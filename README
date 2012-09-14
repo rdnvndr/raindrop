@@ -1,0 +1,45 @@
+Universal Platform
+===================
+
+Описание
+
+------------------------------
+Source      ---> Binary
+------------------------------
+src/app     ---> build/
+src/libs    ---> build/
+src/plugins ---> build/plugins
+src/share   ---> share/
+src/shared  ---> [static lib]
+------------------------------
+
+Supported Platforms
+===================
+The binary packages support the following platforms:
+
+Windows 7, Windows XP SP2, Windows Vista
+(K)Ubuntu Linux 8.04 (32-bit and 64-bit) or later
+Mac OS 10.5 or later
+
+Building the sources requires Qt 4.7.4 or later.
+
+Compiling Universal Platform
+====================
+Prerequisites:
+   * Qt 4.7.4
+   * On Windows:
+     -  ActiveState Active Perl (version 5.8.9 for Symbian development)
+     -  MinGW 4.4 or later, Visual Studio 2008 or later
+     -  jom
+     The Qt SDK provides you with most of the required software.
+   * On Mac: XCode 2.5 or later, compiling on 10.4 requires setting the
+     environment variable QTC_TIGER_COMPAT before running qmake
+
+Compiling Universal Platform on Linux
+--------------------------------------
+
+
+
+Compiling Universal Platform on Windows
+--------------------------------------
+

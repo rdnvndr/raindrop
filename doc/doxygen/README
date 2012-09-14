@@ -1,0 +1,14 @@
+Для генерации документации выполнить команду 
+doxygen doxyfile
+
+Зависимости:
+
+  Ubuntu 
+    sudo apt-get install doxygen graphviz ghostscript-x 
+
+Пример оформления кода:
+    codestyle.cpp
+
+Ссылки:
+
+  http://code.google.com/p/dipins/wiki/UsingDoxygen
