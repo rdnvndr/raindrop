@@ -1,7 +1,6 @@
 TEMPLATE = subdirs
 CONFIG += ordered
-SUBDIRS +=  interfaces\
-            shared \
+SUBDIRS +=  shared \
             libs \
             app \
             plugins

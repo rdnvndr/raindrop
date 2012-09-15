@@ -1,5 +1,5 @@
 include(../main.pri)
-INCLUDEPATH += $$PWD/interfaces $$PWD/libs $$PWD/shared $$PWD/plugins
+INCLUDEPATH += $$PWD/libs $$PWD/shared $$PWD/plugins
 
 
 QMAKE_RPATHDIR += $$LIBRARY_PATH

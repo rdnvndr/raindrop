@@ -1,21 +1,42 @@
 #ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#define	MAINWINDOW_H
 
-#include "ui_mainwindow.h"
+#include "mainwindowglobal.h"
+#include  "ui_mainwindow.h"
+#include <QtGui>
+#include <QMainWindow>
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+//! Класс главного окна
+class MAINWINDOWLIB MainWindow: public QMainWindow, public Ui::MainWindow
 {
-    Q_OBJECT
-    
+        Q_OBJECT
 public:
-    explicit MainWindow(QWidget *parent = 0);
 
-private:
-    void createConnection();
-    void createMainMenu();
+    //! Конструктор главного окна
+    MainWindow(QMainWindow* pwgt = 0);
 
-private slots:
-    void showAboutPlugin();
+public slots:
+
+    //! Слот обработки события закрытия главного окна
+    virtual void closeEvent(QCloseEvent *event);
+
+    //! Слот обновления меню управления окнами
+    /*! Слот предназаначен для изменения состояния
+        пунктов меню при изменении состояния приложения
+    */
+    virtual void updateMenus();
+
+    //! Слот установки оконного режима
+    /*! Слот предназначен переключение приложения в закладочный
+        или оконный режим
+    */
+    virtual void setWindowModeEnable(bool mode);
+
+    //! Слот добавления подчиненного окна
+    /*! Слот предназаначен для добавления подчиненного окна(закладки)
+        в главное окно. Возращает добавленное подокно QMdiSubWindow
+    */
+    virtual QMdiSubWindow* addSubWindow(QWidget* widget);
 };
 
-#endif // MAINWINDOW_H
+#endif
