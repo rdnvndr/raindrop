@@ -1,27 +1,20 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2012-07-27T18:30:34
-#
-#-------------------------------------------------
-LIBS += -lextensionsystem -lcommon
+LIBS += -lplugin -lmdiextarea
 include(../plugins.pri)
 
-TARGET = mainwindows
-TEMPLATE = lib
+TARGET =
+DEPENDPATH += .
+INCLUDEPATH += .
+DEFINES += MAINWINDOW_LIBRARY
 
-DEFINES += MAINWINDOWS_LIBRARY
-
-SOURCES += \
-    mainwindow.cpp \
-    mainwindowplugin.cpp
-
-HEADERS +=\
-    mainwindow.h \
-    mainwindowplugin.h \
+# Input
+HEADERS += mainwindowplug.h \
+           mainwindow.h \
     mainwindowglobal.h
+SOURCES += mainwindowplug.cpp \
+           mainwindow.cpp
 
 FORMS += \
-    mainwindow.ui
+           mainwindow.ui
 
 RESOURCES += \
     mainwindow.qrc

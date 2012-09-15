@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
 
-SUBDIRS += start
+#SUBDIRS += start
+SUBDIRS += raindrop
     

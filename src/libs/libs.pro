@@ -1,4 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS += extensionsystem
+# SUBDIRS += extensionsystem
+SUBDIRS += plugin
+SUBDIRS += mdiextarea
 

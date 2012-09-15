@@ -1,1 +1,5 @@
-<RCC/>
+<RCC>
+  <qresource prefix="/">
+    <file alias="exit">icons/application-exit.svg</file>
+  </qresource>
+</RCC>
