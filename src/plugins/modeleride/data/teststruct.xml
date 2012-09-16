@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RTPClass className="Root"
+          isSystem="true"
+          isAbstract="true"
+          description="Корневой класс"
+>
+    <RTPAttribute attributeName="Name"
+                  description="Наименование"
+                  attributeType="String"
+                  maxStringLength="32"
+                  isArray="false"
+                  arrayLength="0"
+                  isNullsAllowed="false"
+                  isUnique="true"
+                  isCandidateKey="false"
+                  initialValue=""
+                  lowerBoundValue=""
+                  upperBoundValue=""
+                  referencedClass=""
+     />
+    <RTPClass className="Root1"
+              isSystem="true"
+              isAbstract="true"
+              description="Корласс"
+    >
+        <RTPClass className="Root3"
+                  isSystem="true"
+                  isAbstract="true"
+                  description="Корласс"
+        >
+            <RTPAttribute attributeName="Name3"
+                          description="Наименование"
+                          attributeType="String"
+                          maxStringLength="32"
+                          isArray="false"
+                          arrayLength="0"
+                          isNullsAllowed="false"
+                          isUnique="true"
+                          isCandidateKey="false"
+                          initialValue=""
+                          lowerBoundValue=""
+                          upperBoundValue=""
+                          referencedClass=""
+             />
+        </RTPClass>
+
+    </RTPClass>
+    <RTPClass className="Root2"
+              isSystem="true"
+              isAbstract="true"
+              description="Корласс"
+    >
+    </RTPClass>
+
+</RTPClass>
