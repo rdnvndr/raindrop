@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="modeleride">icons/classicon.svg</file>
+        <file alias="cleanfilter">icons/editclean.svg</file>
+        <file alias="savemodel">icons/document-save.svg</file>
+        <file alias="openmodel">icons/document-open.svg</file>
+        <file alias="publish">icons/emblem-package.svg</file>
+        <file alias="closemodel">icons/gtk-close.svg</file>
+        <file alias="newmodel">icons/document-new.svg</file>
+        <file alias="attribute">icons/attr.svg</file>
+    </qresource>
+</RCC>
