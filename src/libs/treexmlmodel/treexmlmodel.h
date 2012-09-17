@@ -110,6 +110,9 @@ public:
     //! Указывает xml атрибуты тэга для отображения
     void addDisplayedAttr(QString nameAttr, QStringList value,QIcon icon = QIcon());
 
+    //! Получение индекса поля в тэге
+    int indexDisplayedAttr(QString nameAttr, QString fieldName);
+
     //! Удаляет xml атрибуты тэга для отображения
     void removeDisplayedAttr(QString nameAttr);
 

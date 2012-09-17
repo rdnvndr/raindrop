@@ -6,6 +6,7 @@
 
 class XMLMODELLIB TableXMLProxyModel : public QSortFilterProxyModel
 {
+    Q_OBJECT
 public:
     TableXMLProxyModel();
 
