@@ -8,5 +8,8 @@
         <file alias="closemodel">icons/gtk-close.svg</file>
         <file alias="newmodel">icons/document-new.svg</file>
         <file alias="attribute">icons/attr.svg</file>
+        <file alias="remove">icons/list-remove.svg</file>
+        <file alias="add">icons/list-add.svg</file>
+        <file alias="edit">icons/gtk-edit.svg</file>
     </qresource>
 </RCC>

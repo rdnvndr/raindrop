@@ -1,4 +1,6 @@
 #include "dlgeditclass.h"
+#include <treexmlmodel/treexmlmodel.h>
+#include "dbxmlstruct.h"
 
 DlgEditClass::DlgEditClass(QWidget *parent) :
     QDialog(parent)
@@ -17,11 +19,25 @@ void DlgEditClass::setModel(QAbstractItemModel *model)
 {
     m_model = model;
     m_mapper->setModel(m_model);
-    m_mapper->addMapping(lineEditNameClass,0);
-    m_mapper->addMapping(checkBoxAbstract,1);
-    m_mapper->addMapping(checkBoxSystem,2);
-    m_mapper->addMapping(plainTextEditDesc,3);
-    m_mapper->addMapping(lineEditParentClass,4);
+    TreeXMLModel *treeModel = qobject_cast<TreeXMLModel*>(model);
+    m_mapper->addMapping(lineEditNameClass,
+                         treeModel->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                       DBCLASSXML::NAME));
+    m_mapper->addMapping(checkBoxAbstract,
+                         treeModel->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                       DBCLASSXML::ISABSTARCT));
+    m_mapper->addMapping(checkBoxSystem,
+                         treeModel->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                       DBCLASSXML::ISACTIVE));
+    m_mapper->addMapping(plainTextEditDesc,
+                         treeModel->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                       DBCLASSXML::DESCRIPTION));
+    m_mapper->addMapping(lineEditParentClass,
+                         treeModel->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                       DBCLASSXML::PARENT));
+    /*m_mapper->addMapping(lineEditParentClass,
+                         treeModel->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                       DBCLASSXML::TYPE));*/
 }
 
 

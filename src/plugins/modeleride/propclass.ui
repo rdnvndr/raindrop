@@ -6,188 +6,648 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>418</width>
-    <height>388</height>
+    <width>527</width>
+    <height>481</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Свойство класса</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
-    <layout class="QHBoxLayout" name="layoutTitleClass">
+    <layout class="QVBoxLayout" name="verticalLayoutClass">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
-      <widget class="QLabel" name="labelTitlePixmap">
-       <property name="maximumSize">
-        <size>
-         <width>24</width>
-         <height>24</height>
-        </size>
+      <widget class="QFrame" name="frameToolClassUp">
+       <property name="frameShape">
+        <enum>QFrame::HLine</enum>
        </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap resource="modeleride.qrc">:/modeleride</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="labelTitleClass">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
+      <layout class="QHBoxLayout" name="horizontalLayoutToolClass">
+       <property name="spacing">
+        <number>0</number>
        </property>
-       <property name="text">
-        <string>Класс:</string>
+       <item>
+        <widget class="QToolButton" name="toolButtonAddClass">
+         <property name="text">
+          <string>Добавить класс</string>
+         </property>
+         <property name="icon">
+          <iconset resource="modeleride.qrc">
+           <normaloff>:/add</normaloff>:/add</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
+         <property name="autoRaise">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacerToolClass">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QFrame" name="frameToolClassDown">
+       <property name="frameShape">
+        <enum>QFrame::HLine</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBoxClass">
-     <property name="title">
-      <string>Детали</string>
+    <widget class="QTabWidget" name="tabWidgetProp">
+     <property name="currentIndex">
+      <number>0</number>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="3" column="0" colspan="2">
-       <layout class="QHBoxLayout" name="layoutCheckClass">
-        <item>
-         <widget class="QCheckBox" name="checkBoxAbsClass">
-          <property name="text">
-           <string>Абстрактный</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="checkBoxSysClass">
-          <property name="text">
-           <string>Системный</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEditNameClass"/>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelParent">
-        <property name="text">
-         <string>Родитель:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QPlainTextEdit" name="plainTextDescClass"/>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="labelNameClass">
-        <property name="text">
-         <string>Имя:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="labelDescClass">
-        <property name="text">
-         <string>Описание:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEditParent">
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QWidget" name="tabProp">
+      <attribute name="title">
+       <string>Свойства</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayoutProp">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutPropTool">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QToolButton" name="toolButton">
+           <property name="text">
+            <string>Изменить класс</string>
+           </property>
+           <property name="icon">
+            <iconset resource="modeleride.qrc">
+             <normaloff>:/edit</normaloff>:/edit</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="toolButtonStyle">
+            <enum>Qt::ToolButtonTextBesideIcon</enum>
+           </property>
+           <property name="autoRaise">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButton_2">
+           <property name="text">
+            <string>Удалить класс</string>
+           </property>
+           <property name="icon">
+            <iconset resource="modeleride.qrc">
+             <normaloff>:/remove</normaloff>:/remove</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="toolButtonStyle">
+            <enum>Qt::ToolButtonTextBesideIcon</enum>
+           </property>
+           <property name="autoRaise">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBoxClass">
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="4" column="0">
+           <widget class="QLabel" name="labelAbsClass">
+            <property name="text">
+             <string>Абстрактный:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="comboBoxClassType"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEditClassName"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="labelClassParent">
+            <property name="text">
+             <string>Родитель:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="labelClassDesc">
+            <property name="text">
+             <string>Описание:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelClassType">
+            <property name="text">
+             <string>Тип класса:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="labelClassName">
+            <property name="text">
+             <string>Имя класса:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <spacer name="verticalSpacerProp">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEditClassDesc"/>
+          </item>
+          <item row="3" column="1">
+           <widget class="TreeComboBox" name="comboBoxClassParent"/>
+          </item>
+          <item row="5" column="1">
+           <widget class="QCheckBox" name="checkBoxActiveClass">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QCheckBox" name="checkBoxAbsClass">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="labelActiveClass">
+            <property name="text">
+             <string>Активный:</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutPropSave">
+         <item>
+          <spacer name="horizontalSpacerRightProp">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonPropSave">
+           <property name="text">
+            <string>Сохранить</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonPropCancel">
+           <property name="text">
+            <string>Отменить</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacerLeftProp">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabAttr">
+      <attribute name="title">
+       <string>Атрибуты</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutAttrListTool">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QToolButton" name="toolButtonAddAttr">
+           <property name="text">
+            <string>Добавить атрибут</string>
+           </property>
+           <property name="icon">
+            <iconset resource="modeleride.qrc">
+             <normaloff>:/add</normaloff>:/add</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="toolButtonStyle">
+            <enum>Qt::ToolButtonTextBesideIcon</enum>
+           </property>
+           <property name="autoRaise">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacerAttrListTool">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxInInherited">
+           <property name="text">
+            <string>Унаследованные</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTableView" name="tableViewAttr"/>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutToolAttr">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QToolButton" name="toolButtonModifyAttr">
+           <property name="text">
+            <string>Изменить атрибут</string>
+           </property>
+           <property name="icon">
+            <iconset resource="modeleride.qrc">
+             <normaloff>:/edit</normaloff>:/edit</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="toolButtonStyle">
+            <enum>Qt::ToolButtonTextBesideIcon</enum>
+           </property>
+           <property name="autoRaise">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButtonDeleteAttr">
+           <property name="text">
+            <string>Удалить атрибут</string>
+           </property>
+           <property name="icon">
+            <iconset resource="modeleride.qrc">
+             <normaloff>:/remove</normaloff>:/remove</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="toolButtonStyle">
+            <enum>Qt::ToolButtonTextBesideIcon</enum>
+           </property>
+           <property name="autoRaise">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacerToolAttr">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutPropAttr">
+         <item>
+          <widget class="QGroupBox" name="groupBoxPropAttr">
+           <property name="title">
+            <string>Свойства атрибута</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="5" column="1">
+             <widget class="QCheckBox" name="checkBoxIsCandidateKey">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="labelAttrDesc">
+              <property name="text">
+               <string>Описание:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QCheckBox" name="checkBoxIsUnique">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="labelIsNull">
+              <property name="text">
+               <string>Может быть нулевым</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="labelAttrGroup">
+              <property name="text">
+               <string>Группа:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QComboBox" name="comboBoxAttrGroup"/>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="labelIsCandidateKey">
+              <property name="text">
+               <string>Потенциальный ключ</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="lineEditAttrDesc"/>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="lineEditAttrName"/>
+            </item>
+            <item row="3" column="1">
+             <widget class="QCheckBox" name="checkBoxIsNull">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="labelIsUnique">
+              <property name="text">
+               <string>Уникален</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="labelAttrName">
+              <property name="text">
+               <string>Имя атрибута:</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBoxPropType">
+           <property name="title">
+            <string>Свойства типа</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <item row="2" column="0">
+             <widget class="QLabel" name="labelLinkClass">
+              <property name="text">
+               <string>Ссылка на класс:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QSpinBox" name="spinBoxUpValue"/>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="lineEditDefaultValue"/>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="labelTypeAttr">
+              <property name="text">
+               <string>Тип атрибута:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="comboBoxTypeAttr"/>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="labelUpValue">
+              <property name="text">
+               <string>Верхняя граница</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="labelDownValue">
+              <property name="text">
+               <string>Нижняя граница:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="TreeComboBox" name="comboBoxLinkAttr"/>
+            </item>
+            <item row="4" column="1">
+             <widget class="QSpinBox" name="spinBoxDownValue"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="labelStringLen">
+              <property name="text">
+               <string>Длина строки:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="labelDefaultValue">
+              <property name="text">
+               <string>Начальное значение:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="spinBoxStrinLen"/>
+            </item>
+           </layout>
+           <zorder>labelTypeAttr</zorder>
+           <zorder>labelStringLen</zorder>
+           <zorder>comboBoxTypeAttr</zorder>
+           <zorder>labelLinkClass</zorder>
+           <zorder>comboBoxLinkAttr</zorder>
+           <zorder>labelDefaultValue</zorder>
+           <zorder>labelDownValue</zorder>
+           <zorder>labelUpValue</zorder>
+           <zorder>spinBoxDownValue</zorder>
+           <zorder>spinBoxUpValue</zorder>
+           <zorder>lineEditDefaultValue</zorder>
+           <zorder>spinBoxStrinLen</zorder>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutAttrSave">
+         <item>
+          <spacer name="horizontalSpacerLeftAttr">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonAttrSave">
+           <property name="text">
+            <string>Сохранить</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonAttrCancel">
+           <property name="text">
+            <string>Отмена</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacerRightAttr">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabLink">
+      <attribute name="title">
+       <string>Связи</string>
+      </attribute>
+     </widget>
     </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBoxAttr">
-     <property name="title">
-      <string>Атрибуты</string>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QTableView" name="tableViewAttr"/>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="layoutButtonAttr">
-        <item>
-         <widget class="QPushButton" name="pushButtonAdd">
-          <property name="text">
-           <string>Добавить</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButtonEdit">
-          <property name="text">
-           <string>Изменить</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButtonDel">
-          <property name="text">
-           <string>Удалить</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="layoutApply">
-     <item>
-      <spacer name="hSpacerApply">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButtonApply">
-       <property name="text">
-        <string>Применить</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TreeComboBox</class>
+   <extends>QComboBox</extends>
+   <header>treecombobox/treecombobox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="modeleride.qrc"/>
  </resources>

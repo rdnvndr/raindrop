@@ -11,10 +11,10 @@ PropClass::PropClass(QWidget *parent) :
     m_mapper = new QDataWidgetMapper();
     m_attrModel = new TableXMLProxyModel();
 
-    connect(pushButtonAdd,SIGNAL(clicked()),this,SLOT(addPropAttr()));
+    /*connect(pushButtonAdd,SIGNAL(clicked()),this,SLOT(addPropAttr()));
     connect(pushButtonEdit,SIGNAL(clicked()),this,SLOT(showPropAttr()));
     connect(pushButtonDel,SIGNAL(clicked()),this,SLOT(removePropAttr()));
-    connect(pushButtonApply,SIGNAL(clicked()),m_mapper,SLOT(submit()));
+    connect(pushButtonApply,SIGNAL(clicked()),m_mapper,SLOT(submit()));*/
 
 }
 
@@ -24,12 +24,21 @@ void PropClass::setModel(TreeXMLModel *model)
 
     m_mapper->setModel(m_model);
 
-    m_mapper->addMapping(lineEditNameClass,0);
-
-    m_mapper->addMapping(checkBoxAbsClass,1);
-    m_mapper->addMapping(checkBoxSysClass,2);
-    m_mapper->addMapping(plainTextDescClass,3);
-    m_mapper->addMapping(lineEditParent,4);
+    m_mapper->addMapping(lineEditClassName,
+                         model->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                   DBATTRXML::NAME));
+    m_mapper->addMapping(checkBoxAbsClass,
+                         model->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                   DBCLASSXML::ISABSTARCT));
+    m_mapper->addMapping(checkBoxActiveClass,
+                         model->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                   DBCLASSXML::ISACTIVE));
+    m_mapper->addMapping(lineEditClassDesc,
+                         model->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                   DBCLASSXML::DESCRIPTION));
+    m_mapper->addMapping(comboBoxClassParent,
+                         model->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                   DBCLASSXML::PARENT));
 
     m_attrModel->setSourceModel(m_model);
     tableViewAttr->setModel(m_attrModel);

@@ -159,20 +159,21 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     dbStructModel->addTagFilter(DBATTRXML::ATTR);
 
     QStringList propsClass;
-    propsClass << DBCLASSXML::CLASSNAME << DBCLASSXML::ISABSTARCT <<
-                  DBCLASSXML::ISSYSTEM << DBCLASSXML::DESCRIPTION <<
-                  DBCLASSXML::PARENT;
+    propsClass << DBCLASSXML::NAME << DBCLASSXML::ISABSTARCT <<
+                  DBCLASSXML::TYPE << DBCLASSXML::DESCRIPTION <<
+                  DBCLASSXML::PARENT << DBCLASSXML::ISACTIVE <<
+                  DBCLASSXML::TEMPLATE;
     dbStructModel->addDisplayedAttr(DBCLASSXML::CLASS,propsClass,QIcon(":/modeleride"));
     dbStructModel->addDisplayedAttr(DBATTRXML::ATTR,propsClass,QIcon(":/attribute"));
 
     QStringList propsAttr;
-    propsAttr << DBATTRXML::ATTRNAME << DBATTRXML::ATTRTYPE <<
+    propsAttr << DBATTRXML::NAME << DBATTRXML::TYPE <<
                  DBATTRXML::MAXSTRLEN << DBATTRXML::REFCLASS <<
                  DBATTRXML::PARENT << DBATTRXML::INITIALVAL <<
                  DBATTRXML::LOWVAL << DBATTRXML::UPVAL <<
-                 DBATTRXML::ISARRAY << DBATTRXML::ARRAYLEN <<
-                 DBATTRXML::ISNULLALLOWED << DBATTRXML::ISUNIQUE <<
-                 DBATTRXML::ISCANDIDATEKEY << DBATTRXML::DESCRIPTION;
+                 DBATTRXML::GROUP << DBATTRXML::ISNULLALLOWED <<
+                 DBATTRXML::ISUNIQUE << DBATTRXML::ISCANDIDATEKEY <<
+                 DBATTRXML::DESCRIPTION;
 
     dbStructModel->setHeaderData(0, Qt::Horizontal, tr("Имя атирибута"));
     dbStructModel->setHeaderData(1, Qt::Horizontal, tr("Тип"));
@@ -182,12 +183,11 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     dbStructModel->setHeaderData(5, Qt::Horizontal, tr("Исходное значение"));
     dbStructModel->setHeaderData(6, Qt::Horizontal, tr("Нижняя граница"));
     dbStructModel->setHeaderData(7, Qt::Horizontal, tr("Верхняя граница"));
-    dbStructModel->setHeaderData(8, Qt::Horizontal, tr("Массив"));
-    dbStructModel->setHeaderData(9, Qt::Horizontal, tr("Длина массива"));
-    dbStructModel->setHeaderData(10, Qt::Horizontal, tr("Нулевые значения"));
-    dbStructModel->setHeaderData(11, Qt::Horizontal, tr("Уникальный"));
-    dbStructModel->setHeaderData(12, Qt::Horizontal, tr("Кандидат в ключ"));
-    dbStructModel->setHeaderData(13, Qt::Horizontal, tr("Комментарий"));
+    dbStructModel->setHeaderData(8, Qt::Horizontal, tr("Группа"));
+    dbStructModel->setHeaderData(9, Qt::Horizontal, tr("Нулевые значения"));
+    dbStructModel->setHeaderData(10, Qt::Horizontal, tr("Уникальный"));
+    dbStructModel->setHeaderData(11, Qt::Horizontal, tr("Кандидат в ключ"));
+    dbStructModel->setHeaderData(12, Qt::Horizontal, tr("Описание"));
 
     dbStructModel->addDisplayedAttr(DBATTRXML::ATTR,propsAttr);
     dbStructModel->addAttributeTag(DBATTRXML::ATTR);

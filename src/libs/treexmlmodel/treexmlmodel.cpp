@@ -62,6 +62,16 @@ void TreeXMLModel::addDisplayedAttr(QString nameAttr, QStringList value, QIcon i
         m_displayedIcon[nameAttr] = icon;
 }
 
+int TreeXMLModel::indexDisplayedAttr(QString nameAttr, QString fieldName)
+{
+    for (int i=0;i<m_displayedAttr[nameAttr].count();i++){
+        if (m_displayedAttr[nameAttr].at(i)==fieldName)
+            return i;
+    }
+    return -1;
+}
+
+
 void TreeXMLModel::removeDisplayedAttr(QString nameAttr)
 {
     bool flagcolumn = false;

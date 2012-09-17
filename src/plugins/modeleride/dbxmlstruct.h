@@ -4,21 +4,22 @@
 #include <QStringList>
 namespace DBCLASSXML{
     const QString CLASS = "RTPClass";
-    const QString CLASSNAME = "className";
-    const QString ISSYSTEM = "isSystem";
+    const QString NAME = "name";
+    const QString TYPE = "type";
     const QString ISABSTARCT = "isAbstract";
+    const QString ISACTIVE = "isActive";
     const QString DESCRIPTION = "description";
     const QString PARENT = "parent";
+    const QString TEMPLATE = "displayTemplate";
 }
 
 namespace DBATTRXML{
     const QString ATTR = "RTPAttribute";
-    const QString ATTRNAME = "attributeName";
+    const QString NAME = "name";
     const QString DESCRIPTION = "description";
-    const QString ATTRTYPE = "attributeType";
+    const QString TYPE = "type";
+    const QString GROUP = "type";
     const QString MAXSTRLEN = "maxStringLength";
-    const QString ISARRAY = "isArray";
-    const QString ARRAYLEN = "arrayLength";
     const QString ISNULLALLOWED = "isNullAllowed";
     const QString ISUNIQUE = "isUnique";
     const QString ISCANDIDATEKEY = "isCandidateKey";
@@ -30,10 +31,16 @@ namespace DBATTRXML{
 }
 
 const QStringList DBXMLTYPE = (QStringList()
-                               << "String"
-                               << "Referenced"
+                               << "Boolean"
+                               << "Char"
+                               << "Date"
+                               << "Decimal"
                                << "Double"
-                               << "Int"
+                               << "Integer"
+                               << "String"
+                               << "Reference"
+                               << "Time"
+                               << "Timeshtamp"
                                );
 
 

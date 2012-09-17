@@ -2,6 +2,8 @@
 #include <QSortFilterProxyModel>
 #include "dbxmlstruct.h"
 #include <treexmlmodel/xmldelegate.h>
+#include <treexmlmodel/treexmlmodel.h>
+#include <treexmlmodel/tablexmlproxymodel.h>
 
 DlgEditAttr::DlgEditAttr(QWidget *parent) :
     QDialog(parent)
@@ -42,19 +44,44 @@ void DlgEditAttr::setModel(QAbstractItemModel *model)
 
     comboBoxRefClass->setModel(proxyModel->sourceModel());
 
-    m_mapper->addMapping(lineEditName,0);
-    m_mapper->addMapping(comboBoxType,1);
-    m_mapper->addMapping(spinBoxLengthStr,2);
-    m_mapper->addMapping(comboBoxRefClass,3);
-    m_mapper->addMapping(lineEditInitValue,5);
-    m_mapper->addMapping(spinBoxDownValue,6);
-    m_mapper->addMapping(spinBoxUpValue,7);
-    m_mapper->addMapping(groupBoxIsArray,8);
-    m_mapper->addMapping(spinBoxLength,9);
-    m_mapper->addMapping(checkBoxIsNull,10);
-    m_mapper->addMapping(checkBoxIsUnique,11);
-    m_mapper->addMapping(checkBoxCandidatKey,12);
-    m_mapper->addMapping(plainTextEdit,13);
+    TableXMLProxyModel* tableModel = qobject_cast<TableXMLProxyModel*>(model);
+    TreeXMLModel *treeModel = qobject_cast<TreeXMLModel*>(tableModel->sourceModel());
+    m_mapper->addMapping(lineEditName,
+                         treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                       DBATTRXML::NAME));
+    m_mapper->addMapping(comboBoxType,
+                         treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                       DBATTRXML::TYPE));
+    m_mapper->addMapping(spinBoxLengthStr,
+                         treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                       DBATTRXML::MAXSTRLEN));
+    m_mapper->addMapping(comboBoxRefClass,
+                         treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                       DBATTRXML::REFCLASS));
+    m_mapper->addMapping(lineEditInitValue,
+                         treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                       DBATTRXML::INITIALVAL));
+    m_mapper->addMapping(spinBoxDownValue,
+                         treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                       DBATTRXML::LOWVAL));
+    m_mapper->addMapping(spinBoxUpValue,
+                         treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                       DBATTRXML::UPVAL));
+    m_mapper->addMapping(spinBoxLength,
+                         treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                       DBATTRXML::PARENT));
+    m_mapper->addMapping(checkBoxIsNull,
+                         treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                       DBATTRXML::ISNULLALLOWED));
+    m_mapper->addMapping(checkBoxIsUnique,
+                         treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                       DBATTRXML::ISUNIQUE));
+    m_mapper->addMapping(checkBoxCandidatKey,
+                         treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                       DBATTRXML::ISCANDIDATEKEY));
+    m_mapper->addMapping(plainTextEdit,
+                         treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                       DBATTRXML::DESCRIPTION));
 }
 
 QAbstractItemModel *DlgEditAttr::model()
@@ -80,22 +107,28 @@ void DlgEditAttr::setCheckArray(bool check)
 
 void DlgEditAttr::changeType(QString s)
 {
-    if (DBXMLTYPE.at(0)==s){
+    if (DBXMLTYPE.at(6)==s){
         // String
         spinBoxLengthStr->setEnabled(true);
         comboBoxRefClass->setEnabled(false);
         lineEditInitValue->setEnabled(true);
         spinBoxDownValue->setEnabled(false);
         spinBoxUpValue->setEnabled(false);
-    } else if( DBXMLTYPE.at(1)==s){
-        //Referenced
+    } else if( DBXMLTYPE.at(7)==s){
+        //Reference
         spinBoxLengthStr->setEnabled(false);
         comboBoxRefClass->setEnabled(true);
         lineEditInitValue->setEnabled(false);
         spinBoxDownValue->setEnabled(false);
         spinBoxUpValue->setEnabled(false);
-    } else {
+    } else if( DBXMLTYPE.at(4)==s || DBXMLTYPE.at(5)==s){
         // Double and Int
+        spinBoxLengthStr->setEnabled(false);
+        comboBoxRefClass->setEnabled(false);
+        lineEditInitValue->setEnabled(true);
+        spinBoxDownValue->setEnabled(true);
+        spinBoxUpValue->setEnabled(true);
+    } else {
         spinBoxLengthStr->setEnabled(false);
         comboBoxRefClass->setEnabled(false);
         lineEditInitValue->setEnabled(true);
