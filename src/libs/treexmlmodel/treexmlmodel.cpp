@@ -99,8 +99,10 @@ QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
         if (!m_displayedIcon[node.nodeName()].isNull()&&index.column()==0)
             return m_displayedIcon[node.nodeName()];
 
-    if (role == Qt::UserRole)
+    if (role == Qt::UserRole){
+        qDebug() << node.nodeName();
         return node.nodeName();
+    }
 
     if (role == Qt::DisplayRole || role == Qt::EditRole){
 

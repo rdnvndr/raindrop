@@ -38,15 +38,15 @@ void MdiExtArea::setViewMode(ViewMode mode){
     this->setOption(QMdiArea::DontMaximizeSubWindowOnActivation,true);
 }
 
-bool MdiExtArea::setActiveSubWindow(QString widgetName)
+QMdiSubWindow* MdiExtArea::setActiveSubWindow(QString widgetName)
 {
     foreach (QMdiSubWindow * subwindow, this->subWindowList()){
         if (subwindow->widget()->objectName()==widgetName){
             this->setActiveSubWindow(subwindow);
-            return true;
+            return subwindow;
         }
     }
-    return false;
+    return NULL;
 }
 
 void MdiExtArea::setActiveSubWindow(QMdiSubWindow *window)

@@ -1,5 +1,6 @@
 #include "tablexmlproxymodel.h"
 #include <QtCore>
+#include <QDebug>
 
 TableXMLProxyModel::TableXMLProxyModel()
 {
@@ -7,15 +8,15 @@ TableXMLProxyModel::TableXMLProxyModel()
 
 bool TableXMLProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) const
 {
-    if (mapFromSource(parent) == m_index)
+    if (parent == m_index)
         return QSortFilterProxyModel::filterAcceptsRow(row,parent);
-    else
-        return true;
+
+    return true;
 }
 
 void TableXMLProxyModel::setFilterIndex(const QModelIndex &parent)
 {
-    m_index = mapFromSource(parent);
+    m_index = parent;
 }
 
 QModelIndex TableXMLProxyModel::filterIndex()

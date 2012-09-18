@@ -30,7 +30,7 @@ namespace DBATTRXML{
     const QString PARENT = "parent";
 }
 
-const QStringList DBXMLTYPE = (QStringList()
+const QStringList DBXMLATTRTYPE = (QStringList()
                                << "Boolean"
                                << "Char"
                                << "Date"
@@ -43,5 +43,10 @@ const QStringList DBXMLTYPE = (QStringList()
                                << "Timeshtamp"
                                );
 
+const QStringList DBXMLCLASSTYPE = (QStringList()
+                               << "System"
+                               << "Standart"
+                               << "User"
+                               );
 
 #endif // DBXMLSTRUCT_H

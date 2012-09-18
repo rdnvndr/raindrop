@@ -49,7 +49,7 @@ public:
         имя объекта.
        \sa addSubWindow()
     */
-    bool setActiveSubWindow(QString widgetName);
+    QMdiSubWindow *setActiveSubWindow(QString widgetName);
 
     //! Активация подокна
     /*! Предназначено для активации указанного подокна
