@@ -228,16 +228,30 @@ void ModelerIDEPlug::showPropClass(QModelIndex index)
     if (dbStructModel->isAttribute(index))
         return;
 
-    PropClass* propClass = new PropClass(NULL);
-    propClass->setModel(dbStructModel);
-    propClass->setCurrentModelIndex(index);
-
     PluginManager* pluginManager = PluginManager::instance();
     MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
                                                            "MainWindowPlug::MainWindow"));
-    QMdiSubWindow* subWindow =  mainwindow->addSubWindow(propClass);
-    if (subWindow!=NULL)
-        subWindow->setWindowTitle(tr("Свойство класса"));
+
+    QString className = index.sibling(index.row(),dbStructModel->indexDisplayedAttr(
+                                          DBCLASSXML::CLASS,
+                                          DBCLASSXML::NAME
+                                          )).data().toString();
+
+    QString subWindowName = "PropClass::" + className;
+    QMdiSubWindow* subWindow = mainwindow->setActiveSubWindow(subWindowName);
+
+    if (!subWindow) {
+        PropClass* propClass = new PropClass(mainwindow);
+        propClass->setObjectName(subWindowName);
+        propClass->setModel(dbStructModel);
+        propClass->setCurrentModelIndex(index);
+        subWindow =  mainwindow->addSubWindow(propClass);
+        if (subWindow!=NULL)
+            subWindow->setWindowTitle(tr("Управления классами"));
+    } else {
+        PropClass* propClass = qobject_cast<PropClass*>(subWindow->widget());
+        propClass->setCurrentModelIndex(index);
+    }
 }
 
 void ModelerIDEPlug::newClassModel()

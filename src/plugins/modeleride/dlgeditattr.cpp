@@ -21,7 +21,7 @@ DlgEditAttr::DlgEditAttr(QWidget *parent) :
 
 
     m_typeModel = new QStringListModel();
-    m_typeModel->setStringList(DBXMLTYPE);
+    m_typeModel->setStringList(DBXMLATTRTYPE);
 
     connect(checkBoxIsLength,SIGNAL(toggled(bool)),this,SLOT(setCheckArray(bool)));
     connect(comboBoxType,SIGNAL(currentIndexChanged(QString)),this,SLOT(changeType(QString)));
@@ -107,21 +107,21 @@ void DlgEditAttr::setCheckArray(bool check)
 
 void DlgEditAttr::changeType(QString s)
 {
-    if (DBXMLTYPE.at(6)==s){
+    if (DBXMLATTRTYPE.at(6)==s){
         // String
         spinBoxLengthStr->setEnabled(true);
         comboBoxRefClass->setEnabled(false);
         lineEditInitValue->setEnabled(true);
         spinBoxDownValue->setEnabled(false);
         spinBoxUpValue->setEnabled(false);
-    } else if( DBXMLTYPE.at(7)==s){
+    } else if( DBXMLATTRTYPE.at(7)==s){
         //Reference
         spinBoxLengthStr->setEnabled(false);
         comboBoxRefClass->setEnabled(true);
         lineEditInitValue->setEnabled(false);
         spinBoxDownValue->setEnabled(false);
         spinBoxUpValue->setEnabled(false);
-    } else if( DBXMLTYPE.at(4)==s || DBXMLTYPE.at(5)==s){
+    } else if( DBXMLATTRTYPE.at(4)==s || DBXMLATTRTYPE.at(5)==s){
         // Double and Int
         spinBoxLengthStr->setEnabled(false);
         comboBoxRefClass->setEnabled(false);

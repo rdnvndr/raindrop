@@ -59,3 +59,8 @@ QMdiSubWindow* MainWindow::addSubWindow(QWidget* widget)
     return subWindow;
 }
 
+QMdiSubWindow* MainWindow::setActiveSubWindow(QString objName)
+{
+    return mdiArea->setActiveSubWindow(objName);
+}
+

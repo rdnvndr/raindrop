@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FormEditAttr</class>
+ <widget class="QWidget" name="FormEditAttr">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>450</width>
+    <height>235</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutToolAttr">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QToolButton" name="toolButtonModifyAttr">
+       <property name="text">
+        <string>Изменить атрибут</string>
+       </property>
+       <property name="icon">
+        <iconset resource="modeleride.qrc">
+         <normaloff>:/edit</normaloff>:/edit</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="toolButtonDeleteAttr">
+       <property name="text">
+        <string>Удалить атрибут</string>
+       </property>
+       <property name="icon">
+        <iconset resource="modeleride.qrc">
+         <normaloff>:/remove</normaloff>:/remove</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerToolAttr">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutPropAttr">
+     <item>
+      <widget class="QGroupBox" name="groupBoxPropAttr">
+       <property name="title">
+        <string>Свойства атрибута</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="5" column="1">
+         <widget class="QCheckBox" name="checkBoxIsCandidateKey">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="labelAttrDesc">
+          <property name="text">
+           <string>Описание:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QCheckBox" name="checkBoxIsUnique">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="labelIsNull">
+          <property name="text">
+           <string>Может быть нулевым</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="labelAttrGroup">
+          <property name="text">
+           <string>Группа:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="comboBoxAttrGroup"/>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="labelIsCandidateKey">
+          <property name="text">
+           <string>Потенциальный ключ</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="lineEditAttrDesc"/>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="lineEditAttrName"/>
+        </item>
+        <item row="3" column="1">
+         <widget class="QCheckBox" name="checkBoxIsNull">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="labelIsUnique">
+          <property name="text">
+           <string>Уникален</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="labelAttrName">
+          <property name="text">
+           <string>Имя атрибута:</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBoxPropType">
+       <property name="title">
+        <string>Свойства типа</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="2" column="0">
+         <widget class="QLabel" name="labelLinkClass">
+          <property name="text">
+           <string>Ссылка на класс:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QSpinBox" name="spinBoxUpValue"/>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="lineEditDefaultValue"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="labelTypeAttr">
+          <property name="text">
+           <string>Тип атрибута:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="comboBoxTypeAttr"/>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="labelUpValue">
+          <property name="text">
+           <string>Верхняя граница</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="labelDownValue">
+          <property name="text">
+           <string>Нижняя граница:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="TreeComboBox" name="comboBoxLinkAttr"/>
+        </item>
+        <item row="4" column="1">
+         <widget class="QSpinBox" name="spinBoxDownValue"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="labelStringLen">
+          <property name="text">
+           <string>Длина строки:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="labelDefaultValue">
+          <property name="text">
+           <string>Начальное значение:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="spinBoxStrinLen"/>
+        </item>
+       </layout>
+       <zorder>labelTypeAttr</zorder>
+       <zorder>labelStringLen</zorder>
+       <zorder>comboBoxTypeAttr</zorder>
+       <zorder>labelLinkClass</zorder>
+       <zorder>comboBoxLinkAttr</zorder>
+       <zorder>labelDefaultValue</zorder>
+       <zorder>labelDownValue</zorder>
+       <zorder>labelUpValue</zorder>
+       <zorder>spinBoxDownValue</zorder>
+       <zorder>spinBoxUpValue</zorder>
+       <zorder>lineEditDefaultValue</zorder>
+       <zorder>spinBoxStrinLen</zorder>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TreeComboBox</class>
+   <extends>QComboBox</extends>
+   <header>treecombobox/treecombobox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="modeleride.qrc"/>
+ </resources>
+ <connections/>
+</ui>

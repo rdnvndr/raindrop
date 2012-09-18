@@ -14,16 +14,19 @@ HEADERS += modelerideplug.h \
     dbxmlstruct.h \
     classtreeview.h \
     dlgeditattr.h \
-    dlgeditclass.h
+    dlgeditclass.h \
+    formeditattr.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
     dlgeditattr.cpp \
-    dlgeditclass.cpp
+    dlgeditclass.cpp \
+    formeditattr.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
     propclass.ui \
     classtreeview.ui \
     dlgeditattr.ui \
-    dlgeditclass.ui
+    dlgeditclass.ui \
+    formeditattr.ui

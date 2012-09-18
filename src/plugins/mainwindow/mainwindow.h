@@ -37,6 +37,8 @@ public slots:
         в главное окно. Возращает добавленное подокно QMdiSubWindow
     */
     virtual QMdiSubWindow* addSubWindow(QWidget* widget);
+
+    virtual QMdiSubWindow *setActiveSubWindow(QString objName);
 };
 
 #endif
