@@ -9,15 +9,19 @@ PropClass::PropClass(QWidget *parent) :
     setupUi(this);
 
     m_mapper = new QDataWidgetMapper();
+    m_mapper->setItemDelegate(new XmlDelegate(this));
     m_mapperAttr = new QDataWidgetMapper();
+    m_mapperAttr->setItemDelegate(new XmlDelegate(this));
+
     m_attrModel = new TableXMLProxyModel();
-    // m_groupModel = new DistinctProxyModel();
 
     m_typeAttrModel = new QStringListModel();
     m_typeAttrModel->setStringList(DBXMLATTRTYPE);
 
     m_typeClassModel = new QStringListModel();
     m_typeClassModel->setStringList(DBXMLCLASSTYPE);
+
+    tableViewAttr->setItemDelegate(new XmlDelegate(this));
 
     connect(tableViewAttr,SIGNAL(clicked(QModelIndex)),
             this,SLOT(setCurrentAttr(QModelIndex)));
@@ -32,7 +36,6 @@ PropClass::PropClass(QWidget *parent) :
 
 PropClass::~PropClass()
 {
-//    delete m_groupModel;
     delete m_mapperAttr;
     delete m_attrModel;
     delete m_mapper;
@@ -70,6 +73,9 @@ void PropClass::setModel(TreeXMLModel *model)
     m_mapper->addMapping(checkBoxActiveClass,
                          model->indexDisplayedAttr(DBCLASSXML::CLASS,
                                                    DBCLASSXML::ISACTIVE));
+    m_mapper->addMapping(plainTextEditShowAttr,
+                         model->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                   DBCLASSXML::TEMPLATE));
 
     m_attrModel->setSourceModel(m_model);
     tableViewAttr->setModel(m_attrModel);
@@ -134,6 +140,20 @@ void PropClass::setCurrentClass(QModelIndex index)
     m_mapper->setRootIndex(index.parent());
     m_mapper->setCurrentModelIndex(index);
 
+    int indexType = comboBoxClassType->findText(index.sibling(index.row(),
+                                             m_model->indexDisplayedAttr(
+                                                 DBCLASSXML::CLASS,
+                                                 DBCLASSXML::TYPE)
+                                             ).data().toString());
+    comboBoxClassType->setCurrentIndex(indexType);
+
+    int indexParent = comboBoxClassParent->findText(index.sibling(index.row(),
+                                             m_model->indexDisplayedAttr(
+                                                 DBCLASSXML::CLASS,
+                                                 DBCLASSXML::PARENT)
+                                             ).data().toString());
+    comboBoxClassParent->setCurrentIndex(indexParent);
+
     this->setCurrentAttr(tableViewAttr->rootIndex().child(0,0));
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
 
@@ -150,6 +170,28 @@ void PropClass::setCurrentAttr(QModelIndex index)
 {
         m_mapperAttr->setRootIndex(index.parent());
         m_mapperAttr->setCurrentModelIndex(index);
+
+        int indexType = comboBoxTypeAttr->findText(index.sibling(index.row(),
+                                                 m_model->indexDisplayedAttr(
+                                                     DBATTRXML::ATTR,
+                                                     DBATTRXML::TYPE)
+                                                 ).data().toString());
+        comboBoxTypeAttr->setCurrentIndex(indexType);
+
+        int indexGroup = comboBoxAttrGroup->findText(index.sibling(index.row(),
+                                                 m_model->indexDisplayedAttr(
+                                                     DBATTRXML::ATTR,
+                                                     DBATTRXML::GROUP)
+                                                 ).data().toString());
+        comboBoxAttrGroup->setCurrentIndex(indexGroup);
+
+        int indexRef = comboBoxLinkAttr->findText(index.sibling(index.row(),
+                                                 m_model->indexDisplayedAttr(
+                                                     DBATTRXML::ATTR,
+                                                     DBATTRXML::REFCLASS)
+                                                 ).data().toString());
+        comboBoxLinkAttr->setCurrentIndex(indexRef);
+
         changeType(comboBoxTypeAttr->currentText());
 }
 
@@ -213,6 +255,8 @@ void PropClass::removeAttr(){
     m_model->setInsTagName(DBATTRXML::ATTR);
     QModelIndex curIndex = m_attrModel->mapToSource(tableViewAttr->currentIndex());
     m_model->removeRow(curIndex.row(),srcIndex);
+
+    this->setCurrentAttr(tableViewAttr->currentIndex());
 }
 
 void PropClass::addClass(){

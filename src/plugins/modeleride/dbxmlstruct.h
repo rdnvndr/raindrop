@@ -20,7 +20,7 @@ namespace DBATTRXML{
     const QString TYPE = "type";
     const QString GROUP = "group";
     const QString MAXSTRLEN = "maxStringLength";
-    const QString ISNULLALLOWED = "isNullAllowed";
+    const QString ISNULLALLOWED = "isNullsAllowed";
     const QString ISUNIQUE = "isUnique";
     const QString ISCANDIDATEKEY = "isCandidateKey";
     const QString INITIALVAL = "initialValue";
