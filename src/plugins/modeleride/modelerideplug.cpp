@@ -141,16 +141,6 @@ TreeXMLModel *ModelerIDEPlug::model()
     return dbStructModel;
 }
 
-void ModelerIDEPlug::editPropClass(){
-    DlgEditClass* dlgEditClass = new DlgEditClass();
-    dlgEditClass->setModel(dbStructModel);
-    dlgEditClass->setCurrentModelIndex(treeClassView->treeView->currentIndex());
-    if (dlgEditClass->exec() == QDialog::Accepted){
-
-    }
-    delete dlgEditClass;
-}
-
 void ModelerIDEPlug::createClassModel(QDomDocument document)
 {
     dbStructModel = new TreeXMLModel(document, this);
@@ -170,7 +160,6 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     propsAttr << DBATTRXML::NAME << DBATTRXML::TYPE <<
                  DBATTRXML::MAXSTRLEN << DBATTRXML::REFCLASS <<
                  DBATTRXML::PARENT << DBATTRXML::INITIALVAL <<
-                 DBATTRXML::LOWVAL << DBATTRXML::UPVAL <<
                  DBATTRXML::GROUP << DBATTRXML::ISNULLALLOWED <<
                  DBATTRXML::ISUNIQUE << DBATTRXML::ISCANDIDATEKEY <<
                  DBATTRXML::DESCRIPTION;
@@ -181,13 +170,11 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     dbStructModel->setHeaderData(3, Qt::Horizontal, tr("Ссылочный класс"));
     dbStructModel->setHeaderData(4, Qt::Horizontal, tr("Класс"));
     dbStructModel->setHeaderData(5, Qt::Horizontal, tr("Исходное значение"));
-    dbStructModel->setHeaderData(6, Qt::Horizontal, tr("Нижняя граница"));
-    dbStructModel->setHeaderData(7, Qt::Horizontal, tr("Верхняя граница"));
-    dbStructModel->setHeaderData(8, Qt::Horizontal, tr("Группа"));
-    dbStructModel->setHeaderData(9, Qt::Horizontal, tr("Нулевые значения"));
-    dbStructModel->setHeaderData(10, Qt::Horizontal, tr("Уникальный"));
-    dbStructModel->setHeaderData(11, Qt::Horizontal, tr("Кандидат в ключ"));
-    dbStructModel->setHeaderData(12, Qt::Horizontal, tr("Описание"));
+    dbStructModel->setHeaderData(6, Qt::Horizontal, tr("Группа"));
+    dbStructModel->setHeaderData(7, Qt::Horizontal, tr("Нулевые значения"));
+    dbStructModel->setHeaderData(8, Qt::Horizontal, tr("Уникальный"));
+    dbStructModel->setHeaderData(9, Qt::Horizontal, tr("Кандидат в ключ"));
+    dbStructModel->setHeaderData(10, Qt::Horizontal, tr("Описание"));
 
     dbStructModel->addDisplayedAttr(DBATTRXML::ATTR,propsAttr);
     dbStructModel->addAttributeTag(DBATTRXML::ATTR);
@@ -207,15 +194,31 @@ void ModelerIDEPlug::addClass()
     dbStructModel->setInsTagName(DBCLASSXML::CLASS);
     dbStructModel->insertRow(0,treeClassView->treeView->currentIndex());
     treeClassView->treeView->setCurrentIndex(dbStructModel->lastInsertRow());
-    editPropClass();
+    showPropClass(treeClassView->treeView->currentIndex());
+}
+
+QString ModelerIDEPlug::className(const QModelIndex& index)
+{
+    return index.sibling(index.row(),dbStructModel->indexDisplayedAttr(
+                             DBCLASSXML::CLASS,
+                             DBCLASSXML::NAME
+                             )).data().toString();
 }
 
 void ModelerIDEPlug::removeClass()
 {
     QModelIndex currentIndex = treeClassView->treeView->currentIndex();
-    if (currentIndex.isValid())
+    if (currentIndex.isValid()){
+        PluginManager* pluginManager = PluginManager::instance();
+        MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
+                                                               "MainWindowPlug::MainWindow"));
+
+        QString subWindowName = "PropClass::" + this->className(currentIndex);
+        QMdiSubWindow *subWindow = mainwindow->subWindow(subWindowName);
+       if (subWindow)
+            subWindow->close();
         dbStructModel->removeRow(currentIndex.row(),currentIndex.parent());
-    else
+    } else
         QMessageBox::warning(NULL,tr("Предупреждение"),
                              tr("Невозможно удалить узел, поскольку он не выбран."));
 }
@@ -232,25 +235,18 @@ void ModelerIDEPlug::showPropClass(QModelIndex index)
     MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
                                                            "MainWindowPlug::MainWindow"));
 
-    QString className = index.sibling(index.row(),dbStructModel->indexDisplayedAttr(
-                                          DBCLASSXML::CLASS,
-                                          DBCLASSXML::NAME
-                                          )).data().toString();
-
-    QString subWindowName = "PropClass::" + className;
+    QString subWindowName = "PropClass::" + this->className(index);
     QMdiSubWindow* subWindow = mainwindow->setActiveSubWindow(subWindowName);
 
     if (!subWindow) {
-        PropClass* propClass = new PropClass(mainwindow);
+        PropClass* propClass = new PropClass();
+        subWindow =  mainwindow->addSubWindow(propClass);
         propClass->setObjectName(subWindowName);
         propClass->setModel(dbStructModel);
-        propClass->setCurrentModelIndex(index);
-        subWindow =  mainwindow->addSubWindow(propClass);
-        if (subWindow!=NULL)
-            subWindow->setWindowTitle(tr("Управления классами"));
+        propClass->setCurrentClass(index);
     } else {
         PropClass* propClass = qobject_cast<PropClass*>(subWindow->widget());
-        propClass->setCurrentModelIndex(index);
+        propClass->setCurrentClass(index);
     }
 }
 

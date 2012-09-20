@@ -14,19 +14,21 @@ class PropClass : public QWidget, public Ui::PropClass
 public:
     explicit PropClass(QWidget *parent = 0);
     virtual ~PropClass();
+
     void setModel(TreeXMLModel *model);
-    void setCurrentModelIndex(QModelIndex index);
     TreeXMLModel* model();    
 
 
-
 public slots:
-    void addPropClass();
-    void addPropAttr();
+    void addClass();
+    void addAttr();
     void showPropAttr();
-    void removePropAttr();
-    void removePropClass();
-    void setCurrentModelIndexAttr(QModelIndex index);
+    void removeAttr();
+    void removeClass();
+    void setCurrentAttr(QModelIndex index);
+    void setCurrentClass(QModelIndex index);
+
+    void changeType(QString s);
 private:
     TreeXMLModel* m_model;
     QDataWidgetMapper* m_mapper;
@@ -34,6 +36,7 @@ private:
     TableXMLProxyModel* m_attrModel;
     QStringListModel *m_typeAttrModel;
     QStringListModel *m_typeClassModel;
+
 };
 
 #endif // PROPCLASS_H

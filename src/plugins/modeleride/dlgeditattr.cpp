@@ -61,12 +61,6 @@ void DlgEditAttr::setModel(QAbstractItemModel *model)
     m_mapper->addMapping(lineEditInitValue,
                          treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
                                                        DBATTRXML::INITIALVAL));
-    m_mapper->addMapping(spinBoxDownValue,
-                         treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                       DBATTRXML::LOWVAL));
-    m_mapper->addMapping(spinBoxUpValue,
-                         treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                       DBATTRXML::UPVAL));
     m_mapper->addMapping(spinBoxLength,
                          treeModel->indexDisplayedAttr(DBATTRXML::ATTR,
                                                        DBATTRXML::PARENT));
