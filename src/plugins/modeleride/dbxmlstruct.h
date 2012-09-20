@@ -18,14 +18,12 @@ namespace DBATTRXML{
     const QString NAME = "name";
     const QString DESCRIPTION = "description";
     const QString TYPE = "type";
-    const QString GROUP = "type";
+    const QString GROUP = "group";
     const QString MAXSTRLEN = "maxStringLength";
     const QString ISNULLALLOWED = "isNullAllowed";
     const QString ISUNIQUE = "isUnique";
     const QString ISCANDIDATEKEY = "isCandidateKey";
     const QString INITIALVAL = "initialValue";
-    const QString LOWVAL = "lowerBoundValue";
-    const QString UPVAL = "upperBoundValue";
     const QString REFCLASS = "referencedClass";
     const QString PARENT = "parent";
 }

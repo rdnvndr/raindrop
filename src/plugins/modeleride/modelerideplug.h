@@ -19,10 +19,7 @@ public:
     bool initialize();
     bool release();
     TreeXMLModel* model();
-
-    void editPropClass();
     void createClassModel(QDomDocument document);
-
 private:
     QString fileName;
     TreeXMLModel* dbStructModel;
@@ -36,6 +33,8 @@ private:
     QAction* actionAddClass;
     QAction* actionRemoveClass;
     QMenu*   contextMenu;
+
+    QString className(const QModelIndex &index);
 
 public slots:
     void showPropClass(QModelIndex index);
