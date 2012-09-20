@@ -5,6 +5,7 @@
           isActive="true"
           description="Корневой класс"
           displayTemplate=""
+          parent=""
 >
     <RTPAttribute name="Name"
                   description="Наименование"
@@ -15,8 +16,6 @@
                   isUnique="true"
                   isCandidateKey="false"
                   initialValue=""
-                  lowerBoundValue=""
-                  upperBoundValue=""
                   referencedClass=""
      />
 </RTPClass>
