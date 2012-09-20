@@ -15,6 +15,10 @@ public:
     //! Конструктор главного окна
     MainWindow(QMainWindow* pwgt = 0);
 
+    //! Получение подокна
+    /*! Предназначено для получения подокна
+    */
+    virtual QMdiSubWindow *subWindow(QString objName);
 public slots:
 
     //! Слот обработки события закрытия главного окна
