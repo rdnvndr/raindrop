@@ -56,6 +56,10 @@ public:
     */
     void setActiveSubWindow(QMdiSubWindow * window);
 
+    //! Получение подокна
+    /*! Предназначено для получения подокна
+    */
+    QMdiSubWindow *subWindow(QString widgetName);
 signals:
 
 public slots:
