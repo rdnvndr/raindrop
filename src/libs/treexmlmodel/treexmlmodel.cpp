@@ -224,16 +224,18 @@ int TreeXMLModel::rowCount(const QModelIndex &parent) const
 bool TreeXMLModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(row);
-qDebug() << "Insert ROW";
+
     TagXMLItem *parentItem = getItem(parent);
     bool success = true;
 
     int position = parentItem->count();
 
-    beginInsertRows(parent,position,position+count-1);
+    //beginInsertRows(parent,position,position+count-1);
     for (int i=0;i<count;i++)
         success = parentItem->insertChild(m_insTag) && success;
-    endInsertRows();
+    //endInsertRows();
+
+    updateInsertsRow(position,count,parent);
 
     // Добавление корнего узла
     if (parent.isValid())
@@ -242,6 +244,24 @@ qDebug() << "Insert ROW";
         m_lastInsRow = index(0,0,parent);
 
     return success;
+}
+
+void TreeXMLModel::updateInsertsRow(int row,int count, const QModelIndex &parent){
+
+    // Если атрибут то обновляем по дереву наследования
+    foreach (QString tagName,m_attrTags)
+        if (tagName == m_insTag){
+            int rowCount = this->rowCount(parent);
+            for (int i=0;i<rowCount;i++){
+                QModelIndex index = parent.child(i,0);
+                if (!isAttribute(index))
+                    updateInsertsRow(this->rowCount(index)-count,count,index);
+            }
+            break;
+        }
+
+    beginInsertRows(parent,row,row+count-1);
+    endInsertRows();
 }
 
 bool TreeXMLModel::removeRows(int row, int count, const QModelIndex &parent)

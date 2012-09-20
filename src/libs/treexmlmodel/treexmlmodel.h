@@ -147,6 +147,8 @@ public:
     //! Возращает поддерживаемые моделью операции Drag
     Qt::DropActions supportedDragActions() const;
 
+    //! Обновление вставленных строк
+    void updateInsertsRow(int row, int count, const QModelIndex &parent);
 private:
 
     //! Корневой узел
