@@ -100,7 +100,6 @@ QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
             return m_displayedIcon[node.nodeName()];
 
     if (role == Qt::UserRole){
-        qDebug() << node.nodeName();
         return node.nodeName();
     }
 
@@ -266,7 +265,6 @@ void TreeXMLModel::updateInsertsRow(int row,int count, const QModelIndex &parent
 
 bool TreeXMLModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    qDebug() << "Delete ROW";
     TagXMLItem *parentItem = getItem(parent);
 
     if  (!parentItem->checkRemoveChild(row))
@@ -288,8 +286,6 @@ QModelIndex TreeXMLModel::lastInsertRow()
 bool TreeXMLModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
                                 int row, int column, const QModelIndex &parent)
 {
-    qDebug() << "dropMimeData" << row;
-
     //return false;
     if (action == Qt::IgnoreAction)
         return true;
@@ -312,7 +308,6 @@ bool TreeXMLModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     while (!stream.atEnd()) {
         QString nameAttr;
         stream >> nameAttr;
-        qDebug() << nameAttr;
         if (nameAttr==QString("|")){
             stream >> tag;
             setInsTagName(tag);
@@ -345,20 +340,17 @@ TagXMLItem *TreeXMLModel::getItem(const QModelIndex &index) const
 
 Qt::DropActions TreeXMLModel::supportedDropActions() const
 {
-    //qDebug() << "supportedDropActions";
     return Qt::CopyAction | Qt::MoveAction;
 }
 
 Qt::DropActions TreeXMLModel::supportedDragActions() const
 {
-    //qDebug() << "supportedDragActions";
     return Qt::CopyAction | Qt::MoveAction;
 }
 
 
 QStringList TreeXMLModel::mimeTypes() const
 {
-    //qDebug() << "mimeTypes";
     QStringList types;
     types << "application/classxmlmodel";
     return types;
@@ -367,7 +359,6 @@ QStringList TreeXMLModel::mimeTypes() const
 
 QMimeData *TreeXMLModel::mimeData(const QModelIndexList &indexes) const
 {
-    //qDebug() << "mimeData";
     QByteArray encodedData;
     QDataStream stream(&encodedData, QIODevice::WriteOnly);
 
