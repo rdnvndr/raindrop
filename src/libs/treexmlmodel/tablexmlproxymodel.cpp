@@ -4,6 +4,7 @@
 
 TableXMLProxyModel::TableXMLProxyModel()
 {
+    setDynamicSortFilter(true);
 }
 
 bool TableXMLProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) const
