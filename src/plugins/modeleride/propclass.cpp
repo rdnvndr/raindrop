@@ -10,8 +10,10 @@ PropClass::PropClass(QWidget *parent) :
 
     m_mapper = new QDataWidgetMapper();
     m_mapper->setItemDelegate(new XmlDelegate(this));
+    m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
     m_mapperAttr = new QDataWidgetMapper();
     m_mapperAttr->setItemDelegate(new XmlDelegate(this));
+    m_mapperAttr->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
     m_attrModel = new TableXMLProxyModel();
 
@@ -32,6 +34,12 @@ PropClass::PropClass(QWidget *parent) :
 
     //connect(checkBoxIsLength,SIGNAL(toggled(bool)),this,SLOT(setCheckArray(bool)));
     connect(comboBoxTypeAttr,SIGNAL(currentIndexChanged(QString)),this,SLOT(changeType(QString)));
+    connect(pushButtonAttrSave,SIGNAL(clicked()),this,SLOT(submitAttr()));
+    connect(pushButtonPropSave,SIGNAL(clicked()),this,SLOT(submitClass()));
+    connect(pushButtonAttrCancel,SIGNAL(clicked()),this,SLOT(revertAttr()));
+    connect(pushButtonPropCancel,SIGNAL(clicked()),this,SLOT(revertClass()));
+    connect(toolButtonEditAttr,SIGNAL(clicked()),this,SLOT(editAttr()));
+    connect(toolButtonEditClass,SIGNAL(clicked()),this,SLOT(editClass()));
 }
 
 PropClass::~PropClass()
@@ -119,6 +127,11 @@ void PropClass::setModel(TreeXMLModel *model)
 
 void PropClass::setCurrentClass(QModelIndex index)
 {
+
+    if (m_mapper->rootIndex() == index.parent() &&
+            index.row() == m_mapper->currentIndex())
+        return;
+
     m_attrModel->setFilterIndex(index);
     m_attrModel->setFilterRole(Qt::UserRole);
     m_attrModel->setFilterRegExp(DBATTRXML::ATTR);
@@ -139,6 +152,7 @@ void PropClass::setCurrentClass(QModelIndex index)
 
     m_mapper->setRootIndex(index.parent());
     m_mapper->setCurrentModelIndex(index);
+    editClass(false);
 
     int indexType = comboBoxClassType->findText(index.sibling(index.row(),
                                              m_model->indexDisplayedAttr(
@@ -166,10 +180,91 @@ void PropClass::setCurrentClass(QModelIndex index)
     subWindow->setWindowTitle(tr("Класс: ")+className);
 }
 
+void PropClass::submitAttr()
+{
+    editAttr(false);
+    m_mapperAttr->submit();
+}
+
+void PropClass::editAttr(bool flag)
+{
+    if (groupBoxPropAttr->isEnabled()==flag)
+        return;
+
+    if (lineEditAttrName->text().isEmpty() && flag==false)
+        m_attrModel->removeRow(m_mapperAttr->currentIndex(),
+                               m_mapperAttr->rootIndex());
+
+    groupBoxPropAttr->setEnabled(flag);
+    groupBoxPropType->setEnabled(flag);
+    pushButtonAttrSave->setEnabled(flag);
+    pushButtonAttrCancel->setEnabled(flag);
+    toolButtonEditAttr->setDisabled(flag);
+}
+
+void PropClass::editClass(bool flag)
+{
+    if (groupBoxClass->isEnabled()==flag)
+        return;
+
+    if (lineEditClassName->text().isEmpty()){
+        toolButtonAddClass->setDisabled(true);
+        flag = true;
+    }else
+        toolButtonAddClass->setEnabled(true);
+
+    groupBoxClass->setEnabled(flag);
+    pushButtonPropSave->setEnabled(flag);
+    pushButtonPropCancel->setEnabled(flag);
+    toolButtonEditClass->setDisabled(flag);
+}
+
+void PropClass::removeEmptyClass(){
+    if (lineEditClassName->text().isEmpty()){
+        QModelIndex parentIndex = m_mapper->rootIndex();
+        if (parentIndex.isValid()){
+            m_model->removeRow(m_mapper->currentIndex(),
+                               m_mapper->rootIndex());
+
+            setCurrentClass(parentIndex);
+        }else {
+            removeClass();
+            return;
+        }
+    }
+}
+
+void PropClass::submitClass()
+{
+    m_mapper->submit();
+    removeEmptyClass();
+    editClass(false);
+}
+
+void PropClass::revertAttr()
+{
+    m_mapperAttr->revert();
+    editAttr(false);
+}
+
+void PropClass::revertClass()
+{
+    m_mapper->revert();
+    removeEmptyClass();
+    editClass(false);
+}
+
 void PropClass::setCurrentAttr(QModelIndex index)
 {
+        if (m_mapperAttr->rootIndex() == index.parent() &&
+                index.row() == m_mapperAttr->currentIndex())
+            return;
+
+        editAttr(false);
         m_mapperAttr->setRootIndex(index.parent());
         m_mapperAttr->setCurrentModelIndex(index);
+        tableViewAttr->setCurrentIndex(index);
+
 
         int indexType = comboBoxTypeAttr->findText(index.sibling(index.row(),
                                                  m_model->indexDisplayedAttr(
@@ -205,7 +300,7 @@ void PropClass::addAttr(){
     m_model->setInsTagName(DBATTRXML::ATTR);
     if (m_model->insertRow(0,srcIndex)){
         QModelIndex srcCurrentIndex = m_model->lastInsertRow();
-
+        this->setCurrentAttr(m_attrModel->mapFromSource(srcCurrentIndex));
         m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(),
                              m_model->indexDisplayedAttr(DBATTRXML::ATTR,
                                                            DBATTRXML::NAME)),
@@ -246,7 +341,8 @@ void PropClass::addAttr(){
                              m_model->indexDisplayedAttr(DBATTRXML::ATTR,
                                                            DBATTRXML::GROUP)),
                                                  "");
-        this->setCurrentAttr(m_attrModel->mapFromSource(srcCurrentIndex));
+
+        editAttr(true);
     }
 }
 
@@ -264,6 +360,7 @@ void PropClass::addClass(){
     m_model->setInsTagName(DBCLASSXML::CLASS);
     m_model->insertRow(0,srcIndex);
     setCurrentClass(m_model->lastInsertRow());
+    editClass(true);
     tabWidgetProp->setCurrentIndex(0);
 }
 
