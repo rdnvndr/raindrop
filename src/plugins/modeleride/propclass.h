@@ -18,6 +18,7 @@ public:
     void setModel(TreeXMLModel *model);
     TreeXMLModel* model();    
 
+    void setTabName(QModelIndex &index);
 public slots:
     void addClass();
     void addAttr();

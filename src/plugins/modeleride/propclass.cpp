@@ -24,6 +24,7 @@ PropClass::PropClass(QWidget *parent) :
     m_typeClassModel->setStringList(DBXMLCLASSTYPE);
 
     tableViewAttr->setItemDelegate(new XmlDelegate(this));
+    tableViewAttr->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     connect(tableViewAttr,SIGNAL(clicked(QModelIndex)),
             this,SLOT(setCurrentAttr(QModelIndex)));
@@ -44,8 +45,18 @@ PropClass::PropClass(QWidget *parent) :
 
 PropClass::~PropClass()
 {
+    if (lineEditAttrName->text().isEmpty())
+        m_attrModel->removeRow(m_mapperAttr->currentIndex(),
+                               m_mapperAttr->rootIndex());
     delete m_mapperAttr;
     delete m_attrModel;
+    if (lineEditClassName->text().isEmpty()){
+        QModelIndex parentIndex = m_mapper->rootIndex();
+        if (parentIndex.isValid()){
+            m_model->removeRow(m_mapper->currentIndex(),
+                               m_mapper->rootIndex());
+        }
+    }
     delete m_mapper;
     delete m_typeAttrModel;
     delete m_typeClassModel;
@@ -169,6 +180,10 @@ void PropClass::setCurrentClass(QModelIndex index)
     comboBoxClassParent->setCurrentIndex(indexParent);
 
     this->setCurrentAttr(tableViewAttr->rootIndex().child(0,0));
+    setTabName(index);
+}
+
+void PropClass::setTabName(QModelIndex &index){
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
 
     QString className = index.sibling(index.row(),
@@ -176,6 +191,7 @@ void PropClass::setCurrentClass(QModelIndex index)
                                           DBATTRXML::ATTR,
                                           DBATTRXML::NAME)
                                       ).data().toString();
+
     this->setObjectName("PropClass::" + className);
     subWindow->setWindowTitle(tr("Класс: ")+className);
 }
@@ -238,6 +254,7 @@ void PropClass::submitClass()
 {
     m_mapper->submit();
     removeEmptyClass();
+    setTabName(m_mapper->rootIndex().child(m_mapper->currentIndex(),0));
     editClass(false);
 }
 
@@ -256,7 +273,10 @@ void PropClass::revertClass()
 
 void PropClass::setCurrentAttr(QModelIndex index)
 {
-        if (m_mapperAttr->rootIndex() == index.parent() &&
+    if (!index.isValid())
+        return;
+
+    if (m_mapperAttr->rootIndex() == index.parent() &&
                 index.row() == m_mapperAttr->currentIndex())
             return;
 

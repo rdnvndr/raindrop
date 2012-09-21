@@ -192,9 +192,11 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 void ModelerIDEPlug::addClass()
 {
     dbStructModel->setInsTagName(DBCLASSXML::CLASS);
-    dbStructModel->insertRow(0,treeClassView->treeView->currentIndex());
-    treeClassView->treeView->setCurrentIndex(dbStructModel->lastInsertRow());
-    showPropClass(treeClassView->treeView->currentIndex());
+    //if (treeClassView->treeView->currentIndex().data(Qt::UserRole)!=DBATTRXML::ATTR)
+        if (dbStructModel->insertRow(0,treeClassView->treeView->currentIndex())){
+            treeClassView->treeView->setCurrentIndex(dbStructModel->lastInsertRow());
+            showPropClass(treeClassView->treeView->currentIndex());
+        }
 }
 
 QString ModelerIDEPlug::className(const QModelIndex& index)
