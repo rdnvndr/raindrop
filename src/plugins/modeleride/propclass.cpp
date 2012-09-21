@@ -16,6 +16,9 @@ PropClass::PropClass(QWidget *parent) :
     m_mapperAttr->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
     m_attrModel = new TableXMLProxyModel();
+    QStringList tags;
+    tags << DBATTRXML::ATTR;
+    m_attrModel->setAttributeTags(tags);
 
     m_typeAttrModel = new QStringListModel();
     m_typeAttrModel->setStringList(DBXMLATTRTYPE);
@@ -41,6 +44,7 @@ PropClass::PropClass(QWidget *parent) :
     connect(pushButtonPropCancel,SIGNAL(clicked()),this,SLOT(revertClass()));
     connect(toolButtonEditAttr,SIGNAL(clicked()),this,SLOT(editAttr()));
     connect(toolButtonEditClass,SIGNAL(clicked()),this,SLOT(editClass()));
+    connect(checkBoxInInherited,SIGNAL(clicked(bool)),this,SLOT(setShowParentAttr(bool)));
 }
 
 PropClass::~PropClass()
@@ -138,15 +142,10 @@ void PropClass::setModel(TreeXMLModel *model)
 
 void PropClass::setCurrentClass(QModelIndex index)
 {
-
     if (m_mapper->rootIndex() == index.parent() &&
             index.row() == m_mapper->currentIndex())
         return;
-
     m_attrModel->setFilterIndex(index);
-    m_attrModel->setFilterRole(Qt::UserRole);
-    m_attrModel->setFilterRegExp(DBATTRXML::ATTR);
-
     for (int row=0;row<comboBoxAttrGroup->count();row++)
         comboBoxAttrGroup->removeItem(row);
 
@@ -271,6 +270,30 @@ void PropClass::revertClass()
     editClass(false);
 }
 
+void PropClass::setShowParentAttr(bool flag)
+{
+    m_attrModel->setFilterRole(Qt::EditRole);
+
+    if (flag==true){
+        m_attrModel->setFilterRegExp("");
+    } else {
+        QModelIndex index = m_mapperAttr->rootIndex();
+        QString className = index.sibling(index.row(),
+                                          m_model->indexDisplayedAttr(
+                                              DBCLASSXML::CLASS,
+                                              DBCLASSXML::NAME
+                                              )
+                                          ).data().toString();
+        if (className.isEmpty()){
+            m_attrModel->setFilterRegExp("[^A=Za-z]*");
+            qDebug("EMPTY");
+        }else
+            m_attrModel->setFilterRegExp(className);
+    }
+    m_attrModel->setFilterKeyColumn(m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                                 DBATTRXML::PARENT));
+}
+
 void PropClass::setCurrentAttr(QModelIndex index)
 {
     if (!index.isValid())
@@ -379,7 +402,20 @@ void PropClass::addClass(){
     QModelIndex srcIndex = m_attrModel->mapToSource(tableViewAttr->rootIndex());
     m_model->setInsTagName(DBCLASSXML::CLASS);
     m_model->insertRow(0,srcIndex);
-    setCurrentClass(m_model->lastInsertRow());
+    QModelIndex srcCurrentIndex = m_model->lastInsertRow();
+    setCurrentClass(srcCurrentIndex);
+
+    /*QString parentClass = srcIndex.sibling(srcIndex.row(),
+                                           m_model->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                                         DBCLASSXML::NAME)
+                                           ).data().toString();
+
+    m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(),
+                         m_model->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                       DBCLASSXML::PARENT)),
+                     parentClass);
+
+    */
     editClass(true);
     tabWidgetProp->setCurrentIndex(0);
 }
