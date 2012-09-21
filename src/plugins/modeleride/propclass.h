@@ -18,15 +18,21 @@ public:
     void setModel(TreeXMLModel *model);
     TreeXMLModel* model();    
 
-
 public slots:
     void addClass();
     void addAttr();
     void showPropAttr();
     void removeAttr();
     void removeClass();
+    void removeEmptyClass();
     void setCurrentAttr(QModelIndex index);
     void setCurrentClass(QModelIndex index);
+    void submitAttr();
+    void editAttr(bool flag = true);
+    void editClass(bool flag = true);
+    void submitClass();
+    void revertAttr();
+    void revertClass();
 
     void changeType(QString s);
 private:
@@ -36,7 +42,6 @@ private:
     TableXMLProxyModel* m_attrModel;
     QStringListModel *m_typeAttrModel;
     QStringListModel *m_typeClassModel;
-
 };
 
 #endif // PROPCLASS_H
