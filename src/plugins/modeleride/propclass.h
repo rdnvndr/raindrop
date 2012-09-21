@@ -34,7 +34,7 @@ public slots:
     void submitClass();
     void revertAttr();
     void revertClass();
-
+    void setShowParentAttr(bool flag);
     void changeType(QString s);
 private:
     TreeXMLModel* m_model;
