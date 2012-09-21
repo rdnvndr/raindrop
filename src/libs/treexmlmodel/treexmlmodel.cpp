@@ -225,6 +225,8 @@ bool TreeXMLModel::insertRows(int row, int count, const QModelIndex &parent)
     Q_UNUSED(row);
 
     TagXMLItem *parentItem = getItem(parent);
+    if (isAttribute(parent))
+        return false;
     bool success = true;
 
     int position = parentItem->count();
@@ -301,7 +303,8 @@ bool TreeXMLModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     QString tag;
     stream >> tag;
     setInsTagName(tag);
-    insertRow(row,parent);
+    if (!insertRow(row,parent))
+        return false;
 
     QModelIndex attrParent = lastInsertRow();
     QDomElement node = getItem(lastInsertRow())->node().toElement();
