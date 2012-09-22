@@ -1,5 +1,4 @@
 #include "propclass.h"
-#include "dlgeditattr.h"
 #include "dbxmlstruct.h"
 #include <treexmlmodel/xmldelegate.h>
 
@@ -28,6 +27,7 @@ PropClass::PropClass(QWidget *parent) :
 
     tableViewAttr->setItemDelegate(new XmlDelegate(this));
     tableViewAttr->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    lineEditClassParent->setReadOnly(true);
 
     connect(tableViewAttr,SIGNAL(clicked(QModelIndex)),
             this,SLOT(setCurrentAttr(QModelIndex)));
@@ -71,7 +71,6 @@ void PropClass::setModel(TreeXMLModel *model)
     m_model = model;
 
     m_mapper->setModel(m_model);
-    comboBoxClassParent->setModel(model);
 
     comboBoxClassType->setModel(m_typeClassModel);
 
@@ -86,7 +85,7 @@ void PropClass::setModel(TreeXMLModel *model)
                          model->indexDisplayedAttr(DBCLASSXML::CLASS,
                                                    DBCLASSXML::TYPE));
 
-    m_mapper->addMapping(comboBoxClassParent,
+    m_mapper->addMapping(lineEditClassParent,
                          model->indexDisplayedAttr(DBCLASSXML::CLASS,
                                                    DBCLASSXML::PARENT));
 
@@ -145,6 +144,7 @@ void PropClass::setCurrentClass(QModelIndex index)
     if (m_mapper->rootIndex() == index.parent() &&
             index.row() == m_mapper->currentIndex())
         return;
+
     m_attrModel->setFilterIndex(index);
     for (int row=0;row<comboBoxAttrGroup->count();row++)
         comboBoxAttrGroup->removeItem(row);
@@ -157,42 +157,34 @@ void PropClass::setCurrentClass(QModelIndex index)
             comboBoxAttrGroup->addItem(insText);
     }
 
-    tableViewAttr->setRootIndex(m_attrModel->mapFromSource(index));
-    tableViewAttr->setCurrentIndex(tableViewAttr->rootIndex().child(0,0));
-
     m_mapper->setRootIndex(index.parent());
     m_mapper->setCurrentModelIndex(index);
     editClass(false);
-
-    int indexType = comboBoxClassType->findText(index.sibling(index.row(),
-                                             m_model->indexDisplayedAttr(
-                                                 DBCLASSXML::CLASS,
-                                                 DBCLASSXML::TYPE)
-                                             ).data().toString());
+    m_attrModel->setSourceModel(m_model);
+    tableViewAttr->setRootIndex(m_attrModel->mapFromSource(index));
+    tableViewAttr->setCurrentIndex(tableViewAttr->rootIndex().child(0,0));
+    int indexType = comboBoxClassType->findText(modelData(DBCLASSXML::CLASS,
+                                                          DBCLASSXML::TYPE,
+                                                          index).toString());
     comboBoxClassType->setCurrentIndex(indexType);
-
-    int indexParent = comboBoxClassParent->findText(index.sibling(index.row(),
-                                             m_model->indexDisplayedAttr(
-                                                 DBCLASSXML::CLASS,
-                                                 DBCLASSXML::PARENT)
-                                             ).data().toString());
-    comboBoxClassParent->setCurrentIndex(indexParent);
 
     this->setCurrentAttr(tableViewAttr->rootIndex().child(0,0));
     setTabName(index);
 }
 
-void PropClass::setTabName(QModelIndex &index){
+void PropClass::setTabName(const QModelIndex &index){
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
 
-    QString className = index.sibling(index.row(),
-                                      m_model->indexDisplayedAttr(
-                                          DBATTRXML::ATTR,
-                                          DBATTRXML::NAME)
-                                      ).data().toString();
+    QString className = modelData(DBATTRXML::ATTR, DBATTRXML::NAME,index).toString();
 
     this->setObjectName("PropClass::" + className);
     subWindow->setWindowTitle(tr("Класс: ")+className);
+}
+
+QVariant PropClass::modelData(QString typeName, QString attr, const QModelIndex& index)
+{
+    return index.sibling(index.row(), m_model->indexDisplayedAttr(
+                      typeName,attr)).data();
 }
 
 void PropClass::submitAttr()
@@ -278,20 +270,16 @@ void PropClass::setShowParentAttr(bool flag)
         m_attrModel->setFilterRegExp("");
     } else {
         QModelIndex index = m_mapperAttr->rootIndex();
-        QString className = index.sibling(index.row(),
-                                          m_model->indexDisplayedAttr(
-                                              DBCLASSXML::CLASS,
-                                              DBCLASSXML::NAME
-                                              )
-                                          ).data().toString();
+        QString className = modelData(DBCLASSXML::CLASS,
+                                      DBCLASSXML::NAME,
+                                      index).toString();
         if (className.isEmpty()){
-            m_attrModel->setFilterRegExp("[^A=Za-z]*");
-            qDebug("EMPTY");
+            m_attrModel->setFilterRegExp("\\S*");
         }else
             m_attrModel->setFilterRegExp(className);
     }
     m_attrModel->setFilterKeyColumn(m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                                 DBATTRXML::PARENT));
+                                                                DBATTRXML::PARENT));
 }
 
 void PropClass::setCurrentAttr(QModelIndex index)
@@ -308,28 +296,23 @@ void PropClass::setCurrentAttr(QModelIndex index)
         m_mapperAttr->setCurrentModelIndex(index);
         tableViewAttr->setCurrentIndex(index);
 
-
-        int indexType = comboBoxTypeAttr->findText(index.sibling(index.row(),
-                                                 m_model->indexDisplayedAttr(
-                                                     DBATTRXML::ATTR,
-                                                     DBATTRXML::TYPE)
-                                                 ).data().toString());
+        int indexType = comboBoxTypeAttr->findText(modelData(
+                                                       DBATTRXML::ATTR,
+                                                       DBATTRXML::TYPE,
+                                                       index).toString());
         comboBoxTypeAttr->setCurrentIndex(indexType);
 
-        int indexGroup = comboBoxAttrGroup->findText(index.sibling(index.row(),
-                                                 m_model->indexDisplayedAttr(
-                                                     DBATTRXML::ATTR,
-                                                     DBATTRXML::GROUP)
-                                                 ).data().toString());
+        int indexGroup = comboBoxAttrGroup->findText(modelData(
+                                                         DBATTRXML::ATTR,
+                                                         DBATTRXML::GROUP,
+                                                         index).toString());
         comboBoxAttrGroup->setCurrentIndex(indexGroup);
 
-        int indexRef = comboBoxLinkAttr->findText(index.sibling(index.row(),
-                                                 m_model->indexDisplayedAttr(
-                                                     DBATTRXML::ATTR,
-                                                     DBATTRXML::REFCLASS)
-                                                 ).data().toString());
+        int indexRef = comboBoxLinkAttr->findText(modelData(
+                                                      DBATTRXML::ATTR,
+                                                      DBATTRXML::REFCLASS,
+                                                      index).toString());
         comboBoxLinkAttr->setCurrentIndex(indexRef);
-
         changeType(comboBoxTypeAttr->currentText());
 }
 
@@ -344,101 +327,43 @@ void PropClass::addAttr(){
     if (m_model->insertRow(0,srcIndex)){
         QModelIndex srcCurrentIndex = m_model->lastInsertRow();
         this->setCurrentAttr(m_attrModel->mapFromSource(srcCurrentIndex));
-        m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(),
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                           DBATTRXML::NAME)),
-                                                 "");
-        m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(),
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                           DBATTRXML::TYPE)),
-                                                 DBXMLATTRTYPE.at(5));
-        m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(),
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                           DBATTRXML::MAXSTRLEN)),
-                                                 0);
-        m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(),
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                           DBATTRXML::REFCLASS)),
-                                                 "");
-        m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(),
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                           DBATTRXML::INITIALVAL)),
-                                                 "");
-        m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(),
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                           DBATTRXML::ISNULLALLOWED)),
-                                                 true);
-        m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(),
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                           DBATTRXML::ISUNIQUE)),
-                                                 false);
-        m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(),
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                           DBATTRXML::ISCANDIDATEKEY)),
-                                                 false);
-        m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(),
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                           DBATTRXML::DESCRIPTION)),
-                                                 "");
-        m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(),
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                           DBATTRXML::GROUP)),
-                                                 "");
-
+        comboBoxTypeAttr->setCurrentIndex(5);
         editAttr(true);
     }
 }
 
 void PropClass::removeAttr(){
     QModelIndex srcIndex = m_attrModel->mapToSource(tableViewAttr->rootIndex());
-    m_model->setInsTagName(DBATTRXML::ATTR);
     QModelIndex curIndex = m_attrModel->mapToSource(tableViewAttr->currentIndex());
-    m_model->removeRow(curIndex.row(),srcIndex);
-
-    this->setCurrentAttr(tableViewAttr->currentIndex());
+    if (srcIndex.isValid() && curIndex.isValid()){
+        m_model->setInsTagName(DBATTRXML::ATTR);
+        m_model->removeRow(curIndex.row(),srcIndex);
+        this->setCurrentAttr(tableViewAttr->currentIndex());
+    } else
+        QMessageBox::warning(NULL,tr("Предупреждение"),
+                             tr("Невозможно удалить атрибут, поскольку нет выбраных атрибутов."));
 }
 
 void PropClass::addClass(){
+    editAttr(false);
     QModelIndex srcIndex = m_attrModel->mapToSource(tableViewAttr->rootIndex());
     m_model->setInsTagName(DBCLASSXML::CLASS);
     m_model->insertRow(0,srcIndex);
     QModelIndex srcCurrentIndex = m_model->lastInsertRow();
     setCurrentClass(srcCurrentIndex);
 
-    /*QString parentClass = srcIndex.sibling(srcIndex.row(),
-                                           m_model->indexDisplayedAttr(DBCLASSXML::CLASS,
-                                                                         DBCLASSXML::NAME)
-                                           ).data().toString();
-
-    m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(),
-                         m_model->indexDisplayedAttr(DBCLASSXML::CLASS,
-                                                       DBCLASSXML::PARENT)),
-                     parentClass);
-
-    */
     editClass(true);
     tabWidgetProp->setCurrentIndex(0);
 }
 
 void PropClass::removeClass(){
     QModelIndex srcIndex = m_attrModel->mapToSource(tableViewAttr->rootIndex());
-    m_model->setInsTagName(DBCLASSXML::CLASS);
-
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
     subWindow->close();
-
-    m_model->removeRow(srcIndex.row(),srcIndex.parent());
-}
-
-void PropClass::showPropAttr()
-{
-    DlgEditAttr* dlgEditAttr = new DlgEditAttr();
-    dlgEditAttr->setModel(m_attrModel);
-    dlgEditAttr->setCurrentModelIndex(tableViewAttr->currentIndex());
-    if (dlgEditAttr->exec() == QDialog::Accepted){
-
-    }
-    delete dlgEditAttr;
+    m_mapper->revert();
+    m_mapperAttr->revert();
+    if (!modelData(DBCLASSXML::CLASS,DBCLASSXML::NAME,srcIndex).toString().isEmpty())
+            m_model->removeRow(srcIndex.row(),srcIndex.parent());
 }
 
 void PropClass::changeType(QString s)

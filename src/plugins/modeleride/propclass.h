@@ -17,12 +17,11 @@ public:
 
     void setModel(TreeXMLModel *model);
     TreeXMLModel* model();    
+    void setTabName(const QModelIndex &index);
 
-    void setTabName(QModelIndex &index);
 public slots:
     void addClass();
     void addAttr();
-    void showPropAttr();
     void removeAttr();
     void removeClass();
     void removeEmptyClass();
@@ -37,6 +36,7 @@ public slots:
     void setShowParentAttr(bool flag);
     void changeType(QString s);
 private:
+    QVariant modelData(QString typeName, QString attr, const QModelIndex &index);
     TreeXMLModel* m_model;
     QDataWidgetMapper* m_mapper;
     QDataWidgetMapper* m_mapperAttr;

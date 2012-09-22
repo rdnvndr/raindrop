@@ -50,5 +50,10 @@ void TreeComboBox::setModel(QAbstractItemModel *model)
 {
     QComboBox::setModel(model);
     for (int i=1;i<treeView->header()->count();i++)
-       treeView->hideColumn(i);
+        treeView->hideColumn(i);
+}
+
+void TreeComboBox::setCurrentModelIndex(const QModelIndex &index)
+{
+    treeView->setCurrentIndex(index);
 }
