@@ -15,7 +15,7 @@ public:
     void setFilterIndex(const QModelIndex &parent);
     QModelIndex filterIndex();
 
-    QStringList attributeTags(QStringList list);
+    QStringList attributeTags();
     void setAttributeTags(QStringList list);
 private:
     QModelIndex m_index;

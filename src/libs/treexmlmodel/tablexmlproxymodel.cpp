@@ -9,14 +9,22 @@ TableXMLProxyModel::TableXMLProxyModel(): QSortFilterProxyModel()
 
 bool TableXMLProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) const
 {
+    QModelIndex source_index = sourceModel()->index(row,filterKeyColumn(),parent);
+    if (!source_index.isValid()) // the column may not exist
+        return true;
 
-    if (parent == m_index && parent.isValid()){
-        /*QString tag = sourceModel()->data(
-                    sourceModel()->index(row,0,parent),
-                    Qt::UserRole).toString();
-        foreach (QString tagName,m_tags)
-            if (tag==tagName)*/
+    if (parent.sibling(parent.row(),0) == m_index && parent.isValid()){
+        QString tag = sourceModel()->data(source_index, Qt::UserRole).toString();
+        foreach (const QString& tagName,this->m_tags)
+            if (tag.contains(tagName)){
+                if (filterRegExp() == QRegExp("\\S*")){
+                    if (sourceModel()->data(source_index).toString().isEmpty())
+                        return true;
+                    else
+                        return false;
+                }
                 return QSortFilterProxyModel::filterAcceptsRow(row,parent);
+            }
         return false;
     }
 
@@ -25,7 +33,7 @@ bool TableXMLProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) co
 
 void TableXMLProxyModel::setFilterIndex(const QModelIndex &parent)
 {
-    m_index = parent;
+    m_index = parent.sibling(parent.row(),0);
 }
 
 QModelIndex TableXMLProxyModel::filterIndex()
@@ -38,7 +46,7 @@ void TableXMLProxyModel::setAttributeTags(QStringList list)
     m_tags = list;
 }
 
-QStringList TableXMLProxyModel::attributeTags(QStringList list)
+QStringList TableXMLProxyModel::attributeTags()
 {
     return m_tags;
 }

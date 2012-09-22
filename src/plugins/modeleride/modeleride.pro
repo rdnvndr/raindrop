@@ -12,21 +12,12 @@ include(../plugins.pri)
 HEADERS += modelerideplug.h \
     propclass.h \
     dbxmlstruct.h \
-    classtreeview.h \
-    dlgeditattr.h \
-    dlgeditclass.h \
-    formeditattr.h
+    classtreeview.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
-    classtreeview.cpp \
-    dlgeditattr.cpp \
-    dlgeditclass.cpp \
-    formeditattr.cpp
+    classtreeview.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
     propclass.ui \
-    classtreeview.ui \
-    dlgeditattr.ui \
-    dlgeditclass.ui \
-    formeditattr.ui
+    classtreeview.ui

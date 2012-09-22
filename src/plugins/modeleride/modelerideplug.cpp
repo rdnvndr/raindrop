@@ -10,7 +10,6 @@
 #include "modelerideplug.h"
 #include "propclass.h"
 #include "dbxmlstruct.h"
-#include "dlgeditclass.h"
 
 ModelerIDEPlug::ModelerIDEPlug(IPlugin *parent):
     IPlugin(parent)
@@ -157,24 +156,23 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     dbStructModel->addDisplayedAttr(DBATTRXML::ATTR,propsClass,QIcon(":/attribute"));
 
     QStringList propsAttr;
-    propsAttr << DBATTRXML::NAME << DBATTRXML::TYPE <<
+    propsAttr << DBATTRXML::NAME << DBATTRXML::DESCRIPTION << DBATTRXML::TYPE <<
                  DBATTRXML::MAXSTRLEN << DBATTRXML::REFCLASS <<
                  DBATTRXML::PARENT << DBATTRXML::INITIALVAL <<
                  DBATTRXML::GROUP << DBATTRXML::ISNULLALLOWED <<
-                 DBATTRXML::ISUNIQUE << DBATTRXML::ISCANDIDATEKEY <<
-                 DBATTRXML::DESCRIPTION;
+                 DBATTRXML::ISUNIQUE << DBATTRXML::ISCANDIDATEKEY;
 
     dbStructModel->setHeaderData(0, Qt::Horizontal, tr("Имя атирибута"));
-    dbStructModel->setHeaderData(1, Qt::Horizontal, tr("Тип"));
-    dbStructModel->setHeaderData(2, Qt::Horizontal, tr("Длина строки"));
-    dbStructModel->setHeaderData(3, Qt::Horizontal, tr("Ссылочный класс"));
-    dbStructModel->setHeaderData(4, Qt::Horizontal, tr("Класс"));
-    dbStructModel->setHeaderData(5, Qt::Horizontal, tr("Исходное значение"));
-    dbStructModel->setHeaderData(6, Qt::Horizontal, tr("Группа"));
-    dbStructModel->setHeaderData(7, Qt::Horizontal, tr("Нулевые значения"));
-    dbStructModel->setHeaderData(8, Qt::Horizontal, tr("Уникальный"));
-    dbStructModel->setHeaderData(9, Qt::Horizontal, tr("Кандидат в ключ"));
-    dbStructModel->setHeaderData(10, Qt::Horizontal, tr("Описание"));
+    dbStructModel->setHeaderData(1, Qt::Horizontal, tr("Описание"));
+    dbStructModel->setHeaderData(2, Qt::Horizontal, tr("Тип"));
+    dbStructModel->setHeaderData(3, Qt::Horizontal, tr("Длина строки"));
+    dbStructModel->setHeaderData(4, Qt::Horizontal, tr("Ссылочный класс"));
+    dbStructModel->setHeaderData(5, Qt::Horizontal, tr("Класс"));
+    dbStructModel->setHeaderData(6, Qt::Horizontal, tr("Исходное значение"));
+    dbStructModel->setHeaderData(7, Qt::Horizontal, tr("Группа"));
+    dbStructModel->setHeaderData(8, Qt::Horizontal, tr("Нулевые значения"));
+    dbStructModel->setHeaderData(9, Qt::Horizontal, tr("Уникальный"));
+    dbStructModel->setHeaderData(10, Qt::Horizontal, tr("Кандидат в ключ"));
 
     dbStructModel->addDisplayedAttr(DBATTRXML::ATTR,propsAttr);
     dbStructModel->addAttributeTag(DBATTRXML::ATTR);
@@ -211,15 +209,20 @@ void ModelerIDEPlug::removeClass()
 {
     QModelIndex currentIndex = treeClassView->treeView->currentIndex();
     if (currentIndex.isValid()){
-        PluginManager* pluginManager = PluginManager::instance();
-        MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
-                                                               "MainWindowPlug::MainWindow"));
+        if (!className(currentIndex).isEmpty())
+        {
+            PluginManager* pluginManager = PluginManager::instance();
+            MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
+                                                                  "MainWindowPlug::MainWindow"));
 
-        QString subWindowName = "PropClass::" + this->className(currentIndex);
-        QMdiSubWindow *subWindow = mainwindow->subWindow(subWindowName);
-       if (subWindow)
-            subWindow->close();
-        dbStructModel->removeRow(currentIndex.row(),currentIndex.parent());
+            QString subWindowName = "PropClass::" + this->className(currentIndex);
+            QMdiSubWindow *subWindow = mainwindow->subWindow(subWindowName);
+            if (subWindow)
+                subWindow->close();
+            dbStructModel->removeRow(currentIndex.row(),currentIndex.parent());
+        } else
+            QMessageBox::warning(NULL,tr("Предупреждение"),
+                                 tr("Невозможно удалить узел, поскольку он еще не сохранен."));
     } else
         QMessageBox::warning(NULL,tr("Предупреждение"),
                              tr("Невозможно удалить узел, поскольку он не выбран."));

@@ -13,6 +13,7 @@ public:
     virtual void hidePopup();
 
     void setModel(QAbstractItemModel * model);
+    void setCurrentModelIndex (const QModelIndex & index);
 private:
     bool skipNextHide;
     QTreeView* treeView;
