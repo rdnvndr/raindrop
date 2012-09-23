@@ -195,7 +195,7 @@ void PropClass::submitAttr()
 
 void PropClass::editAttr(bool flag)
 {
-    if (groupBoxPropAttr->isEnabled()==flag)
+    if (groupBoxPropAttr->isEnabled()==flag || !tableViewAttr->currentIndex().isValid())
         return;
 
     if (lineEditAttrName->text().isEmpty() && flag==false)
@@ -336,7 +336,6 @@ void PropClass::removeAttr(){
     QModelIndex srcIndex = m_attrModel->mapToSource(tableViewAttr->rootIndex());
     QModelIndex curIndex = m_attrModel->mapToSource(tableViewAttr->currentIndex());
     if (srcIndex.isValid() && curIndex.isValid()){
-        m_model->setInsTagName(DBATTRXML::ATTR);
         m_model->removeRow(curIndex.row(),srcIndex);
         this->setCurrentAttr(tableViewAttr->currentIndex());
     } else
