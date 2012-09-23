@@ -236,7 +236,7 @@ bool TreeXMLModel::insertRows(int row, int count, const QModelIndex &parent)
         success = parentItem->insertChild(m_insTag) && success;
     //endInsertRows();
 
-    updateInsertsRow(position,count,parent);
+    updateInsertRows(position,count,parent);
 
     // Добавление корнего узла
     if (parent.isValid())
@@ -247,22 +247,35 @@ bool TreeXMLModel::insertRows(int row, int count, const QModelIndex &parent)
     return success;
 }
 
-void TreeXMLModel::updateInsertsRow(int row,int count, const QModelIndex &parent){
+void TreeXMLModel::updateInsertRows(int row,int count, const QModelIndex &parent){
 
-    // Если атрибут то обновляем по дереву наследования
     foreach (QString tagName,m_attrTags)
         if (tagName == m_insTag){
             int rowCount = this->rowCount(parent);
             for (int i=0;i<rowCount;i++){
                 QModelIndex index = parent.child(i,0);
                 if (!isAttribute(index))
-                    updateInsertsRow(this->rowCount(index)-count,count,index);
+                    updateInsertRows(this->rowCount(index)-count,count,index);
             }
             break;
         }
 
     beginInsertRows(parent,row,row+count-1);
     endInsertRows();
+}
+
+void TreeXMLModel::updateRemoveRows(int emptyRowAttr,int count, const QModelIndex &parent){
+    // Если атрибут то обновляем по дереву наследования
+    int rowCount = this->rowCount(parent);
+    for (int i=0;i<rowCount;i++){
+        QModelIndex index = parent.child(i,0);
+        if (!isAttribute(index)){
+            updateRemoveRows(emptyRowAttr,count,index);
+            int row = this->rowCount(index)-emptyRowAttr+count-1;
+            beginRemoveRows(index,row,row+count-1);
+            endRemoveRows();
+        }
+    }
 }
 
 bool TreeXMLModel::removeRows(int row, int count, const QModelIndex &parent)
@@ -276,6 +289,14 @@ bool TreeXMLModel::removeRows(int row, int count, const QModelIndex &parent)
     for (int i=count-1;i>=0;i--)
         parentItem->removeChild(row+i);
     endRemoveRows();
+
+    int emptyRowAttr = 0;
+    for (int i=row+1-count;i<this->rowCount(parent);i++){
+        QModelIndex index = parent.child(i,0);
+        if (isAttribute(index))
+                emptyRowAttr++;
+    }
+    updateRemoveRows(emptyRowAttr,count,parent);
 
     return true;
 }

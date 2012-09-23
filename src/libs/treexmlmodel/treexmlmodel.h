@@ -147,9 +147,13 @@ public:
     //! Возращает поддерживаемые моделью операции Drag
     Qt::DropActions supportedDragActions() const;
 
-    //! Обновление вставленных строк
-    void updateInsertsRow(int row, int count, const QModelIndex &parent);
 private:
+
+    //! Обновление вставленных унаследованных строк
+    void updateInsertRows(int row, int count, const QModelIndex &parent);
+
+    //! Обновление удаленных унаследованных строк
+    void updateRemoveRows(int emptyRowAttr, int count, const QModelIndex &parent);
 
     //! Корневой узел
     TagXMLItem *m_rootItem;
