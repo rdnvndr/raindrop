@@ -24,6 +24,7 @@ ModelerIDEPlug::ModelerIDEPlug(IPlugin *parent):
 ModelerIDEPlug::~ModelerIDEPlug()
 {
     if (state.testFlag(IPlugin::Init)){
+        delete classFilterModel;
         delete dbStructModel;
         delete treeClassView;
         delete actionSaveModel;
@@ -168,7 +169,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     dbStructModel->setHeaderData(3, Qt::Horizontal, tr("Длина строки"));
     dbStructModel->setHeaderData(4, Qt::Horizontal, tr("Ссылочный класс"));
     dbStructModel->setHeaderData(5, Qt::Horizontal, tr("Класс"));
-    dbStructModel->setHeaderData(6, Qt::Horizontal, tr("Исходное значение"));
+    dbStructModel->setHeaderData(6, Qt::Horizontal, tr("По умолчанию"));
     dbStructModel->setHeaderData(7, Qt::Horizontal, tr("Группа"));
     dbStructModel->setHeaderData(8, Qt::Horizontal, tr("Нулевые значения"));
     dbStructModel->setHeaderData(9, Qt::Horizontal, tr("Уникальный"));
@@ -177,7 +178,14 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     dbStructModel->addDisplayedAttr(DBATTRXML::ATTR,propsAttr);
     dbStructModel->addAttributeTag(DBATTRXML::ATTR);
 
-    treeClassView->treeView->setModel(dbStructModel);
+    classFilterModel = new TreeFilterProxyModel();
+    classFilterModel->setSourceModel(dbStructModel);
+    classFilterModel->setDynamicSortFilter(true);
+
+    connect(treeClassView->lineEditFiler,SIGNAL(textChanged(QString)),
+            classFilterModel,SLOT(setFilterRegExp(QString)));
+
+    treeClassView->treeView->setModel(classFilterModel);
     for (int i=1;i<dbStructModel->columnCount();i++)
         treeClassView->treeView->hideColumn(i);
 
@@ -190,11 +198,12 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 void ModelerIDEPlug::addClass()
 {
     dbStructModel->setInsTagName(DBCLASSXML::CLASS);
-    //if (treeClassView->treeView->currentIndex().data(Qt::UserRole)!=DBATTRXML::ATTR)
-        if (dbStructModel->insertRow(0,treeClassView->treeView->currentIndex())){
-            treeClassView->treeView->setCurrentIndex(dbStructModel->lastInsertRow());
-            showPropClass(treeClassView->treeView->currentIndex());
-        }
+    QModelIndex index = classFilterModel->mapToSource(treeClassView->treeView->currentIndex());
+    if (dbStructModel->insertRow(0,index)){
+        index = classFilterModel->mapFromSource(dbStructModel->lastInsertRow());
+        treeClassView->treeView->setCurrentIndex(index);
+        showPropClass(index);
+    }
 }
 
 QString ModelerIDEPlug::className(const QModelIndex& index)
@@ -207,7 +216,8 @@ QString ModelerIDEPlug::className(const QModelIndex& index)
 
 void ModelerIDEPlug::removeClass()
 {
-    QModelIndex currentIndex = treeClassView->treeView->currentIndex();
+    QModelIndex currentIndex = classFilterModel->mapToSource(
+                treeClassView->treeView->currentIndex());
     if (currentIndex.isValid()){
         if (!className(currentIndex).isEmpty())
         {
@@ -230,10 +240,12 @@ void ModelerIDEPlug::removeClass()
 
 void ModelerIDEPlug::showPropClass(QModelIndex index)
 {
-    if (!index.isValid())
+    QModelIndex indexSource = classFilterModel->mapToSource(index);
+
+    if (!indexSource.isValid())
         return;
 
-    if (dbStructModel->isAttribute(index))
+    if (dbStructModel->isAttribute(indexSource))
         return;
 
     PluginManager* pluginManager = PluginManager::instance();
@@ -248,10 +260,10 @@ void ModelerIDEPlug::showPropClass(QModelIndex index)
         subWindow =  mainwindow->addSubWindow(propClass);
         propClass->setObjectName(subWindowName);
         propClass->setModel(dbStructModel);
-        propClass->setCurrentClass(index);
+        propClass->setCurrentClass(indexSource);
     } else {
         PropClass* propClass = qobject_cast<PropClass*>(subWindow->widget());
-        propClass->setCurrentClass(index);
+        propClass->setCurrentClass(indexSource);
     }
 }
 

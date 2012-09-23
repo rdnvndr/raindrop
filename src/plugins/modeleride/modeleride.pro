@@ -12,10 +12,12 @@ include(../plugins.pri)
 HEADERS += modelerideplug.h \
     propclass.h \
     dbxmlstruct.h \
-    classtreeview.h
+    classtreeview.h \
+    treefilterproxymodel.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
-    classtreeview.cpp
+    classtreeview.cpp \
+    treefilterproxymodel.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
