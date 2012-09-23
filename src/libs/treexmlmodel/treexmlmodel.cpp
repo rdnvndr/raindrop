@@ -130,12 +130,12 @@ QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
 void TreeXMLModel::updateModifyRow(int emptyRowAttr, const QModelIndex &parent){
     int rowCount = this->rowCount(parent);
     for (int i=0;i<rowCount;i++){
-        QModelIndex index = parent.child(i,parent.column());
+        QModelIndex index = parent.child(i,0);
         if (!isAttribute(index)){
             updateModifyRow(emptyRowAttr,index);
             int row = this->rowCount(index)-emptyRowAttr-1;
-            QModelIndex updateIndex = index.child(row,index.column());
-            emit dataChanged(updateIndex,updateIndex);
+            QModelIndex updateIndex = index.child(row,0);
+            emit dataChanged(updateIndex,updateIndex.sibling(updateIndex.row(),columnCount(updateIndex)));
         }
     }
 }
@@ -234,7 +234,7 @@ QModelIndex TreeXMLModel::parent(const QModelIndex &child) const
 
     int row = parentItem->parent()->childNumber(parentItem,m_filterTags,m_attrTags);
 
-    return createIndex(row , child.column(), parentItem);
+    return createIndex(row , 0, parentItem);
 }
 
 int TreeXMLModel::rowCount(const QModelIndex &parent) const
