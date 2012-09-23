@@ -127,10 +127,22 @@ QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+void TreeXMLModel::updateModifyRow(int emptyRowAttr, const QModelIndex &parent){
+    int rowCount = this->rowCount(parent);
+    for (int i=0;i<rowCount;i++){
+        QModelIndex index = parent.child(i,parent.column());
+        if (!isAttribute(index)){
+            updateModifyRow(emptyRowAttr,index);
+            int row = this->rowCount(index)-emptyRowAttr-1;
+            QModelIndex updateIndex = index.child(row,index.column());
+            emit dataChanged(updateIndex,updateIndex);
+        }
+    }
+}
+
 bool TreeXMLModel::setData(const QModelIndex &index, const QVariant &value,
                            int role)
 {
-
     if (role != Qt::EditRole) return false;
 
     TagXMLItem *item = getItem(index);
@@ -138,6 +150,18 @@ bool TreeXMLModel::setData(const QModelIndex &index, const QVariant &value,
 
     node.toElement().setAttribute(m_displayedAttr[node.nodeName()].at(index.column()),value.toString());
     emit dataChanged(index,index);
+
+    if (isAttribute(index)){
+        int emptyRowAttr = 0;
+        QModelIndex parent = index.parent();
+        for (int i=index.row()+1;i<this->rowCount(parent);i++){
+            QModelIndex idx = parent.child(i,parent.column());
+            if (isAttribute(idx))
+                emptyRowAttr++;
+        }
+        updateModifyRow(emptyRowAttr,parent);
+    }
+
     return true;
 }
 
@@ -210,7 +234,7 @@ QModelIndex TreeXMLModel::parent(const QModelIndex &child) const
 
     int row = parentItem->parent()->childNumber(parentItem,m_filterTags,m_attrTags);
 
-    return createIndex(row , 0, parentItem);
+    return createIndex(row , child.column(), parentItem);
 }
 
 int TreeXMLModel::rowCount(const QModelIndex &parent) const
@@ -231,10 +255,8 @@ bool TreeXMLModel::insertRows(int row, int count, const QModelIndex &parent)
 
     int position = parentItem->count();
 
-    //beginInsertRows(parent,position,position+count-1);
     for (int i=0;i<count;i++)
         success = parentItem->insertChild(m_insTag) && success;
-    //endInsertRows();
 
     updateInsertRows(position,count,parent);
 
@@ -248,18 +270,13 @@ bool TreeXMLModel::insertRows(int row, int count, const QModelIndex &parent)
 }
 
 void TreeXMLModel::updateInsertRows(int row,int count, const QModelIndex &parent){
-
-    foreach (QString tagName,m_attrTags)
-        if (tagName == m_insTag){
-            int rowCount = this->rowCount(parent);
-            for (int i=0;i<rowCount;i++){
-                QModelIndex index = parent.child(i,0);
-                if (!isAttribute(index))
-                    updateInsertRows(this->rowCount(index)-count,count,index);
-            }
-            break;
+    QModelIndex curIndex = parent.child(row,0);
+    if (isAttribute(curIndex))
+        for (int i=0;i<this->rowCount(parent);i++){
+            QModelIndex index = parent.child(i,0);
+            if (!isAttribute(index))
+                updateInsertRows(this->rowCount(index)-count,count,index);
         }
-
     beginInsertRows(parent,row,row+count-1);
     endInsertRows();
 }

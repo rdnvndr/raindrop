@@ -60,7 +60,7 @@ public:
     ~TreeXMLModel();
 
     //! Возращает хранимые данные
-    QVariant data(const QModelIndex &index, int role) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole ) const;
 
     //! Устанавливает значение для указанной записи
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
@@ -147,7 +147,10 @@ public:
     //! Возращает поддерживаемые моделью операции Drag
     Qt::DropActions supportedDragActions() const;
 
+
 private:
+     //! Обновление отредактированных унаследованных строк
+    void updateModifyRow(int emptyRowAttr, const QModelIndex &parent);
 
     //! Обновление вставленных унаследованных строк
     void updateInsertRows(int row, int count, const QModelIndex &parent);
