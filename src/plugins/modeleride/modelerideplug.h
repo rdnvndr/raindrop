@@ -5,6 +5,7 @@
 #include <treexmlmodel/treexmlmodel.h>
 #include <mainwindow/mainwindow.h>
 #include "classtreeview.h"
+#include "treefilterproxymodel.h"
 #include <QtGui>
 
 class ModelerIDEPlug: public IPlugin
@@ -23,6 +24,7 @@ public:
 private:
     QString fileName;
     TreeXMLModel* dbStructModel;
+    TreeFilterProxyModel* classFilterModel;
     ClassTreeView* treeClassView;
     QAction* actionNewModel;
     QAction* actionSaveModel;
