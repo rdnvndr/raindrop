@@ -24,9 +24,8 @@ ModelerIDEPlug::ModelerIDEPlug(IPlugin *parent):
 ModelerIDEPlug::~ModelerIDEPlug()
 {
     if (state.testFlag(IPlugin::Init)){
-        delete classFilterModel;
-        delete dbStructModel;
         delete treeClassView;
+        closeClassModel();
         delete actionSaveModel;
         delete actionSaveAsModel;
         delete actionNewModel;
@@ -120,6 +119,7 @@ bool ModelerIDEPlug::initialize(){
     toolBarMain->insertAction(separator, actionCloseModel);
 
     dockWidget->insertWidget(QIcon(":/modeleride"),tr("Редактор модели данных"),treeClassView);
+
     return true;
 }
 
@@ -184,6 +184,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     connect(treeClassView->lineEditFiler,SIGNAL(textChanged(QString)),
             classFilterModel,SLOT(setFilterRegExp(QString)));
+
+    connect(treeClassView->lineEditFiler,SIGNAL(textChanged(QString)),
+            treeClassView->treeView,SLOT(expandAll()));
 
     treeClassView->treeView->setModel(classFilterModel);
     for (int i=1;i<dbStructModel->columnCount();i++)
@@ -327,6 +330,7 @@ void ModelerIDEPlug::publishClassModel()
 void ModelerIDEPlug::closeClassModel()
 {
     if (dbStructModel){
+        delete classFilterModel;
         delete dbStructModel;
         dbStructModel = NULL;
         actionCloseModel->setDisabled(true);
