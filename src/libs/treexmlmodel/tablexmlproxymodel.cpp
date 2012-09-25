@@ -13,7 +13,7 @@ bool TableXMLProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) co
     if (!source_index.isValid()) // the column may not exist
         return true;
 
-    if (parent.sibling(parent.row(),0) == m_index && parent.isValid()){
+    if (parent.internalPointer() ==  m_index.internalPointer()){
         QString tag = sourceModel()->data(source_index, Qt::UserRole).toString();
         foreach (const QString& tagName,this->m_tags)
             if (tag.contains(tagName)){
@@ -33,7 +33,7 @@ bool TableXMLProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) co
 
 void TableXMLProxyModel::setFilterIndex(const QModelIndex &parent)
 {
-    m_index = parent.sibling(parent.row(),0);
+    m_index = parent;
 }
 
 QModelIndex TableXMLProxyModel::filterIndex()
