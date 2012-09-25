@@ -326,7 +326,9 @@ QModelIndex TreeXMLModel::lastInsertRow()
 bool TreeXMLModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
                                 int row, int column, const QModelIndex &parent)
 {
-    //return false;
+    if (!parent.isValid())
+        return false;
+
     if (action == Qt::IgnoreAction)
         return true;
     if (!data->hasFormat("application/classxmlmodel"))
@@ -341,6 +343,7 @@ bool TreeXMLModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     QString tag;
     stream >> tag;
     setInsTagName(tag);
+
     if (!insertRow(row,parent))
         return false;
 
