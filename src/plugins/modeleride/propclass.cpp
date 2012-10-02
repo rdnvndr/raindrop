@@ -333,6 +333,7 @@ void PropClass::addAttr(){
 }
 
 void PropClass::removeAttr(){
+    editAttr(false);
     QModelIndex srcIndex = m_attrModel->mapToSource(tableViewAttr->rootIndex());
     QModelIndex curIndex = m_attrModel->mapToSource(tableViewAttr->currentIndex());
     if (srcIndex.isValid() && curIndex.isValid()){
