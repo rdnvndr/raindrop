@@ -17,32 +17,13 @@ public:
 
     void setModel(TreeXMLModel *model);
     TreeXMLModel* model();    
-    void setTabName(const QModelIndex &index);
 
 public slots:
-    void addClass();
-    void addAttr();
-    void removeAttr();
-    void removeClass();
-    void removeEmptyClass();
-    void setCurrentAttr(QModelIndex index);
     void setCurrentClass(QModelIndex index);
-    void submitAttr();
-    void editAttr(bool flag = true);
-    void editClass(bool flag = true);
-    void submitClass();
-    void revertAttr();
-    void revertClass();
-    void setShowParentAttr(bool flag);
-    void changeType(QString s);
+    void setTabName(const QModelIndex &index);
 private:
     QVariant modelData(QString typeName, QString attr, const QModelIndex &index);
     TreeXMLModel* m_model;
-    QDataWidgetMapper* m_mapper;
-    QDataWidgetMapper* m_mapperAttr;
-    TableXMLProxyModel* m_attrModel;
-    QStringListModel *m_typeAttrModel;
-    QStringListModel *m_typeClassModel;
 };
 
 #endif // PROPCLASS_H

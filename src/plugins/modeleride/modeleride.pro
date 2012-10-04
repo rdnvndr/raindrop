@@ -13,13 +13,19 @@ HEADERS += modelerideplug.h \
     propclass.h \
     dbxmlstruct.h \
     classtreeview.h \
-    treefilterproxymodel.h
+    treefilterproxymodel.h \
+    attrwidget.h \
+    classwidget.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
-    treefilterproxymodel.cpp
+    treefilterproxymodel.cpp \
+    attrwidget.cpp \
+    classwidget.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
     propclass.ui \
-    classtreeview.ui
+    classtreeview.ui \
+    attrwidget.ui \
+    classwidget.ui
