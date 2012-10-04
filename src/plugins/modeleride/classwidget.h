@@ -13,6 +13,7 @@ public:
     explicit ClassWidget(QWidget *parent = 0);
     virtual ~ClassWidget();
     void setModel(TreeXMLModel *model);
+
 public slots:
     void add();
     void remove();
@@ -21,8 +22,10 @@ public slots:
     void edit(bool flag = true);
     void submit();
     void revert();
+
 signals:
     void dataChanged(QModelIndex index);
+    void dataRemoved(QModelIndex index);
     void currentIndexChanged(QModelIndex index);
 
 private:

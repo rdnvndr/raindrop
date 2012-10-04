@@ -13,6 +13,7 @@ public:
     explicit AttrWidget(QWidget *parent = 0);
     virtual ~AttrWidget();
     void setModel(TreeXMLModel *model);
+
 public slots:
     void add();
     void remove();
@@ -23,6 +24,12 @@ public slots:
     void showParentAttr(bool flag);
     void changeType(QString s);
     void setRootIndex(QModelIndex index);
+
+signals:
+    void dataChanged(QModelIndex index);
+    void dataRemoved(QModelIndex index);
+    void currentIndexChanged(QModelIndex index);
+
 private:
     QVariant modelData(QString typeName, QString attr, const QModelIndex &index);
     TableXMLProxyModel* m_attrModel;

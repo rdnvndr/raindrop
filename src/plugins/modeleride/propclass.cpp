@@ -12,6 +12,8 @@ PropClass::PropClass(QWidget *parent) :
             this,SLOT(setTabName(QModelIndex)));
     connect(classWidget,SIGNAL(dataChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
+    connect(classWidget,SIGNAL(dataRemoved(QModelIndex)),
+            this,SLOT(closeTab(QModelIndex)));
 }
 
 PropClass::~PropClass()
@@ -40,13 +42,19 @@ void PropClass::setTabName(const QModelIndex &index){
     subWindow->setWindowTitle(tr("Класс: ")+className);
 }
 
+void PropClass::closeTab(const QModelIndex &index)
+{
+    Q_UNUSED(index);
+
+    QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
+    subWindow->close();
+}
+
 QVariant PropClass::modelData(QString typeName, QString attr, const QModelIndex& index)
 {
     return index.sibling(index.row(), m_model->indexDisplayedAttr(
                       typeName,attr)).data();
 }
-
-
 
 TreeXMLModel *PropClass::model()
 {

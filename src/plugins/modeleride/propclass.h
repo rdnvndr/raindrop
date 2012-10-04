@@ -21,6 +21,7 @@ public:
 public slots:
     void setCurrentClass(QModelIndex index);
     void setTabName(const QModelIndex &index);
+    void closeTab(const QModelIndex &index);
 private:
     QVariant modelData(QString typeName, QString attr, const QModelIndex &index);
     TreeXMLModel* m_model;
