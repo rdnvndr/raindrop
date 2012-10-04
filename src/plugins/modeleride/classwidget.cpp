@@ -66,7 +66,8 @@ void ClassWidget::setModel(TreeXMLModel *model)
 
 void ClassWidget::add()
 {
-    QModelIndex srcIndex = m_mapper->rootIndex().child(m_mapper->currentIndex(),0);
+    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+
     m_model->setInsTagName(DBCLASSXML::CLASS);
     m_model->insertRow(0,srcIndex);
     QModelIndex srcCurrentIndex = m_model->lastInsertRow();
@@ -77,7 +78,7 @@ void ClassWidget::add()
 
 void ClassWidget::remove()
 {
-    QModelIndex srcIndex = m_mapper->rootIndex().child(m_mapper->currentIndex(),0);
+    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
     m_mapper->revert();
     setCurrent(srcIndex.parent());
 
@@ -127,7 +128,7 @@ void ClassWidget::submit()
     m_mapper->submit();
     removeEmpty();
     edit(false);
-    QModelIndex srcIndex = m_mapper->rootIndex().child(m_mapper->currentIndex(),0);
+    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
     emit dataChanged(srcIndex);
 }
 
@@ -143,7 +144,6 @@ QVariant ClassWidget::modelData(QString typeName, QString attr, const QModelInde
     return index.sibling(index.row(), m_model->indexDisplayedAttr(
                              typeName,attr)).data();
 }
-
 
 void ClassWidget::removeEmpty()
 {
