@@ -19,8 +19,6 @@ ClassWidget::ClassWidget(QWidget *parent) :
 
     connect(toolButtonAddClass,SIGNAL(clicked()),this,SLOT(add()));
     connect(toolButtonDelClass,SIGNAL(clicked()),this,SLOT(remove()));
-
-    //connect(checkBoxIsLength,SIGNAL(toggled(bool)),this,SLOT(setCheckArray(bool)));
     connect(pushButtonPropSave,SIGNAL(clicked()),this,SLOT(submit()));
     connect(pushButtonPropCancel,SIGNAL(clicked()),this,SLOT(revert()));
     connect(toolButtonEditClass,SIGNAL(clicked()),this,SLOT(edit()));
@@ -68,9 +66,6 @@ void ClassWidget::setModel(TreeXMLModel *model)
 
 void ClassWidget::add()
 {
-    //editAttr(false);
-
-
     QModelIndex srcIndex = m_mapper->rootIndex().child(m_mapper->currentIndex(),0);
     m_model->setInsTagName(DBCLASSXML::CLASS);
     m_model->insertRow(0,srcIndex);
@@ -78,19 +73,19 @@ void ClassWidget::add()
     setCurrent(srcCurrentIndex);
 
     edit(true);
-    //tabWidgetProp->setCurrentIndex(0);
 }
 
 void ClassWidget::remove()
 {
     QModelIndex srcIndex = m_mapper->rootIndex().child(m_mapper->currentIndex(),0);
-
-    //QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
-    //subWindow->close();
     m_mapper->revert();
     setCurrent(srcIndex.parent());
-    if (!modelData(DBCLASSXML::CLASS,DBCLASSXML::NAME,srcIndex).toString().isEmpty())
-            m_model->removeRow(srcIndex.row(),srcIndex.parent());
+
+    if (!modelData(DBCLASSXML::CLASS,DBCLASSXML::NAME,srcIndex).toString().isEmpty()){
+        emit dataRemoved(srcIndex);
+        m_model->removeRow(srcIndex.row(),srcIndex.parent());
+    }
+
 }
 
 
@@ -146,7 +141,7 @@ void ClassWidget::revert()
 QVariant ClassWidget::modelData(QString typeName, QString attr, const QModelIndex &index)
 {
     return index.sibling(index.row(), m_model->indexDisplayedAttr(
-                      typeName,attr)).data();
+                             typeName,attr)).data();
 }
 
 

@@ -55,35 +55,35 @@ void AttrWidget::setModel(TreeXMLModel *model)
     comboBoxTypeAttr->setModel(m_typeAttrModel);
 
     m_mapperAttr->addMapping(lineEditAttrName,
-                         m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                       DBATTRXML::NAME));
+                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                         DBATTRXML::NAME));
     m_mapperAttr->addMapping(comboBoxTypeAttr,
-                         m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                       DBATTRXML::TYPE));
+                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                         DBATTRXML::TYPE));
     m_mapperAttr->addMapping(spinBoxStringLen,
-                         m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                       DBATTRXML::MAXSTRLEN));
+                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                         DBATTRXML::MAXSTRLEN));
     m_mapperAttr->addMapping(comboBoxLinkAttr,
-                         m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                       DBATTRXML::REFCLASS));
+                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                         DBATTRXML::REFCLASS));
     m_mapperAttr->addMapping(lineEditDefaultValue,
-                         m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                       DBATTRXML::INITIALVAL));
+                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                         DBATTRXML::INITIALVAL));
     m_mapperAttr->addMapping(checkBoxIsNull,
-                         m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                       DBATTRXML::ISNULLALLOWED));
+                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                         DBATTRXML::ISNULLALLOWED));
     m_mapperAttr->addMapping(checkBoxIsUnique,
-                         m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                       DBATTRXML::ISUNIQUE));
+                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                         DBATTRXML::ISUNIQUE));
     m_mapperAttr->addMapping(checkBoxIsCandidateKey,
-                         m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                       DBATTRXML::ISCANDIDATEKEY));
+                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                         DBATTRXML::ISCANDIDATEKEY));
     m_mapperAttr->addMapping(lineEditAttrDesc,
-                         m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                       DBATTRXML::DESCRIPTION));
+                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                         DBATTRXML::DESCRIPTION));
     m_mapperAttr->addMapping(comboBoxAttrGroup,
-                         m_model->indexDisplayedAttr(DBATTRXML::ATTR,
-                                                     DBATTRXML::GROUP));
+                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                                                         DBATTRXML::GROUP));
 }
 
 void AttrWidget::setRootIndex(QModelIndex index)
@@ -129,6 +129,7 @@ void AttrWidget::remove()
     QModelIndex srcIndex = m_attrModel->mapToSource(tableViewAttr->rootIndex());
     QModelIndex curIndex = m_attrModel->mapToSource(tableViewAttr->currentIndex());
     if (srcIndex.isValid() && curIndex.isValid()){
+        emit dataRemoved(srcIndex);
         m_model->removeRow(curIndex.row(),srcIndex);
         this->setCurrent(tableViewAttr->currentIndex());
     } else
@@ -141,6 +142,8 @@ void AttrWidget::submit()
 {
     edit(false);
     m_mapperAttr->submit();
+    QModelIndex srcIndex = m_mapperAttr->rootIndex().child(m_mapperAttr->currentIndex(),0);
+    emit dataChanged(srcIndex);
 }
 
 void AttrWidget::edit(bool flag)
@@ -207,7 +210,7 @@ void AttrWidget::changeType(QString s)
 QVariant AttrWidget::modelData(QString typeName, QString attr, const QModelIndex &index)
 {
     return index.sibling(index.row(), m_model->indexDisplayedAttr(
-                      typeName,attr)).data();
+                             typeName,attr)).data();
 }
 
 
@@ -217,30 +220,31 @@ void AttrWidget::setCurrent(QModelIndex index)
         return;
 
     if (m_mapperAttr->rootIndex() == index.parent() &&
-                index.row() == m_mapperAttr->currentIndex())
-            return;
+            index.row() == m_mapperAttr->currentIndex())
+        return;
 
-        edit(false);
-        m_mapperAttr->setRootIndex(index.parent());
-        m_mapperAttr->setCurrentModelIndex(index);
-        tableViewAttr->setCurrentIndex(index);
+    edit(false);
+    m_mapperAttr->setRootIndex(index.parent());
+    m_mapperAttr->setCurrentModelIndex(index);
+    tableViewAttr->setCurrentIndex(index);
 
-        int indexType = comboBoxTypeAttr->findText(modelData(
-                                                       DBATTRXML::ATTR,
-                                                       DBATTRXML::TYPE,
-                                                       index).toString());
-        comboBoxTypeAttr->setCurrentIndex(indexType);
+    int indexType = comboBoxTypeAttr->findText(modelData(
+                                                   DBATTRXML::ATTR,
+                                                   DBATTRXML::TYPE,
+                                                   index).toString());
+    comboBoxTypeAttr->setCurrentIndex(indexType);
 
-        int indexGroup = comboBoxAttrGroup->findText(modelData(
-                                                         DBATTRXML::ATTR,
-                                                         DBATTRXML::GROUP,
-                                                         index).toString());
-        comboBoxAttrGroup->setCurrentIndex(indexGroup);
+    int indexGroup = comboBoxAttrGroup->findText(modelData(
+                                                     DBATTRXML::ATTR,
+                                                     DBATTRXML::GROUP,
+                                                     index).toString());
+    comboBoxAttrGroup->setCurrentIndex(indexGroup);
 
-        int indexRef = comboBoxLinkAttr->findText(modelData(
-                                                      DBATTRXML::ATTR,
-                                                      DBATTRXML::REFCLASS,
-                                                      index).toString());
-        comboBoxLinkAttr->setCurrentIndex(indexRef);
-        changeType(comboBoxTypeAttr->currentText());
+    int indexRef = comboBoxLinkAttr->findText(modelData(
+                                                  DBATTRXML::ATTR,
+                                                  DBATTRXML::REFCLASS,
+                                                  index).toString());
+    comboBoxLinkAttr->setCurrentIndex(indexRef);
+    changeType(comboBoxTypeAttr->currentText());
+    emit currentIndexChanged(index);
 }
