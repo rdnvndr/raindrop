@@ -331,6 +331,7 @@ void ModelerIDEPlug::closeClassModel()
 {
     if (dbStructModel){
         delete classFilterModel;
+        classFilterModel = NULL;
         delete dbStructModel;
         dbStructModel = NULL;
         actionCloseModel->setDisabled(true);
