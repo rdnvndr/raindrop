@@ -6,8 +6,11 @@ PropClass::PropClass(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
+
     connect(classWidget,SIGNAL(currentIndexChanged(QModelIndex)),
             attrWidget,SLOT(setRootIndex(QModelIndex)));
+    connect(classWidget,SIGNAL(currentIndexChanged(QModelIndex)),
+            compWidget,SLOT(setRootIndex(QModelIndex)));
     connect(classWidget,SIGNAL(currentIndexChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
     connect(classWidget,SIGNAL(dataChanged(QModelIndex)),
@@ -25,6 +28,7 @@ void PropClass::setModel(TreeXMLModel *model)
 {
     classWidget->setModel(model);
     attrWidget->setModel(model);
+    compWidget->setModel(model);
     m_model = model;
 }
 

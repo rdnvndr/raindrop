@@ -5,6 +5,7 @@
 TableXMLProxyModel::TableXMLProxyModel(): QSortFilterProxyModel()
 {
     setDynamicSortFilter(true);
+    m_columnCount = 0;
 }
 
 bool TableXMLProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) const
@@ -46,7 +47,21 @@ void TableXMLProxyModel::setAttributeTags(QStringList list)
     m_tags = list;
 }
 
+void TableXMLProxyModel::setColumnCount(int column)
+{
+    m_columnCount = column;
+}
+
 QStringList TableXMLProxyModel::attributeTags()
 {
     return m_tags;
+}
+
+
+int TableXMLProxyModel::columnCount(const QModelIndex &parent) const
+{
+    if (QSortFilterProxyModel::columnCount(parent)<m_columnCount || m_columnCount<=0)
+        return QSortFilterProxyModel::columnCount(parent);
+    else
+        return m_columnCount;
 }

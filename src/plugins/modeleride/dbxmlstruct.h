@@ -28,6 +28,16 @@ namespace DBATTRXML{
     const QString PARENT = "parent";
 }
 
+namespace DBCOMPXML{
+    const QString COMP = "RTPComposition";
+    const QString NAME = "name";
+    const QString DESCRIPTION = "description";
+    const QString PARENT = "parent";
+    const QString CLASS = "Class";
+    const QString DIRECTDESCRIPTION = "directDescription";
+    const QString INVERSEDESCRIPTION = "inverseDescription";
+}
+
 const QStringList DBXMLATTRTYPE = (QStringList()
                                << "Boolean"
                                << "Char"

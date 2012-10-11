@@ -38,11 +38,20 @@ public:
 
      //! Установка тэгов, которые являются атрибутами
     void setAttributeTags(QStringList list);
+
+    //! Установка количества столбцов
+    void setColumnCount(int column);
+
+    //! Количество столбцов
+    virtual int columnCount(const QModelIndex &parent) const;
+
 private:
     //! Индекс модели, в котором отображаются только атрибуты
     QModelIndex m_index;
     //! Список тэгов, которые являются атрибутами
     QStringList m_tags;
+    //! Количество столбцов
+    int m_columnCount;
 };
 
 #endif // TABLEXMLPROXYMODEL_H
