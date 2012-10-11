@@ -11,5 +11,6 @@
         <file alias="remove">icons/list-remove.svg</file>
         <file alias="add">icons/list-add.svg</file>
         <file alias="edit">icons/gtk-edit.svg</file>
+        <file alias="composition">icons/composite.svg</file>
     </qresource>
 </RCC>

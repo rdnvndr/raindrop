@@ -147,6 +147,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     dbStructModel->addTagFilter(DBCLASSXML::CLASS);
     dbStructModel->addTagFilter(DBATTRXML::ATTR);
+    dbStructModel->addTagFilter(DBCOMPXML::COMP);
 
     QStringList propsClass;
     propsClass << DBCLASSXML::NAME << DBCLASSXML::ISABSTARCT <<
@@ -155,6 +156,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                   DBCLASSXML::TEMPLATE;
     dbStructModel->addDisplayedAttr(DBCLASSXML::CLASS,propsClass,QIcon(":/modeleride"));
     dbStructModel->addDisplayedAttr(DBATTRXML::ATTR,propsClass,QIcon(":/attribute"));
+    dbStructModel->addDisplayedAttr(DBCOMPXML::COMP,propsClass,QIcon(":/composition"));
 
     QStringList propsAttr;
     propsAttr << DBATTRXML::NAME << DBATTRXML::DESCRIPTION << DBATTRXML::TYPE <<
@@ -162,6 +164,11 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                  DBATTRXML::PARENT << DBATTRXML::INITIALVAL <<
                  DBATTRXML::GROUP << DBATTRXML::ISNULLALLOWED <<
                  DBATTRXML::ISUNIQUE << DBATTRXML::ISCANDIDATEKEY;
+
+    QStringList propsComposition;
+    propsComposition << DBCOMPXML::NAME << DBCOMPXML::DESCRIPTION <<
+                 DBCOMPXML::PARENT << DBCOMPXML::CLASS <<
+                 DBCOMPXML::DIRECTDESCRIPTION << DBCOMPXML::INVERSEDESCRIPTION;
 
     dbStructModel->setHeaderData(0, Qt::Horizontal, tr("Имя атирибута"));
     dbStructModel->setHeaderData(1, Qt::Horizontal, tr("Описание"));
@@ -177,6 +184,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     dbStructModel->addDisplayedAttr(DBATTRXML::ATTR,propsAttr);
     dbStructModel->addAttributeTag(DBATTRXML::ATTR);
+
+    dbStructModel->addDisplayedAttr(DBCOMPXML::COMP,propsComposition);
+    dbStructModel->addAttributeTag(DBCOMPXML::COMP);
 
     classFilterModel = new TreeFilterProxyModel();
     classFilterModel->setSourceModel(dbStructModel);

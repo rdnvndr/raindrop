@@ -15,17 +15,20 @@ HEADERS += modelerideplug.h \
     classtreeview.h \
     treefilterproxymodel.h \
     attrwidget.h \
-    classwidget.h
+    classwidget.h \
+    compositionwidget.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
     treefilterproxymodel.cpp \
     attrwidget.cpp \
-    classwidget.cpp
+    classwidget.cpp \
+    compositionwidget.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
     propclass.ui \
     classtreeview.ui \
     attrwidget.ui \
-    classwidget.ui
+    classwidget.ui \
+    compositionwidget.ui
