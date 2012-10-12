@@ -40,6 +40,7 @@ private:
 
 public slots:
     void showPropClass(QModelIndex index);
+    void showPropComposition(QModelIndex index);
     void newClassModel();
     void openClassModel();
     void saveClassModel();

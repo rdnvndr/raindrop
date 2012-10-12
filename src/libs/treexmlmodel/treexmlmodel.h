@@ -110,6 +110,9 @@ public:
     //! Указывает xml атрибуты тэга для отображения
     void addDisplayedAttr(QString nameAttr, QStringList value,QIcon icon = QIcon());
 
+    //! Указывает тэги разрешенные для вставки
+    void addInsertTags(QString tag,QStringList value);
+
     //! Получение индекса поля в тэге
     int indexDisplayedAttr(QString nameAttr, QString fieldName);
 
@@ -147,7 +150,8 @@ public:
     //! Возращает поддерживаемые моделью операции Drag
     Qt::DropActions supportedDragActions() const;
 
-
+    //! Возращает True если можно вставить строку
+    bool isInsert(const QModelIndex &index) const;
 private:
      //! Обновление отредактированных унаследованных строк
     void updateModifyRow(int emptyRowAttr, const QModelIndex &parent);
@@ -184,6 +188,9 @@ private:
 
     //! Индекс последней вставленной строки
     QModelIndex m_lastInsRow;
+
+    //! Список тэгов в которые нельзя вставлять строки
+    QMap<QString, QStringList> m_insertTags;
 };
 
 #endif

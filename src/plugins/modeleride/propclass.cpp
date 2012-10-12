@@ -40,7 +40,7 @@ void PropClass::setCurrentClass(QModelIndex index)
 void PropClass::setTabName(const QModelIndex &index){
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
 
-    QString className = modelData(DBATTRXML::ATTR, DBATTRXML::NAME,index).toString();
+    QString className = modelData(DBCLASSXML::CLASS, DBCLASSXML::NAME,index).toString();
 
     this->setObjectName("PropClass::" + className);
     subWindow->setWindowTitle(tr("Класс: ")+className);

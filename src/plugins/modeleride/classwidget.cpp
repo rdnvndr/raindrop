@@ -67,13 +67,12 @@ void ClassWidget::setModel(TreeXMLModel *model)
 void ClassWidget::add()
 {
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
-
     m_model->setInsTagName(DBCLASSXML::CLASS);
-    m_model->insertRow(0,srcIndex);
-    QModelIndex srcCurrentIndex = m_model->lastInsertRow();
-    setCurrent(srcCurrentIndex);
-
-    edit(true);
+    if (m_model->insertRow(0,srcIndex)) {
+        QModelIndex srcCurrentIndex = m_model->lastInsertRow();
+        setCurrent(srcCurrentIndex);
+        edit(true);
+    }
 }
 
 void ClassWidget::remove()

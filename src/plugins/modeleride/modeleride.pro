@@ -16,14 +16,18 @@ HEADERS += modelerideplug.h \
     treefilterproxymodel.h \
     attrwidget.h \
     classwidget.h \
-    compositionwidget.h
+    compositionwidget.h \
+    propcomposition.h \
+    compositionpropwidget.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
     treefilterproxymodel.cpp \
     attrwidget.cpp \
     classwidget.cpp \
-    compositionwidget.cpp
+    compositionwidget.cpp \
+    propcomposition.cpp \
+    compositionpropwidget.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
@@ -31,4 +35,6 @@ FORMS += \
     classtreeview.ui \
     attrwidget.ui \
     classwidget.ui \
-    compositionwidget.ui
+    compositionwidget.ui \
+    propcomposition.ui \
+    compositionpropwidget.ui

@@ -52,6 +52,20 @@ bool TreeXMLModel::isAttribute(const QModelIndex &index) const
     return false;
 }
 
+bool TreeXMLModel::isInsert(const QModelIndex &index) const
+{
+    TagXMLItem *item = getItem(index);
+    QDomNode node = item->node();
+
+    if (index.isValid()){
+        foreach (QString tagName,m_insertTags[node.nodeName()])
+            if (tagName == m_insTag)
+                return true;
+        return false;
+    } else
+        return !isAttribute(index);
+}
+
 void TreeXMLModel::addDisplayedAttr(QString nameAttr, QStringList value, QIcon icon)
 {
     if (value.count()>m_column)
@@ -60,6 +74,11 @@ void TreeXMLModel::addDisplayedAttr(QString nameAttr, QStringList value, QIcon i
 
     if (!icon.isNull())
         m_displayedIcon[nameAttr] = icon;
+}
+
+void TreeXMLModel::addInsertTags(QString tag,QStringList value)
+{
+    m_insertTags.insert(tag,value);
 }
 
 int TreeXMLModel::indexDisplayedAttr(QString nameAttr, QString fieldName)
@@ -249,7 +268,7 @@ bool TreeXMLModel::insertRows(int row, int count, const QModelIndex &parent)
     Q_UNUSED(row);
 
     TagXMLItem *parentItem = getItem(parent);
-    if (isAttribute(parent))
+    if (!isInsert(parent))
         return false;
     bool success = true;
 
