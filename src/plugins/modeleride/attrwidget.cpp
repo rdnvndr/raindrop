@@ -148,18 +148,28 @@ void AttrWidget::submit()
 
 void AttrWidget::edit(bool flag)
 {
-    if (groupBoxPropAttr->isEnabled()==flag || !tableViewAttr->currentIndex().isValid())
+    if (groupBoxPropAttr->isEnabled()==flag && tableViewAttr->currentIndex().isValid())
         return;
 
     if (lineEditAttrName->text().isEmpty() && flag==false)
         m_attrModel->removeRow(m_mapperAttr->currentIndex(),
                                m_mapperAttr->rootIndex());
 
+    if (!tableViewAttr->currentIndex().isValid()){
+        flag = false;
+        toolButtonDeleteAttr->setEnabled(false);
+        toolButtonEditAttr->setEnabled(false);
+    } else {
+        toolButtonEditAttr->setDisabled(flag);
+        toolButtonDeleteAttr->setEnabled(true);
+    }
+
+
     groupBoxPropAttr->setEnabled(flag);
     groupBoxPropType->setEnabled(flag);
     pushButtonAttrSave->setEnabled(flag);
     pushButtonAttrCancel->setEnabled(flag);
-    toolButtonEditAttr->setDisabled(flag);
+
 }
 
 void AttrWidget::revert()
@@ -216,6 +226,7 @@ QVariant AttrWidget::modelData(QString typeName, QString attr, const QModelIndex
 
 void AttrWidget::setCurrent(QModelIndex index)
 {
+    edit(false);
     if (!index.isValid())
         return;
 
@@ -223,7 +234,7 @@ void AttrWidget::setCurrent(QModelIndex index)
             index.row() == m_mapperAttr->currentIndex())
         return;
 
-    edit(false);
+
     m_mapperAttr->setRootIndex(index.parent());
     m_mapperAttr->setCurrentModelIndex(index);
     tableViewAttr->setCurrentIndex(index);

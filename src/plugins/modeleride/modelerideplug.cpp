@@ -9,6 +9,7 @@
 
 #include "modelerideplug.h"
 #include "propclass.h"
+#include "propcomposition.h"
 #include "dbxmlstruct.h"
 
 ModelerIDEPlug::ModelerIDEPlug(IPlugin *parent):
@@ -48,6 +49,8 @@ bool ModelerIDEPlug::initialize(){
     connect(treeClassView->treeView,SIGNAL(doubleClicked(QModelIndex)),
             this,SLOT(showPropClass(QModelIndex)));
 
+    connect(treeClassView->treeView,SIGNAL(doubleClicked(QModelIndex)),
+            this,SLOT(showPropComposition(QModelIndex)));
 
     // Создание контекстного меню
     contextMenu = new QMenu();
@@ -188,6 +191,13 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     dbStructModel->addDisplayedAttr(DBCOMPXML::COMP,propsComposition);
     dbStructModel->addAttributeTag(DBCOMPXML::COMP);
 
+    QStringList insertTags;
+    insertTags << DBATTRXML::ATTR << DBCLASSXML::CLASS << DBCOMPXML::COMP;
+    dbStructModel->addInsertTags(DBCLASSXML::CLASS,insertTags);
+    insertTags.clear();
+    insertTags << DBATTRXML::ATTR;
+    dbStructModel->addInsertTags(DBCOMPXML::COMP,insertTags);
+
     classFilterModel = new TreeFilterProxyModel();
     classFilterModel->setSourceModel(dbStructModel);
     classFilterModel->setDynamicSortFilter(true);
@@ -211,9 +221,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 void ModelerIDEPlug::addClass()
 {
     dbStructModel->setInsTagName(DBCLASSXML::CLASS);
-    QModelIndex index = classFilterModel->mapToSource(treeClassView->treeView->currentIndex());
-    if (dbStructModel->insertRow(0,index)){
-        index = classFilterModel->mapFromSource(dbStructModel->lastInsertRow());
+    QModelIndex indexSource = classFilterModel->mapToSource(treeClassView->treeView->currentIndex());
+    if (dbStructModel->insertRow(0,indexSource)){
+        QModelIndex index = classFilterModel->mapFromSource(dbStructModel->lastInsertRow());
         treeClassView->treeView->setCurrentIndex(index);
         showPropClass(index);
     }
@@ -277,6 +287,40 @@ void ModelerIDEPlug::showPropClass(QModelIndex index)
     } else {
         PropClass* propClass = qobject_cast<PropClass*>(subWindow->widget());
         propClass->setCurrentClass(indexSource);
+    }
+}
+
+void ModelerIDEPlug::showPropComposition(QModelIndex index)
+{
+    QModelIndex indexSource = classFilterModel->mapToSource(index);
+
+    if (!indexSource.isValid())
+        return;
+
+    if (indexSource.data(Qt::UserRole)!=DBCOMPXML::COMP)
+        return;
+
+    PluginManager* pluginManager = PluginManager::instance();
+    MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
+                                                           "MainWindowPlug::MainWindow"));
+
+    QString className = index.sibling(index.row(),dbStructModel->indexDisplayedAttr(
+                                 DBCOMPXML::COMP,
+                                 DBCOMPXML::NAME
+                                 )).data().toString();
+
+    QString subWindowName = "PropComposition::" + className;
+    QMdiSubWindow* subWindow = mainwindow->setActiveSubWindow(subWindowName);
+
+    if (!subWindow) {
+        PropComposition* propComposition = new PropComposition();
+        subWindow =  mainwindow->addSubWindow(propComposition);
+        propComposition->setObjectName(subWindowName);
+        propComposition->setModel(dbStructModel);
+        propComposition->setCurrentClass(indexSource);
+    } else {
+        PropComposition* propComposition = qobject_cast<PropComposition*>(subWindow->widget());
+        propComposition->setCurrentClass(indexSource);
     }
 }
 
