@@ -19,7 +19,6 @@ public:
 public slots:
     void add();
     void remove();
-    void setCurrent(QModelIndex index);
     void edit();
     void showParent(bool flag);
     void setRootIndex(QModelIndex index);

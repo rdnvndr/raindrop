@@ -16,8 +16,6 @@ CompositionWidget::CompositionWidget(QWidget *parent) :
     tableViewComp->setItemDelegate(new XmlDelegate(this));
     tableViewComp->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    connect(tableViewComp,SIGNAL(clicked(QModelIndex)),
-            this,SLOT(setCurrent(QModelIndex)));
     connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));
     connect(toolButtonDelete,SIGNAL(clicked()),this,SLOT(remove()));
 
@@ -60,11 +58,15 @@ void CompositionWidget::add()
 }
 
 void CompositionWidget::remove()
-{
-}
-
-void CompositionWidget::setCurrent(QModelIndex index)
-{
+{   
+    QModelIndex srcIndex = m_compositionModel->mapToSource(tableViewComp->rootIndex());
+    QModelIndex curIndex = m_compositionModel->mapToSource(tableViewComp->currentIndex());
+    if (srcIndex.isValid() && curIndex.isValid()){
+        emit dataRemoved(srcIndex);
+        m_model->removeRow(curIndex.row(),srcIndex);
+    } else
+        QMessageBox::warning(NULL,tr("Предупреждение"),
+                             tr("Невозможно удалить состав, поскольку ничего не выбрано."));
 }
 
 void CompositionWidget::edit()
@@ -110,6 +112,4 @@ void CompositionWidget::setRootIndex(QModelIndex index)
 
     tableViewComp->setRootIndex(m_compositionModel->mapFromSource(index));
     tableViewComp->setCurrentIndex(tableViewComp->rootIndex().child(0,0));
-
-    this->setCurrent(tableViewComp->rootIndex().child(0,0));
 }
