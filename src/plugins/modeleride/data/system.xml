@@ -43,6 +43,6 @@
 <RTPClass isAbstract="true" description="Сборочная единица" isActive="true" type="" parent="DesignComposition" name="Assembly" displayTemplate=""/>
 <RTPClass isAbstract="true" description="Стандартные изделия" isActive="true" type="" parent="Product" name="Part" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Технологическая сборка" isActive="false" type="" parent="Item" name="TechAssembly" displayTemplate=""/>
-<RTPComposition description="Вхождение" name="in" directDescription="1" inverseDescription="2" parent="Product" class=""/>
+<RTPComposition inverseDescription="2" class="" description="Вхождение" parent="Product" name="in" directDescription="1"/>
 </RTPClass>
 </RTPClass>

@@ -17,6 +17,8 @@ PropClass::PropClass(QWidget *parent) :
             this,SLOT(setTabName(QModelIndex)));
     connect(classWidget,SIGNAL(dataRemoved(QModelIndex)),
             this,SLOT(closeTab(QModelIndex)));
+    connect(compWidget,SIGNAL(dataEdited(QModelIndex)),
+            this,SLOT(onEditComposition(QModelIndex)));
 }
 
 PropClass::~PropClass()
@@ -52,6 +54,11 @@ void PropClass::closeTab(const QModelIndex &index)
 
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
     subWindow->close();
+}
+
+void PropClass::onEditComposition(QModelIndex index)
+{
+    emit editComposition(index);
 }
 
 QVariant PropClass::modelData(QString typeName, QString attr, const QModelIndex& index)

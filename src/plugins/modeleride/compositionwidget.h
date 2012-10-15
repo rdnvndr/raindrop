@@ -25,6 +25,8 @@ public slots:
     void setRootIndex(QModelIndex index);
 
 signals:
+    void dataAdded(QModelIndex index);
+    void dataEdited(QModelIndex index);
     void dataChanged(QModelIndex index);
     void dataRemoved(QModelIndex index);
     void currentIndexChanged(QModelIndex index);

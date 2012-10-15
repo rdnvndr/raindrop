@@ -48,6 +48,15 @@ void CompositionWidget::setModel(TreeXMLModel *model)
 
 void CompositionWidget::add()
 {
+    QModelIndex srcIndex = m_compositionModel->mapToSource(tableViewComp->rootIndex());
+    m_model->setInsTagName(DBCOMPXML::COMP);
+    if (m_model->insertRow(0,srcIndex)){
+        QModelIndex srcCurrentIndex = m_model->lastInsertRow();
+        tableViewComp->setCurrentIndex(
+                    m_compositionModel->mapFromSource(srcCurrentIndex));
+        emit dataEdited(srcCurrentIndex);
+    }
+
 }
 
 void CompositionWidget::remove()
@@ -60,6 +69,8 @@ void CompositionWidget::setCurrent(QModelIndex index)
 
 void CompositionWidget::edit()
 {
+    QModelIndex index = m_compositionModel->mapToSource(tableViewComp->currentIndex());
+    emit dataEdited(index);
 }
 
 QVariant CompositionWidget::modelData(QString typeName, QString attr, const QModelIndex &index)

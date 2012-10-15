@@ -22,6 +22,7 @@ public slots:
     void edit(bool flag = true);
     void submit();
     void revert();
+    void rowsRemoved(QModelIndex index,int start,int end);
 
 signals:
     void dataChanged(QModelIndex index);
@@ -33,6 +34,7 @@ private:
     TreeXMLModel* m_model;
     QDataWidgetMapper* m_mapper;
     QStringListModel *m_typeClassModel;
+    int  m_oldIndex;
 };
 
 #endif // CLASSWIDGET_H

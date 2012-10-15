@@ -17,6 +17,7 @@ CompositionPropWidget::CompositionPropWidget(QWidget *parent) :
     connect(pushButtonPropSave,SIGNAL(clicked()),this,SLOT(submit()));
     connect(pushButtonPropCancel,SIGNAL(clicked()),this,SLOT(revert()));
     connect(toolButtonEdit,SIGNAL(clicked()),this,SLOT(edit()));
+    m_oldIndex = -1;
 }
 
 CompositionPropWidget::~CompositionPropWidget()
@@ -59,9 +60,9 @@ void CompositionPropWidget::setModel(TreeXMLModel *model)
 
 void CompositionPropWidget::add()
 {
-    m_oldIndex = m_model->index(m_mapper->currentIndex(),
-                                0,m_mapper->rootIndex());
-    QModelIndex srcIndex = m_oldIndex.parent();
+    m_oldIndex = m_mapper->currentIndex();
+    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),
+                                          0,m_mapper->rootIndex()).parent();
 
     m_model->setInsTagName(DBCOMPXML::COMP);
     if (m_model->insertRow(0,srcIndex)){
@@ -131,9 +132,17 @@ void CompositionPropWidget::revert()
     edit(false);
 }
 
-void CompositionPropWidget::rowsRemoved(QModelIndex index, int pos, int count)
+void CompositionPropWidget::rowsRemoved(QModelIndex index, int start, int end)
 {
-    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1)
+    if (index == m_mapper->rootIndex()){
+        if (m_oldIndex > end)
+            m_oldIndex = m_oldIndex - end-start-1;
+        else if (m_oldIndex >= start && m_oldIndex <= end){
+            m_oldIndex = -1;
+        }
+    }
+
+    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1 && m_oldIndex <0)
         emit dataRemoved(QModelIndex());
 }
 
@@ -147,13 +156,12 @@ QVariant CompositionPropWidget::modelData(QString typeName, QString attr, const 
 void CompositionPropWidget::removeEmpty()
 {
     if (lineEditName->text().isEmpty()){
-
-        if (m_oldIndex.isValid()){
+        if (m_oldIndex>=0){
             m_model->removeRow(m_mapper->currentIndex(),
                                m_mapper->rootIndex());
-
-            setCurrent(m_oldIndex);
-        } else {
+            setCurrent(m_mapper->rootIndex().child(m_oldIndex,0));
+            m_oldIndex = -1;
+        }else {
             remove();
             return;
         }
