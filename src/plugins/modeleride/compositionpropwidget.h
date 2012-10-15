@@ -21,7 +21,7 @@ public slots:
     void edit(bool flag = true);
     void submit();
     void revert();
-    void rowsRemoved(QModelIndex index,int pos,int count);
+    void rowsRemoved(QModelIndex index,int start,int end);
 
 signals:
     void dataChanged(QModelIndex index);
@@ -32,7 +32,7 @@ private:
     QVariant modelData(QString typeName, QString attr, const QModelIndex &index);
     TreeXMLModel* m_model;
     QDataWidgetMapper* m_mapper;
-    QModelIndex m_oldIndex;
+    int  m_oldIndex;
 };
 
 #endif // COMPOSITIONPROPWIDGET_H

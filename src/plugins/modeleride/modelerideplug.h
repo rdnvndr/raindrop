@@ -39,8 +39,9 @@ private:
     QString className(const QModelIndex &index);
 
 public slots:
-    void showPropClass(QModelIndex index);
-    void showPropComposition(QModelIndex index);
+    void dblClickTree(QModelIndex index);
+    void showPropClass(QModelIndex indexSource);
+    void showPropComposition(QModelIndex indexSource);
     void newClassModel();
     void openClassModel();
     void saveClassModel();

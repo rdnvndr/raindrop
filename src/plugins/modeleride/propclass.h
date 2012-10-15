@@ -18,10 +18,14 @@ public:
     void setModel(TreeXMLModel *model);
     TreeXMLModel* model();    
 
+signals:
+    void editComposition(QModelIndex index);
+
 public slots:
     void setCurrentClass(QModelIndex index);
     void setTabName(const QModelIndex &index);
     void closeTab(const QModelIndex &index);
+    void onEditComposition(QModelIndex index);
 private:
     QVariant modelData(QString typeName, QString attr, const QModelIndex &index);
     TreeXMLModel* m_model;

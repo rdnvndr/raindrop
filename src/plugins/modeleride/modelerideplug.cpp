@@ -47,10 +47,7 @@ bool ModelerIDEPlug::initialize(){
     treeClassView = new ClassTreeView();
 
     connect(treeClassView->treeView,SIGNAL(doubleClicked(QModelIndex)),
-            this,SLOT(showPropClass(QModelIndex)));
-
-    connect(treeClassView->treeView,SIGNAL(doubleClicked(QModelIndex)),
-            this,SLOT(showPropComposition(QModelIndex)));
+            this,SLOT(dblClickTree(QModelIndex)));
 
     // Создание контекстного меню
     contextMenu = new QMenu();
@@ -225,7 +222,7 @@ void ModelerIDEPlug::addClass()
     if (dbStructModel->insertRow(0,indexSource)){
         QModelIndex index = classFilterModel->mapFromSource(dbStructModel->lastInsertRow());
         treeClassView->treeView->setCurrentIndex(index);
-        showPropClass(index);
+        showPropClass(dbStructModel->lastInsertRow());
     }
 }
 
@@ -235,6 +232,20 @@ QString ModelerIDEPlug::className(const QModelIndex& index)
                              DBCLASSXML::CLASS,
                              DBCLASSXML::NAME
                              )).data().toString();
+}
+
+void ModelerIDEPlug::dblClickTree(QModelIndex index)
+{
+    QModelIndex indexSource = classFilterModel->mapToSource(index);
+
+    if (!indexSource.isValid())
+        return;
+
+    if (!dbStructModel->isAttribute(indexSource))
+        showPropClass(indexSource);
+
+    if (indexSource.data(Qt::UserRole)==DBCOMPXML::COMP)
+        showPropComposition(indexSource);
 }
 
 void ModelerIDEPlug::removeClass()
@@ -261,10 +272,8 @@ void ModelerIDEPlug::removeClass()
                              tr("Невозможно удалить узел, поскольку он не выбран."));
 }
 
-void ModelerIDEPlug::showPropClass(QModelIndex index)
+void ModelerIDEPlug::showPropClass(QModelIndex indexSource)
 {
-    QModelIndex indexSource = classFilterModel->mapToSource(index);
-
     if (!indexSource.isValid())
         return;
 
@@ -275,7 +284,7 @@ void ModelerIDEPlug::showPropClass(QModelIndex index)
     MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
                                                            "MainWindowPlug::MainWindow"));
 
-    QString subWindowName = "PropClass::" + this->className(index);
+    QString subWindowName = "PropClass::" + this->className(indexSource);
     QMdiSubWindow* subWindow = mainwindow->setActiveSubWindow(subWindowName);
 
     if (!subWindow) {
@@ -284,16 +293,16 @@ void ModelerIDEPlug::showPropClass(QModelIndex index)
         propClass->setObjectName(subWindowName);
         propClass->setModel(dbStructModel);
         propClass->setCurrentClass(indexSource);
+        connect(propClass,SIGNAL(editComposition(QModelIndex)),
+                this,SLOT(showPropComposition(QModelIndex)));
     } else {
         PropClass* propClass = qobject_cast<PropClass*>(subWindow->widget());
         propClass->setCurrentClass(indexSource);
     }
 }
 
-void ModelerIDEPlug::showPropComposition(QModelIndex index)
+void ModelerIDEPlug::showPropComposition(QModelIndex indexSource)
 {
-    QModelIndex indexSource = classFilterModel->mapToSource(index);
-
     if (!indexSource.isValid())
         return;
 
@@ -304,7 +313,7 @@ void ModelerIDEPlug::showPropComposition(QModelIndex index)
     MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
                                                            "MainWindowPlug::MainWindow"));
 
-    QString className = index.sibling(index.row(),dbStructModel->indexDisplayedAttr(
+    QString className = indexSource.sibling(indexSource.row(),dbStructModel->indexDisplayedAttr(
                                  DBCOMPXML::COMP,
                                  DBCOMPXML::NAME
                                  )).data().toString();
