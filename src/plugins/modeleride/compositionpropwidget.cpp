@@ -92,6 +92,9 @@ void CompositionPropWidget::setCurrent(QModelIndex index)
     m_mapper->setRootIndex(index.parent());
     m_mapper->setCurrentModelIndex(index);
     edit(false);
+    //comboBoxDestClass->currentText();
+    //comboBoxDestClass->setCurrentModelIndex(index.parent());
+    //comboBoxDestClass->lineEdit()->setText("dddd");
     /*int indexType = comboBoxClassType->findText(modelData(DBCLASSXML::CLASS,
                                                           DBCLASSXML::TYPE,
                                                           index).toString());

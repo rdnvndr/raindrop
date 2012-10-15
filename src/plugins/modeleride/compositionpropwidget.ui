@@ -116,7 +116,7 @@
        <widget class="QLineEdit" name="lineEditDirectDesc"/>
       </item>
       <item row="5" column="1">
-       <widget class="QComboBox" name="comboBoxDestClass"/>
+       <widget class="TreeComboBox" name="comboBoxDestClass"/>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="labelDesc">
@@ -231,6 +231,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TreeComboBox</class>
+   <extends>QComboBox</extends>
+   <header>treecombobox/treecombobox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="modeleride.qrc"/>
  </resources>
