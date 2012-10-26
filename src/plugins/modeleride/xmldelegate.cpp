@@ -2,6 +2,7 @@
 #include <QComboBox>
 #include <QDebug>
 #include <QAbstractItemView>
+#include <treecombobox/treecombobox.h>
 
 XmlDelegate::XmlDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -16,11 +17,18 @@ QWidget*  XmlDelegate::createEditor ( QWidget * parent, const QStyleOptionViewIt
 
 void XmlDelegate::setEditorData( QWidget * editor, const QModelIndex & index )const
 {
-    QComboBox* pRes = dynamic_cast<QComboBox*>(editor);
-    if (pRes) {
-        pRes->setEditText(index.model()->data(index,Qt::EditRole).toString());
+    TreeComboBox* treeComboBox = dynamic_cast<TreeComboBox*>(editor);
+    if (treeComboBox) {
+        treeComboBox->setDisplayText(index.model()->data(index,Qt::EditRole).toString());
         return;
     }
+
+    QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
+    if (comboBox) {
+        comboBox->setEditText(index.model()->data(index,Qt::EditRole).toString());
+        return;
+    }
+
     QStyledItemDelegate::setEditorData(editor, index);
     return;
 
@@ -29,9 +37,9 @@ void XmlDelegate::setEditorData( QWidget * editor, const QModelIndex & index )co
 void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, const QModelIndex & index )const
 {
     // Если QComboBox присваиваем текущий текст, а не индекс
-    QComboBox* pRes = dynamic_cast<QComboBox*>(editor);
-    if (pRes) {
-        model->setData(index,pRes->currentText(),Qt::EditRole);
+    QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
+    if (comboBox) {
+        model->setData(index,comboBox->currentText(),Qt::EditRole);
         return;
     }
 

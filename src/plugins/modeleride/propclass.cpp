@@ -1,6 +1,6 @@
 #include "propclass.h"
 #include "dbxmlstruct.h"
-#include <treexmlmodel/xmldelegate.h>
+#include "xmldelegate.h"
 
 PropClass::PropClass(QWidget *parent) :
     QWidget(parent)

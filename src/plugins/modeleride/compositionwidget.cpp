@@ -1,6 +1,6 @@
 #include "compositionwidget.h"
 #include "dbxmlstruct.h"
-#include <treexmlmodel/xmldelegate.h>
+#include "xmldelegate.h"
 #include <QHeaderView>
 
 CompositionWidget::CompositionWidget(QWidget *parent) :

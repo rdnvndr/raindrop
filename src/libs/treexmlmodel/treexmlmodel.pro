@@ -6,12 +6,10 @@ HEADERS += \
     tagxmlitem.h \
     xmlmodeldll.h \
     tablexmlproxymodel.h \
-    xmldelegate.h \
     treexmlmodelglobal.h
 
 SOURCES += \ 
     treexmlmodel.cpp \
     tagxmlitem.cpp \
-    tablexmlproxymodel.cpp \
-    xmldelegate.cpp
+    tablexmlproxymodel.cpp
 
