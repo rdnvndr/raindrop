@@ -1,6 +1,6 @@
 #include "attrwidget.h"
 #include "dbxmlstruct.h"
-#include <treexmlmodel/xmldelegate.h>
+#include "xmldelegate.h"
 #include <QStringListModel>
 
 AttrWidget::AttrWidget(QWidget *parent) :

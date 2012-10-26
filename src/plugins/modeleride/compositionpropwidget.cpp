@@ -1,5 +1,5 @@
 #include "compositionpropwidget.h"
-#include <treexmlmodel/xmldelegate.h>
+#include "xmldelegate.h"
 #include "dbxmlstruct.h"
 
 CompositionPropWidget::CompositionPropWidget(QWidget *parent) :

@@ -2,14 +2,13 @@
 #define XMLDELEGATE_H
 
 #include <QStyledItemDelegate>
-#include "treexmlmodelglobal.h"
 
 //! Делегат XML модели
 /*! Данный делегат предназначен для ввода данных в XML модель
     TreeXMLModel
  */
 
-class XMLMODELLIB XmlDelegate : public QStyledItemDelegate
+class XmlDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 public:

@@ -1,6 +1,6 @@
 #include "classwidget.h"
 #include "dbxmlstruct.h"
-#include <treexmlmodel/xmldelegate.h>
+#include "xmldelegate.h"
 #include <QStringListModel>
 
 ClassWidget::ClassWidget(QWidget *parent) :
