@@ -54,6 +54,7 @@ void TreeComboBox::setModel(QAbstractItemModel *model)
 void TreeComboBox::setCurrentModelIndex(const QModelIndex &index)
 {
     treeView->setCurrentIndex(index);
+    hidePopup();
 }
 
 void TreeComboBox::paintEvent(QPaintEvent *)
