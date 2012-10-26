@@ -14,10 +14,15 @@ public:
 
     void setModel(QAbstractItemModel * model);
     void setCurrentModelIndex (const QModelIndex & index);
+
+    virtual void paintEvent(QPaintEvent *);
+    void setDisplayText(QString text);
+    QString getDisplayText() const;
+
 private:
     bool skipNextHide;
     QTreeView* treeView;
-
+    QString m_displayText;
 };
 
 #endif // TREECOMBOBOX_H
