@@ -45,13 +45,25 @@ public:
     //! Количество столбцов
     virtual int columnCount(const QModelIndex &parent) const;
 
+    //! Устанавливает название заголовка
+    bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value,
+                       int role = Qt::EditRole);
+
+    //! Возращает название заголовка
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+
 private:
     //! Индекс модели, в котором отображаются только атрибуты
     QModelIndex m_index;
+
     //! Список тэгов, которые являются атрибутами
     QStringList m_tags;
+
     //! Количество столбцов
     int m_columnCount;
+
+    //! Список названий заголовков
+    QMap<int, QString> m_header;
 };
 
 #endif // TABLEXMLPROXYMODEL_H
