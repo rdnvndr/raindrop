@@ -11,7 +11,7 @@ TableXMLProxyModel::TableXMLProxyModel(): QSortFilterProxyModel()
 bool TableXMLProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) const
 {
     QModelIndex source_index = sourceModel()->index(row,filterKeyColumn(),parent);
-    if (!source_index.isValid()) // the column may not exist
+    if (!source_index.isValid())
         return true;
 
     if (parent.internalPointer() ==  m_index.internalPointer()){
@@ -64,4 +64,29 @@ int TableXMLProxyModel::columnCount(const QModelIndex &parent) const
         return QSortFilterProxyModel::columnCount(parent);
     else
         return m_columnCount;
+}
+
+QVariant TableXMLProxyModel::headerData(int section, Qt::Orientation orientation,
+                                  int role) const
+{
+    if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
+        if (m_header[section].isNull())
+            return QSortFilterProxyModel::headerData(section,orientation,role);
+        else
+            return  m_header[section];
+    }
+    return  QVariant();
+}
+
+bool TableXMLProxyModel::setHeaderData(int section, Qt::Orientation orientation,
+                                 const QVariant &value, int role)
+{
+    if (role != Qt::EditRole || orientation != Qt::Horizontal)
+        return false;
+
+    m_header[section] = value.toString();
+    emit headerDataChanged(orientation, section, section);
+
+    return true;
+
 }

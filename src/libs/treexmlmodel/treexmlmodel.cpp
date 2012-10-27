@@ -66,6 +66,11 @@ bool TreeXMLModel::isInsert(const QModelIndex &index) const
         return !isAttribute(index);
 }
 
+bool TreeXMLModel::hasChildren(const QModelIndex &parent) const
+{
+    return true;
+}
+
 void TreeXMLModel::addDisplayedAttr(QString nameAttr, QStringList value, QIcon icon)
 {
     if (value.count()>m_column)

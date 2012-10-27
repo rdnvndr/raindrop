@@ -47,6 +47,17 @@ void AttrWidget::setModel(TreeXMLModel *model)
     m_model = model;
 
     m_attrModel->setSourceModel(m_model);
+    m_attrModel->setHeaderData(0, Qt::Horizontal, tr("Имя атрибута"));
+    m_attrModel->setHeaderData(1, Qt::Horizontal, tr("Описание"));
+    m_attrModel->setHeaderData(2, Qt::Horizontal, tr("Тип"));
+    m_attrModel->setHeaderData(3, Qt::Horizontal, tr("Длина строки"));
+    m_attrModel->setHeaderData(4, Qt::Horizontal, tr("Ссылочный класс"));
+    m_attrModel->setHeaderData(5, Qt::Horizontal, tr("Класс"));
+    m_attrModel->setHeaderData(6, Qt::Horizontal, tr("По умолчанию"));
+    m_attrModel->setHeaderData(7, Qt::Horizontal, tr("Группа"));
+    m_attrModel->setHeaderData(8, Qt::Horizontal, tr("Нулевые значения"));
+    m_attrModel->setHeaderData(9, Qt::Horizontal, tr("Уникальный"));
+    m_attrModel->setHeaderData(10, Qt::Horizontal, tr("Кандидат в ключ"));
     tableViewAttr->setModel(m_attrModel);
 
     m_mapperAttr->setModel(m_attrModel);
@@ -107,6 +118,7 @@ void AttrWidget::setRootIndex(QModelIndex index)
     m_attrModel->setSourceModel(m_model);
     tableViewAttr->setRootIndex(m_attrModel->mapFromSource(index));
     tableViewAttr->setCurrentIndex(tableViewAttr->rootIndex().child(0,0));
+    m_mapperAttr->setRootIndex(m_attrModel->mapFromSource(index));
 
     this->setCurrent(tableViewAttr->rootIndex().child(0,0));
 }
@@ -234,10 +246,8 @@ void AttrWidget::setCurrent(QModelIndex index)
             index.row() == m_mapperAttr->currentIndex())
         return;
 
-
-    m_mapperAttr->setRootIndex(index.parent());
-    m_mapperAttr->setCurrentModelIndex(index);
     tableViewAttr->setCurrentIndex(index);
+    m_mapperAttr->setCurrentModelIndex(index);
 
     int indexType = comboBoxTypeAttr->findText(modelData(
                                                    DBATTRXML::ATTR,
@@ -245,17 +255,9 @@ void AttrWidget::setCurrent(QModelIndex index)
                                                    index).toString());
     comboBoxTypeAttr->setCurrentIndex(indexType);
 
-    int indexGroup = comboBoxAttrGroup->findText(modelData(
-                                                     DBATTRXML::ATTR,
-                                                     DBATTRXML::GROUP,
+    comboBoxAttrGroup->setEditText(modelData(DBATTRXML::ATTR,DBATTRXML::GROUP,
                                                      index).toString());
-    comboBoxAttrGroup->setCurrentIndex(indexGroup);
 
-    int indexRef = comboBoxLinkAttr->findText(modelData(
-                                                  DBATTRXML::ATTR,
-                                                  DBATTRXML::REFCLASS,
-                                                  index).toString());
-    comboBoxLinkAttr->setCurrentIndex(indexRef);
     changeType(comboBoxTypeAttr->currentText());
     emit currentIndexChanged(index);
 }

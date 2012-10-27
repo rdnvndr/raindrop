@@ -170,7 +170,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                  DBCOMPXML::PARENT << DBCOMPXML::CLASS <<
                  DBCOMPXML::DIRECTDESCRIPTION << DBCOMPXML::INVERSEDESCRIPTION;
 
-    dbStructModel->setHeaderData(0, Qt::Horizontal, tr("Имя атирибута"));
+    dbStructModel->setHeaderData(0, Qt::Horizontal, tr("Имя атрибута"));
     dbStructModel->setHeaderData(1, Qt::Horizontal, tr("Описание"));
     dbStructModel->setHeaderData(2, Qt::Horizontal, tr("Тип"));
     dbStructModel->setHeaderData(3, Qt::Horizontal, tr("Длина строки"));

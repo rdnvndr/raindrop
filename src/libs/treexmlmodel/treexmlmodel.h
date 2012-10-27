@@ -152,6 +152,10 @@ public:
 
     //! Возращает True если можно вставить строку
     bool isInsert(const QModelIndex &index) const;
+
+    //! Возращает True если имеются потомки
+    virtual bool hasChildren(const QModelIndex &parent) const;
+
 private:
      //! Обновление отредактированных унаследованных строк
     void updateModifyRow(int emptyRowAttr, const QModelIndex &parent);

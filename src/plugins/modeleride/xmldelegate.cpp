@@ -17,9 +17,12 @@ QWidget*  XmlDelegate::createEditor ( QWidget * parent, const QStyleOptionViewIt
 
 void XmlDelegate::setEditorData( QWidget * editor, const QModelIndex & index )const
 {
+
     TreeComboBox* treeComboBox = dynamic_cast<TreeComboBox*>(editor);
     if (treeComboBox) {
         treeComboBox->setDisplayText(index.model()->data(index,Qt::EditRole).toString());
+        if (!treeComboBox->isEnabled())
+            treeComboBox->repaint();
         return;
     }
 
