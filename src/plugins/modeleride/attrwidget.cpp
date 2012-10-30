@@ -2,6 +2,7 @@
 #include "dbxmlstruct.h"
 #include "xmldelegate.h"
 #include <QStringListModel>
+#include "treefilterproxymodel.h"
 
 AttrWidget::AttrWidget(QWidget *parent) :
     QWidget(parent)
@@ -62,7 +63,14 @@ void AttrWidget::setModel(TreeXMLModel *model)
 
     m_mapperAttr->setModel(m_attrModel);
 
-    comboBoxLinkAttr->setModel(m_model);
+    QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
+    classFilterModel->setFilterKeyColumn(0);
+    classFilterModel->setFilterRole(Qt::UserRole);
+    classFilterModel->setFilterRegExp(DBCLASSXML::CLASS);
+    classFilterModel->setSourceModel(m_model);
+    classFilterModel->setDynamicSortFilter(true);
+    comboBoxLinkAttr->setModel(classFilterModel);
+
     comboBoxTypeAttr->setModel(m_typeAttrModel);
 
     m_mapperAttr->addMapping(lineEditAttrName,

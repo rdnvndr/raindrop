@@ -33,7 +33,13 @@ void CompositionPropWidget::setModel(TreeXMLModel *model)
 
     m_mapper->setModel(m_model);
 
-    comboBoxDestClass->setModel(m_model);
+    QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
+    classFilterModel->setFilterKeyColumn(0);
+    classFilterModel->setFilterRole(Qt::UserRole);
+    classFilterModel->setFilterRegExp(DBCLASSXML::CLASS);
+    classFilterModel->setSourceModel(m_model);
+    classFilterModel->setDynamicSortFilter(true);
+    comboBoxDestClass->setModel(classFilterModel);
 
     m_mapper->addMapping(lineEditName,
                          model->indexDisplayedAttr(DBCOMPXML::COMP,
