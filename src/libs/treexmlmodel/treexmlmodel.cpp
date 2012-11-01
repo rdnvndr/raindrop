@@ -277,7 +277,7 @@ bool TreeXMLModel::insertRows(int row, int count, const QModelIndex &parent)
         return false;
     bool success = true;
 
-    int position = parentItem->count();
+    int position = this->rowCount(parent);
 
     for (int i=0;i<count;i++)
         success = parentItem->insertChild(m_insTag) && success;
@@ -288,7 +288,7 @@ bool TreeXMLModel::insertRows(int row, int count, const QModelIndex &parent)
     if (parent.isValid())
         m_lastInsRow = parent.child(position+count-1,0);
     else
-        m_lastInsRow = index(0,0,parent);
+        m_lastInsRow = index(position+count-1,0,parent);
 
     return success;
 }
