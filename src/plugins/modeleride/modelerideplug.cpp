@@ -35,6 +35,9 @@ ModelerIDEPlug::~ModelerIDEPlug()
         delete actionCloseModel;
         delete actionAddClass;
         delete actionRemoveClass;
+        delete actionShowAttr;
+        delete actionShowComp;
+        delete actionSeparator;
         delete contextMenu;
     }
 }
@@ -51,12 +54,29 @@ bool ModelerIDEPlug::initialize(){
 
     // Создание контекстного меню
     contextMenu = new QMenu();
+
     actionAddClass = new QAction(tr("Добавить"),this);
     contextMenu->addAction(actionAddClass);
     connect(actionAddClass,SIGNAL(triggered()),this,SLOT(addClass()));
+
     actionRemoveClass = new QAction(tr("Удалить"),this);
     contextMenu->addAction(actionRemoveClass);
     connect(actionRemoveClass,SIGNAL(triggered()),this,SLOT(removeClass()));
+
+    actionSeparator = new QAction(tr("Разделитель"),this);
+    actionSeparator->setSeparator(true);
+    contextMenu->addAction(actionSeparator);
+
+    actionShowAttr = new QAction(tr("Показать атрибуты"),this);
+    actionShowAttr->setCheckable(true);
+    contextMenu->addAction(actionShowAttr);
+    connect(actionShowAttr,SIGNAL(triggered(bool)),this,SLOT(setShownAttr(bool)));
+
+    actionShowComp = new QAction(tr("Показать состав"),this);
+    actionShowComp->setCheckable(true);
+    contextMenu->addAction(actionShowComp);
+    connect(actionShowComp,SIGNAL(triggered(bool)),this,SLOT(setShownComp(bool)));
+
     treeClassView->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(treeClassView->treeView,SIGNAL(customContextMenuRequested(const QPoint&)),
             this,SLOT(showContextMenu(const QPoint&)));
@@ -136,6 +156,30 @@ void ModelerIDEPlug::showContextMenu(const QPoint& point)
     return;
 }
 
+void ModelerIDEPlug::setShownAttr(bool shown)
+{
+    if (shown)
+        classFilterModel->removeHiddenTag(DBATTRXML::ATTR);
+    else
+        classFilterModel->addHiddenTag(DBATTRXML::ATTR);
+
+    QRegExp regex = classFilterModel->filterRegExp();
+    //classFilterModel->clear();
+    classFilterModel->setFilterRegExp(regex);
+}
+
+void ModelerIDEPlug::setShownComp(bool shown)
+{
+    if (shown)
+        classFilterModel->removeHiddenTag(DBCOMPXML::COMP);
+    else
+        classFilterModel->addHiddenTag(DBCOMPXML::COMP);
+
+    QRegExp regex = classFilterModel->filterRegExp();
+    //classFilterModel->clear();
+    classFilterModel->setFilterRegExp(regex);
+}
+
 TreeXMLModel *ModelerIDEPlug::model()
 {
     return dbStructModel;
@@ -198,6 +242,8 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     classFilterModel = new TreeFilterProxyModel();
     classFilterModel->setSourceModel(dbStructModel);
     classFilterModel->setDynamicSortFilter(true);
+    setShownComp(false);
+    setShownAttr(false);
 
     connect(treeClassView->lineEditFiler,SIGNAL(textChanged(QString)),
             classFilterModel,SLOT(setFilterRegExp(QString)));
