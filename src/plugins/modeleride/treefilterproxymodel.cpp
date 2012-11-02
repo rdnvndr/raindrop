@@ -1,11 +1,33 @@
 #include "treefilterproxymodel.h"
+#include <QDebug>
 
 TreeFilterProxyModel::TreeFilterProxyModel()
 {
+
+}
+
+void TreeFilterProxyModel::addHiddenTag(QString tag)
+{
+    m_filterTags.insert(tag);
+}
+
+void TreeFilterProxyModel::removeHiddenTag(QString tag)
+{
+    m_filterTags.remove(tag);
+}
+
+QSet<QString> TreeFilterProxyModel::hiddenTags()
+{
+    return m_filterTags;
 }
 
 bool TreeFilterProxyModel::filterAcceptsRow(int source_row,
                                             const QModelIndex &source_parent) const{
+
+    if (m_filterTags.contains(sourceModel()->data(
+                                  source_parent.child(source_row,0),
+                                  Qt::UserRole).toString()))
+            return false;
 
     // Если узел удолетворяет  фильтру то показать этот узел
     if (filterAcceptsRowItself(source_row, source_parent))

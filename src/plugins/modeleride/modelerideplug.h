@@ -34,6 +34,9 @@ private:
     QAction* actionCloseModel;
     QAction* actionAddClass;
     QAction* actionRemoveClass;
+    QAction* actionShowAttr;
+    QAction* actionShowComp;
+    QAction* actionSeparator;
     QMenu*   contextMenu;
 
     QString className(const QModelIndex &index);
@@ -51,6 +54,8 @@ public slots:
     void addClass();
     void removeClass();
     void showContextMenu(const QPoint &point);
+    void setShownAttr(bool shown);
+    void setShownComp(bool shown);
 
 };
 
