@@ -1,6 +1,6 @@
 #include <QtGui>
 #include <QtXml>
-
+#include <QMessageBox>
 #include "tagxmlitem.h"
 #include "treexmlmodel.h"
 
@@ -62,12 +62,20 @@ bool TreeXMLModel::isInsert(const QModelIndex &index) const
             if (tagName == m_insTag)
                 return true;
         return false;
-    } else
-        return !isAttribute(index);
+    } else {
+        if (rowCount(index) == 0)
+            return !isAttribute(index);
+        else
+            QMessageBox::warning(NULL,
+                                 tr("Предупреждение"),
+                                 tr("У дерева может быть только один корневой узел"));
+    }
+    return false;
 }
 
 bool TreeXMLModel::hasChildren(const QModelIndex &parent) const
 {
+    Q_UNUSED (parent);
     return true;
 }
 
