@@ -285,7 +285,7 @@ bool TreeXMLModel::insertRows(int row, int count, const QModelIndex &parent)
         return false;
     bool success = true;
 
-    int position = this->rowCount(parent);
+    int position = parentItem->count(m_filterTags);
 
     for (int i=0;i<count;i++)
         success = parentItem->insertChild(m_insTag) && success;
