@@ -19,6 +19,7 @@ public:
     /*! Предназначено для получения подокна
     */
     virtual QMdiSubWindow *subWindow(QString objName);
+
 public slots:
 
     //! Слот обработки события закрытия главного окна
@@ -42,6 +43,10 @@ public slots:
     */
     virtual QMdiSubWindow* addSubWindow(QWidget* widget);
 
+    //! Слот установки активного окна по имени
+    /*! Слот предназначен для установки активного подокна в главном окне
+        по его имени
+     */
     virtual QMdiSubWindow *setActiveSubWindow(QString objName);
 };
 

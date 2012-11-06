@@ -6,7 +6,12 @@
 #include <mainwindow/mainwindow.h>
 #include "classtreeview.h"
 #include "treefilterproxymodel.h"
-#include <QtGui>
+
+//! Плагин среды разработки структуры классов
+/*! Плагин предназначен для разработки структуры классов
+    с сохранением ее XML. Имеется возможность разработанную
+    структуру классов опубликовать на сервере БД
+*/
 
 class ModelerIDEPlug: public IPlugin
 {
@@ -14,49 +19,118 @@ class ModelerIDEPlug: public IPlugin
     Q_INTERFACES(IPlugin)
 
 public:
-
+    //! Конструктор плагина
     ModelerIDEPlug(IPlugin *parent = 0);
-    virtual ~ModelerIDEPlug();
-    bool initialize();
-    bool release();
-    TreeXMLModel* model();
-    void createClassModel(QDomDocument document);
-private:
-    QString fileName;
-    TreeXMLModel* dbStructModel;
-    TreeFilterProxyModel* classFilterModel;
-    ClassTreeView* treeClassView;
-    QAction* actionNewModel;
-    QAction* actionSaveModel;
-    QAction* actionSaveAsModel;
-    QAction* actionOpenModel;
-    QAction* actionPublishModel;
-    QAction* actionCloseModel;
-    QAction* actionAddClass;
-    QAction* actionRemoveClass;
-    QAction* actionShowAttr;
-    QAction* actionShowComp;
-    QAction* actionSeparator;
-    QMenu*   contextMenu;
 
+    //! Деструктор плагина
+    virtual ~ModelerIDEPlug();
+
+    //! Инициализация плагина
+    bool initialize();
+
+    //! Освобожение плагина
+    bool release();
+
+    //! Получение Модели данных плагина
+    TreeXMLModel* model();
+
+    //! Создание класса
+    void createClassModel(QDomDocument document);
+
+    //! Получение имени класса по индексу
     QString className(const QModelIndex &index);
 
-public slots:
-    void dblClickTree(QModelIndex index);
-    void showPropClass(QModelIndex indexSource);
-    void showPropComposition(QModelIndex indexSource);
-    void newClassModel();
-    void openClassModel();
-    void saveClassModel();
-    void saveAsClassModel();
-    void publishClassModel();
-    void closeClassModel();
-    void addClass();
-    void removeClass();
-    void showContextMenu(const QPoint &point);
-    void setShownAttr(bool shown);
-    void setShownComp(bool shown);
+private:
+    //! Имя файла структуры
+    QString fileName;
 
+    //! Модель дерева классов
+    TreeXMLModel* dbStructModel;
+
+    //! Прокси модель дерева классов. Отвечает за сортировку и фильтрацию дерева классов
+    TreeFilterProxyModel* classFilterModel;
+
+    //! Дерево классов
+    ClassTreeView* treeClassView;
+
+    //! Команда создания структуры классов
+    QAction* actionNewModel;
+
+    //! Команда сохранения структуры классов
+    QAction* actionSaveModel;
+
+    //! Команда сохранения структуры классов как...
+    QAction* actionSaveAsModel;
+
+    //! Команда открытия структуры классов
+    QAction* actionOpenModel;
+
+    //! Команда публикации структуры классов в БД
+    QAction* actionPublishModel;
+
+    //! Команда закрытия структуры классов
+    QAction* actionCloseModel;
+
+    //! Команда добавления класса
+    QAction* actionAddClass;
+
+    //! Команда удаления класса
+    QAction* actionRemoveClass;
+
+    //! Команда отображения атрибутов в дереве классов
+    QAction* actionShowAttr;
+
+    //! Команда отображения состава в дереве классов
+    QAction* actionShowComp;
+
+    //! Команда разделитель
+    QAction* actionSeparator;
+
+    //! Контекстное меню дерева классов
+    QMenu*   contextMenu;
+
+public slots:
+    //! Слот обработки двойного щелчка по дереву классов
+    void dblClickTree(QModelIndex index);
+
+    //! Слот вызова окна редактирования класса
+    void showPropClass(QModelIndex indexSource);
+
+    //! Слот вызова окна редактирования состава
+    void showPropComposition(QModelIndex indexSource);
+
+    //! Создание новой структуры классов
+    void newClassModel();
+
+    //! Открытие структуры классов
+    void openClassModel();
+
+    //! Сохранение структуры классов
+    void saveClassModel();
+
+    //! Сохранение структуры классов как ...
+    void saveAsClassModel();
+
+    //! Публикация структуры классов на сервере БД
+    void publishClassModel();
+
+    //! Закрытие структуры классов
+    void closeClassModel();
+
+    //! Добавление класса
+    void addClass();
+
+    //! Удаление класса
+    void removeClass();
+
+    //! Слот вызова отображения контекстного меню дерева классов
+    void showContextMenu(const QPoint &point);
+
+    //! Установка отображения атрибутов в дереве классов
+    void setShownAttr(bool shown);
+
+    //! Установка отображения состава в дереве классов
+    void setShownComp(bool shown);
 };
 
 #endif
