@@ -242,6 +242,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     classFilterModel = new TreeFilterProxyModel();
     classFilterModel->setSourceModel(dbStructModel);
     classFilterModel->setDynamicSortFilter(true);
+    classFilterModel->sort(0);
     setShownComp(false);
     setShownAttr(false);
 
