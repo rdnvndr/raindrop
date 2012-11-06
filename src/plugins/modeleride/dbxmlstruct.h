@@ -1,7 +1,10 @@
 #ifndef DBXMLSTRUCT_H
 #define DBXMLSTRUCT_H
+
 #include <QString>
 #include <QStringList>
+
+//! Ключевые слова XML файла для описания класса
 namespace DBCLASSXML{
     const QString CLASS = "RTPClass";
     const QString NAME = "name";
@@ -13,6 +16,7 @@ namespace DBCLASSXML{
     const QString TEMPLATE = "displayTemplate";
 }
 
+//! Ключевые слова XML файла для описания класса
 namespace DBATTRXML{
     const QString ATTR = "RTPAttribute";
     const QString NAME = "name";
@@ -28,6 +32,7 @@ namespace DBATTRXML{
     const QString PARENT = "parent";
 }
 
+//! Ключевые слова XML файла для описания состава
 namespace DBCOMPXML{
     const QString COMP = "RTPComposition";
     const QString NAME = "name";
@@ -38,6 +43,7 @@ namespace DBCOMPXML{
     const QString INVERSEDESCRIPTION = "inverseDescription";
 }
 
+//! Список типов атрибута
 const QStringList DBXMLATTRTYPE = (QStringList()
                                << "Boolean"
                                << "Char"
@@ -50,7 +56,7 @@ const QStringList DBXMLATTRTYPE = (QStringList()
                                << "Time"
                                << "Timeshtamp"
                                );
-
+//! Список типов класса
 const QStringList DBXMLCLASSTYPE = (QStringList()
                                << "System"
                                << "Standart"

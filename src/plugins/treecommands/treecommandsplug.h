@@ -48,10 +48,15 @@ public:
 
     //! Инициализация плагина Дерево команд
     bool initialize();
-    bool release();
-    void readSettings();
-    void writeSettings();
 
+     //! Освобождение плагина Дерево команд
+    bool release();
+
+    //! Чтение и применение настроек плагина Дерево команд
+    void readSettings();
+
+    //! Запись настроек плагина Дерево команд
+    void writeSettings();
 };
 
 #endif
