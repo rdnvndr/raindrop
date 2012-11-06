@@ -7,7 +7,7 @@ class TREECOMBOBOXLIB TreeComboBox : public QComboBox
 {
 public:
     TreeComboBox(QWidget* parent=0);
-    ~TreeComboBox();
+    virtual ~TreeComboBox();
     bool eventFilter(QObject*object,QEvent*event);
     virtual void showPopup();
     virtual void hidePopup();

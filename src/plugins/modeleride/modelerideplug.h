@@ -16,7 +16,7 @@ class ModelerIDEPlug: public IPlugin
 public:
 
     ModelerIDEPlug(IPlugin *parent = 0);
-    ~ModelerIDEPlug();
+    virtual ~ModelerIDEPlug();
     bool initialize();
     bool release();
     TreeXMLModel* model();
