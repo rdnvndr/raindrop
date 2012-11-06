@@ -1,5 +1,6 @@
 #include "treefilterproxymodel.h"
 #include <QDebug>
+#include "dbxmlstruct.h"
 
 TreeFilterProxyModel::TreeFilterProxyModel()
 {
@@ -65,4 +66,18 @@ bool TreeFilterProxyModel::hasAcceptedChildren(int source_row,
             return true;
     }
     return false;
+}
+
+bool TreeFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
+{
+    if (right.data(Qt::UserRole)!=DBCLASSXML::CLASS &&
+            left.data(Qt::UserRole)==DBCLASSXML::CLASS)
+            return true;
+
+    if (right.data(Qt::UserRole)!=DBCOMPXML::COMP &&
+            right.data(Qt::UserRole)!=DBCLASSXML::CLASS &&
+            left.data(Qt::UserRole)==DBCOMPXML::COMP )
+            return true;
+
+    return QSortFilterProxyModel::lessThan(left,right);
 }
