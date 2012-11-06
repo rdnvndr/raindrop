@@ -13,7 +13,7 @@ public:
     TagXMLItem(QDomNode &node, TagXMLItem *parent = 0);
 
     //! Деструктор узла дерева
-    ~TagXMLItem();
+    virtual ~TagXMLItem();
 
     //! Возращает родителя
     TagXMLItem *parent();

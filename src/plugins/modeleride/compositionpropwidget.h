@@ -10,7 +10,7 @@ class CompositionPropWidget : public QWidget, private Ui::CompositionPropWidget
     
 public:
     explicit CompositionPropWidget(QWidget *parent = 0);
-    ~CompositionPropWidget();
+    virtual ~CompositionPropWidget();
     void setModel(TreeXMLModel *model);
 
 public slots:

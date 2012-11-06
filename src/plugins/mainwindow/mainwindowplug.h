@@ -32,15 +32,15 @@ public:
     MainWindow *window;
 
     //! Инициализация плагина главного окна
-    virtual bool initialize();
+    bool initialize();
 
-    virtual bool release();
+    bool release();
 
     //! Чтение и применение настроек плагина главного окна
-    virtual void readSettings();
+    void readSettings();
 
     //! Запись настроек плагина главного окна
-    virtual void writeSettings();
+    void writeSettings();
 
 };
 

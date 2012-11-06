@@ -57,7 +57,7 @@ public:
      //! Конструктор модели
     TreeXMLModel(QDomNode document, QObject *parent = 0);
     //! Деструктор модели
-    ~TreeXMLModel();
+    virtual ~TreeXMLModel();
 
     //! Возращает хранимые данные
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole ) const;

@@ -22,7 +22,7 @@ public:
 public slots:
 
     //! Слот обработки события закрытия главного окна
-    virtual void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event);
 
     //! Слот обновления меню управления окнами
     /*! Слот предназаначен для изменения состояния
