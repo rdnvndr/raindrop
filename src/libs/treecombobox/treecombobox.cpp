@@ -76,7 +76,7 @@ void TreeComboBox::setDisplayText(QString text)
     m_displayText = text;
 }
 
-QString TreeComboBox::getDisplayText() const
+QString TreeComboBox::displayText() const
 {
     return m_displayText;
 }
