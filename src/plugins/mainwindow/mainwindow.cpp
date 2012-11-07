@@ -70,3 +70,8 @@ QMdiSubWindow* MainWindow::subWindow(QString objName)
     return  mdiArea->subWindow(objName);
 }
 
+QList<QMdiSubWindow *> MainWindow::subWindowList() const
+{
+    return mdiArea->subWindowList();
+}
+

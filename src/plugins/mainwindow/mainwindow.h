@@ -20,6 +20,11 @@ public:
     */
     virtual QMdiSubWindow *subWindow(QString objName);
 
+    //! Получение списка подокон
+    /*! Предназначено для получения списка подокон
+    */
+    virtual QList<QMdiSubWindow *> subWindowList() const;
+
 public slots:
 
     //! Слот обработки события закрытия главного окна
