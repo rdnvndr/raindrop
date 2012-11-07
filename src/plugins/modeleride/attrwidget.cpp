@@ -224,15 +224,22 @@ void AttrWidget::changeType(QString s)
         // String
         spinBoxStringLen->setEnabled(true);
         comboBoxLinkAttr->setEnabled(false);
+        comboBoxLinkAttr->setDisplayText("");
+        comboBoxLinkAttr->setCurrentIndex(-1);
         lineEditDefaultValue->setEnabled(true);
     } else if( DBXMLATTRTYPE.at(7)==s){
         //Reference
         spinBoxStringLen->setEnabled(false);
+        spinBoxStringLen->setValue(0);
         comboBoxLinkAttr->setEnabled(true);
         lineEditDefaultValue->setEnabled(false);
+        lineEditDefaultValue->setText("");
     } else {
         spinBoxStringLen->setEnabled(false);
+        spinBoxStringLen->setValue(0);
         comboBoxLinkAttr->setEnabled(false);
+        comboBoxLinkAttr->setDisplayText("");
+        comboBoxLinkAttr->setCurrentIndex(-1);
         lineEditDefaultValue->setEnabled(true);
     }
 }
