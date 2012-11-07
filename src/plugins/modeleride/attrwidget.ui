@@ -250,7 +250,11 @@
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="1" column="1">
-         <widget class="QSpinBox" name="spinBoxStringLen"/>
+         <widget class="QSpinBox" name="spinBoxStringLen">
+          <property name="maximum">
+           <number>8000</number>
+          </property>
+         </widget>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="labelDefaultValue">
