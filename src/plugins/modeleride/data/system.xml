@@ -37,12 +37,20 @@
 <RTPClass isAbstract="true" description="Технологический состав" isActive="true" type="" parent="DesignComposition" name="TechComposition" displayTemplate=""/>
 </RTPClass>
 <RTPClass isAbstract="false" description="Изделие" isActive="false" type="" parent="Root" name="Product" displayTemplate="">
-<RTPClass isAbstract="true" description="Деталь" isActive="true" type="" parent="DesignComposition" name="Detail" displayTemplate=""/>
-<RTPClass isAbstract="true" description="Комплекс" isActive="true" type="" parent="Detail" name="Complex" displayTemplate=""/>
-<RTPClass isAbstract="true" description="Комплект" isActive="true" type="" parent="Product" name="Sets" displayTemplate=""/>
-<RTPClass isAbstract="true" description="Сборочная единица" isActive="true" type="" parent="DesignComposition" name="Assembly" displayTemplate=""/>
+<RTPClass isAbstract="true" description="Деталь" isActive="true" type="" parent="DesignComposition" name="Detail" displayTemplate="">
 <RTPClass isAbstract="true" description="Стандартные изделия" isActive="true" type="" parent="Product" name="Part" displayTemplate=""/>
-<RTPClass isAbstract="false" description="Технологическая сборка" isActive="false" type="" parent="Item" name="TechAssembly" displayTemplate=""/>
-<RTPComposition inverseDescription="2" class="" description="Вхождение" parent="Product" name="in" directDescription="1"/>
+</RTPClass>
+<RTPClass isAbstract="true" description="Сборочная единица" isActive="true" type="" parent="DesignComposition" name="Assembly" displayTemplate="">
+<RTPComposition inverseDescription="" Class="Detail" description="Деталь" parent="Assembly" name="Detail" directDescription="">
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Количество" group="" type="Integer" initialValue="" name="count" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Позиция" group="" type="Integer" initialValue="" name="number" isNullsAllowed="false" referencedClass=""/>
+</RTPComposition>
+<RTPComposition inverseDescription="" Class="Assembly" description="Сборочная единица" parent="Assembly" name="Assembly" directDescription=""/>
+<RTPClass isAbstract="true" description="Комплект" isActive="true" type="" parent="Product" name="Sets" displayTemplate=""/>
+<RTPClass isAbstract="true" description="Комплекс" isActive="true" type="" parent="Detail" name="Complex" displayTemplate=""/>
+<RTPClass isAbstract="false" description="Технологическая сборка" isActive="false" type="" parent="Item" name="TechAssembly" displayTemplate="">
+<RTPComposition inverseDescription="" Class="TechAssembly" description="Технологическая сборка" parent="TechAssembly" name="TechAssembly" directDescription=""/>
+</RTPClass>
+</RTPClass>
 </RTPClass>
 </RTPClass>
