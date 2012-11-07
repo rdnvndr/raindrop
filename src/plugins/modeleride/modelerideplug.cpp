@@ -164,7 +164,6 @@ void ModelerIDEPlug::setShownAttr(bool shown)
         classFilterModel->addHiddenTag(DBATTRXML::ATTR);
 
     QRegExp regex = classFilterModel->filterRegExp();
-    //classFilterModel->clear();
     classFilterModel->setFilterRegExp(regex);
 }
 
@@ -176,7 +175,6 @@ void ModelerIDEPlug::setShownComp(bool shown)
         classFilterModel->addHiddenTag(DBCOMPXML::COMP);
 
     QRegExp regex = classFilterModel->filterRegExp();
-    //classFilterModel->clear();
     classFilterModel->setFilterRegExp(regex);
 }
 
@@ -439,6 +437,14 @@ void ModelerIDEPlug::publishClassModel()
 
 void ModelerIDEPlug::closeClassModel()
 {
+    PluginManager* pluginManager = PluginManager::instance();
+    MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
+                                                           "MainWindowPlug::MainWindow"));
+    foreach (QMdiSubWindow* subWindow, mainwindow->subWindowList())
+        if (subWindow->widget()->objectName().indexOf(QRegExp("^PropClass::"))
+                || subWindow->widget()->objectName().indexOf(QRegExp("^PropComposition::")))
+            subWindow->close();
+
     if (dbStructModel){
         delete classFilterModel;
         classFilterModel = NULL;
