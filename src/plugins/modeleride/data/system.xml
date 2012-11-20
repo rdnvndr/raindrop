@@ -1,55 +1,55 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <RTPClass isAbstract="true" isActive="true" description="Корневой класс" type="System" parent="" name="Root" displayTemplate="">
-<RTPClass isAbstract="true" description="Описание системы" isActive="false" type="System" parent="Root" name="System" displayTemplate="">
-<RTPClass isAbstract="false" description="Классы" isActive="false" type="System" parent="System" name="Class" displayTemplate="">
-<RTPAttribute maxStringLength="32" isCandidateKey="false" isUnique="false" description="Имя класса" group="" type="String" initialValue="" name="name" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="32" isCandidateKey="false" isUnique="false" description="Описание" group="" type="String" initialValue="" name="description" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="32" isCandidateKey="false" isUnique="false" description="Тип класса" group="" type="String" initialValue="" name="type" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="32" isCandidateKey="false" isUnique="false" description="Родитель" group="" type="Reference" initialValue="" name="parent" isNullsAllowed="false" referencedClass="Class"/>
-<RTPAttribute maxStringLength="32" isCandidateKey="false" isUnique="false" description="Абстрактный" group="" type="Boolean" initialValue="" name="isAbstract" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="32" isCandidateKey="false" isUnique="false" description="Активный" group="" type="Boolean" initialValue="" name="isActive" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="32" isCandidateKey="false" isUnique="false" description="Отображаемый атрибут" group="" type="String" initialValue="" name="displayTemplate" isNullsAllowed="false" referencedClass=""/>
+<RTPClass isAbstract="true" description="Описание системы" isActive="true" type="System" parent="Root" name="System" displayTemplate="">
+<RTPClass isAbstract="false" description="Класс" isActive="true" type="System" parent="System" name="Class" displayTemplate="">
+<RTPAttribute maxStringLength="128" isCandidateKey="false" isUnique="false" description="Имя класса" group="" type="String" initialValue="" name="name" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="256" isCandidateKey="false" isUnique="false" description="Описание" group="" type="String" initialValue="" name="description" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="256" isCandidateKey="false" isUnique="false" description="Тип класса" group="" type="String" initialValue="" name="type" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Родитель" group="" type="Reference" initialValue="" name="parent" isNullsAllowed="false" referencedClass="Class"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Абстрактный" group="" type="Boolean" initialValue="" name="isAbstract" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Активный" group="" type="Boolean" initialValue="" name="isActive" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="8000" isCandidateKey="false" isUnique="false" description="Отображаемый атрибут" group="" type="String" initialValue="" name="displayTemplate" isNullsAllowed="true" referencedClass=""/>
 </RTPClass>
-<RTPClass isAbstract="false" description="Атрибуты" isActive="false" type="" parent="System" name="Attribute" displayTemplate="">
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Имя атрибута" group="" type="Integer" initialValue="" name="name" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Описание атрибута" group="" type="Integer" initialValue="" name="description" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Группа" group="" type="Integer" initialValue="" name="group" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Кандидат в ключ" group="" type="Integer" initialValue="" name="isCandidateKey" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Уникальный" group="" type="Integer" initialValue="" name="isUnique" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Может быть нулевым" group="" type="Integer" initialValue="" name="isNullsAllowed" isNullsAllowed="false" referencedClass=""/>
+<RTPClass isAbstract="false" description="Атрибут" isActive="true" type="System" parent="System" name="Attribute" displayTemplate="">
+<RTPAttribute maxStringLength="128" isCandidateKey="false" isUnique="false" description="Имя атрибута" group="" type="String" initialValue="" name="name" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="256" isCandidateKey="false" isUnique="false" description="Описание атрибута" group="" type="String" initialValue="" name="description" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="256" isCandidateKey="false" isUnique="false" description="Группа" group="" type="String" initialValue="" name="group" isNullsAllowed="true" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Кандидат в ключ" group="" type="Boolean" initialValue="" name="isCandidateKey" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Уникальный" group="" type="Boolean" initialValue="" name="isUnique" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Может быть нулевым" group="" type="Boolean" initialValue="" name="isNullsAllowed" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Тип атрибута" group="" type="Integer" initialValue="" name="type" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Длина строки" group="" type="Integer" initialValue="" name="maxStrLen" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Ссылка на класс" group="" type="Integer" initialValue="" name="refClass" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="По умолчанию" group="" type="Integer" initialValue="" name="default" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Длина строки" group="" type="Integer" initialValue="" name="maxStrLen" isNullsAllowed="true" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Ссылка на класс" group="" type="Reference" initialValue="" name="refClass" isNullsAllowed="true" referencedClass="Class"/>
+<RTPAttribute maxStringLength="8000" isCandidateKey="false" isUnique="false" description="По умолчанию" group="" type="String" initialValue="" name="default" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Класс атрибута" group="" type="Reference" initialValue="" name="parent" isNullsAllowed="false" referencedClass="Class"/>
 </RTPClass>
-<RTPClass isAbstract="false" description="Состав" isActive="false" type="System" parent="System" name="Composition" displayTemplate="">
+<RTPClass isAbstract="false" description="Состав" isActive="true" type="System" parent="System" name="Composition" displayTemplate="">
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Наименование" group="" type="String" initialValue="" name="name" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Исходный класс" group="" type="Reference" initialValue="" name="srcClass" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Входящий класс" group="" type="Reference" initialValue="" name="dstClass" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Описание состава" group="" type="Integer" initialValue="" name="description" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Описание состава" group="" type="Integer" initialValue="" name="description" isNullsAllowed="true" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Описание включения" group="" type="String" initialValue="" name="directDescription" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Описание вхождения" group="" type="String" initialValue="" name="inverseDescription" isNullsAllowed="false" referencedClass=""/>
 </RTPClass>
 </RTPClass>
-<RTPAttribute maxStringLength="32" isCandidateKey="false" isUnique="false" description="Индетификатор" group="" type="String" initialValue="" name="guid" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="36" isCandidateKey="true" isUnique="true" description="Индетификатор" group="" type="String" initialValue="" name="guid" isNullsAllowed="false" referencedClass=""/>
+<RTPClass isAbstract="true" description="Изделие" isActive="true" type="" parent="Root" name="Product" displayTemplate="">
 <RTPClass isAbstract="true" description="Конструкторский состав" isActive="true" type="" parent="Root" name="DesignComposition" displayTemplate="">
-<RTPClass isAbstract="true" description="Технологический состав" isActive="true" type="" parent="DesignComposition" name="TechComposition" displayTemplate=""/>
+<RTPClass isAbstract="true" description="Конструкторская сборка" isActive="true" type="" parent="DesignComposition" name="Assembly" displayTemplate="">
+<RTPComposition inverseDescription="Входит в" Class="DesignComposition" description="Конструкторский состав" parent="Assembly" name="DesignComposition" directDescription="Состоит из"/>
+<RTPClass isAbstract="false" description="Комплекс" isActive="true" type="" parent="Assembly" name="Complex" displayTemplate=""/>
+<RTPClass isAbstract="false" description="Комплект" isActive="true" type="" parent="Assembly" name="Sets" displayTemplate=""/>
+<RTPClass isAbstract="false" description="Сборочная единица" isActive="true" type="" parent="Assembly" name="AssemblyUnit" displayTemplate=""/>
 </RTPClass>
-<RTPClass isAbstract="false" description="Изделие" isActive="false" type="" parent="Root" name="Product" displayTemplate="">
-<RTPClass isAbstract="true" description="Деталь" isActive="true" type="" parent="DesignComposition" name="Detail" displayTemplate="">
-<RTPClass isAbstract="true" description="Стандартные изделия" isActive="true" type="" parent="Product" name="Part" displayTemplate=""/>
+<RTPClass isAbstract="true" description="Деталь" isActive="true" type="" parent="Product" name="Component" displayTemplate="">
+<RTPClass isAbstract="false" description="Детали" isActive="true" type="" parent="Component" name="Detail" displayTemplate=""/>
+<RTPClass isAbstract="false" description="Стандартные изделия" isActive="true" type="" parent="Detail" name="Part" displayTemplate=""/>
 </RTPClass>
-<RTPClass isAbstract="true" description="Сборочная единица" isActive="true" type="" parent="DesignComposition" name="Assembly" displayTemplate="">
-<RTPComposition inverseDescription="" Class="Detail" description="Деталь" parent="Assembly" name="Detail" directDescription="">
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Количество" group="" type="Integer" initialValue="" name="count" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Позиция" group="" type="Integer" initialValue="" name="number" isNullsAllowed="false" referencedClass=""/>
-</RTPComposition>
-<RTPComposition inverseDescription="" Class="Assembly" description="Сборочная единица" parent="Assembly" name="Assembly" directDescription=""/>
-<RTPClass isAbstract="true" description="Комплект" isActive="true" type="" parent="Product" name="Sets" displayTemplate=""/>
-<RTPClass isAbstract="true" description="Комплекс" isActive="true" type="" parent="Detail" name="Complex" displayTemplate=""/>
-<RTPClass isAbstract="false" description="Технологическая сборка" isActive="false" type="" parent="Item" name="TechAssembly" displayTemplate="">
-<RTPComposition inverseDescription="" Class="TechAssembly" description="Технологическая сборка" parent="TechAssembly" name="TechAssembly" directDescription=""/>
+</RTPClass>
+<RTPClass isAbstract="true" description="Технологический состав" isActive="true" type="" parent="DesignComposition" name="TechComposition" displayTemplate="">
+<RTPClass isAbstract="false" description="Технологическая сборка" isActive="true" type="" parent="Assembly" name="TechAssembly" displayTemplate="">
+<RTPComposition inverseDescription="Входит в" Class="TechComposition" description="Технологическая сборка" parent="TechAssembly" name="TechAssembly" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="DesignComposition" description="Конструкторский состав" parent="TechAssembly" name="DesignComposition" directDescription="Состоит из"/>
 </RTPClass>
 </RTPClass>
 </RTPClass>
