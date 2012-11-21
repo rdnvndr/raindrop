@@ -79,6 +79,67 @@ bool TreeXMLModel::hasChildren(const QModelIndex &parent) const
     return true;
 }
 
+bool TreeXMLModel::unpackData(const QModelIndex &parent, QDataStream &stream, int row)
+{
+    QString tag;
+    QDomElement node = getItem(parent)->node().toElement();
+    while (!stream.atEnd()) {
+        QString nameAttr;
+        stream >> nameAttr;
+        if (nameAttr==QString("^")){
+            stream >> tag;
+            setInsTagName(tag);
+            insertRow(row,parent);
+            node = getItem(lastInsertRow())->node().toElement();
+        } else if (nameAttr==QString("{")) {
+            unpackData(lastInsertRow(),stream,row);
+        } else if (nameAttr==QString("}")) {
+            return true;
+        } else {
+            QString value;
+            stream >> value;
+            node.setAttribute(nameAttr,value);
+        }
+    }
+    return true;
+}
+
+void TreeXMLModel::packData(QDomElement node, QDataStream &stream) const
+{
+    bool isFirstNode=true;
+    for (QDomNode childNode = node.firstChild();!childNode.isNull();
+         childNode = childNode.nextSibling())
+    {
+        QDomElement nodeElement = childNode.toElement();
+
+        foreach (QString tagName,m_filterTags)
+            if (tagName == nodeElement.tagName()){
+                // Разделитель
+                if (isFirstNode){
+                    stream << QString("{");
+                    isFirstNode = false;
+                }
+                stream << QString("^");
+
+                stream << nodeElement.tagName();
+                QDomNamedNodeMap attrs = nodeElement.attributes();
+                for (int i = 0; i < attrs.size(); ++i) {
+                    QDomAttr attr = attrs.item(i).toAttr();
+                    stream << attr.name();
+                    stream << attr.value();
+                }
+
+                // Обработка вложенного класса
+                foreach (const QString &tagAttrName,m_attrTags)
+                    if (tagName==tagAttrName)
+                        break;
+                packData(nodeElement,stream);
+            }
+    }
+    if (!isFirstNode)
+        stream << QString("}");
+}
+
 void TreeXMLModel::addDisplayedAttr(QString nameAttr, QStringList value, QIcon icon)
 {
     if (value.count()>m_column)
@@ -123,7 +184,6 @@ void TreeXMLModel::removeDisplayedAttr(QString nameAttr)
 
 QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
 {
-
     TagXMLItem *item = getItem(index);
     QDomNode node = item->node();
 
@@ -234,7 +294,6 @@ bool TreeXMLModel::setHeaderData(int section, Qt::Orientation orientation,
     emit headerDataChanged(orientation, section, section);
 
     return true;
-
 }
 
 QModelIndex TreeXMLModel::index(int row, int column, const QModelIndex &parent)
@@ -368,34 +427,10 @@ bool TreeXMLModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     if (column >= columnCount(parent))
         return false;
 
-    // get the data
     QByteArray encodedData = data->data("application/classxmlmodel");
     QDataStream stream(&encodedData, QIODevice::ReadOnly);
 
-    QString tag;
-    stream >> tag;
-    setInsTagName(tag);
-
-    if (!insertRow(row,parent))
-        return false;
-
-    QModelIndex attrParent = lastInsertRow();
-    QDomElement node = getItem(lastInsertRow())->node().toElement();
-    while (!stream.atEnd()) {
-        QString nameAttr;
-        stream >> nameAttr;
-        if (nameAttr==QString("|")){
-            stream >> tag;
-            setInsTagName(tag);
-            insertRow(row,attrParent);
-            node = getItem(lastInsertRow())->node().toElement();
-        } else {
-            QString value;
-            stream >> value;
-            node.setAttribute(nameAttr,value);
-        }
-    }
-    return true;
+    return unpackData(parent,stream,row);
 }
 
 
@@ -413,7 +448,6 @@ TagXMLItem *TreeXMLModel::getItem(const QModelIndex &index) const
     return m_rootItem;
 }
 
-
 Qt::DropActions TreeXMLModel::supportedDropActions() const
 {
     return Qt::CopyAction | Qt::MoveAction;
@@ -424,7 +458,6 @@ Qt::DropActions TreeXMLModel::supportedDragActions() const
     return Qt::CopyAction | Qt::MoveAction;
 }
 
-
 QStringList TreeXMLModel::mimeTypes() const
 {
     QStringList types;
@@ -432,14 +465,14 @@ QStringList TreeXMLModel::mimeTypes() const
     return types;
 }
 
-
 QMimeData *TreeXMLModel::mimeData(const QModelIndexList &indexes) const
 {
     QByteArray encodedData;
     QDataStream stream(&encodedData, QIODevice::WriteOnly);
 
-    foreach (QModelIndex index, indexes) {
+    foreach (const QModelIndex& index,indexes){
         if (index.isValid()) {
+            stream << QString("^");
             QDomElement node = getItem(index)->node().toElement();
             stream << node.tagName();
             QDomNamedNodeMap attrs = node.attributes();
@@ -448,31 +481,8 @@ QMimeData *TreeXMLModel::mimeData(const QModelIndexList &indexes) const
                 stream << attr.name();
                 stream << attr.value();
             }
-
-            // Упаковка входящих атрибутов класса
-            if (!isAttribute(index)){
-                for (QDomNode childNode = node.firstChild();!childNode.isNull();
-                     childNode = childNode.nextSibling()){
-
-                    QDomElement node = childNode.toElement();
-                    foreach (QString tagName,m_attrTags)
-                        if (tagName == node.tagName()){
-
-                            // Разделитель
-                            stream << QString("|");
-
-                            stream << node.tagName();
-                            attrs = node.attributes();
-                            for (int i = 0; i < attrs.size(); ++ i) {
-                                QDomAttr attr = attrs.item(i).toAttr();
-                                stream << attr.name();
-                                stream << attr.value();
-                            }
-                            break;
-                        }
-
-                }
-            }
+            if (!isAttribute(index))
+                packData(node,stream);
         }
     }
 
