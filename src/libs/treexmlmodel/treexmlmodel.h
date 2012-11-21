@@ -139,6 +139,19 @@ public:
                       int row, int column, const QModelIndex &parent);
 
     //! Возращает объект с упакованными данными по списку индексов
+    /*! Возращает объект с упакованными данными по списку индексов\n
+        Упаковка данных производится в виде:
+        \code
+          ^Tag1 prop1 ... propN
+          {
+             ^Tag2 prop1 ... propN
+             ^Tag3 prop1 ... propN
+             ^...
+          }
+          ^...
+          ^TagN
+        \endcode
+    */
     QMimeData *mimeData(const QModelIndexList &indexes) const;
 
     //! Возращает список типов, которые могут быть упакованы
@@ -157,6 +170,12 @@ public:
     virtual bool hasChildren(const QModelIndex &parent) const;
 
 private:
+    //! Распаковка данных из потока
+    bool unpackData(const QModelIndex &parent, QDataStream &stream, int row);
+
+    //! Упаковка данных в поток
+    void packData(QDomElement node, QDataStream &stream) const;
+
      //! Обновление отредактированных унаследованных строк
     void updateModifyRow(int emptyRowAttr, const QModelIndex &parent);
 
