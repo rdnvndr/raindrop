@@ -83,6 +83,7 @@ bool TreeXMLModel::unpackData(const QModelIndex &parent, QDataStream &stream, in
 {
     QString tag;
     QDomElement node = getItem(parent)->node().toElement();
+
     while (!stream.atEnd()) {
         QString nameAttr;
         stream >> nameAttr;
@@ -425,6 +426,8 @@ bool TreeXMLModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     if (!data->hasFormat("application/classxmlmodel"))
         return false;
     if (column >= columnCount(parent))
+        return false;
+    if (isAttribute(parent))
         return false;
 
     QByteArray encodedData = data->data("application/classxmlmodel");
