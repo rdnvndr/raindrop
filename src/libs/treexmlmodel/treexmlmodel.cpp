@@ -42,6 +42,22 @@ void TreeXMLModel::clearAttributeTags(){
     m_attrTags.clear();
 }
 
+bool TreeXMLModel::isInherited(const QModelIndex &index) const
+{
+    TagXMLItem *item = getItem(index);
+    QDomNode node = item->node();
+    QDomNode parentNode1 = node.parentNode();
+
+    QModelIndex parent = index.parent();
+    item = getItem(parent);
+    QDomNode parentNode2 = item->node();
+
+    if (parentNode1!=parentNode2)
+        return true;
+
+    return false;
+}
+
 bool TreeXMLModel::isAttribute(const QModelIndex &index) const
 {
     TagXMLItem *item = getItem(index);
