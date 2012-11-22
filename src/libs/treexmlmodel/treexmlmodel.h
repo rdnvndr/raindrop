@@ -169,6 +169,8 @@ public:
     //! Возращает True если имеются потомки
     virtual bool hasChildren(const QModelIndex &parent) const;
 
+    //! Возращает True если унаследован
+    bool isInherited(const QModelIndex &index) const;
 private:
     //! Распаковка данных из потока
     bool unpackData(const QModelIndex &parent, QDataStream &stream, int row);
