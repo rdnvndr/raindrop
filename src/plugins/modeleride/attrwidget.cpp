@@ -179,9 +179,11 @@ void AttrWidget::edit(bool flag)
         flag = false;
         toolButtonDeleteAttr->setEnabled(false);
         toolButtonEditAttr->setEnabled(false);
+        toolButtonAddAttr->setEnabled(true);
     } else {
         toolButtonEditAttr->setDisabled(flag);
         toolButtonDeleteAttr->setEnabled(true);
+        toolButtonAddAttr->setDisabled(flag);
     }
 
 
