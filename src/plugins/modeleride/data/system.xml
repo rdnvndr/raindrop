@@ -61,10 +61,20 @@
 <RTPClass isAbstract="false" description="Условия труда" isActive="true" type="User" parent="Uts" name="WorkingСonditions" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Цех" isActive="true" type="User" parent="Uts" name="Shop" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Участок" isActive="true" type="User" parent="Uts" name="Plot" displayTemplate=""/>
-<RTPClass isAbstract="false" description="Операции" isActive="true" type="User" parent="Uts" name="Operations" displayTemplate=""/>
-<RTPClass isAbstract="false" description="Переходы" isActive="true" type="" parent="Uts" name="Steps" displayTemplate="">
+<RTPClass isAbstract="false" description="Операция" isActive="true" type="User" parent="TechReferences" name="TPOperation" displayTemplate="">
+<RTPComposition inverseDescription="Входит в" Class="TPStep" description="Переходы" parent="TPOperation" name="Steps" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="MeansEquipment" description="Средства оснащения" parent="TPOperation" name="MeansEquipment" directDescription="Состоит из"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Наименование" group="" type="Reference" initialValue="" name="operation" isNullsAllowed="false" referencedClass="OperationName"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Цех" group="" type="Reference" initialValue="" name="shop" isNullsAllowed="false" referencedClass="Shop"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Участок" group="" type="Reference" initialValue="" name="piot" isNullsAllowed="false" referencedClass="Plot"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Рабочее место" group="" type="Reference" initialValue="" name="workplace" isNullsAllowed="false" referencedClass="Workplace"/>
+</RTPClass>
+<RTPClass isAbstract="false" description="Переход" isActive="true" type="" parent="TechReferences" name="TPStep" displayTemplate="">
 <RTPClass isAbstract="false" description="Технологические переходы" isActive="true" type="" parent="Steps" name="ManufacturingSteps" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Вспомагательные переходы" isActive="true" type="User" parent="Steps" name="AuxiliarySteps" displayTemplate=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Ключевое слово" group="" type="Reference" initialValue="" name="word" isNullsAllowed="false" referencedClass="StepWord"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Поверхность" group="" type="Reference" initialValue="" name="surface" isNullsAllowed="false" referencedClass="StepSurface"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Окончание" group="" type="Reference" initialValue="" name="end" isNullsAllowed="false" referencedClass="StepEnd"/>
 </RTPClass>
 <RTPClass isAbstract="false" description="" isActive="true" type="" parent="Uts" name="ViewOfOperations" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Материал" isActive="true" type="User" parent="Uts" name="Material" displayTemplate="">
@@ -131,5 +141,20 @@
 </RTPClass>
 <RTPClass isAbstract="false" description="Средства защиты" isActive="true" type="User" parent="MeansEquipment" name="MeansProtection" displayTemplate=""/>
 </RTPClass>
+<RTPClass isAbstract="false" description="Технологический процесс" isActive="true" type="User" parent="Root" name="TechProcess" displayTemplate="">
+<RTPComposition inverseDescription="Входит в" Class="TPOperation" description="Операции" parent="TechProcess" name="Operations" directDescription="Состоит из"/>
+</RTPClass>
+<RTPClass isAbstract="false" description="Название операции" isActive="true" type="User" parent="TechReferences" name="Operation" displayTemplate="">
+<RTPComposition inverseDescription="Входит в" Class="TPWorker" description="Рабочий" parent="Operation" name="Worker" directDescription="Состоит из"/>
+</RTPClass>
+<RTPClass isAbstract="false" description="Ключевое слово перехода" isActive="true" type="User" parent="TechReferences" name="StepWord" displayTemplate="">
+<RTPComposition inverseDescription="Входит в" Class="StepSurface" description="Поверхность перехода" parent="StepWord" name="StepSurface" directDescription="Состоит из"/>
+</RTPClass>
+<RTPClass isAbstract="false" description="Поверхность перехода" isActive="true" type="User" parent="TechReferences" name="StepSurface" displayTemplate="">
+<RTPComposition inverseDescription="Входит в" Class="Root" description="Окончание перехода" parent="StepSurface" name="StepEnd" directDescription="Состоит из"/>
+</RTPClass>
+<RTPClass isAbstract="false" description="Окончание перехода" isActive="true" type="User" parent="TechReferences" name="StepEnd" displayTemplate=""/>
+<RTPClass isAbstract="false" description="Рабочее место" isActive="true" type="User" parent="TechReferences" name="Workplace" displayTemplate=""/>
+<RTPClass isAbstract="false" description="Рабочий" isActive="true" type="User" parent="TechReferences" name="TPWorker" displayTemplate=""/>
 </RTPClass>
 </RTPClass>
