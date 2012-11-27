@@ -59,15 +59,32 @@
 <RTPClass isAbstract="false" description="Степень механизации" isActive="true" type="" parent="Uts" name="Mechanization" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Вид производства" isActive="true" type="User" parent="Uts" name="ViewOfProduction" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Условия труда" isActive="true" type="User" parent="Uts" name="WorkingСonditions" displayTemplate=""/>
-<RTPClass isAbstract="false" description="Цех" isActive="true" type="User" parent="Uts" name="Shop" displayTemplate=""/>
-<RTPClass isAbstract="false" description="Участок" isActive="true" type="User" parent="Uts" name="Plot" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Операция" isActive="true" type="User" parent="TechReferences" name="TPOperation" displayTemplate="">
 <RTPComposition inverseDescription="Входит в" Class="TPStep" description="Переходы" parent="TPOperation" name="Steps" directDescription="Состоит из"/>
-<RTPComposition inverseDescription="Входит в" Class="MeansEquipment" description="Средства оснащения" parent="TPOperation" name="MeansEquipment" directDescription="Состоит из"/>
-<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Наименование" group="" type="Reference" initialValue="" name="operation" isNullsAllowed="false" referencedClass="OperationName"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Операция" group="" type="Reference" initialValue="" name="operation" isNullsAllowed="false" referencedClass="Operation"/>
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Цех" group="" type="Reference" initialValue="" name="shop" isNullsAllowed="false" referencedClass="Shop"/>
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Участок" group="" type="Reference" initialValue="" name="piot" isNullsAllowed="false" referencedClass="Plot"/>
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Рабочее место" group="" type="Reference" initialValue="" name="workplace" isNullsAllowed="false" referencedClass="Workplace"/>
+<RTPComposition inverseDescription="Изготавливает" Class="Equipment" description="Оборудование" parent="TPOperation" name="Equipment" directDescription="Иготавливается на"/>
+<RTPComposition inverseDescription="Входит в" Class="MeansEquipment" description="Средства оснащения" parent="TPOperation" name="MeansEquipment" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="Profession" description="Рабочий" parent="TPOperation" name="Worker" directDescription="Состоит из">
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Условия труда" group="" type="Reference" initialValue="" name="workingconditions" isNullsAllowed="false" referencedClass="WorkingСonditions"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Степень механизации" group="" type="Reference" initialValue="" name="mechanization" isNullsAllowed="false" referencedClass="Mechanization"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Штучный коэфициент" group="" type="Double" initialValue="" name="piececoeff" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Количество" group="" type="Integer" initialValue="" name="count" isNullsAllowed="false" referencedClass=""/>
+</RTPComposition>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Номер" group="" type="Integer" initialValue="" name="number" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="КОИД" group="" type="Integer" initialValue="" name="produceParts" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="ОП" group="" type="Integer" initialValue="" name="volumePart" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="ЕН" group="" type="Integer" initialValue="" name="normOnCount" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Подготовительно-заключительное время" group="" type="Double" initialValue="" name="setUpTime" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Штучное время" group="" type="Double" initialValue="" name="pieceTime" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Процент времени на отдых" group="" type="Double" initialValue="" name="restTimePercent" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Основное время" group="" type="Double" initialValue="" name="basicTime" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Вспомагательное время" group="" type="Double" initialValue="" name="auxiliaryTime" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Коэффициент вспомагательного времени" group="" type="Double" initialValue="" name="auxiliaryTimeCoeff" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Процент времени на обслуживание" group="" type="Double" initialValue="" name="serviceTimePercent" isNullsAllowed="false" referencedClass=""/>
+<RTPComposition inverseDescription="Входит в" Class="Instruction" description="Инструкция" parent="TPOperation" name="Instruction" directDescription="Состоит из"/>
 </RTPClass>
 <RTPClass isAbstract="false" description="Переход" isActive="true" type="" parent="TechReferences" name="TPStep" displayTemplate="">
 <RTPClass isAbstract="false" description="Технологические переходы" isActive="true" type="" parent="Steps" name="ManufacturingSteps" displayTemplate=""/>
@@ -75,8 +92,12 @@
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Ключевое слово" group="" type="Reference" initialValue="" name="word" isNullsAllowed="false" referencedClass="StepWord"/>
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Поверхность" group="" type="Reference" initialValue="" name="surface" isNullsAllowed="false" referencedClass="StepSurface"/>
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Окончание" group="" type="Reference" initialValue="" name="end" isNullsAllowed="false" referencedClass="StepEnd"/>
+<RTPAttribute maxStringLength="512" isCandidateKey="true" isUnique="true" description="Текст перехода" group="" type="String" initialValue="" name="text" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Номер" group="" type="Integer" initialValue="" name="number" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Основное время" group="" type="Double" initialValue="" name="basicTime" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Вспомагательное время" group="" type="Double" initialValue="" name="auxiliaryTime" isNullsAllowed="false" referencedClass=""/>
 </RTPClass>
-<RTPClass isAbstract="false" description="" isActive="true" type="" parent="Uts" name="ViewOfOperations" displayTemplate=""/>
+<RTPClass isAbstract="false" description="Вид операции" isActive="true" type="User" parent="TechReferences" name="ViewOfOperations" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Материал" isActive="true" type="User" parent="Uts" name="Material" displayTemplate="">
 <RTPClass isAbstract="false" description="Основной Материал" isActive="true" type="User" parent="Material" name="BasicMaterial" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Вспомагательный материал" isActive="true" type="User" parent="Material" name="AuxiliaryMaterial" displayTemplate=""/>
@@ -85,7 +106,9 @@
 <RTPClass isAbstract="false" description="Исходная заготовка" isActive="true" type="User" parent="Material" name="PrimaryBlank" displayTemplate=""/>
 </RTPClass>
 <RTPClass isAbstract="false" description="Средства оснащения" isActive="true" type="User" parent="Uts" name="MeansEquipment" displayTemplate="">
-<RTPClass isAbstract="false" description="Оборудование" isActive="true" type="User" parent="Uts" name="Equipment" displayTemplate=""/>
+<RTPClass isAbstract="false" description="Оборудование" isActive="true" type="User" parent="Uts" name="Equipment" displayTemplate="">
+<RTPAttribute maxStringLength="512" isCandidateKey="true" isUnique="true" description="Наименование" group="" type="String" initialValue="" name="name" isNullsAllowed="false" referencedClass=""/>
+</RTPClass>
 <RTPClass isAbstract="false" description="Оснастка" isActive="true" type="User" parent="Uts" name="Tooling" displayTemplate="">
 <RTPClass isAbstract="false" description="Инструмент" isActive="true" type="User" parent="Tooling" name="Tool" displayTemplate="">
 <RTPClass isAbstract="false" description="Режущий инструмент" isActive="true" type="" parent="Tool" name="CuttingTool" displayTemplate="">
@@ -144,9 +167,7 @@
 <RTPClass isAbstract="false" description="Технологический процесс" isActive="true" type="User" parent="Root" name="TechProcess" displayTemplate="">
 <RTPComposition inverseDescription="Входит в" Class="TPOperation" description="Операции" parent="TechProcess" name="Operations" directDescription="Состоит из"/>
 </RTPClass>
-<RTPClass isAbstract="false" description="Название операции" isActive="true" type="User" parent="TechReferences" name="Operation" displayTemplate="">
-<RTPComposition inverseDescription="Входит в" Class="TPWorker" description="Рабочий" parent="Operation" name="Worker" directDescription="Состоит из"/>
-</RTPClass>
+<RTPClass isAbstract="false" description="Название операции" isActive="true" type="User" parent="TechReferences" name="Operation" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Ключевое слово перехода" isActive="true" type="User" parent="TechReferences" name="StepWord" displayTemplate="">
 <RTPComposition inverseDescription="Входит в" Class="StepSurface" description="Поверхность перехода" parent="StepWord" name="StepSurface" directDescription="Состоит из"/>
 </RTPClass>
@@ -154,7 +175,19 @@
 <RTPComposition inverseDescription="Входит в" Class="Root" description="Окончание перехода" parent="StepSurface" name="StepEnd" directDescription="Состоит из"/>
 </RTPClass>
 <RTPClass isAbstract="false" description="Окончание перехода" isActive="true" type="User" parent="TechReferences" name="StepEnd" displayTemplate=""/>
+<RTPClass isAbstract="false" description="Парк оборудование" isActive="true" type="User" parent="TechReferences" name="ParkOfEquipment" displayTemplate="">
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Модель" group="" type="Reference" initialValue="" name="model" isNullsAllowed="false" referencedClass="Equipment"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Заводской номер" group="" type="Integer" initialValue="" name="plantNumber" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Цех" group="" type="Reference" initialValue="" name="shop" isNullsAllowed="false" referencedClass="Shop"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Участок" group="" type="Reference" initialValue="" name="plot" isNullsAllowed="false" referencedClass="Plot"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Рабочее место" group="" type="Reference" initialValue="" name="workplace" isNullsAllowed="false" referencedClass="Workplace"/>
+</RTPClass>
+<RTPClass isAbstract="true" description="Подразделения" isActive="true" type="User" parent="TechReferences" name="Subdivision" displayTemplate="">
+<RTPClass isAbstract="false" description="Цех" isActive="true" type="User" parent="Uts" name="Shop" displayTemplate=""/>
+<RTPClass isAbstract="false" description="Участок" isActive="true" type="User" parent="Uts" name="Plot" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Рабочее место" isActive="true" type="User" parent="TechReferences" name="Workplace" displayTemplate=""/>
-<RTPClass isAbstract="false" description="Рабочий" isActive="true" type="User" parent="TechReferences" name="TPWorker" displayTemplate=""/>
+</RTPClass>
+<RTPClass isAbstract="true" description="Инструкция" isActive="true" type="User" parent="TechReferences" name="Instruction" displayTemplate=""/>
+<RTPClass isAbstract="false" description="Переменная" isActive="true" type="User" parent="TechReferences" name="TPVariable" displayTemplate=""/>
 </RTPClass>
 </RTPClass>
