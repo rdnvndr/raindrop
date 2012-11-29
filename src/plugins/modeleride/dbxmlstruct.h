@@ -46,13 +46,16 @@ namespace DBCOMPXML{
 //! Список типов атрибута
 const QStringList DBXMLATTRTYPE = (QStringList()
                                << "Boolean"
+                               << "Binary"
                                << "Char"
                                << "Date"
                                << "Decimal"
+                               << "Dimension"
                                << "Double"
                                << "Integer"
                                << "String"
                                << "Reference"
+                               << "Range"
                                << "Time"
                                << "Timeshtamp"
                                );

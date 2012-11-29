@@ -222,14 +222,14 @@ void AttrWidget::showParentAttr(bool flag)
 
 void AttrWidget::changeType(QString s)
 {
-    if (DBXMLATTRTYPE.at(6)==s){
+    if (DBXMLATTRTYPE.at(8)==s){
         // String
         spinBoxStringLen->setEnabled(true);
         comboBoxLinkAttr->setEnabled(false);
         comboBoxLinkAttr->setDisplayText("");
         comboBoxLinkAttr->setCurrentIndex(-1);
         lineEditDefaultValue->setEnabled(true);
-    } else if( DBXMLATTRTYPE.at(7)==s){
+    } else if( DBXMLATTRTYPE.at(9)==s){
         //Reference
         spinBoxStringLen->setEnabled(false);
         spinBoxStringLen->setValue(0);
