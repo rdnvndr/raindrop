@@ -116,6 +116,9 @@ public:
     //! Получение индекса поля в тэге
     int indexDisplayedAttr(QString nameAttr, QString fieldName);
 
+    //! Получение поля в тэге по индексу
+    QString fieldDisplayedAttr(QString nameAttr, int column) const;
+
     //! Удаляет xml атрибуты тэга для отображения
     void removeDisplayedAttr(QString nameAttr);
 
@@ -176,7 +179,7 @@ private:
     bool unpackData(const QModelIndex &parent, QDataStream &stream, int row);
 
     //! Упаковка данных в поток
-    void packData(QDomElement node, QDataStream &stream) const;
+    void packData(const QModelIndex &parent, QDataStream &stream) const;
 
      //! Обновление отредактированных унаследованных строк
     void updateModifyRow(int emptyRowAttr, const QModelIndex &parent);

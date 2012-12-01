@@ -113,7 +113,7 @@ bool TreeXMLModel::unpackData(const QModelIndex &parent, QDataStream &stream, in
         } else if (nameAttr==QString("}")) {
             return true;
         } else {
-            QString value;
+            QVariant value;
             stream >> value;
             int column = indexDisplayedAttr(tag,nameAttr);
             setData(index.sibling(index.row(),column),value);
@@ -122,40 +122,40 @@ bool TreeXMLModel::unpackData(const QModelIndex &parent, QDataStream &stream, in
     return true;
 }
 
-void TreeXMLModel::packData(QDomElement node, QDataStream &stream) const
+void TreeXMLModel::packData(const QModelIndex &parent, QDataStream &stream) const
 {
     bool isFirstNode=true;
-    for (QDomNode childNode = node.firstChild();!childNode.isNull();
-         childNode = childNode.nextSibling())
+
+    for (int row=0;row<rowCount(parent);row++)
     {
-        QDomElement nodeElement = childNode.toElement();
+        QModelIndex childIndex = parent.child(row,0);
+        // Разделитель
+        if (isFirstNode){
+            stream << QString("{");
+            isFirstNode = false;
+        }
 
-        foreach (QString tagName,m_filterTags)
-            if (tagName == nodeElement.tagName()){
-                // Разделитель
-                if (isFirstNode){
-                    stream << QString("{");
-                    isFirstNode = false;
-                }
+        if (childIndex.isValid())
+            if (!isInherited(childIndex)) {
                 stream << QString("^");
-
-                stream << nodeElement.tagName();
-                QDomNamedNodeMap attrs = nodeElement.attributes();
-                for (int i = 0; i < attrs.size(); ++i) {
-                    QDomAttr attr = attrs.item(i).toAttr();
-                    stream << attr.name();
-                    stream << attr.value();
+                QString tag = data(childIndex,Qt::UserRole).toString();
+                stream << tag;
+                for (int i = 0; i < columnCount(childIndex); i++) {
+                    QString attrName = fieldDisplayedAttr(tag,i);
+                    if (!attrName.isEmpty()){
+                        stream << attrName;
+                        stream << childIndex.sibling(childIndex.row(),i).data();
+                        qDebug() << attrName;
+                    }
                 }
-
-                // Обработка вложенного класса
-                foreach (const QString &tagAttrName,m_attrTags)
-                    if (tagName==tagAttrName)
-                        break;
-                packData(nodeElement,stream);
+                if (!isAttribute(childIndex))
+                    packData(childIndex,stream);
             }
     }
+
     if (!isFirstNode)
         stream << QString("}");
+
 }
 
 void TreeXMLModel::addDisplayedAttr(QString nameAttr, QStringList value, QIcon icon)
@@ -180,6 +180,13 @@ int TreeXMLModel::indexDisplayedAttr(QString nameAttr, QString fieldName)
             return i;
     }
     return -1;
+}
+
+QString TreeXMLModel::fieldDisplayedAttr(QString nameAttr, int column) const
+{
+    if (m_displayedAttr[nameAttr].count()<=column)
+        return QString("");
+    return m_displayedAttr[nameAttr].at(column);
 }
 
 
@@ -258,7 +265,15 @@ bool TreeXMLModel::setData(const QModelIndex &index, const QVariant &value,
     TagXMLItem *item = getItem(index);
     QDomNode node = item->node();
 
-    node.toElement().setAttribute(m_displayedAttr[node.nodeName()].at(index.column()),value.toString());
+
+    if (index.column()>=m_displayedAttr[node.nodeName()].count())
+        return false;
+
+    QString attrName = m_displayedAttr[node.nodeName()].at(index.column());
+    if (attrName.isEmpty())
+        return false;
+
+    node.toElement().setAttribute(attrName,value.toString());
     emit dataChanged(index,index);
 
     if (isAttribute(index)){
@@ -491,19 +506,21 @@ QMimeData *TreeXMLModel::mimeData(const QModelIndexList &indexes) const
     QDataStream stream(&encodedData, QIODevice::WriteOnly);
 
     foreach (const QModelIndex& index,indexes){
-        if (index.isValid()) {
-            stream << QString("^");
-            QDomElement node = getItem(index)->node().toElement();
-            stream << node.tagName();
-            QDomNamedNodeMap attrs = node.attributes();
-            for (int i = 0; i < attrs.size(); ++ i) {
-                QDomAttr attr = attrs.item(i).toAttr();
-                stream << attr.name();
-                stream << attr.value();
+        if (index.isValid())
+            if (!isInherited(index)){
+                stream << QString("^");
+                QString tag = data(index,Qt::UserRole).toString();
+                stream << tag;
+                for (int i = 0; i < columnCount(index); i++) {
+                    QString attrName = fieldDisplayedAttr(tag,i);
+                    if (!attrName.isEmpty()){
+                        stream << attrName;
+                        stream << index.sibling(index.row(),i).data();
+                    }
+                }
+                if (!isAttribute(index))
+                    packData(index,stream);
             }
-            if (!isAttribute(index))
-                packData(node,stream);
-        }
     }
 
     QMimeData *mimeData = new QMimeData();
