@@ -98,7 +98,7 @@ bool TreeXMLModel::hasChildren(const QModelIndex &parent) const
 bool TreeXMLModel::unpackData(const QModelIndex &parent, QDataStream &stream, int row)
 {
     QString tag;
-    QDomElement node = getItem(parent)->node().toElement();
+    QModelIndex index;
 
     while (!stream.atEnd()) {
         QString nameAttr;
@@ -107,7 +107,7 @@ bool TreeXMLModel::unpackData(const QModelIndex &parent, QDataStream &stream, in
             stream >> tag;
             setInsTagName(tag);
             insertRow(row,parent);
-            node = getItem(lastInsertRow())->node().toElement();
+            index = lastInsertRow();
         } else if (nameAttr==QString("{")) {
             unpackData(lastInsertRow(),stream,row);
         } else if (nameAttr==QString("}")) {
@@ -115,7 +115,8 @@ bool TreeXMLModel::unpackData(const QModelIndex &parent, QDataStream &stream, in
         } else {
             QString value;
             stream >> value;
-            node.setAttribute(nameAttr,value);
+            int column = indexDisplayedAttr(tag,nameAttr);
+            setData(index.sibling(index.row(),column),value);
         }
     }
     return true;
