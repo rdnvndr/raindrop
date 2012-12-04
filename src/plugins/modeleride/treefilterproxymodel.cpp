@@ -1,6 +1,8 @@
 #include "treefilterproxymodel.h"
 #include <QDebug>
 #include "dbxmlstruct.h"
+#include <QMimeData>
+#include <treexmlmodel/treexmlmodel.h>
 
 TreeFilterProxyModel::TreeFilterProxyModel()
 {
@@ -80,4 +82,138 @@ bool TreeFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &
             return true;
 
     return QSortFilterProxyModel::lessThan(left,right);
+}
+
+
+QStringList TreeFilterProxyModel::mimeTypes() const
+{
+    QStringList types;
+    types << "application/classxmlmodel";
+    return types;
+}
+
+Qt::DropActions TreeFilterProxyModel::supportedDropActions() const
+{
+    return Qt::CopyAction | Qt::MoveAction;
+}
+
+Qt::DropActions TreeFilterProxyModel::supportedDragActions() const
+{
+    return Qt::CopyAction | Qt::MoveAction;
+}
+
+
+QMimeData *TreeFilterProxyModel::mimeData(const QModelIndexList &indexes) const
+{
+    QByteArray encodedData;
+    QDataStream stream(&encodedData, QIODevice::WriteOnly);
+    TreeXMLModel* xmlModel = qobject_cast<TreeXMLModel*>(sourceModel());
+
+    foreach (const QModelIndex& index,indexes){
+        QModelIndex sourceIndex = mapToSource(index);
+        if (sourceIndex.isValid())
+            if (!xmlModel->isInherited(sourceIndex)){
+                stream << QString("^");
+                QString tag = xmlModel->data(sourceIndex,Qt::UserRole).toString();
+                stream << tag;
+                for (int i = 0; i < xmlModel->columnCount(sourceIndex); i++){
+                    QString attrName = xmlModel->fieldDisplayedAttr(tag,i);
+                    if (!attrName.isEmpty()){
+                        stream << attrName;
+                        stream << sourceIndex.sibling(sourceIndex.row(),i).data();
+                    }
+                }
+                if (!xmlModel->isAttribute(sourceIndex))
+                    packData(sourceIndex,stream);
+            }
+    }
+
+    QMimeData *mimeData = new QMimeData();
+    mimeData->setData("application/classxmlmodel", encodedData);
+    return mimeData;
+}
+
+bool TreeFilterProxyModel::dropMimeData(const QMimeData *data,
+                                        Qt::DropAction action,
+                                        int row, int column,
+                                        const QModelIndex &parent)
+{
+    if (!parent.isValid())
+        return false;
+
+    if (action == Qt::IgnoreAction)
+        return true;
+    if (!data->hasFormat("application/classxmlmodel"))
+        return false;
+    if (column >= columnCount(parent))
+        return false;
+
+    QByteArray encodedData = data->data("application/classxmlmodel");
+    QDataStream stream(&encodedData, QIODevice::ReadOnly);
+
+    return unpackData(mapToSource(parent),stream,row);
+}
+
+bool TreeFilterProxyModel::unpackData(const QModelIndex &parent, QDataStream &stream, int row)
+{
+    QString tag;
+    QModelIndex index;
+    TreeXMLModel* xmlModel = qobject_cast<TreeXMLModel*>(sourceModel());
+
+    while (!stream.atEnd()) {
+        QString nameAttr;
+        stream >> nameAttr;
+        if (nameAttr==QString("^")){
+            stream >> tag;
+            xmlModel->setInsTagName(tag);
+            insertRow(0, mapFromSource(parent));
+            index = xmlModel->lastInsertRow();
+        } else if (nameAttr==QString("{")) {
+            unpackData(xmlModel->lastInsertRow(),stream,row);
+        } else if (nameAttr==QString("}")) {
+            return true;
+        } else {
+            QVariant value;
+            stream >> value;
+            int column = xmlModel->indexDisplayedAttr(tag,nameAttr);
+            xmlModel->setData(index.sibling(index.row(),column),value);
+        }
+    }
+    return true;
+}
+
+void TreeFilterProxyModel::packData(QModelIndex parent, QDataStream &stream) const
+{
+    bool isFirstNode=true;
+    TreeXMLModel* xmlModel = qobject_cast<TreeXMLModel*>(sourceModel());
+
+    for (int row=0;row<xmlModel->rowCount(parent);row++)
+    {
+        QModelIndex sourceIndex = xmlModel->index(row,0,parent);
+
+        // Разделитель
+        if (isFirstNode){
+            stream << QString("{");
+            isFirstNode = false;
+        }
+
+        if (sourceIndex.isValid())
+            if (!xmlModel->isInherited(sourceIndex)) {
+                stream << QString("^");
+                QString tag = xmlModel->data(sourceIndex,Qt::UserRole).toString();
+                stream << tag;
+                for (int i = 0; i < xmlModel->columnCount(sourceIndex); i++) {
+                    QString attrName = xmlModel->fieldDisplayedAttr(tag,i);
+                    if (!attrName.isEmpty()){
+                        stream << attrName;
+                        stream << sourceIndex.sibling(sourceIndex.row(),i).data();
+                    }
+                }
+                if (!xmlModel->isAttribute(sourceIndex))
+                    packData(sourceIndex,stream);
+            }
+    }
+
+    if (!isFirstNode)
+        stream << QString("}");
 }
