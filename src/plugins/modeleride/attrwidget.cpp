@@ -69,6 +69,8 @@ void AttrWidget::setModel(TreeXMLModel *model)
     classFilterModel->setFilterRegExp(DBCLASSXML::CLASS);
     classFilterModel->setSourceModel(m_model);
     classFilterModel->setDynamicSortFilter(true);
+    classFilterModel->sort(0);
+
     comboBoxLinkAttr->setModel(classFilterModel);
 
     comboBoxTypeAttr->setModel(m_typeAttrModel);
