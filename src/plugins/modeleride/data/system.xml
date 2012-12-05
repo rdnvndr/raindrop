@@ -31,6 +31,19 @@
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Описание включения" group="" type="String" initialValue="" name="directDescription" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Описание вхождения" group="" type="String" initialValue="" name="inverseDescription" isNullsAllowed="false" referencedClass=""/>
 </RTPClass>
+<RTPClass isAbstract="false" description="Измеряемая сущность" isActive="true" type="System" parent="System" name="MeasuredEntity" displayTemplate="">
+<RTPAttribute maxStringLength="128" isCandidateKey="true" isUnique="true" description="Наименование" group="" type="String" initialValue="" name="name" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="512" isCandidateKey="true" isUnique="true" description="Описание" group="" type="String" initialValue="" name="decription" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="true" description="Базовая единица" group="" type="Reference" initialValue="" name="basicUnit" isNullsAllowed="false" referencedClass="MeasureUnit"/>
+</RTPClass>
+<RTPClass isAbstract="false" description="Единица измерения" isActive="true" type="System" parent="System" name="MeasureUnit" displayTemplate="">
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Код ОКЕИ" group="" type="Integer" initialValue="" name="code" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="32" isCandidateKey="true" isUnique="true" description="Условное обозначеие" group="" type="String" initialValue="" name="symbol" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="512" isCandidateKey="true" isUnique="true" description="Обозначение" group="" type="String" initialValue="" name="designation" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Измеряемая сущность" group="" type="Reference" initialValue="" name="entity" isNullsAllowed="false" referencedClass="MeasuredEntity"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Коэффициент" group="" type="Double" initialValue="" name="coeff" isNullsAllowed="false" referencedClass=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Разница" group="" type="Double" initialValue="" name="delta" isNullsAllowed="false" referencedClass=""/>
+</RTPClass>
 </RTPClass>
 <RTPAttribute maxStringLength="36" isCandidateKey="true" isUnique="true" description="Индетификатор" group="" type="String" initialValue="" name="guid" isNullsAllowed="false" referencedClass=""/>
 <RTPClass isAbstract="true" description="Изделие" isActive="true" type="" parent="Root" name="Product" displayTemplate="">
