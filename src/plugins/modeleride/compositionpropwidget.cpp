@@ -39,6 +39,7 @@ void CompositionPropWidget::setModel(TreeXMLModel *model)
     classFilterModel->setFilterRegExp(DBCLASSXML::CLASS);
     classFilterModel->setSourceModel(m_model);
     classFilterModel->setDynamicSortFilter(true);
+    classFilterModel->sort(0);
     comboBoxDestClass->setModel(classFilterModel);
 
     m_mapper->addMapping(lineEditName,
