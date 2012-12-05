@@ -165,6 +165,7 @@ void ModelerIDEPlug::setShownAttr(bool shown)
 
     QRegExp regex = classFilterModel->filterRegExp();
     classFilterModel->setFilterRegExp(regex);
+    actionShowAttr->setChecked(shown);
 }
 
 void ModelerIDEPlug::setShownComp(bool shown)
@@ -176,6 +177,7 @@ void ModelerIDEPlug::setShownComp(bool shown)
 
     QRegExp regex = classFilterModel->filterRegExp();
     classFilterModel->setFilterRegExp(regex);
+    actionShowComp->setChecked(shown);
 }
 
 TreeXMLModel *ModelerIDEPlug::model()
@@ -241,7 +243,8 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     classFilterModel->setSourceModel(dbStructModel);
     classFilterModel->setDynamicSortFilter(true);
     classFilterModel->sort(0);
-    setShownComp(false);
+
+    setShownComp(false);   
     setShownAttr(false);
 
     connect(treeClassView->lineEditFiler,SIGNAL(textChanged(QString)),
