@@ -59,7 +59,11 @@ void AttrWidget::setModel(TreeXMLModel *model)
     m_attrModel->setHeaderData(8, Qt::Horizontal, tr("Нулевые значения"));
     m_attrModel->setHeaderData(9, Qt::Horizontal, tr("Уникальный"));
     m_attrModel->setHeaderData(10, Qt::Horizontal, tr("Кандидат в ключ"));
+    m_attrModel->setDynamicSortFilter(true);
+
+    tableViewAttr->setSortingEnabled(true);
     tableViewAttr->setModel(m_attrModel);
+    tableViewAttr->sortByColumn(0,Qt::AscendingOrder);
 
     m_mapperAttr->setModel(m_attrModel);
 
