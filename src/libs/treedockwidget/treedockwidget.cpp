@@ -45,6 +45,8 @@ void TreeDockWidget::setActionTreeWidget(){
 }
 
 void TreeDockWidget::callFuncTreeWidget(QTreeWidgetItem* item, int column){
+    Q_UNUSED(column)
+
     QMetaObject::invokeMethod(objTreeItem[item],funcTreeItem[item]);
 }
 
