@@ -433,9 +433,30 @@ void ModelerIDEPlug::saveAsClassModel()
     }
 }
 
-void ModelerIDEPlug::publishClassModel()
+void ModelerIDEPlug::publishClassModel(QModelIndex index)
 {
+    for (int row=0;row < dbStructModel->rowCount(index);row++){
+        QModelIndex childIndex = dbStructModel->index(row,0,index);
 
+        if (childIndex.data(Qt::UserRole)==DBATTRXML::ATTR){
+            // Создание атрибута
+            if (dbStructModel->isInherited(childIndex))
+                qDebug() << "Унаследованный атрибут:" << childIndex.data().toString();
+            else
+                qDebug() << "Атрибут:" << childIndex.data().toString();
+        } else if (childIndex.data(Qt::UserRole)==DBCOMPXML::COMP) {
+            // Создание состава
+            if (dbStructModel->isInherited(childIndex))
+                qDebug() << "Унаследованный состав:" <<childIndex.data().toString();
+            else
+                qDebug() << "Состав:" <<childIndex.data().toString();
+            publishClassModel(childIndex);
+        } else if (childIndex.data(Qt::UserRole)==DBCLASSXML::CLASS) {
+            // Создание класса
+            qDebug() << "Класс:" << childIndex.data().toString();
+            publishClassModel(childIndex);
+        }
+    }
 }
 
 void ModelerIDEPlug::closeClassModel()
