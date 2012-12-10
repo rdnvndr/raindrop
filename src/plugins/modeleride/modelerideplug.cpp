@@ -197,7 +197,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     propsClass << DBCLASSXML::NAME << DBCLASSXML::ISABSTARCT <<
                   DBCLASSXML::TYPE << DBCLASSXML::DESCRIPTION <<
                   DBCLASSXML::PARENT << DBCLASSXML::ISACTIVE <<
-                  DBCLASSXML::TEMPLATE;
+                  DBCLASSXML::TEMPLATE << DBCLASSXML::ID;
     dbStructModel->addDisplayedAttr(DBCLASSXML::CLASS,propsClass,QIcon(":/modeleride"));
     dbStructModel->addDisplayedAttr(DBATTRXML::ATTR,propsClass,QIcon(":/attribute"));
     dbStructModel->addDisplayedAttr(DBCOMPXML::COMP,propsClass,QIcon(":/composition"));
@@ -207,12 +207,14 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                  DBATTRXML::MAXSTRLEN << DBATTRXML::REFCLASS <<
                  DBATTRXML::PARENT << DBATTRXML::INITIALVAL <<
                  DBATTRXML::GROUP << DBATTRXML::ISNULLALLOWED <<
-                 DBATTRXML::ISUNIQUE << DBATTRXML::ISCANDIDATEKEY;
+                 DBATTRXML::ISUNIQUE << DBATTRXML::ISCANDIDATEKEY <<
+                 DBATTRXML::ID;
 
     QStringList propsComposition;
     propsComposition << DBCOMPXML::NAME << DBCOMPXML::DESCRIPTION <<
                  DBCOMPXML::PARENT << DBCOMPXML::CLASS <<
-                 DBCOMPXML::DIRECTDESCRIPTION << DBCOMPXML::INVERSEDESCRIPTION;
+                 DBCOMPXML::DIRECTDESCRIPTION << DBCOMPXML::INVERSEDESCRIPTION <<
+                 DBCOMPXML::ID;
 
     dbStructModel->setHeaderData(0, Qt::Horizontal, tr("Имя атрибута"));
     dbStructModel->setHeaderData(1, Qt::Horizontal, tr("Описание"));

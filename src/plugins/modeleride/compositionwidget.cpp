@@ -39,12 +39,14 @@ void CompositionWidget::setModel(TreeXMLModel *model)
     m_compositionModel->setHeaderData(3, Qt::Horizontal, tr("Входящий класс"));
     m_compositionModel->setHeaderData(4, Qt::Horizontal, tr("Описание включения"));
     m_compositionModel->setHeaderData(5, Qt::Horizontal, tr("Описание вхождения"));
-    m_compositionModel->setColumnCount(6);
+    m_compositionModel->setHeaderData(6, Qt::Horizontal, tr("Индетификатор"));
+    m_compositionModel->setColumnCount(7);
     m_compositionModel->setDynamicSortFilter(true);
 
     tableViewComp->setSortingEnabled(true);
     tableViewComp->setModel(m_compositionModel);
     tableViewComp->sortByColumn(0,Qt::AscendingOrder);
+    tableViewComp->setColumnHidden(6,true);
 }
 
 

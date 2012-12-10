@@ -14,6 +14,7 @@ namespace DBCLASSXML{
     const QString DESCRIPTION = "description";
     const QString PARENT = "parent";
     const QString TEMPLATE = "displayTemplate";
+    const QString ID = "id";
 }
 
 //! Ключевые слова XML файла для описания класса
@@ -30,6 +31,7 @@ namespace DBATTRXML{
     const QString INITIALVAL = "initialValue";
     const QString REFCLASS = "referencedClass";
     const QString PARENT = "parent";
+    const QString ID = "id";
 }
 
 //! Ключевые слова XML файла для описания состава
@@ -41,6 +43,7 @@ namespace DBCOMPXML{
     const QString CLASS = "Class";
     const QString DIRECTDESCRIPTION = "directDescription";
     const QString INVERSEDESCRIPTION = "inverseDescription";
+    const QString ID = "id";
 }
 
 //! Список типов атрибута
