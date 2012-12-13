@@ -105,7 +105,10 @@ public:
     bool isAttribute(const QModelIndex &index) const;
 
     //! Получает класс связку TagXMLItem по индексу модели
-    TagXMLItem *getItem(const QModelIndex &index) const;
+    TagXMLItem *toItem(const QModelIndex &index) const;
+
+    //! Получает  индекс модели по классу связке TagXMLItem
+    QModelIndex fromItem(TagXMLItem *item) const;
 
     //! Указывает xml атрибуты тэга для отображения
     void addDisplayedAttr(QString nameAttr, QStringList value,QIcon icon = QIcon());
@@ -174,6 +177,13 @@ public:
 
     //! Возращает True если унаследован
     bool isInherited(const QModelIndex &index) const;
+
+    //! Добавления контроля уникальности
+    void addUniqueField(QString tag,QStringList value);
+
+    //! Возращает индекс уникального атрибута
+    QModelIndex indexFromField(QString tag,QString attrName, QVariant value);
+
 private:
     //! Распаковка данных из потока
     bool unpackData(const QModelIndex &parent, QDataStream &stream, int row);
@@ -219,6 +229,9 @@ private:
 
     //! Список тэгов в которые нельзя вставлять строки
     QMap<QString, QStringList> m_insertTags;
+
+    //! Список атрибутов для которых контролируется уникальность
+    QMap<QString, QStringList> m_UniqueField;
 };
 
 #endif
