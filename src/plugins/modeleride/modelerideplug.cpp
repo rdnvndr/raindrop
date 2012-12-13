@@ -241,6 +241,14 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     insertTags << DBATTRXML::ATTR;
     dbStructModel->addInsertTags(DBCOMPXML::COMP,insertTags);
 
+    QStringList uniqueField;
+    uniqueField << DBCLASSXML::NAME;
+    dbStructModel->addUniqueField(DBCLASSXML::CLASS,uniqueField);
+    dbStructModel->refreshUnique();
+    /*qDebug() << dbStructModel->indexUniqueField(DBCLASSXML::CLASS,
+                                                DBCLASSXML::NAME,
+                                                QString("Class1")).data();*/
+
     classFilterModel = new TreeFilterProxyModel();
     classFilterModel->setSourceModel(dbStructModel);
     classFilterModel->setDynamicSortFilter(true);

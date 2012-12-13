@@ -14,6 +14,9 @@ TreeXMLModel::TreeXMLModel(QDomNode document, QObject *parent)
 
 TreeXMLModel::~TreeXMLModel()
 {
+
+    m_uniqueField.clear();
+    m_uniqueValue.clear();
     delete m_rootItem;
 }
 
@@ -60,13 +63,37 @@ bool TreeXMLModel::isInherited(const QModelIndex &index) const
 
 void TreeXMLModel::addUniqueField(QString tag, QStringList value)
 {
-    m_UniqueField.insert(tag,value);
+    m_uniqueField.insert(tag,value);
 }
 
-QModelIndex TreeXMLModel::indexFromField(QString tag, QString attrName, QVariant value)
+void TreeXMLModel::refreshUnique(QModelIndex parent)
 {
-    // Для начала сделать методом перебора
-    return QModelIndex();
+    for (int row=0;row<rowCount(parent);row++){
+        QModelIndex childIndex = index(row,0,parent);
+        if (!isInherited(childIndex)) {
+            for (int i=0;i<m_uniqueField.count();i++){
+                QString tag  = m_uniqueField.keys().at(i);
+                if (childIndex.data(Qt::UserRole)==tag){
+                    QStringList attrList = m_uniqueField.values().at(i);
+                    foreach (const QString& attr, attrList){
+                        int column = indexDisplayedAttr(tag,attr);
+                        childIndex = childIndex.sibling(row,column);
+                        TagXMLItem* item =  toItem(childIndex);
+                        m_uniqueValue[tag][attr][childIndex.data().toString()]=item;
+                        // qDebug() << childIndex.data().toString();
+                        // qDebug() << fromItem(m_UniqueValue[tag][attr][childIndex.data().toString()]).data();
+                    }
+                }
+            }
+            refreshUnique(childIndex);
+        }
+    }
+}
+
+
+QModelIndex TreeXMLModel::indexUniqueField(QString tag, QString attrName, QVariant value)
+{
+    return fromItem(m_uniqueValue[tag][attrName][value.toString()]);
 }
 
 bool TreeXMLModel::isAttribute(const QModelIndex &index) const

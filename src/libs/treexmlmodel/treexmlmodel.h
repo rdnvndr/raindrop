@@ -182,7 +182,10 @@ public:
     void addUniqueField(QString tag,QStringList value);
 
     //! Возращает индекс уникального атрибута
-    QModelIndex indexFromField(QString tag,QString attrName, QVariant value);
+    QModelIndex indexUniqueField(QString tag,QString attrName, QVariant value);
+
+    //! Обновление хэшей уникальности
+    void refreshUnique(QModelIndex parent = QModelIndex());
 
 private:
     //! Распаковка данных из потока
@@ -231,7 +234,11 @@ private:
     QMap<QString, QStringList> m_insertTags;
 
     //! Список атрибутов для которых контролируется уникальность
-    QMap<QString, QStringList> m_UniqueField;
+    QMap<QString, QStringList> m_uniqueField;
+
+    //! Список хэшей для контроля уникальности [тэг][атрибут][значение атрибута]
+    QMap<QString, QHash<QString,QHash<QString,TagXMLItem*> > > m_uniqueValue;
+
 };
 
 #endif
