@@ -185,7 +185,7 @@ public:
     QModelIndex indexUniqueField(QString tag,QString attrName, QVariant value);
 
     //! Обновление хэшей уникальности
-    void refreshUnique(QModelIndex parent = QModelIndex());
+    void refreshUnique(QModelIndex parent = QModelIndex(), bool remove = false);
 
 private:
     //! Распаковка данных из потока
