@@ -484,6 +484,7 @@ bool TreeXMLModel::removeRows(int row, int count, const QModelIndex &parent)
     for (int i=row+1-count;i<this->rowCount(parent);i++){
         QModelIndex index = parent.child(i,0);
         if (!isInherited(index)) {
+            refreshUnique(index,true);
             for (int i=0;i<m_uniqueField.count();i++){
                 QString tag  = m_uniqueField.keys().at(i);
                 if (index.data(Qt::UserRole)==tag){
@@ -495,7 +496,7 @@ bool TreeXMLModel::removeRows(int row, int count, const QModelIndex &parent)
                     }
                 }
             }
-            refreshUnique(index,true);
+
         }
     }
 
