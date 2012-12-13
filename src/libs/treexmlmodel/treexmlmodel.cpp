@@ -66,11 +66,12 @@ void TreeXMLModel::addUniqueField(QString tag, QStringList value)
     m_uniqueField.insert(tag,value);
 }
 
-void TreeXMLModel::refreshUnique(QModelIndex parent)
+void TreeXMLModel::refreshUnique(QModelIndex parent, bool remove)
 {
     for (int row=0;row<rowCount(parent);row++){
         QModelIndex childIndex = index(row,0,parent);
         if (!isInherited(childIndex)) {
+            refreshUnique(childIndex, remove);
             for (int i=0;i<m_uniqueField.count();i++){
                 QString tag  = m_uniqueField.keys().at(i);
                 if (childIndex.data(Qt::UserRole)==tag){
@@ -79,13 +80,13 @@ void TreeXMLModel::refreshUnique(QModelIndex parent)
                         int column = indexDisplayedAttr(tag,attr);
                         childIndex = childIndex.sibling(row,column);
                         TagXMLItem* item =  toItem(childIndex);
-                        m_uniqueValue[tag][attr][childIndex.data().toString()]=item;
-                        // qDebug() << childIndex.data().toString();
-                        // qDebug() << fromItem(m_UniqueValue[tag][attr][childIndex.data().toString()]).data();
+                        if (remove)
+                            m_uniqueValue[tag][attr].remove(childIndex.data().toString());
+                        else
+                            m_uniqueValue[tag][attr][childIndex.data().toString()]=item;
                     }
                 }
             }
-            refreshUnique(childIndex);
         }
     }
 }
@@ -183,7 +184,6 @@ void TreeXMLModel::packData(const QModelIndex &parent, QDataStream &stream) cons
                     if (!attrName.isEmpty()){
                         stream << attrName;
                         stream << childIndex.sibling(childIndex.row(),i).data();
-                        qDebug() << attrName;
                     }
                 }
                 if (!isAttribute(childIndex))
@@ -303,7 +303,6 @@ bool TreeXMLModel::setData(const QModelIndex &index, const QVariant &value,
     TagXMLItem *item = toItem(index);
     QDomNode node = item->node();
 
-
     if (index.column()>=m_displayedAttr[node.nodeName()].count())
         return false;
 
@@ -323,6 +322,21 @@ bool TreeXMLModel::setData(const QModelIndex &index, const QVariant &value,
                 emptyRowAttr++;
         }
         updateModifyRow(emptyRowAttr,parent);
+    }
+
+    // Обновление хэша контроля целостности
+    if (!isInherited(index)) {
+        for (int i=0;i<m_uniqueField.count();i++){
+            QString tag  = m_uniqueField.keys().at(i);
+            if (index.data(Qt::UserRole)==tag){
+                QStringList attrList = m_uniqueField.values().at(i);
+                foreach (const QString& attr, attrList){
+                    int column = indexDisplayedAttr(tag,attr);
+                    if (column==index.column())
+                        m_uniqueValue[tag][attr][value.toString()]=item;
+                }
+            }
+        }
     }
 
     return true;
@@ -466,6 +480,25 @@ bool TreeXMLModel::removeRows(int row, int count, const QModelIndex &parent)
     if  (!parentItem->checkRemoveChild(row))
         return false;
 
+    // Удаление хэша уникальности
+    for (int i=row+1-count;i<this->rowCount(parent);i++){
+        QModelIndex index = parent.child(i,0);
+        if (!isInherited(index)) {
+            for (int i=0;i<m_uniqueField.count();i++){
+                QString tag  = m_uniqueField.keys().at(i);
+                if (index.data(Qt::UserRole)==tag){
+                    QStringList attrList = m_uniqueField.values().at(i);
+                    foreach (const QString& attr, attrList){
+                        int column = indexDisplayedAttr(tag,attr);
+                        m_uniqueValue[tag][attr].remove(
+                                    index.sibling(index.row(),column).data().toString());
+                    }
+                }
+            }
+            refreshUnique(index,true);
+        }
+    }
+
     beginRemoveRows(parent,row,row+count-1);
     for (int i=count-1;i>=0;i--)
         parentItem->removeChild(row+i);
@@ -474,6 +507,7 @@ bool TreeXMLModel::removeRows(int row, int count, const QModelIndex &parent)
     int emptyRowAttr = 0;
     for (int i=row+1-count;i<this->rowCount(parent);i++){
         QModelIndex index = parent.child(i,0);
+
         if (isAttribute(index))
                 emptyRowAttr++;
     }
