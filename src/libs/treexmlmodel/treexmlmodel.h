@@ -237,7 +237,7 @@ private:
     QMap<QString, QStringList> m_uniqueField;
 
     //! Список хэшей для контроля уникальности [тэг][атрибут][значение атрибута]
-    QMap<QString, QHash<QString,QHash<QString,TagXMLItem*> > > m_uniqueValue;
+    QMap<QString, QHash<QString,QMultiHash<QString,TagXMLItem*> > > m_uniqueValue;
 
 };
 

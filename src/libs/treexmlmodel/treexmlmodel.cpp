@@ -69,7 +69,7 @@ void TreeXMLModel::addUniqueField(QString tag, QStringList value)
 void TreeXMLModel::refreshUnique(QModelIndex parent, bool remove)
 {
     for (int row=0;row<rowCount(parent);row++){
-        QModelIndex childIndex = index(row,0,parent);
+        QModelIndex childIndex = parent.child(row,0);
         if (!isInherited(childIndex)) {
             refreshUnique(childIndex, remove);
             for (int i=0;i<m_uniqueField.count();i++){
@@ -81,9 +81,9 @@ void TreeXMLModel::refreshUnique(QModelIndex parent, bool remove)
                         childIndex = childIndex.sibling(row,column);
                         TagXMLItem* item =  toItem(childIndex);
                         if (remove)
-                            m_uniqueValue[tag][attr].remove(childIndex.data().toString());
+                            m_uniqueValue[tag][attr].remove(childIndex.data().toString(),item);
                         else
-                            m_uniqueValue[tag][attr][childIndex.data().toString()]=item;
+                            m_uniqueValue[tag][attr].insert(childIndex.data().toString(),item);
                     }
                 }
             }
@@ -94,7 +94,7 @@ void TreeXMLModel::refreshUnique(QModelIndex parent, bool remove)
 
 QModelIndex TreeXMLModel::indexUniqueField(QString tag, QString attrName, QVariant value)
 {
-    return fromItem(m_uniqueValue[tag][attrName][value.toString()]);
+    return fromItem(m_uniqueValue[tag][attrName].value(value.toString()));
 }
 
 bool TreeXMLModel::isAttribute(const QModelIndex &index) const
@@ -333,7 +333,7 @@ bool TreeXMLModel::setData(const QModelIndex &index, const QVariant &value,
                 foreach (const QString& attr, attrList){
                     int column = indexDisplayedAttr(tag,attr);
                     if (column==index.column())
-                        m_uniqueValue[tag][attr][value.toString()]=item;
+                        m_uniqueValue[tag][attr].insert(value.toString(),item);
                 }
             }
         }
@@ -492,7 +492,8 @@ bool TreeXMLModel::removeRows(int row, int count, const QModelIndex &parent)
                     foreach (const QString& attr, attrList){
                         int column = indexDisplayedAttr(tag,attr);
                         m_uniqueValue[tag][attr].remove(
-                                    index.sibling(index.row(),column).data().toString());
+                                    index.sibling(index.row(),column).data().toString(),
+                                    toItem(index));
                     }
                 }
             }
