@@ -244,10 +244,10 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     QStringList uniqueField;
     uniqueField << DBCLASSXML::NAME;
     dbStructModel->addUniqueField(DBCLASSXML::CLASS,uniqueField);
-    dbStructModel->refreshUnique();
+    dbStructModel->applyUnique();
     /*qDebug() << dbStructModel->indexUniqueField(DBCLASSXML::CLASS,
                                                 DBCLASSXML::NAME,
-                                                QString("Class1")).data();*/
+                                                QString("Class")).data();*/
 
     classFilterModel = new TreeFilterProxyModel();
     classFilterModel->setSourceModel(dbStructModel);

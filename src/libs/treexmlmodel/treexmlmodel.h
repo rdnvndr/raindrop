@@ -184,10 +184,14 @@ public:
     //! Возращает индекс уникального атрибута
     QModelIndex indexUniqueField(QString tag,QString attrName, QVariant value);
 
-    //! Обновление хэшей уникальности
-    void refreshUnique(QModelIndex parent = QModelIndex(), bool remove = false);
+    //! Применение хэшей уникальности
+    void applyUnique();
 
 private:
+
+    //! Обновление хэшей уникальности
+    void refreshUnique(TagXMLItem *item, bool remove = false);
+
     //! Распаковка данных из потока
     bool unpackData(const QModelIndex &parent, QDataStream &stream, int row);
 
