@@ -178,19 +178,19 @@ public:
     //! Возращает True если унаследован
     bool isInherited(const QModelIndex &index) const;
 
-    //! Добавления контроля уникальности
-    void addUniqueField(QString tag,QStringList value);
+    //! Добавления поля для хешеирования
+    void addHashField(QString tag,QStringList value);
 
-    //! Возращает индекс уникального атрибута
-    QModelIndex indexUniqueField(QString tag,QString attrName, QVariant value);
+    //! Возращает индекс по значению хешеированного поля
+    QModelIndex indexHashField(QString tag,QString attrName, QVariant value);
 
-    //! Применение хэшей уникальности
-    void applyUnique();
+    //! Обновление хэшей
+    void refreshHashing();
 
 private:
 
-    //! Обновление хэшей уникальности
-    void refreshUnique(TagXMLItem *item, bool remove = false);
+    //! Создание хэшей
+    void makeHashing(TagXMLItem *item, bool remove = false);
 
     //! Распаковка данных из потока
     bool unpackData(const QModelIndex &parent, QDataStream &stream, int row);
