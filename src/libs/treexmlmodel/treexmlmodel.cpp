@@ -145,6 +145,7 @@ bool TreeXMLModel::unpackData(const QModelIndex &parent, QDataStream &stream, in
 {
     QString tag;
     QModelIndex index;
+     bool nextTag = false;
 
     while (!stream.atEnd()) {
         QString nameAttr;
@@ -152,7 +153,10 @@ bool TreeXMLModel::unpackData(const QModelIndex &parent, QDataStream &stream, in
         if (nameAttr==QString("^")){
             stream >> tag;
             setInsTagName(tag);
-            insertRow(row,parent);
+            if (insertRow(row,parent))
+                nextTag = false;
+            else
+                nextTag = true;
             index = lastInsertRow();
         } else if (nameAttr==QString("{")) {
             unpackData(lastInsertRow(),stream,row);
@@ -162,7 +166,10 @@ bool TreeXMLModel::unpackData(const QModelIndex &parent, QDataStream &stream, in
             QVariant value;
             stream >> value;
             int column = indexDisplayedAttr(tag,nameAttr);
-            setData(index.sibling(index.row(),column),value);
+            if (!setData(index.sibling(index.row(),column),value)){
+                nextTag = true;
+                removeRow(index.row(),index.parent());
+            }
         }
     }
     return true;

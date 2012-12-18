@@ -159,6 +159,7 @@ bool TreeFilterProxyModel::unpackData(const QModelIndex &parent, QDataStream &st
     QString tag;
     QModelIndex index;
     TreeXMLModel* xmlModel = qobject_cast<TreeXMLModel*>(sourceModel());
+    bool nextTag = false;
 
     while (!stream.atEnd()) {
         QString nameAttr;
@@ -166,17 +167,23 @@ bool TreeFilterProxyModel::unpackData(const QModelIndex &parent, QDataStream &st
         if (nameAttr==QString("^")){
             stream >> tag;
             xmlModel->setInsTagName(tag);
-            insertRow(0, mapFromSource(parent));
+            if (insertRow(0, mapFromSource(parent)))
+                nextTag = false;
+            else
+                nextTag = true;
             index = xmlModel->lastInsertRow();
         } else if (nameAttr==QString("{")) {
             unpackData(xmlModel->lastInsertRow(),stream,row);
         } else if (nameAttr==QString("}")) {
             return true;
-        } else {
+        } else if (!nextTag){
             QVariant value;
             stream >> value;
             int column = xmlModel->indexDisplayedAttr(tag,nameAttr);
-            xmlModel->setData(index.sibling(index.row(),column),value);
+            if (!xmlModel->setData(index.sibling(index.row(),column),value)){
+                nextTag = true;
+                xmlModel->removeRow(index.row(),index.parent());
+            }
         }
     }
     return true;
