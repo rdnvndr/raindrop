@@ -484,8 +484,8 @@ bool TreeXMLModel::removeRows(int row, int count, const QModelIndex &parent)
         return false;
 
     // Удаление хэша уникальности
-    for (int i=row+1-count;i<this->rowCount(parent);i++){
-        QModelIndex index = parent.child(i,0);
+    for (int j=row; j < row+count; j++){
+        QModelIndex index = parent.child(j,0);
         if (!isInherited(index)) {
             makeHashing(toItem(index),true);
             for (int i=0;i<m_uniqueField.count();i++){
