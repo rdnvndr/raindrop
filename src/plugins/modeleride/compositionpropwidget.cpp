@@ -122,6 +122,20 @@ void CompositionPropWidget::edit(bool flag)
 
 void CompositionPropWidget::submit()
 {
+    QModelIndex rootIndex = m_mapper->rootIndex();
+    for (int row=0; row < m_model->rowCount(rootIndex); row++){
+        QModelIndex childIndex = m_model->index(row, m_model->indexDisplayedAttr(
+                                                    DBCOMPXML::COMP,
+                                                    DBCOMPXML::NAME),
+                                                rootIndex);
+        if (childIndex.data(Qt::UserRole) == DBCOMPXML::COMP)
+            if (lineEditName->text() == childIndex.data()) {
+                QMessageBox::warning(this,tr("Предуреждение"),
+                                     tr("Состав с таким имененм уже существует"));
+                return;
+            }
+    }
+
     m_mapper->submit();
     removeEmpty();
     edit(false);
