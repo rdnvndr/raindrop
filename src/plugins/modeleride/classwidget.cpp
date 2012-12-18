@@ -125,6 +125,14 @@ void ClassWidget::edit(bool flag)
 
 void ClassWidget::submit()
 {
+    if (m_model->indexUniqueField(DBCLASSXML::CLASS,
+                                  DBCLASSXML::NAME,
+                                  lineEditClassName->text()).isValid()) {
+        QMessageBox::warning(this,tr("Предупреждение"),
+                             tr("Класс с таким именем уже существует"));
+        return;
+    }
+
     m_mapper->submit();
     removeEmpty();
     edit(false);
