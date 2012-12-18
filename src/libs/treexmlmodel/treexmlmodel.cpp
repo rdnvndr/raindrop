@@ -60,16 +60,16 @@ bool TreeXMLModel::isInherited(const QModelIndex &index) const
     return false;
 }
 
-void TreeXMLModel::addUniqueField(QString tag, QStringList value)
+void TreeXMLModel::addHashField(QString tag, QStringList value)
 {
     m_uniqueField.insert(tag,value);
 }
 
-void TreeXMLModel::refreshUnique(TagXMLItem *item, bool remove)
+void TreeXMLModel::makeHashing(TagXMLItem *item, bool remove)
 {    
     for (int row=0; row < item->count(m_filterTags); row++) {
         TagXMLItem *childItem = item->child(row,m_filterTags);
-        refreshUnique(childItem, remove);
+        makeHashing(childItem, remove);
         for (int i=0; i < m_uniqueField.count(); i++) {
             QString tag  = m_uniqueField.keys().at(i);
             QString nodeName = childItem->node().nodeName();
@@ -87,14 +87,14 @@ void TreeXMLModel::refreshUnique(TagXMLItem *item, bool remove)
 }
 
 
-QModelIndex TreeXMLModel::indexUniqueField(QString tag, QString attrName, QVariant value)
+QModelIndex TreeXMLModel::indexHashField(QString tag, QString attrName, QVariant value)
 {
     return fromItem(m_uniqueValue[tag][attrName].value(value.toString()));
 }
 
-void TreeXMLModel::applyUnique()
+void TreeXMLModel::refreshHashing()
 {
-    refreshUnique(m_rootItem);
+    makeHashing(m_rootItem);
 }
 
 bool TreeXMLModel::isAttribute(const QModelIndex &index) const
@@ -480,7 +480,7 @@ bool TreeXMLModel::removeRows(int row, int count, const QModelIndex &parent)
     for (int i=row+1-count;i<this->rowCount(parent);i++){
         QModelIndex index = parent.child(i,0);
         if (!isInherited(index)) {
-            refreshUnique(toItem(index),true);
+            makeHashing(toItem(index),true);
             for (int i=0;i<m_uniqueField.count();i++){
                 QString tag  = m_uniqueField.keys().at(i);
                 if (index.data(Qt::UserRole)==tag){

@@ -243,8 +243,8 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     QStringList uniqueField;
     uniqueField << DBCLASSXML::NAME;
-    dbStructModel->addUniqueField(DBCLASSXML::CLASS,uniqueField);
-    dbStructModel->applyUnique();
+    dbStructModel->addHashField(DBCLASSXML::CLASS,uniqueField);
+    dbStructModel->refreshHashing();
     /*qDebug() << dbStructModel->indexUniqueField(DBCLASSXML::CLASS,
                                                 DBCLASSXML::NAME,
                                                 QString("Class")).data();*/

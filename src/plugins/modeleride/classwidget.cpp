@@ -125,7 +125,7 @@ void ClassWidget::edit(bool flag)
 
 void ClassWidget::submit()
 {
-    if (m_model->indexUniqueField(DBCLASSXML::CLASS,
+    if (m_model->indexHashField(DBCLASSXML::CLASS,
                                   DBCLASSXML::NAME,
                                   lineEditClassName->text()).isValid()) {
         QMessageBox::warning(this,tr("Предупреждение"),
