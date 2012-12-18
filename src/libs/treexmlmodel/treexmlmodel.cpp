@@ -310,8 +310,7 @@ bool TreeXMLModel::setData(const QModelIndex &index, const QVariant &value,
     if (attrName.isEmpty())
         return false;
 
-    node.toElement().setAttribute(attrName,value.toString());
-
+    QString dataValue = value.toString();
     // Обновление хэша контроля уникальности
     if (!isInherited(index)) {
         for (int i=0;i<m_uniqueField.count();i++){
@@ -321,14 +320,22 @@ bool TreeXMLModel::setData(const QModelIndex &index, const QVariant &value,
                 foreach (const QString& attr, attrList){
                     int column = indexDisplayedAttr(tag,attr);
                     if (column==index.column()){
+                        if (indexHashField(tag,attr,dataValue).isValid()){
+                            int position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
+                            int number = 1;
+                            if (position != -1)
+                                number = dataValue.mid(position+1).toInt()+1;
+                            dataValue = dataValue.left(position)+QString("_%1").arg(number);
+                        }
                         m_uniqueValue[tag][attr].remove(node.toElement().attribute(attrName),item);
-                        m_uniqueValue[tag][attr].insert(value.toString(),item);
+                        m_uniqueValue[tag][attr].insert(dataValue,item);
                     }
                 }
             }
         }
     }
 
+    node.toElement().setAttribute(attrName,dataValue);
     emit dataChanged(index,index);
 
     if (isAttribute(index)){
