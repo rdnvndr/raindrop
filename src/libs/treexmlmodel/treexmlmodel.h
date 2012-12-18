@@ -54,6 +54,14 @@ class XMLMODELLIB TreeXMLModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
+
+    //! Перечисления типов уникальности поля
+    enum UniqueField {
+        NoUnique = 0,         //!< Поле не уникальное
+        UniqueRename = 1,     //!< Контроль уникальности путем переименования
+        Unique = 2            //!< Поле уникальное (не используется)
+    };
+
      //! Конструктор модели
     TreeXMLModel(QDomNode document, QObject *parent = 0);
     //! Деструктор модели
@@ -179,7 +187,8 @@ public:
     bool isInherited(const QModelIndex &index) const;
 
     //! Добавления поля для хешеирования
-    void addHashField(QString tag,QStringList value);
+    //void addHashField(QString tag,QStringList value);
+    void addHashField(QString tag,QString value, UniqueField unique = TreeXMLModel::NoUnique);
 
     //! Возращает индекс по значению хешеированного поля
     QModelIndex indexHashField(QString tag,QString attrName, QVariant value);
@@ -237,11 +246,14 @@ private:
     //! Список тэгов в которые нельзя вставлять строки
     QMap<QString, QStringList> m_insertTags;
 
-    //! Список атрибутов для которых контролируется уникальность
-    QMap<QString, QStringList> m_uniqueField;
+    //! Список атрибутов для хэшеированя
+    QMap<QString, QStringList> m_hashField;
 
-    //! Список хэшей для контроля уникальности [тэг][атрибут][значение атрибута]
-    QMap<QString, QHash<QString,QMultiHash<QString,TagXMLItem*> > > m_uniqueValue;
+    //! Список уникальности
+    QMap<QString, QList<UniqueField> > m_uniqueField;
+
+    //! Список хэшей [тэг][атрибут][значение атрибута]
+    QMap<QString, QHash<QString,QMultiHash<QString,TagXMLItem*> > > m_hashValue;
 
 };
 

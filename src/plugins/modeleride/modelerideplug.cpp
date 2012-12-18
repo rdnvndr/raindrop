@@ -241,13 +241,10 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     insertTags << DBATTRXML::ATTR;
     dbStructModel->addInsertTags(DBCOMPXML::COMP,insertTags);
 
-    QStringList uniqueField;
-    uniqueField << DBCLASSXML::NAME;
-    dbStructModel->addHashField(DBCLASSXML::CLASS,uniqueField);
+    dbStructModel->addHashField(DBCLASSXML::CLASS,
+                                DBCLASSXML::NAME,
+                                TreeXMLModel::UniqueRename);
     dbStructModel->refreshHashing();
-    /*qDebug() << dbStructModel->indexUniqueField(DBCLASSXML::CLASS,
-                                                DBCLASSXML::NAME,
-                                                QString("Class")).data();*/
 
     classFilterModel = new TreeFilterProxyModel();
     classFilterModel->setSourceModel(dbStructModel);
