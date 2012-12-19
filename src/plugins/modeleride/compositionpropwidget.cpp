@@ -123,13 +123,15 @@ void CompositionPropWidget::edit(bool flag)
 void CompositionPropWidget::submit()
 {
     QModelIndex rootIndex = m_mapper->rootIndex();
+    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
     for (int row=0; row < m_model->rowCount(rootIndex); row++){
         QModelIndex childIndex = m_model->index(row, m_model->indexDisplayedAttr(
                                                     DBCOMPXML::COMP,
                                                     DBCOMPXML::NAME),
                                                 rootIndex);
         if (childIndex.data(Qt::UserRole) == DBCOMPXML::COMP)
-            if (lineEditName->text() == childIndex.data()) {
+            if (lineEditName->text() == childIndex.data() &&
+                    srcIndex != childIndex.sibling(row,0)) {
                 QMessageBox::warning(this,tr("Предуреждение"),
                                      tr("Состав с таким имененм уже существует"));
                 return;
@@ -139,7 +141,7 @@ void CompositionPropWidget::submit()
     m_mapper->submit();
     removeEmpty();
     edit(false);
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+
     emit dataChanged(srcIndex);
 }
 

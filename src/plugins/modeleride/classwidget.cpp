@@ -125,9 +125,12 @@ void ClassWidget::edit(bool flag)
 
 void ClassWidget::submit()
 {
-    if (m_model->indexHashField(DBCLASSXML::CLASS,
-                                  DBCLASSXML::NAME,
-                                  lineEditClassName->text()).isValid()) {
+    QModelIndex existIndex = m_model->indexHashField(DBCLASSXML::CLASS,
+                                                     DBCLASSXML::NAME,
+                                                     lineEditClassName->text());
+    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+
+    if (existIndex!=srcIndex){
         QMessageBox::warning(this,tr("Предупреждение"),
                              tr("Класс с таким именем уже существует"));
         return;
@@ -136,7 +139,6 @@ void ClassWidget::submit()
     m_mapper->submit();
     removeEmpty();
     edit(false);
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
     emit dataChanged(srcIndex);
 }
 

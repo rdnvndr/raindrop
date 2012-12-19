@@ -170,13 +170,15 @@ void AttrWidget::remove()
 void AttrWidget::submit()
 {
     QModelIndex rootIndex = (tableViewAttr->rootIndex());
+    QModelIndex srcIndex = m_mapperAttr->rootIndex().child(m_mapperAttr->currentIndex(),0);
     for (int row=0; row < m_attrModel->rowCount(rootIndex); row++){
         QModelIndex childIndex = m_attrModel->index(row,
                                                     m_model->indexDisplayedAttr(
                                                         DBATTRXML::ATTR,
                                                         DBATTRXML::NAME),
                                                     rootIndex);
-        if (lineEditAttrName->text() == childIndex.data()) {
+        if (lineEditAttrName->text() == childIndex.data()
+                && childIndex.sibling(row,0)!=srcIndex) {
             QMessageBox::warning(this,tr("Предуреждение"),
                                  tr("Атрибут с таким имененм уже существует"));
             return;
@@ -184,7 +186,6 @@ void AttrWidget::submit()
     }
     edit(false);
     m_mapperAttr->submit();
-    QModelIndex srcIndex = m_mapperAttr->rootIndex().child(m_mapperAttr->currentIndex(),0);
     emit dataChanged(srcIndex);
 }
 
