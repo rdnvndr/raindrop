@@ -14,8 +14,9 @@ TreeXMLModel::TreeXMLModel(QDomNode document, QObject *parent)
 
 TreeXMLModel::~TreeXMLModel()
 {   
-    m_hashField.clear();
     m_hashValue.clear();
+    m_hashField.clear();
+
     m_uniqueField.clear();
     delete m_rootItem;
 }
@@ -335,17 +336,19 @@ bool TreeXMLModel::setData(const QModelIndex &index, const QVariant &value,
                     const QString& attr = attrList.at(j);
                     int column = indexDisplayedAttr(tag,attr);
                     if (column==index.column()){
-                        if (indexHashField(tag,attr,dataValue).isValid()){
-                            if (m_uniqueField[tag].at(j) == TreeXMLModel::UniqueRename){
-                                int position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
-                                int number = 1;
-                                if (position != -1)
-                                    number = dataValue.mid(position+1).toInt()+1;
-                                dataValue = dataValue.left(position)+QString("_%1").arg(number);
-                            } else if (m_uniqueField[tag].at(j) == TreeXMLModel::Unique) {
-                                return false;
+                        QModelIndex existIndex = indexHashField(tag,attr,dataValue);
+                        if (existIndex.isValid())
+                            if (existIndex!=index){
+                                if (m_uniqueField[tag].at(j) == TreeXMLModel::UniqueRename){
+                                    int position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
+                                    int number = 1;
+                                    if (position != -1)
+                                        number = dataValue.mid(position+1).toInt()+1;
+                                    dataValue = dataValue.left(position)+QString("_%1").arg(number);
+                                } else if (m_uniqueField[tag].at(j) == TreeXMLModel::Unique) {
+                                    return false;
+                                }
                             }
-                        }
                         m_hashValue[tag][attr].remove(node.toElement().attribute(attrName),item);
                         m_hashValue[tag][attr].insert(dataValue,item);
                         break;
