@@ -130,10 +130,12 @@ void ClassWidget::submit()
                                                      lineEditClassName->text());
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
 
-    if (existIndex!=srcIndex){
-        QMessageBox::warning(this,tr("Предупреждение"),
-                             tr("Класс с таким именем уже существует"));
-        return;
+    if (existIndex.isValid()){
+        if (existIndex.sibling(existIndex.row(),0)!=srcIndex){
+            QMessageBox::warning(this,tr("Предупреждение"),
+                                 tr("Класс с таким именем уже существует"));
+            return;
+        }
     }
 
     m_mapper->submit();
