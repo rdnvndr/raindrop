@@ -18,6 +18,22 @@ QDomNode TagXMLItem::node() const
     return domNode;
 }
 
+QString TagXMLItem::nodeName() const
+{
+    return domNode.nodeName();
+}
+
+bool TagXMLItem::isInherited()
+{
+    QDomNode parentNode1 = node().parentNode();
+    QDomNode parentNode2 = parent()->node();
+
+    if (parentNode1!=parentNode2)
+        return true;
+
+    return false;
+}
+
 int TagXMLItem::count(QStringList tags,QStringList parenttags){
     int count = 0;
     // Поиск количества потомков

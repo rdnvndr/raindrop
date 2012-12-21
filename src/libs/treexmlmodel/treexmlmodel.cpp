@@ -50,17 +50,7 @@ void TreeXMLModel::clearAttributeTags(){
 bool TreeXMLModel::isInherited(const QModelIndex &index) const
 {
     TagXMLItem *item = toItem(index);
-    QDomNode node = item->node();
-    QDomNode parentNode1 = node.parentNode();
-
-    QModelIndex parent = index.parent();
-    item = toItem(parent);
-    QDomNode parentNode2 = item->node();
-
-    if (parentNode1!=parentNode2)
-        return true;
-
-    return false;
+    return item->isInherited();
 }
 
 void TreeXMLModel::addHashField(QString tag, QString value, UniqueField unique)
@@ -162,9 +152,8 @@ void TreeXMLModel::refreshHashingOne(const QModelIndex &index, bool remove)
 bool TreeXMLModel::isAttribute(const QModelIndex &index) const
 {
     TagXMLItem *item = toItem(index);
-    QDomNode node = item->node();
     foreach (QString tagName,m_attrTags)
-        if (tagName == node.nodeName())
+        if (tagName == item->nodeName())
             return true;
     return false;
 }
@@ -172,10 +161,9 @@ bool TreeXMLModel::isAttribute(const QModelIndex &index) const
 bool TreeXMLModel::isInsert(const QModelIndex &index) const
 {
     TagXMLItem *item = toItem(index);
-    QDomNode node = item->node();
 
     if (index.isValid()){
-        foreach (QString tagName,m_insertTags[node.nodeName()])
+        foreach (QString tagName,m_insertTags[item->nodeName()])
             if (tagName == m_insTag)
                 return true;
         return false;
@@ -320,35 +308,32 @@ void TreeXMLModel::removeDisplayedAttr(QString nameAttr)
 QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
 {
     TagXMLItem *item = toItem(index);
-    QDomNode node = item->node();
+    //QDomNode node = item->node();
 
     if (role == Qt::DecorationRole)
-        if (!m_displayedIcon[node.nodeName()].isNull()&&index.column()==0)
-            return m_displayedIcon[node.nodeName()];
+        if (!m_displayedIcon[item->nodeName()].isNull()&&index.column()==0)
+            return m_displayedIcon[item->nodeName()];
 
     if (role == Qt::UserRole){
-        return node.nodeName();
+        return item->nodeName();
     }
 
     if (role == Qt::DisplayRole || role == Qt::EditRole){
+        if (m_displayedAttr[item->nodeName()].isEmpty())
+            return item->nodeName();
 
-
-        if (m_displayedAttr[node.nodeName()].isEmpty())
-            return node.nodeName();
-
-        if (index.column()<m_displayedAttr[node.nodeName()].count()){
-
-            QString attrName = m_displayedAttr[node.nodeName()].at(index.column());
+        if (index.column()<m_displayedAttr[item->nodeName()].count()){
+            QString attrName = fieldDisplayedAttr(item->nodeName(),index.column());
             if (attrName == "parent"){
-                node = node.parentNode();
-
-                if (!node.isElement())
+                //node = node.parentNode();
+                item = item->parent();
+                if (item->node().isElement())
                     return QVariant();
 
-                attrName = m_displayedAttr[node.nodeName()].at(0);
+                // Отображает в качестве родителя первое поле
+                attrName = fieldDisplayedAttr(item->nodeName(),0);
             }
-            QDomNamedNodeMap attributeMap = node.attributes();
-            return attributeMap.namedItem(attrName).nodeValue();
+            return item->value(attrName);
         }
     }
     return QVariant();
@@ -374,12 +359,12 @@ bool TreeXMLModel::setData(const QModelIndex &index, const QVariant &value,
     if (role != Qt::EditRole) return false;
 
     TagXMLItem *item = toItem(index);
-    QDomNode node = item->node();
 
-    if (index.column()>=m_displayedAttr[node.nodeName()].count())
+    if (index.column()>=m_displayedAttr[item->nodeName()].count())
         return false;
 
-    QString attrName = m_displayedAttr[node.nodeName()].at(index.column());
+    QString attrName = fieldDisplayedAttr(item->nodeName(),index.column());
+
     if (attrName.isEmpty())
         return false;
 
@@ -387,7 +372,7 @@ bool TreeXMLModel::setData(const QModelIndex &index, const QVariant &value,
     if (!makeHashingData(index,dataValue))
         return false;
 
-    node.toElement().setAttribute(attrName,dataValue);
+    item->setValue(attrName,dataValue);
     emit dataChanged(index,index);
 
     if (isAttribute(index)){
