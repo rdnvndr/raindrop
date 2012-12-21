@@ -166,7 +166,7 @@ public:
           ^TagN
         \endcode
     */
-    QMimeData *mimeData(const QModelIndexList &indexes) const;
+    QMimeData *mimeData(const QModelIndexList &indexes);
 
     //! Возращает список типов, которые могут быть упакованы
     QStringList mimeTypes() const;
@@ -193,16 +193,25 @@ public:
     //! Возращает индекс по значению хешеированного поля
     QModelIndex indexHashField(QString tag,QString attrName, QVariant value);
 
-    //! Обновление хэшей
-    void refreshHashing();
+    //! Обновление хэшей начиная с указанног индекса
+    void refreshHashing(const QModelIndex &index = QModelIndex(), bool remove = false);
+
+    //! Обновление хэша указанног индекса
+    void refreshHashingOne(const QModelIndex &index, bool remove = false);
 
 private:
 
-    //! Создание хэшей
+    //! Создание хэша для указанног индекса
     void makeHashing(TagXMLItem *item, bool remove = false);
 
+    //! Создание хэшей начиная с указанног индекса
+    void makeHashingOne(TagXMLItem *item, bool remove);
+
+    //! Создание хэша при редактировании индекса
+    bool makeHashingData(const QModelIndex &index, QString &dataValue);
+
     //! Распаковка данных из потока
-    bool unpackData(const QModelIndex &parent, QDataStream &stream, int row);
+    bool unpackData(const QModelIndex &parent, QDataStream &stream, int row, bool move = false);
 
     //! Упаковка данных в поток
     void packData(const QModelIndex &parent, QDataStream &stream) const;
@@ -250,7 +259,7 @@ private:
     QMap<QString, QStringList> m_hashField;
 
     //! Список уникальности
-    QMap<QString, QList<UniqueField> > m_uniqueField;
+    QMap<QString, QMap<QString,UniqueField> > m_uniqueField;
 
     //! Список хэшей [тэг][атрибут][значение атрибута]
     QMap<QString, QHash<QString,QMultiHash<QString,TagXMLItem*> > > m_hashValue;
