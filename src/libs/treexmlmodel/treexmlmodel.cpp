@@ -1,6 +1,7 @@
 #include <QtGui>
 #include <QtXml>
 #include <QMessageBox>
+#include <QUuid>
 #include "tagxmlitem.h"
 #include "treexmlmodel.h"
 
@@ -103,6 +104,8 @@ bool TreeXMLModel::makeHashingData(const QModelIndex &index, QString &dataValue)
                         dataValue = dataValue.left(position)+QString("_%1").arg(number);
                     } else if (m_uniqueField[tag].value(attr) == TreeXMLModel::Unique) {
                         return false;
+                    } else if (m_uniqueField[tag].value(attr) == TreeXMLModel::Uuid) {
+                        dataValue = QUuid::createUuid().toString();
                     }
                 }
             TagXMLItem *item = toItem(index);
@@ -113,6 +116,13 @@ bool TreeXMLModel::makeHashingData(const QModelIndex &index, QString &dataValue)
         }
     }
     return true;
+}
+
+void TreeXMLModel::insertUuid(const QModelIndex &index)
+{
+    foreach (QString attr,m_uniqueField.value(m_insTag).keys())
+        if (m_uniqueField[m_insTag].value(attr)==TreeXMLModel::Uuid)
+            toItem(index)->setValue(attr,QUuid::createUuid().toString());
 }
 
 void TreeXMLModel::makeHashing(TagXMLItem *item, bool remove)
@@ -486,6 +496,10 @@ bool TreeXMLModel::insertRows(int row, int count, const QModelIndex &parent)
         m_lastInsRow = parent.child(position+count-1,0);
     else
         m_lastInsRow = index(position+count-1,0,parent);
+
+    for (int i=0;i<count;i++) {
+        insertUuid(index(position+i,0,parent));
+    }
 
     return success;
 }

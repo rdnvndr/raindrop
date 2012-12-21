@@ -165,8 +165,7 @@ QString TagXMLItem::value(const QString& attr)
 
 void TagXMLItem::setValue(const QString& attr, const QString& val)
 {
-    QDomNamedNodeMap attributeMap = domNode.attributes();
-    attributeMap.namedItem(attr).setNodeValue(val);
+    domNode.toElement().setAttribute(attr,val);
 }
 
 bool TagXMLItem::insertChild(const QString& tagname)
