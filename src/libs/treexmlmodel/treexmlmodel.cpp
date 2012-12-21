@@ -325,13 +325,17 @@ QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
         if (index.column()<m_displayedAttr[item->nodeName()].count()){
             QString attrName = fieldDisplayedAttr(item->nodeName(),index.column());
             if (attrName == "parent"){
-                //node = node.parentNode();
-                item = item->parent();
-                if (item->node().isElement())
+                QDomNode nodeParent = item->node().parentNode();
+                if (!nodeParent.isElement())
                     return QVariant();
 
                 // Отображает в качестве родителя первое поле
-                attrName = fieldDisplayedAttr(item->nodeName(),0);
+                /*foreach (QString attr,m_hashField.value(nodeParent.nodeName()))
+                    if (m_uniqueField[nodeParent.nodeName()].value(attr) == TreeXMLModel::Uuid)
+                        return nodeParent.toElement().attribute(attr);*/
+                return nodeParent.toElement().attribute(
+                            fieldDisplayedAttr(nodeParent.nodeName(),0)
+                            );
             }
             return item->value(attrName);
         }
