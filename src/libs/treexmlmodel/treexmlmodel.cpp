@@ -330,12 +330,9 @@ QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
                     return QVariant();
 
                 // Отображает в качестве родителя первое поле
-                /*foreach (QString attr,m_hashField.value(nodeParent.nodeName()))
+                foreach (QString attr,m_hashField.value(nodeParent.nodeName()))
                     if (m_uniqueField[nodeParent.nodeName()].value(attr) == TreeXMLModel::Uuid)
-                        return nodeParent.toElement().attribute(attr);*/
-                return nodeParent.toElement().attribute(
-                            fieldDisplayedAttr(nodeParent.nodeName(),0)
-                            );
+                        return nodeParent.toElement().attribute(attr);
             }
             return item->value(attrName);
         }

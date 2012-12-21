@@ -96,8 +96,10 @@ void CompositionWidget::showParent(bool flag)
     } else {
         QModelIndex index = tableViewComp->rootIndex();
         QString className = modelData(DBCLASSXML::CLASS,
-                                      DBCLASSXML::NAME,
+                                      DBCLASSXML::ID,
                                       index).toString();
+        className.replace("{","\\{");
+        className.replace("}","\\}");
         if (className.isEmpty()){
             m_compositionModel->setFilterRegExp("\\S*");
         }else
