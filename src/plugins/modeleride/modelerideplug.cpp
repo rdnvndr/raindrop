@@ -250,6 +250,12 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     dbStructModel->addHashField(DBCLASSXML::CLASS,
                                 DBCLASSXML::ID,
                                 TreeXMLModel::Uuid);
+    dbStructModel->addHashField(DBATTRXML::ATTR,
+                                DBATTRXML::ID,
+                                TreeXMLModel::Uuid);
+    dbStructModel->addHashField(DBCOMPXML::COMP,
+                                DBCOMPXML::ID,
+                                TreeXMLModel::Uuid);
     dbStructModel->refreshHashing();
 
     classFilterModel = new TreeFilterProxyModel();
