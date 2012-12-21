@@ -68,7 +68,7 @@ protected:
 
 private:
     //! Распаковка данных из потока
-   bool unpackData(const QModelIndex &parent, QDataStream &stream, int row);
+   bool unpackData(const QModelIndex &parent, QDataStream &stream, int row, bool move = false);
 
    //! Упаковка данных в поток
    void packData(QModelIndex parent, QDataStream &stream) const;
