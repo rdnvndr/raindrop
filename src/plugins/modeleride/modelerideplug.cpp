@@ -247,6 +247,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     dbStructModel->addHashField(DBATTRXML::ATTR,
                                 DBATTRXML::REFCLASS,
                                 TreeXMLModel::NoUnique);
+    dbStructModel->addHashField(DBCLASSXML::CLASS,
+                                DBCLASSXML::ID,
+                                TreeXMLModel::Uuid);
     dbStructModel->refreshHashing();
 
     classFilterModel = new TreeFilterProxyModel();

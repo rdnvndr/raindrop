@@ -59,7 +59,8 @@ public:
     enum UniqueField {
         NoUnique = 0,         //!< Поле не уникальное
         UniqueRename = 1,     //!< Контроль уникальности путем переименования
-        Unique = 2            //!< Поле уникальное (не используется)
+        Unique = 2,           //!< Поле уникальное
+        Uuid = 3              //!< Поле UUID
     };
 
      //! Конструктор модели
@@ -210,6 +211,9 @@ private:
     //! Создание хэша при редактировании индекса
     bool makeHashingData(const QModelIndex &index, QString &dataValue);
 
+    //! Заполнение UUID при вставке строки
+    void insertUuid(const QModelIndex &index);
+
     //! Распаковка данных из потока
     bool unpackData(const QModelIndex &parent, QDataStream &stream, int row, bool move = false);
 
@@ -258,7 +262,7 @@ private:
     //! Список атрибутов для хэшеированя
     QMap<QString, QStringList> m_hashField;
 
-    //! Список уникальности
+    //! Список уникальности [тэг][атрибут][уникальность]
     QMap<QString, QMap<QString,UniqueField> > m_uniqueField;
 
     //! Список хэшей [тэг][атрибут][значение атрибута]
