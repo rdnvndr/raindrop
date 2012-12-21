@@ -45,6 +45,11 @@ public:
     //! Проверка на возможность удаление узла
     bool checkRemoveChild(const int &row);
 
+    //! Возращает имя узла
+    QString nodeName() const;
+
+    //! Возращает True если унаследован
+    bool isInherited();
 private:
     //! Тэг
     QDomNode domNode;
