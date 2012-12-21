@@ -232,8 +232,10 @@ void AttrWidget::showParentAttr(bool flag)
     } else {
         QModelIndex index = m_mapperAttr->rootIndex();
         QString className = modelData(DBCLASSXML::CLASS,
-                                      DBCLASSXML::NAME,
+                                      DBCLASSXML::ID,
                                       index).toString();
+        className.replace("{","\\{");
+        className.replace("}","\\}");
         if (className.isEmpty()){
             m_attrModel->setFilterRegExp("\\S*");
         }else

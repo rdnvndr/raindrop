@@ -247,13 +247,13 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     dbStructModel->addHashField(DBATTRXML::ATTR,
                                 DBATTRXML::REFCLASS,
                                 TreeXMLModel::NoUnique);
-    dbStructModel->addHashField(DBCLASSXML::CLASS,
-                                DBCLASSXML::ID,
-                                TreeXMLModel::Uuid);
     dbStructModel->addHashField(DBCOMPXML::COMP,
                                 DBCOMPXML::CLASS,
                                 TreeXMLModel::NoUnique);
 
+    dbStructModel->addHashField(DBCLASSXML::CLASS,
+                                DBCLASSXML::ID,
+                                TreeXMLModel::Uuid);
     dbStructModel->addHashField(DBATTRXML::ATTR,
                                 DBATTRXML::ID,
                                 TreeXMLModel::Uuid);
