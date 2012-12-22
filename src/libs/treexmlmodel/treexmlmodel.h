@@ -200,6 +200,10 @@ public:
     //! Обновление хэша указанног индекса
     void refreshHashingOne(const QModelIndex &index, bool remove = false);
 
+    //! Установка ссылки на другое поле
+    void addRelation(const QString &tag, const QString &attr,
+                     const QString &linkTag, const QString &linkAttr);
+
 private:
 
     //! Создание хэша для указанног индекса
@@ -259,11 +263,8 @@ private:
     //! Список тэгов в которые нельзя вставлять строки
     QMap<QString, QStringList> m_insertTags;
 
-    //! Список атрибутов для хэшеированя
-    QMap<QString, QStringList> m_hashField;
-
-    //! Список уникальности [тэг][атрибут][уникальность]
-    QMap<QString, QMap<QString,UniqueField> > m_uniqueField;
+    //! Список атрибутов для хэшеированя [тэг][атрибут][уникальность]
+    QMap<QString, QMap<QString,UniqueField> > m_hashField;
 
     //! Список хэшей [тэг][атрибут][значение атрибута]
     QMap<QString, QHash<QString,QMultiHash<QString,TagXMLItem*> > > m_hashValue;

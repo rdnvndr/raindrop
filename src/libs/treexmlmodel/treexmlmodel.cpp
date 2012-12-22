@@ -17,8 +17,6 @@ TreeXMLModel::~TreeXMLModel()
 {   
     m_hashValue.clear();
     m_hashField.clear();
-
-    m_uniqueField.clear();
     delete m_rootItem;
 }
 
@@ -55,24 +53,17 @@ bool TreeXMLModel::isInherited(const QModelIndex &index) const
 
 void TreeXMLModel::addHashField(QString tag, QString value, UniqueField unique)
 {
-    m_hashField[tag].append(value);
-    m_uniqueField[tag].insert(value,unique);
+    m_hashField[tag].insert(value,unique);
 }
 
 void TreeXMLModel::makeHashingOne(TagXMLItem *item, bool remove)
 {
-    for (int i=0; i < m_hashField.count(); i++) {
-        QString tag  = m_hashField.keys().at(i);
-        QString nodeName = item->node().nodeName();
-        if (nodeName == tag){
-            QStringList attrList = m_hashField.values().at(i);
-            foreach (const QString& attr, attrList){
-                if (remove){
-                    m_hashValue[tag][attr].remove(item->value(attr),item);
-                }else
-                    m_hashValue[tag][attr].insert(item->value(attr),item);
-            }
-        }
+    QString tag = item->nodeName();
+    foreach (const QString& attr, m_hashField.value(tag).keys()){
+        if (remove)
+            m_hashValue[tag][attr].remove(item->value(attr),item);
+        else
+            m_hashValue[tag][attr].insert(item->value(attr),item);
     }
 }
 
@@ -86,15 +77,15 @@ bool TreeXMLModel::makeHashingData(const QModelIndex &index, QString &dataValue)
             QModelIndex existIndex = indexHashField(tag,attr,dataValue);
             if (existIndex.isValid())
                 if (existIndex!=index){
-                    if (m_uniqueField[tag].value(attr) == TreeXMLModel::UniqueRename){
+                    if (m_hashField[tag].value(attr) == TreeXMLModel::UniqueRename){
                         int position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
                         int number = 1;
                         if (position != -1)
                             number = dataValue.mid(position+1).toInt()+1;
                         dataValue = dataValue.left(position)+QString("_%1").arg(number);
-                    } else if (m_uniqueField[tag].value(attr) == TreeXMLModel::Unique) {
+                    } else if (m_hashField[tag].value(attr) == TreeXMLModel::Unique) {
                         return false;
-                    } else if (m_uniqueField[tag].value(attr) == TreeXMLModel::Uuid) {
+                    } else if (m_hashField[tag].value(attr) == TreeXMLModel::Uuid) {
                         dataValue = QUuid::createUuid().toString();
                     }
                 }
@@ -110,8 +101,8 @@ bool TreeXMLModel::makeHashingData(const QModelIndex &index, QString &dataValue)
 
 void TreeXMLModel::insertUuid(const QModelIndex &index)
 {
-    foreach (QString attr,m_uniqueField.value(m_insTag).keys())
-        if (m_uniqueField[m_insTag].value(attr)==TreeXMLModel::Uuid)
+    foreach (QString attr,m_hashField.value(m_insTag).keys())
+        if (m_hashField[m_insTag].value(attr)==TreeXMLModel::Uuid)
             toItem(index)->setValue(attr,QUuid::createUuid().toString());
 }
 
@@ -147,6 +138,12 @@ void TreeXMLModel::refreshHashingOne(const QModelIndex &index, bool remove)
         else
             m_hashValue[tag][attr].insert(index.data().toString(),toItem(index));
     }
+}
+
+void TreeXMLModel::addRelation(const QString &tag, const QString &attr,
+                               const QString &linkTag, const QString &linkAttr)
+{
+
 }
 
 bool TreeXMLModel::isAttribute(const QModelIndex &index) const
@@ -330,8 +327,8 @@ QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
                     return QVariant();
 
                 // Отображает в качестве родителя первое поле
-                foreach (QString attr,m_hashField.value(nodeParent.nodeName()))
-                    if (m_uniqueField[nodeParent.nodeName()].value(attr) == TreeXMLModel::Uuid)
+                foreach (QString attr,m_hashField.value(nodeParent.nodeName()).keys())
+                    if (m_hashField[nodeParent.nodeName()].value(attr) == TreeXMLModel::Uuid)
                         return nodeParent.toElement().attribute(attr);
             }
             return item->value(attrName);
