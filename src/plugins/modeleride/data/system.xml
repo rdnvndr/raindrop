@@ -5,7 +5,7 @@
 <RTPAttribute maxStringLength="128" isCandidateKey="false" isUnique="false" description="Имя класса" group="" type="String" initialValue="" id="{18f99580-d43c-40db-8f8d-9c53cf9a1dd8}" name="name" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="256" isCandidateKey="false" isUnique="false" description="Описание" group="" type="String" initialValue="" id="{33e55bf6-0740-499d-94b5-2ad2a85a772d}" name="description" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="256" isCandidateKey="false" isUnique="false" description="Тип класса" group="" type="String" initialValue="" id="{63418737-63d5-47c0-b88d-1eea48d8b290}" name="type" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Родитель" group="" type="Reference" initialValue="" id="{30e33193-a531-4fd5-9725-7bbeeeff86bf}" name="parent" isNullsAllowed="false" referencedClass="Class"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Родитель" group="" type="Reference" initialValue="" id="{30e33193-a531-4fd5-9725-7bbeeeff86bf}" name="parent" isNullsAllowed="false" referencedClass="{07365d21-0334-46f3-8f57-add028f3ece0}"/>
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Абстрактный" group="" type="Boolean" initialValue="" id="{35cae906-bacf-4b72-bb73-3370da2db240}" name="isAbstract" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Активный" group="" type="Boolean" initialValue="" id="{0ffa7ebb-b625-4bb1-bd06-9f2c57e866a8}" name="isActive" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="8000" isCandidateKey="false" isUnique="false" description="Отображаемый атрибут" group="" type="String" initialValue="" id="{e8fc6398-0afe-49f4-92fa-ca74e67e5a9f}" name="displayTemplate" isNullsAllowed="true" referencedClass=""/>
@@ -19,9 +19,9 @@
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Может быть нулевым" group="" type="Boolean" initialValue="" id="{31c45fab-0ca2-4e0c-899e-81137285c4d1}" name="isNullsAllowed" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Тип атрибута" group="" type="Integer" initialValue="" id="{2064ff79-3490-4246-812d-6019c7a09c90}" name="type" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Длина строки" group="" type="Integer" initialValue="" id="{02424a5e-2526-410f-be4b-ee4c4bdf320e}" name="maxStrLen" isNullsAllowed="true" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Ссылка на класс" group="" type="Reference" initialValue="" id="{482e7d68-c6aa-47f3-ae78-a79e699705bc}" name="refClass" isNullsAllowed="true" referencedClass="Class"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Ссылка на класс" group="" type="Reference" initialValue="" id="{482e7d68-c6aa-47f3-ae78-a79e699705bc}" name="refClass" isNullsAllowed="true" referencedClass="{07365d21-0334-46f3-8f57-add028f3ece0}"/>
 <RTPAttribute maxStringLength="8000" isCandidateKey="false" isUnique="false" description="По умолчанию" group="" type="String" initialValue="" id="{f6862c77-eeae-460f-afa7-e2eca77685f1}" name="default" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Класс атрибута" group="" type="Reference" initialValue="" id="{8caa2618-2e49-49a9-9682-4fdf19859805}" name="parent" isNullsAllowed="false" referencedClass="Class"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Класс атрибута" group="" type="Reference" initialValue="" id="{8caa2618-2e49-49a9-9682-4fdf19859805}" name="parent" isNullsAllowed="false" referencedClass="{07365d21-0334-46f3-8f57-add028f3ece0}"/>
 </RTPClass>
 <RTPClass isAbstract="false" description="Состав" isActive="true" type="System" parent="System" id="{1ae3b8cf-ebb8-4367-b3e8-c73c9dd20079}" name="Composition" displayTemplate="">
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Наименование" group="" type="String" initialValue="" id="{4447a777-5739-48e3-8798-6c64f51716d4}" name="name" isNullsAllowed="false" referencedClass=""/>
@@ -34,13 +34,13 @@
 <RTPClass isAbstract="false" description="Измеряемая сущность" isActive="true" type="System" parent="System" id="{4a66ffab-5711-420c-9072-00026b543879}" name="MeasuredEntity" displayTemplate="">
 <RTPAttribute maxStringLength="128" isCandidateKey="true" isUnique="true" description="Наименование" group="" type="String" initialValue="" id="{46a61a15-db66-4194-bbaa-899dbe9bc3a9}" name="name" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="512" isCandidateKey="true" isUnique="true" description="Описание" group="" type="String" initialValue="" id="{547af757-9aae-4346-958e-f7d749191414}" name="decription" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="true" description="Базовая единица" group="" type="Reference" initialValue="" id="{1c9eda70-ab5c-41da-a8b1-e0f7dc5ed3bd}" name="basicUnit" isNullsAllowed="false" referencedClass="MeasureUnit"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="true" description="Базовая единица" group="" type="Reference" initialValue="" id="{1c9eda70-ab5c-41da-a8b1-e0f7dc5ed3bd}" name="basicUnit" isNullsAllowed="false" referencedClass="{1c9eda70-ab5c-41da-a8b1-e0f7dc5ed3bd}"/>
 </RTPClass>
 <RTPClass isAbstract="false" description="Единица измерения" isActive="true" type="System" parent="System" id="{84d269d6-569a-4bab-b8d7-b22c6b7af2dc}" name="MeasureUnit" displayTemplate="">
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Код ОКЕИ" group="" type="Integer" initialValue="" id="{a5df4ba6-f1fa-4e29-ba05-4f6978855875}" name="code" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="32" isCandidateKey="true" isUnique="true" description="Условное обозначеие" group="" type="String" initialValue="" id="{9a53b2dc-e1b2-4514-a4d9-232639de2afb}" name="symbol" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="512" isCandidateKey="true" isUnique="true" description="Обозначение" group="" type="String" initialValue="" id="{d2f1acfa-d84c-4202-adbf-c509fb5fed6c}" name="designation" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Измеряемая сущность" group="" type="Reference" initialValue="" id="{ac62bf4f-1aaa-4f98-998d-c74fccac9639}" name="entity" isNullsAllowed="false" referencedClass="MeasuredEntity"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Измеряемая сущность" group="" type="Reference" initialValue="" id="{ac62bf4f-1aaa-4f98-998d-c74fccac9639}" name="entity" isNullsAllowed="false" referencedClass="{4a66ffab-5711-420c-9072-00026b543879}"/>
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Коэффициент" group="" type="Double" initialValue="" id="{79883fca-f2dd-4389-b2c3-9a6cda44f242}" name="coeff" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Разница" group="" type="Double" initialValue="" id="{f785e287-6c12-4fa3-a100-883ec986feee}" name="delta" isNullsAllowed="false" referencedClass=""/>
 </RTPClass>
@@ -49,7 +49,7 @@
 <RTPClass isAbstract="true" description="Изделие" isActive="true" type="" parent="Root" id="{dc665fef-8ae6-4004-8a35-68b211652483}" name="Product" displayTemplate="">
 <RTPClass isAbstract="true" description="Конструкторский состав" isActive="true" type="" parent="Root" id="{051bfe5c-686c-4698-90f1-50e719d397e0}" name="DesignComposition" displayTemplate="">
 <RTPClass isAbstract="true" description="Конструкторская сборка" isActive="true" type="" parent="DesignComposition" id="{6b0768e9-7d18-46c4-b9f5-fae76821423b}" name="Assembly" displayTemplate="">
-<RTPComposition inverseDescription="Входит в" Class="DesignComposition" description="Конструкторский состав" parent="Assembly" id="{739fb7a0-25c9-4b0e-af9f-695389ae9e6c}" name="DesignComposition" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{051bfe5c-686c-4698-90f1-50e719d397e0}" description="Конструкторский состав" parent="Assembly" id="{739fb7a0-25c9-4b0e-af9f-695389ae9e6c}" name="DesignComposition" directDescription="Состоит из"/>
 <RTPClass isAbstract="false" description="Комплекс" isActive="true" type="" parent="Assembly" id="{6b3d4903-a0c7-4400-a919-9c3fec90ddb5}" name="Complex" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Комплект" isActive="true" type="" parent="Assembly" id="{e8bfae15-6321-41fe-ba8b-df14d4658628}" name="Sets" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Сборочная единица" isActive="true" type="" parent="Assembly" id="{f6a4cb52-d55a-4daf-9780-162380342d59}" name="AssemblyUnit" displayTemplate=""/>
@@ -61,8 +61,8 @@
 </RTPClass>
 <RTPClass isAbstract="true" description="Технологический состав" isActive="true" type="" parent="DesignComposition" id="{d1ccd187-209e-4128-9326-c840d989fa40}" name="TechComposition" displayTemplate="">
 <RTPClass isAbstract="false" description="Технологическая сборка" isActive="true" type="" parent="Assembly" id="{002f253e-74ab-40b7-b94e-6642448c4b21}" name="TechAssembly" displayTemplate="">
-<RTPComposition inverseDescription="Входит в" Class="TechComposition" description="Технологическая сборка" parent="TechAssembly" id="{5948ca53-e7ab-464f-b4ce-1090e04dc8e3}" name="TechAssembly" directDescription="Состоит из"/>
-<RTPComposition inverseDescription="Входит в" Class="DesignComposition" description="Конструкторский состав" parent="TechAssembly" id="{a3bed566-69b8-43db-bdb5-421f9b81a441}" name="DesignComposition" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{d1ccd187-209e-4128-9326-c840d989fa40}" description="Технологическая сборка" parent="TechAssembly" id="{5948ca53-e7ab-464f-b4ce-1090e04dc8e3}" name="TechAssembly" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{d1ccd187-209e-4128-9326-c840d989fa40}" description="Конструкторский состав" parent="TechAssembly" id="{a3bed566-69b8-43db-bdb5-421f9b81a441}" name="DesignComposition" directDescription="Состоит из"/>
 </RTPClass>
 </RTPClass>
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Обозначение" group="" type="String" initialValue="" id="{bcca1cb6-c775-4d4c-bdf9-cfcf77099f57}" name="designation" isNullsAllowed="false" referencedClass=""/>
@@ -144,10 +144,10 @@
 </RTPClass>
 <RTPClass isAbstract="false" description="Название операции" isActive="true" type="User" parent="TechReferences" id="{a92bf29b-dc38-4e88-b369-0f92d92e589b}" name="Operation" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Ключевое слово перехода" isActive="true" type="User" parent="TechReferences" id="{ca46e18a-c02f-4d0e-bf9e-f1d521c5deec}" name="StepWord" displayTemplate="">
-<RTPComposition inverseDescription="Входит в" Class="StepSurface" description="Поверхность перехода" parent="StepWord" id="{60e045ca-d5fe-499f-9d80-a6d9cd028870}" name="StepSurface" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{7b78da05-e80c-47d4-8c22-0e644ec441de}" description="Поверхность перехода" parent="StepWord" id="{60e045ca-d5fe-499f-9d80-a6d9cd028870}" name="StepSurface" directDescription="Состоит из"/>
 </RTPClass>
 <RTPClass isAbstract="false" description="Поверхность перехода" isActive="true" type="User" parent="TechReferences" id="{7b78da05-e80c-47d4-8c22-0e644ec441de}" name="StepSurface" displayTemplate="">
-<RTPComposition inverseDescription="Входит в" Class="Root" description="Окончание перехода" parent="StepSurface" id="{f3e82605-3a63-4f5a-9013-b58d2b232e9c}" name="StepEnd" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{dde6a61b-ab17-4812-8cac-9b8946770e15}" description="Окончание перехода" parent="StepSurface" id="{f3e82605-3a63-4f5a-9013-b58d2b232e9c}" name="StepEnd" directDescription="Состоит из"/>
 </RTPClass>
 <RTPClass isAbstract="false" description="Окончание перехода" isActive="true" type="User" parent="TechReferences" id="{e8463bfb-e95b-4b10-92cd-d41ac163219c}" name="StepEnd" displayTemplate=""/>
 <RTPClass isAbstract="true" description="Подразделения" isActive="true" type="User" parent="TechReferences" id="{c2dda30d-f474-4210-97cd-654b841ca2c1}" name="Subdivision" displayTemplate="">
@@ -165,21 +165,21 @@
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="A" group="" type="Dimension" parent="TPEstablished" initialValue="" id="{ade53614-d6d3-443b-8a99-d6121ba0a66b}" name="A" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="B" group="" type="Dimension" parent="TPEstablished" initialValue="" id="{b7a3c2a7-b3f7-4929-82a7-238d02efabf8}" name="B" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="C" group="" type="Dimension" parent="TPEstablished" initialValue="" id="{17427641-a12f-49d4-bb0b-91546a9ba110}" name="C" isNullsAllowed="false" referencedClass=""/>
-<RTPComposition inverseDescription="Входит в" Class="TPStep" description="Переходы установа" parent="TPEstablished" id="{0808b2d8-03d9-401d-a5db-dca037fd7750}" name="StepOfEstablished" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{d5d622ff-e81d-478f-9469-795ced2fef68}" description="Переходы установа" parent="TPEstablished" id="{0808b2d8-03d9-401d-a5db-dca037fd7750}" name="StepOfEstablished" directDescription="Состоит из"/>
 </RTPClass>
 <RTPClass isAbstract="false" description="Операция" isActive="true" type="User" parent="TechReferences" id="{752f6e29-37f6-4b9d-ae30-34c4a39e4e12}" name="TPOperation" displayTemplate="">
-<RTPComposition inverseDescription="Входит в" Class="TPStep" description="Переходы" parent="TPOperation" id="{27e3be80-3dfd-4b96-9be4-5408a03b461f}" name="Steps" directDescription="Состоит из"/>
-<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Операция" group="" type="Reference" parent="TPOperation" initialValue="" id="{78b9ceda-74fb-45f1-b8ef-c2fd98ee4314}" name="operation" isNullsAllowed="false" referencedClass="Operation"/>
-<RTPComposition inverseDescription="Изготавливает" Class="Equipment" description="Оборудование" parent="TPOperation" id="{bd029d2b-555e-426d-acb5-5a1f4f5f7d4b}" name="Equipment" directDescription="Иготавливается на"/>
-<RTPComposition inverseDescription="Входит в" Class="MeansEquipment" description="Средства оснащения" parent="TPOperation" id="{28a4442c-8527-4326-804f-85c4b26885d3}" name="MeansEquipment" directDescription="Состоит из"/>
-<RTPComposition inverseDescription="Входит в" Class="Profession" description="Рабочий" parent="TPOperation" id="{c7008225-c808-4cd1-b823-2038b2a062a3}" name="Worker" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{d5d622ff-e81d-478f-9469-795ced2fef68}" description="Переходы" parent="TPOperation" id="{27e3be80-3dfd-4b96-9be4-5408a03b461f}" name="Steps" directDescription="Состоит из"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Операция" group="" type="Reference" parent="TPOperation" initialValue="" id="{78b9ceda-74fb-45f1-b8ef-c2fd98ee4314}" name="operation" isNullsAllowed="false" referencedClass="{a92bf29b-dc38-4e88-b369-0f92d92e589b}"/>
+<RTPComposition inverseDescription="Изготавливает" Class="{d2056648-6bc0-4264-8ab5-06e0d6526560}" description="Оборудование" parent="TPOperation" id="{bd029d2b-555e-426d-acb5-5a1f4f5f7d4b}" name="Equipment" directDescription="Иготавливается на"/>
+<RTPComposition inverseDescription="Входит в" Class="{c2682351-1b14-4ccb-8bf7-525636656510}" description="Средства оснащения" parent="TPOperation" id="{28a4442c-8527-4326-804f-85c4b26885d3}" name="MeansEquipment" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{71482064-a325-4c35-88a6-9c493841695f}"  description="Рабочий" parent="TPOperation" id="{c7008225-c808-4cd1-b823-2038b2a062a3}" name="Worker" directDescription="Состоит из"/>
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Номер" group="" type="Integer" parent="TPOperation" initialValue="" id="{64e77af9-01ed-479a-afa3-99c641208ece}" name="number" isNullsAllowed="false" referencedClass=""/>
-<RTPComposition inverseDescription="Входит в" Class="Instruction" description="Инструкция" parent="TPOperation" id="{5d3983c5-e6ce-49a9-b2cd-3bd14d9385a9}" name="Instruction" directDescription="Состоит из"/>
-<RTPComposition inverseDescription="Входит в" Class="TPEstablished" description="Установ" parent="TPOperation" id="{504e5e56-7497-4680-8b90-397df21a3dff}" name="Established" directDescription="Состоит из"/>
-<RTPComposition inverseDescription="Входит в" Class="TPWorkplace" description="Рабочее место" parent="TPOperation" id="{d38c7dc9-9834-4e5f-8417-4dc21d8d1cf4}" name="Workplace" directDescription="Состоит из"/>
-<RTPComposition inverseDescription="Входит в" Class="TPOperationTime" description="Время на операцию" parent="TPOperation" id="{50fff08f-14b5-4c3c-8d3b-4ddc3754ad3c}" name="OperationTime" directDescription="Состоит из"/>
-<RTPComposition inverseDescription="Входит в" Class="TPVariable" description="Переменная" parent="TPOperation" id="{78434f45-4d93-494b-8b4d-72560684ed4c}" name="Variable" directDescription="Состоит из"/>
-<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Ссылочный техпроцесс" group="" type="Reference" parent="TPOperation" initialValue="" id="{c8342e31-a899-4237-8caa-b8904d097323}" name="techProcess" isNullsAllowed="false" referencedClass="TechProcess"/>
+<RTPComposition inverseDescription="Входит в" Class="{4e1a0173-b6d3-43e1-b6ff-692baadeefca}" description="Инструкция" parent="TPOperation" id="{5d3983c5-e6ce-49a9-b2cd-3bd14d9385a9}" name="Instruction" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{b4b3e0da-eb91-41c6-a2ee-57d2c5155dba}" description="Установ" parent="TPOperation" id="{504e5e56-7497-4680-8b90-397df21a3dff}" name="Established" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{212f33c5-47c1-46cd-8844-ce07ac321a48}" description="Рабочее место" parent="TPOperation" id="{d38c7dc9-9834-4e5f-8417-4dc21d8d1cf4}" name="Workplace" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{48c03225-2a56-46c5-88aa-5dca59e9e223}" description="Время на операцию" parent="TPOperation" id="{50fff08f-14b5-4c3c-8d3b-4ddc3754ad3c}" name="OperationTime" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{13bc92cb-4e66-4e46-b43f-cbac1a36ecb0}" description="Переменная" parent="TPOperation" id="{78434f45-4d93-494b-8b4d-72560684ed4c}" name="Variable" directDescription="Состоит из"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Ссылочный техпроцесс" group="" type="Reference" parent="TPOperation" initialValue="" id="{c8342e31-a899-4237-8caa-b8904d097323}" name="techProcess" isNullsAllowed="false" referencedClass="{c8342e31-a899-4237-8caa-b8904d097323}"/>
 </RTPClass>
 <RTPClass isAbstract="false" description="Время на операцию" isActive="true" type="User" parent="TechReferences" id="{48c03225-2a56-46c5-88aa-5dca59e9e223}" name="TPOperationTime" displayTemplate="">
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Вспомагательное время" group="" type="Double" parent="TPOperationTime" initialValue="" id="{1160bced-32fc-4579-a763-95fdacd278b0}" name="auxiliaryTime" isNullsAllowed="false" referencedClass=""/>
@@ -196,13 +196,13 @@
 <RTPClass isAbstract="false" description="Переход" isActive="true" type="" parent="TechReferences" id="{d5d622ff-e81d-478f-9469-795ced2fef68}" name="TPStep" displayTemplate="">
 <RTPClass isAbstract="false" description="Технологические переходы" isActive="true" type="" parent="TPStep" id="{af9de540-5e64-4ce8-9f29-d21d91430106}" name="ManufacturingSteps" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Вспомагательные переходы" isActive="true" type="User" parent="TPStep" id="{4f362623-88f4-4dbc-b3fa-47929a8b9617}" name="AuxiliarySteps" displayTemplate=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Ключевое слово" group="" type="Reference" parent="TPStep" initialValue="" id="{2a5352c6-5ee3-48cd-8584-d20d0e0386f3}" name="word" isNullsAllowed="false" referencedClass="StepWord"/>
-<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Поверхность" group="" type="Reference" parent="TPStep" initialValue="" id="{03444396-d040-4be7-9a3c-574d62805cf9}" name="surface" isNullsAllowed="false" referencedClass="StepSurface"/>
-<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Окончание" group="" type="Reference" parent="TPStep" initialValue="" id="{77246222-f769-4151-8bc1-619ce6eac0fb}" name="end" isNullsAllowed="false" referencedClass="StepEnd"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Ключевое слово" group="" type="Reference" parent="TPStep" initialValue="" id="{2a5352c6-5ee3-48cd-8584-d20d0e0386f3}" name="word" isNullsAllowed="false" referencedClass="{ca46e18a-c02f-4d0e-bf9e-f1d521c5deec}"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Поверхность" group="" type="Reference" parent="TPStep" initialValue="" id="{03444396-d040-4be7-9a3c-574d62805cf9}" name="surface" isNullsAllowed="false" referencedClass="{7b78da05-e80c-47d4-8c22-0e644ec441de}"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Окончание" group="" type="Reference" parent="TPStep" initialValue="" id="{77246222-f769-4151-8bc1-619ce6eac0fb}" name="end" isNullsAllowed="false" referencedClass="{e8463bfb-e95b-4b10-92cd-d41ac163219c}"/>
 <RTPAttribute maxStringLength="512" isCandidateKey="true" isUnique="true" description="Текст перехода" group="" type="String" parent="TPStep" initialValue="" id="{5370dbf6-4c21-4a10-a3e3-79ccbaf49002}" name="text" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Номер" group="" type="Integer" parent="TPStep" initialValue="" id="{5b8be190-82cc-406c-92a7-ad62b71ee6a8}" name="number" isNullsAllowed="false" referencedClass=""/>
-<RTPComposition inverseDescription="Входит в" Class="TPStepTime" description="Время на переход" parent="TPStep" id="{71e6e4bf-9033-45fe-bd7e-4a7f4bc5147b}" name="StepTime" directDescription="Состоит из"/>
-<RTPComposition inverseDescription="Входит в" Class="TPVariable" description="Переменная" parent="TPStep" id="{3430aa4e-f41b-414e-877e-fa0d247bf297}" name="Variable" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{ed9f84cf-cd16-4d21-adda-6bb0edc05437}" description="Время на переход" parent="TPStep" id="{71e6e4bf-9033-45fe-bd7e-4a7f4bc5147b}" name="StepTime" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{13bc92cb-4e66-4e46-b43f-cbac1a36ecb0}" description="Переменная" parent="TPStep" id="{3430aa4e-f41b-414e-877e-fa0d247bf297}" name="Variable" directDescription="Состоит из"/>
 </RTPClass>
 <RTPClass isAbstract="false" description="Время на переход" isActive="true" type="User" parent="TechReferences" id="{ed9f84cf-cd16-4d21-adda-6bb0edc05437}" name="TPStepTime" displayTemplate="">
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Основное время" group="" type="Double" parent="TPStepTime" initialValue="" id="{9c195283-edc5-499d-a79f-4da722f33a02}" name="basicTime" isNullsAllowed="false" referencedClass=""/>
@@ -210,17 +210,17 @@
 </RTPClass>
 <RTPClass isAbstract="false" description="Переменные техпроцесса" isActive="true" type="User" parent="TechReferences" id="{13bc92cb-4e66-4e46-b43f-cbac1a36ecb0}" name="TPVariable" displayTemplate=""/>
 <RTPClass isAbstract="false" description="Рабочее место" isActive="true" type="User" parent="TechReferences" id="{212f33c5-47c1-46cd-8844-ce07ac321a48}" name="TPWorkplace" displayTemplate="">
-<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Цех" group="" type="Reference" parent="TPWorkplace" initialValue="" id="{5e8fc3ad-272a-4bb3-8bbd-901b6ecda241}" name="shop" isNullsAllowed="false" referencedClass="Shop"/>
-<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Рабочее место" group="" type="Reference" parent="TPWorkplace" initialValue="" id="{514fd3c7-c648-40db-a874-a2ffd127a13e}" name="workplace" isNullsAllowed="false" referencedClass="Workplace"/>
-<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Участок" group="" type="Reference" parent="TPWorkplace" initialValue="" id="{e8eb175e-236d-4e12-b658-518b8783850b}" name="piot" isNullsAllowed="false" referencedClass="Plot"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Цех" group="" type="Reference" parent="TPWorkplace" initialValue="" id="{5e8fc3ad-272a-4bb3-8bbd-901b6ecda241}" name="shop" isNullsAllowed="false" referencedClass="{81312c85-3af3-4cd0-b4c6-47be5e3d9453}"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Рабочее место" group="" type="Reference" parent="TPWorkplace" initialValue="" id="{514fd3c7-c648-40db-a874-a2ffd127a13e}" name="workplace" isNullsAllowed="false" referencedClass="{dc7535f5-e632-40e1-9938-d9305a3d5be1}"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Участок" group="" type="Reference" parent="TPWorkplace" initialValue="" id="{e8eb175e-236d-4e12-b658-518b8783850b}" name="piot" isNullsAllowed="false" referencedClass="{81b12158-8bf4-4569-8e5f-f18822deb953}"/>
 </RTPClass>
 <RTPClass isAbstract="false" description="Технологический процесс" isActive="true" type="User" parent="References" id="{e1795222-c9dd-41d6-800e-20f86e9f8751}" name="TechProcess" displayTemplate="">
-<RTPComposition inverseDescription="Входит в" Class="TPOperation" description="Операции" parent="TechProcess" id="{9ab8737d-a108-4c81-88ee-a100ea2e67d5}" name="Operations" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{752f6e29-37f6-4b9d-ae30-34c4a39e4e12}" description="Операции" parent="TechProcess" id="{9ab8737d-a108-4c81-88ee-a100ea2e67d5}" name="Operations" directDescription="Состоит из"/>
 <RTPAttribute maxStringLength="64" isCandidateKey="true" isUnique="true" description="Обозначение" group="" type="String" parent="TechProcess" initialValue="" id="{8ea312e1-10b4-446d-b71c-9461514aa952}" name="designation" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="512" isCandidateKey="true" isUnique="true" description="Наименование" group="" type="String" parent="TechProcess" initialValue="" id="{e3366087-6d59-424c-8d74-946a1acc045f}" name="name" isNullsAllowed="false" referencedClass=""/>
-<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Организация" group="" type="Reference" parent="TechProcess" initialValue="" id="{796660cb-f45a-473e-8c3a-76029e07f69b}" name="organization" isNullsAllowed="false" referencedClass="Subdivision"/>
-<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Изделие" group="" type="Reference" parent="TechProcess" initialValue="" id="{53653eb3-960b-4b81-a5c8-a85cd2551b41}" name="product" isNullsAllowed="false" referencedClass="Product"/>
-<RTPComposition inverseDescription="Входит в" Class="TPVariable" description="Переменная" parent="TechProcess" id="{7faa64a2-80fa-4f21-893f-d7f699601a58}" name="Variable" directDescription="Состоит из"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Организация" group="" type="Reference" parent="TechProcess" initialValue="" id="{796660cb-f45a-473e-8c3a-76029e07f69b}" name="organization" isNullsAllowed="false" referencedClass="{c2dda30d-f474-4210-97cd-654b841ca2c1}"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Изделие" group="" type="Reference" parent="TechProcess" initialValue="" id="{53653eb3-960b-4b81-a5c8-a85cd2551b41}" name="product" isNullsAllowed="false" referencedClass="{dc665fef-8ae6-4004-8a35-68b211652483}"/>
+<RTPComposition inverseDescription="Входит в" Class="{13bc92cb-4e66-4e46-b43f-cbac1a36ecb0}" description="Переменная" parent="TechProcess" id="{7faa64a2-80fa-4f21-893f-d7f699601a58}" name="Variable" directDescription="Состоит из"/>
 </RTPClass>
 </RTPClass>
 </RTPClass>
