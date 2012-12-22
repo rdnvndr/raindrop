@@ -55,6 +55,11 @@ class XMLMODELLIB TreeXMLModel : public QAbstractItemModel
 
 public:
 
+    struct LinkField {
+        QString linkTag;
+        QString linkAttr;
+    };
+
     //! Перечисления типов уникальности поля
     enum UniqueField {
         NoUnique = 0,         //!< Поле не уникальное
@@ -126,7 +131,7 @@ public:
     void addInsertTags(QString tag,QStringList value);
 
     //! Получение индекса поля в тэге
-    int indexDisplayedAttr(QString nameAttr, QString fieldName);
+    int indexDisplayedAttr(QString nameAttr, QString fieldName) const;
 
     //! Получение поля в тэге по индексу
     QString fieldDisplayedAttr(QString nameAttr, int column) const;
@@ -192,7 +197,7 @@ public:
     void addHashField(QString tag,QString value, UniqueField unique = TreeXMLModel::NoUnique);
 
     //! Возращает индекс по значению хешеированного поля
-    QModelIndex indexHashField(QString tag,QString attrName, QVariant value);
+    QModelIndex indexHashField(QString tag,QString attrName, QVariant value) const;
 
     //! Обновление хэшей начиная с указанног индекса
     void refreshHashing(const QModelIndex &index = QModelIndex(), bool remove = false);
@@ -269,6 +274,9 @@ private:
     //! Список хэшей [тэг][атрибут][значение атрибута]
     QMap<QString, QHash<QString,QMultiHash<QString,TagXMLItem*> > > m_hashValue;
 
+    //! Список зависимых полей [тэг][атрибут]
+    //QMap<QString, QMap<QString, LinkField> > m_linkField;
+    QMap<QString, QMap<QString, QMap<QString, QString> > > m_linkField;
 };
 
 #endif
