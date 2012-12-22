@@ -116,7 +116,7 @@ void TreeXMLModel::makeHashing(TagXMLItem *item, bool remove)
 }
 
 
-QModelIndex TreeXMLModel::indexHashField(QString tag, QString attrName, QVariant value)
+QModelIndex TreeXMLModel::indexHashField(QString tag, QString attrName, QVariant value) const
 {
     int column = indexDisplayedAttr(tag,attrName);
     QModelIndex index = fromItem(m_hashValue[tag][attrName].value(value.toString()));
@@ -143,7 +143,9 @@ void TreeXMLModel::refreshHashingOne(const QModelIndex &index, bool remove)
 void TreeXMLModel::addRelation(const QString &tag, const QString &attr,
                                const QString &linkTag, const QString &linkAttr)
 {
-
+    /*m_linkField[tag][attr].linkTag = linkTag;
+    m_linkField[tag][attr].linkAttr = linkAttr;*/
+    m_linkField[tag][attr][linkTag] = linkAttr;
 }
 
 bool TreeXMLModel::isAttribute(const QModelIndex &index) const
@@ -269,7 +271,7 @@ void TreeXMLModel::addInsertTags(QString tag,QStringList value)
     m_insertTags.insert(tag,value);
 }
 
-int TreeXMLModel::indexDisplayedAttr(QString nameAttr, QString fieldName)
+int TreeXMLModel::indexDisplayedAttr(QString nameAttr, QString fieldName) const
 {
     for (int i=0;i<m_displayedAttr[nameAttr].count();i++){
         if (m_displayedAttr[nameAttr].at(i)==fieldName)
@@ -305,32 +307,49 @@ void TreeXMLModel::removeDisplayedAttr(QString nameAttr)
 QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
 {
     TagXMLItem *item = toItem(index);
-    //QDomNode node = item->node();
+    QString tag = item->nodeName();
 
     if (role == Qt::DecorationRole)
-        if (!m_displayedIcon[item->nodeName()].isNull()&&index.column()==0)
-            return m_displayedIcon[item->nodeName()];
+        if (!m_displayedIcon[tag].isNull()&&index.column()==0)
+            return m_displayedIcon[tag];
 
     if (role == Qt::UserRole){
-        return item->nodeName();
+        return tag;
     }
 
     if (role == Qt::DisplayRole || role == Qt::EditRole){
-        if (m_displayedAttr[item->nodeName()].isEmpty())
-            return item->nodeName();
+        if (m_displayedAttr[tag].isEmpty())
+            return tag;
 
-        if (index.column()<m_displayedAttr[item->nodeName()].count()){
-            QString attrName = fieldDisplayedAttr(item->nodeName(),index.column());
+        if (index.column()<m_displayedAttr[tag].count()){
+            QString attrName = fieldDisplayedAttr(tag,index.column());
             if (attrName == "parent"){
                 QDomNode nodeParent = item->node().parentNode();
+                QString parentTag = nodeParent.nodeName();
                 if (!nodeParent.isElement())
                     return QVariant();
 
                 // Отображает в качестве родителя первое поле
-                foreach (QString attr,m_hashField.value(nodeParent.nodeName()).keys())
-                    if (m_hashField[nodeParent.nodeName()].value(attr) == TreeXMLModel::Uuid)
+                foreach (QString attr,m_hashField.value(parentTag).keys())
+                    if (m_hashField[parentTag].value(attr) == TreeXMLModel::Uuid){
+                        if (role == Qt::DisplayRole)
+                            attr = m_linkField[tag][attrName][parentTag];
                         return nodeParent.toElement().attribute(attr);
+                    }
             }
+
+            if (role == Qt::DisplayRole)
+                if (m_linkField[tag].contains(attrName)) {
+                    foreach (QString linkTag,m_linkField[tag][attrName].keys()){
+                        QString linkAttr = m_linkField[tag][attrName][linkTag];
+                        foreach (QString attr,m_hashField.value(linkTag).keys())
+                            if (m_hashField[linkTag].value(attr) == TreeXMLModel::Uuid){
+                                QModelIndex linkIndex = indexHashField(linkTag, attr, item->value(attrName));
+                                int column = indexDisplayedAttr(linkTag,linkAttr);
+                                return linkIndex.sibling(linkIndex.row(),column).data();
+                            }
+                    }
+                }
             return item->value(attrName);
         }
     }
