@@ -9,6 +9,8 @@ TreeComboBox::TreeComboBox(QWidget *parent):QComboBox(parent),skipNextHide(false
     view()->setProperty("headerHidden",true);
     view()->setMinimumSize(0,150);
     view()->setAlternatingRowColors(true);
+
+    m_indexColumn = 0;
 }
 
 TreeComboBox::~TreeComboBox()
@@ -57,6 +59,12 @@ void TreeComboBox::setCurrentModelIndex(const QModelIndex &index)
     hidePopup();
 }
 
+QModelIndex TreeComboBox::currentModelIndex()
+{
+    QModelIndex index = treeView->currentIndex();
+    return index.sibling(index.row(),m_indexColumn);
+}
+
 void TreeComboBox::paintEvent(QPaintEvent *)
 {
     QStylePainter painter(this);
@@ -79,4 +87,9 @@ void TreeComboBox::setDisplayText(QString text)
 QString TreeComboBox::displayText() const
 {
     return m_displayText;
+}
+
+void TreeComboBox::setIndexColumn(int column)
+{
+    m_indexColumn = column;
 }
