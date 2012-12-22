@@ -57,6 +57,13 @@ void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, co
         return;
     }
 
+    QLineEdit* lineEdit = dynamic_cast<QLineEdit*>(editor);
+    if (lineEdit)
+        if (lineEdit->isReadOnly()) {
+            model->setData(index,index.data(Qt::EditRole),Qt::EditRole);
+            return;
+        }
+
     QStyledItemDelegate::setModelData(editor,model,index);
     return;
 }

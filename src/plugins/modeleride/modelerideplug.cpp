@@ -476,7 +476,12 @@ void ModelerIDEPlug::publishClassModel(QModelIndex index)
 {
     for (int row=0;row < dbStructModel->rowCount(index);row++){
         QModelIndex childIndex = dbStructModel->index(row,0,index);
-
+        /*childIndex = childIndex.sibling(childIndex.row(),
+                                        dbStructModel->indexDisplayedAttr(
+                                            childIndex.data(Qt::UserRole).toString(),
+                                            QString("parent"))
+                                        );
+        dbStructModel->setData(childIndex, childIndex.data(Qt::EditRole), Qt::EditRole);*/
         if (childIndex.data(Qt::UserRole)==DBATTRXML::ATTR){
             // Создание атрибута
             if (dbStructModel->isInherited(childIndex))
