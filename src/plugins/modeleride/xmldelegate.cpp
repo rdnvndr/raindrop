@@ -20,7 +20,7 @@ void XmlDelegate::setEditorData( QWidget * editor, const QModelIndex & index )co
 
     TreeComboBox* treeComboBox = dynamic_cast<TreeComboBox*>(editor);
     if (treeComboBox) {
-        treeComboBox->setDisplayText(index.model()->data(index,Qt::EditRole).toString());
+        treeComboBox->setDisplayText(index.model()->data(index,Qt::DisplayRole).toString());
         if (!treeComboBox->isEnabled())
             treeComboBox->repaint();
         return;
@@ -32,6 +32,12 @@ void XmlDelegate::setEditorData( QWidget * editor, const QModelIndex & index )co
         return;
     }
 
+    QLineEdit* lineEdit = dynamic_cast<QLineEdit*>(editor);
+    if (lineEdit) {
+        lineEdit->setText(index.model()->data(index,Qt::DisplayRole).toString());
+        return;
+    }
+
     QStyledItemDelegate::setEditorData(editor, index);
     return;
 
@@ -39,6 +45,11 @@ void XmlDelegate::setEditorData( QWidget * editor, const QModelIndex & index )co
 
 void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, const QModelIndex & index )const
 {
+    TreeComboBox* treeComboBox = dynamic_cast<TreeComboBox*>(editor);
+    if (treeComboBox) {
+        model->setData(index,treeComboBox->currentModelIndex().data(),Qt::EditRole);
+        return;
+    }
     // Если QComboBox присваиваем текущий текст, а не индекс
     QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
     if (comboBox) {

@@ -143,9 +143,27 @@ void TreeXMLModel::refreshHashingOne(const QModelIndex &index, bool remove)
 void TreeXMLModel::addRelation(const QString &tag, const QString &attr,
                                const QString &linkTag, const QString &linkAttr)
 {
-    /*m_linkField[tag][attr].linkTag = linkTag;
-    m_linkField[tag][attr].linkAttr = linkAttr;*/
     m_linkField[tag][attr][linkTag] = linkAttr;
+}
+
+QModelIndex TreeXMLModel::indexLink(const QModelIndex &index) const
+{
+    TagXMLItem *item = toItem(index);
+    QString tag = item->nodeName();
+    QString attrName = fieldDisplayedAttr(tag,index.column());
+
+    if (m_linkField[tag].contains(attrName)) {
+        foreach (QString linkTag,m_linkField[tag][attrName].keys()){
+            QString linkAttr = m_linkField[tag][attrName][linkTag];
+            foreach (QString attr,m_hashField.value(linkTag).keys())
+                if (m_hashField[linkTag].value(attr) == TreeXMLModel::Uuid){
+                    QModelIndex linkIndex = indexHashField(linkTag, attr, item->value(attrName));
+                    int column = indexDisplayedAttr(linkTag,linkAttr);
+                    return linkIndex.sibling(linkIndex.row(),column);
+                }
+        }
+    }
+    return QModelIndex();
 }
 
 bool TreeXMLModel::isAttribute(const QModelIndex &index) const
@@ -338,8 +356,12 @@ QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
                     }
             }
 
-            if (role == Qt::DisplayRole)
-                if (m_linkField[tag].contains(attrName)) {
+            if (role == Qt::DisplayRole){
+                QModelIndex link = indexLink(index);
+                if (link.isValid())
+                    return link.data();
+            }
+                /*if (m_linkField[tag].contains(attrName)) {
                     foreach (QString linkTag,m_linkField[tag][attrName].keys()){
                         QString linkAttr = m_linkField[tag][attrName][linkTag];
                         foreach (QString attr,m_hashField.value(linkTag).keys())
@@ -349,7 +371,7 @@ QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
                                 return linkIndex.sibling(linkIndex.row(),column).data();
                             }
                     }
-                }
+                }*/
             return item->value(attrName);
         }
     }

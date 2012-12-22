@@ -30,6 +30,9 @@ public:
     //! Устанавливает текущий индекс модели списка
     void setCurrentModelIndex (const QModelIndex & index);
 
+    //! Возращает текущий индекс модели списка
+    QModelIndex currentModelIndex ();
+
     virtual void paintEvent(QPaintEvent *);
 
     //! Утанавливает текст по умолчанию
@@ -37,6 +40,8 @@ public:
 
     //! Получение текста по умолчанию
     QString displayText() const;
+
+    void setIndexColumn(int column);
 
 private:
     //! Фильтр событий
@@ -56,6 +61,9 @@ private:
 
     //! Текст по умолчанию
     QString m_displayText;
+
+    //! Колонка со значением
+    int m_indexColumn ;
 };
 
 #endif // TREECOMBOBOX_H

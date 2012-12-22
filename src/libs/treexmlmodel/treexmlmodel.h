@@ -209,6 +209,9 @@ public:
     void addRelation(const QString &tag, const QString &attr,
                      const QString &linkTag, const QString &linkAttr);
 
+    //! Возращает ссылку на индекс
+    QModelIndex indexLink(const QModelIndex &index) const;
+
 private:
 
     //! Создание хэша для указанног индекса

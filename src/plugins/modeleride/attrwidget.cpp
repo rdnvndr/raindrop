@@ -79,6 +79,8 @@ void AttrWidget::setModel(TreeXMLModel *model)
     classFilterModel->sort(0);
 
     comboBoxLinkAttr->setModel(classFilterModel);
+    comboBoxLinkAttr->setIndexColumn(m_model->indexDisplayedAttr(DBCLASSXML::CLASS,
+                                                                 DBATTRXML::ID));
 
     comboBoxTypeAttr->setModel(m_typeAttrModel);
 
