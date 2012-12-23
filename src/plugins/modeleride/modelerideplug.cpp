@@ -339,6 +339,15 @@ void ModelerIDEPlug::removeClass()
 {
     QModelIndex currentIndex = classFilterModel->mapToSource(
                 treeClassView->treeView->currentIndex());
+
+    QStringList tags;
+    tags << DBCLASSXML::CLASS;
+    if (dbStructModel->rowCount(currentIndex,tags)) {
+        QMessageBox::warning(NULL,tr("Предупреждение"),
+                             tr("Удаление не возможно.\nСначало необходимо удалить классы-потомки."));
+        return;
+    }
+
     if (currentIndex.isValid()){
         if (!className(currentIndex).isEmpty())
         {

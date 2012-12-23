@@ -82,6 +82,14 @@ void ClassWidget::add()
 void ClassWidget::remove()
 {
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+    QStringList tags;
+    tags << DBCLASSXML::CLASS;
+    if (m_model->rowCount(srcIndex,tags)) {
+        QMessageBox::warning(this,tr("Предупреждение"),
+                             tr("Удаление не возможно.\nСначало необходимо удалить классы-потомки."));
+        return;
+    }
+
     m_mapper->revert();
     setCurrent(srcIndex.parent());
 
