@@ -55,11 +55,6 @@ class XMLMODELLIB TreeXMLModel : public QAbstractItemModel
 
 public:
 
-    struct LinkField {
-        QString linkTag;
-        QString linkAttr;
-    };
-
     //! Перечисления типов уникальности поля
     enum UniqueField {
         NoUnique = 0,         //!< Поле не уникальное
@@ -99,6 +94,9 @@ public:
 
     //! Возращает количество строк в индексе родителя
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
+
+    //! Возращает количество строк указанных тэгов в индексе родителя
+    int rowCount(const QModelIndex &parent, QStringList tags) const;
 
     //! Возращает количество столбцов в индексе родителя
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
