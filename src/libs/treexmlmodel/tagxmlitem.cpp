@@ -56,8 +56,11 @@ int TagXMLItem::count(QStringList tags,QStringList parenttags){
                 return count;
 
         // Считаем количество унаследованных узлов
-        if (parentItem != NULL)
-            count += parent()->count(parenttags,parenttags);
+        foreach (QString tag,tags)
+            if (parentItem != NULL && parenttags.contains(tag)){
+                count += parent()->count(parenttags,parenttags);
+                break;
+            }
     }
 
     return count;

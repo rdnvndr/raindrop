@@ -502,6 +502,13 @@ int TreeXMLModel::rowCount(const QModelIndex &parent) const
     return parentItem->count(m_filterTags,m_attrTags);
 }
 
+int TreeXMLModel::rowCount(const QModelIndex &parent, QStringList tags) const
+{
+    TagXMLItem *parentItem = toItem(parent);
+
+    return parentItem->count(tags,m_attrTags);
+}
+
 bool TreeXMLModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(row);
