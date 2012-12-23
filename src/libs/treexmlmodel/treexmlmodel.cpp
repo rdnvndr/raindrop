@@ -262,7 +262,7 @@ void TreeXMLModel::packData(const QModelIndex &parent, QDataStream &stream) cons
                     QString attrName = fieldDisplayedAttr(tag,i);
                     if (!attrName.isEmpty()){
                         stream << attrName;
-                        stream << childIndex.sibling(childIndex.row(),i).data();
+                        stream << childIndex.sibling(childIndex.row(),i).data(Qt::EditRole);
                     }
                 }
                 if (!isAttribute(childIndex))
@@ -408,6 +408,9 @@ bool TreeXMLModel::setData(const QModelIndex &index, const QVariant &value,
         return false;
 
     QString dataValue = value.toString();
+    if (attrName == QString("parent"))
+        dataValue = data(index,Qt::EditRole).toString();
+
     if (!makeHashingData(index,dataValue))
         return false;
 
@@ -673,7 +676,7 @@ QMimeData *TreeXMLModel::mimeData(const QModelIndexList &indexes)
                     QString attrName = fieldDisplayedAttr(tag,i);
                     if (!attrName.isEmpty()){
                         stream << attrName;
-                        stream << index.sibling(index.row(),i).data();
+                        stream << index.sibling(index.row(),i).data(Qt::EditRole);
                     }
                 }
                 if (!isAttribute(index))

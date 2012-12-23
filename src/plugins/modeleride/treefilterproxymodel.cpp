@@ -120,7 +120,7 @@ QMimeData *TreeFilterProxyModel::mimeData(const QModelIndexList &indexes) const
                     QString attrName = xmlModel->fieldDisplayedAttr(tag,i);
                     if (!attrName.isEmpty()){
                         stream << attrName;
-                        stream << sourceIndex.sibling(sourceIndex.row(),i).data();
+                        stream << sourceIndex.sibling(sourceIndex.row(),i).data(Qt::EditRole);
                     }
                 }
                 if (!xmlModel->isAttribute(sourceIndex))
@@ -221,7 +221,7 @@ void TreeFilterProxyModel::packData(QModelIndex parent, QDataStream &stream) con
                     QString attrName = xmlModel->fieldDisplayedAttr(tag,i);
                     if (!attrName.isEmpty()){
                         stream << attrName;
-                        stream << sourceIndex.sibling(sourceIndex.row(),i).data();
+                        stream << sourceIndex.sibling(sourceIndex.row(),i).data(Qt::EditRole);
                     }
                 }
                 if (!xmlModel->isAttribute(sourceIndex))
