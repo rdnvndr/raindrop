@@ -335,22 +335,63 @@ void ModelerIDEPlug::dblClickTree(QModelIndex index)
         showPropComposition(indexSource);
 }
 
+bool ModelerIDEPlug::isRemoveClass(QModelIndex srcIndex)
+{
+    QStringList tags;
+    tags << DBCLASSXML::CLASS;
+    if (dbStructModel->rowCount(srcIndex,tags)) {
+        QMessageBox::warning(NULL,tr("Предупреждение"),
+                             tr("Удаление не возможно.\nСначало необходимо удалить классы-потомки."));
+        return false;
+    }
+
+    QString guid =  srcIndex.sibling(srcIndex.row(),
+                                     dbStructModel->indexDisplayedAttr(
+                                         DBCLASSXML::CLASS,DBCLASSXML::ID))
+            .data().toString();
+
+    foreach (TreeXMLModel::TagWithAttr tagWithAttr,
+             dbStructModel->fromRelation(DBCLASSXML::CLASS))
+    {
+        int number = 0;
+
+        QModelIndex linkIndex = dbStructModel->indexHashField(
+                    tagWithAttr.tag,
+                    tagWithAttr.attr,
+                    guid,
+                    number
+                    );
+
+        while (linkIndex.isValid()) {
+            QModelIndex linkParent = linkIndex.parent();
+            if (linkParent.sibling(linkIndex.parent().row(),0)!= srcIndex){
+                QMessageBox::warning(NULL,tr("Предупреждение"),
+                                     tr("Удаление не возможно.\nСначало необходимо удалить зависимые объекты"));
+                return false;
+            }
+            number++;
+            linkIndex = dbStructModel->indexHashField(
+                        tagWithAttr.tag,
+                        tagWithAttr.attr,
+                        guid,
+                        number
+                        );
+        }
+    }
+    return true;
+}
+
 void ModelerIDEPlug::removeClass()
 {
     QModelIndex currentIndex = classFilterModel->mapToSource(
                 treeClassView->treeView->currentIndex());
 
-    QStringList tags;
-    tags << DBCLASSXML::CLASS;
-    if (dbStructModel->rowCount(currentIndex,tags)) {
-        QMessageBox::warning(NULL,tr("Предупреждение"),
-                             tr("Удаление не возможно.\nСначало необходимо удалить классы-потомки."));
-        return;
-    }
-
     if (currentIndex.isValid()){
         if (!className(currentIndex).isEmpty())
         {
+            if (!isRemoveClass(currentIndex))
+                return;
+
             PluginManager* pluginManager = PluginManager::instance();
             MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
                                                                   "MainWindowPlug::MainWindow"));

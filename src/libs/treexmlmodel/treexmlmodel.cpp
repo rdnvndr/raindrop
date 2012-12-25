@@ -115,12 +115,17 @@ void TreeXMLModel::makeHashing(TagXMLItem *item, bool remove)
     }
 }
 
-
-QModelIndex TreeXMLModel::indexHashField(QString tag, QString attrName, QVariant value) const
+QModelIndex TreeXMLModel::indexHashField(QString tag, QString attrName, QVariant value, int number) const
 {
     int column = indexDisplayedAttr(tag,attrName);
-    QModelIndex index = fromItem(m_hashValue[tag][attrName].value(value.toString()));
-    return index.sibling(index.row(),column);
+    if (number <  m_hashValue[tag][attrName].values(value.toString()).count()) {
+        QModelIndex index = fromItem(
+                    m_hashValue[tag][attrName].values(
+                        value.toString()).at(number)
+                    );
+        return index.sibling(index.row(),column);
+    }
+    return QModelIndex();
 }
 
 void TreeXMLModel::refreshHashing(const QModelIndex &index, bool remove)
@@ -144,6 +149,34 @@ void TreeXMLModel::addRelation(const QString &tag, const QString &attr,
                                const QString &linkTag, const QString &linkAttr)
 {
     m_linkField[tag][attr][linkTag] = linkAttr;
+}
+
+QList<TreeXMLModel::TagWithAttr> TreeXMLModel::fromRelation(const QString &linkTag, const QString &linkAttr)
+{
+    QList<TreeXMLModel::TagWithAttr> list;
+    foreach (QString tag,m_linkField.keys())
+        foreach (QString attr,m_linkField[tag].keys())
+            foreach (QString lTag,m_linkField[tag][attr].keys())
+                if (lTag == linkTag
+                        && (m_linkField[tag][attr][lTag] == linkAttr || linkAttr.isEmpty()))
+                {
+                    TreeXMLModel::TagWithAttr tagWithAttr;
+                    tagWithAttr.tag =  tag;
+                    tagWithAttr.attr = attr;
+                    list << tagWithAttr;
+                }
+    return list;
+}
+
+TreeXMLModel::TagWithAttr TreeXMLModel::toRelation(const QString &tag, const QString &attr)
+{
+    TreeXMLModel::TagWithAttr tagWithAttr;
+    foreach (QString linkTag,m_linkField[tag][attr].keys()) {
+        tagWithAttr.tag =  linkTag;
+        tagWithAttr.attr = m_linkField[tag][attr][linkTag];
+        return tagWithAttr;
+    }
+    return tagWithAttr;
 }
 
 QModelIndex TreeXMLModel::indexLink(const QModelIndex &index) const

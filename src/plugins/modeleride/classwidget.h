@@ -23,6 +23,9 @@ public:
     //! Установка модели структуры классов
     void setModel(TreeXMLModel *model);
 
+    //! Проверка на возможность удаления класса
+    bool isRemove(QModelIndex srcIndex);
+
 public slots:
     //! Добавление класса
     void add();

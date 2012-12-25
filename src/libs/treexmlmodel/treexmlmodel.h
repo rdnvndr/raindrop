@@ -63,6 +63,11 @@ public:
         Uuid = 3              //!< Поле UUID
     };
 
+    struct TagWithAttr {
+        QString tag;
+        QString attr;
+    };
+
      //! Конструктор модели
     TreeXMLModel(QDomNode document, QObject *parent = 0);
     //! Деструктор модели
@@ -195,7 +200,7 @@ public:
     void addHashField(QString tag,QString value, UniqueField unique = TreeXMLModel::NoUnique);
 
     //! Возращает индекс по значению хешеированного поля
-    QModelIndex indexHashField(QString tag,QString attrName, QVariant value) const;
+    QModelIndex indexHashField(QString tag, QString attrName, QVariant value, int number = 0) const;
 
     //! Обновление хэшей начиная с указанног индекса
     void refreshHashing(const QModelIndex &index = QModelIndex(), bool remove = false);
@@ -206,6 +211,13 @@ public:
     //! Установка ссылки на другое поле
     void addRelation(const QString &tag, const QString &attr,
                      const QString &linkTag, const QString &linkAttr);
+
+    //! Получить поля которые ссылаются на указанное поле
+    QList<TagWithAttr> fromRelation(const QString &linkTag,
+                                    const QString &linkAttr = QString());
+
+    //! Получить поле на которое ссылается указанное поле
+    TagWithAttr toRelation(const QString &tag, const QString &attr);
 
     //! Возращает ссылку на индекс
     QModelIndex indexLink(const QModelIndex &index) const;
@@ -275,8 +287,7 @@ private:
     //! Список хэшей [тэг][атрибут][значение атрибута]
     QMap<QString, QHash<QString,QMultiHash<QString,TagXMLItem*> > > m_hashValue;
 
-    //! Список зависимых полей [тэг][атрибут]
-    //QMap<QString, QMap<QString, LinkField> > m_linkField;
+    //! Список зависимых полей [тэг][атрибут][ссылочныйТэг] = ссылочныйАтрибут
     QMap<QString, QMap<QString, QMap<QString, QString> > > m_linkField;
 };
 
