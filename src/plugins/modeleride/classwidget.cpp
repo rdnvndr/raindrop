@@ -79,16 +79,58 @@ void ClassWidget::add()
     }
 }
 
-void ClassWidget::remove()
+bool ClassWidget::isRemove(QModelIndex srcIndex)
 {
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
     QStringList tags;
     tags << DBCLASSXML::CLASS;
     if (m_model->rowCount(srcIndex,tags)) {
         QMessageBox::warning(this,tr("Предупреждение"),
                              tr("Удаление не возможно.\nСначало необходимо удалить классы-потомки."));
-        return;
+        return false;
     }
+
+    QString guid =  srcIndex.sibling(srcIndex.row(),
+                                     m_model->indexDisplayedAttr(
+                                         DBCLASSXML::CLASS,DBCLASSXML::ID))
+            .data().toString();
+
+    foreach (TreeXMLModel::TagWithAttr tagWithAttr,
+             m_model->fromRelation(DBCLASSXML::CLASS))
+    {
+        int number = 0;
+
+        QModelIndex linkIndex = m_model->indexHashField(
+                    tagWithAttr.tag,
+                    tagWithAttr.attr,
+                    guid,
+                    number
+                    );
+
+        while (linkIndex.isValid()) {
+            QModelIndex linkParent = linkIndex.parent();
+            if (linkParent.sibling(linkIndex.parent().row(),0)!= srcIndex){
+                QMessageBox::warning(NULL,tr("Предупреждение"),
+                                     tr("Удаление не возможно.\nСначало необходимо удалить зависимые объекты"));
+                return false;
+            }
+            number++;
+            linkIndex = m_model->indexHashField(
+                        tagWithAttr.tag,
+                        tagWithAttr.attr,
+                        guid,
+                        number
+                        );
+        }
+    }
+    return true;
+}
+
+void ClassWidget::remove()
+{
+    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+
+    if (!isRemove(srcIndex))
+        return;
 
     m_mapper->revert();
     setCurrent(srcIndex.parent());
