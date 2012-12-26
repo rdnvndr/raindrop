@@ -2,6 +2,7 @@
 #include "dbxmlstruct.h"
 #include "xmldelegate.h"
 #include <QStringListModel>
+#include <QMessageBox>
 #include "treefilterproxymodel.h"
 
 AttrWidget::AttrWidget(QWidget *parent) :

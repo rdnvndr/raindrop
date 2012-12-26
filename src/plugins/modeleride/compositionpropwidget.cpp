@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include "compositionpropwidget.h"
 #include "xmldelegate.h"
 #include "dbxmlstruct.h"

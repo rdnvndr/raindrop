@@ -1,4 +1,5 @@
 #include "pluginmanager.h"
+#include <QMessageBox>
 
 PluginManager::PluginManager(QObject *parent) :
     QObject(parent)

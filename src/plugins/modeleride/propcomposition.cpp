@@ -1,3 +1,4 @@
+#include <QMdiSubWindow>
 #include "propcomposition.h"
 #include "dbxmlstruct.h"
 

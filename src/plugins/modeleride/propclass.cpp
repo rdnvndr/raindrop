@@ -1,3 +1,4 @@
+#include <QMdiSubWindow>
 #include "propclass.h"
 #include "dbxmlstruct.h"
 #include "xmldelegate.h"

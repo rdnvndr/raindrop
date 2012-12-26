@@ -1,10 +1,10 @@
 LIBS += -lplugin -lmdiextarea
 include(../plugins.pri)
 
-TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
 DEFINES += MAINWINDOW_LIBRARY
+QT += widgets
 
 # Input
 HEADERS += mainwindowplug.h \

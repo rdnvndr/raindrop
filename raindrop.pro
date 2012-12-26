@@ -3,4 +3,3 @@ SUBDIRS += src \
                 tests
 CONFIG += ordered
 
-

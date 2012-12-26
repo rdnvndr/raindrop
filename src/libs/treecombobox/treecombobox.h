@@ -1,7 +1,8 @@
 #ifndef TREECOMBOBOX_H
 #define TREECOMBOBOX_H
 #include "treecomboboxglobal.h"
-#include <QtGui>
+#include <QComboBox>
+#include <QTreeView>
 
 //! ComboxBox с выпадающим списком в виде QTreeView
 /*! Класс предназначен для выбора значения ComboBox

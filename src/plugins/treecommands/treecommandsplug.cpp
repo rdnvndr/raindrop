@@ -1,5 +1,9 @@
-#include "treecommandsplug.h"
+#include <QMainWindow>
+
 #include <pluginmanager.h>
+#include <treedockwidget/treedockwidget.h>
+#include "treecommandsplug.h"
+
 
 TreeCommandsPlug::TreeCommandsPlug(QObject *parent):
     IPlugin(parent)
