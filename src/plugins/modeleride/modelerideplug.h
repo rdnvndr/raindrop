@@ -42,6 +42,9 @@ public:
 
     //! Проверка на возможность удаления класса
     bool isRemoveClass(QModelIndex srcIndex);
+
+    //! Получение индетификатора класса по индексу
+    QString classId(const QModelIndex &index);
 private:
     //! Имя файла структуры
     QString fileName;

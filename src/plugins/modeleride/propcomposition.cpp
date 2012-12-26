@@ -32,8 +32,9 @@ void PropComposition::setTabName(const QModelIndex &index){
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
 
     QString className = modelData(DBCOMPXML::COMP, DBCOMPXML::NAME,index).toString();
+    QString id = modelData(DBCOMPXML::COMP, DBCOMPXML::ID,index).toString();
 
-    this->setObjectName("PropComposition::" + className);
+    this->setObjectName("PropComposition::" + id);
     subWindow->setWindowTitle(tr("Состав: ")+className);
 }
 

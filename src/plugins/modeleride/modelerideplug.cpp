@@ -321,6 +321,14 @@ QString ModelerIDEPlug::className(const QModelIndex& index)
                              )).data().toString();
 }
 
+QString ModelerIDEPlug::classId(const QModelIndex& index)
+{
+    return index.sibling(index.row(),dbStructModel->indexDisplayedAttr(
+                             DBCLASSXML::CLASS,
+                             DBCLASSXML::ID
+                             )).data().toString();
+}
+
 void ModelerIDEPlug::dblClickTree(QModelIndex index)
 {
     QModelIndex indexSource = classFilterModel->mapToSource(index);
@@ -396,7 +404,7 @@ void ModelerIDEPlug::removeClass()
             MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
                                                                   "MainWindowPlug::MainWindow"));
 
-            QString subWindowName = "PropClass::" + this->className(currentIndex);
+            QString subWindowName = "PropClass::" + this->classId(currentIndex);
             QMdiSubWindow *subWindow = mainwindow->subWindow(subWindowName);
             if (subWindow)
                 subWindow->close();
@@ -421,7 +429,7 @@ void ModelerIDEPlug::showPropClass(QModelIndex indexSource)
     MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
                                                            "MainWindowPlug::MainWindow"));
 
-    QString subWindowName = "PropClass::" + this->className(indexSource);
+    QString subWindowName = "PropClass::" + this->classId(indexSource);
     QMdiSubWindow* subWindow = mainwindow->setActiveSubWindow(subWindowName);
 
     if (!subWindow) {
@@ -455,7 +463,12 @@ void ModelerIDEPlug::showPropComposition(QModelIndex indexSource)
                                  DBCOMPXML::NAME
                                  )).data().toString();
 
-    QString subWindowName = "PropComposition::" + className;
+    QString classId = indexSource.sibling(indexSource.row(),dbStructModel->indexDisplayedAttr(
+                                 DBCOMPXML::COMP,
+                                 DBCOMPXML::NAME
+                                 )).data().toString();
+
+    QString subWindowName = "PropComposition::" + classId;
     QMdiSubWindow* subWindow = mainwindow->setActiveSubWindow(subWindowName);
 
     if (!subWindow) {
