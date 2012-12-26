@@ -51,5 +51,6 @@ void MainWindowPlug::writeSettings()
     settings()->setValue("pos", window->pos());
     settings()->setValue("viewMode", window->mdiArea->viewMode());
 }
-
-Q_EXPORT_PLUGIN2(mainwindow, MainWindowPlug)
+#if QT_VERSION < 0x050000
+    Q_EXPORT_PLUGIN2(mainwindow, MainWindowPlug)
+#endif

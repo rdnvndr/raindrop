@@ -604,5 +604,6 @@ void ModelerIDEPlug::closeClassModel()
         actionPublishModel->setDisabled(true);
     }
 }
-
-Q_EXPORT_PLUGIN2(modeleride, ModelerIDEPlug)
+#if QT_VERSION < 0x050000
+    Q_EXPORT_PLUGIN2(modeleride, ModelerIDEPlug)
+#endif
