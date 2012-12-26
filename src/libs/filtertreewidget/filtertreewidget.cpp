@@ -1,4 +1,8 @@
 #include "filtertreewidget.h"
+#include <QDropEvent>
+#include <QApplication>
+#include <QMimeData>
+#include <QDrag>
 
 FilterTreeWidget::FilterTreeWidget(QWidget *parent) :
     QTreeWidget(parent)

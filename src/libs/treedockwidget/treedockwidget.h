@@ -1,10 +1,9 @@
 #ifndef TREEDOCKWIDGET_H
 #define TREEDOCKWIDGET_H
 
-
 #include <QDockWidget>
-#include <QtCore>
-#include <QtGui>
+#include <QToolBar>
+#include <QStackedWidget>
 #include "treefilterwidget.h"
 #include "treedockwidgetglobal.h"
 

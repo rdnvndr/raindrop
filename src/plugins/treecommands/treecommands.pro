@@ -1,7 +1,7 @@
-TARGET = 
 DEPENDPATH += .
 INCLUDEPATH += .
 
+QT += widgets
 LIBS += -lfiltertreewidget -lplugin -ltreedockwidget
 include(../plugins.pri)
 # Input

@@ -1,4 +1,8 @@
 #include "treecombobox.h"
+#include <QEvent>
+#include <QMouseEvent>
+#include <QHeaderView>
+#include <QStylePainter>
 
 TreeComboBox::TreeComboBox(QWidget *parent):QComboBox(parent),skipNextHide(false)
 {

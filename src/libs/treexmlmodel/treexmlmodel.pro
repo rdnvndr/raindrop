@@ -1,10 +1,9 @@
 include(../libs.pri)
-QT += xml
+QT += xml widgets
 DEFINES += XMLMODEL_LIBRARY
 HEADERS += \
     treexmlmodel.h \
     tagxmlitem.h \
-    xmlmodeldll.h \
     tablexmlproxymodel.h \
     treexmlmodelglobal.h
 

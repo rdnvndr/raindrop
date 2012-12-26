@@ -1,4 +1,5 @@
-#include <QtGui>
+#include <QApplication>
+#include <QTextCodec>
 #include <plugin/pluginmanager.h>
 
 int main(int argc, char* argv[])

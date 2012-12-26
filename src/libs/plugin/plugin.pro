@@ -1,4 +1,5 @@
 include(../libs.pri)
+QT += widgets
 DEFINES += PLUGIN_LIBRARY
 HEADERS += \
     pluginmanager.h \

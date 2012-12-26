@@ -2,6 +2,7 @@
 #include "dbxmlstruct.h"
 #include "xmldelegate.h"
 #include <QHeaderView>
+#include <QMessageBox>
 
 CompositionWidget::CompositionWidget(QWidget *parent) :
     QWidget(parent)

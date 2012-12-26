@@ -2,6 +2,7 @@
 #define ATTRWIDGET_H
 
 #include "ui_attrwidget.h"
+#include <QDataWidgetMapper>
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <treexmlmodel/treexmlmodel.h>
 

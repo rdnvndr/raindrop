@@ -3,6 +3,8 @@ LIBS += -lfiltertreewidget
 include(../libs.pri)
 # Input
 
+QT += widgets
+
 DEFINES += TREEDOCKWIDGET_LIBRARY
 
 

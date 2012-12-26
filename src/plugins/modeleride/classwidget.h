@@ -4,6 +4,8 @@
 #include "ui_classwidget.h"
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <treexmlmodel/treexmlmodel.h>
+#include <QDataWidgetMapper>
+#include <QMessageBox>
 
 //! Диалог редактирования класса
 /*! Диалог предназначен для класса

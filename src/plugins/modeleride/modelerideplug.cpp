@@ -1,4 +1,5 @@
 #include <QMainWindow>
+#include <QFileDialog>
 
 #include <treedockwidget/treedockwidget.h>
 
@@ -182,6 +183,9 @@ void ModelerIDEPlug::setShownComp(bool shown)
 
 void ModelerIDEPlug::dataChange(const QModelIndex &topLeft, const QModelIndex &bottomRight)
 {
+    Q_UNUSED(topLeft)
+    Q_UNUSED(bottomRight)
+
     actionSaveModel->setEnabled(true);
 }
 

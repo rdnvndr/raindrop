@@ -2,6 +2,7 @@
 #include <QComboBox>
 #include <QDebug>
 #include <QAbstractItemView>
+#include <QlineEdit>
 #include <treecombobox/treecombobox.h>
 
 XmlDelegate::XmlDelegate(QObject *parent) :

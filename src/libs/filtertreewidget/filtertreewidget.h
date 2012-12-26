@@ -2,7 +2,7 @@
 #define FILTERTREEWIDGET_H
 
 #include "filtertreewidgetglobal.h"
-#include <QtGui>
+#include <QTreeWidget>
 
 //! Класс дерева с фильтром
 /*! Класс дерева с контекстной фильтрацией узлов

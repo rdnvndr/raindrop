@@ -1,6 +1,7 @@
 #ifndef COMPOSITIONPROPWIDGET_H
 #define COMPOSITIONPROPWIDGET_H
 
+#include <QDataWidgetMapper>
 #include "ui_compositionpropwidget.h"
 #include <treexmlmodel/treexmlmodel.h>
 
