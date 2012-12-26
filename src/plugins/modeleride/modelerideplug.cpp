@@ -180,6 +180,11 @@ void ModelerIDEPlug::setShownComp(bool shown)
     actionShowComp->setChecked(shown);
 }
 
+void ModelerIDEPlug::dataChange(const QModelIndex &topLeft, const QModelIndex &bottomRight)
+{
+    actionSaveModel->setEnabled(true);
+}
+
 TreeXMLModel *ModelerIDEPlug::model()
 {
     return dbStructModel;
@@ -285,6 +290,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     setShownComp(false);   
     setShownAttr(false);
+
+    connect(dbStructModel,SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+            this,SLOT(dataChange(QModelIndex,QModelIndex)));
 
     connect(treeClassView->lineEditFiler,SIGNAL(textChanged(QString)),
             classFilterModel,SLOT(setFilterRegExp(QString)));
@@ -504,12 +512,15 @@ void ModelerIDEPlug::openClassModel()
         }
         file.close();
     }
+    actionSaveModel->setDisabled(true);
 }
 
 void ModelerIDEPlug::saveClassModel()
 {
-    if (fileName.isEmpty())
+    if (fileName.isEmpty()) {
         saveAsClassModel();
+        return;
+    }
 
     QFile File(fileName);
     if ( File.open(QIODevice::WriteOnly) )
@@ -519,6 +530,7 @@ void ModelerIDEPlug::saveClassModel()
         doc.save(TextStream, 0);
         File.close();
     }
+    actionSaveModel->setDisabled(true);
 }
 
 void ModelerIDEPlug::saveAsClassModel()
@@ -533,6 +545,7 @@ void ModelerIDEPlug::saveAsClassModel()
         doc.save(TextStream, 0);
         File.close();
     }
+    actionSaveModel->setDisabled(true);
 }
 
 void ModelerIDEPlug::publishClassModel(QModelIndex index)
