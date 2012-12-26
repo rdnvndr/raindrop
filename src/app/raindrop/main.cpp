@@ -5,8 +5,11 @@
 int main(int argc, char* argv[])
 {
     QApplication *app = new QApplication(argc,argv);
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+
+    #if QT_VERSION < 0x050000
+        QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+        QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+    #endif
 
     // Подключение перевода для Qt
     QString translatorFileName = QLatin1String("qt_");

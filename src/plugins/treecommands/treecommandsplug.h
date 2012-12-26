@@ -42,6 +42,11 @@ class  TreeCommandsPlug: public IPlugin
     Q_OBJECT
     Q_INTERFACES(IPlugin)
 
+    #if QT_VERSION >= 0x050000
+        Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.TreeCommandsPlug" FILE "treecommandsplug.json")
+    #endif
+
+
 public:
     //! Конструктор плагина Дерево команд
     TreeCommandsPlug(QObject* parent = 0);

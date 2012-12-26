@@ -4,7 +4,6 @@
 #include <plugin/iplugin.h>
 #include "mainwindow.h"
 
-
 //! Плагин главного окна
 /*! Плагин предназначен для создания главного окна
     Весь графический интерфейс приложения должен строится
@@ -22,11 +21,13 @@ class MainWindowPlug: public IPlugin
 {
     Q_OBJECT
     Q_INTERFACES(IPlugin)
+    #if QT_VERSION >= 0x050000
+        Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.MainWindowPlug" FILE "mainwindow.json")
+    #endif
 public:
     //! Конструктор плагина главного окна
     MainWindowPlug(QObject *parent = 0);
     virtual ~MainWindowPlug();
-
 
     //! Главное окно
     MainWindow *window;
