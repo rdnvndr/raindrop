@@ -136,6 +136,9 @@ public slots:
 
     //! Установка отображения состава в дереве классов
     void setShownComp(bool shown);
+
+    //! Обработка изменения модели
+    void dataChange(const QModelIndex & topLeft, const QModelIndex & bottomRight);
 };
 
 #endif
