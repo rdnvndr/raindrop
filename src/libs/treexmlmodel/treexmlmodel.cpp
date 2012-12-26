@@ -607,10 +607,10 @@ bool TreeXMLModel::removeRows(int row, int count, const QModelIndex &parent)
         return false;
 
     // Удаление хэша уникальности
-    for (int j=row; j < row+count; j++){
-        QModelIndex index = parent.child(j,0);
-        if (!isInherited(index))
-            makeHashing(toItem(index),true);
+    for (int i=row; i < row+count; i++){
+        QModelIndex childIndex = index(i,0,parent);
+        if (!isInherited(childIndex))
+            makeHashing(toItem(childIndex),true);
     }
 
     beginRemoveRows(parent,row,row+count-1);
