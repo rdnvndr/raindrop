@@ -1,11 +1,13 @@
 #ifndef ATTRWIDGET_H
 #define ATTRWIDGET_H
 
-#include "ui_attrwidget.h"
+#include <QStringListModel>
 #include <QDataWidgetMapper>
+
+#include "ui_attrwidget.h"
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <treexmlmodel/treexmlmodel.h>
-#include <QStringListModel>
+
 
 //! Диалог редактирования атрибутов класса
 /*! Диалог предназначен для редактирования атрибутов класса
@@ -34,7 +36,7 @@ public slots:
     void remove();
 
     //! Установка текущего атрибута класса
-    void setCurrent(QModelIndex index);
+    void setCurrent(const QModelIndex &index);
 
     //! Применение изменений атрибута класса
     void submit();
@@ -49,24 +51,25 @@ public slots:
     void showParentAttr(bool flag);
 
     //! Обработка изменение типа атрибута
-    void changeType(QString s);
+    void changeType(const QString &typeName);
 
     //! Установка родителя атрибутов
-    void setRootIndex(QModelIndex index);
+    void setRootIndex(const QModelIndex &index);
 
 signals:
     //! Сигнал об изменении данных
-    void dataChanged(QModelIndex index);
+    void dataChanged(const QModelIndex &index);
 
     //! Сигнал об удалении данных
-    void dataRemoved(QModelIndex index);
+    void dataRemoved(const QModelIndex &index);
 
     //! Сигнал об изменении текущего атрибута
-    void currentIndexChanged(QModelIndex index);
+    void currentIndexChanged(const QModelIndex &index);
 
 private:
     //! Получение данных модели
-    QVariant modelData(QString typeName, QString attr, const QModelIndex &index);
+    QVariant modelData(const QString &tag, const QString &attr,
+                       const QModelIndex &index);
 
     //! Прокси модель для атрибутов класса
     TableXMLProxyModel* m_attrModel;
