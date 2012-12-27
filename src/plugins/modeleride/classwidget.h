@@ -6,6 +6,7 @@
 #include <treexmlmodel/treexmlmodel.h>
 #include <QDataWidgetMapper>
 #include <QMessageBox>
+#include <QStringListModel>
 
 //! Диалог редактирования класса
 /*! Диалог предназначен для класса

@@ -102,8 +102,12 @@ bool TreeXMLModel::makeHashingData(const QModelIndex &index, QString &dataValue)
 void TreeXMLModel::insertUuid(const QModelIndex &index)
 {
     QString attr = uuidField(m_insTag);
-    if (!attr.isEmpty())
-        toItem(index)->setValue(attr,QUuid::createUuid().toString());
+    if (!attr.isEmpty()) {
+        TagXMLItem *item = toItem(index);
+        QString value = QUuid::createUuid().toString();
+        item->setValue(attr,value);
+        m_hashValue[m_insTag][attr].insert(value,item);
+    }
 }
 
 void TreeXMLModel::makeHashing(TagXMLItem *item, bool remove)
