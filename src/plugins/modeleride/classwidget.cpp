@@ -79,7 +79,7 @@ void ClassWidget::add()
     }
 }
 
-bool ClassWidget::isRemove(QModelIndex srcIndex)
+bool ClassWidget::isRemove(const QModelIndex &srcIndex)
 {
     QString tag = srcIndex.data(Qt::UserRole).toString();
     QStringList tags;
@@ -145,7 +145,7 @@ void ClassWidget::remove()
 }
 
 
-void ClassWidget::setCurrent(QModelIndex index)
+void ClassWidget::setCurrent(const QModelIndex &index)
 {
     if (m_mapper->rootIndex() == index.parent() &&
             index.row() == m_mapper->currentIndex())
@@ -206,7 +206,7 @@ void ClassWidget::revert()
     edit(false);
 }
 
-void ClassWidget::rowsRemoved(QModelIndex index, int start, int end)
+void ClassWidget::rowsRemoved(const QModelIndex &index, int start, int end)
 {
     if (index == m_mapper->rootIndex()){
         if (m_oldIndex > end)
@@ -220,10 +220,10 @@ void ClassWidget::rowsRemoved(QModelIndex index, int start, int end)
         emit dataRemoved(QModelIndex());
 }
 
-QVariant ClassWidget::modelData(QString typeName, QString attr, const QModelIndex &index)
+QVariant ClassWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
 {
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                             typeName,attr)).data();
+                             tag,attr)).data();
 }
 
 void ClassWidget::removeEmpty()
