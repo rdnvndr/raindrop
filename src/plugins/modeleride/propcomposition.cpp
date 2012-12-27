@@ -24,7 +24,7 @@ void PropComposition::setModel(TreeXMLModel *model)
     m_model = model;
 }
 
-void PropComposition::setCurrentClass(QModelIndex index)
+void PropComposition::setCurrentClass(const QModelIndex &index)
 {
     propWidget->setCurrent(index);
 }
@@ -47,10 +47,10 @@ void PropComposition::closeTab(const QModelIndex &index)
     subWindow->close();
 }
 
-QVariant PropComposition::modelData(QString typeName, QString attr, const QModelIndex& index)
+QVariant PropComposition::modelData(const QString &tag, const QString &attr, const QModelIndex& index)
 {
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                      typeName,attr)).data();
+                      tag,attr)).data();
 }
 
 TreeXMLModel *PropComposition::model()
