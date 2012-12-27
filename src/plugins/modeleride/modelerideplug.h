@@ -50,10 +50,10 @@ public:
     QString classId(const QModelIndex &index);
 private:
     //! Имя файла структуры
-    QString fileName;
+    QString m_fileName;
 
     //! Модель дерева классов
-    TreeXMLModel* dbStructModel;
+    TreeXMLModel* m_model;
 
     //! Прокси модель дерева классов. Отвечает за сортировку и фильтрацию дерева классов
     TreeFilterProxyModel* classFilterModel;

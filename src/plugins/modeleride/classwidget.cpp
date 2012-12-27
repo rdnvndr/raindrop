@@ -81,21 +81,26 @@ void ClassWidget::add()
 
 bool ClassWidget::isRemove(QModelIndex srcIndex)
 {
+    QString tag = srcIndex.data(Qt::UserRole).toString();
     QStringList tags;
-    tags << DBCLASSXML::CLASS;
+    tags << tag;
     if (m_model->rowCount(srcIndex,tags)) {
-        QMessageBox::warning(this,tr("Предупреждение"),
+        QMessageBox::warning(NULL,tr("Предупреждение"),
                              tr("Удаление не возможно.\nСначало необходимо удалить классы-потомки."));
         return false;
     }
 
+    QString fieldId = m_model->uuidField(tag);
+    if (fieldId.isEmpty())
+        return true;
+
     QString guid =  srcIndex.sibling(srcIndex.row(),
                                      m_model->indexDisplayedAttr(
-                                         DBCLASSXML::CLASS,DBCLASSXML::ID))
+                                         tag,fieldId))
             .data().toString();
 
     foreach (TreeXMLModel::TagWithAttr tagWithAttr,
-             m_model->fromRelation(DBCLASSXML::CLASS))
+             m_model->fromRelation(tag))
     {
         int number = 0;
 

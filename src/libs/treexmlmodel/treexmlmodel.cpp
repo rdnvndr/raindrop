@@ -101,9 +101,9 @@ bool TreeXMLModel::makeHashingData(const QModelIndex &index, QString &dataValue)
 
 void TreeXMLModel::insertUuid(const QModelIndex &index)
 {
-    foreach (QString attr,m_hashField.value(m_insTag).keys())
-        if (m_hashField[m_insTag].value(attr)==TreeXMLModel::Uuid)
-            toItem(index)->setValue(attr,QUuid::createUuid().toString());
+    QString attr = uuidField(m_insTag);
+    if (!attr.isEmpty())
+        toItem(index)->setValue(attr,QUuid::createUuid().toString());
 }
 
 void TreeXMLModel::makeHashing(TagXMLItem *item, bool remove)
@@ -188,12 +188,12 @@ QModelIndex TreeXMLModel::indexLink(const QModelIndex &index) const
     if (m_linkField[tag].contains(attrName)) {
         foreach (QString linkTag,m_linkField[tag][attrName].keys()){
             QString linkAttr = m_linkField[tag][attrName][linkTag];
-            foreach (QString attr,m_hashField.value(linkTag).keys())
-                if (m_hashField[linkTag].value(attr) == TreeXMLModel::Uuid){
-                    QModelIndex linkIndex = indexHashField(linkTag, attr, item->value(attrName));
-                    int column = indexDisplayedAttr(linkTag,linkAttr);
-                    return linkIndex.sibling(linkIndex.row(),column);
-                }
+            QString attr = uuidField(linkTag);
+            if (!attr.isEmpty()) {
+                QModelIndex linkIndex = indexHashField(linkTag, attr, item->value(attrName));
+                int column = indexDisplayedAttr(linkTag,linkAttr);
+                return linkIndex.sibling(linkIndex.row(),column);
+            }
         }
     }
     return QModelIndex();
@@ -381,12 +381,12 @@ QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
                     return QVariant();
 
                 // Отображает в качестве родителя первое поле
-                foreach (QString attr,m_hashField.value(parentTag).keys())
-                    if (m_hashField[parentTag].value(attr) == TreeXMLModel::Uuid){
-                        if (role == Qt::DisplayRole)
-                            attr = m_linkField[tag][attrName][parentTag];
-                        return nodeParent.toElement().attribute(attr);
-                    }
+                QString attr = uuidField(parentTag);
+                if (!attr.isEmpty()) {
+                    if (role == Qt::DisplayRole)
+                        attr = m_linkField[tag][attrName][parentTag];
+                    return nodeParent.toElement().attribute(attr);
+                }
             }
 
             if (role == Qt::DisplayRole){
@@ -394,17 +394,7 @@ QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
                 if (link.isValid())
                     return link.data();
             }
-                /*if (m_linkField[tag].contains(attrName)) {
-                    foreach (QString linkTag,m_linkField[tag][attrName].keys()){
-                        QString linkAttr = m_linkField[tag][attrName][linkTag];
-                        foreach (QString attr,m_hashField.value(linkTag).keys())
-                            if (m_hashField[linkTag].value(attr) == TreeXMLModel::Uuid){
-                                QModelIndex linkIndex = indexHashField(linkTag, attr, item->value(attrName));
-                                int column = indexDisplayedAttr(linkTag,linkAttr);
-                                return linkIndex.sibling(linkIndex.row(),column).data();
-                            }
-                    }
-                }*/
+
             return item->value(attrName);
         }
     }
@@ -728,4 +718,12 @@ QMimeData *TreeXMLModel::mimeData(const QModelIndexList &indexes)
     mimeData->setData("application/classxmlmodel", encodedData);
     mimeData->setParent(this);
     return mimeData;
+}
+
+QString TreeXMLModel::uuidField(const QString &tag) const
+{
+    foreach (QString attr,m_hashField.value(tag).keys())
+        if (m_hashField[tag].value(attr)==TreeXMLModel::Uuid)
+            return attr;
+    return QString();
 }
