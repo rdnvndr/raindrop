@@ -5,9 +5,9 @@
 #include <QtXml/QDomDocument>
 #include <QModelIndex>
 #include <QVariant>
+#include <QStringList>
+#include <QIcon>
 #include "treexmlmodelglobal.h"
-#include <QtCore>
-#include <QtGui>
 
 class XMLMODELLIB TagXMLItem;
 
@@ -62,10 +62,10 @@ public:
         Unique = 2,           //!< Поле уникальное
         Uuid = 3              //!< Поле UUID
     };
-
+    //! Структура для хранения тэга и аттрибута вместе
     struct TagWithAttr {
-        QString tag;
-        QString attr;
+        QString tag;    //!< Поле с тэгом
+        QString attr;   //!< Поле с атрибутом
     };
 
      //! Конструктор модели
@@ -107,13 +107,13 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
 
     //! Добавляет тэг для фильтрации
-    void addTagFilter(QString tag);
+    void addTagFilter(const QString &tag);
 
     //! Очищает фильтр тэгов
     void clearTagsFilter();
 
     //! Добавляет тэг, который будет являться атрибутом
-    void addAttributeTag(QString tag);
+    void addAttributeTag(const QString &tag);
 
     //! Очищает список тэгов, которые являются атрибутами
     void clearAttributeTags();
@@ -128,25 +128,25 @@ public:
     QModelIndex fromItem(TagXMLItem *item) const;
 
     //! Указывает xml атрибуты тэга для отображения
-    void addDisplayedAttr(QString nameAttr, QStringList value,QIcon icon = QIcon());
+    void addDisplayedAttr(const QString &tag,const QStringList &value,QIcon icon = QIcon());
 
     //! Указывает тэги разрешенные для вставки
-    void addInsertTags(QString tag,QStringList value);
+    void addInsertTags(const QString &tag,const QStringList &value);
 
     //! Получение индекса поля в тэге
     int indexDisplayedAttr(QString nameAttr, QString fieldName) const;
 
     //! Получение поля в тэге по индексу
-    QString fieldDisplayedAttr(QString nameAttr, int column) const;
+    QString fieldDisplayedAttr(const QString &tag, int column) const;
 
     //! Удаляет xml атрибуты тэга для отображения
-    void removeDisplayedAttr(QString nameAttr);
+    void removeDisplayedAttr(const QString &tag);
 
     //! Получение корневой узла дерева
     TagXMLItem* rootItem();
 
     //! Установить наименование тэга для вставки строки
-    void setInsTagName(QString tagName);
+    void setInsTagName(const QString &tag);
 
     //! Вставка строки
     bool insertRows (int row, int count, const QModelIndex & parent);
@@ -190,17 +190,18 @@ public:
     bool isInsert(const QModelIndex &index) const;
 
     //! Возращает True если имеются потомки
-    virtual bool hasChildren(const QModelIndex &parent) const;
+    bool hasChildren(const QModelIndex &parent) const;
 
     //! Возращает True если унаследован
     bool isInherited(const QModelIndex &index) const;
 
     //! Добавления поля для хешеирования
-    //void addHashField(QString tag,QStringList value);
-    void addHashField(QString tag,QString value, UniqueField unique = TreeXMLModel::NoUnique);
+    void addHashField(const QString &tag, const QString &value,
+                      UniqueField unique = TreeXMLModel::NoUnique);
 
     //! Возращает индекс по значению хешеированного поля
-    QModelIndex indexHashField(QString tag, QString attrName, QVariant value, int number = 0) const;
+    QModelIndex indexHashField(const QString &tag, const QString &attrName,
+                               const QVariant &value, int number = 0) const;
 
     //! Обновление хэшей начиная с указанног индекса
     void refreshHashing(const QModelIndex &index = QModelIndex(), bool remove = false);
