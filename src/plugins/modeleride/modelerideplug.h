@@ -44,7 +44,7 @@ public:
     QString className(const QModelIndex &index);
 
     //! Проверка на возможность удаления класса
-    bool isRemoveClass(QModelIndex srcIndex);
+    bool isRemoveClass(const QModelIndex &srcIndex);
 
     //! Получение индетификатора класса по индексу
     QString classId(const QModelIndex &index);
@@ -99,13 +99,13 @@ private:
 
 public slots:
     //! Слот обработки двойного щелчка по дереву классов
-    void dblClickTree(QModelIndex index);
+    void dblClickTree(const QModelIndex &index);
 
     //! Слот вызова окна редактирования класса
-    void showPropClass(QModelIndex indexSource);
+    void showPropClass(const QModelIndex &indexSource);
 
     //! Слот вызова окна редактирования состава
-    void showPropComposition(QModelIndex indexSource);
+    void showPropComposition(const QModelIndex &indexSource);
 
     //! Создание новой структуры классов
     void newClassModel();
@@ -120,7 +120,7 @@ public slots:
     void saveAsClassModel();
 
     //! Публикация структуры классов на сервере БД
-    void publishClassModel(QModelIndex index = QModelIndex());
+    void publishClassModel(const QModelIndex &index = QModelIndex());
 
     //! Закрытие структуры классов
     void closeClassModel();

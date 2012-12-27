@@ -341,7 +341,7 @@ QString ModelerIDEPlug::classId(const QModelIndex& index)
                              )).data().toString();
 }
 
-void ModelerIDEPlug::dblClickTree(QModelIndex index)
+void ModelerIDEPlug::dblClickTree(const QModelIndex &index)
 {
     QModelIndex indexSource = classFilterModel->mapToSource(index);
 
@@ -355,7 +355,7 @@ void ModelerIDEPlug::dblClickTree(QModelIndex index)
         showPropComposition(indexSource);
 }
 
-bool ModelerIDEPlug::isRemoveClass(QModelIndex srcIndex)
+bool ModelerIDEPlug::isRemoveClass(const QModelIndex &srcIndex)
 {
     QString tag = srcIndex.data(Qt::UserRole).toString();
     QStringList tags;
@@ -434,7 +434,7 @@ void ModelerIDEPlug::removeClass()
                              tr("Невозможно удалить узел, поскольку он не выбран."));
 }
 
-void ModelerIDEPlug::showPropClass(QModelIndex indexSource)
+void ModelerIDEPlug::showPropClass(const QModelIndex &indexSource)
 {
     if (!indexSource.isValid())
         return;
@@ -463,7 +463,7 @@ void ModelerIDEPlug::showPropClass(QModelIndex indexSource)
     }
 }
 
-void ModelerIDEPlug::showPropComposition(QModelIndex indexSource)
+void ModelerIDEPlug::showPropComposition(const QModelIndex &indexSource)
 {
     if (!indexSource.isValid())
         return;
@@ -557,16 +557,10 @@ void ModelerIDEPlug::saveAsClassModel()
     actionSaveModel->setDisabled(true);
 }
 
-void ModelerIDEPlug::publishClassModel(QModelIndex index)
+void ModelerIDEPlug::publishClassModel(const QModelIndex &index)
 {
     for (int row=0;row < m_model->rowCount(index);row++){
         QModelIndex childIndex = m_model->index(row,0,index);
-        /*childIndex = childIndex.sibling(childIndex.row(),
-                                        dbStructModel->indexDisplayedAttr(
-                                            childIndex.data(Qt::UserRole).toString(),
-                                            QString("parent"))
-                                        );
-        dbStructModel->setData(childIndex, childIndex.data(Qt::EditRole), Qt::EditRole);*/
         if (childIndex.data(Qt::UserRole)==DBATTRXML::ATTR){
             // Создание атрибута
             if (m_model->isInherited(childIndex))
