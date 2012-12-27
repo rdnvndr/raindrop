@@ -16,10 +16,10 @@ public:
     TreeFilterProxyModel();
 
     //! Добавление скрытых тэгов
-    void addHiddenTag(QString tag);
+    void addHiddenTag(const QString &tag);
 
     //! Удаление скрытых тэгов
-    void removeHiddenTag(QString tag);
+    void removeHiddenTag(const QString &tag);
 
     //! Список скрытых тэгов
     QSet<QString> hiddenTags();

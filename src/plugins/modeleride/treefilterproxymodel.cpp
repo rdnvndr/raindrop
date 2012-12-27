@@ -9,12 +9,12 @@ TreeFilterProxyModel::TreeFilterProxyModel()
 
 }
 
-void TreeFilterProxyModel::addHiddenTag(QString tag)
+void TreeFilterProxyModel::addHiddenTag(const QString &tag)
 {
     m_filterTags.insert(tag);
 }
 
-void TreeFilterProxyModel::removeHiddenTag(QString tag)
+void TreeFilterProxyModel::removeHiddenTag(const QString &tag)
 {
     m_filterTags.remove(tag);
 }
