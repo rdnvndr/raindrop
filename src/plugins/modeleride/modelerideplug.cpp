@@ -238,10 +238,10 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->setHeaderData(10, Qt::Horizontal, tr("Кандидат в ключ"));
 
     m_model->addDisplayedAttr(DBATTRXML::ATTR,propsAttr);
-    m_model->addAttributeTag(DBATTRXML::ATTR);
+    m_model->addAttrTag(DBATTRXML::ATTR);
 
     m_model->addDisplayedAttr(DBCOMPXML::COMP,propsComposition);
-    m_model->addAttributeTag(DBCOMPXML::COMP);
+    m_model->addAttrTag(DBCOMPXML::COMP);
 
     QStringList insertTags;
     insertTags << DBATTRXML::ATTR << DBCLASSXML::CLASS << DBCOMPXML::COMP;
@@ -250,23 +250,23 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     insertTags << DBATTRXML::ATTR;
     m_model->addInsertTags(DBCOMPXML::COMP,insertTags);
 
-    m_model->addHashField(DBCLASSXML::CLASS,
+    m_model->addHashAttr(DBCLASSXML::CLASS,
                                 DBCLASSXML::NAME,
                                 TreeXMLModel::UniqueRename);
-    m_model->addHashField(DBATTRXML::ATTR,
+    m_model->addHashAttr(DBATTRXML::ATTR,
                                 DBATTRXML::REFCLASS,
                                 TreeXMLModel::NoUnique);
-    m_model->addHashField(DBCOMPXML::COMP,
+    m_model->addHashAttr(DBCOMPXML::COMP,
                                 DBCOMPXML::CLASS,
                                 TreeXMLModel::NoUnique);
 
-    m_model->addHashField(DBCLASSXML::CLASS,
+    m_model->addHashAttr(DBCLASSXML::CLASS,
                                 DBCLASSXML::ID,
                                 TreeXMLModel::Uuid);
-    m_model->addHashField(DBATTRXML::ATTR,
+    m_model->addHashAttr(DBATTRXML::ATTR,
                                 DBATTRXML::ID,
                                 TreeXMLModel::Uuid);
-    m_model->addHashField(DBCOMPXML::COMP,
+    m_model->addHashAttr(DBCOMPXML::COMP,
                                 DBCOMPXML::ID,
                                 TreeXMLModel::Uuid);
 
@@ -327,7 +327,7 @@ void ModelerIDEPlug::addClass()
 
 QString ModelerIDEPlug::className(const QModelIndex& index)
 {
-    return index.sibling(index.row(),m_model->indexDisplayedAttr(
+    return index.sibling(index.row(),m_model->columnDisplayedAttr(
                              DBCLASSXML::CLASS,
                              DBCLASSXML::NAME
                              )).data().toString();
@@ -335,7 +335,7 @@ QString ModelerIDEPlug::className(const QModelIndex& index)
 
 QString ModelerIDEPlug::classId(const QModelIndex& index)
 {
-    return index.sibling(index.row(),m_model->indexDisplayedAttr(
+    return index.sibling(index.row(),m_model->columnDisplayedAttr(
                              DBCLASSXML::CLASS,
                              DBCLASSXML::ID
                              )).data().toString();
@@ -348,7 +348,7 @@ void ModelerIDEPlug::dblClickTree(QModelIndex index)
     if (!indexSource.isValid())
         return;
 
-    if (!m_model->isAttribute(indexSource))
+    if (!m_model->isAttr(indexSource))
         showPropClass(indexSource);
 
     if (indexSource.data(Qt::UserRole)==DBCOMPXML::COMP)
@@ -366,12 +366,12 @@ bool ModelerIDEPlug::isRemoveClass(QModelIndex srcIndex)
         return false;
     }
 
-    QString fieldId = m_model->uuidField(tag);
+    QString fieldId = m_model->uuidAttr(tag);
     if (fieldId.isEmpty())
         return true;
 
     QString guid =  srcIndex.sibling(srcIndex.row(),
-                                     m_model->indexDisplayedAttr(
+                                     m_model->columnDisplayedAttr(
                                          tag,fieldId))
             .data().toString();
 
@@ -380,7 +380,7 @@ bool ModelerIDEPlug::isRemoveClass(QModelIndex srcIndex)
     {
         int number = 0;
 
-        QModelIndex linkIndex = m_model->indexHashField(
+        QModelIndex linkIndex = m_model->indexHashAttr(
                     tagWithAttr.tag,
                     tagWithAttr.attr,
                     guid,
@@ -395,7 +395,7 @@ bool ModelerIDEPlug::isRemoveClass(QModelIndex srcIndex)
                 return false;
             }
             number++;
-            linkIndex = m_model->indexHashField(
+            linkIndex = m_model->indexHashAttr(
                         tagWithAttr.tag,
                         tagWithAttr.attr,
                         guid,
@@ -439,7 +439,7 @@ void ModelerIDEPlug::showPropClass(QModelIndex indexSource)
     if (!indexSource.isValid())
         return;
 
-    if (m_model->isAttribute(indexSource))
+    if (m_model->isAttr(indexSource))
         return;
 
     PluginManager* pluginManager = PluginManager::instance();
@@ -475,12 +475,12 @@ void ModelerIDEPlug::showPropComposition(QModelIndex indexSource)
     MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
                                                            "MainWindowPlug::MainWindow"));
 
-    QString className = indexSource.sibling(indexSource.row(),m_model->indexDisplayedAttr(
+    QString className = indexSource.sibling(indexSource.row(),m_model->columnDisplayedAttr(
                                  DBCOMPXML::COMP,
                                  DBCOMPXML::NAME
                                  )).data().toString();
 
-    QString classId = indexSource.sibling(indexSource.row(),m_model->indexDisplayedAttr(
+    QString classId = indexSource.sibling(indexSource.row(),m_model->columnDisplayedAttr(
                                  DBCOMPXML::COMP,
                                  DBCOMPXML::NAME
                                  )).data().toString();
