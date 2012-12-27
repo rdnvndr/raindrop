@@ -28,7 +28,7 @@ public:
 
 public slots:
     //! Установка текущего класса
-    void setCurrentClass(QModelIndex index);
+    void setCurrentClass(const QModelIndex &index);
 
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);
@@ -38,7 +38,7 @@ public slots:
 
 private:
     //! Получение данных модели
-    QVariant modelData(QString typeName, QString attr, const QModelIndex &index);
+    QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
 
     //! Модель структуры классов
     TreeXMLModel* m_model;
