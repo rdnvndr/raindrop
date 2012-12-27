@@ -1,4 +1,5 @@
 #include <QMessageBox>
+#include <QSortFilterProxyModel>
 #include "compositionpropwidget.h"
 #include "xmldelegate.h"
 #include "dbxmlstruct.h"

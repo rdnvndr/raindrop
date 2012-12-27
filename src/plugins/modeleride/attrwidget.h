@@ -5,6 +5,7 @@
 #include <QDataWidgetMapper>
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <treexmlmodel/treexmlmodel.h>
+#include <QStringListModel>
 
 //! Диалог редактирования атрибутов класса
 /*! Диалог предназначен для редактирования атрибутов класса
