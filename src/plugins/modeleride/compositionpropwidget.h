@@ -34,7 +34,7 @@ public slots:
     void removeEmpty();
 
     //! Установка текущего состава
-    void setCurrent(QModelIndex index);
+    void setCurrent(const QModelIndex &index);
 
     //! Перевод состава в режим редактирования
     void edit(bool flag = true);
@@ -46,21 +46,21 @@ public slots:
     void revert();
 
     //! Удаление составов
-    void rowsRemoved(QModelIndex index,int start,int end);
+    void rowsRemoved(const QModelIndex &index,int start,int end);
 
 signals:
     //! Сигнал об изменении данных
-    void dataChanged(QModelIndex index);
+    void dataChanged(const QModelIndex &index);
 
     //! Сигнал об удалении данных
-    void dataRemoved(QModelIndex index);
+    void dataRemoved(const QModelIndex &index);
 
     //! Сигнал об изменении текущего состава
-    void currentIndexChanged(QModelIndex index);
+    void currentIndexChanged(const QModelIndex &index);
 
 private:
     //! Получение данных модели
-    QVariant modelData(QString typeName, QString attr, const QModelIndex &index);
+    QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
 
     //! Модель структуры классов
     TreeXMLModel* m_model;

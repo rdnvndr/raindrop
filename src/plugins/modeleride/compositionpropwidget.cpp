@@ -94,7 +94,7 @@ void CompositionPropWidget::remove()
 }
 
 
-void CompositionPropWidget::setCurrent(QModelIndex index)
+void CompositionPropWidget::setCurrent(const QModelIndex &index)
 {
     if (m_mapper->rootIndex() == index.parent() &&
             index.row() == m_mapper->currentIndex())
@@ -156,7 +156,7 @@ void CompositionPropWidget::revert()
     edit(false);
 }
 
-void CompositionPropWidget::rowsRemoved(QModelIndex index, int start, int end)
+void CompositionPropWidget::rowsRemoved(const QModelIndex &index, int start, int end)
 {
     if (index == m_mapper->rootIndex()){
         if (m_oldIndex > end)
@@ -171,10 +171,10 @@ void CompositionPropWidget::rowsRemoved(QModelIndex index, int start, int end)
 }
 
 
-QVariant CompositionPropWidget::modelData(QString typeName, QString attr, const QModelIndex &index)
+QVariant CompositionPropWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
 {
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                             typeName,attr)).data();
+                             tag,attr)).data();
 }
 
 void CompositionPropWidget::removeEmpty()
