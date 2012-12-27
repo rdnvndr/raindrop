@@ -56,7 +56,7 @@ class XMLMODELLIB TreeXMLModel : public QAbstractItemModel
 public:
 
     //! Перечисления типов уникальности поля
-    enum UniqueField {
+    enum UniqueAttr {
         NoUnique = 0,         //!< Поле не уникальное
         UniqueRename = 1,     //!< Контроль уникальности путем переименования
         Unique = 2,           //!< Поле уникальное
@@ -101,7 +101,7 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
     //! Возращает количество строк указанных тэгов в индексе родителя
-    int rowCount(const QModelIndex &parent, QStringList tags) const;
+    int rowCount(const QModelIndex &parent, const QStringList &tags) const;
 
     //! Возращает количество столбцов в индексе родителя
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -113,13 +113,13 @@ public:
     void clearTagsFilter();
 
     //! Добавляет тэг, который будет являться атрибутом
-    void addAttributeTag(const QString &tag);
+    void addAttrTag(const QString &tag);
 
     //! Очищает список тэгов, которые являются атрибутами
-    void clearAttributeTags();
+    void clearAttrTags();
 
     //! Возращает True если строка является атрибутом
-    bool isAttribute(const QModelIndex &index) const;
+    bool isAttr(const QModelIndex &index) const;
 
     //! Получает класс связку TagXMLItem по индексу модели
     TagXMLItem *toItem(const QModelIndex &index) const;
@@ -134,10 +134,10 @@ public:
     void addInsertTags(const QString &tag,const QStringList &value);
 
     //! Получение индекса поля в тэге
-    int indexDisplayedAttr(QString nameAttr, QString fieldName) const;
+    int columnDisplayedAttr(const QString &tag, const QString &attr) const;
 
     //! Получение поля в тэге по индексу
-    QString fieldDisplayedAttr(const QString &tag, int column) const;
+    QString displayedAttr(const QString &tag, int column) const;
 
     //! Удаляет xml атрибуты тэга для отображения
     void removeDisplayedAttr(const QString &tag);
@@ -196,11 +196,11 @@ public:
     bool isInherited(const QModelIndex &index) const;
 
     //! Добавления поля для хешеирования
-    void addHashField(const QString &tag, const QString &value,
-                      UniqueField unique = TreeXMLModel::NoUnique);
+    void addHashAttr(const QString &tag, const QString &value,
+                      UniqueAttr unique = TreeXMLModel::NoUnique);
 
     //! Возращает индекс по значению хешеированного поля
-    QModelIndex indexHashField(const QString &tag, const QString &attrName,
+    QModelIndex indexHashAttr(const QString &tag, const QString &attr,
                                const QVariant &value, int number = 0) const;
 
     //! Обновление хэшей начиная с указанног индекса
@@ -224,7 +224,7 @@ public:
     QModelIndex indexLink(const QModelIndex &index) const;
 
     //! Возращает uuid поле
-    QString uuidField(const QString &tag) const;
+    QString uuidAttr(const QString &tag) const;
 private:
 
     //! Создание хэша для указанного индекса
@@ -285,13 +285,13 @@ private:
     QMap<QString, QStringList> m_insertTags;
 
     //! Список атрибутов для хэшеированя [тэг][атрибут][уникальность]
-    QMap<QString, QMap<QString,UniqueField> > m_hashField;
+    QMap<QString, QMap<QString,UniqueAttr> > m_hashAttr;
 
     //! Список хэшей [тэг][атрибут][значение атрибута]
     QMap<QString, QHash<QString,QMultiHash<QString,TagXMLItem*> > > m_hashValue;
 
     //! Список зависимых полей [тэг][атрибут][ссылочныйТэг] = ссылочныйАтрибут
-    QMap<QString, QMap<QString, QMap<QString, QString> > > m_linkField;
+    QMap<QString, QMap<QString, QMap<QString, QString> > > m_linkAttr;
 };
 
 #endif

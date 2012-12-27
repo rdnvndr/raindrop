@@ -84,7 +84,7 @@ void CompositionWidget::edit()
 
 QVariant CompositionWidget::modelData(QString typeName, QString attr, const QModelIndex &index)
 {
-    return index.sibling(index.row(), m_model->indexDisplayedAttr(
+    return index.sibling(index.row(), m_model->columnDisplayedAttr(
                              typeName,attr)).data();
 }
 
@@ -106,7 +106,7 @@ void CompositionWidget::showParent(bool flag)
         }else
             m_compositionModel->setFilterRegExp(className);
     }
-    m_compositionModel->setFilterKeyColumn(m_model->indexDisplayedAttr(DBCOMPXML::COMP,
+    m_compositionModel->setFilterKeyColumn(m_model->columnDisplayedAttr(DBCOMPXML::COMP,
                                                                 DBCOMPXML::PARENT));
 }
 

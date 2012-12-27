@@ -117,13 +117,13 @@ QMimeData *TreeFilterProxyModel::mimeData(const QModelIndexList &indexes) const
                 QString tag = xmlModel->data(sourceIndex,Qt::UserRole).toString();
                 stream << tag;
                 for (int i = 0; i < xmlModel->columnCount(sourceIndex); i++){
-                    QString attrName = xmlModel->fieldDisplayedAttr(tag,i);
+                    QString attrName = xmlModel->displayedAttr(tag,i);
                     if (!attrName.isEmpty()){
                         stream << attrName;
                         stream << sourceIndex.sibling(sourceIndex.row(),i).data(Qt::EditRole);
                     }
                 }
-                if (!xmlModel->isAttribute(sourceIndex))
+                if (!xmlModel->isAttr(sourceIndex))
                     packData(sourceIndex,stream);
             }
     }
@@ -182,9 +182,9 @@ bool TreeFilterProxyModel::unpackData(const QModelIndex &parent, QDataStream &st
         } else if (!nextTag){
             QVariant value;
             stream >> value;
-            int column = xmlModel->indexDisplayedAttr(tag,nameAttr);
+            int column = xmlModel->columnDisplayedAttr(tag,nameAttr);
 
-            QModelIndex existIndex = xmlModel->indexHashField(tag,nameAttr,value);
+            QModelIndex existIndex = xmlModel->indexHashAttr(tag,nameAttr,value);
             if (existIndex.isValid() && move)
                 xmlModel->refreshHashingOne(existIndex,true);
 
@@ -218,13 +218,13 @@ void TreeFilterProxyModel::packData(QModelIndex parent, QDataStream &stream) con
                 QString tag = xmlModel->data(sourceIndex,Qt::UserRole).toString();
                 stream << tag;
                 for (int i = 0; i < xmlModel->columnCount(sourceIndex); i++) {
-                    QString attrName = xmlModel->fieldDisplayedAttr(tag,i);
+                    QString attrName = xmlModel->displayedAttr(tag,i);
                     if (!attrName.isEmpty()){
                         stream << attrName;
                         stream << sourceIndex.sibling(sourceIndex.row(),i).data(Qt::EditRole);
                     }
                 }
-                if (!xmlModel->isAttribute(sourceIndex))
+                if (!xmlModel->isAttr(sourceIndex))
                     packData(sourceIndex,stream);
             }
     }

@@ -80,40 +80,40 @@ void AttrWidget::setModel(TreeXMLModel *model)
     classFilterModel->sort(0);
 
     comboBoxLinkAttr->setModel(classFilterModel);
-    comboBoxLinkAttr->setIndexColumn(m_model->indexDisplayedAttr(DBCLASSXML::CLASS,
+    comboBoxLinkAttr->setIndexColumn(m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                                  DBATTRXML::ID));
 
     comboBoxTypeAttr->setModel(m_typeAttrModel);
 
     m_mapperAttr->addMapping(lineEditAttrName,
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                             m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::NAME));
     m_mapperAttr->addMapping(comboBoxTypeAttr,
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                             m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::TYPE));
     m_mapperAttr->addMapping(spinBoxStringLen,
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                             m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::MAXSTRLEN));
     m_mapperAttr->addMapping(comboBoxLinkAttr,
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                             m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::REFCLASS));
     m_mapperAttr->addMapping(lineEditDefaultValue,
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                             m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::INITIALVAL));
     m_mapperAttr->addMapping(checkBoxIsNull,
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                             m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::ISNULLALLOWED));
     m_mapperAttr->addMapping(checkBoxIsUnique,
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                             m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::ISUNIQUE));
     m_mapperAttr->addMapping(checkBoxIsCandidateKey,
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                             m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::ISCANDIDATEKEY));
     m_mapperAttr->addMapping(lineEditAttrDesc,
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                             m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::DESCRIPTION));
     m_mapperAttr->addMapping(comboBoxAttrGroup,
-                             m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                             m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::GROUP));
 }
 
@@ -129,7 +129,7 @@ void AttrWidget::setRootIndex(QModelIndex index)
 
     for (int row=0;row<m_attrModel->rowCount(m_attrModel->mapFromSource(index));row++){
         QString insText = m_attrModel->mapFromSource(index).child(
-                    row,m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+                    row,m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                     DBATTRXML::GROUP)).data().toString();
         if (comboBoxAttrGroup->findText(insText)==-1)
             comboBoxAttrGroup->addItem(insText);
@@ -176,7 +176,7 @@ void AttrWidget::submit()
     QModelIndex srcIndex = m_mapperAttr->rootIndex().child(m_mapperAttr->currentIndex(),0);
     for (int row=0; row < m_attrModel->rowCount(rootIndex); row++){
         QModelIndex childIndex = m_attrModel->index(row,
-                                                    m_model->indexDisplayedAttr(
+                                                    m_model->columnDisplayedAttr(
                                                         DBATTRXML::ATTR,
                                                         DBATTRXML::NAME),
                                                     rootIndex);
@@ -244,7 +244,7 @@ void AttrWidget::showParentAttr(bool flag)
         }else
             m_attrModel->setFilterRegExp(className);
     }
-    m_attrModel->setFilterKeyColumn(m_model->indexDisplayedAttr(DBATTRXML::ATTR,
+    m_attrModel->setFilterKeyColumn(m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                                 DBATTRXML::PARENT));
 }
 
@@ -276,7 +276,7 @@ void AttrWidget::changeType(QString s)
 
 QVariant AttrWidget::modelData(QString typeName, QString attr, const QModelIndex &index)
 {
-    return index.sibling(index.row(), m_model->indexDisplayedAttr(
+    return index.sibling(index.row(), m_model->columnDisplayedAttr(
                              typeName,attr)).data();
 }
 

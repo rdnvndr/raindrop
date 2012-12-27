@@ -49,7 +49,7 @@ void PropComposition::closeTab(const QModelIndex &index)
 
 QVariant PropComposition::modelData(QString typeName, QString attr, const QModelIndex& index)
 {
-    return index.sibling(index.row(), m_model->indexDisplayedAttr(
+    return index.sibling(index.row(), m_model->columnDisplayedAttr(
                       typeName,attr)).data();
 }
 

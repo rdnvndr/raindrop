@@ -43,29 +43,29 @@ void CompositionPropWidget::setModel(TreeXMLModel *model)
     classFilterModel->setDynamicSortFilter(true);
     classFilterModel->sort(0);
     comboBoxDestClass->setModel(classFilterModel);
-    comboBoxDestClass->setIndexColumn(m_model->indexDisplayedAttr(DBCLASSXML::CLASS,
+    comboBoxDestClass->setIndexColumn(m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                                   DBATTRXML::ID));
 
     m_mapper->addMapping(lineEditName,
-                         model->indexDisplayedAttr(DBCOMPXML::COMP,
+                         model->columnDisplayedAttr(DBCOMPXML::COMP,
                                                    DBCOMPXML::NAME));
     m_mapper->addMapping(lineEditDesc,
-                         model->indexDisplayedAttr(DBCOMPXML::COMP,
+                         model->columnDisplayedAttr(DBCOMPXML::COMP,
                                                    DBCOMPXML::DESCRIPTION));
 
     m_mapper->addMapping(lineEditDirectDesc,
-                         model->indexDisplayedAttr(DBCOMPXML::COMP,
+                         model->columnDisplayedAttr(DBCOMPXML::COMP,
                                                    DBCOMPXML::DIRECTDESCRIPTION));
 
     m_mapper->addMapping(lineEditInverseDesc,
-                         model->indexDisplayedAttr(DBCOMPXML::COMP,
+                         model->columnDisplayedAttr(DBCOMPXML::COMP,
                                                    DBCOMPXML::INVERSEDESCRIPTION));
     m_mapper->addMapping(lineEditSrcClass,
-                         model->indexDisplayedAttr(DBCOMPXML::COMP,
+                         model->columnDisplayedAttr(DBCOMPXML::COMP,
                                                    DBCOMPXML::PARENT));
 
     m_mapper->addMapping(comboBoxDestClass,
-                         model->indexDisplayedAttr(DBCOMPXML::COMP,
+                         model->columnDisplayedAttr(DBCOMPXML::COMP,
                                                    DBCOMPXML::CLASS));
 }
 
@@ -129,7 +129,7 @@ void CompositionPropWidget::submit()
     QModelIndex rootIndex = m_mapper->rootIndex();
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
     for (int row=0; row < m_model->rowCount(rootIndex); row++){
-        QModelIndex childIndex = m_model->index(row, m_model->indexDisplayedAttr(
+        QModelIndex childIndex = m_model->index(row, m_model->columnDisplayedAttr(
                                                     DBCOMPXML::COMP,
                                                     DBCOMPXML::NAME),
                                                 rootIndex);
@@ -173,7 +173,7 @@ void CompositionPropWidget::rowsRemoved(QModelIndex index, int start, int end)
 
 QVariant CompositionPropWidget::modelData(QString typeName, QString attr, const QModelIndex &index)
 {
-    return index.sibling(index.row(), m_model->indexDisplayedAttr(
+    return index.sibling(index.row(), m_model->columnDisplayedAttr(
                              typeName,attr)).data();
 }
 
