@@ -222,9 +222,11 @@ public:
     //! Возращает ссылку на индекс
     QModelIndex indexLink(const QModelIndex &index) const;
 
+    //! Возращает uuid поле
+    QString uuidField(const QString &tag) const;
 private:
 
-    //! Создание хэша для указанног индекса
+    //! Создание хэша для указанного индекса
     void makeHashing(TagXMLItem *item, bool remove = false);
 
     //! Создание хэшей начиная с указанног индекса

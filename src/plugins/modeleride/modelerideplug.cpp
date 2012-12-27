@@ -20,7 +20,7 @@ ModelerIDEPlug::ModelerIDEPlug(IPlugin *parent):
     setIcon(QIcon(":/modeleride"));
     addDepend("TreeCommandsPlug");
 
-    dbStructModel = NULL;
+    m_model = NULL;
 }
 
 ModelerIDEPlug::~ModelerIDEPlug()
@@ -151,7 +151,7 @@ bool ModelerIDEPlug::release()
 
 void ModelerIDEPlug::showContextMenu(const QPoint& point)
 {
-    if (dbStructModel){
+    if (m_model){
             contextMenu->exec(treeClassView->treeView->mapToGlobal(point));
     }
     return;
@@ -191,25 +191,25 @@ void ModelerIDEPlug::dataChange(const QModelIndex &topLeft, const QModelIndex &b
 
 TreeXMLModel *ModelerIDEPlug::model()
 {
-    return dbStructModel;
+    return m_model;
 }
 
 void ModelerIDEPlug::createClassModel(QDomDocument document)
 {
-    dbStructModel = new TreeXMLModel(document, this);
+    m_model = new TreeXMLModel(document, this);
 
-    dbStructModel->addTagFilter(DBCLASSXML::CLASS);
-    dbStructModel->addTagFilter(DBATTRXML::ATTR);
-    dbStructModel->addTagFilter(DBCOMPXML::COMP);
+    m_model->addTagFilter(DBCLASSXML::CLASS);
+    m_model->addTagFilter(DBATTRXML::ATTR);
+    m_model->addTagFilter(DBCOMPXML::COMP);
 
     QStringList propsClass;
     propsClass << DBCLASSXML::NAME << DBCLASSXML::ISABSTARCT <<
                   DBCLASSXML::TYPE << DBCLASSXML::DESCRIPTION <<
                   DBCLASSXML::PARENT << DBCLASSXML::ISACTIVE <<
                   DBCLASSXML::TEMPLATE << DBCLASSXML::ID;
-    dbStructModel->addDisplayedAttr(DBCLASSXML::CLASS,propsClass,QIcon(":/modeleride"));
-    dbStructModel->addDisplayedAttr(DBATTRXML::ATTR,propsClass,QIcon(":/attribute"));
-    dbStructModel->addDisplayedAttr(DBCOMPXML::COMP,propsClass,QIcon(":/composition"));
+    m_model->addDisplayedAttr(DBCLASSXML::CLASS,propsClass,QIcon(":/modeleride"));
+    m_model->addDisplayedAttr(DBATTRXML::ATTR,propsClass,QIcon(":/attribute"));
+    m_model->addDisplayedAttr(DBCOMPXML::COMP,propsClass,QIcon(":/composition"));
 
     QStringList propsAttr;
     propsAttr << DBATTRXML::NAME << DBATTRXML::DESCRIPTION << DBATTRXML::TYPE <<
@@ -225,77 +225,77 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                  DBCOMPXML::DIRECTDESCRIPTION << DBCOMPXML::INVERSEDESCRIPTION <<
                  DBCOMPXML::ID;
 
-    dbStructModel->setHeaderData(0, Qt::Horizontal, tr("Имя атрибута"));
-    dbStructModel->setHeaderData(1, Qt::Horizontal, tr("Описание"));
-    dbStructModel->setHeaderData(2, Qt::Horizontal, tr("Тип"));
-    dbStructModel->setHeaderData(3, Qt::Horizontal, tr("Длина строки"));
-    dbStructModel->setHeaderData(4, Qt::Horizontal, tr("Ссылочный класс"));
-    dbStructModel->setHeaderData(5, Qt::Horizontal, tr("Класс"));
-    dbStructModel->setHeaderData(6, Qt::Horizontal, tr("По умолчанию"));
-    dbStructModel->setHeaderData(7, Qt::Horizontal, tr("Группа"));
-    dbStructModel->setHeaderData(8, Qt::Horizontal, tr("Нулевые значения"));
-    dbStructModel->setHeaderData(9, Qt::Horizontal, tr("Уникальный"));
-    dbStructModel->setHeaderData(10, Qt::Horizontal, tr("Кандидат в ключ"));
+    m_model->setHeaderData(0, Qt::Horizontal, tr("Имя атрибута"));
+    m_model->setHeaderData(1, Qt::Horizontal, tr("Описание"));
+    m_model->setHeaderData(2, Qt::Horizontal, tr("Тип"));
+    m_model->setHeaderData(3, Qt::Horizontal, tr("Длина строки"));
+    m_model->setHeaderData(4, Qt::Horizontal, tr("Ссылочный класс"));
+    m_model->setHeaderData(5, Qt::Horizontal, tr("Класс"));
+    m_model->setHeaderData(6, Qt::Horizontal, tr("По умолчанию"));
+    m_model->setHeaderData(7, Qt::Horizontal, tr("Группа"));
+    m_model->setHeaderData(8, Qt::Horizontal, tr("Нулевые значения"));
+    m_model->setHeaderData(9, Qt::Horizontal, tr("Уникальный"));
+    m_model->setHeaderData(10, Qt::Horizontal, tr("Кандидат в ключ"));
 
-    dbStructModel->addDisplayedAttr(DBATTRXML::ATTR,propsAttr);
-    dbStructModel->addAttributeTag(DBATTRXML::ATTR);
+    m_model->addDisplayedAttr(DBATTRXML::ATTR,propsAttr);
+    m_model->addAttributeTag(DBATTRXML::ATTR);
 
-    dbStructModel->addDisplayedAttr(DBCOMPXML::COMP,propsComposition);
-    dbStructModel->addAttributeTag(DBCOMPXML::COMP);
+    m_model->addDisplayedAttr(DBCOMPXML::COMP,propsComposition);
+    m_model->addAttributeTag(DBCOMPXML::COMP);
 
     QStringList insertTags;
     insertTags << DBATTRXML::ATTR << DBCLASSXML::CLASS << DBCOMPXML::COMP;
-    dbStructModel->addInsertTags(DBCLASSXML::CLASS,insertTags);
+    m_model->addInsertTags(DBCLASSXML::CLASS,insertTags);
     insertTags.clear();
     insertTags << DBATTRXML::ATTR;
-    dbStructModel->addInsertTags(DBCOMPXML::COMP,insertTags);
+    m_model->addInsertTags(DBCOMPXML::COMP,insertTags);
 
-    dbStructModel->addHashField(DBCLASSXML::CLASS,
+    m_model->addHashField(DBCLASSXML::CLASS,
                                 DBCLASSXML::NAME,
                                 TreeXMLModel::UniqueRename);
-    dbStructModel->addHashField(DBATTRXML::ATTR,
+    m_model->addHashField(DBATTRXML::ATTR,
                                 DBATTRXML::REFCLASS,
                                 TreeXMLModel::NoUnique);
-    dbStructModel->addHashField(DBCOMPXML::COMP,
+    m_model->addHashField(DBCOMPXML::COMP,
                                 DBCOMPXML::CLASS,
                                 TreeXMLModel::NoUnique);
 
-    dbStructModel->addHashField(DBCLASSXML::CLASS,
+    m_model->addHashField(DBCLASSXML::CLASS,
                                 DBCLASSXML::ID,
                                 TreeXMLModel::Uuid);
-    dbStructModel->addHashField(DBATTRXML::ATTR,
+    m_model->addHashField(DBATTRXML::ATTR,
                                 DBATTRXML::ID,
                                 TreeXMLModel::Uuid);
-    dbStructModel->addHashField(DBCOMPXML::COMP,
+    m_model->addHashField(DBCOMPXML::COMP,
                                 DBCOMPXML::ID,
                                 TreeXMLModel::Uuid);
 
-    dbStructModel->addRelation(DBATTRXML::ATTR,DBATTRXML::REFCLASS,
+    m_model->addRelation(DBATTRXML::ATTR,DBATTRXML::REFCLASS,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
-    dbStructModel->addRelation(DBATTRXML::ATTR,DBATTRXML::PARENT,
+    m_model->addRelation(DBATTRXML::ATTR,DBATTRXML::PARENT,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
-    dbStructModel->addRelation(DBATTRXML::ATTR,DBATTRXML::PARENT,
+    m_model->addRelation(DBATTRXML::ATTR,DBATTRXML::PARENT,
                                DBCOMPXML::COMP, DBCOMPXML::NAME);
 
-    dbStructModel->addRelation(DBCLASSXML::CLASS, DBCLASSXML::PARENT,
+    m_model->addRelation(DBCLASSXML::CLASS, DBCLASSXML::PARENT,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
 
-    dbStructModel->addRelation(DBCOMPXML::COMP, DBCOMPXML::PARENT,
+    m_model->addRelation(DBCOMPXML::COMP, DBCOMPXML::PARENT,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
-    dbStructModel->addRelation(DBCOMPXML::COMP, DBCOMPXML::CLASS,
+    m_model->addRelation(DBCOMPXML::COMP, DBCOMPXML::CLASS,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
 
-    dbStructModel->refreshHashing();
+    m_model->refreshHashing();
 
     classFilterModel = new TreeFilterProxyModel();
-    classFilterModel->setSourceModel(dbStructModel);
+    classFilterModel->setSourceModel(m_model);
     classFilterModel->setDynamicSortFilter(true);
     classFilterModel->sort(0);
 
     setShownComp(false);   
     setShownAttr(false);
 
-    connect(dbStructModel,SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+    connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)),
             this,SLOT(dataChange(QModelIndex,QModelIndex)));
 
     connect(treeClassView->lineEditFiler,SIGNAL(textChanged(QString)),
@@ -305,7 +305,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
             treeClassView->treeView,SLOT(expandAll()));
 
     treeClassView->treeView->setModel(classFilterModel);
-    for (int i=1;i<dbStructModel->columnCount();i++)
+    for (int i=1;i<m_model->columnCount();i++)
         treeClassView->treeView->hideColumn(i);
 
     actionPublishModel->setEnabled(true);
@@ -316,18 +316,18 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
 void ModelerIDEPlug::addClass()
 {
-    dbStructModel->setInsTagName(DBCLASSXML::CLASS);
+    m_model->setInsTagName(DBCLASSXML::CLASS);
     QModelIndex indexSource = classFilterModel->mapToSource(treeClassView->treeView->currentIndex());
-    if (dbStructModel->insertRow(0,indexSource)){
-        QModelIndex index = classFilterModel->mapFromSource(dbStructModel->lastInsertRow());
+    if (m_model->insertRow(0,indexSource)){
+        QModelIndex index = classFilterModel->mapFromSource(m_model->lastInsertRow());
         treeClassView->treeView->setCurrentIndex(index);
-        showPropClass(dbStructModel->lastInsertRow());
+        showPropClass(m_model->lastInsertRow());
     }
 }
 
 QString ModelerIDEPlug::className(const QModelIndex& index)
 {
-    return index.sibling(index.row(),dbStructModel->indexDisplayedAttr(
+    return index.sibling(index.row(),m_model->indexDisplayedAttr(
                              DBCLASSXML::CLASS,
                              DBCLASSXML::NAME
                              )).data().toString();
@@ -335,7 +335,7 @@ QString ModelerIDEPlug::className(const QModelIndex& index)
 
 QString ModelerIDEPlug::classId(const QModelIndex& index)
 {
-    return index.sibling(index.row(),dbStructModel->indexDisplayedAttr(
+    return index.sibling(index.row(),m_model->indexDisplayedAttr(
                              DBCLASSXML::CLASS,
                              DBCLASSXML::ID
                              )).data().toString();
@@ -348,7 +348,7 @@ void ModelerIDEPlug::dblClickTree(QModelIndex index)
     if (!indexSource.isValid())
         return;
 
-    if (!dbStructModel->isAttribute(indexSource))
+    if (!m_model->isAttribute(indexSource))
         showPropClass(indexSource);
 
     if (indexSource.data(Qt::UserRole)==DBCOMPXML::COMP)
@@ -357,25 +357,30 @@ void ModelerIDEPlug::dblClickTree(QModelIndex index)
 
 bool ModelerIDEPlug::isRemoveClass(QModelIndex srcIndex)
 {
+    QString tag = srcIndex.data(Qt::UserRole).toString();
     QStringList tags;
-    tags << DBCLASSXML::CLASS;
-    if (dbStructModel->rowCount(srcIndex,tags)) {
+    tags << tag;
+    if (m_model->rowCount(srcIndex,tags)) {
         QMessageBox::warning(NULL,tr("Предупреждение"),
                              tr("Удаление не возможно.\nСначало необходимо удалить классы-потомки."));
         return false;
     }
 
+    QString fieldId = m_model->uuidField(tag);
+    if (fieldId.isEmpty())
+        return true;
+
     QString guid =  srcIndex.sibling(srcIndex.row(),
-                                     dbStructModel->indexDisplayedAttr(
-                                         DBCLASSXML::CLASS,DBCLASSXML::ID))
+                                     m_model->indexDisplayedAttr(
+                                         tag,fieldId))
             .data().toString();
 
     foreach (TreeXMLModel::TagWithAttr tagWithAttr,
-             dbStructModel->fromRelation(DBCLASSXML::CLASS))
+             m_model->fromRelation(tag))
     {
         int number = 0;
 
-        QModelIndex linkIndex = dbStructModel->indexHashField(
+        QModelIndex linkIndex = m_model->indexHashField(
                     tagWithAttr.tag,
                     tagWithAttr.attr,
                     guid,
@@ -390,7 +395,7 @@ bool ModelerIDEPlug::isRemoveClass(QModelIndex srcIndex)
                 return false;
             }
             number++;
-            linkIndex = dbStructModel->indexHashField(
+            linkIndex = m_model->indexHashField(
                         tagWithAttr.tag,
                         tagWithAttr.attr,
                         guid,
@@ -420,7 +425,7 @@ void ModelerIDEPlug::removeClass()
             QMdiSubWindow *subWindow = mainwindow->subWindow(subWindowName);
             if (subWindow)
                 subWindow->close();
-            dbStructModel->removeRow(currentIndex.row(),currentIndex.parent());
+            m_model->removeRow(currentIndex.row(),currentIndex.parent());
         } else
             QMessageBox::warning(NULL,tr("Предупреждение"),
                                  tr("Невозможно удалить узел, поскольку он еще не сохранен."));
@@ -434,7 +439,7 @@ void ModelerIDEPlug::showPropClass(QModelIndex indexSource)
     if (!indexSource.isValid())
         return;
 
-    if (dbStructModel->isAttribute(indexSource))
+    if (m_model->isAttribute(indexSource))
         return;
 
     PluginManager* pluginManager = PluginManager::instance();
@@ -448,7 +453,7 @@ void ModelerIDEPlug::showPropClass(QModelIndex indexSource)
         PropClass* propClass = new PropClass();
         subWindow =  mainwindow->addSubWindow(propClass);
         propClass->setObjectName(subWindowName);
-        propClass->setModel(dbStructModel);
+        propClass->setModel(m_model);
         propClass->setCurrentClass(indexSource);
         connect(propClass,SIGNAL(editComposition(QModelIndex)),
                 this,SLOT(showPropComposition(QModelIndex)));
@@ -470,12 +475,12 @@ void ModelerIDEPlug::showPropComposition(QModelIndex indexSource)
     MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
                                                            "MainWindowPlug::MainWindow"));
 
-    QString className = indexSource.sibling(indexSource.row(),dbStructModel->indexDisplayedAttr(
+    QString className = indexSource.sibling(indexSource.row(),m_model->indexDisplayedAttr(
                                  DBCOMPXML::COMP,
                                  DBCOMPXML::NAME
                                  )).data().toString();
 
-    QString classId = indexSource.sibling(indexSource.row(),dbStructModel->indexDisplayedAttr(
+    QString classId = indexSource.sibling(indexSource.row(),m_model->indexDisplayedAttr(
                                  DBCOMPXML::COMP,
                                  DBCOMPXML::NAME
                                  )).data().toString();
@@ -487,7 +492,7 @@ void ModelerIDEPlug::showPropComposition(QModelIndex indexSource)
         PropComposition* propComposition = new PropComposition();
         subWindow =  mainwindow->addSubWindow(propComposition);
         propComposition->setObjectName(subWindowName);
-        propComposition->setModel(dbStructModel);
+        propComposition->setModel(m_model);
         propComposition->setCurrentClass(indexSource);
     } else {
         PropComposition* propComposition = qobject_cast<PropComposition*>(subWindow->widget());
@@ -506,9 +511,9 @@ void ModelerIDEPlug::newClassModel()
 
 void ModelerIDEPlug::openClassModel()
 {
-    fileName = QFileDialog::getOpenFileName(NULL, tr("Открытие модели"),
+    m_fileName = QFileDialog::getOpenFileName(NULL, tr("Открытие модели"),
                                                     "", tr("Фаил модели (*.xml)"));
-    QFile file(fileName);
+    QFile file(m_fileName);
     if (file.open(QIODevice::ReadOnly)) {
         QDomDocument document;
         if (document.setContent(&file)) {
@@ -521,16 +526,16 @@ void ModelerIDEPlug::openClassModel()
 
 void ModelerIDEPlug::saveClassModel()
 {
-    if (fileName.isEmpty()) {
+    if (m_fileName.isEmpty()) {
         saveAsClassModel();
         return;
     }
 
-    QFile File(fileName);
+    QFile File(m_fileName);
     if ( File.open(QIODevice::WriteOnly) )
     {
         QTextStream TextStream(&File);
-        QDomDocument doc = dbStructModel->rootItem()->node().toDocument();
+        QDomDocument doc = m_model->rootItem()->node().toDocument();
         doc.save(TextStream, 0);
         File.close();
     }
@@ -539,13 +544,13 @@ void ModelerIDEPlug::saveClassModel()
 
 void ModelerIDEPlug::saveAsClassModel()
 {
-    fileName = QFileDialog::getSaveFileName(NULL, tr("Сохранение модели"),
+    m_fileName = QFileDialog::getSaveFileName(NULL, tr("Сохранение модели"),
                                                     "", tr("Фаил модели (*.xml)"));
-    QFile File(fileName);
+    QFile File(m_fileName);
     if ( File.open(QIODevice::WriteOnly) )
     {
         QTextStream TextStream(&File);
-        QDomDocument doc = dbStructModel->rootItem()->node().toDocument();
+        QDomDocument doc = m_model->rootItem()->node().toDocument();
         doc.save(TextStream, 0);
         File.close();
     }
@@ -554,8 +559,8 @@ void ModelerIDEPlug::saveAsClassModel()
 
 void ModelerIDEPlug::publishClassModel(QModelIndex index)
 {
-    for (int row=0;row < dbStructModel->rowCount(index);row++){
-        QModelIndex childIndex = dbStructModel->index(row,0,index);
+    for (int row=0;row < m_model->rowCount(index);row++){
+        QModelIndex childIndex = m_model->index(row,0,index);
         /*childIndex = childIndex.sibling(childIndex.row(),
                                         dbStructModel->indexDisplayedAttr(
                                             childIndex.data(Qt::UserRole).toString(),
@@ -564,13 +569,13 @@ void ModelerIDEPlug::publishClassModel(QModelIndex index)
         dbStructModel->setData(childIndex, childIndex.data(Qt::EditRole), Qt::EditRole);*/
         if (childIndex.data(Qt::UserRole)==DBATTRXML::ATTR){
             // Создание атрибута
-            if (dbStructModel->isInherited(childIndex))
+            if (m_model->isInherited(childIndex))
                 qDebug() << "Унаследованный атрибут:" << childIndex.data().toString();
             else
                 qDebug() << "Атрибут:" << childIndex.data().toString();
         } else if (childIndex.data(Qt::UserRole)==DBCOMPXML::COMP) {
             // Создание состава
-            if (dbStructModel->isInherited(childIndex))
+            if (m_model->isInherited(childIndex))
                 qDebug() << "Унаследованный состав:" <<childIndex.data().toString();
             else
                 qDebug() << "Состав:" <<childIndex.data().toString();
@@ -593,11 +598,11 @@ void ModelerIDEPlug::closeClassModel()
                 || subWindow->widget()->objectName().indexOf(QRegExp("^PropComposition::")))
             subWindow->close();
 
-    if (dbStructModel){
+    if (m_model){
         delete classFilterModel;
         classFilterModel = NULL;
-        delete dbStructModel;
-        dbStructModel = NULL;
+        delete m_model;
+        m_model = NULL;
         actionCloseModel->setDisabled(true);
         actionSaveModel->setDisabled(true);
         actionSaveAsModel->setDisabled(true);
