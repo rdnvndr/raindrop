@@ -159,9 +159,9 @@ void TreeXMLModel::addRelation(const QString &tag, const QString &attr,
 QList<TreeXMLModel::TagWithAttr> TreeXMLModel::fromRelation(const QString &linkTag, const QString &linkAttr)
 {
     QList<TreeXMLModel::TagWithAttr> list;
-    foreach (QString tag,m_linkAttr.keys())
-        foreach (QString attr,m_linkAttr[tag].keys())
-            foreach (QString lTag,m_linkAttr[tag][attr].keys())
+    foreach (const QString &tag,m_linkAttr.keys())
+        foreach (const QString &attr,m_linkAttr[tag].keys())
+            foreach (const QString &lTag,m_linkAttr[tag][attr].keys())
                 if (lTag == linkTag
                         && (m_linkAttr[tag][attr][lTag] == linkAttr || linkAttr.isEmpty()))
                 {
@@ -176,7 +176,7 @@ QList<TreeXMLModel::TagWithAttr> TreeXMLModel::fromRelation(const QString &linkT
 TreeXMLModel::TagWithAttr TreeXMLModel::toRelation(const QString &tag, const QString &attr)
 {
     TreeXMLModel::TagWithAttr tagWithAttr;
-    foreach (QString linkTag,m_linkAttr[tag][attr].keys()) {
+    foreach (const QString &linkTag,m_linkAttr[tag][attr].keys()) {
         tagWithAttr.tag =  linkTag;
         tagWithAttr.attr = m_linkAttr[tag][attr][linkTag];
         return tagWithAttr;
@@ -191,7 +191,7 @@ QModelIndex TreeXMLModel::indexLink(const QModelIndex &index) const
     QString attrName = displayedAttr(tag,index.column());
 
     if (m_linkAttr[tag].contains(attrName)) {
-        foreach (QString linkTag,m_linkAttr[tag][attrName].keys()){
+        foreach (const QString &linkTag,m_linkAttr[tag][attrName].keys()){
             QString linkAttr = m_linkAttr[tag][attrName][linkTag];
             QString attr = uuidAttr(linkTag);
             if (!attr.isEmpty()) {
@@ -207,7 +207,7 @@ QModelIndex TreeXMLModel::indexLink(const QModelIndex &index) const
 bool TreeXMLModel::isAttr(const QModelIndex &index) const
 {
     TagXMLItem *item = toItem(index);
-    foreach (QString tagName,m_attrTags)
+    foreach (const QString &tagName,m_attrTags)
         if (tagName == item->nodeName())
             return true;
     return false;
@@ -218,7 +218,7 @@ bool TreeXMLModel::isInsert(const QModelIndex &index) const
     TagXMLItem *item = toItem(index);
 
     if (index.isValid()){
-        foreach (QString tagName,m_insertTags[item->nodeName()])
+        foreach (const QString &tagName,m_insertTags[item->nodeName()])
             if (tagName == m_insTag)
                 return true;
         return false;
@@ -648,7 +648,6 @@ bool TreeXMLModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     QByteArray encodedData = data->data("application/classxmlmodel");
     QDataStream stream(&encodedData, QIODevice::ReadOnly);
 
-    return unpackData(parent,stream,row);
     return unpackData(parent,stream,row,
                       data->parent() == this
                       && action == Qt::MoveAction);
