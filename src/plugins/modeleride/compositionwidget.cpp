@@ -82,10 +82,10 @@ void CompositionWidget::edit()
     emit dataEdited(index);
 }
 
-QVariant CompositionWidget::modelData(QString typeName, QString attr, const QModelIndex &index)
+QVariant CompositionWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
 {
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                             typeName,attr)).data();
+                             tag,attr)).data();
 }
 
 void CompositionWidget::showParent(bool flag)
