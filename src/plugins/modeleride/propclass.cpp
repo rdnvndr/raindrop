@@ -35,7 +35,7 @@ void PropClass::setModel(TreeXMLModel *model)
     m_model = model;
 }
 
-void PropClass::setCurrentClass(QModelIndex index)
+void PropClass::setCurrentClass(const QModelIndex &index)
 {
     classWidget->setCurrent(index);
 }
@@ -58,15 +58,15 @@ void PropClass::closeTab(const QModelIndex &index)
     subWindow->close();
 }
 
-void PropClass::onEditComposition(QModelIndex index)
+void PropClass::onEditComposition(const QModelIndex &index)
 {
     emit editComposition(index);
 }
 
-QVariant PropClass::modelData(QString typeName, QString attr, const QModelIndex& index)
+QVariant PropClass::modelData(const QString &tag, const QString &attr, const QModelIndex& index)
 {
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                      typeName,attr)).data();
+                      tag,attr)).data();
 }
 
 TreeXMLModel *PropClass::model()

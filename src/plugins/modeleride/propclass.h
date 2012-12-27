@@ -31,11 +31,11 @@ public:
 
 signals:
     //! Сигнал вызова редактирования состава
-    void editComposition(QModelIndex index);
+    void editComposition(const QModelIndex &index);
 
 public slots:
     //! Установка текущего класса
-    void setCurrentClass(QModelIndex index);
+    void setCurrentClass(const QModelIndex &index);
 
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);
@@ -44,10 +44,10 @@ public slots:
     void closeTab(const QModelIndex &index);
 
     //! Вызов редактирования состава
-    void onEditComposition(QModelIndex index);
+    void onEditComposition(const QModelIndex &index);
 private:
     //! Получение данных модели
-    QVariant modelData(QString typeName, QString attr, const QModelIndex &index);
+    QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
 
     //! Модель структуры классов
     TreeXMLModel* m_model;
