@@ -117,7 +117,7 @@ void AttrWidget::setModel(TreeXMLModel *model)
                                                          DBATTRXML::GROUP));
 }
 
-void AttrWidget::setRootIndex(QModelIndex index)
+void AttrWidget::setRootIndex(const QModelIndex &index)
 {
     QModelIndex rootIndex = m_attrModel->mapToSource(tableViewAttr->rootIndex());
     if (rootIndex == index)
@@ -248,16 +248,16 @@ void AttrWidget::showParentAttr(bool flag)
                                                                 DBATTRXML::PARENT));
 }
 
-void AttrWidget::changeType(QString s)
+void AttrWidget::changeType(const QString &typeName)
 {
-    if (DBXMLATTRTYPE.at(8)==s){
+    if (DBXMLATTRTYPE.at(8)==typeName){
         // String
         spinBoxStringLen->setEnabled(true);
         comboBoxLinkAttr->setEnabled(false);
         comboBoxLinkAttr->setDisplayText("");
         comboBoxLinkAttr->setCurrentIndex(-1);
         lineEditDefaultValue->setEnabled(true);
-    } else if( DBXMLATTRTYPE.at(9)==s){
+    } else if( DBXMLATTRTYPE.at(9)==typeName){
         //Reference
         spinBoxStringLen->setEnabled(false);
         spinBoxStringLen->setValue(0);
@@ -274,14 +274,14 @@ void AttrWidget::changeType(QString s)
     }
 }
 
-QVariant AttrWidget::modelData(QString typeName, QString attr, const QModelIndex &index)
+QVariant AttrWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
 {
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                             typeName,attr)).data();
+                             tag,attr)).data();
 }
 
 
-void AttrWidget::setCurrent(QModelIndex index)
+void AttrWidget::setCurrent(const QModelIndex &index)
 {
     edit(false);
     if (!index.isValid())
