@@ -43,23 +43,23 @@ public slots:
 
 signals:
     //! Сигнал об добавлении данных
-    void dataAdded(QModelIndex index);
+    void dataAdded(const QModelIndex &index);
 
     //! Сигнал об вызове редактирования данных
-    void dataEdited(QModelIndex index);
+    void dataEdited(const QModelIndex &index);
 
     //! Сигнал об изменении данных
-    void dataChanged(QModelIndex index);
+    void dataChanged(const QModelIndex &index);
 
     //! Сигнал об удалении данных
-    void dataRemoved(QModelIndex index);
+    void dataRemoved(const QModelIndex &index);
 
     //! Сигнал об изменении текущего состава
-    void currentIndexChanged(QModelIndex index);
+    void currentIndexChanged(const QModelIndex &index);
 
 private:
     //! Получение данных модели
-    QVariant modelData(QString typeName, QString attr, const QModelIndex &index);
+    QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
 
     //! Прокси модель для составов класса
     TableXMLProxyModel* m_compositionModel;
