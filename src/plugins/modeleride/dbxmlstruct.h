@@ -14,6 +14,7 @@ namespace DBCLASSXML{
     const QString DESCRIPTION = "description";
     const QString PARENT = "parent";
     const QString TEMPLATE = "displayTemplate";
+    const QString ICON = "icon";
     const QString ID = "guid";
 }
 

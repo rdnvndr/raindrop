@@ -18,7 +18,8 @@ HEADERS += modelerideplug.h \
     compositionwidget.h \
     propcomposition.h \
     compositionpropwidget.h \
-    xmldelegate.h
+    xmldelegate.h \
+    pushbuttonimage.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -28,7 +29,8 @@ SOURCES += modelerideplug.cpp \
     compositionwidget.cpp \
     propcomposition.cpp \
     compositionpropwidget.cpp \
-    xmldelegate.cpp
+    xmldelegate.cpp \
+    pushbuttonimage.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \

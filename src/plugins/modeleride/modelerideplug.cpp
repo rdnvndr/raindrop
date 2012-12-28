@@ -203,27 +203,28 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addTagFilter(DBCOMPXML::COMP);
 
     QStringList propsClass;
-    propsClass << DBCLASSXML::NAME << DBCLASSXML::ISABSTARCT <<
-                  DBCLASSXML::TYPE << DBCLASSXML::DESCRIPTION <<
-                  DBCLASSXML::PARENT << DBCLASSXML::ISACTIVE <<
-                  DBCLASSXML::TEMPLATE << DBCLASSXML::ID;
+    propsClass << DBCLASSXML::NAME     << DBCLASSXML::ISABSTARCT  <<
+                  DBCLASSXML::TYPE     << DBCLASSXML::DESCRIPTION <<
+                  DBCLASSXML::PARENT   << DBCLASSXML::ISACTIVE    <<
+                  DBCLASSXML::TEMPLATE << DBCLASSXML::ID          <<
+                  DBCLASSXML::ICON;
     m_model->addDisplayedAttr(DBCLASSXML::CLASS,propsClass,QIcon(":/modeleride"));
     m_model->addDisplayedAttr(DBATTRXML::ATTR,propsClass,QIcon(":/attribute"));
     m_model->addDisplayedAttr(DBCOMPXML::COMP,propsClass,QIcon(":/composition"));
 
     QStringList propsAttr;
-    propsAttr << DBATTRXML::NAME << DBATTRXML::DESCRIPTION << DBATTRXML::TYPE <<
-                 DBATTRXML::MAXSTRLEN << DBATTRXML::REFCLASS <<
-                 DBATTRXML::PARENT << DBATTRXML::INITIALVAL <<
-                 DBATTRXML::GROUP << DBATTRXML::ISNULLALLOWED <<
-                 DBATTRXML::ISUNIQUE << DBATTRXML::ISCANDIDATEKEY <<
-                 DBATTRXML::ID;
+    propsAttr << DBATTRXML::NAME           << DBATTRXML::DESCRIPTION
+              << DBATTRXML::TYPE           << DBATTRXML::MAXSTRLEN
+              << DBATTRXML::REFCLASS       << DBATTRXML::PARENT
+              << DBATTRXML::INITIALVAL     << DBATTRXML::GROUP
+              << DBATTRXML::ISNULLALLOWED  << DBATTRXML::ISUNIQUE
+              << DBATTRXML::ISCANDIDATEKEY << DBATTRXML::ID;
 
     QStringList propsComposition;
-    propsComposition << DBCOMPXML::NAME << DBCOMPXML::DESCRIPTION <<
-                 DBCOMPXML::PARENT << DBCOMPXML::CLASS <<
-                 DBCOMPXML::DIRECTDESCRIPTION << DBCOMPXML::INVERSEDESCRIPTION <<
-                 DBCOMPXML::ID;
+    propsComposition << DBCOMPXML::NAME              << DBCOMPXML::DESCRIPTION
+                     << DBCOMPXML::PARENT            << DBCOMPXML::CLASS
+                     << DBCOMPXML::DIRECTDESCRIPTION << DBCOMPXML::INVERSEDESCRIPTION
+                     << DBCOMPXML::ID;
 
     m_model->setHeaderData(0, Qt::Horizontal, tr("Имя атрибута"));
     m_model->setHeaderData(1, Qt::Horizontal, tr("Описание"));
@@ -512,7 +513,7 @@ void ModelerIDEPlug::newClassModel()
 void ModelerIDEPlug::openClassModel()
 {
     m_fileName = QFileDialog::getOpenFileName(NULL, tr("Открытие модели"),
-                                                    "", tr("Фаил модели (*.xml)"));
+                                                    ".", tr("Фаил модели (*.xml)"));
     QFile file(m_fileName);
     if (file.open(QIODevice::ReadOnly)) {
         QDomDocument document;

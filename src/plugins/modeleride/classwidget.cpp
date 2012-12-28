@@ -64,6 +64,9 @@ void ClassWidget::setModel(TreeXMLModel *model)
     m_mapper->addMapping(plainTextEditShowAttr,
                          model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                    DBCLASSXML::TEMPLATE));
+    m_mapper->addMapping(pushButtonIcon,
+                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                    DBCLASSXML::ICON));
 }
 
 void ClassWidget::add()
