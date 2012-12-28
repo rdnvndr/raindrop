@@ -1,4 +1,5 @@
 #include "xmldelegate.h"
+#include "pushbuttonimage.h"
 #include <QComboBox>
 #include <QDebug>
 #include <QAbstractItemView>
@@ -39,6 +40,13 @@ void XmlDelegate::setEditorData( QWidget * editor, const QModelIndex & index )co
         return;
     }
 
+    PushButtonImage *pushButton = dynamic_cast<PushButtonImage*>(editor);
+    if (pushButton) {
+        QByteArray bytes = QByteArray::fromBase64(index.data().toByteArray());
+        pushButton->setData(bytes);
+        return;
+    }
+
     QStyledItemDelegate::setEditorData(editor, index);
     return;
 
@@ -64,6 +72,12 @@ void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, co
             model->setData(index,index.data(Qt::EditRole),Qt::EditRole);
             return;
         }
+
+    PushButtonImage *pushButton = dynamic_cast<PushButtonImage*>(editor);
+    if (pushButton) {
+        model->setData(index,pushButton->data().toBase64(),Qt::EditRole);
+        return;
+    }
 
     QStyledItemDelegate::setModelData(editor,model,index);
     return;

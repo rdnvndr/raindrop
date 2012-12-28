@@ -1,0 +1,38 @@
+#ifndef PUSHBUTTONIMAGE_H
+#define PUSHBUTTONIMAGE_H
+
+#include <QPushButton>
+
+//! Класс PushButtonImage является кнопкой-изображением
+/*! Данный класс предназначен для отображение рисунка в
+ *  виде кнопки, загрузки с диска, сохранения на диск
+ */
+
+class PushButtonImage : public QPushButton
+{
+    Q_OBJECT
+public:
+    //! Конструктор
+    explicit PushButtonImage(QWidget *parent = 0);
+
+    //! Запись рисунка
+    bool setData(const QByteArray &data);
+
+    //! Получение рисунка
+    QByteArray data() const;
+signals:
+    
+public slots:
+
+    //! Открытие рисунка с диска
+    bool openImage();
+
+    //! Сохранение рисунка на диск
+    bool saveImage();
+
+private:
+    //! Переменная для хранения рисунка
+    QByteArray m_data;
+};
+
+#endif // PUSHBUTTONIMAGE_H
