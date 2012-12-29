@@ -30,6 +30,9 @@ public slots:
     //! Сохранение рисунка на диск
     bool saveImage();
 
+    //! Очистка рисунка
+    void cleanImage();
+
 private:
     //! Переменная для хранения рисунка
     QByteArray m_data;
