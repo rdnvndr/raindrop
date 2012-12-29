@@ -18,6 +18,7 @@ bool PushButtonImage::setData(const QByteArray &data)
         this->setIcon(icon);
         return true;
     }
+    this->setIcon(QIcon());
     return false;
 }
 
@@ -60,4 +61,10 @@ bool PushButtonImage::saveImage()
         }
     }
     return false;
+}
+
+void PushButtonImage::cleanImage()
+{
+    m_data.clear();
+    setIcon(QIcon());
 }
