@@ -181,11 +181,8 @@ void ModelerIDEPlug::setShownComp(bool shown)
     actionShowComp->setChecked(shown);
 }
 
-void ModelerIDEPlug::dataChange(const QModelIndex &topLeft, const QModelIndex &bottomRight)
+void ModelerIDEPlug::actionSaveEnable()
 {
-    Q_UNUSED(topLeft)
-    Q_UNUSED(bottomRight)
-
     actionSaveModel->setEnabled(true);
 }
 
@@ -297,7 +294,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     setShownAttr(false);
 
     connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-            this,SLOT(dataChange(QModelIndex,QModelIndex)));
+            this,SLOT(actionSaveEnable()));
+    connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
+            this,SLOT(actionSaveEnable()));
 
     connect(treeClassView->lineEditFiler,SIGNAL(textChanged(QString)),
             classFilterModel,SLOT(setFilterRegExp(QString)));
