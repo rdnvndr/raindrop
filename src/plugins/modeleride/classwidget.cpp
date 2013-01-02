@@ -82,15 +82,19 @@ void ClassWidget::add()
     }
 }
 
+// Метод совпадает с bool ModelerIDEPlug::isRemoveClass(const QModelIndex &srcIndex)
 bool ClassWidget::isRemove(const QModelIndex &srcIndex)
 {
+    bool success = true;
+    QString msg;
+
     QString tag = srcIndex.data(Qt::UserRole).toString();
     QStringList tags;
     tags << tag;
     if (m_model->rowCount(srcIndex,tags)) {
-        QMessageBox::warning(NULL,tr("Предупреждение"),
-                             tr("Удаление не возможно.\nСначало необходимо удалить классы-потомки."));
-        return false;
+        msg += tr("Необходимо удалить классы-потомки.\n\n");
+        if (success)
+            success = false;
     }
 
     QString fieldId = m_model->uuidAttr(tag);
@@ -117,9 +121,53 @@ bool ClassWidget::isRemove(const QModelIndex &srcIndex)
         while (linkIndex.isValid()) {
             QModelIndex linkParent = linkIndex.parent();
             if (linkParent.sibling(linkIndex.parent().row(),0)!= srcIndex){
-                QMessageBox::warning(NULL,tr("Предупреждение"),
-                                     tr("Удаление не возможно.\nСначало необходимо удалить зависимые объекты"));
-                return false;
+                QString parentName;
+                QString name;
+                if (linkIndex.data(Qt::UserRole) == DBCLASSXML::CLASS) {
+                    name = tr("класс ")
+                            + linkIndex.sibling(linkIndex.row(),
+                                                m_model->columnDisplayedAttr(
+                                                    DBCLASSXML::CLASS,
+                                                    DBCLASSXML::NAME)
+                                                ).data().toString();
+                } else {
+                    if (linkParent.data(Qt::UserRole) == DBCOMPXML::COMP)
+                        parentName = tr(" принадлежащий составу ")
+                                + linkParent.sibling(
+                                    linkParent.row(),
+                                    m_model->columnDisplayedAttr(
+                                        DBCOMPXML::COMP,
+                                        DBCOMPXML::NAME)
+                                    ).data().toString();
+                    else
+                        parentName = tr(" принадлежащий классу ")
+                                + linkParent.sibling(
+                                    linkParent.row(),
+                                    m_model->columnDisplayedAttr(
+                                        DBCLASSXML::CLASS,
+                                        DBCLASSXML::NAME)
+                                    ).data().toString();
+
+                    if  (linkIndex.data(Qt::UserRole) == DBCOMPXML::COMP)
+                        name = tr("состав ")
+                                + linkIndex.sibling(linkIndex.row(),
+                                                    m_model->columnDisplayedAttr(
+                                                        DBCOMPXML::COMP,
+                                                        DBCOMPXML::NAME)
+                                                    ).data().toString();
+                    else
+                        name = tr("атрибут ")
+                                + linkIndex.sibling(linkIndex.row(),
+                                                    m_model->columnDisplayedAttr(
+                                                        DBATTRXML::ATTR,
+                                                        DBATTRXML::NAME)
+                                                    ).data().toString();
+
+                }
+                msg += QString(tr("Необходимо удалить %1%2.\n\n")).
+                        arg(name).arg(parentName);
+                if (success)
+                    success = false;
             }
             number++;
             linkIndex = m_model->indexHashAttr(
@@ -130,7 +178,15 @@ bool ClassWidget::isRemove(const QModelIndex &srcIndex)
                         );
         }
     }
-    return true;
+    if (!success) {
+        QMessageBox msgBox;
+        msgBox.setText(tr("Удаление данного объекта не воможно."));
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setDetailedText(msg);
+        msgBox.setWindowTitle(tr("Предупреждение"));
+        msgBox.exec();
+    }
+    return success;
 }
 
 void ClassWidget::remove()
