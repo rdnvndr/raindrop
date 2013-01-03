@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>648</width>
-     <height>18</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -54,8 +54,14 @@
     <addaction name="separator"/>
     <addaction name="actionWindowGui"/>
    </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Настройка</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuSettings"/>
    <addaction name="menuWindow"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -79,7 +85,7 @@
   </widget>
   <action name="actionExit">
    <property name="icon">
-    <iconset resource="res.qrc">
+    <iconset resource="mainwindow.qrc">
      <normaloff>:/exit</normaloff>:/exit</iconset>
    </property>
    <property name="text">
@@ -134,7 +140,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="res.qrc"/>
+  <include location="mainwindow.qrc"/>
  </resources>
  <connections>
   <connection>

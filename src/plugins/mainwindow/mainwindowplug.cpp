@@ -13,6 +13,7 @@ MainWindowPlug::MainWindowPlug(QObject *parent):
     publicObject(window);
     publicObject(window->menuFile);
     publicObject(window->menuEdit);
+    publicObject(window->menuSettings);
     publicObject(window->menuHelp);
     publicObject(window->toolBarMain);
     publicObject(window->mdiArea);
