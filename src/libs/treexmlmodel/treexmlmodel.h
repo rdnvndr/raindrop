@@ -270,10 +270,10 @@ private:
     QString m_insTag;
 
     //! Список атрибутов тэга для отображения
-    QMap<QString, QStringList> m_displayedAttr;
+    QHash<QString, QStringList> m_displayedAttr;
 
     //! Список иконок тэгов для отображения
-    QMap<QString, QIcon> m_displayedIcon;
+    QHash<QString, QIcon> m_displayedIcon;
 
     //! Список названий заголовков
     QMap<int, QString> m_header;
@@ -282,16 +282,16 @@ private:
     QModelIndex m_lastInsRow;
 
     //! Список тэгов в которые нельзя вставлять строки
-    QMap<QString, QStringList> m_insertTags;
+    QHash<QString, QStringList> m_insertTags;
 
     //! Список атрибутов для хэшеированя [тэг][атрибут][уникальность]
-    QMap<QString, QMap<QString,UniqueAttr> > m_hashAttr;
+    QHash<QString, QHash<QString,UniqueAttr> > m_hashAttr;
 
     //! Список хэшей [тэг][атрибут][значение атрибута]
-    QMap<QString, QHash<QString,QMultiHash<QString,TagXMLItem*> > > m_hashValue;
+    QHash<QString, QHash<QString,QMultiHash<QString,TagXMLItem*> > > m_hashValue;
 
     //! Список зависимых полей [тэг][атрибут][ссылочныйТэг] = ссылочныйАтрибут
-    QMap<QString, QMap<QString, QMap<QString, QString> > > m_linkAttr;
+    QHash<QString, QHash<QString, QMap<QString, QString> > > m_linkAttr;
 };
 
 #endif
