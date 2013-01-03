@@ -243,7 +243,7 @@ bool TreeXMLModel::unpackData(const QModelIndex &parent, QDataStream &stream, in
 {
     QString tag;
     QModelIndex index;
-     bool nextTag = false;
+    bool nextTag = false;
 
     while (!stream.atEnd()) {
         QString nameAttr;
@@ -260,7 +260,7 @@ bool TreeXMLModel::unpackData(const QModelIndex &parent, QDataStream &stream, in
             unpackData(lastInsertRow(),stream,row);
         } else if (nameAttr==QString("}")) {
             return true;
-        } else {
+        } else if (!nextTag){
             QVariant value;
             stream >> value;
             int column = columnDisplayedAttr(tag,nameAttr);
