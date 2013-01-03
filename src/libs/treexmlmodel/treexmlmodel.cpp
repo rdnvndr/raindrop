@@ -59,7 +59,7 @@ void TreeXMLModel::addHashAttr(const QString &tag, const QString &value, UniqueA
 void TreeXMLModel::makeHashingOne(TagXMLItem *item, bool remove)
 {
     QString tag = item->nodeName();
-    foreach (const QString& attr, m_hashAttr.value(tag).keys()){
+    foreach (const QString& attr, m_hashAttr[tag].keys()){
         if (remove)
             m_hashValue[tag][attr].remove(item->value(attr),item);
         else
@@ -77,15 +77,15 @@ bool TreeXMLModel::makeHashingData(const QModelIndex &index, QString &dataValue)
             QModelIndex existIndex = indexHashAttr(tag,attr,dataValue);
             if (existIndex.isValid())
                 if (existIndex!=index){
-                    if (m_hashAttr[tag].value(attr) == TreeXMLModel::UniqueRename){
+                    if (m_hashAttr[tag][attr] == TreeXMLModel::UniqueRename){
                         int position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
                         int number = 1;
                         if (position != -1)
                             number = dataValue.mid(position+1).toInt()+1;
                         dataValue = dataValue.left(position)+QString("_%1").arg(number);
-                    } else if (m_hashAttr[tag].value(attr) == TreeXMLModel::Unique) {
+                    } else if (m_hashAttr[tag][attr] == TreeXMLModel::Unique) {
                         return false;
-                    } else if (m_hashAttr[tag].value(attr) == TreeXMLModel::Uuid) {
+                    } else if (m_hashAttr[tag][attr] == TreeXMLModel::Uuid) {
                         dataValue = QUuid::createUuid().toString();
                     }
                 }
@@ -726,8 +726,8 @@ QMimeData *TreeXMLModel::mimeData(const QModelIndexList &indexes)
 
 QString TreeXMLModel::uuidAttr(const QString &tag) const
 {
-    foreach (QString attr,m_hashAttr.value(tag).keys())
-        if (m_hashAttr[tag].value(attr)==TreeXMLModel::Uuid)
+    foreach (QString attr,m_hashAttr[tag].keys())
+        if (m_hashAttr[tag][attr]==TreeXMLModel::Uuid)
             return attr;
     return QString();
 }
