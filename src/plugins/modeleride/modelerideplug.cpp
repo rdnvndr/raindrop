@@ -569,6 +569,9 @@ void ModelerIDEPlug::openClassModel()
 {
     m_fileName = QFileDialog::getOpenFileName(NULL, tr("Открытие модели"),
                                                     ".", tr("Фаил модели (*.xml)"));
+    if (m_fileName.isEmpty())
+        return;
+
     QFile file(m_fileName);
     if (file.open(QIODevice::ReadOnly)) {
         QDomDocument document;
