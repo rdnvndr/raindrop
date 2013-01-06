@@ -2,7 +2,6 @@
 #define	TREEFILTERWIDGET_H
 
 #include  "ui_treefilterwidget.h"
-#include <QtGui>
 
 //! Класс визуального компонента дерева с фильтров
 class TreeFilterWidget: public QWidget, public Ui::TreeFilterWidget{

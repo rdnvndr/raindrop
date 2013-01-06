@@ -2,7 +2,14 @@
 #define IPLUGIN_H
 
 #include <QtPlugin>
-#include <QtGui>
+#include <QStringList>
+#include <QIcon>
+#include <QSettings>
+#include <QMessageBox>
+#include <QDebug>
+#include <QDir>
+#include <QPluginLoader>
+#include <QApplication>
 #include "pluginmanager.h"
 
 QT_BEGIN_NAMESPACE
@@ -91,7 +98,8 @@ public:
     };
     Q_DECLARE_FLAGS(State, StateFlag)
 
-    virtual QObject *instance() =0;
+    //! Получение экземпляра
+    virtual QObject *instance() = 0;
 
     //! Состояние плагина
     IPlugin::State state;

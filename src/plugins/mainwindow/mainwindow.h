@@ -44,75 +44,78 @@ public:
     explicit MainWindow(QMainWindow* pwgt = 0);
 
     //! Инициализация плагина главного окна
-    virtual bool initialize();
+    bool initialize();
 
     //! Освобождение плагина главного окна
-    virtual bool release();
+    bool release();
 
     //! Чтение и применение настроек плагина главного окна
-    virtual void readSettings();
+    void readSettings();
 
     //! Запись настроек плагина главного окна
-    virtual void writeSettings();
+    void writeSettings();
 
     //! Получение экземпляра
-    virtual QObject *instance() { return this; }
+    QObject *instance() { return this; }
 
 // IMainWindow
 
     //! Получение подокна
     /*! Предназначено для получения подокна
     */
-    virtual QMdiSubWindow *subWindow(QString objName);
+    QMdiSubWindow *subWindow(QString objName);
 
     //! Получение списка подокон
     /*! Предназначено для получения списка подокон
     */
-    virtual QList<QMdiSubWindow *> subWindowList() const;
+    QList<QMdiSubWindow *> subWindowList() const;
 
 public slots:
 
     //! Слот обработки события закрытия главного окна
-    virtual void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event);
 
     //! Слот обновления меню управления окнами
     /*! Слот предназаначен для изменения состояния
         пунктов меню при изменении состояния приложения
     */
-    virtual void updateMenus();
+    void updateMenus();
 
     //! Слот установки оконного режима
     /*! Слот предназначен переключение приложения в закладочный
         или оконный режим
     */
-    virtual void setWindowModeEnable(bool mode);
+    void setWindowModeEnable(bool mode);
 
     //! Слот добавления подчиненного окна
     /*! Слот предназаначен для добавления подчиненного окна(закладки)
         в главное окно. Возращает добавленное подокно QMdiSubWindow
     */
-    virtual QMdiSubWindow* addSubWindow(QWidget* widget);
+    QMdiSubWindow* addSubWindow(QWidget* widget);
 
     //! Слот установки активного окна по имени
     /*! Слот предназначен для установки активного подокна в главном окне
         по его имени
      */
-    virtual QMdiSubWindow *setActiveSubWindow(QString objName);
+    QMdiSubWindow *setActiveSubWindow(QString objName);
 
     //! Получение меню File
-    virtual QMenu* getMenuFile();
+    QMenu* getMenuFile();
 
     //! Получение меню Edit
-    virtual QMenu* getMenuEdit();
+    QMenu* getMenuEdit();
+
+    //! Получение меню Settings
+    QMenu* getMenuSettings();
 
     //! Получение меню Help
-    virtual QMenu* getMenuHelp();
+    QMenu* getMenuHelp();
 
     //! Получение панели инструментов
-    virtual QToolBar*   getToolBarMain();
+    QToolBar*   getToolBarMain();
 
     //! Получение области подокон
-    virtual MdiExtArea* getMdiArea();
+    MdiExtArea* getMdiArea();
 };
 
 #endif

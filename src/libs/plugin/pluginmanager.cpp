@@ -71,6 +71,7 @@ bool PluginManager::initPlugin(IPlugin* plug)
     plug->initialize();
 
     emit showMessage(tr("Инициализирован плагин: %1").arg(plug->name()));
+    qDebug() << "Init plugin:" << plug->name();
     plug->state = IPlugin::Init;
     return true;
 }
@@ -111,7 +112,7 @@ void PluginManager::loadPlugins()
                 plugin->setObjectName(plugin->metaObject()->className());
                 plugList[plugin->objectName()] = corePlugin;
                 emit showMessage(tr("Загружен плагин: %1").arg(corePlugin->name()));
-                qDebug()<<"Load plugin "<<corePlugin->name();
+                qDebug()<<"Load plugin: "<<corePlugin->name();
             }else
                 qDebug()<<"Error load plugin" << loader.errorString();
         }

@@ -1,5 +1,7 @@
 #include <QApplication>
 #include <QTextCodec>
+#include <QTranslator>
+#include <QLibraryInfo>
 #include <plugin/pluginmanager.h>
 
 int main(int argc, char* argv[])
