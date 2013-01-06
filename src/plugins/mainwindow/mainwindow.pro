@@ -7,10 +7,10 @@ DEFINES += MAINWINDOW_LIBRARY
 QT += widgets
 
 # Input
-HEADERS += mainwindowplug.h \
+HEADERS += \
            mainwindow.h \
     mainwindowglobal.h
-SOURCES += mainwindowplug.cpp \
+SOURCES += \
            mainwindow.cpp
 
 FORMS += \

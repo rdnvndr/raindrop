@@ -10,6 +10,7 @@ class QWidget;
 class QString;
 class QStringList;
 class PluginManager;
+class QObject;
 QT_END_NAMESPACE
 
 //! Класс плагина
@@ -74,9 +75,8 @@ QT_END_NAMESPACE
 
     \endcode
 */
-class IPlugin: public QObject
+class IPlugin
 {
-    Q_OBJECT
 
 public:
 
@@ -91,6 +91,8 @@ public:
     };
     Q_DECLARE_FLAGS(State, StateFlag)
 
+    virtual QObject *instance() =0;
+
     //! Состояние плагина
     IPlugin::State state;
 
@@ -100,7 +102,7 @@ public:
     QStringList depModulList;
 
     //! Конструктор плагина
-    explicit IPlugin(QObject *parent = 0);
+    explicit IPlugin();
 
     //! Деструктор плагина
     virtual ~IPlugin();
@@ -110,26 +112,26 @@ public:
     /*! Устанавливает наименование плагина для
         отображения
     */
-    void setName(QString name);
+    virtual void setName(QString name);
 
     //! Получение имени плагина
     /*! Получение наименования плагина для
         отображения
     */
-    QString name();
+    virtual QString name();
 
     //! Устанавливает иконку для плагина
     /*! Устанавливает иконку плагина для
         отображения
     */
-    void setIcon(QIcon icon);
+    virtual void setIcon(QIcon icon);
 
 
     //! Получение иконки плагина
     /*! Получение иконки плагина для
         отображения
     */
-    QIcon icon();
+    virtual QIcon icon();
 
     //! Инициализация плагина
     /*! Производит инициализацию текущего плагина.
@@ -150,27 +152,13 @@ public:
         инициализируется сначало зависимый плагин
         \sa initPlug()
     */
-    void addDepend(QString s);
-
-    //! Добавления объекта в общий список менеджера плагинов
-    /*! \param obj Объект для добавления в общий список менеджера плагинов
-        При добавлении объекта в общий список менеджера плагинов
-        этот объект можно получить из вне при помощи менеджера плагинов
-    */
-    void publicObject(QObject *obj);
-
-    //! Удаление объекта из общего списка менеджера плагинов
-    /*! \param obj Объект для удаления из общего списка менеджера плагинов
-        В результате удаления объекта из общего списка менеджера плагинов
-        он становится не доступен для доступа из вне при помощи менеджера плагинов
-    */
-    void privateObject(QObject *obj);
+    virtual void addDepend(QString s);
 
     //! Устанавливает ссылку на объект для сохранения настроек
-    void setSettings(QSettings *settings);
+    virtual void setSettings(QSettings *settings);
 
     //! Получает ссылку на объект для сохранения настроек
-    QSettings *settings();
+    virtual QSettings *settings();
 
     //! Чтение настроек
     /*! Метод предназначен для чтения настроек
@@ -188,34 +176,34 @@ public:
     /*! Получение описания плагина для
         отображения
     */
-    QString descript() const;
+    virtual QString descript() const;
 
     //! Категория в которой состоит плагин
     /*! Категория плагинов предназначена для группировки плагинов
      *  по смыслу в одну группу.
      */
-    QString category() const;
+    virtual QString category() const;
 
     //! Версия плагина
-    QString version() const;
+    virtual QString version() const;
 
     //! Производитель плагина
-    QString vendor() const;
+    virtual QString vendor() const;
 
     //! Установка описания плагина
     /*! Устанавливает описание плагина для
         отображения
     */
-    void setDescript(QString descript);
+    virtual void setDescript(QString descript);
 
     //! Установить категорию плагина
-    void setCategory(const QString category);
+    virtual void setCategory(const QString category);
 
     //! Установить версию плагина
-    void setVersion(const QString version);
+    virtual void setVersion(const QString version);
 
     //! Установить производителя плагина
-    void setVendor(const QString vendor);
+    virtual void setVendor(const QString vendor);
 
 private:
     //! Имя плагина (описание)

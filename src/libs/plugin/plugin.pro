@@ -1,6 +1,5 @@
 include(../libs.pri)
-QT += widgets
-DEFINES += PLUGIN_LIBRARY
+DEFINES += PLUGINMANAGER_LIBRARY
 HEADERS += \
     pluginmanager.h \
     iplugin.h \

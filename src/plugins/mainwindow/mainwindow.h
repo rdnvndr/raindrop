@@ -2,18 +2,63 @@
 #define	MAINWINDOW_H
 
 #include "mainwindowglobal.h"
-#include  "ui_mainwindow.h"
-#include <QtGui>
+#include "ui_mainwindow.h"
+#include <imainwindow.h>
+#include <plugin/iplugin.h>
+#include <mdiextarea/mdiextarea.h>
 #include <QMainWindow>
+#include <QMenu>
 
-//! Класс главного окна
-class MAINWINDOWLIB MainWindow: public QMainWindow, public Ui::MainWindow
+//! Плагин главного окна
+/*! Плагин предназначен для создания главного окна
+    Весь графический интерфейс приложения должен строится
+    на базе данного окна. Поддерживает закладочный и оконный
+    интерфейс.\n
+    Пример:
+    \code
+        PluginManager* pluginManager = PluginManager::instance();
+        MainWindow* mainwindow = qobject_cast<MainWindow*>(pluginManager->getObjectByName(
+                                               "MainWindowPlug::MainWindow"));
+        mainwindow->addSubWindow(new QTextEdit(NULL));
+    \endcode
+*/
+
+class MAINWINDOWLIB MainWindow:
+        public QMainWindow,
+        public Ui::MainWindow,
+        public IMainWindow,
+        public IPlugin
+
 {
-        Q_OBJECT
-public:
+    Q_OBJECT
+    Q_INTERFACES(IPlugin IMainWindow)
 
-    //! Конструктор главного окна
-    MainWindow(QMainWindow* pwgt = 0);
+#if QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.MainWindow" FILE "mainwindow.json")
+#endif
+
+
+public:
+// IPlugin
+    //! Конструктор плагина главного окна
+    explicit MainWindow(QMainWindow* pwgt = 0);
+
+    //! Инициализация плагина главного окна
+    virtual bool initialize();
+
+    //! Освобождение плагина главного окна
+    virtual bool release();
+
+    //! Чтение и применение настроек плагина главного окна
+    virtual void readSettings();
+
+    //! Запись настроек плагина главного окна
+    virtual void writeSettings();
+
+    //! Получение экземпляра
+    virtual QObject *instance() { return this; }
+
+// IMainWindow
 
     //! Получение подокна
     /*! Предназначено для получения подокна
@@ -28,7 +73,7 @@ public:
 public slots:
 
     //! Слот обработки события закрытия главного окна
-    void closeEvent(QCloseEvent *event);
+    virtual void closeEvent(QCloseEvent *event);
 
     //! Слот обновления меню управления окнами
     /*! Слот предназаначен для изменения состояния
@@ -53,6 +98,21 @@ public slots:
         по его имени
      */
     virtual QMdiSubWindow *setActiveSubWindow(QString objName);
+
+    //! Получение меню File
+    virtual QMenu* getMenuFile();
+
+    //! Получение меню Edit
+    virtual QMenu* getMenuEdit();
+
+    //! Получение меню Help
+    virtual QMenu* getMenuHelp();
+
+    //! Получение панели инструментов
+    virtual QToolBar*   getToolBarMain();
+
+    //! Получение области подокон
+    virtual MdiExtArea* getMdiArea();
 };
 
 #endif

@@ -1,5 +1,4 @@
 #include "pluginmanager.h"
-#include <QMessageBox>
 
 PluginManager::PluginManager(QObject *parent) :
     QObject(parent)
@@ -14,25 +13,12 @@ PluginManager *PluginManager::instance()
     return m_instance;
 }
 
-QObject *PluginManager::getObjectByName(const QString &name) const
+IPlugin *PluginManager::getPlugin(QString className)
 {
-    return m_objects[name];
-}
-
-QObject *PluginManager::getObjectByClassName(const QString &className) const
-{
-    const QByteArray ba = className.toUtf8();
-
-    foreach (QObject *obj, m_objects) {
-        if (obj->inherits(ba.constData()))
-            return obj;
-    }
+    foreach(IPlugin* pluginItem, plugList)
+        if (className.isEmpty() || pluginItem->instance()->inherits(className.toLatin1().data()))
+            return pluginItem;
     return 0;
-}
-
-IPlugin *PluginManager::getPlugin(const QString &className) const
-{
-    return plugList.value(className);
 }
 
 QString PluginManager::pluginClass(IPlugin *plug) const
@@ -40,23 +26,11 @@ QString PluginManager::pluginClass(IPlugin *plug) const
     return plugList.key(plug);
 }
 
-void PluginManager::addObject(QObject *obj)
-{
-    m_objects[obj->objectName()] = obj;
-}
-
-void PluginManager::removeObject(QObject *obj)
-{
-   m_objects.remove(m_objects.key(obj));
-}
-
 PluginManager::~PluginManager()
 {
-    foreach (QString str, plugList.keys()){
-        IPlugin* corePlugin = plugList.value(str);
+    foreach (IPlugin* corePlugin,plugList)
         if (corePlugin)
             delete corePlugin;
-    }
 }
 
 QSettings* PluginManager::settings() const
@@ -67,7 +41,6 @@ QSettings* PluginManager::settings() const
 // Инициализация плагина
 bool PluginManager::initPlugin(IPlugin* plug)
 {
-
     if (!plug)
         return false;
 
@@ -82,22 +55,21 @@ bool PluginManager::initPlugin(IPlugin* plug)
     plug->state = IPlugin::Lock;
 
     foreach (QString depPlugin,plug->depModulList)
-    {
         if (!initPlugin(getPlugin(depPlugin)))
         {
             delete plug;
             return false;
         }
-    }
 
     if (m_settings)
     {
         plug->setSettings(m_settings);
-        m_settings->beginGroup(plug->metaObject()->className());
+        m_settings->beginGroup(plug->instance()->metaObject()->className());
         plug->readSettings();
         m_settings->endGroup();
     }
     plug->initialize();
+
     emit showMessage(tr("Инициализирован плагин: %1").arg(plug->name()));
     plug->state = IPlugin::Init;
     return true;
@@ -121,6 +93,7 @@ void PluginManager::loadPlugins()
     if (!pluginsDir.cd("plugins"))
     {
         QMessageBox::critical(NULL, tr("Ошибка"), tr("Каталог с модулями не найден"));
+        return;
     }
 
     // Загрузка файлов
@@ -135,7 +108,8 @@ void PluginManager::loadPlugins()
             IPlugin* corePlugin = qobject_cast<IPlugin*>(plugin);
             if (corePlugin){
                 connect(plugin,SIGNAL(destroyed(QObject*)),this,SLOT(removePlugin(QObject*)));
-                plugList[plugin->metaObject()->className()] = corePlugin;
+                plugin->setObjectName(plugin->metaObject()->className());
+                plugList[plugin->objectName()] = corePlugin;
                 emit showMessage(tr("Загружен плагин: %1").arg(corePlugin->name()));
                 qDebug()<<"Load plugin "<<corePlugin->name();
             }else
@@ -147,7 +121,9 @@ void PluginManager::loadPlugins()
 
     // Инициализация
     foreach (IPlugin* corePlugin,plugList)
+    {
         initPlugin(corePlugin);
+    }
     QDir::setCurrent(qApp->applicationDirPath());
 }
 
@@ -158,7 +134,6 @@ void PluginManager::setSettings(QSettings *s)
 
 void PluginManager::removePlugin(QObject *obj)
 {
-    QString className = pluginClass(static_cast<IPlugin*>(obj));
-    qDebug() << "Remove plugin:" << className;
-    plugList.remove(className);
+    plugList.remove(obj->objectName());
+    qDebug() << "Remove plugin:" << obj->objectName();
 }

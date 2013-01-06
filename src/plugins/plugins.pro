@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
 CONFIG += ordered
 SUBDIRS +=  mainwindow
-SUBDIRS +=  treecommands
+SUBDIRS +=  treedockwidget
 SUBDIRS +=  modeleride

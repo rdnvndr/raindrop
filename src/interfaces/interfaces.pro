@@ -1,6 +1,4 @@
-TEMPLATE = lib
-CONFIG += staticlib
-
+TEMPLATE = subdirs
 HEADERS += \
-    imainwindow.h
-
+    imainwindow.h \
+    itreedockwidget.h
