@@ -1,0 +1,8 @@
+#ifndef EXAMPLEGLOBAL_H
+#define EXAMPLEGLOBAL_H
+#if defined(EXAMPLE_LIBRARY)
+#  define EXAMPLELIB Q_DECL_EXPORT
+#else
+#  define EXAMPLELIB Q_DECL_IMPORT
+#endif
+#endif // EXAMPLEGLOBAL_H
