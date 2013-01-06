@@ -1,71 +1,58 @@
-#ifndef IMAINWINDOW_H
-#define IMAINWINDOW_H
+#ifndef MAINWINDOW_H
+#define	MAINWINDOW_H
 
-#include <QMdiSubWindow>
+#include "mainwindowglobal.h"
+#include  "ui_mainwindow.h"
+#include <QtGui>
 #include <QMainWindow>
-#include <mdiextarea/mdiextarea.h>
 
 //! Класс главного окна
-class IMainWindow
+class MAINWINDOWLIB MainWindow: public QMainWindow, public Ui::MainWindow
 {
-
+        Q_OBJECT
 public:
+
+    //! Конструктор главного окна
+    MainWindow(QMainWindow* pwgt = 0);
 
     //! Получение подокна
     /*! Предназначено для получения подокна
     */
-    virtual QMdiSubWindow *subWindow(QString objName) = 0;
+    virtual QMdiSubWindow *subWindow(QString objName);
 
     //! Получение списка подокон
     /*! Предназначено для получения списка подокон
     */
-    virtual QList<QMdiSubWindow *> subWindowList() const = 0;
+    virtual QList<QMdiSubWindow *> subWindowList() const;
 
 public slots:
 
     //! Слот обработки события закрытия главного окна
-    virtual void closeEvent(QCloseEvent *event) = 0;
+    void closeEvent(QCloseEvent *event);
 
     //! Слот обновления меню управления окнами
     /*! Слот предназаначен для изменения состояния
         пунктов меню при изменении состояния приложения
     */
-    virtual void updateMenus() = 0;
+    virtual void updateMenus();
 
     //! Слот установки оконного режима
     /*! Слот предназначен переключение приложения в закладочный
         или оконный режим
     */
-    virtual void setWindowModeEnable(bool mode) = 0;
+    virtual void setWindowModeEnable(bool mode);
 
     //! Слот добавления подчиненного окна
     /*! Слот предназаначен для добавления подчиненного окна(закладки)
         в главное окно. Возращает добавленное подокно QMdiSubWindow
     */
-    virtual QMdiSubWindow* addSubWindow(QWidget* widget) = 0;
+    virtual QMdiSubWindow* addSubWindow(QWidget* widget);
 
     //! Слот установки активного окна по имени
     /*! Слот предназначен для установки активного подокна в главном окне
         по его имени
      */
-    virtual QMdiSubWindow *setActiveSubWindow(QString objName) = 0;
-
-    //! Получение меню File
-    virtual QMenu* getMenuFile() = 0;
-
-    //! Получение меню Edit
-    virtual QMenu* getMenuEdit() = 0;
-
-    //! Получение меню Help
-    virtual QMenu* getMenuHelp() = 0;
-
-    //! Получение панели инструментов
-    virtual QToolBar*   getToolBarMain() = 0;
-
-    //! Получение области подокон
-    virtual MdiExtArea* getMdiArea() = 0;
+    virtual QMdiSubWindow *setActiveSubWindow(QString objName);
 };
 
-Q_DECLARE_INTERFACE(IMainWindow,"com.RTPTechGroup.Raindrop.IMainWindow/1.0")
-
-#endif // IMAINWINDOW_H
+#endif

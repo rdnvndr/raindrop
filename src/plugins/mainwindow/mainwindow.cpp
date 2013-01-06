@@ -3,6 +3,10 @@
 
 MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt)
 {
+    setName("MainWindow");
+    setDescript(tr("Главное окно"));
+    setVendor(tr("RTPTechGroup"));
+    setVersion("0.0.1");
 
     setupUi(this);
     connect(actionWindowClose, SIGNAL(triggered()), mdiArea, SLOT(closeActiveSubWindow()));
@@ -13,6 +17,35 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt)
     connect(actionWindowPrev, SIGNAL(triggered()), mdiArea, SLOT(activatePreviousSubWindow()));
     connect(actionWindowGui, SIGNAL(triggered(bool)), this, SLOT(setWindowModeEnable(bool)));
     connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
+}
+
+bool MainWindow::initialize()
+{
+    show();
+
+    return true;
+}
+
+bool MainWindow::release()
+{
+    return true;
+}
+
+void MainWindow::readSettings()
+{
+    resize(settings()->value("size", QSize(687, 582)).toSize());
+    move(settings()->value("pos", QPoint(200, 200)).toPoint());
+    if (settings()->value("viewMode")== QMdiArea::SubWindowView)
+        setWindowModeEnable(true);
+    else
+        setWindowModeEnable(false);
+}
+
+void MainWindow::writeSettings()
+{
+    settings()->setValue("size", size());
+    settings()->setValue("pos", pos());
+    settings()->setValue("viewMode", mdiArea->viewMode());
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
@@ -75,3 +108,32 @@ QList<QMdiSubWindow *> MainWindow::subWindowList() const
     return mdiArea->subWindowList();
 }
 
+QMenu *MainWindow::getMenuFile()
+{
+    return menuFile;
+}
+
+QMenu *MainWindow::getMenuEdit()
+{
+    return menuEdit;
+}
+
+QMenu *MainWindow::getMenuHelp()
+{
+    return menuHelp;
+}
+
+QToolBar *MainWindow::getToolBarMain()
+{
+    return toolBarMain;
+}
+
+MdiExtArea *MainWindow::getMdiArea()
+{
+    return mdiArea;
+}
+
+
+#if QT_VERSION < 0x050000
+    Q_EXPORT_PLUGIN2(mainwindow, MainWindow)
+#endif

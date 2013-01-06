@@ -1,7 +1,6 @@
 #include "iplugin.h"
 
-IPlugin::IPlugin(QObject *parent):
-    QObject(parent)
+IPlugin::IPlugin()
 {
     state = IPlugin::NoInit;
 }
@@ -14,39 +13,10 @@ IPlugin::~IPlugin()
 
     if (state.testFlag(IPlugin::Init)){
         if (m_settings)
-        {
-            QString className = PluginManager::instance()->pluginClass(this);
-            m_settings->beginGroup(className);
             writeSettings();
-            m_settings->endGroup();
-            m_settings->sync();
-        }
-        release();
+        this->release();
     }
-    qDebug() << "Delete plugin:" << PluginManager::instance()->pluginClass(this);
-}
-
-void IPlugin::publicObject(QObject *obj)
-{
-    obj->setObjectName(metaObject()->className()+QString("::")+obj->objectName());
-    PluginManager::instance()->addObject(obj);
-}
-
-void IPlugin::privateObject(QObject *obj)
-{
-    QString objName = obj->objectName();
-    objName = objName.left(objName.indexOf("::")+3);
-    obj->setObjectName(objName);
-    PluginManager::instance()->removeObject(obj);
-}
-
-void IPlugin::readSettings(){
-
-}
-
-
-void IPlugin::writeSettings(){
-
+    qDebug() << "Delete plugin:" << name();
 }
 
 void IPlugin::setSettings(QSettings *s){
@@ -73,6 +43,14 @@ QString IPlugin::descript() const
 QSettings* IPlugin::settings()
 {
     return m_settings;
+}
+
+void IPlugin::readSettings()
+{
+}
+
+void IPlugin::writeSettings()
+{
 }
 
 QString IPlugin::category() const
@@ -119,11 +97,6 @@ QIcon IPlugin::icon(){
 }
 
 bool IPlugin::release()
-{
-    return true;
-}
-
-bool IPlugin::initialize()
 {
     return true;
 }
