@@ -17,8 +17,8 @@
     Пример:
     \code
         PluginManager* pluginManager = PluginManager::instance();
-        MainWindow* mainwindow = qobject_cast<MainWindow*>(pluginManager->getObjectByName(
-                                               "MainWindowPlug::MainWindow"));
+        IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
+                  pluginManager->getPlugin("IMainWindow")->instance());
         mainwindow->addSubWindow(new QTextEdit(NULL));
     \endcode
 */
