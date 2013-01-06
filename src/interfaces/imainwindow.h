@@ -56,6 +56,9 @@ public slots:
     //! Получение меню Edit
     virtual QMenu* getMenuEdit() = 0;
 
+    //! Получение меню Settings
+    virtual QMenu* getMenuSettings() = 0;
+
     //! Получение меню Help
     virtual QMenu* getMenuHelp() = 0;
 

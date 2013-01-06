@@ -1,4 +1,3 @@
-#include <QtGui>
 #include <QtXml>
 #include <QMessageBox>
 #include <QUuid>

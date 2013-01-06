@@ -67,10 +67,12 @@ public:
     QSettings *settings() const;
 
 signals:
+    //! Сигнал с сообщениями о загрузке плагинов
     void showMessage(const QString &message, int alignment = Qt::AlignLeft | Qt::AlignBottom ,
                                             const QColor &color = Qt::black);
 
 private slots:
+    //! Удаляет указанный плагин
     void removePlugin(QObject* obj);
 
 private:

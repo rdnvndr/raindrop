@@ -1,9 +1,9 @@
 #ifndef MODELERIDE_H
 #define MODELERIDE_H
 
+#include <QObject>
 #include <plugin/iplugin.h>
 #include <treexmlmodel/treexmlmodel.h>
-#include <mainwindow/mainwindow.h>
 #include "classtreeview.h"
 #include "treefilterproxymodel.h"
 
@@ -13,26 +13,35 @@
     структуру классов опубликовать на сервере БД
 */
 
-class ModelerIDEPlug: public IPlugin
+class ModelerIDEPlug:
+        public QObject,
+        public IPlugin
 {
     Q_OBJECT
     Q_INTERFACES(IPlugin)
+
     #if QT_VERSION >= 0x050000
         Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.ModelerIDEPlug" FILE "modelerideplug.json")
     #endif
 
 public:
-    //! Конструктор плагина
-    ModelerIDEPlug(IPlugin *parent = 0);
 
-    //! Деструктор плагина
-    virtual ~ModelerIDEPlug();
-
+// IPlugin
     //! Инициализация плагина
     bool initialize();
 
     //! Освобожение плагина
     bool release();
+
+    //! Получение экземпляра
+    QObject *instance() { return this; }
+
+// ModelerIDEPlug
+    //! Конструктор плагина
+    explicit ModelerIDEPlug(QObject *parent = 0);
+
+    //! Деструктор плагина
+    virtual ~ModelerIDEPlug();
 
     //! Получение Модели данных плагина
     TreeXMLModel* model();

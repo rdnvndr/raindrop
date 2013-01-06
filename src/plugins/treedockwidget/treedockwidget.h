@@ -37,7 +37,7 @@ public:
     bool release();
 
     //! Получение экземпляра
-    virtual QObject *instance() { return this; }
+    QObject *instance() { return this; }
 
 // ITreeDockWidget
 
@@ -66,6 +66,7 @@ public:
         \param widget Визуальный компонент
     */
     void insertWidget(QIcon icon, QString name, QWidget *widget);
+
 public slots:
 
     //! Установка активного дерева в зависимости от выбранного модуля

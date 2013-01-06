@@ -1,7 +1,10 @@
 #include <QMainWindow>
 #include <QFileDialog>
+#include <QMenu>
+#include <QToolBar>
 
-#include <treedockwidget/treedockwidget.h>
+#include <itreedockwidget.h>
+#include <imainwindow.h>
 
 #include <mdiextarea/mdiextarea.h>
 #include <treexmlmodel/tagxmlitem.h>
@@ -13,41 +16,26 @@
 #include "propcomposition.h"
 #include "dbxmlstruct.h"
 
-ModelerIDEPlug::ModelerIDEPlug(IPlugin *parent):
-    IPlugin(parent)
+ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
+    QObject(parent)
 {
     setName(tr("Редактор модели данных"));
     setIcon(QIcon(":/modeleride"));
-    addDepend("TreeCommandsPlug");
+    addDepend("ITreeDockWidget");
 
     m_model = NULL;
 }
 
 ModelerIDEPlug::~ModelerIDEPlug()
 {
-    if (state.testFlag(IPlugin::Init)){
-        delete treeClassView;
-        closeClassModel();
-        delete actionSaveModel;
-        delete actionSaveAsModel;
-        delete actionNewModel;
-        delete actionOpenModel;
-        delete actionPublishModel;
-        delete actionCloseModel;
-        delete actionAddClass;
-        delete actionRemoveClass;
-        delete actionShowAttr;
-        delete actionShowComp;
-        delete actionSeparator;
-        delete contextMenu;
-    }
+
 }
 
 bool ModelerIDEPlug::initialize(){
 
     PluginManager* pluginManager = PluginManager::instance();
-    TreeDockWidget* dockWidget = static_cast<TreeDockWidget*>(pluginManager->getObjectByName(
-                                                                   "TreeCommandsPlug::TreeDockWidget"));
+    ITreeDockWidget* dockWidget = qobject_cast<ITreeDockWidget*>(
+                pluginManager->getPlugin("ITreeDockWidget")->instance());
     treeClassView = new ClassTreeView();
 
     connect(treeClassView->treeView,SIGNAL(doubleClicked(QModelIndex)),
@@ -83,11 +71,13 @@ bool ModelerIDEPlug::initialize(){
             this,SLOT(showContextMenu(const QPoint&)));
 
     // Создание пунктов строки меню и кнопок панели исрументов
-    QObject *object = pluginManager->getObjectByName("MainWindowPlug::MainWindow");
-    QMainWindow* mainWindow = static_cast<QMainWindow*>(object);
+    QMainWindow* mainWindow = qobject_cast<QMainWindow*>(
+                pluginManager->getPlugin("IMainWindow")->instance());
 
-    object = pluginManager->getObjectByName("MainWindowPlug::menuFile");
-    QMenu* menuFile = static_cast<QMenu*>(object);
+    IMainWindow* iMainWindow = qobject_cast<IMainWindow*>(
+                pluginManager->getPlugin("IMainWindow")->instance());
+
+    QMenu* menuFile = iMainWindow->getMenuFile();
 
     QAction* separator;
 
@@ -125,8 +115,7 @@ bool ModelerIDEPlug::initialize(){
     menuFile->insertAction(separator, actionPublishModel);
     menuFile->insertAction(separator, actionCloseModel);
 
-    object = pluginManager->getObjectByName("MainWindowPlug::toolBarMain");
-    QToolBar* toolBarMain = static_cast<QToolBar*>(object);
+    QToolBar* toolBarMain = iMainWindow->getToolBarMain();
 
     if (toolBarMain->actions().count() > 0)
         separator = toolBarMain->insertSeparator(toolBarMain->actions().first());
@@ -146,6 +135,20 @@ bool ModelerIDEPlug::initialize(){
 
 bool ModelerIDEPlug::release()
 {
+    delete treeClassView;
+    closeClassModel();
+    delete actionSaveModel;
+    delete actionSaveAsModel;
+    delete actionNewModel;
+    delete actionOpenModel;
+    delete actionPublishModel;
+    delete actionCloseModel;
+    delete actionAddClass;
+    delete actionRemoveClass;
+    delete actionShowAttr;
+    delete actionShowComp;
+    delete actionSeparator;
+    delete contextMenu;
     return true;
 }
 
@@ -474,11 +477,11 @@ void ModelerIDEPlug::removeClass()
                 return;
 
             PluginManager* pluginManager = PluginManager::instance();
-            MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
-                                                                  "MainWindowPlug::MainWindow"));
+            IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
+                        pluginManager->getPlugin("IMainWindow")->instance());
 
             QString subWindowName = "PropClass::" + this->classId(currentIndex);
-            QMdiSubWindow *subWindow = mainwindow->subWindow(subWindowName);
+            QMdiSubWindow *subWindow = mainWindow->subWindow(subWindowName);
             if (subWindow)
                 subWindow->close();
             m_model->removeRow(currentIndex.row(),currentIndex.parent());
@@ -499,15 +502,15 @@ void ModelerIDEPlug::showPropClass(const QModelIndex &indexSource)
         return;
 
     PluginManager* pluginManager = PluginManager::instance();
-    MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
-                                                           "MainWindowPlug::MainWindow"));
+    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
+                pluginManager->getPlugin("IMainWindow")->instance());
 
     QString subWindowName = "PropClass::" + this->classId(indexSource);
-    QMdiSubWindow* subWindow = mainwindow->setActiveSubWindow(subWindowName);
+    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
 
     if (!subWindow) {
         PropClass* propClass = new PropClass();
-        subWindow =  mainwindow->addSubWindow(propClass);
+        subWindow =  mainWindow->addSubWindow(propClass);
         propClass->setObjectName(subWindowName);
         propClass->setModel(m_model);
         propClass->setCurrentClass(indexSource);
@@ -528,8 +531,8 @@ void ModelerIDEPlug::showPropComposition(const QModelIndex &indexSource)
         return;
 
     PluginManager* pluginManager = PluginManager::instance();
-    MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
-                                                           "MainWindowPlug::MainWindow"));
+    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
+                pluginManager->getPlugin("IMainWindow")->instance());
 
     QString className = indexSource.sibling(indexSource.row(),m_model->columnDisplayedAttr(
                                  DBCOMPXML::COMP,
@@ -542,11 +545,11 @@ void ModelerIDEPlug::showPropComposition(const QModelIndex &indexSource)
                                  )).data().toString();
 
     QString subWindowName = "PropComposition::" + classId;
-    QMdiSubWindow* subWindow = mainwindow->setActiveSubWindow(subWindowName);
+    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
 
     if (!subWindow) {
         PropComposition* propComposition = new PropComposition();
-        subWindow =  mainwindow->addSubWindow(propComposition);
+        subWindow =  mainWindow->addSubWindow(propComposition);
         propComposition->setObjectName(subWindowName);
         propComposition->setModel(m_model);
         propComposition->setCurrentClass(indexSource);
@@ -642,11 +645,11 @@ void ModelerIDEPlug::publishClassModel(const QModelIndex &index)
 }
 
 void ModelerIDEPlug::closeClassModel()
-{
+{   
     PluginManager* pluginManager = PluginManager::instance();
-    MainWindow* mainwindow = static_cast<MainWindow*>(pluginManager->getObjectByName(
-                                                           "MainWindowPlug::MainWindow"));
-    foreach (QMdiSubWindow* subWindow, mainwindow->subWindowList())
+    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
+                pluginManager->getPlugin("IMainWindow")->instance());
+    foreach (QMdiSubWindow* subWindow, mainWindow->subWindowList())
         if (subWindow->widget()->objectName().indexOf(QRegExp("^PropClass::"))
                 || subWindow->widget()->objectName().indexOf(QRegExp("^PropComposition::")))
             subWindow->close();

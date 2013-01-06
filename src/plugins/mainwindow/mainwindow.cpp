@@ -1,9 +1,11 @@
+#include <QCloseEvent>
+
 #include "mainwindow.h"
 #include <plugin/pluginmanager.h>
 
 MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt)
 {
-    setName("MainWindow");
+    setName("Главное окно");
     setDescript(tr("Главное окно"));
     setVendor(tr("RTPTechGroup"));
     setVersion("0.0.1");
@@ -116,6 +118,11 @@ QMenu *MainWindow::getMenuFile()
 QMenu *MainWindow::getMenuEdit()
 {
     return menuEdit;
+}
+
+QMenu *MainWindow::getMenuSettings()
+{
+    return menuSettings;
 }
 
 QMenu *MainWindow::getMenuHelp()
