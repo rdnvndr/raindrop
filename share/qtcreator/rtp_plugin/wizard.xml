@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wizard version="1" kind="project" class="qt4project" firstpage="10"
+id="A.RTPTechGroupPlugin" category="B.RTPTechGroupProjects">
+    <icon>plugin.png</icon>
+    <description>Creates plugin UniversalPlatform.</description>
+    <displayname>Plugin UniversalPlatform</displayname>
+    <displaycategory>RTPTechGroup Projects</displaycategory>
+    <files>
+        <file source="plugin.cpp" target="%PluginName:l%.%CppSourceSuffix%" openeditor="false"/>
+        <file source="plugin.h"   target="%PluginName:l%.%CppHeaderSuffix%" openeditor="false"/>
+        <file source="plugin.qrc"     target="%PluginName:l%.qrc"               openeditor="false"/>
+        <file source="plugin.json"    target="%PluginName:l%.json"              openeditor="false"/>
+        <file source="plugin.pro"     target="%PluginName:l%.pro"               openproject="true"/>
+        <file source="pluginglobal.h" target="%PluginName:l%global.h"           openeditor="false"/>
+        <file source="icons/logo.svg"  target="icons/%PluginName:l%.svg"         openeditor="false"/>
+    </files>
+    <fieldpagetitle>Plugin Information</fieldpagetitle>
+    <fields>
+        <field mandatory="true" name="PluginName">
+            <fieldcontrol class="QLineEdit" validator="^[a-zA-Z0-9_]+$"
+            defaulttext="MyPlugin"/>
+            <fielddescription>Plugin name:</fielddescription>
+        </field>
+        <field mandatory="true" name="VendorName">
+            <fieldcontrol class="QLineEdit" validator="^[a-zA-Z0-9_]+$"
+            defaulttext="RTPTechGroup" />
+            <fielddescription>Vendor name:</fielddescription>
+        </field>
+        <field name="Description">
+            <fieldcontrol class="QTextEdit"
+            defaulttext="Put a short description of your plugin here"/>
+            <fielddescription>Description:</fielddescription>
+        </field>
+    </fields>
+</wizard>
