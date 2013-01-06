@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wizard version="1" kind="project" class="qt4project" firstpage="10"
+id="A.RTPTechGroupLibrary" category="B.RTPTechGroupProjects">
+    <icon>library.png</icon>
+    <description>Creates library UniversalPlatform.</description>
+    <displayname>Library UniversalPlatform</displayname>
+    <displaycategory>RTPTechGroup Projects</displaycategory>
+    <files>
+        <file source="library.cpp" target="%LibName:l%.%CppSourceSuffix%" openeditor="false"/>
+        <file source="library.h"   target="%LibName:l%.%CppHeaderSuffix%" openeditor="false"/>
+        <file source="library.pro"     target="%LibName:l%.pro"               openproject="true"/>
+        <file source="libraryglobal.h" target="%LibName:l%global.h"           openeditor="false"/>
+    </files>
+    <fieldpagetitle>Library Information</fieldpagetitle>
+    <fields>
+        <field mandatory="true" name="LibName">
+            <fieldcontrol class="QLineEdit" validator="^[a-zA-Z0-9_]+$"
+            defaulttext="MyLibrary"/>
+            <fielddescription>Library name:</fielddescription>
+        </field>
+        <field mandatory="true" name="VendorName">
+            <fieldcontrol class="QLineEdit" validator="^[a-zA-Z0-9_]+$"
+            defaulttext="RTPTechGroup" />
+            <fielddescription>Vendor name:</fielddescription>
+        </field>
+        <field name="Description">
+            <fieldcontrol class="QTextEdit"
+            defaulttext="Put a short description of your library here"/>
+            <fielddescription>Description:</fielddescription>
+        </field>
+    </fields>
+</wizard>
