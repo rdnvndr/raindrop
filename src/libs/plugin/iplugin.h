@@ -32,19 +32,41 @@ QT_END_NAMESPACE
         #define PLUG_EXAMPLE_H
 
         #include <plugin/iplugin.h>
-        #include <QtGui>
+        #include <itreedockwidget.h>
 
-        class ExamplePlug: public IPlugin
+        class ExamplePlug:
+                public QObject,
+                public IPlugin
         {
             Q_OBJECT
             Q_INTERFACES(IPlugin)
 
+
+        #if QT_VERSION >= 0x050000
+            Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.Example" FILE "example.json")
+        #endif
+
         public:
-            MainWindow *window;
-            ExamplePlug();
-            void initPlug();
+
+            ExamplePlug(QObject *parent = 0);
+
+        // IPlugin
+            //! Инициализация плагина
+            bool initialize();
+
+            //! Освобожение плагина
+            bool release();
+
+            //! Чтение настроек
             void readSettings();
+
+            //! Запись настроек
             void writeSettings();
+
+            //! Получение экземпляра
+            QObject *instance() { return this; }
+
+            MainWindow *window;
         };
         #endif
     \endcode
@@ -52,30 +74,36 @@ QT_END_NAMESPACE
     \code
         #include "exampleplug.h"
 
-        ExamplePlug::ExamplePlug(){
+        ExamplePlug::ExamplePlug(QObject *parent):
+            QObject(parent)
+        {
             setName(tr("Пример плагина"));
-            setIcon(QIcon(":icon/icons/example.png"));
-            setDescript(tr("Пример написания плагина"));
-            setCategory(tr("Примеры"));
-            setVersion(tr("0.0.1"));
-            setVendor(tr("RTPTechGroup"));
-            addDepend("DependPlug");
+            setIcon(QIcon(":/example"));
+            addDepend("ITreeDockWidget");
             window = new QMainWindow();
-            addObject(this->window);
         }
 
-        void ExamplePlug::initPlug(){
 
+        bool ExamplePlug::initialize()
+        {
+            // Получение интерфейса ITreeDockWidget
             PluginManager* pluginManager = PluginManager::instance();
-            TreeDockWidget* dockWidget = qobject_cast<TreeDockWidget*>(pluginManager->getObjectByName(
-                                                       "DependPlug::TreeDockWidget"));
+            ITreeDockWidget* dockWidget = qobject_cast<ITreeDockWidget*>(
+                        pluginManager->getPlugin("ITreeDockWidget")->instance());
         }
 
-        void MainWindowPlug::readSettings(){
+        bool ExamplePlug::release()
+        {
+            return true;
+        }
+
+        void ExamplePlug::readSettings()
+        {
             window->resize(settings->value("size", QSize(687, 582)).toSize());
         }
 
-        void MainWindowPlug::writeSettings(){
+        void ExamplePlug::writeSettings()
+        {
             settings->setValue("size", window->size());
         }
         Q_EXPORT_PLUGIN2(example, ExamplePlug)

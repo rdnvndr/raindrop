@@ -24,7 +24,7 @@ bool TreeDockWidget::release()
 TreeDockWidget::TreeDockWidget(QWidget *parent) :
     QDockWidget(parent)
 {
-    setName("Дерево команд");
+    setName(tr("Дерево команд"));
     setDescript(tr("Дерево команд"));
     setVendor(tr("RTPTechGroup"));
     setVersion("0.0.1");

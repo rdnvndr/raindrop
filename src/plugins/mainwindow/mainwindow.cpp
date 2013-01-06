@@ -5,7 +5,7 @@
 
 MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt)
 {
-    setName("Главное окно");
+    setName(tr("Главное окно"));
     setDescript(tr("Главное окно"));
     setVendor(tr("RTPTechGroup"));
     setVersion("0.0.1");
