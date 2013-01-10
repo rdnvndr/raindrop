@@ -4,7 +4,9 @@ include(../plugins.pri)
 DEPENDPATH += .
 INCLUDEPATH += .
 DEFINES += MAINWINDOW_LIBRARY
-QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4) {
+  QT += widgets
+}
 
 # Input
 HEADERS += \

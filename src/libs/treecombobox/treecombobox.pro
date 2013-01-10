@@ -1,6 +1,8 @@
 include(../libs.pri)
 DEFINES += TREECOMBOBOX_LIBRARY
-QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4) {
+  QT += widgets
+}
 # Input
 HEADERS += \
     treecombobox.h \

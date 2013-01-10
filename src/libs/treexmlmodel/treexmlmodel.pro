@@ -1,5 +1,8 @@
 include(../libs.pri)
-QT += xml widgets
+greaterThan(QT_MAJOR_VERSION, 4) {
+  QT += widgets
+}
+QT += xml
 DEFINES += XMLMODEL_LIBRARY
 HEADERS += \
     treexmlmodel.h \

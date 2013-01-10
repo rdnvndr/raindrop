@@ -4,7 +4,10 @@
 DEPENDPATH += .
 INCLUDEPATH += .
 
-QT += xml widgets
+greaterThan(QT_MAJOR_VERSION, 4) {
+  QT += widgets
+}
+QT += xml
 LIBS += -lplugin -ltreedockwidget -lmdiextarea -ltreexmlmodel -ltreecombobox
 include(../plugins.pri)
 # Input

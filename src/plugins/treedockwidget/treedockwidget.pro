@@ -1,4 +1,4 @@
-LIBS += -lfiltertreewidget
+LIBS += -lfiltertreewidget -lplugin
 
 include(../plugins.pri)
 
@@ -7,7 +7,9 @@ INCLUDEPATH += .
 
 # Input
 
-QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4) {
+  QT += widgets
+}
 
 DEFINES += TREEDOCKWIDGET_LIBRARY
 

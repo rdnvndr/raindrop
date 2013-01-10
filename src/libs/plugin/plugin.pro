@@ -1,5 +1,5 @@
 include(../libs.pri)
-DEFINES += PLUGINMANAGER_LIBRARY
+DEFINES += PLUGIN_LIBRARY
 HEADERS += \
     pluginmanager.h \
     iplugin.h \
