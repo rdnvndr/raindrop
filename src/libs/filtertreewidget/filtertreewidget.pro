@@ -1,7 +1,8 @@
 include(../libs.pri)
 
-QT += widgets
-
+greaterThan(QT_MAJOR_VERSION, 4) {
+  QT += widgets
+}
 DEFINES += FILTERTREEWIDGET_LIBRARY
 # Input
 HEADERS += filtertreewidget.h \
