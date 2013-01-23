@@ -21,15 +21,20 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt)
     connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
 }
 
-bool MainWindow::initialize()
+MainWindow::~MainWindow()
 {
-    show();
-
-    return true;
+    settings()->beginGroup("IMainWindow");
+    writeSettings();
+    settings()->endGroup();
+    settings()->sync();
 }
 
-bool MainWindow::release()
+bool MainWindow::initialize()
 {
+    settings()->beginGroup("IMainWindow");
+    readSettings();
+    settings()->endGroup();
+    show();
     return true;
 }
 

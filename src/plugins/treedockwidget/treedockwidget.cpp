@@ -5,7 +5,7 @@ bool TreeDockWidget::initialize()
 {
     PluginManager* pluginManager = PluginManager::instance();
     QMainWindow* mainWindow = qobject_cast<QMainWindow*>(
-                pluginManager->getPlugin("IMainWindow")->instance());
+                pluginManager->interfaceObject("IMainWindow"));
 
     mainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), this);
     this->setWindowTitle(tr("Список команд"));
@@ -14,12 +14,6 @@ bool TreeDockWidget::initialize()
 
     return true;
 }
-
-bool TreeDockWidget::release()
-{
-    return true;
-}
-
 
 TreeDockWidget::TreeDockWidget(QWidget *parent) :
     QDockWidget(parent)

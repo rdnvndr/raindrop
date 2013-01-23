@@ -33,9 +33,6 @@ public:
     //! Инициализация плагина главного окна
     bool initialize();
 
-    //! Освобождение плагина главного окна
-    bool release();
-
     //! Получение экземпляра
     QObject *instance() { return this; }
 
