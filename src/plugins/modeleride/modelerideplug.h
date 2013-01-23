@@ -30,9 +30,6 @@ public:
     //! Инициализация плагина
     bool initialize();
 
-    //! Освобожение плагина
-    bool release();
-
     //! Получение экземпляра
     QObject *instance() { return this; }
 

@@ -8,6 +8,7 @@ ExamplePlug::ExamplePlug(QObject *parent):
     setName(tr("Пример плагина"));
     setIcon(QIcon(":/example"));
     addDepend("ITreeDockWidget");
+    addDepend("IMainWindow");
 }
 
 bool ExamplePlug::initialize()
@@ -15,7 +16,7 @@ bool ExamplePlug::initialize()
     // Получение интерфейса ITreeDockWidget
     PluginManager* pluginManager = PluginManager::instance();
     ITreeDockWidget* dockWidget = qobject_cast<ITreeDockWidget*>(
-                pluginManager->getPlugin("ITreeDockWidget")->instance());
+                pluginManager->interfaceObject("ITreeDockWidget"));
 
     QTreeWidget* tree = dockWidget->insertTreeWidget(
                 QIcon(tr(":/example")),tr("Проверка"));
@@ -52,17 +53,12 @@ bool ExamplePlug::initialize()
     return true;
 }
 
-bool ExamplePlug::release()
-{
-    return true;
-}
-
 void ExamplePlug::createTab(){
 
     // Получение интерфейса IMainWindow
     PluginManager* pluginManager = PluginManager::instance();
     IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->getPlugin("IMainWindow")->instance());
+                pluginManager->interfaceObject("IMainWindow"));
 
     mainWindow->addSubWindow(new QTextEdit(NULL));
 }

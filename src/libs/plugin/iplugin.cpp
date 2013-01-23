@@ -11,11 +11,6 @@ IPlugin::~IPlugin()
         if (plug)
             delete plug;
 
-    if (state.testFlag(IPlugin::Init)){
-        if (m_settings)
-            writeSettings();
-        this->release();
-    }
     qDebug() << "Delete plugin:" << name();
 }
 
@@ -43,14 +38,6 @@ QString IPlugin::descript() const
 QSettings* IPlugin::settings()
 {
     return m_settings;
-}
-
-void IPlugin::readSettings()
-{
-}
-
-void IPlugin::writeSettings()
-{
 }
 
 QString IPlugin::category() const
@@ -94,9 +81,4 @@ QString IPlugin::name(){
 
 QIcon IPlugin::icon(){
     return m_PlugIcon;
-}
-
-bool IPlugin::release()
-{
-    return true;
 }

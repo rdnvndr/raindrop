@@ -37,23 +37,24 @@ class MAINWINDOWLIB MainWindow:
     Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.MainWindow" FILE "mainwindow.json")
 #endif
 
-
 public:
-// IPlugin
+
     //! Конструктор плагина главного окна
     explicit MainWindow(QMainWindow* pwgt = 0);
 
-    //! Инициализация плагина главного окна
-    bool initialize();
-
-    //! Освобождение плагина главного окна
-    bool release();
+    //! Деструктор плагина главного окна
+    virtual ~MainWindow();
 
     //! Чтение и применение настроек плагина главного окна
     void readSettings();
 
     //! Запись настроек плагина главного окна
     void writeSettings();
+
+// IPlugin
+
+    //! Инициализация плагина главного окна
+    bool initialize();
 
     //! Получение экземпляра
     QObject *instance() { return this; }
