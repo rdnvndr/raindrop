@@ -38,6 +38,14 @@ class MAINWINDOWLIB MainWindow:
 #endif
 
 public:
+    struct MenuItem {
+        QString name;              //!< Имя объекта
+        QString text;              //!< Название
+        QString type;              //!< Тип
+        MenuItem *parentItem;          //!< Родитель
+        QList<MenuItem *> childIItems; //!< Потомки
+        QAction *action;           //!< Созданный объект
+    };
 
     //! Конструктор плагина главного окна
     explicit MainWindow(QMainWindow* pwgt = 0);
@@ -50,6 +58,9 @@ public:
 
     //! Запись настроек плагина главного окна
     void writeSettings();
+
+    //! Добавления QAction для использования в главном окне
+    void addAction(QString category, QAction *action);
 
 // IPlugin
 
@@ -117,6 +128,24 @@ public slots:
 
     //! Получение области подокон
     MdiExtArea* getMdiArea();
+
+private:
+    //! Запись настроек меню
+    void writeMenuSettings(QWidget *menu, int level = 0);
+
+    //! Чтение настроек меню
+    void readMenuSettings();
+
+    //! Индекс для записи настроек меню
+    int menuArrayIndex;
+
+    //! Список команд по группам
+    QMultiHash <QString, QAction *> m_actions;
+
+    //! Список команд в структуре
+    QHash <QString, MenuItem *> m_actionItem;
+
+    MenuItem *m_item;
 };
 
 #endif

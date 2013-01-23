@@ -14,13 +14,13 @@
    <string>Главное окно</string>
   </property>
   <widget class="MdiExtArea" name="mdiArea"/>
-  <widget class="QMenuBar" name="menuBar">
+  <widget class="QMenuBar" name="mainMenuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>648</width>
-     <height>20</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

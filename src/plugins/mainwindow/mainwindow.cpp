@@ -1,7 +1,9 @@
 #include <QCloseEvent>
 
 #include "mainwindow.h"
+#include "menubar.h"
 #include <plugin/pluginmanager.h>
+#include <QUuid>
 
 MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt)
 {
@@ -9,6 +11,8 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt)
     setDescript(tr("Главное окно"));
     setVendor(tr("RTPTechGroup"));
     setVersion("0.0.1");
+
+    this->setMenuBar(new MenuBar());
 
     setupUi(this);
     connect(actionWindowClose, SIGNAL(triggered()), mdiArea, SLOT(closeActiveSubWindow()));
@@ -34,6 +38,16 @@ bool MainWindow::initialize()
     settings()->beginGroup("IMainWindow");
     readSettings();
     settings()->endGroup();
+
+    addAction(tr("Главное окно"),actionExit);
+    addAction(tr("Главное окно"),actionWindowCascade);
+    addAction(tr("Главное окно"),actionWindowClose);
+    addAction(tr("Главное окно"),actionWindowCloseAll);
+    addAction(tr("Главное окно"),actionWindowGui);
+    addAction(tr("Главное окно"),actionWindowNext);
+    addAction(tr("Главное окно"),actionWindowPrev);
+    addAction(tr("Главное окно"),actionWindowTile);
+
     show();
     return true;
 }
@@ -46,13 +60,27 @@ void MainWindow::readSettings()
         setWindowModeEnable(true);
     else
         setWindowModeEnable(false);
+
+    readMenuSettings();
 }
 
 void MainWindow::writeSettings()
 {
+    // MainWindow settings
     settings()->setValue("size", size());
     settings()->setValue("pos", pos());
     settings()->setValue("viewMode", mdiArea->viewMode());
+
+    // MenuBar settings
+    menuArrayIndex = 0;
+    settings()->beginWriteArray("MenuBar");
+    writeMenuSettings(this->menuBar());
+    settings()->endArray();
+}
+
+void MainWindow::addAction(QString category, QAction *action)
+{
+    m_actions.insert(category,action);
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
@@ -145,6 +173,97 @@ MdiExtArea *MainWindow::getMdiArea()
     return mdiArea;
 }
 
+void MainWindow::writeMenuSettings(QWidget *menu, int level)
+{
+    foreach (QAction *child, menu->actions()) {
+        settings()->setArrayIndex(menuArrayIndex);
+        menuArrayIndex++;
+
+        settings()->setValue("level", level);
+
+        if (child->isSeparator()) {
+            settings()->setValue("type", "Separator");
+            settings()->setValue("name",  QUuid::createUuid().toString());
+        } else if (child->menu()) {
+            settings()->setValue("type", "Menu");
+            settings()->setValue("name",  QUuid::createUuid().toString());
+        } else {
+            settings()->setValue("type", "Action");
+            settings()->setValue("name", child->objectName());
+        }
+        settings()->setValue("text", child->text());
+
+        //settings()->setValue("icon", child->icon());
+
+        if (child->menu())
+            writeMenuSettings(child->menu(), level+1);
+    }
+
+}
+
+void MainWindow::readMenuSettings()
+{
+    //return;
+/*
+    QMenu *parentMenu = NULL;
+    QMenu *currentMenu = NULL;
+*/
+    int prevLevel = 0;
+    m_item = new MenuItem;
+    MenuItem *parentItem  = m_item;
+    MenuItem *currentItem = m_item;
+
+    int size = settings()->beginReadArray("MenuBar");
+    for (int i = 0; i < size; ++i) {
+        settings()->setArrayIndex(i);
+        int level = settings()->value("level").toInt();
+        QString name = settings()->value("name").toString();
+        QString text = settings()->value("text").toString();
+        QString typeAction = settings()->value("type").toString();
+
+        if (prevLevel<level)
+            parentItem = currentItem;
+
+        if (prevLevel>level)
+            parentItem = parentItem->parentItem;
+
+        currentItem = new MenuItem;
+        currentItem->name = name;
+        currentItem->text = text;
+        currentItem->type = typeAction;
+        currentItem->parentItem = parentItem;
+        parentItem->childIItems.append(currentItem);
+        m_actionItem[name] = currentItem;
+/*
+        if (prevLevel<level)
+            parentMenu = currentMenu;
+
+        if (prevLevel>level)
+            parentMenu = qobject_cast<QMenu *>(parentMenu->parentWidget());
+
+        if (typeAction == "Separator")
+            if (parentMenu)
+                parentMenu->addSeparator();
+            else
+                menuBar()->addSeparator();
+        else if (typeAction == "Menu") {
+
+           currentMenu = new QMenu(text);
+           if (parentMenu)
+                parentMenu->addMenu(currentMenu);
+            else
+                menuBar()->addMenu(currentMenu);
+        } else {
+            if (parentMenu)
+                parentMenu->addAction(text);
+            else
+                menuBar()->addAction(text);
+        }
+*/
+        prevLevel = level;
+    }
+    settings()->endArray();
+}
 
 #if QT_VERSION < 0x050000
     Q_EXPORT_PLUGIN2(mainwindow, MainWindow)

@@ -11,9 +11,11 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 # Input
 HEADERS += \
            mainwindow.h \
-    mainwindowglobal.h
+    mainwindowglobal.h \
+    menubar.h
 SOURCES += \
-           mainwindow.cpp
+           mainwindow.cpp \
+    menubar.cpp
 
 FORMS += \
            mainwindow.ui
