@@ -1,8 +1,25 @@
 #include "iplugin.h"
 
-IPlugin::IPlugin()
+IPlugin::IPlugin(QString depInterfaces)
 {
-    state = IPlugin::NoInit;
+    depModulList = depInterfaces.split(" ");
+    PluginManager *pluginManager = PluginManager::instance();
+    foreach (QString depPlugin, depModulList) {
+        bool existPlugin = true;
+        do {   
+            if (pluginManager->interfaceObject(depPlugin) || depPlugin.isEmpty())
+                break;
+            existPlugin = pluginManager->nextLoadPlugin();
+        } while (existPlugin);
+
+        // Интерфейс не найден
+        if (!existPlugin) {
+            qDebug() << "Interface not found: " << depPlugin;
+            throw 1;
+        }
+    }
+    if (pluginManager->settings())
+        setSettings(pluginManager->settings());
 }
 
 IPlugin::~IPlugin()
@@ -10,75 +27,13 @@ IPlugin::~IPlugin()
     foreach (IPlugin* plug,PluginManager::instance()->dependentPlugins(this))
         if (plug)
             delete plug;
-
-    qDebug() << "Delete plugin:" << name();
 }
 
 void IPlugin::setSettings(QSettings *s){
     m_settings = s;
 }
 
-void IPlugin::addDepend(QString s){
-    depModulList.append(s);
-}
-
-void IPlugin::setName(QString name){
-    m_PlugName = name;
-}
-
-void IPlugin::setIcon(QIcon icon){
-    m_PlugIcon = icon;
-}
-
-QString IPlugin::descript() const
-{
-    return m_descript;
-}
-
 QSettings* IPlugin::settings()
 {
     return m_settings;
-}
-
-QString IPlugin::category() const
-{
-    return m_category;
-}
-
-QString IPlugin::version() const
-{
-    return m_version;
-}
-
-QString IPlugin::vendor() const
-{
-    return m_vendor;
-}
-
-void IPlugin::setDescript(QString descript)
-{
-    m_descript = descript;
-}
-
-void IPlugin::setCategory(const QString category)
-{
-    m_category = category;
-}
-
-void IPlugin::setVersion(const QString version)
-{
-    m_version = version;
-}
-
-void IPlugin::setVendor(const QString vendor)
-{
-    m_vendor = vendor;
-}
-
-QString IPlugin::name(){
-    return m_PlugName;
-}
-
-QIcon IPlugin::icon(){
-    return m_PlugIcon;
 }
