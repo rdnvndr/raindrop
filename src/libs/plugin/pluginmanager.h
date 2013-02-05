@@ -43,12 +43,6 @@ public:
     //! Получение объектов для указанного интерфейса
     QList<QObject *> interfaceObjects(QString interfaceName);
 
-    //! Инициализация плагина
-    /*! \param plug Плагин для инициализации.
-        Производит настройку плагина после его загрузки
-    */
-    bool initPlugin(IPlugin* plug);
-
     //! Получить зависимые плагины
     /*! Позволяет получить список зависимых плагинов от указанного
      */
@@ -65,12 +59,17 @@ public:
     */
     void loadPlugins();
 
+    //! Загрузка указанного плагина
+    bool loadPlugin(QString fileName);
+
     //! Устанавливает ссылку на объект для сохранения настроек
     void setSettings(QSettings *s);
 
     //! Получает ссылку на объект для сохранения настроек
     QSettings *settings() const;
 
+    //! Загрузка следующего плагина
+    bool nextLoadPlugin();
 signals:
     //! Сигнал с сообщениями о загрузке плагинов
     void showMessage(const QString &message, int alignment = Qt::AlignLeft | Qt::AlignBottom ,
@@ -91,6 +90,15 @@ private:
      *  по интерфейсам
      */
     QMultiHash<QString, QObject *> m_interfaces;
+
+    //! Текущий плагин для загрузки
+    int m_currentFile;
+
+    //! Каталог нахождения плагинов
+    QDir m_pluginsDir;
+
+    //! Список файлов в каталоге плагина
+    QStringList m_listFiles;
 };
 
 #endif // PLUGINMANAGER_H

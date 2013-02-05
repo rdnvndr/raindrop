@@ -40,37 +40,6 @@ QSettings* PluginManager::settings() const
     return m_settings;
 }
 
-bool PluginManager::initPlugin(IPlugin* plug)
-{
-    if (!plug)
-        return false;
-
-    if (plug->state.testFlag(IPlugin::Init))
-        return true;
-    else if (plug->state.testFlag(IPlugin::Lock))
-    {
-        QMessageBox::critical(NULL, tr("Ошибка"), tr("Рекурсивная зависимость плагинов"));
-        return false;
-    }
-
-    plug->state = IPlugin::Lock;
-
-    foreach (QString depPlugin,plug->depModulList)
-        foreach (QObject* interfacePlugin, interfaceObjects(depPlugin))
-            if (!initPlugin(qobject_cast<IPlugin *>(interfacePlugin)))
-            {
-                delete plug;
-                return false;
-            }
-
-    plug->initialize();
-
-    emit showMessage(tr("Инициализирован плагин: %1").arg(plug->name()));
-    qDebug() << "Init plugin:" << plug->name();
-    plug->state = IPlugin::Init;
-    return true;
-}
-
 QList<IPlugin *> PluginManager::dependPlugins(IPlugin *plugin)
 {
     QHash<QString, IPlugin *> pluginList;
@@ -101,8 +70,8 @@ QList<IPlugin *> PluginManager::dependentPlugins(IPlugin *plugin)
 
 void PluginManager::loadPlugins()
 {
-    QDir pluginsDir = QDir(qApp->applicationDirPath());
-    if (!pluginsDir.cd("plugins"))
+    m_pluginsDir = QDir(qApp->applicationDirPath());
+    if (!m_pluginsDir.cd("plugins"))
     {
         QMessageBox::critical(NULL, tr("Ошибка"), tr("Каталог с модулями не найден"));
         return;
@@ -110,11 +79,30 @@ void PluginManager::loadPlugins()
 
     // Загрузка файлов
     QDir::setCurrent(qApp->applicationDirPath()+"\\"+"plugins");
-    foreach(QString fileName, pluginsDir.entryList(QDir::Files))
-    {
-        QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
-        QObject* plugin = loader.instance();
+    m_listFiles = m_pluginsDir.entryList(QDir::Files);
+    for (m_currentFile=0; m_currentFile < m_listFiles.count(); m_currentFile++)
+        loadPlugin(m_listFiles.at(m_currentFile));
 
+    QDir::setCurrent(qApp->applicationDirPath());
+}
+
+bool PluginManager::nextLoadPlugin() {
+
+    if (m_currentFile <  m_listFiles.count()-1) {
+        m_currentFile++;
+        loadPlugin(m_listFiles.at(m_currentFile));
+        return true;
+    }
+    return false;
+}
+
+bool PluginManager::loadPlugin(QString fileName)
+{
+    if (!QLibrary::isLibrary(fileName))
+        return false;
+    try {
+        QPluginLoader loader(m_pluginsDir.absoluteFilePath(fileName));
+        QObject* plugin = loader.instance();
         if (plugin)
         {
             IPlugin* corePlugin = qobject_cast<IPlugin*>(plugin);
@@ -125,24 +113,22 @@ void PluginManager::loadPlugins()
                 foreach (const QString &interface, corePlugin->interfaces())
                     m_interfaces.insert(interface, plugin);
 
-                if (m_settings)
-                    corePlugin->setSettings(m_settings);
-
                 emit showMessage(tr("Загружен плагин: %1").arg(corePlugin->name()));
                 qDebug()<<"Load plugin: "<<corePlugin->name();
+                return true;
             }else {
                 qDebug()<<"Error load plugin" << loader.errorString();
                 delete plugin;
+                return false;
             }
-        } else
+        } else {
             qDebug()<<"Error load plugin" << loader.errorString();
+            return false;
+        }
+    } catch (int e) {
+        Q_UNUSED(e)
+        return false;
     }
-
-    // Инициализация
-    foreach (QObject* corePlugin,m_interfaces.values("IPlugin"))
-        initPlugin(qobject_cast<IPlugin *>(corePlugin));
-
-    QDir::setCurrent(qApp->applicationDirPath());
 }
 
 void PluginManager::setSettings(QSettings *s)

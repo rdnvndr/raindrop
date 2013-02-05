@@ -5,13 +5,8 @@
 #include <plugin/pluginmanager.h>
 #include <QUuid>
 
-MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt)
+MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
 {
-    setName(tr("Главное окно"));
-    setDescript(tr("Главное окно"));
-    setVendor(tr("RTPTechGroup"));
-    setVersion("0.0.1");
-
     this->setMenuBar(new MenuBar());
 
     setupUi(this);
@@ -23,18 +18,7 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt)
     connect(actionWindowPrev, SIGNAL(triggered()), mdiArea, SLOT(activatePreviousSubWindow()));
     connect(actionWindowGui, SIGNAL(triggered(bool)), this, SLOT(setWindowModeEnable(bool)));
     connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
-}
 
-MainWindow::~MainWindow()
-{
-    settings()->beginGroup("IMainWindow");
-    writeSettings();
-    settings()->endGroup();
-    settings()->sync();
-}
-
-bool MainWindow::initialize()
-{
     settings()->beginGroup("IMainWindow");
     readSettings();
     settings()->endGroup();
@@ -49,7 +33,14 @@ bool MainWindow::initialize()
     addAction(tr("Главное окно"),actionWindowTile);
 
     show();
-    return true;
+}
+
+MainWindow::~MainWindow()
+{
+    settings()->beginGroup("IMainWindow");
+    writeSettings();
+    settings()->endGroup();
+    settings()->sync();
 }
 
 void MainWindow::readSettings()

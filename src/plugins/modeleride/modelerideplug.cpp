@@ -17,35 +17,9 @@
 #include "dbxmlstruct.h"
 
 ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
-    QObject(parent)
+    QObject(parent), IPlugin("ITreeDockWidget IMainWindow")
 {
-    setName(tr("Редактор модели данных"));
-    setIcon(QIcon(":/modeleride"));
-    addDepend("ITreeDockWidget");
-    addDepend("IMainWindow");
-
     m_model = NULL;
-}
-
-ModelerIDEPlug::~ModelerIDEPlug()
-{
-    delete treeClassView;
-    closeClassModel();
-    delete actionSaveModel;
-    delete actionSaveAsModel;
-    delete actionNewModel;
-    delete actionOpenModel;
-    delete actionPublishModel;
-    delete actionCloseModel;
-    delete actionAddClass;
-    delete actionRemoveClass;
-    delete actionShowAttr;
-    delete actionShowComp;
-    delete actionSeparator;
-    delete contextMenu;
-}
-
-bool ModelerIDEPlug::initialize(){
 
     PluginManager* pluginManager = PluginManager::instance();
     ITreeDockWidget* dockWidget = qobject_cast<ITreeDockWidget*>(
@@ -143,8 +117,24 @@ bool ModelerIDEPlug::initialize(){
     toolBarMain->insertAction(separator, actionCloseModel);
 
     dockWidget->insertWidget(QIcon(":/modeleride"),tr("Редактор модели данных"),treeClassView);
+}
 
-    return true;
+ModelerIDEPlug::~ModelerIDEPlug()
+{
+    delete treeClassView;
+    closeClassModel();
+    delete actionSaveModel;
+    delete actionSaveAsModel;
+    delete actionNewModel;
+    delete actionOpenModel;
+    delete actionPublishModel;
+    delete actionCloseModel;
+    delete actionAddClass;
+    delete actionRemoveClass;
+    delete actionShowAttr;
+    delete actionShowComp;
+    delete actionSeparator;
+    delete contextMenu;
 }
 
 void ModelerIDEPlug::showContextMenu(const QPoint& point)

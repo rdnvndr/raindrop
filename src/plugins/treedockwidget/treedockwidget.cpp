@@ -1,29 +1,9 @@
 #include "treedockwidget.h"
 #include <QMainWindow>
 
-bool TreeDockWidget::initialize()
-{
-    PluginManager* pluginManager = PluginManager::instance();
-    QMainWindow* mainWindow = qobject_cast<QMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
-
-    mainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), this);
-    this->setWindowTitle(tr("Список команд"));
-    this->show();
-    this->setObjectName("TreeDockWidget");
-
-    return true;
-}
-
 TreeDockWidget::TreeDockWidget(QWidget *parent) :
-    QDockWidget(parent)
+    QDockWidget(parent), IPlugin("IMainWindow")
 {
-    setName(tr("Дерево команд"));
-    setDescript(tr("Дерево команд"));
-    setVendor(tr("RTPTechGroup"));
-    setVersion("0.0.1");
-    addDepend("IMainWindow");
-
     this->setFeatures(QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetClosable);
     this->setMinimumSize(QSize(160, 0));
 
@@ -43,6 +23,15 @@ TreeDockWidget::TreeDockWidget(QWidget *parent) :
     qw->setLayout(verticalLayout);
     this->setWidget(qw);
     toolbar->show();
+
+    PluginManager* pluginManager = PluginManager::instance();
+    QMainWindow* mainWindow = qobject_cast<QMainWindow*>(
+                pluginManager->interfaceObject("IMainWindow"));
+
+    mainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), this);
+    this->setWindowTitle(tr("Список команд"));
+    this->show();
+    this->setObjectName("TreeDockWidget");
 }
 
 void TreeDockWidget::insertWidget(QIcon icon,QString name, QWidget* widget){

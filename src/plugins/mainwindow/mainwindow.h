@@ -64,11 +64,26 @@ public:
 
 // IPlugin
 
-    //! Инициализация плагина главного окна
-    bool initialize();
-
     //! Получение экземпляра
     QObject *instance() { return this; }
+
+    //! Получение имени плагина
+    QString name() {return tr("Главное окно");};
+
+    //! Получение иконки плагина
+    QIcon icon() {return QIcon();}
+
+    //! Описание плагина
+    QString descript() {return tr("");};
+
+    //! Категория в которой состоит плагин
+    QString category() {return tr("");};
+
+    //! Версия плагина
+    QString version() {return tr("");};
+
+    //! Производитель плагина
+    QString vendor() {return tr("");};
 
 // IMainWindow
 
