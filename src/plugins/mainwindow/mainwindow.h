@@ -53,15 +53,6 @@ public:
     //! Деструктор плагина главного окна
     virtual ~MainWindow();
 
-    //! Чтение и применение настроек плагина главного окна
-    void readSettings();
-
-    //! Запись настроек плагина главного окна
-    void writeSettings();
-
-    //! Добавления QAction для использования в главном окне
-    void addAction(QString category, QAction *action);
-
 // IPlugin
 
     //! Получение экземпляра
@@ -96,6 +87,22 @@ public:
     /*! Предназначено для получения списка подокон
     */
     QList<QMdiSubWindow *> subWindowList() const;
+
+    //! Добавления QAction для использования в главном окне
+    void addAction(QString category, QAction *action);
+
+    //! Запись настроек меню
+    void writeMenuSettings();
+
+    //! Чтение настроек меню
+    void readMenuSettings();
+
+    //! Чтение и применение настроек плагина главного окна
+    void readSettings();
+
+    //! Запись настроек плагина главного окна
+    void writeSettings();
+
 
 public slots:
 
@@ -145,11 +152,11 @@ public slots:
     MdiExtArea* getMdiArea();
 
 private:
-    //! Запись настроек меню
-    void writeMenuSettings(QWidget *menu, int level = 0);
+    //! Создание пунктов меню
+    QAction *createAction(MenuItem *menuItem);
 
-    //! Чтение настроек меню
-    void readMenuSettings();
+    //! Запись настроек меню определенного уровня
+    void writeMenu(QWidget *menu, int level = 0);
 
     //! Индекс для записи настроек меню
     int menuArrayIndex;
@@ -160,6 +167,7 @@ private:
     //! Список команд в структуре
     QHash <QString, MenuItem *> m_actionItem;
 
+    //! Ссылка на структуру меню
     MenuItem *m_item;
 };
 
