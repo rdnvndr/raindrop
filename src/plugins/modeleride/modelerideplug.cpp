@@ -71,25 +71,37 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
 
     actionNewModel = new QAction(QIcon(":newmodel"), tr("Новая модель"), mainWindow);
     connect(actionNewModel, SIGNAL(triggered()), this, SLOT(newClassModel()));
+    actionNewModel->setObjectName("actionNewModel");
+    iMainWindow->addAction(tr("Редактор модели данных"),actionNewModel);
 
     actionOpenModel = new QAction(QIcon(":openmodel"), tr("Открыть модель..."), mainWindow);
     connect(actionOpenModel, SIGNAL(triggered()), this, SLOT(openClassModel()));
+    actionOpenModel->setObjectName("actionOpenModel");
+    iMainWindow->addAction(tr("Редактор модели данных"),actionOpenModel);
 
     actionSaveModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель"), mainWindow);
     connect(actionSaveModel, SIGNAL(triggered()), this, SLOT(saveClassModel()));
     actionSaveModel->setDisabled(true);
+    actionSaveModel->setObjectName("actionSaveModel");
+    iMainWindow->addAction(tr("Редактор модели данных"),actionSaveModel);
 
     actionSaveAsModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель как..."), mainWindow);
     connect(actionSaveAsModel, SIGNAL(triggered()), this, SLOT(saveAsClassModel()));
     actionSaveAsModel->setDisabled(true);
+    actionSaveAsModel->setObjectName("actionSaveAsModel");
+    iMainWindow->addAction(tr("Редактор модели данных"),actionSaveAsModel);
 
     actionPublishModel = new QAction(QIcon(":publish"), tr("Опубликовать модель..."), mainWindow);
     connect(actionPublishModel, SIGNAL(triggered()), this, SLOT(publishClassModel()));
     actionPublishModel->setDisabled(true);
+    actionPublishModel->setObjectName("actionPublishModel");
+    iMainWindow->addAction(tr("Редактор модели данных"),actionPublishModel);
 
     actionCloseModel = new QAction(QIcon(":closemodel"), tr("Закрыть модель"), mainWindow);
     connect(actionCloseModel, SIGNAL(triggered()), this, SLOT(closeClassModel()));
     actionCloseModel->setDisabled(true);
+    actionCloseModel->setObjectName("actionCloseModel");
+    iMainWindow->addAction(tr("Редактор модели данных"),actionCloseModel);
 
     if (menuFile->actions().count() > 0)
         separator = menuFile->insertSeparator(menuFile->actions().first());
