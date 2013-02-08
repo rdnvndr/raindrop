@@ -24,6 +24,8 @@ public:
     //! Добавления QAction для использования в главном окне
     virtual void addAction(QString category, QAction *action) = 0;
 
+public slots:
+
     //! Запись настроек меню
     virtual void writeMenuSettings() = 0;
 
@@ -35,8 +37,6 @@ public:
 
     //! Запись настроек главного окна
     virtual void writeSettings() = 0;
-
-public slots:
 
     //! Слот обработки события закрытия главного окна
     virtual void closeEvent(QCloseEvent *event) = 0;

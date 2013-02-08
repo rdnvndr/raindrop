@@ -1,9 +1,9 @@
 #include <QCloseEvent>
-
+#include <QString>
 #include "mainwindow.h"
 #include "menubar.h"
-#include  "menu.h"
-#include "mainwindowoptions.h"
+#include "menu.h"
+
 #include <plugin/pluginmanager.h>
 #include <QUuid>
 
@@ -21,13 +21,13 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     connect(actionWindowNext, SIGNAL(triggered()), mdiArea, SLOT(activateNextSubWindow()));
     connect(actionWindowPrev, SIGNAL(triggered()), mdiArea, SLOT(activatePreviousSubWindow()));
     connect(actionWindowGui, SIGNAL(triggered(bool)), this, SLOT(setWindowModeEnable(bool)));
-    connect(actionGuiOptions, SIGNAL(triggered()), this, SLOT(showGuiOptions()));
+    connect(actionGuiOptions, SIGNAL(triggered()), this, SLOT(showOptionsDialog()));
     connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
 
     readSettings();
     readMenuSettings();
 
-    addAction(tr("Фаил"),actionExit);
+    addAction(tr("Файл"),actionExit);
     addAction(tr("Окно"),actionWindowCascade);
     addAction(tr("Окно"),actionWindowClose);
     addAction(tr("Окно"),actionWindowCloseAll);
@@ -51,6 +51,13 @@ MainWindow::~MainWindow()
 {
     writeSettings();
     settings()->sync();
+    if (mainWindowOptions)
+        delete mainWindowOptions;
+
+    releaseAction(m_item);
+    delete m_item;
+    m_actionItem.clear();
+    m_actions.clear();
 }
 
 void MainWindow::readSettings()
@@ -89,12 +96,11 @@ void MainWindow::writeSettings()
 void MainWindow::releaseAction(MenuItem *menuItem)
 {
     foreach (MenuItem *item,menuItem->childIItems){
-        QAction *action = item->action;
-        if (action)
+        if (item->action)
         {
-            if (action->isSeparator() || action->menu())
-                delete action;
-            action = NULL;
+            if (item->action->isSeparator() || item->action->menu())
+                delete item->action;
+            item->action = NULL;
         }
         releaseAction(item);
     }
@@ -215,16 +221,13 @@ void MainWindow::updateMenus()
 
 void MainWindow::refreshMenuBar()
 {
-    //this->setMenuBar(new MenuBar());
+    this->setMenuBar(new MenuBar());
     releaseAction(m_item);
     foreach (QAction* action, m_actions.values()) {
-        QString name = action->objectName();
-        qDebug() << name;
-        MenuItem *menuItem = m_actionItem[name];
+        MenuItem *menuItem = (action) ? m_actionItem[action->objectName()] : 0;
         if (menuItem) {
-
             menuItem->action = action;
-            /*createAction(menuItem);*/
+            createAction(menuItem);
         }
     }
 }
@@ -288,17 +291,30 @@ MdiExtArea *MainWindow::getMdiArea()
     return mdiArea;
 }
 
-void MainWindow::showGuiOptions()
+QMdiSubWindow *MainWindow::showOptionsDialog()
 {
-    MainWindowOptions *mainWindowOptions = new MainWindowOptions(this);
-    mainWindowOptions->createActionsModel(&m_actions);
-    /*mainWindowOptions->exec();
-    delete mainWindowOptions;*/
+    if (mainWindowOptions) {
+        mainWindowOptions = new MainWindowOptions(this);
+        mainWindowOptions->createActionsModel(&m_actions);
 
-    connect(mainWindowOptions->pushButtonCancel,SIGNAL(clicked()),
-            this,SLOT(refreshMenuBar()));
+        QMdiSubWindow *subWindow = addSubWindow(mainWindowOptions);
 
-    QMdiSubWindow* subWindow = addSubWindow(mainWindowOptions);
+        connect(subWindow,SIGNAL(destroyed()),this,SLOT(refreshMenuBar()));
+
+        connect(mainWindowOptions->pushButtonCancel,SIGNAL(clicked()),
+                this,SLOT(refreshMenuBar()));
+        connect(mainWindowOptions->pushButtonCancel,SIGNAL(clicked()),
+                subWindow,SLOT(close()));
+
+        connect(mainWindowOptions->pushButtonSave,SIGNAL(clicked()),
+                this,SLOT(writeMenuSettings()));
+        connect(mainWindowOptions->pushButtonSave,SIGNAL(clicked()),
+                subWindow,SLOT(close()));
+
+        return subWindow;
+    }
+
+    return 0;
 }
 
 void MainWindow::writeMenu(QWidget *menu, int level)
@@ -331,6 +347,7 @@ void MainWindow::writeMenu(QWidget *menu, int level)
 
 void MainWindow::readMenuSettings()
 {
+    m_actionItem.clear();
     settings()->beginGroup("IMainWindow");
     //return;
     int prevLevel = 0;

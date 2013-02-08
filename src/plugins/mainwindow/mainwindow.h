@@ -3,6 +3,7 @@
 
 #include "mainwindowglobal.h"
 #include "ui_mainwindow.h"
+#include "mainwindowoptions.h"
 #include <imainwindow.h>
 #include <plugin/iplugin.h>
 #include <mdiextarea/mdiextarea.h>
@@ -91,6 +92,8 @@ public:
     //! Добавления QAction для использования в главном окне
     void addAction(QString category, QAction *action);
 
+public slots:
+
     //! Запись настроек меню
     void writeMenuSettings();
 
@@ -103,9 +106,6 @@ public:
     //! Запись настроек плагина главного окна
     void writeSettings();
 
-    void releaseAction(MenuItem *menuItem);
-public slots:
-
     //! Слот обработки события закрытия главного окна
     void closeEvent(QCloseEvent *event);
 
@@ -115,7 +115,7 @@ public slots:
     */
     void updateMenus();
 
-    //! Обновляет Главное меню окна по структуре
+    //! Обновляет главное меню окна по структуре
     void refreshMenuBar();
 
     //! Слот установки оконного режима
@@ -154,11 +154,16 @@ public slots:
     //! Получение области подокон
     MdiExtArea* getMdiArea();
 
-    void showGuiOptions();
+    //! Вызов настройки главного окна
+    QMdiSubWindow *showOptionsDialog();
 
 private:
+
     //! Создание пунктов меню
     QAction *createAction(MenuItem *menuItem);
+
+    //! Удаление пунктов меню
+    void releaseAction(MenuItem *menuItem);
 
     //! Запись настроек меню определенного уровня
     void writeMenu(QWidget *menu, int level = 0);
@@ -174,6 +179,9 @@ private:
 
     //! Ссылка на структуру меню
     MenuItem *m_item;
+
+    //! Окно настройки главного меню окна
+    MainWindowOptions *mainWindowOptions;
 };
 
 #endif
