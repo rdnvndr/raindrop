@@ -8,11 +8,10 @@ class MenuBar : public QMenuBar
     Q_OBJECT
 public:
     explicit MenuBar(QWidget *parent = 0);
-    
-signals:
-    
-public slots:
-    
+
+    void dropEvent(QDropEvent *event);
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dragMoveEvent(QDragMoveEvent *event);   
 };
 
 #endif // MENUBAR_H

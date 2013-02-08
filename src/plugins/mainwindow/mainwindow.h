@@ -103,7 +103,7 @@ public:
     //! Запись настроек плагина главного окна
     void writeSettings();
 
-
+    void releaseAction(MenuItem *menuItem);
 public slots:
 
     //! Слот обработки события закрытия главного окна
@@ -114,6 +114,9 @@ public slots:
         пунктов меню при изменении состояния приложения
     */
     void updateMenus();
+
+    //! Обновляет Главное меню окна по структуре
+    void refreshMenuBar();
 
     //! Слот установки оконного режима
     /*! Слот предназначен переключение приложения в закладочный
@@ -150,6 +153,8 @@ public slots:
 
     //! Получение области подокон
     MdiExtArea* getMdiArea();
+
+    void showGuiOptions();
 
 private:
     //! Создание пунктов меню
