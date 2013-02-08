@@ -2,6 +2,8 @@
 
 #include "mainwindow.h"
 #include "menubar.h"
+#include  "menu.h"
+#include "mainwindowoptions.h"
 #include <plugin/pluginmanager.h>
 #include <QUuid>
 
@@ -10,6 +12,7 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
 
     setupUi(this);
     this->setMenuBar(new MenuBar());
+    //writeMenuSettings();
 
     connect(actionWindowClose, SIGNAL(triggered()), mdiArea, SLOT(closeActiveSubWindow()));
     connect(actionWindowCloseAll, SIGNAL(triggered()), mdiArea, SLOT(closeAllSubWindows()));
@@ -18,19 +21,28 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     connect(actionWindowNext, SIGNAL(triggered()), mdiArea, SLOT(activateNextSubWindow()));
     connect(actionWindowPrev, SIGNAL(triggered()), mdiArea, SLOT(activatePreviousSubWindow()));
     connect(actionWindowGui, SIGNAL(triggered(bool)), this, SLOT(setWindowModeEnable(bool)));
+    connect(actionGuiOptions, SIGNAL(triggered()), this, SLOT(showGuiOptions()));
     connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
 
     readSettings();
     readMenuSettings();
 
-    addAction(tr("Главное окно"),actionExit);
-    addAction(tr("Главное окно"),actionWindowCascade);
-    addAction(tr("Главное окно"),actionWindowClose);
-    addAction(tr("Главное окно"),actionWindowCloseAll);
-    addAction(tr("Главное окно"),actionWindowGui);
-    addAction(tr("Главное окно"),actionWindowNext);
-    addAction(tr("Главное окно"),actionWindowPrev);
-    addAction(tr("Главное окно"),actionWindowTile);
+    addAction(tr("Фаил"),actionExit);
+    addAction(tr("Окно"),actionWindowCascade);
+    addAction(tr("Окно"),actionWindowClose);
+    addAction(tr("Окно"),actionWindowCloseAll);
+    addAction(tr("Окно"),actionWindowGui);
+    addAction(tr("Окно"),actionWindowNext);
+    addAction(tr("Окно"),actionWindowPrev);
+    addAction(tr("Окно"),actionWindowTile);
+    addAction(tr("Настройка"),actionGuiOptions);
+
+    Menu *newMenu = new Menu("Пункт меню");
+    addAction(tr("Новое меню"),newMenu->menuAction());
+
+    QAction *newSeparator = new QAction("Разделитель",this);
+    newSeparator->setSeparator(true);
+    addAction(tr("Новое меню"),newSeparator);
 
     show();
 }
@@ -74,6 +86,20 @@ void MainWindow::writeSettings()
     settings()->endGroup();
 }
 
+void MainWindow::releaseAction(MenuItem *menuItem)
+{
+    foreach (MenuItem *item,menuItem->childIItems){
+        QAction *action = item->action;
+        if (action)
+        {
+            if (action->isSeparator() || action->menu())
+                delete action;
+            action = NULL;
+        }
+        releaseAction(item);
+    }
+}
+
 QAction *MainWindow::createAction(MenuItem *menuItem)
 {
     if (!menuItem)
@@ -113,7 +139,7 @@ QAction *MainWindow::createAction(MenuItem *menuItem)
 
     // Создание пункта меню
     if (menuItem->type == "Menu") {
-        QMenu *currentMenu = new QMenu(menuItem->text);
+        Menu *currentMenu = new Menu(menuItem->text);
         QAction *currentAction =  NULL;
         if (parentMenu) {
             currentAction = (prevAction)
@@ -187,6 +213,22 @@ void MainWindow::updateMenus()
     actionWindowGui->setChecked(mdiArea->viewMode() == QMdiArea::SubWindowView);
 }
 
+void MainWindow::refreshMenuBar()
+{
+    //this->setMenuBar(new MenuBar());
+    releaseAction(m_item);
+    foreach (QAction* action, m_actions.values()) {
+        QString name = action->objectName();
+        qDebug() << name;
+        MenuItem *menuItem = m_actionItem[name];
+        if (menuItem) {
+
+            menuItem->action = action;
+            /*createAction(menuItem);*/
+        }
+    }
+}
+
 QMdiSubWindow* MainWindow::addSubWindow(QWidget* widget)
 {
     if (mdiArea->setActiveSubWindow(widget->objectName()))
@@ -244,6 +286,19 @@ QToolBar *MainWindow::getToolBarMain()
 MdiExtArea *MainWindow::getMdiArea()
 {
     return mdiArea;
+}
+
+void MainWindow::showGuiOptions()
+{
+    MainWindowOptions *mainWindowOptions = new MainWindowOptions(this);
+    mainWindowOptions->createActionsModel(&m_actions);
+    /*mainWindowOptions->exec();
+    delete mainWindowOptions;*/
+
+    connect(mainWindowOptions->pushButtonCancel,SIGNAL(clicked()),
+            this,SLOT(refreshMenuBar()));
+
+    QMdiSubWindow* subWindow = addSubWindow(mainWindowOptions);
 }
 
 void MainWindow::writeMenu(QWidget *menu, int level)

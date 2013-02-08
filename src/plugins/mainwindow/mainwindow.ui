@@ -58,6 +58,7 @@
     <property name="title">
      <string>Настройка</string>
     </property>
+    <addaction name="actionGuiOptions"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -128,6 +129,11 @@
    </property>
    <property name="text">
     <string>Оконный вид</string>
+   </property>
+  </action>
+  <action name="actionGuiOptions">
+   <property name="text">
+    <string>Оформление</string>
    </property>
   </action>
  </widget>

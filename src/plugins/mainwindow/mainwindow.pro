@@ -12,13 +12,22 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 HEADERS += \
            mainwindow.h \
     mainwindowglobal.h \
-    menubar.h
+    menubar.h \
+    mainwindowoptions.h \
+    actiongroupmodel.h \
+    mimedataobject.h \
+    menu.h
 SOURCES += \
            mainwindow.cpp \
-    menubar.cpp
+    menubar.cpp \
+    mainwindowoptions.cpp \
+    actiongroupmodel.cpp \
+    mimedataobject.cpp \
+    menu.cpp
 
 FORMS += \
-           mainwindow.ui
+           mainwindow.ui \
+    mainwindowoptions.ui
 
 RESOURCES += \
     mainwindow.qrc
