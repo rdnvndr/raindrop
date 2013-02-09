@@ -65,7 +65,7 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     IMainWindow* iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    QMenu* menuFile = iMainWindow->getMenuFile();
+    // QMenu* menuFile = iMainWindow->getMenuFile();
 
     QAction* separator;
 
@@ -103,7 +103,7 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     actionCloseModel->setObjectName("actionCloseModel");
     iMainWindow->addAction(tr("Редактор модели"),actionCloseModel);
 
-    if (menuFile->actions().count() > 0)
+/*    if (menuFile->actions().count() > 0)
         separator = menuFile->insertSeparator(menuFile->actions().first());
     else
         separator = menuFile->addSeparator();
@@ -114,7 +114,7 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     menuFile->insertAction(separator, actionSaveAsModel);
     menuFile->insertAction(separator, actionPublishModel);
     menuFile->insertAction(separator, actionCloseModel);
-
+*/
     QToolBar* toolBarMain = iMainWindow->getToolBarMain();
 
     if (toolBarMain->actions().count() > 0)

@@ -40,12 +40,12 @@ class MAINWINDOWLIB MainWindow:
 
 public:
     struct MenuItem {
-        QString name;              //!< Имя объекта
-        QString text;              //!< Название
-        QString type;              //!< Тип
-        MenuItem *parentItem;          //!< Родитель
-        QList<MenuItem *> childIItems; //!< Потомки
-        QAction *action;           //!< Созданный объект
+        QString name;                 //!< Имя объекта
+        QString text;                 //!< Название
+        QString type;                 //!< Тип
+        MenuItem *parentItem;         //!< Родитель
+        QList<MenuItem *> childItems; //!< Потомки
+        QAction *action;              //!< Созданный объект
     };
 
     //! Конструктор плагина главного окна
@@ -89,10 +89,15 @@ public:
     */
     QList<QMdiSubWindow *> subWindowList() const;
 
+
+public slots:
+
     //! Добавления QAction для использования в главном окне
     void addAction(QString category, QAction *action);
 
-public slots:
+    //! Удаление QAction из главного окна
+    void removeAction(QAction *action);
+
 
     //! Запись настроек меню
     void writeMenuSettings();
@@ -135,7 +140,7 @@ public slots:
         по его имени
      */
     QMdiSubWindow *setActiveSubWindow(QString objName);
-
+/*
     //! Получение меню File
     QMenu* getMenuFile();
 
@@ -147,7 +152,7 @@ public slots:
 
     //! Получение меню Help
     QMenu* getMenuHelp();
-
+*/
     //! Получение панели инструментов
     QToolBar*   getToolBarMain();
 
@@ -157,13 +162,46 @@ public slots:
     //! Вызов настройки главного окна
     QMdiSubWindow *showOptionsDialog();
 
+private slots:
+
+    //! Удаление QAction из главного окна
+    void removeAction(QObject *obj);
+
+    //! Вызов сохранение настроек меню
+    void saveOptionsDialog();
+
+    //! Вызов отмены сохранения настроек меню
+    void cancelOptionsDialog();
+
 private:
+
+    QAction *actionWindowClose;
+
+    QAction *actionWindowCloseAll;
+
+    QAction *actionWindowCascade;
+
+    QAction *actionWindowTile;
+
+    QAction *actionWindowNext;
+
+    QAction *actionWindowPrev;
+
+    QAction *actionWindowGui;
+
+    QAction *actionGuiOptions;
+
+    QAction *actionExit;
+
 
     //! Создание пунктов меню
     QAction *createAction(MenuItem *menuItem);
 
     //! Удаление пунктов меню
     void releaseAction(MenuItem *menuItem);
+
+    //! Удаление ветки начиная с указанного узла
+    void cleanAction(MenuItem *menuItem);
 
     //! Запись настроек меню определенного уровня
     void writeMenu(QWidget *menu, int level = 0);
@@ -175,13 +213,13 @@ private:
     QMultiHash <QString, QAction *> m_actions;
 
     //! Список команд в структуре
-    QHash <QString, MenuItem *> m_actionItem;
+    QMultiHash <QString, MenuItem *> m_actionItem;
 
     //! Ссылка на структуру меню
     MenuItem *m_item;
 
     //! Окно настройки главного меню окна
-    MainWindowOptions *mainWindowOptions;
+    MainWindowOptions *m_optionsDialog;
 };
 
 #endif
