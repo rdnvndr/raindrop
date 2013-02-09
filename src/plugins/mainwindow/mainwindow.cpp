@@ -14,6 +14,34 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     this->setMenuBar(new MenuBar());
     //writeMenuSettings();
 
+    actionWindowClose = new QAction(QIcon(), tr("Закрыть"), this);
+    actionWindowClose->setObjectName("actionWindowClose");
+
+    actionWindowCloseAll = new QAction(QIcon(), tr("Закрыть все"), this);
+    actionWindowCloseAll->setObjectName("actionWindowCloseAll");
+
+    actionWindowCascade = new QAction(QIcon(), tr("Каскадом"), this);
+    actionWindowCascade->setObjectName("actionWindowCascade");
+
+    actionWindowTile = new QAction(QIcon(), tr("Плиткой"), this);
+    actionWindowTile->setObjectName("actionWindowTile");
+
+    actionWindowNext = new QAction(QIcon(), tr("Следующее"), this);
+    actionWindowNext->setObjectName("actionWindowNext");
+
+    actionWindowPrev = new QAction(QIcon(), tr("Предыдущее"), this);
+    actionWindowPrev->setObjectName("actionWindowPrev");
+
+    actionWindowGui = new QAction(QIcon(), tr("Оконный вид"), this);
+    actionWindowGui->setObjectName("actionWindowGui");
+
+    actionGuiOptions = new QAction(QIcon(), tr("Оформление"), this);
+    actionGuiOptions->setObjectName("actionGuiOptions");
+
+    actionExit = new QAction(QIcon(":exit"), tr("Выход"), this);
+    actionExit->setObjectName("actionExit");
+
+    connect(actionExit, SIGNAL(triggered()), this, SLOT(close()));
     connect(actionWindowClose, SIGNAL(triggered()), mdiArea, SLOT(closeActiveSubWindow()));
     connect(actionWindowCloseAll, SIGNAL(triggered()), mdiArea, SLOT(closeAllSubWindows()));
     connect(actionWindowCascade, SIGNAL(triggered()), mdiArea, SLOT(cascadeSubWindows()));
@@ -51,13 +79,21 @@ MainWindow::~MainWindow()
 {
     writeSettings();
     settings()->sync();
-    if (mainWindowOptions)
-        delete mainWindowOptions;
 
-    releaseAction(m_item);
+    cleanAction(m_item);
     delete m_item;
     m_actionItem.clear();
     m_actions.clear();
+
+    delete actionWindowClose;
+    delete actionWindowCloseAll;
+    delete actionWindowCascade;
+    delete actionWindowTile;
+    delete actionWindowNext;
+    delete actionWindowPrev;
+    delete actionWindowGui;
+    delete actionGuiOptions;
+    delete actionExit;
 }
 
 void MainWindow::readSettings()
@@ -93,16 +129,16 @@ void MainWindow::writeSettings()
     settings()->endGroup();
 }
 
-void MainWindow::releaseAction(MenuItem *menuItem)
+void MainWindow::cleanAction(MenuItem *menuItem)
 {
-    foreach (MenuItem *item,menuItem->childIItems){
+    foreach (MenuItem *item,menuItem->childItems){
         if (item->action)
         {
             if (item->action->isSeparator() || item->action->menu())
                 delete item->action;
             item->action = NULL;
         }
-        releaseAction(item);
+        cleanAction(item);
     }
 }
 
@@ -123,12 +159,12 @@ QAction *MainWindow::createAction(MenuItem *menuItem)
     QMenu *parentMenu = (parentAction) ? parentMenu = parentAction->menu():NULL;
     QAction *prevAction = NULL;
 
-    for (int row = parentItem->childIItems.count()-1; row >= 0; row--) {
-        MenuItem *item = parentItem->childIItems.at(row);
+    for (int row = parentItem->childItems.count()-1; row >= 0; row--) {
+        MenuItem *item = parentItem->childItems.at(row);
         if (item == menuItem) {
             // Создание разделителя между двумя существующими QAction
             if (prevAction) {
-                MenuItem *separatorItem = parentItem->childIItems.at(row+1);
+                MenuItem *separatorItem = parentItem->childItems.at(row+1);
                 if (separatorItem->type == "Separator") {
                     prevAction = (parentMenu) ?
                                 parentMenu->insertSeparator(prevAction)
@@ -176,16 +212,62 @@ QAction *MainWindow::createAction(MenuItem *menuItem)
     return NULL;
 }
 
+void MainWindow::releaseAction(MenuItem *menuItem)
+{
+    if (menuItem) {
+
+        if (menuItem->childItems.count()==0) {
+            MenuItem *parentMenuItem = menuItem->parentItem;
+            if (menuItem->action) {
+                if (menuItem->action->menu())
+                    delete menuItem->action;
+                else if (parentMenuItem)
+                    if (parentMenuItem->action)
+                        if (parentMenuItem->action->menu())
+                            parentMenuItem->action->menu()->removeAction(menuItem->action);
+            }
+
+            if (parentMenuItem) {
+                parentMenuItem->childItems.removeOne(menuItem);
+                releaseAction(parentMenuItem);
+            }
+            delete menuItem;
+        }
+    }
+}
+
 void MainWindow::addAction(QString category, QAction *action)
 {
     m_actions.insert(category,action);
 
     QString name = action->objectName();
-    MenuItem *menuItem = m_actionItem[name];
-    if (menuItem) {
+
+    foreach (MenuItem *menuItem,m_actionItem.values(name)) {
         menuItem->action = action;
         createAction(menuItem);
     }
+
+    connect(action,SIGNAL(destroyed(QObject*)),
+            this, SLOT(removeAction(QObject*)));
+}
+
+void MainWindow::removeAction(QObject *obj)
+{
+    foreach (const QString &category, m_actions.uniqueKeys())
+        foreach (QAction* actionCategory, m_actions.values(category))
+            if (obj == qobject_cast< QObject *>(actionCategory))
+                m_actions.remove(category,actionCategory);
+
+    QString name = obj->objectName();
+    foreach (MenuItem *item, m_actionItem.values(name)) {
+        releaseAction(item);
+        m_actionItem.remove(name, item);
+    }
+}
+
+void MainWindow::removeAction(QAction *action)
+{
+   removeAction(qobject_cast< QObject *>(action));
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
@@ -222,13 +304,13 @@ void MainWindow::updateMenus()
 void MainWindow::refreshMenuBar()
 {
     this->setMenuBar(new MenuBar());
-    releaseAction(m_item);
+    cleanAction(m_item);
     foreach (QAction* action, m_actions.values()) {
-        MenuItem *menuItem = (action) ? m_actionItem[action->objectName()] : 0;
-        if (menuItem) {
-            menuItem->action = action;
-            createAction(menuItem);
-        }
+        if (action)
+            foreach (MenuItem *menuItem, m_actionItem.values(action->objectName())) {
+                menuItem->action = action;
+                createAction(menuItem);
+            }
     }
 }
 
@@ -261,7 +343,7 @@ QList<QMdiSubWindow *> MainWindow::subWindowList() const
     return mdiArea->subWindowList();
 }
 
-QMenu *MainWindow::getMenuFile()
+/* QMenu *MainWindow::getMenuFile()
 {
     return menuFile;
 }
@@ -280,7 +362,7 @@ QMenu *MainWindow::getMenuHelp()
 {
     return menuHelp;
 }
-
+*/
 QToolBar *MainWindow::getToolBarMain()
 {
     return toolBarMain;
@@ -293,28 +375,38 @@ MdiExtArea *MainWindow::getMdiArea()
 
 QMdiSubWindow *MainWindow::showOptionsDialog()
 {
-    if (mainWindowOptions) {
-        mainWindowOptions = new MainWindowOptions(this);
-        mainWindowOptions->createActionsModel(&m_actions);
+    if (m_optionsDialog) {
+        m_optionsDialog = new MainWindowOptions(this);
+        m_optionsDialog->createActionsModel(&m_actions);
 
-        QMdiSubWindow *subWindow = addSubWindow(mainWindowOptions);
-
+        QMdiSubWindow *subWindow = addSubWindow(m_optionsDialog);
         connect(subWindow,SIGNAL(destroyed()),this,SLOT(refreshMenuBar()));
 
-        connect(mainWindowOptions->pushButtonCancel,SIGNAL(clicked()),
-                this,SLOT(refreshMenuBar()));
-        connect(mainWindowOptions->pushButtonCancel,SIGNAL(clicked()),
+        connect(m_optionsDialog->pushButtonCancel,SIGNAL(clicked()),
+                this,SLOT(cancelOptionsDialog()));
+        connect(m_optionsDialog->pushButtonCancel,SIGNAL(clicked()),
                 subWindow,SLOT(close()));
 
-        connect(mainWindowOptions->pushButtonSave,SIGNAL(clicked()),
-                this,SLOT(writeMenuSettings()));
-        connect(mainWindowOptions->pushButtonSave,SIGNAL(clicked()),
+        connect(m_optionsDialog->pushButtonSave,SIGNAL(clicked()),
+                this,SLOT(saveOptionsDialog()));
+        connect(m_optionsDialog->pushButtonSave,SIGNAL(clicked()),
                 subWindow,SLOT(close()));
 
         return subWindow;
     }
 
     return 0;
+}
+
+void MainWindow::saveOptionsDialog()
+{
+    writeMenuSettings();
+    readMenuSettings();
+}
+
+void MainWindow::cancelOptionsDialog()
+{
+
 }
 
 void MainWindow::writeMenu(QWidget *menu, int level)
@@ -381,8 +473,8 @@ void MainWindow::readMenuSettings()
         currentItem->type = typeAction;
         currentItem->action = NULL;
         currentItem->parentItem = parentItem;
-        parentItem->childIItems.append(currentItem);
-        m_actionItem[name] = currentItem;
+        parentItem->childItems.append(currentItem);
+        m_actionItem.insert(name,currentItem);
         prevLevel = level;
     }
     settings()->endArray();

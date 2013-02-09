@@ -21,10 +21,13 @@ public:
     */
     virtual QList<QMdiSubWindow *> subWindowList() const = 0;
 
+public slots:
+
     //! Добавления QAction для использования в главном окне
     virtual void addAction(QString category, QAction *action) = 0;
 
-public slots:
+    //! Удаление QAction из главного окна
+    virtual void removeAction(QAction *action) = 0;
 
     //! Запись настроек меню
     virtual void writeMenuSettings() = 0;
@@ -64,7 +67,7 @@ public slots:
         по его имени
      */
     virtual QMdiSubWindow *setActiveSubWindow(QString objName) = 0;
-
+/*
     //! Получение меню File
     virtual QMenu* getMenuFile() = 0;
 
@@ -76,7 +79,7 @@ public slots:
 
     //! Получение меню Help
     virtual QMenu* getMenuHelp() = 0;
-
+*/
     //! Получение панели инструментов
     virtual QToolBar*   getToolBarMain() = 0;
 
