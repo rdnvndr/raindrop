@@ -103,18 +103,6 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     actionCloseModel->setObjectName("actionCloseModel");
     iMainWindow->addAction(tr("Редактор модели"),actionCloseModel);
 
-/*    if (menuFile->actions().count() > 0)
-        separator = menuFile->insertSeparator(menuFile->actions().first());
-    else
-        separator = menuFile->addSeparator();
-
-    menuFile->insertAction(separator, actionNewModel);
-    menuFile->insertAction(separator, actionOpenModel);
-    menuFile->insertAction(separator, actionSaveModel);
-    menuFile->insertAction(separator, actionSaveAsModel);
-    menuFile->insertAction(separator, actionPublishModel);
-    menuFile->insertAction(separator, actionCloseModel);
-*/
     QToolBar* toolBarMain = iMainWindow->getToolBarMain();
 
     if (toolBarMain->actions().count() > 0)
@@ -152,7 +140,7 @@ ModelerIDEPlug::~ModelerIDEPlug()
 void ModelerIDEPlug::showContextMenu(const QPoint& point)
 {
     if (m_model){
-            contextMenu->exec(treeClassView->treeView->mapToGlobal(point));
+        contextMenu->exec(treeClassView->treeView->mapToGlobal(point));
     }
     return;
 }

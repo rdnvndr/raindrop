@@ -16,14 +16,16 @@ HEADERS += \
     mainwindowoptions.h \
     actiongroupmodel.h \
     mimedataobject.h \
-    menu.h
+    menu.h \
+    listview.h
 SOURCES += \
            mainwindow.cpp \
     menubar.cpp \
     mainwindowoptions.cpp \
     actiongroupmodel.cpp \
     mimedataobject.cpp \
-    menu.cpp
+    menu.cpp \
+    listview.cpp
 
 FORMS += \
            mainwindow.ui \

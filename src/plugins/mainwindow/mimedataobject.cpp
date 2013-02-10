@@ -19,3 +19,10 @@ bool MimeDataObject::hasObject() const
 {
     return (m_object)?true:false;
 }
+
+QStringList MimeDataObject::formats() const
+{
+    QStringList format = QMimeData::formats();
+    if (hasObject()) format << "application/x-qobject";
+    return format;
+}
