@@ -53,16 +53,15 @@
            </widget>
           </item>
           <item>
-           <widget class="QListView" name="listCommands">
+           <widget class="ListView" name="listCommands">
             <property name="styleSheet">
-             <string notr="true">background: palette(Window);
-border-color: rgba(255, 255, 255, 0);
-gridline-color: rgba(255, 255, 255, 0);
-selection-color: rgb(0, 0, 0);
-selection-background-color: rgba(0, 0, 0, 0);</string>
+             <string notr="true">background: palette(Window);</string>
             </property>
             <property name="editTriggers">
              <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="showDropIndicator" stdset="0">
+             <bool>false</bool>
             </property>
             <property name="dragEnabled">
              <bool>true</bool>
@@ -71,7 +70,7 @@ selection-background-color: rgba(0, 0, 0, 0);</string>
              <bool>true</bool>
             </property>
             <property name="dragDropMode">
-             <enum>QAbstractItemView::DragOnly</enum>
+             <enum>QAbstractItemView::DragDrop</enum>
             </property>
            </widget>
           </item>
@@ -198,6 +197,13 @@ selection-background-color: rgba(0, 0, 0, 0);</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ListView</class>
+   <extends>QListView</extends>
+   <header>listview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

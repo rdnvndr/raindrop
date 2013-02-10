@@ -8,6 +8,7 @@ class ActionGroupModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
+    //! Конструктор
     explicit ActionGroupModel(QMultiHash<QString, QAction *> *actions);
 
     //! Возращает хранимые данные
@@ -33,15 +34,23 @@ public:
     //! Возращает количество столбцов в индексе родителя
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
 
+    //! Указывает данные для формирования модели
     void setActionGroup(QMultiHash<QString, QAction *> *actions);
     
+    //! Разрешенные действия для Drag
+    Qt::DropActions supportedDragActions() const;
+
+    //! Разрешенные действия для Drop
+    Qt::DropActions supportedDropActions() const;
+
+    //! Возращает типы данных перетаскивания
     QStringList mimeTypes() const;
+
+    //! Упаковывает данные для перетаскивания
     QMimeData *mimeData(const QModelIndexList &indexes) const;
-signals:
-    
-public slots:
 
 private:
+    //! Данные для формирования модели
     QMultiHash <QString, QAction *> *m_actions;
     
 };

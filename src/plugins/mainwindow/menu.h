@@ -6,9 +6,14 @@
 class Menu : public QMenu
 {
     Q_OBJECT
+
 public:
     explicit Menu(QWidget *parent = 0);
     explicit Menu(const QString & title, QWidget * parent = 0 );
+    virtual ~Menu();
+
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 
     void dropEvent(QDropEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
@@ -16,9 +21,13 @@ public:
 
    QSize sizeHint() const;
 
-signals:
-    
-public slots:
+   void contextMenuEvent(QContextMenuEvent *event);
+
+
+private:
+
+   QMenu* m_contextMenu;
+   QPoint m_dragPos;
     
 };
 

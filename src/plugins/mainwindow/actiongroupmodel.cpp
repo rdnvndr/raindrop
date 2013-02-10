@@ -91,7 +91,7 @@ int ActionGroupModel::columnCount(const QModelIndex &parent) const
 QStringList ActionGroupModel::mimeTypes() const
 {
     QStringList types;
-    types << "application/x-actiongroupitem";
+    types << "application/x-qobject";
     return types;
 }
 
@@ -108,9 +108,17 @@ QMimeData *ActionGroupModel::mimeData(const QModelIndexList &indexes) const
     return 0;
 }
 
-
-
 void ActionGroupModel::setActionGroup(QMultiHash<QString, QAction *> *actions)
 {
     m_actions = actions;
+}
+
+Qt::DropActions ActionGroupModel::supportedDragActions() const
+{
+    return Qt::CopyAction;
+}
+
+Qt::DropActions ActionGroupModel::supportedDropActions() const
+{
+    return Qt::MoveAction;
 }
