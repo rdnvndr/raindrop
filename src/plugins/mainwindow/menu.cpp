@@ -121,7 +121,8 @@ void Menu::mouseMoveEvent(QMouseEvent *event)
             drag->setMimeData(mimeData);
 
             if (drag->exec(Qt::MoveAction) == Qt::MoveAction)
-                this->removeAction(action);
+                if (drag->target() != this)
+                    this->removeAction(action);
         }
     }
     QMenu::mouseMoveEvent(event);
