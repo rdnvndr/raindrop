@@ -45,8 +45,7 @@ void Menu::dropEvent(QDropEvent *event)
 
     if (aAction) {
         if (aAction->menu())
-            if (!qobject_cast<QMenu *>(event->source())
-                    && !qobject_cast<QMenuBar *>(event->source())) {
+            if (aAction->objectName() == "actionNewMenu") {
                 aAction = (new Menu(aAction->text()))->menuAction();
             }
 
@@ -78,12 +77,15 @@ void Menu::dragEnterEvent(QDragEnterEvent *event)
 
 void Menu::dragMoveEvent(QDragMoveEvent *event)
 {
-    QAction* eAction = this->actionAt(event->pos());
-    if (eAction)
-        if (eAction->menu() && activeAction()!=eAction)
-            setActiveAction(eAction);
-    event->accept();
+    const MimeDataObject *mimeData
+            = qobject_cast<const MimeDataObject *>(event->mimeData());
 
+    QAction* eAction = this->actionAt(event->pos());
+    if (mimeData->hasFormat("application/x-qobject"))
+        if (mimeData->object() != eAction && eAction)
+            if (eAction->menu() && activeAction()!= eAction)
+                setActiveAction(eAction);
+    event->accept();
 }
 
 QSize Menu::sizeHint() const

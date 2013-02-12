@@ -65,12 +65,14 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     addAction(tr("Окно"),actionWindowTile);
     addAction(tr("Настройка"),actionGuiOptions);
 
-    Menu *newMenu = new Menu("Пункт меню");
+    Menu *newMenu = new Menu("Новое меню");
     addAction(tr("Новое меню"),newMenu->menuAction());
+    newMenu->menuAction()->setObjectName("actionNewMenu");
 
     QAction *newSeparator = new QAction("Разделитель",this);
     newSeparator->setSeparator(true);
     addAction(tr("Новое меню"),newSeparator);
+    newSeparator->setObjectName("actionNewSeparator");
 
     show();
 }
