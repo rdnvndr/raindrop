@@ -34,8 +34,9 @@ void MenuBar::mouseMoveEvent(QMouseEvent *event)
         if (distance > QApplication::startDragDistance() ) {
             qDebug() << "MenuBar:" <<m_dragPos;
             qDebug() << "drag menubar";
-            if (action->menu())
+            if (action->menu()) {
                 action->menu()->close();
+            }
 
             QDrag *drag = new QDrag(this);
             MimeDataObject *mimeData = new MimeDataObject();
@@ -68,9 +69,8 @@ void MenuBar::dropEvent(QDropEvent *event)
 
     if (aAction) {
         if (aAction->menu())
-            if (!qobject_cast<QMenu *>(event->source())
-                    && !qobject_cast<QMenuBar *>(event->source())) {
-            aAction = (new Menu(aAction->text()))->menuAction();
+            if (aAction->objectName() == "actionNewMenu") {
+                aAction = (new Menu(aAction->text()))->menuAction();
             }
 
         QAction* eAction = this->actionAt(event->pos());
@@ -101,10 +101,14 @@ void MenuBar::dragEnterEvent(QDragEnterEvent *event)
 
 void MenuBar::dragMoveEvent(QDragMoveEvent *event)
 {
+    const MimeDataObject *mimeData
+            = qobject_cast<const MimeDataObject *>(event->mimeData());
+
     QAction* eAction = this->actionAt(event->pos());
-    if (eAction)
-        if (eAction->menu() && activeAction()!= eAction)
-            setActiveAction(eAction);
+    if (mimeData->hasFormat("application/x-qobject"))
+        if (mimeData->object() != eAction && eAction)
+            if (eAction->menu() && activeAction()!= eAction)
+                setActiveAction(eAction);
     event->accept();
 }
 
