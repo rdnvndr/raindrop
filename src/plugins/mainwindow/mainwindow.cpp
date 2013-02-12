@@ -35,7 +35,7 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     actionWindowGui = new QAction(QIcon(), tr("Оконный вид"), this);
     actionWindowGui->setObjectName("actionWindowGui");
 
-    actionGuiOptions = new QAction(QIcon(), tr("Оформление"), this);
+    actionGuiOptions = new QAction(QIcon(":guioptions"), tr("Оформление"), this);
     actionGuiOptions->setObjectName("actionGuiOptions");
 
     actionExit = new QAction(QIcon(":exit"), tr("Выход"), this);
@@ -66,10 +66,12 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     addAction(tr("Настройка"),actionGuiOptions);
 
     Menu *newMenu = new Menu("Новое меню");
+    newMenu->setIcon(QIcon(":menu"));
     addAction(tr("Новое меню"),newMenu->menuAction());
     newMenu->menuAction()->setObjectName("actionNewMenu");
 
     QAction *newSeparator = new QAction("Разделитель",this);
+    newSeparator->setIcon(QIcon(":separator"));
     newSeparator->setSeparator(true);
     addAction(tr("Новое меню"),newSeparator);
     newSeparator->setObjectName("actionNewSeparator");
