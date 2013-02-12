@@ -2,6 +2,7 @@
 #include <QByteArray>
 #include <QDebug>
 #include <QAction>
+#include <QMenuBar>
 #include <QDropEvent>
 #include <QApplication>
 #include <QPainter>
@@ -17,6 +18,7 @@ Menu::Menu(QWidget *parent) :
 
     QAction *action = new QAction(tr("Добавить"),this);
     m_contextMenu->addAction(action);
+    m_dragPos = QPoint(-1,-1);
 }
 
 Menu::Menu(const QString &title, QWidget *parent):
@@ -29,6 +31,7 @@ Menu::Menu(const QString &title, QWidget *parent):
 
     QAction *action = new QAction(tr("Добавить"),this);
     m_contextMenu->addAction(action);
+    m_dragPos = QPoint(-1,-1);
 }
 
 Menu::~Menu() {
@@ -41,12 +44,14 @@ void Menu::dropEvent(QDropEvent *event)
     QAction *aAction = qobject_cast<QAction *>(mimeData->object());
 
     if (aAction) {
-        QAction* eAction = this->actionAt(event->pos());
         if (aAction->menu())
-            aAction = (new Menu("Новое меню"))->menuAction();
+            if (!qobject_cast<QMenu *>(event->source())
+                    && !qobject_cast<QMenuBar *>(event->source())) {
+                aAction = (new Menu(aAction->text()))->menuAction();
+            }
 
+        QAction* eAction = this->actionAt(event->pos());
         QRect rect = actionGeometry(eAction);
-
         eAction = this->actionAt(QPoint(event->pos().x(),
                                         event->pos().y()+rect.height()/2));
         if (eAction) {
@@ -68,6 +73,7 @@ void Menu::dragEnterEvent(QDragEnterEvent *event)
 {
     if ((qobject_cast<const MimeDataObject *>(event->mimeData()))->hasObject())
         event->acceptProposedAction();
+    m_dragPos = QPoint(-1,-1);
 }
 
 void Menu::dragMoveEvent(QDragMoveEvent *event)
@@ -76,6 +82,8 @@ void Menu::dragMoveEvent(QDragMoveEvent *event)
     if (eAction)
         if (eAction->menu() && activeAction()!=eAction)
             setActiveAction(eAction);
+    event->accept();
+
 }
 
 QSize Menu::sizeHint() const
@@ -98,14 +106,20 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 
 void Menu::mouseMoveEvent(QMouseEvent *event)
 {
-    if (event->buttons() & Qt::LeftButton) {
+    QMenu::mouseMoveEvent(event);
+    QAction *action = this->actionAt(m_dragPos);
+    if (event->buttons() & Qt::LeftButton && action) {
         int distance = (event->pos() - m_dragPos).manhattanLength();
         if (distance > QApplication::startDragDistance()) {
+            qDebug() << "Menu:" <<m_dragPos;
+            qDebug() << "drag menu";
+            if (action->menu())
+                action->menu()->close();
 
             QDrag *drag = new QDrag(this);
             MimeDataObject *mimeData = new MimeDataObject();
-            QAction *action  = this->actionAt(m_dragPos);
-/*
+
+            /*
             QRect rect = actionGeometry(action);
             drag->setHotSpot(m_dragPos - rect.topLeft());
             QPixmap pixmap(rect.width(),rect.height());
@@ -125,7 +139,6 @@ void Menu::mouseMoveEvent(QMouseEvent *event)
                     this->removeAction(action);
         }
     }
-    QMenu::mouseMoveEvent(event);
 }
 
 void Menu::mousePressEvent(QMouseEvent *event)

@@ -2,7 +2,7 @@
 
 MimeDataObject::MimeDataObject(): QMimeData ()
 {
-
+    m_object = NULL;
 }
 
 void MimeDataObject::setObject(QAction *widget)
