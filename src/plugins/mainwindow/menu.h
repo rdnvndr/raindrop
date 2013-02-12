@@ -25,7 +25,6 @@ public:
 
 
 private:
-
    QMenu* m_contextMenu;
    QPoint m_dragPos;
     

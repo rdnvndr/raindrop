@@ -16,6 +16,7 @@ MenuBar::MenuBar(QWidget *parent) :
 
     QAction *action = new QAction(tr("Добавить"),this);
     m_contextMenu->addAction(action);
+    m_dragPos = QPoint(-1,-1);
 }
 
 MenuBar::~MenuBar()
@@ -25,12 +26,19 @@ MenuBar::~MenuBar()
 
 void MenuBar::mouseMoveEvent(QMouseEvent *event)
 {
-    if (event->buttons() & Qt::LeftButton) {
+    QMenuBar::mouseMoveEvent(event);
+    QAction *action  = this->actionAt(m_dragPos);
+
+    if (event->buttons() & Qt::LeftButton && action) {
         int distance = (event->pos() - m_dragPos).manhattanLength();
-        if (distance > QApplication::startDragDistance()) {
+        if (distance > QApplication::startDragDistance() ) {
+            qDebug() << "MenuBar:" <<m_dragPos;
+            qDebug() << "drag menubar";
+            if (action->menu())
+                action->menu()->close();
+
             QDrag *drag = new QDrag(this);
             MimeDataObject *mimeData = new MimeDataObject();
-            QAction *action  = this->actionAt(m_dragPos);
 
             mimeData->setObject(action);
             drag->setMimeData(mimeData);
@@ -40,13 +48,15 @@ void MenuBar::mouseMoveEvent(QMouseEvent *event)
                     this->removeAction(action);
         }
     }
-    QMenuBar::mouseMoveEvent(event);
 }
 
 void MenuBar::mousePressEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton)
+
+    if (event->button() == Qt::LeftButton) {
         m_dragPos = event->pos();
+        qDebug() << "Press menubar";
+    }
 
     QMenuBar::mousePressEvent(event);
 }
@@ -57,14 +67,16 @@ void MenuBar::dropEvent(QDropEvent *event)
     QAction *aAction = qobject_cast<QAction *>(mimeData->object());
 
     if (aAction) {
-        QAction* eAction = this->actionAt(event->pos());
         if (aAction->menu())
-            aAction = (new Menu("Новое меню"))->menuAction();
+            if (!qobject_cast<QMenu *>(event->source())
+                    && !qobject_cast<QMenuBar *>(event->source())) {
+            aAction = (new Menu(aAction->text()))->menuAction();
+            }
 
+        QAction* eAction = this->actionAt(event->pos());
         QRect rect = actionGeometry(eAction);
-
-        eAction = this->actionAt(QPoint(event->pos().x(),
-                                        event->pos().y()+rect.height()/2));
+        eAction = this->actionAt(QPoint(event->pos().x()+rect.width()/2,
+                                        event->pos().y()));
         if (eAction) {
             if (aAction->isSeparator())
                 insertSeparator(eAction);
@@ -82,8 +94,9 @@ void MenuBar::dropEvent(QDropEvent *event)
 
 void MenuBar::dragEnterEvent(QDragEnterEvent *event)
 {
-    if ((qobject_cast<const MimeDataObject *>(event->mimeData()))->hasObject())
+    if (event->mimeData()->hasFormat("application/x-qobject"))
         event->acceptProposedAction();
+     m_dragPos = QPoint(-1,-1);
 }
 
 void MenuBar::dragMoveEvent(QDragMoveEvent *event)
@@ -92,6 +105,7 @@ void MenuBar::dragMoveEvent(QDragMoveEvent *event)
     if (eAction)
         if (eAction->menu() && activeAction()!= eAction)
             setActiveAction(eAction);
+    event->accept();
 }
 
 void MenuBar::contextMenuEvent(QContextMenuEvent *event)

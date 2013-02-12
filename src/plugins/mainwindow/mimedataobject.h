@@ -10,9 +10,9 @@ class MimeDataObject : public QMimeData
 public:
     explicit MimeDataObject();
 
-    void setObject(QAction *object);
-    QObject *object() const;
-    bool hasObject() const;
+    virtual void setObject(QAction *object);
+    virtual QObject *object() const;
+    virtual bool hasObject() const;
 
     QStringList formats() const;
 private:
