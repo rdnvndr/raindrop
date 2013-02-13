@@ -1,6 +1,7 @@
 #include "actiongroupmodel.h"
-#include <QDebug>
 #include "mimedataobject.h"
+
+#include <QDebug>
 
 ActionGroupModel::ActionGroupModel(QMultiHash<QString, QAction *> *actions)
 {
@@ -55,7 +56,7 @@ QModelIndex ActionGroupModel::index(int row, int column, const QModelIndex &pare
     if (parent.isValid()) {
         return createIndex(row, 0, parent.row()+1);
     } else
-        return createIndex(row, 0, 0);
+        return createIndex(row, 0);
 }
 
 
@@ -66,7 +67,7 @@ QModelIndex ActionGroupModel::parent(const QModelIndex &child) const
 
 
     if (child.internalId()>0) {
-        return createIndex(child.internalId()-1,0,0);
+        return createIndex(child.internalId()-1,0);
     } else
         return QModelIndex();
 }

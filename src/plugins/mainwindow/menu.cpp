@@ -4,6 +4,7 @@
 #include <QAction>
 #include <QMenuBar>
 #include <QDropEvent>
+#include <QDrag>
 #include <QApplication>
 #include <QPainter>
 #include "mimedataobject.h"
