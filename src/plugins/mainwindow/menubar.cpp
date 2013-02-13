@@ -4,6 +4,7 @@
 #include <QDropEvent>
 #include <QApplication>
 #include <QDebug>
+#include <QDrag>
 #include "mimedataobject.h"
 
 MenuBar::MenuBar(QWidget *parent) :
