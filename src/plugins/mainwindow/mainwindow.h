@@ -98,7 +98,6 @@ public slots:
     //! Удаление QAction из главного окна
     void removeAction(QAction *action);
 
-
     //! Запись настроек меню
     void writeMenuSettings();
 
@@ -140,19 +139,7 @@ public slots:
         по его имени
      */
     QMdiSubWindow *setActiveSubWindow(QString objName);
-/*
-    //! Получение меню File
-    QMenu* getMenuFile();
 
-    //! Получение меню Edit
-    QMenu* getMenuEdit();
-
-    //! Получение меню Settings
-    QMenu* getMenuSettings();
-
-    //! Получение меню Help
-    QMenu* getMenuHelp();
-*/
     //! Получение панели инструментов
     QToolBar*   getToolBarMain();
 
@@ -175,25 +162,6 @@ private slots:
 
 private:
 
-    QAction *actionWindowClose;
-
-    QAction *actionWindowCloseAll;
-
-    QAction *actionWindowCascade;
-
-    QAction *actionWindowTile;
-
-    QAction *actionWindowNext;
-
-    QAction *actionWindowPrev;
-
-    QAction *actionWindowGui;
-
-    QAction *actionGuiOptions;
-
-    QAction *actionExit;
-
-
     //! Создание пунктов меню
     QAction *createAction(MenuItem *menuItem);
 
@@ -206,8 +174,35 @@ private:
     //! Запись настроек меню определенного уровня
     void writeMenu(QWidget *menu, int level = 0);
 
+    //! Команда закрытия окна
+    QAction *actionWindowClose;
+
+    //! Команда закрытия всех окон
+    QAction *actionWindowCloseAll;
+
+    //! Команда расположения окон каскадом
+    QAction *actionWindowCascade;
+
+    //! Команда расположения окон плиткой
+    QAction *actionWindowTile;
+
+    //! Команда выбора следующего окна
+    QAction *actionWindowNext;
+
+    //! Команда выбора предыдущего окна
+    QAction *actionWindowPrev;
+
+    //! Команда выбора типа отображения окон
+    QAction *actionWindowGui;
+
+    //! Команда вызова настроек меню и панелей инструментов
+    QAction *actionGuiOptions;
+
+    //! Команда выхода
+    QAction *actionExit;
+
     //! Индекс для записи настроек меню
-    int menuArrayIndex;
+    int m_menuArrayIndex;
 
     //! Список команд по группам
     QMultiHash <QString, QAction *> m_actions;

@@ -116,7 +116,7 @@ void MainWindow::readSettings()
 void MainWindow::writeMenuSettings() {
     // MenuBar settings
     settings()->beginGroup("IMainWindow");
-    menuArrayIndex = 0;
+    m_menuArrayIndex = 0;
     settings()->beginWriteArray("MenuBar");
     writeMenu(this->menuBar());
     settings()->endArray();
@@ -161,26 +161,32 @@ QAction *MainWindow::createAction(MenuItem *menuItem)
     // Сортировка меню
     QAction *parentAction  = createAction(parentItem);
     QMenu *parentMenu = (parentAction) ? parentMenu = parentAction->menu():NULL;
+    //MenuItem *item
     QAction *prevAction = NULL;
+    MenuItem *separatorItem = NULL;
 
     for (int row = parentItem->childItems.count()-1; row >= 0; row--) {
         MenuItem *item = parentItem->childItems.at(row);
         if (item == menuItem) {
+
             // Создание разделителя между двумя существующими QAction
-            if (prevAction) {
-                MenuItem *separatorItem = parentItem->childItems.at(row+1);
-                if (separatorItem->type == "Separator") {
-                    prevAction = (parentMenu) ?
-                                parentMenu->insertSeparator(prevAction)
-                              : menuBar()->insertSeparator(prevAction);
-                    separatorItem->action = prevAction;
-                    prevAction->setObjectName(separatorItem->name);
-                }
+            if (separatorItem) {
+                prevAction = (parentMenu) ?
+                            parentMenu->insertSeparator(prevAction)
+                          : menuBar()->insertSeparator(prevAction);
+                separatorItem->action = prevAction;
+                prevAction->setObjectName(separatorItem->name);
             }
+
             break;
         }
-        if (item->action)
+        if (item->type == "Separator" && !item->action)
+            separatorItem = item;
+
+        if (item->action) {
             prevAction = item->action;
+            separatorItem = NULL;
+        }
     }
 
     // Создание пункта меню
@@ -347,26 +353,6 @@ QList<QMdiSubWindow *> MainWindow::subWindowList() const
     return mdiArea->subWindowList();
 }
 
-/* QMenu *MainWindow::getMenuFile()
-{
-    return menuFile;
-}
-
-QMenu *MainWindow::getMenuEdit()
-{
-    return menuEdit;
-}
-
-QMenu *MainWindow::getMenuSettings()
-{
-    return menuSettings;
-}
-
-QMenu *MainWindow::getMenuHelp()
-{
-    return menuHelp;
-}
-*/
 QToolBar *MainWindow::getToolBarMain()
 {
     return toolBarMain;
@@ -415,10 +401,15 @@ void MainWindow::cancelOptionsDialog()
 
 void MainWindow::writeMenu(QWidget *menu, int level)
 {
-    foreach (QAction *child, menu->actions()) {
-        settings()->setArrayIndex(menuArrayIndex);
-        menuArrayIndex++;
+    for (int row = 0;row < menu->actions().count(); row++) {
+        QAction *child = menu->actions().at(row);
 
+        if (child->isSeparator()
+                && (row == 0 || row == menu->actions().count()-1))
+            continue;
+
+        settings()->setArrayIndex(m_menuArrayIndex);
+        m_menuArrayIndex++;
         settings()->setValue("level", level);
 
         if (child->isSeparator()) {
@@ -438,7 +429,6 @@ void MainWindow::writeMenu(QWidget *menu, int level)
         if (child->menu())
             writeMenu(child->menu(), level+1);
     }
-
 }
 
 void MainWindow::readMenuSettings()
