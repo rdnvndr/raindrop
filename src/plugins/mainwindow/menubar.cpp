@@ -69,6 +69,10 @@ void MenuBar::dropEvent(QDropEvent *event)
     QAction *aAction = qobject_cast<QAction *>(mimeData->object());
 
     if (aAction) {
+        if (activeAction())
+            if (activeAction()->menu())
+                activeAction()->menu()->close();
+
         if (aAction->menu())
             if (aAction->objectName() == "actionNewMenu") {
                 aAction = (new Menu(aAction->text()))->menuAction();

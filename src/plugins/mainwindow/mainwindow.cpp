@@ -160,8 +160,7 @@ QAction *MainWindow::createAction(MenuItem *menuItem)
 
     // Сортировка меню
     QAction *parentAction  = createAction(parentItem);
-    QMenu *parentMenu = (parentAction) ? parentMenu = parentAction->menu():NULL;
-    //MenuItem *item
+    QMenu *parentMenu = (parentAction) ? parentAction->menu():NULL;
     QAction *prevAction = NULL;
     MenuItem *separatorItem = NULL;
 
@@ -195,12 +194,12 @@ QAction *MainWindow::createAction(MenuItem *menuItem)
         QAction *currentAction =  NULL;
         if (parentMenu) {
             currentAction = (prevAction)
-                    ? currentAction = parentMenu->insertMenu(prevAction,currentMenu)
-                    : currentAction = parentMenu->addMenu(currentMenu);
+                    ? parentMenu->insertMenu(prevAction,currentMenu)
+                    : parentMenu->addMenu(currentMenu);
         } else {
             currentAction = (prevAction)
-                    ? currentAction = menuBar()->insertMenu(prevAction,currentMenu)
-                    : currentAction = menuBar()->addMenu(currentMenu);
+                    ? menuBar()->insertMenu(prevAction,currentMenu)
+                    : menuBar()->addMenu(currentMenu);
         }
         menuItem->action = currentAction;
         currentAction->setObjectName(menuItem->name);
