@@ -362,9 +362,8 @@ MdiExtArea *MainWindow::getMdiArea()
     return mdiArea;
 }
 
-QMdiSubWindow *MainWindow::showOptionsDialog()
+void MainWindow::showOptionsDialog()
 {
-    if (m_optionsDialog) {
         m_optionsDialog = new MainWindowOptions(this);
         m_optionsDialog->createActionsModel(&m_actions);
 
@@ -380,11 +379,6 @@ QMdiSubWindow *MainWindow::showOptionsDialog()
                 this,SLOT(saveOptionsDialog()));
         connect(m_optionsDialog->pushButtonSave,SIGNAL(clicked()),
                 subWindow,SLOT(close()));
-
-        return subWindow;
-    }
-
-    return 0;
 }
 
 void MainWindow::saveOptionsDialog()
