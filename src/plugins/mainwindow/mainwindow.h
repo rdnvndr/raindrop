@@ -147,7 +147,7 @@ public slots:
     MdiExtArea* getMdiArea();
 
     //! Вызов настройки главного окна
-    QMdiSubWindow *showOptionsDialog();
+    void showOptionsDialog();
 
 private slots:
 
