@@ -4,6 +4,20 @@
 #include <QAbstractItemModel>
 #include <QAction>
 
+//! Модель сгруппированных QAction
+/*! Модель сгруппированных QAction представляет собой на первом уровне
+ *  список групп, а на втором уровне список QAction. \n
+    Пример:
+    \code
+        ActionGroupModel *model = new ActionGroupModel(actions);
+        listCategory->setModel(model);
+        listCommands->setModel(model);
+
+        listCategory->setCurrentIndex(model->index(0,0));
+        listCommands->setRootIndex(model->index(0,0));
+    \endcode
+*/
+
 class ActionGroupModel : public QAbstractItemModel
 {
     Q_OBJECT

@@ -119,5 +119,8 @@ void MenuBar::dragMoveEvent(QDragMoveEvent *event)
 
 void MenuBar::contextMenuEvent(QContextMenuEvent *event)
 {
-   m_contextMenu->exec(event->globalPos());
+    if (this->actionAt(event->pos())!=NULL)
+        m_contextMenu->exec(event->globalPos());
+    else
+        QMenuBar::contextMenuEvent(event);
 }

@@ -6,17 +6,28 @@
 #include "ui_mainwindowoptions.h"
 #include "actiongroupmodel.h"
 
+//! Класс настройки панели инструментов и главного меню
+/*! Класс настройки панели инструментов и главного меню предназначен
+ *  для настройки панели инструментов и главного меню при помощи
+ *  технологии Drag and Drop
+*/
+
 class MainWindowOptions : public QWidget, public Ui::MainWindowOptions
 {
     Q_OBJECT
 public:
+
+    //! Конструктор класса
     explicit MainWindowOptions(QWidget *parent = 0);
+
+    //! Деструктор класса
     virtual ~MainWindowOptions();
 
-    //! Создает модель команд
+    //! Создание модели команд
     void createActionsModel(QMultiHash<QString, QAction *> *actions);
 
 private:
+    //! Хранит модель команд
     ActionGroupModel* m_model;
     
 };
