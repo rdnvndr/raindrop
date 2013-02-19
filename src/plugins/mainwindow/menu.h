@@ -3,30 +3,55 @@
 
 #include <QMenu>
 
+//! Класс Menu предназначен для создания меню
+/*! Класс Menu представляет собой widget для изпользования в строке меню,
+ *  контекстном меню и других выпадающих меню. Отличается от QMenu возможносnm
+ *  добавления QAction при помощи Drag and Drop.
+*/
+
 class Menu : public QMenu
 {
     Q_OBJECT
 
 public:
+
+    //! Конструктор класса
     explicit Menu(QWidget *parent = 0);
+
+    //! Конструктор класса
     explicit Menu(const QString & title, QWidget * parent = 0 );
+
+    //! Деструктор класса
     virtual ~Menu();
 
+     //! Событие обрабатывающее перещение курсора мыши
     void mouseMoveEvent(QMouseEvent *event);
+
+    //! Событие обрабатывающее нажатие клавиш мыши
     void mousePressEvent(QMouseEvent *event);
 
+     //! Событие обрабатывающее отпускание перемещаемого объекта
     void dropEvent(QDropEvent *event);
+
+    //! Событие обрабатывающее нажатие мыши при Drag and Drop
     void dragEnterEvent(QDragEnterEvent *event);
+
+    //! Событие обрабатывающее перещение курсора мыши при Drag and Drop
     void dragMoveEvent(QDragMoveEvent *event);
 
-   QSize sizeHint() const;
+    //! Рекомендованный размер widget
+    QSize sizeHint() const;
 
-   void contextMenuEvent(QContextMenuEvent *event);
-
+    //! Вызов контекстного меню
+    void contextMenuEvent(QContextMenuEvent *event);
 
 private:
-   QMenu* m_contextMenu;
-   QPoint m_dragPos;
+
+    //! Контекстное меню
+    QMenu* m_contextMenu;
+
+    //! Старые координаты курсора мыши при Drag and Drop
+    QPoint m_dragPos;
     
 };
 

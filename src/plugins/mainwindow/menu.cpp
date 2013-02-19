@@ -104,7 +104,8 @@ QSize Menu::sizeHint() const
 
 void Menu::contextMenuEvent(QContextMenuEvent *event)
 {
-    m_contextMenu->exec(event->globalPos());
+    if (this->actionAt(event->pos()))
+        m_contextMenu->exec(event->globalPos());
 }
 
 void Menu::mouseMoveEvent(QMouseEvent *event)
@@ -122,7 +123,7 @@ void Menu::mouseMoveEvent(QMouseEvent *event)
             QDrag *drag = new QDrag(this);
             MimeDataObject *mimeData = new MimeDataObject();
 
-            /*
+/*
             QRect rect = actionGeometry(action);
             drag->setHotSpot(m_dragPos - rect.topLeft());
             QPixmap pixmap(rect.width(),rect.height());
