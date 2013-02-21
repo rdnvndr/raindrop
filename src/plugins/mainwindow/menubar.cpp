@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QDrag>
 #include "mimedataobject.h"
+#include "actionprop.h"
 
 MenuBar::MenuBar(QWidget *parent) :
     QMenuBar(parent)
@@ -15,7 +16,12 @@ MenuBar::MenuBar(QWidget *parent) :
     // Создание контекстного меню
     m_contextMenu = new QMenu();
 
-    QAction *action = new QAction(tr("Добавить"),this);
+    QAction *action = new QAction(tr("Удалить"),this);
+    connect(action,SIGNAL(triggered()), this,SLOT(removeContextAction()));
+    m_contextMenu->addAction(action);
+    m_contextMenu->addSeparator();
+    action = new QAction(tr("Свойства..."),this);
+    connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
     m_contextMenu->addAction(action);
     m_dragPos = QPoint(-1,-1);
 }
@@ -119,8 +125,23 @@ void MenuBar::dragMoveEvent(QDragMoveEvent *event)
 
 void MenuBar::contextMenuEvent(QContextMenuEvent *event)
 {
-    if (this->actionAt(event->pos())!=NULL)
+    if (this->actionAt(event->pos())!=NULL) {
+        m_contextAction = this->actionAt(event->pos());
         m_contextMenu->exec(event->globalPos());
-    else
+    } else
         QMenuBar::contextMenuEvent(event);
+}
+
+void MenuBar::removeContextAction()
+{
+    removeAction(m_contextAction);
+}
+
+void MenuBar::showActionProp()
+{
+    ActionProp *actionProp = new ActionProp();
+    actionProp->lineEditName->setText(m_contextAction->text());
+    if (actionProp->exec() == QDialog::Accepted) {
+        m_contextAction->setText(actionProp->lineEditName->text());
+    }
 }

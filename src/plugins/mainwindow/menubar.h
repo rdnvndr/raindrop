@@ -38,6 +38,14 @@ public:
     //! Вызов контекстного меню
     void contextMenuEvent(QContextMenuEvent *event);
 
+private slots:
+
+    //! Удаление QAction на котором вызвано контекстное меню
+    void removeContextAction();
+
+    //! Вызов редактирования свойств QAction
+    void showActionProp();
+
 private:
 
     //! Контекстное меню
@@ -45,6 +53,9 @@ private:
 
     //! Старые координаты курсора мыши при Drag and Drop
     QPoint m_dragPos;
+
+    //! Активный QAction при вызове контекстного меню
+    QAction *m_contextAction;
 };
 
 #endif // MENUBAR_H

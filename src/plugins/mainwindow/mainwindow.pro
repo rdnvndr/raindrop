@@ -17,7 +17,8 @@ HEADERS += \
     actiongroupmodel.h \
     mimedataobject.h \
     menu.h \
-    listview.h
+    listview.h \
+    actionprop.h
 SOURCES += \
            mainwindow.cpp \
     menubar.cpp \
@@ -25,11 +26,13 @@ SOURCES += \
     actiongroupmodel.cpp \
     mimedataobject.cpp \
     menu.cpp \
-    listview.cpp
+    listview.cpp \
+    actionprop.cpp
 
 FORMS += \
            mainwindow.ui \
-    mainwindowoptions.ui
+    mainwindowoptions.ui \
+    actionprop.ui
 
 RESOURCES += \
     mainwindow.qrc

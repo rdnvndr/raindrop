@@ -7,6 +7,7 @@
 #include <QDrag>
 #include <QApplication>
 #include <QPainter>
+#include "actionprop.h"
 #include "mimedataobject.h"
 
 Menu::Menu(QWidget *parent) :
@@ -17,7 +18,12 @@ Menu::Menu(QWidget *parent) :
     // Создание контекстного меню
     m_contextMenu = new QMenu();
 
-    QAction *action = new QAction(tr("Добавить"),this);
+    QAction *action = new QAction(tr("Удалить"),this);
+    connect(action,SIGNAL(triggered()), this,SLOT(removeContextAction()));
+    m_contextMenu->addAction(action);
+    m_contextMenu->addSeparator();
+    action = new QAction(tr("Свойства..."),this);
+    connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
     m_contextMenu->addAction(action);
     m_dragPos = QPoint(-1,-1);
 }
@@ -30,7 +36,12 @@ Menu::Menu(const QString &title, QWidget *parent):
     // Создание контекстного меню
     m_contextMenu = new QMenu();
 
-    QAction *action = new QAction(tr("Добавить"),this);
+    QAction *action = new QAction(tr("Удалить"),this);
+    connect(action,SIGNAL(triggered()), this,SLOT(removeContextAction()));
+    m_contextMenu->addAction(action);
+    m_contextMenu->addSeparator();
+    action = new QAction(tr("Свойства..."),this);
+    connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
     m_contextMenu->addAction(action);
     m_dragPos = QPoint(-1,-1);
 }
@@ -103,9 +114,31 @@ QSize Menu::sizeHint() const
 }
 
 void Menu::contextMenuEvent(QContextMenuEvent *event)
-{
-    if (this->actionAt(event->pos()))
+{   
+    m_contextAction = this->actionAt(event->pos());
+    if (m_contextAction)
         m_contextMenu->exec(event->globalPos());
+    else {
+        if (!geometry().contains(event->globalPos())) {
+            this->close();
+            m_contextAction = this->menuAction();
+            m_contextMenu->exec(event->globalPos());
+        }
+    }
+}
+
+void Menu::removeContextAction()
+{
+    removeAction(m_contextAction);
+}
+
+void Menu::showActionProp()
+{
+    ActionProp *actionProp = new ActionProp();
+    actionProp->lineEditName->setText(m_contextAction->text());
+    if (actionProp->exec() == QDialog::Accepted) {
+        m_contextAction->setText(actionProp->lineEditName->text());
+    }
 }
 
 void Menu::mouseMoveEvent(QMouseEvent *event)
