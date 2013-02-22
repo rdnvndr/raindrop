@@ -26,6 +26,8 @@ Menu::Menu(QWidget *parent) :
     connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
     m_contextMenu->addAction(action);
     m_dragPos = QPoint(-1,-1);
+
+    setContextMenuPolicy(Qt::NoContextMenu);
 }
 
 Menu::Menu(const QString &title, QWidget *parent):
@@ -44,6 +46,8 @@ Menu::Menu(const QString &title, QWidget *parent):
     connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
     m_contextMenu->addAction(action);
     m_dragPos = QPoint(-1,-1);
+
+    setContextMenuPolicy(Qt::NoContextMenu);
 }
 
 Menu::~Menu() {
@@ -113,20 +117,6 @@ QSize Menu::sizeHint() const
     return QMenu::sizeHint();
 }
 
-void Menu::contextMenuEvent(QContextMenuEvent *event)
-{   
-    m_contextAction = this->actionAt(event->pos());
-    if (m_contextAction)
-        m_contextMenu->exec(event->globalPos());
-    else {
-        if (!geometry().contains(event->globalPos())) {
-            this->close();
-            m_contextAction = this->menuAction();
-            m_contextMenu->exec(event->globalPos());
-        }
-    }
-}
-
 void Menu::removeContextAction()
 {
     removeAction(m_contextAction);
@@ -182,6 +172,13 @@ void Menu::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
         m_dragPos = event->pos();
+
+    // Вызов контекстного меню, contextMenuEvent() не вызывается для QAction типа меню)
+    if (event->button() == Qt::RightButton) {
+        m_contextAction = this->actionAt(event->pos());
+        if (m_contextAction)
+            m_contextMenu->exec(event->globalPos());
+    }
 
     QMenu::mousePressEvent(event);
 }

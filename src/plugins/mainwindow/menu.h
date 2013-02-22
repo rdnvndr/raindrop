@@ -42,9 +42,6 @@ public:
     //! Рекомендованный размер widget
     QSize sizeHint() const;
 
-    //! Вызов контекстного меню
-    void contextMenuEvent(QContextMenuEvent *event);
-
 private slots:
 
     //! Удаление QAction на котором вызвано контекстное меню
