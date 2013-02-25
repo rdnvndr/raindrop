@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "menubar.h"
 #include "menu.h"
+#include "toolbar.h"
 
 #include <plugin/pluginmanager.h>
 #include <QUuid>
@@ -380,6 +381,9 @@ void MainWindow::showOptionsDialog()
                 this,SLOT(saveOptionsDialog()));
         connect(m_optionsDialog->pushButtonSave,SIGNAL(clicked()),
                 subWindow,SLOT(close()));
+
+        connect(m_optionsDialog->pushButtonNew,SIGNAL(clicked()),
+                this,SLOT(createToolBar()));
 }
 
 void MainWindow::saveOptionsDialog()
@@ -391,6 +395,12 @@ void MainWindow::saveOptionsDialog()
 void MainWindow::cancelOptionsDialog()
 {
 
+}
+
+void MainWindow::createToolBar()
+{
+    ToolBar *toolBar = new ToolBar();
+    this->addToolBar(toolBar);
 }
 
 void MainWindow::writeMenu(QWidget *menu, int level)

@@ -160,6 +160,9 @@ private slots:
     //! Вызов отмены сохранения настроек меню
     void cancelOptionsDialog();
 
+    //! Добавление панели инструментов
+    void createToolBar();
+
 private:
 
     //! Создание пунктов меню
