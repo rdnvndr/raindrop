@@ -33,6 +33,7 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     actionWindowPrev->setObjectName("actionWindowPrev");
 
     actionWindowGui = new QAction(QIcon(), tr("Оконный вид"), this);
+    actionWindowGui->setCheckable(true);
     actionWindowGui->setObjectName("actionWindowGui");
 
     actionGuiOptions = new QAction(QIcon(":guioptions"), tr("Оформление"), this);
