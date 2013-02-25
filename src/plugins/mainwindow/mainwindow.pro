@@ -18,7 +18,8 @@ HEADERS += \
     mimedataobject.h \
     menu.h \
     listview.h \
-    actionprop.h
+    actionprop.h \
+    toolbar.h
 SOURCES += \
            mainwindow.cpp \
     menubar.cpp \
@@ -27,7 +28,8 @@ SOURCES += \
     mimedataobject.cpp \
     menu.cpp \
     listview.cpp \
-    actionprop.cpp
+    actionprop.cpp \
+    toolbar.cpp
 
 FORMS += \
            mainwindow.ui \
