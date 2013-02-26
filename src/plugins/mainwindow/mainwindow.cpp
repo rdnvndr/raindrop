@@ -14,6 +14,7 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     setupUi(this);
     this->setMenuBar(new MenuBar());
     //writeMenuSettings();
+    m_optionsDialog = NULL;
 
     actionWindowClose = new QAction(QIcon(), tr("Закрыть"), this);
     actionWindowClose->setObjectName("actionWindowClose");
@@ -366,11 +367,13 @@ MdiExtArea *MainWindow::getMdiArea()
 
 void MainWindow::showOptionsDialog()
 {
+    if (!m_optionsDialog) {
         m_optionsDialog = new MainWindowOptions(this);
         m_optionsDialog->createActionsModel(&m_actions);
 
         QMdiSubWindow *subWindow = addSubWindow(m_optionsDialog);
         connect(subWindow,SIGNAL(destroyed()),this,SLOT(refreshMenuBar()));
+        connect(subWindow,SIGNAL(destroyed()),this,SLOT(cancelOptionsDialog()));
 
         connect(m_optionsDialog->pushButtonCancel,SIGNAL(clicked()),
                 this,SLOT(cancelOptionsDialog()));
@@ -384,17 +387,20 @@ void MainWindow::showOptionsDialog()
 
         connect(m_optionsDialog->pushButtonNew,SIGNAL(clicked()),
                 this,SLOT(createToolBar()));
+    } else
+        addSubWindow(m_optionsDialog);
 }
 
 void MainWindow::saveOptionsDialog()
 {
     writeMenuSettings();
     readMenuSettings();
+    m_optionsDialog = NULL;
 }
 
 void MainWindow::cancelOptionsDialog()
 {
-
+    m_optionsDialog = NULL;
 }
 
 void MainWindow::createToolBar()
