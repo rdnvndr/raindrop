@@ -2,12 +2,14 @@
 #define TOOLBAR_H
 
 #include <QToolBar>
+#include <QMenu>
 
 class ToolBar : public QToolBar
 {
     Q_OBJECT
 public:
     explicit ToolBar(QWidget *parent = 0);
+    virtual ~ToolBar();
 
     //! Событие обрабатывающее перещение курсора мыши
     void mouseMoveEvent(QMouseEvent *event);
@@ -29,14 +31,28 @@ public:
 
     //! Обработка событий работы с QAction
     void actionEvent(QActionEvent *event);
+
+    //! Вызов контекстного меню
+    void contextMenuEvent(QContextMenuEvent *event);
     
-signals:
-    
-public slots:
+private slots:
+
+    //! Удаление QAction на котором вызвано контекстное меню
+    void removeContextAction();
+
+    //! Вызов редактирования свойств QAction
+    void showActionProp();
 
 private:
+
     //! Старые координаты курсора мыши при Drag and Drop
     QPoint m_dragPos;
+
+    //!  Активный QAction с меню
+    QAction *m_activeAction;
+
+    //! Активный QAction при вызове контекстного меню
+    QAction *m_contextAction;
 };
 
 #endif // TOOLBAR_H
