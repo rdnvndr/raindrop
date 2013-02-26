@@ -1,4 +1,3 @@
-#include "menu.h"
 #include <QByteArray>
 #include <QDebug>
 #include <QAction>
@@ -7,6 +6,7 @@
 #include <QDrag>
 #include <QApplication>
 #include <QPainter>
+#include "menu.h"
 #include "actionprop.h"
 #include "mimedataobject.h"
 
@@ -138,7 +138,7 @@ void Menu::mouseMoveEvent(QMouseEvent *event)
             drag->setMimeData(mimeData);
 
             if (drag->exec(Qt::MoveAction) == Qt::MoveAction)
-                if (drag->target() != this)
+                if (drag->target() != this || action->isSeparator())
                     this->removeAction(action);
         }
     }
