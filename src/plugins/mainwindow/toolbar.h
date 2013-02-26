@@ -4,6 +4,11 @@
 #include <QToolBar>
 #include <QMenu>
 
+//! Класс ToolBar представляет собой панель инструментов
+/*! Панель инструментов состоит из списочных или выпадающих пунктов меню
+ *  Отличается от QToolBar возможносnm добавления QAction при помощи
+ *  Drag and Drop
+ */
 class ToolBar : public QToolBar
 {
     Q_OBJECT

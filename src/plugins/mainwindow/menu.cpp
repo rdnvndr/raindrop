@@ -13,20 +13,8 @@
 Menu::Menu(QWidget *parent) :
     QMenu(parent)
 {
-    setAcceptDrops(true);
-
-    // Создание контекстного меню
-    m_contextMenu = new QMenu();
-
-    QAction *action = new QAction(tr("Удалить"),this);
-    connect(action,SIGNAL(triggered()), this,SLOT(removeContextAction()));
-    m_contextMenu->addAction(action);
-    m_contextMenu->addSeparator();
-    action = new QAction(tr("Свойства..."),this);
-    connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
-    m_contextMenu->addAction(action);
+    setAcceptDrops(true);    
     m_dragPos = QPoint(-1,-1);
-
     setContextMenuPolicy(Qt::NoContextMenu);
 }
 
@@ -34,24 +22,12 @@ Menu::Menu(const QString &title, QWidget *parent):
     QMenu(title, parent)
 {
     setAcceptDrops(true);
-
-    // Создание контекстного меню
-    m_contextMenu = new QMenu();
-
-    QAction *action = new QAction(tr("Удалить"),this);
-    connect(action,SIGNAL(triggered()), this,SLOT(removeContextAction()));
-    m_contextMenu->addAction(action);
-    m_contextMenu->addSeparator();
-    action = new QAction(tr("Свойства..."),this);
-    connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
-    m_contextMenu->addAction(action);
     m_dragPos = QPoint(-1,-1);
-
     setContextMenuPolicy(Qt::NoContextMenu);
 }
 
 Menu::~Menu() {
-    delete m_contextMenu;
+
 }
 
 void Menu::dropEvent(QDropEvent *event)
@@ -176,8 +152,19 @@ void Menu::mousePressEvent(QMouseEvent *event)
     // Вызов контекстного меню, contextMenuEvent() не вызывается для QAction типа меню)
     if (event->button() == Qt::RightButton) {
         m_contextAction = this->actionAt(event->pos());
-        if (m_contextAction)
-            m_contextMenu->exec(event->globalPos());
+        if (m_contextAction) {
+            // Создание контекстного меню
+            QMenu *contextMenu = new QMenu();
+            QAction *action = new QAction(tr("Удалить"),this);
+            connect(action,SIGNAL(triggered()), this,SLOT(removeContextAction()));
+            contextMenu->addAction(action);
+            contextMenu->addSeparator();
+            action = new QAction(tr("Свойства..."),this);
+            connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
+            contextMenu->addAction(action);
+            contextMenu->exec(event->globalPos());
+            delete contextMenu;
+        }
     }
 
     QMenu::mousePressEvent(event);
