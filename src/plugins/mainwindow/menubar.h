@@ -48,9 +48,6 @@ private slots:
 
 private:
 
-    //! Контекстное меню
-    QMenu* m_contextMenu;
-
     //! Старые координаты курсора мыши при Drag and Drop
     QPoint m_dragPos;
 
