@@ -106,23 +106,14 @@ MainWindow::~MainWindow()
 void MainWindow::readSettings()
 {
     settings()->beginGroup("IMainWindow");
-    resize(settings()->value("size", QSize(687, 582)).toSize());
-    move(settings()->value("pos", QPoint(200, 200)).toPoint());
+    /*resize(settings()->value("size", QSize(687, 582)).toSize());
+    move(settings()->value("pos", QPoint(200, 200)).toPoint());*/
     if (settings()->value("viewMode")== QMdiArea::SubWindowView)
         setWindowModeEnable(true);
     else
         setWindowModeEnable(false);
-    settings()->endGroup();
-}
-
-
-void MainWindow::writeMenuSettings() {
-    // MenuBar settings
-    settings()->beginGroup("IMainWindow");
-    m_menuArrayIndex = 0;
-    settings()->beginWriteArray("MenuBar");
-    writeMenu(this->menuBar());
-    settings()->endArray();
+    restoreGeometry(settings()->value("geometry").toByteArray());
+    restoreState(settings()->value("state").toByteArray());
     settings()->endGroup();
 }
 
@@ -130,9 +121,11 @@ void MainWindow::writeSettings()
 {
     // MainWindow settings
     settings()->beginGroup("IMainWindow");
-    settings()->setValue("size", size());
-    settings()->setValue("pos", pos());
+    /*settings()->setValue("size", size());
+    settings()->setValue("pos", pos());*/
     settings()->setValue("viewMode", mdiArea->viewMode());
+    settings()->setValue("geometry", saveGeometry());
+    settings()->setValue("state", saveState());
     settings()->endGroup();
 }
 
@@ -439,6 +432,16 @@ void MainWindow::writeMenu(QWidget *menu, int level)
         if (child->menu())
             writeMenu(child->menu(), level+1);
     }
+}
+
+void MainWindow::writeMenuSettings() {
+    // MenuBar settings
+    settings()->beginGroup("IMainWindow");
+    m_menuArrayIndex = 0;
+    settings()->beginWriteArray("MenuBar");
+    writeMenu(this->menuBar());
+    settings()->endArray();
+    settings()->endGroup();
 }
 
 void MainWindow::readMenuSettings()
