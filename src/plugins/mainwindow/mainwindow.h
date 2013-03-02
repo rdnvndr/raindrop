@@ -47,6 +47,7 @@ public:
         QList<MenuItem *> childItems; //!< Потомки
         QAction *action;              //!< Созданный объект
     };
+    typedef QMultiHash <QString, MenuItem *> MenuItemHash;
 
     //! Конструктор плагина главного окна
     explicit MainWindow(QMainWindow* pwgt = 0);
@@ -98,11 +99,11 @@ public slots:
     //! Удаление QAction из главного окна
     void removeAction(QAction *action);
 
-    //! Запись настроек меню
-    void writeMenuSettings();
+    //! Запись настроек меню и панелей инструментов
+    void writeBarSettings();
 
-    //! Чтение настроек меню
-    void readMenuSettings();
+    //! Чтение настроек меню и панелей инструментов
+    void readBarSettings();
 
     //! Чтение и применение настроек плагина главного окна
     void readSettings();
@@ -119,8 +120,8 @@ public slots:
     */
     void updateMenus();
 
-    //! Обновляет главное меню окна по структуре
-    void refreshMenuBar();
+    //! Обновляет главное меню окна и панели инструментов по структуре
+    void refreshAllBar();
 
     //! Слот установки оконного режима
     /*! Слот предназначен переключение приложения в закладочный
@@ -139,9 +140,6 @@ public slots:
         по его имени
      */
     QMdiSubWindow *setActiveSubWindow(QString objName);
-
-    //! Получение панели инструментов
-    QToolBar*   getToolBarMain();
 
     //! Получение области подокон
     MdiExtArea* getMdiArea();
@@ -166,13 +164,16 @@ private slots:
 private:
 
     //! Создание пунктов меню
-    QAction *createAction(MenuItem *menuItem);
+    QAction *createBranchAction(MenuItem *menuItem);
 
-    //! Удаление пунктов меню
-    void releaseAction(MenuItem *menuItem);
+    //! Удаление указанного пункта меню
+    void deleteBranchAction(MenuItem *menuItem);
 
-    //! Удаление ветки начиная с указанного узла
-    void cleanAction(MenuItem *menuItem);
+    //! Удаление ветки меню начиная с указанного узла
+    void removeBranchAction(MenuItem *menuItem);
+
+    //! Очистка меню начиная с указанного узла
+    void cleanBranchAction(MenuItem *menuItem);
 
     //! Запись настроек меню определенного уровня
     void writeMenu(QWidget *menu, int level = 0);
@@ -211,10 +212,10 @@ private:
     QMultiHash <QString, QAction *> m_actions;
 
     //! Список команд в структуре
-    QMultiHash <QString, MenuItem *> m_actionItem;
+    QList <MenuItemHash> m_actionItem;
 
     //! Ссылка на структуру меню
-    MenuItem *m_item;
+    QList <MenuItem *> m_item;
 
     //! Окно настройки главного меню окна
     MainWindowOptions *m_optionsDialog;
