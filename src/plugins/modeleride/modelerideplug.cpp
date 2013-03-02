@@ -1,7 +1,6 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QMenu>
-#include <QToolBar>
 
 #include <itreedockwidget.h>
 #include <imainwindow.h>
@@ -59,62 +58,42 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
             this,SLOT(showContextMenu(const QPoint&)));
 
     // Создание пунктов строки меню и кнопок панели исрументов
-    QMainWindow* mainWindow = qobject_cast<QMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
-
     IMainWindow* iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    // QMenu* menuFile = iMainWindow->getMenuFile();
-
-    QAction* separator;
-
-    actionNewModel = new QAction(QIcon(":newmodel"), tr("Новая модель"), mainWindow);
+    actionNewModel = new QAction(QIcon(":newmodel"), tr("Новая модель"), this);
     connect(actionNewModel, SIGNAL(triggered()), this, SLOT(newClassModel()));
     actionNewModel->setObjectName("actionNewModel");
     iMainWindow->addAction(tr("Редактор модели"),actionNewModel);
 
-    actionOpenModel = new QAction(QIcon(":openmodel"), tr("Открыть модель..."), mainWindow);
+    actionOpenModel = new QAction(QIcon(":openmodel"), tr("Открыть модель..."), this);
     connect(actionOpenModel, SIGNAL(triggered()), this, SLOT(openClassModel()));
     actionOpenModel->setObjectName("actionOpenModel");
     iMainWindow->addAction(tr("Редактор модели"),actionOpenModel);
 
-    actionSaveModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель"), mainWindow);
+    actionSaveModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель"), this);
     connect(actionSaveModel, SIGNAL(triggered()), this, SLOT(saveClassModel()));
     actionSaveModel->setDisabled(true);
     actionSaveModel->setObjectName("actionSaveModel");
     iMainWindow->addAction(tr("Редактор модели"),actionSaveModel);
 
-    actionSaveAsModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель как..."), mainWindow);
+    actionSaveAsModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель как..."), this);
     connect(actionSaveAsModel, SIGNAL(triggered()), this, SLOT(saveAsClassModel()));
     actionSaveAsModel->setDisabled(true);
     actionSaveAsModel->setObjectName("actionSaveAsModel");
     iMainWindow->addAction(tr("Редактор модели"),actionSaveAsModel);
 
-    actionPublishModel = new QAction(QIcon(":publish"), tr("Опубликовать модель..."), mainWindow);
+    actionPublishModel = new QAction(QIcon(":publish"), tr("Опубликовать модель..."), this);
     connect(actionPublishModel, SIGNAL(triggered()), this, SLOT(publishClassModel()));
     actionPublishModel->setDisabled(true);
     actionPublishModel->setObjectName("actionPublishModel");
     iMainWindow->addAction(tr("Редактор модели"),actionPublishModel);
 
-    actionCloseModel = new QAction(QIcon(":closemodel"), tr("Закрыть модель"), mainWindow);
+    actionCloseModel = new QAction(QIcon(":closemodel"), tr("Закрыть модель"), this);
     connect(actionCloseModel, SIGNAL(triggered()), this, SLOT(closeClassModel()));
     actionCloseModel->setDisabled(true);
     actionCloseModel->setObjectName("actionCloseModel");
     iMainWindow->addAction(tr("Редактор модели"),actionCloseModel);
-
-    QToolBar* toolBarMain = iMainWindow->getToolBarMain();
-
-    if (toolBarMain->actions().count() > 0)
-        separator = toolBarMain->insertSeparator(toolBarMain->actions().first());
-    else
-        separator = toolBarMain->addSeparator();
-
-    toolBarMain->insertAction(separator, actionNewModel);
-    toolBarMain->insertAction(separator, actionOpenModel);
-    toolBarMain->insertAction(separator, actionSaveModel);
-    toolBarMain->insertAction(separator, actionPublishModel);
-    toolBarMain->insertAction(separator, actionCloseModel);
 
     dockWidget->insertWidget(QIcon(":/modeleride"),tr("Редактор модели данных"),treeClassView);
 }

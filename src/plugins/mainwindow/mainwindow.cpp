@@ -10,7 +10,6 @@
 
 MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
 {
-
     setupUi(this);
     this->setMenuBar(new MenuBar());
     //writeMenuSettings();
@@ -54,9 +53,7 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     connect(actionWindowGui, SIGNAL(triggered(bool)), this, SLOT(setWindowModeEnable(bool)));
     connect(actionGuiOptions, SIGNAL(triggered()), this, SLOT(showOptionsDialog()));
     connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
-
-    readSettings();
-    readMenuSettings();
+    readBarSettings();
 
     addAction(tr("Файл"),actionExit);
     addAction(tr("Окно"),actionWindowCascade);
@@ -79,6 +76,7 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     addAction(tr("Новое меню"),newSeparator);
     newSeparator->setObjectName("actionNewSeparator");
 
+    readSettings();
     show();
 }
 
@@ -87,9 +85,16 @@ MainWindow::~MainWindow()
     writeSettings();
     settings()->sync();
 
-    cleanAction(m_item);
-    delete m_item;
+    foreach (MenuItem *item, m_item) {
+        cleanBranchAction(item);
+        removeBranchAction(item);
+    }
+    m_item.clear();
+
+    foreach (MenuItemHash actionItem, m_actionItem)
+        actionItem.clear();
     m_actionItem.clear();
+
     m_actions.clear();
 
     delete actionWindowClose;
@@ -106,8 +111,6 @@ MainWindow::~MainWindow()
 void MainWindow::readSettings()
 {
     settings()->beginGroup("IMainWindow");
-    /*resize(settings()->value("size", QSize(687, 582)).toSize());
-    move(settings()->value("pos", QPoint(200, 200)).toPoint());*/
     if (settings()->value("viewMode")== QMdiArea::SubWindowView)
         setWindowModeEnable(true);
     else
@@ -121,28 +124,37 @@ void MainWindow::writeSettings()
 {
     // MainWindow settings
     settings()->beginGroup("IMainWindow");
-    /*settings()->setValue("size", size());
-    settings()->setValue("pos", pos());*/
     settings()->setValue("viewMode", mdiArea->viewMode());
     settings()->setValue("geometry", saveGeometry());
     settings()->setValue("state", saveState());
     settings()->endGroup();
 }
 
-void MainWindow::cleanAction(MenuItem *menuItem)
+void MainWindow::removeBranchAction(MenuItem *menuItem)
 {
-    foreach (MenuItem *item,menuItem->childItems){
-        if (item->action)
-        {
-            if (item->action->isSeparator() || item->action->menu())
-                delete item->action;
-            item->action = NULL;
+    if (menuItem) {
+        foreach (MenuItem *item, menuItem->childItems) {
+            removeBranchAction(item);
         }
-        cleanAction(item);
+        delete menuItem;
     }
 }
 
-QAction *MainWindow::createAction(MenuItem *menuItem)
+void MainWindow::cleanBranchAction(MainWindow::MenuItem *menuItem)
+{
+    if (menuItem)
+        foreach (MenuItem *item, menuItem->childItems){
+            if (item->action)
+            {
+                if (item->action->isSeparator() || item->action->menu())
+                    delete item->action;
+                item->action = NULL;
+            }
+            cleanBranchAction(item);
+        }
+}
+
+QAction *MainWindow::createBranchAction(MenuItem *menuItem)
 {
     if (!menuItem)
         return NULL;
@@ -155,8 +167,18 @@ QAction *MainWindow::createAction(MenuItem *menuItem)
         return NULL;
 
     // Сортировка меню
-    QAction *parentAction  = createAction(parentItem);
+    QAction *parentAction  = createBranchAction(parentItem);
     QMenu *parentMenu = (parentAction) ? parentAction->menu():NULL;
+    ToolBar *toolBar = NULL;
+    if (parentItem->type == "ToolBar") {
+        toolBar = this->findChild<ToolBar *>(parentItem->name);
+        if (!toolBar) {
+            toolBar = new ToolBar();
+            toolBar->setObjectName(parentItem->name);
+            this->addToolBar(toolBar);
+        }
+    }
+
     QAction *prevAction = NULL;
     MenuItem *separatorItem = NULL;
 
@@ -168,7 +190,9 @@ QAction *MainWindow::createAction(MenuItem *menuItem)
             if (separatorItem) {
                 prevAction = (parentMenu) ?
                             parentMenu->insertSeparator(prevAction)
-                          : menuBar()->insertSeparator(prevAction);
+                          : (toolBar) ?
+                                toolBar->insertSeparator(prevAction)
+                              : menuBar()->insertSeparator(prevAction);
                 separatorItem->action = prevAction;
                 prevAction->setObjectName(separatorItem->name);
             }
@@ -192,6 +216,12 @@ QAction *MainWindow::createAction(MenuItem *menuItem)
             currentAction = (prevAction)
                     ? parentMenu->insertMenu(prevAction,currentMenu)
                     : parentMenu->addMenu(currentMenu);
+        } else if (toolBar) {
+            currentAction = currentMenu->menuAction();
+            if (prevAction)
+                toolBar->insertAction(prevAction,currentMenu->menuAction());
+            else
+                toolBar->addAction(currentMenu->menuAction());
         } else {
             currentAction = (prevAction)
                     ? menuBar()->insertMenu(prevAction,currentMenu)
@@ -206,6 +236,11 @@ QAction *MainWindow::createAction(MenuItem *menuItem)
                 parentMenu->insertAction(prevAction,menuItem->action);
             else
                 parentMenu->addAction(menuItem->action);
+        } else if (toolBar) {
+            if (prevAction)
+                toolBar->insertAction(prevAction,menuItem->action);
+            else
+                toolBar->addAction(menuItem->action);
         } else {
             if (prevAction)
                 menuBar()->insertAction(prevAction,menuItem->action);
@@ -217,13 +252,14 @@ QAction *MainWindow::createAction(MenuItem *menuItem)
     return NULL;
 }
 
-void MainWindow::releaseAction(MenuItem *menuItem)
+void MainWindow::deleteBranchAction(MenuItem *menuItem)
 {
     if (menuItem) {
-
+        // Удаляtncz menuItem без детей
         if (menuItem->childItems.count()==0) {
             MenuItem *parentMenuItem = menuItem->parentItem;
             if (menuItem->action) {
+                // Если Menu, то удаляем его иначе убираем QAction из него
                 if (menuItem->action->menu())
                     delete menuItem->action;
                 else if (parentMenuItem)
@@ -232,11 +268,12 @@ void MainWindow::releaseAction(MenuItem *menuItem)
                             parentMenuItem->action->menu()->removeAction(menuItem->action);
             }
 
+            // Удаляем MenuItem из структуры
             if (parentMenuItem) {
-                parentMenuItem->childItems.removeOne(menuItem);
-                releaseAction(parentMenuItem);
+                parentMenuItem->childItems.removeAll(menuItem);
+                deleteBranchAction(parentMenuItem);
+                delete menuItem;
             }
-            delete menuItem;
         }
     }
 }
@@ -247,10 +284,11 @@ void MainWindow::addAction(QString category, QAction *action)
 
     QString name = action->objectName();
 
-    foreach (MenuItem *menuItem,m_actionItem.values(name)) {
-        menuItem->action = action;
-        createAction(menuItem);
-    }
+    foreach (MenuItemHash actionItem, m_actionItem)
+        foreach (MenuItem *menuItem,actionItem.values(name)) {
+            menuItem->action = action;
+            createBranchAction(menuItem);
+        }
 
     connect(action,SIGNAL(destroyed(QObject*)),
             this, SLOT(removeAction(QObject*)));
@@ -264,15 +302,16 @@ void MainWindow::removeAction(QObject *obj)
                 m_actions.remove(category,actionCategory);
 
     QString name = obj->objectName();
-    foreach (MenuItem *item, m_actionItem.values(name)) {
-        releaseAction(item);
-        m_actionItem.remove(name, item);
-    }
+    foreach (MenuItemHash actionItem, m_actionItem)
+        foreach (MenuItem *item, actionItem.values(name)) {
+            deleteBranchAction(item);
+            actionItem.remove(name, item);
+        }
 }
 
 void MainWindow::removeAction(QAction *action)
 {
-   removeAction(qobject_cast< QObject *>(action));
+    removeAction(qobject_cast< QObject *>(action));
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
@@ -306,16 +345,25 @@ void MainWindow::updateMenus()
     actionWindowGui->setChecked(mdiArea->viewMode() == QMdiArea::SubWindowView);
 }
 
-void MainWindow::refreshMenuBar()
+void MainWindow::refreshAllBar()
 {
+    QList<ToolBar *> toolBars = this->findChildren<ToolBar *> ();
+    foreach (ToolBar* toolBar,toolBars) {
+        this->removeToolBar(toolBar);
+        delete toolBar;
+    }
     this->setMenuBar(new MenuBar());
-    cleanAction(m_item);
+
+    foreach (MenuItem *item, m_item)
+        cleanBranchAction(item);
+
     foreach (QAction* action, m_actions.values()) {
         if (action)
-            foreach (MenuItem *menuItem, m_actionItem.values(action->objectName())) {
-                menuItem->action = action;
-                createAction(menuItem);
-            }
+            foreach (MenuItemHash actionItem, m_actionItem)
+                foreach (MenuItem *menuItem, actionItem.values(action->objectName())) {
+                    menuItem->action = action;
+                    createBranchAction(menuItem);
+                }
     }
 }
 
@@ -348,11 +396,6 @@ QList<QMdiSubWindow *> MainWindow::subWindowList() const
     return mdiArea->subWindowList();
 }
 
-QToolBar *MainWindow::getToolBarMain()
-{
-    return toolBarMain;
-}
-
 MdiExtArea *MainWindow::getMdiArea()
 {
     return mdiArea;
@@ -365,7 +408,7 @@ void MainWindow::showOptionsDialog()
         m_optionsDialog->createActionsModel(&m_actions);
 
         QMdiSubWindow *subWindow = addSubWindow(m_optionsDialog);
-        connect(subWindow,SIGNAL(destroyed()),this,SLOT(refreshMenuBar()));
+        connect(subWindow,SIGNAL(destroyed()),this,SLOT(refreshAllBar()));
         connect(subWindow,SIGNAL(destroyed()),this,SLOT(cancelOptionsDialog()));
 
         connect(m_optionsDialog->pushButtonCancel,SIGNAL(clicked()),
@@ -386,8 +429,8 @@ void MainWindow::showOptionsDialog()
 
 void MainWindow::saveOptionsDialog()
 {
-    writeMenuSettings();
-    readMenuSettings();
+    writeBarSettings();
+    readBarSettings();
     m_optionsDialog = NULL;
 }
 
@@ -434,33 +477,54 @@ void MainWindow::writeMenu(QWidget *menu, int level)
     }
 }
 
-void MainWindow::writeMenuSettings() {
-    // MenuBar settings
+void MainWindow::writeBarSettings() {
+
     settings()->beginGroup("IMainWindow");
+
     m_menuArrayIndex = 0;
-    settings()->beginWriteArray("MenuBar");
+    settings()->beginWriteArray("BarSettings");
+
+    settings()->setArrayIndex(m_menuArrayIndex);
+    m_menuArrayIndex++;
+    settings()->setValue("level", -1);
+    settings()->setValue("type", "MenuBar");
+    settings()->setValue("name",  QUuid::createUuid().toString());
     writeMenu(this->menuBar());
+
+    const QList<ToolBar *> toolBars = this->findChildren<ToolBar *> ();
+    foreach (ToolBar* toolBar,toolBars) {
+        settings()->setArrayIndex(m_menuArrayIndex);
+        m_menuArrayIndex++;
+        settings()->setValue("level", -1);
+        settings()->setValue("type", "ToolBar");
+        settings()->setValue("name",  QUuid::createUuid().toString());
+        writeMenu(toolBar);
+    }
     settings()->endArray();
+
     settings()->endGroup();
 }
 
-void MainWindow::readMenuSettings()
+void MainWindow::readBarSettings()
 {
+    foreach (MenuItem *item, m_item) {
+        cleanBranchAction(item);
+        removeBranchAction(item);
+    }
+    m_item.clear();
+
+    foreach (MenuItemHash actionItem, m_actionItem)
+        actionItem.clear();
     m_actionItem.clear();
+    m_actionItem.append(MenuItemHash());
+
     settings()->beginGroup("IMainWindow");
-    //return;
-    int prevLevel = 0;
-    m_item = new MenuItem;
-    m_item->type = "MenuBar";
-    m_item->name = "MenuBar";
-    m_item->text = "MenuBar";
-    m_item->action = NULL;
-    m_item->parentItem = NULL;
 
-    MenuItem *parentItem  = m_item;
-    MenuItem *currentItem = new MenuItem;
+    int prevLevel = -1;
+    MenuItem *parentItem  = NULL;
+    MenuItem *currentItem = NULL;
 
-    int size = settings()->beginReadArray("MenuBar");
+    int size = settings()->beginReadArray("BarSettings");
     for (int i = 0; i < size; ++i) {
         settings()->setArrayIndex(i);
         int level = settings()->value("level").toInt();
@@ -468,11 +532,15 @@ void MainWindow::readMenuSettings()
         QString text = settings()->value("text").toString();
         QString typeAction = settings()->value("type").toString();
 
-        if (prevLevel<level)
-            parentItem = currentItem;
+        if (level < 0) {
+            parentItem = NULL;
+        } else {
+            if (prevLevel<level)
+                parentItem = currentItem;
 
-        if (prevLevel>level)
-            parentItem = parentItem->parentItem;
+            if (prevLevel>level)
+                parentItem = parentItem->parentItem;
+        }
 
         currentItem = new MenuItem;
         currentItem->name = name;
@@ -480,14 +548,22 @@ void MainWindow::readMenuSettings()
         currentItem->type = typeAction;
         currentItem->action = NULL;
         currentItem->parentItem = parentItem;
-        parentItem->childItems.append(currentItem);
-        m_actionItem.insert(name,currentItem);
-        prevLevel = level;
+        if (parentItem) {
+            parentItem->childItems.append(currentItem);
+            m_actionItem[0].insert(name,currentItem);
+            prevLevel = level;
+        } else {
+            qDebug() << "Append" ;
+            m_item.append(currentItem);
+            parentItem = currentItem;
+            prevLevel = 0;
+        }
+
     }
     settings()->endArray();
     settings()->endGroup();
 }
 
 #if QT_VERSION < 0x050000
-    Q_EXPORT_PLUGIN2(mainwindow, MainWindow)
+Q_EXPORT_PLUGIN2(mainwindow, MainWindow)
 #endif

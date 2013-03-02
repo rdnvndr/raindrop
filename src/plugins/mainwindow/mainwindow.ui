@@ -15,23 +15,6 @@
   </property>
   <widget class="MdiExtArea" name="mdiArea"/>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QToolBar" name="toolBarMain">
-   <property name="windowTitle">
-    <string>Стандартная</string>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>20</width>
-     <height>20</height>
-    </size>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
   <action name="actionExit">
    <property name="icon">
     <iconset resource="mainwindow.qrc">

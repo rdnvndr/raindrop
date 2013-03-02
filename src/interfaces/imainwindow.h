@@ -30,10 +30,10 @@ public slots:
     virtual void removeAction(QAction *action) = 0;
 
     //! Запись настроек меню
-    virtual void writeMenuSettings() = 0;
+    virtual void writeBarSettings() = 0;
 
     //! Чтение настроек меню
-    virtual void readMenuSettings() = 0;
+    virtual void readBarSettings() = 0;
 
     //! Чтение и применение настроек главного окна
     virtual void readSettings() = 0;
@@ -67,21 +67,6 @@ public slots:
         по его имени
      */
     virtual QMdiSubWindow *setActiveSubWindow(QString objName) = 0;
-/*
-    //! Получение меню File
-    virtual QMenu* getMenuFile() = 0;
-
-    //! Получение меню Edit
-    virtual QMenu* getMenuEdit() = 0;
-
-    //! Получение меню Settings
-    virtual QMenu* getMenuSettings() = 0;
-
-    //! Получение меню Help
-    virtual QMenu* getMenuHelp() = 0;
-*/
-    //! Получение панели инструментов
-    virtual QToolBar*   getToolBarMain() = 0;
 
     //! Получение области подокон
     virtual MdiExtArea* getMdiArea() = 0;
