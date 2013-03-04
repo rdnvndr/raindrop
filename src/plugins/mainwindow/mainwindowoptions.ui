@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindowOptions</class>
- <widget class="QWidget" name="MainWindowOptions">
+ <widget class="QDialog" name="MainWindowOptions">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -211,5 +211,38 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButtonSave</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindowOptions</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>215</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>132</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonCancel</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindowOptions</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>174</x>
+     <y>215</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>132</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

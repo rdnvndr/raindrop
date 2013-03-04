@@ -2,7 +2,7 @@
 #include <QDebug>
 
 MainWindowOptions::MainWindowOptions(QWidget *parent) :
-    QWidget(parent)
+    QDialog(parent)
 {
     setupUi(this);
     connect(listCategory,SIGNAL(activated(QModelIndex)),

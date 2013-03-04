@@ -53,8 +53,8 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     connect(actionWindowGui, SIGNAL(triggered(bool)), this, SLOT(setWindowModeEnable(bool)));
     connect(actionGuiOptions, SIGNAL(triggered()), this, SLOT(showOptionsDialog()));
     connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
-    readBarSettings();
 
+    readBarSettings();
     addAction(tr("Файл"),actionExit);
     addAction(tr("Окно"),actionWindowCascade);
     addAction(tr("Окно"),actionWindowClose);
@@ -76,7 +76,9 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     addAction(tr("Новое меню"),newSeparator);
     newSeparator->setObjectName("actionNewSeparator");
 
-    readSettings();
+    PluginManager* pluginManager = PluginManager::instance();
+    connect(pluginManager,SIGNAL(endLoadingPlugins()),
+            this,SLOT(readSettings()));
     show();
 }
 
@@ -175,6 +177,7 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
         if (!toolBar) {
             toolBar = new ToolBar();
             toolBar->setObjectName(parentItem->name);
+            toolBar->setWindowTitle(parentItem->text);
             this->addToolBar(toolBar);
         }
     }
@@ -365,6 +368,7 @@ void MainWindow::refreshAllBar()
                     createBranchAction(menuItem);
                 }
     }
+    readSettings();
 }
 
 QMdiSubWindow* MainWindow::addSubWindow(QWidget* widget)
@@ -403,21 +407,20 @@ MdiExtArea *MainWindow::getMdiArea()
 
 void MainWindow::showOptionsDialog()
 {
+    writeSettings();
     if (!m_optionsDialog) {
         m_optionsDialog = new MainWindowOptions(this);
         m_optionsDialog->createActionsModel(&m_actions);
 
         QMdiSubWindow *subWindow = addSubWindow(m_optionsDialog);
-        connect(subWindow,SIGNAL(destroyed()),this,SLOT(refreshAllBar()));
-        connect(subWindow,SIGNAL(destroyed()),this,SLOT(cancelOptionsDialog()));
 
-        connect(m_optionsDialog->pushButtonCancel,SIGNAL(clicked()),
+        connect(m_optionsDialog,SIGNAL(accepted()),
+                this,SLOT(saveOptionsDialog()));
+        connect(m_optionsDialog,SIGNAL(rejected()),
                 this,SLOT(cancelOptionsDialog()));
+
         connect(m_optionsDialog->pushButtonCancel,SIGNAL(clicked()),
                 subWindow,SLOT(close()));
-
-        connect(m_optionsDialog->pushButtonSave,SIGNAL(clicked()),
-                this,SLOT(saveOptionsDialog()));
         connect(m_optionsDialog->pushButtonSave,SIGNAL(clicked()),
                 subWindow,SLOT(close()));
 
@@ -430,12 +433,12 @@ void MainWindow::showOptionsDialog()
 void MainWindow::saveOptionsDialog()
 {
     writeBarSettings();
-    readBarSettings();
     m_optionsDialog = NULL;
 }
 
 void MainWindow::cancelOptionsDialog()
 {
+    refreshAllBar();
     m_optionsDialog = NULL;
 }
 
@@ -497,7 +500,10 @@ void MainWindow::writeBarSettings() {
         m_menuArrayIndex++;
         settings()->setValue("level", -1);
         settings()->setValue("type", "ToolBar");
-        settings()->setValue("name",  QUuid::createUuid().toString());
+        QString toolBarName = QUuid::createUuid().toString();
+        settings()->setValue("name", toolBarName);
+        settings()->setValue("text", toolBar->windowTitle());
+        toolBar->setObjectName(toolBarName);
         writeMenu(toolBar);
     }
     settings()->endArray();
