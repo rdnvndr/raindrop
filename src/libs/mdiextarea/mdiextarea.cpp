@@ -65,14 +65,14 @@ void MdiExtArea::setActiveSubWindow(QMdiSubWindow *window)
 void MdiExtArea::closeActiveSubWindow(){
     QMdiSubWindow* subWindow = activeSubWindow();
     activateNextSubWindow();
-    removeSubWindow(subWindow);
+    subWindow->close();
 }
 
 void MdiExtArea::closeAllSubWindows(){
     QMdiSubWindow* subWindow = activeSubWindow();
     while (subWindow){
         activateNextSubWindow();
-        removeSubWindow(subWindow);
+        subWindow->close();
         subWindow = activeSubWindow();
     }
 }
