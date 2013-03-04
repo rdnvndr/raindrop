@@ -12,7 +12,7 @@
  *  технологии Drag and Drop
 */
 
-class MainWindowOptions : public QWidget, public Ui::MainWindowOptions
+class MainWindowOptions : public QDialog, public Ui::MainWindowOptions
 {
     Q_OBJECT
 public:

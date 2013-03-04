@@ -84,6 +84,7 @@ void PluginManager::loadPlugins()
         loadPlugin(m_listFiles.at(m_currentFile));
 
     QDir::setCurrent(qApp->applicationDirPath());
+    emit endLoadingPlugins();
 }
 
 bool PluginManager::nextLoadPlugin() {
