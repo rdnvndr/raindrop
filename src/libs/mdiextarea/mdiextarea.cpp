@@ -21,21 +21,7 @@ QMdiSubWindow *MdiExtArea::addSubWindow(QWidget *widget, Qt::WindowFlags flags){
 }
 
 void MdiExtArea::setViewMode(ViewMode mode){
-    if (mode == QMdiArea::TabbedView)
-        for (int i=0;i<this->subWindowList().count();i++)
-            this->subWindowList().at(i)->showMaximized();
-
     QMdiArea::setViewMode(mode);
-    if (mode == QMdiArea::TabbedView){
-        QTabBar *tabBar = findChild <QTabBar*>();
-        if (!tabBar->tabsClosable()){
-            tabBar->setTabsClosable(true);
-            tabBar->parentWidget()->adjustSize();
-        }
-        if (activeSubWindow()!=NULL)
-            activeSubWindow()->showMaximized();
-    }
-    this->setOption(QMdiArea::DontMaximizeSubWindowOnActivation,true);
 }
 
 QMdiSubWindow* MdiExtArea::subWindow(QString widgetName) {
