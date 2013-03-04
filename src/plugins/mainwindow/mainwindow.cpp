@@ -78,8 +78,7 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
 
     PluginManager* pluginManager = PluginManager::instance();
     connect(pluginManager,SIGNAL(endLoadingPlugins()),
-            this,SLOT(readSettings()));
-    show();
+            this,SLOT(endLoadingPlugins()));
 }
 
 MainWindow::~MainWindow()
@@ -448,6 +447,12 @@ void MainWindow::createToolBar()
     this->addToolBar(toolBar);
 }
 
+void MainWindow::endLoadingPlugins()
+{
+    readSettings();
+    show();
+}
+
 void MainWindow::writeMenu(QWidget *menu, int level)
 {
     for (int row = 0;row < menu->actions().count(); row++) {
@@ -559,7 +564,6 @@ void MainWindow::readBarSettings()
             m_actionItem[0].insert(name,currentItem);
             prevLevel = level;
         } else {
-            qDebug() << "Append" ;
             m_item.append(currentItem);
             parentItem = currentItem;
             prevLevel = 0;
