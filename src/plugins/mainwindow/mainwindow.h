@@ -161,6 +161,9 @@ private slots:
     //! Добавление панели инструментов
     void createToolBar();
 
+    //! Выполнение действий после загрузки плагина
+    void endLoadingPlugins();
+
 private:
 
     //! Создание пунктов меню

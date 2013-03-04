@@ -18,6 +18,7 @@ ToolBar::ToolBar(QWidget *parent) :
 
     m_dragPos = QPoint(-1,-1);
     m_activeAction = NULL;
+    setContextMenuPolicy(Qt::NoContextMenu);
 }
 
 ToolBar::~ToolBar()
@@ -126,9 +127,28 @@ bool ToolBar::eventFilter(QObject *object, QEvent *event)
     if (event->type() == QEvent::MouseMove)
         this->mouseMoveEvent(mouseEvent);
 
-    if (event->type() == QEvent::MouseButtonPress)
+    if (event->type() == QEvent::MouseButtonPress) {
+        if (mouseEvent->button() == Qt::RightButton) {
+            m_contextAction = this->actionAt(
+                        mapFromGlobal(mouseEvent->globalPos()));
+            if (m_contextAction) {
+                // Создание контекстного меню
+                QMenu *contextMenu = new QMenu();
+                QAction *action = new QAction(tr("Удалить"),this);
+                connect(action,SIGNAL(triggered()), this,SLOT(removeContextAction()));
+                contextMenu->addAction(action);
+                contextMenu->addSeparator();
+                action = new QAction(tr("Свойства..."),this);
+                connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
+                contextMenu->addAction(action);
+                contextMenu->exec(mouseEvent->globalPos());
+                delete contextMenu;
+            }
+        }
+
         if (mouseEvent->button() == Qt::LeftButton)
             m_dragPos = mapFromGlobal(mouseEvent->globalPos());
+    }
 
     return false;
 }
@@ -142,25 +162,6 @@ void ToolBar::actionEvent(QActionEvent *event)
             if (widget)
                 widget->installEventFilter(this);
         }
-}
-
-void ToolBar::contextMenuEvent(QContextMenuEvent *event)
-{
-    if (this->actionAt(event->pos())!=NULL) {
-        // Создание контекстного меню
-        QMenu *contextMenu = new QMenu();
-        QAction *action = new QAction(tr("Удалить"),this);
-        connect(action,SIGNAL(triggered()), this,SLOT(removeContextAction()));
-        contextMenu->addAction(action);
-        contextMenu->addSeparator();
-        action = new QAction(tr("Свойства..."),this);
-        connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
-        contextMenu->addAction(action);
-        m_contextAction = this->actionAt(event->pos());
-        contextMenu->exec(event->globalPos());
-        delete contextMenu;
-    } else
-        QToolBar::contextMenuEvent(event);
 }
 
 void ToolBar::removeContextAction()
