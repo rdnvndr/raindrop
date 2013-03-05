@@ -12,7 +12,7 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
 {
     setupUi(this);
     this->setMenuBar(new MenuBar());
-    //writeMenuSettings();
+
     m_optionsDialog = NULL;
 
     actionWindowClose = new QAction(QIcon(), tr("Закрыть"), this);
@@ -424,6 +424,7 @@ void MainWindow::showOptionsDialog()
     if (!m_optionsDialog) {
         m_optionsDialog = new MainWindowOptions(this);
         m_optionsDialog->createActionsModel(&m_actions);
+        m_optionsDialog->createToolBarModel(this);
 
         QMdiSubWindow *subWindow = addSubWindow(m_optionsDialog);
 
@@ -436,9 +437,6 @@ void MainWindow::showOptionsDialog()
                 subWindow,SLOT(close()));
         connect(m_optionsDialog->pushButtonSave,SIGNAL(clicked()),
                 subWindow,SLOT(close()));
-
-        connect(m_optionsDialog->pushButtonNew,SIGNAL(clicked()),
-                this,SLOT(createToolBar()));
     } else
         addSubWindow(m_optionsDialog);
 }
@@ -453,12 +451,6 @@ void MainWindow::cancelOptionsDialog()
 {
     refreshAllBar();
     m_optionsDialog = NULL;
-}
-
-void MainWindow::createToolBar()
-{
-    ToolBar *toolBar = new ToolBar();
-    this->addToolBar(toolBar);
 }
 
 void MainWindow::endLoadingPlugins()

@@ -164,9 +164,6 @@ private slots:
     //! Вызов отмены сохранения настроек меню
     void cancelOptionsDialog();
 
-    //! Добавление панели инструментов
-    void createToolBar();
-
     //! Выполнение действий после загрузки плагина
     void endLoadingPlugins();
 

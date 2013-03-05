@@ -19,7 +19,9 @@ HEADERS += \
     menu.h \
     listview.h \
     actionprop.h \
-    toolbar.h
+    toolbar.h \
+    toolbarmodel.h \
+    toolbarprop.h
 SOURCES += \
            mainwindow.cpp \
     menubar.cpp \
@@ -29,12 +31,15 @@ SOURCES += \
     menu.cpp \
     listview.cpp \
     actionprop.cpp \
-    toolbar.cpp
+    toolbar.cpp \
+    toolbarmodel.cpp \
+    toolbarprop.cpp
 
 FORMS += \
            mainwindow.ui \
     mainwindowoptions.ui \
-    actionprop.ui
+    actionprop.ui \
+    toolbarprop.ui
 
 RESOURCES += \
     mainwindow.qrc
