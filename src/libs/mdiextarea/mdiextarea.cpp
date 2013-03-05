@@ -22,6 +22,13 @@ QMdiSubWindow *MdiExtArea::addSubWindow(QWidget *widget, Qt::WindowFlags flags){
 
 void MdiExtArea::setViewMode(ViewMode mode){
     QMdiArea::setViewMode(mode);
+    if (mode == QMdiArea::TabbedView){
+        QTabBar *tabBar = findChild <QTabBar*>();
+        if (!tabBar->tabsClosable()){
+            tabBar->setTabsClosable(true);
+            tabBar->parentWidget()->adjustSize();
+        }
+    }
 }
 
 QMdiSubWindow* MdiExtArea::subWindow(QString widgetName) {
