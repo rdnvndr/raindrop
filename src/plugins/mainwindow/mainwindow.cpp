@@ -83,7 +83,6 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
 
 MainWindow::~MainWindow()
 {
-    writeSettings();
     settings()->sync();
 
     foreach (MenuItem *item, m_item) {
@@ -116,7 +115,10 @@ void MainWindow::readSettings()
         setWindowModeEnable(true);
     else
         setWindowModeEnable(false);
-    restoreGeometry(settings()->value("geometry").toByteArray());
+    QPoint pos = settings()->value("pos", QPoint(200, 200)).toPoint();
+    QSize size = settings()->value("size", QSize(400, 400)).toSize();
+    resize(size);
+    move(pos);
     restoreState(settings()->value("state").toByteArray());
     settings()->endGroup();
 }
@@ -126,7 +128,8 @@ void MainWindow::writeSettings()
     // MainWindow settings
     settings()->beginGroup("IMainWindow");
     settings()->setValue("viewMode", mdiArea->viewMode());
-    settings()->setValue("geometry", saveGeometry());
+    settings()->setValue("pos", pos());
+    settings()->setValue("size", size());
     settings()->setValue("state", saveState());
     settings()->endGroup();
 }
@@ -318,6 +321,7 @@ void MainWindow::removeAction(QAction *action)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
+    writeSettings();
     event->accept();
 }
 
