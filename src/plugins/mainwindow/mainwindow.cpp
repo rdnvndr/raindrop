@@ -351,7 +351,7 @@ void MainWindow::updateMenus()
     actionWindowGui->setChecked(mdiArea->viewMode() == QMdiArea::SubWindowView);
 }
 
-void MainWindow::refreshAllBar()
+void MainWindow::refreshAllBar(bool readingBarSettings)
 {
     QList<ToolBar *> toolBars = this->findChildren<ToolBar *> ();
     foreach (ToolBar* toolBar,toolBars) {
@@ -360,8 +360,11 @@ void MainWindow::refreshAllBar()
     }
     this->setMenuBar(new MenuBar());
 
-    foreach (MenuItem *item, m_item)
-        cleanBranchAction(item);
+    if (readingBarSettings)
+        readBarSettings();
+    else
+        foreach (MenuItem *item, m_item)
+            cleanBranchAction(item);
 
     foreach (QAction* action, m_actions.values()) {
         if (action)
@@ -371,7 +374,9 @@ void MainWindow::refreshAllBar()
                     createBranchAction(menuItem);
                 }
     }
-    readSettings();
+    settings()->beginGroup("IMainWindow");
+    restoreState(settings()->value("state").toByteArray());
+    settings()->endGroup();
 }
 
 QMdiSubWindow* MainWindow::addSubWindow(QWidget* widget)
@@ -407,8 +412,6 @@ QMenu *MainWindow::createPopupMenu()
 {
     QMenu *menu = QMainWindow::createPopupMenu();
     menu->addSeparator();
-    //action = new QAction(tr("Свойства..."),this);
-    //connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
     menu->addAction(actionGuiOptions);
     return menu;
 }
@@ -420,7 +423,9 @@ MdiExtArea *MainWindow::getMdiArea()
 
 void MainWindow::showOptionsDialog()
 {
-    writeSettings();
+    settings()->beginGroup("IMainWindow");
+    settings()->setValue("state", saveState());
+    settings()->endGroup();
     if (!m_optionsDialog) {
         m_optionsDialog = new MainWindowOptions(this);
         m_optionsDialog->createActionsModel(&m_actions);
@@ -444,6 +449,7 @@ void MainWindow::showOptionsDialog()
 void MainWindow::saveOptionsDialog()
 {
     writeBarSettings();
+    settings()->sync();
     m_optionsDialog = NULL;
 }
 
