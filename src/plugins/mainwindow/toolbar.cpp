@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QMenu>
 #include <QToolButton>
+#include <QDrag>
 #include <QDebug>
 
 #include "toolbar.h"
