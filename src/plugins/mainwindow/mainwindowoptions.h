@@ -3,8 +3,10 @@
 
 #include <QMenuBar>
 #include <QStandardItemModel>
+#include <QMainWindow>
 #include "ui_mainwindowoptions.h"
 #include "actiongroupmodel.h"
+#include "toolbarmodel.h"
 
 //! Класс настройки панели инструментов и главного меню
 /*! Класс настройки панели инструментов и главного меню предназначен
@@ -26,10 +28,26 @@ public:
     //! Создание модели команд
     void createActionsModel(QMultiHash<QString, QAction *> *actions);
 
+    //! Создание модели панелей инструментов
+    void createToolBarModel(QMainWindow *mainWindow);
+
+private slots:
+
+    //! Создание новой панели инструментов
+    void insertToolBar();
+
+    //! Удаление панели инструментов
+    void removeToolBar();
+
+    //! Переименование панели инструментов
+    void renameToolBar();
+
 private:
     //! Хранит модель команд
-    ActionGroupModel* m_model;
+    ActionGroupModel *m_actionGroupModel;
     
+    //! Хранит модель панелей инструментов
+    ToolBarModel *m_toolBarModel;
 };
 
 #endif // MAINWINDOWOPTIONS_H
