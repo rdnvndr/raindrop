@@ -37,7 +37,7 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     actionWindowGui->setCheckable(true);
     actionWindowGui->setObjectName("actionWindowGui");
 
-    actionGuiOptions = new QAction(QIcon(":guioptions"), tr("Оформление"), this);
+    actionGuiOptions = new QAction(QIcon(":guioptions"), tr("Оформление..."), this);
     actionGuiOptions->setObjectName("actionGuiOptions");
 
     actionExit = new QAction(QIcon(":exit"), tr("Выход"), this);
@@ -401,6 +401,16 @@ QMdiSubWindow* MainWindow::subWindow(QString objName)
 QList<QMdiSubWindow *> MainWindow::subWindowList() const
 {
     return mdiArea->subWindowList();
+}
+
+QMenu *MainWindow::createPopupMenu()
+{
+    QMenu *menu = QMainWindow::createPopupMenu();
+    menu->addSeparator();
+    //action = new QAction(tr("Свойства..."),this);
+    //connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
+    menu->addAction(actionGuiOptions);
+    return menu;
 }
 
 MdiExtArea *MainWindow::getMdiArea()
