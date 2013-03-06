@@ -475,7 +475,7 @@ void MainWindow::optionsDialogStateChanged(Qt::WindowStates oldState,
 {
     bool edited;
     if (newState.testFlag(Qt::WindowActive)) {
-        if (oldState.testFlag(Qt::WindowActive)) {
+        if (!oldState.testFlag(Qt::WindowActive)) {
             edited = true;
         }
     } else {
@@ -548,7 +548,6 @@ void MainWindow::setEditedMenu(QWidget *widget, bool edited)
 
 void MainWindow::setEditedAllMenu(bool edited)
 {
-    qDebug() << "Edited:" << edited;
     setEditedMenu(this->menuBar(), edited);
 
     const QList<ToolBar *> toolBars = this->findChildren<ToolBar *> ();

@@ -34,13 +34,18 @@ Menu::~Menu() {
 
 void Menu::dropEvent(QDropEvent *event)
 {
+    if (!isEdited())
+        return;
+
     const MimeDataObject *mimeData = qobject_cast<const MimeDataObject *>(event->mimeData());
     QAction *aAction = qobject_cast<QAction *>(mimeData->object());
 
     if (aAction) {
         if (aAction->menu())
             if (aAction->objectName() == "actionNewMenu") {
-                aAction = (new Menu(aAction->text()))->menuAction();
+                Menu *menu =  new Menu(aAction->text());
+                menu->setEdited(true);
+                aAction = menu->menuAction();
             }
 
         QAction* eAction = this->actionAt(event->pos());
@@ -64,7 +69,8 @@ void Menu::dropEvent(QDropEvent *event)
 
 void Menu::dragEnterEvent(QDragEnterEvent *event)
 {
-    if ((qobject_cast<const MimeDataObject *>(event->mimeData()))->hasObject())
+    if ((qobject_cast<const MimeDataObject *>(event->mimeData()))->hasObject()
+            && isEdited())
         event->acceptProposedAction();
     m_dragPos = QPoint(-1,-1);
 }
@@ -75,7 +81,7 @@ void Menu::dragMoveEvent(QDragMoveEvent *event)
             = qobject_cast<const MimeDataObject *>(event->mimeData());
 
     QAction* eAction = this->actionAt(event->pos());
-    if (mimeData->hasFormat("application/x-qobject"))
+    if (mimeData->hasFormat("application/x-qobject") && isEdited())
         if (mimeData->object() != eAction && eAction)
             if (eAction->menu() && activeAction()!= eAction)
                 setActiveAction(eAction);
@@ -123,7 +129,7 @@ void Menu::mouseMoveEvent(QMouseEvent *event)
 {
     QMenu::mouseMoveEvent(event);
     QAction *action = this->actionAt(m_dragPos);
-    if (event->buttons() & Qt::LeftButton && action) {
+    if (event->buttons() & Qt::LeftButton && action && isEdited()) {
         int distance = (event->pos() - m_dragPos).manhattanLength();
         if (distance > QApplication::startDragDistance()) {
             qDebug() << "Menu:" <<m_dragPos;
@@ -162,7 +168,7 @@ void Menu::mousePressEvent(QMouseEvent *event)
         m_dragPos = event->pos();
 
     // Вызов контекстного меню, contextMenuEvent() не вызывается для QAction типа меню)
-    if (event->button() == Qt::RightButton) {
+    if (event->button() == Qt::RightButton && isEdited()) {
         m_contextAction = this->actionAt(event->pos());
         if (m_contextAction) {
             // Создание контекстного меню

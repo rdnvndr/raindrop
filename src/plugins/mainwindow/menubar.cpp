@@ -26,7 +26,7 @@ void MenuBar::mouseMoveEvent(QMouseEvent *event)
     QMenuBar::mouseMoveEvent(event);
     QAction *action  = this->actionAt(m_dragPos);
 
-    if (event->buttons() & Qt::LeftButton && action) {
+    if (event->buttons() & Qt::LeftButton && action && isEdited()) {
         int distance = (event->pos() - m_dragPos).manhattanLength();
         if (distance > QApplication::startDragDistance() ) {
             qDebug() << "MenuBar:" <<m_dragPos;
@@ -64,14 +64,16 @@ void MenuBar::dropEvent(QDropEvent *event)
     const MimeDataObject *mimeData = qobject_cast<const MimeDataObject *>(event->mimeData());
     QAction *aAction = qobject_cast<QAction *>(mimeData->object());
 
-    if (aAction) {
+    if (aAction && isEdited()) {
         if (activeAction())
             if (activeAction()->menu())
                 activeAction()->menu()->close();
 
         if (aAction->menu())
             if (aAction->objectName() == "actionNewMenu") {
-                aAction = (new Menu(aAction->text()))->menuAction();
+                Menu *menu =  new Menu(aAction->text());
+                menu->setEdited(true);
+                aAction = menu->menuAction();
             }
 
         QAction* eAction = this->actionAt(event->pos());
@@ -95,7 +97,8 @@ void MenuBar::dropEvent(QDropEvent *event)
 
 void MenuBar::dragEnterEvent(QDragEnterEvent *event)
 {
-    if (event->mimeData()->hasFormat("application/x-qobject"))
+    if (event->mimeData()->hasFormat("application/x-qobject")
+            && isEdited())
         event->acceptProposedAction();
      m_dragPos = QPoint(-1,-1);
 }
@@ -106,7 +109,7 @@ void MenuBar::dragMoveEvent(QDragMoveEvent *event)
             = qobject_cast<const MimeDataObject *>(event->mimeData());
 
     QAction* eAction = this->actionAt(event->pos());
-    if (mimeData->hasFormat("application/x-qobject"))
+    if (mimeData->hasFormat("application/x-qobject") && isEdited())
         if (mimeData->object() != eAction && eAction)
             if (eAction->menu() && activeAction()!= eAction)
                 setActiveAction(eAction);
@@ -115,7 +118,7 @@ void MenuBar::dragMoveEvent(QDragMoveEvent *event)
 
 void MenuBar::contextMenuEvent(QContextMenuEvent *event)
 {
-    if (this->actionAt(event->pos())!=NULL) {
+    if (this->actionAt(event->pos())!=NULL && isEdited()) {
         // Создание контекстного меню
         QMenu *contextMenu = new QMenu();
         QAction *action = new QAction(tr("Удалить"),this);

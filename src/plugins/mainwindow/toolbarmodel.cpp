@@ -111,6 +111,7 @@ bool ToolBarModel::insertRows(int row, int count, const QModelIndex &parent)
             m_mapper,SLOT(map()));
     m_mapper->setMapping(toolBar,toolBar);
     endInsertRows();
+    toolBar->setEdited(true);
     return true;
 }
 
