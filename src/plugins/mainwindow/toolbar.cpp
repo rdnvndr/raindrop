@@ -34,7 +34,7 @@ void ToolBar::mouseMoveEvent(QMouseEvent *event)
     QToolBar::mouseMoveEvent(event);
     QAction *action  = this->actionAt(m_dragPos);
 
-    if (event->buttons() & Qt::LeftButton && action) {
+    if (event->buttons() & Qt::LeftButton && action && isEdited()) {
         int distance = (event->pos() - m_dragPos).manhattanLength();
         if (distance > QApplication::startDragDistance() ) {
 
@@ -62,11 +62,13 @@ void ToolBar::dropEvent(QDropEvent *event)
     const MimeDataObject *mimeData = qobject_cast<const MimeDataObject *>(event->mimeData());
     QAction *aAction = qobject_cast<QAction *>(mimeData->object());
 
-    if (aAction) {
+    if (aAction && isEdited()) {
 
         if (aAction->menu())
             if (aAction->objectName() == "actionNewMenu") {
-                aAction = (new Menu(aAction->text()))->menuAction();
+                Menu *menu =  new Menu(aAction->text());
+                menu->setEdited(true);
+                aAction = menu->menuAction();
             }
 
         QAction* eAction = this->actionAt(event->pos());
@@ -96,7 +98,8 @@ void ToolBar::dropEvent(QDropEvent *event)
 
 void ToolBar::dragEnterEvent(QDragEnterEvent *event)
 {
-    if (event->mimeData()->hasFormat("application/x-qobject")) {
+    if (event->mimeData()->hasFormat("application/x-qobject")
+            && isEdited()) {
         event->acceptProposedAction();
     }
     m_dragPos = QPoint(-1,-1);
@@ -108,7 +111,7 @@ void ToolBar::dragMoveEvent(QDragMoveEvent *event)
             = qobject_cast<const MimeDataObject *>(event->mimeData());
 
     QAction* eAction = this->actionAt(event->pos());
-    if (mimeData->hasFormat("application/x-qobject"))
+    if (mimeData->hasFormat("application/x-qobject") && isEdited())
         if (mimeData->object() != eAction && eAction)
             if (eAction->menu() && !eAction->menu()->isVisible()) {
                 if (m_activeAction)
@@ -130,7 +133,7 @@ bool ToolBar::eventFilter(QObject *object, QEvent *event)
     if (event->type() == QEvent::MouseMove)
         this->mouseMoveEvent(mouseEvent);
 
-    if (event->type() == QEvent::MouseButtonPress) {
+    if (event->type() == QEvent::MouseButtonPress && isEdited()) {
         if (mouseEvent->button() == Qt::RightButton) {
             m_contextAction = this->actionAt(
                         mapFromGlobal(mouseEvent->globalPos()));
