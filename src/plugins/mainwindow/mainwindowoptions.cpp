@@ -27,9 +27,16 @@ void MainWindowOptions::createActionsModel(QMultiHash <QString, QAction *> *acti
     m_actionGroupModel = new ActionGroupModel(actions);
     listCategory->setModel(m_actionGroupModel);
     listCommands->setModel(m_actionGroupModel);
+    treeViewHotKey->setModel(m_actionGroupModel);
+    treeViewHotKey->setColumnWidth(0,300);
+    treeViewHotKey->setColumnHidden(2,true);
+    treeViewHotKey->setColumnHidden(3,true);
+    treeViewHotKey->setColumnHidden(4,true);
+    treeViewHotKey->expandAll();
 
     listCategory->setCurrentIndex(m_actionGroupModel->index(0,0));
     listCommands->setRootIndex(m_actionGroupModel->index(0,0));
+
 }
 
 void MainWindowOptions::createToolBarModel(QMainWindow *mainWindow)

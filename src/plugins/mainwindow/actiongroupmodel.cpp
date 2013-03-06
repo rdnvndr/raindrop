@@ -14,17 +14,28 @@ QVariant ActionGroupModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     if (index.internalId()>0) {
+
         QString key = m_actions->uniqueKeys().at(index.internalId()-1);
         QAction *action = m_actions->values(key).at(index.row());
-        if (role == Qt::DecorationRole) {
+        if (role == Qt::DecorationRole && index.column() == 0) {
             if (action->icon().isNull())
                 return QIcon(":empty");
             else
                 return action->icon();
-        } else if (role == Qt::DisplayRole || role == Qt::EditRole){
-            return action->text();
         }
-    } else if (role == Qt::DisplayRole || role == Qt::EditRole){
+
+        if (role == Qt::DisplayRole || role == Qt::EditRole){
+            switch (index.column()) {
+                case 0: return action->text();
+                case 1: return action->shortcut().toString();
+                case 2: return action->whatsThis();
+                case 3: return action->toolTip();
+                case 4: return action->statusTip();
+            }
+        }
+
+    } else if ((role == Qt::DisplayRole || role == Qt::EditRole)
+               && index.column() == 0){
         QString key = m_actions->uniqueKeys().at(index.row());
         return key;
     }
@@ -42,8 +53,13 @@ Qt::ItemFlags ActionGroupModel::flags(const QModelIndex &index) const
 QVariant ActionGroupModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
-        if (section == 0)
-            return  tr("Наименование");
+        switch (section) {
+            case 0: return  tr("Наименование");
+            case 1: return  tr("Сочетание клавиш");
+            case 2: return  tr("Описание");
+            case 3: return  tr("Подсказака");
+            case 4: return  tr("Подсказка строки статуса");
+        }
     }
     return  QVariant();
 }
@@ -54,9 +70,9 @@ QModelIndex ActionGroupModel::index(int row, int column, const QModelIndex &pare
         return QModelIndex();
 
     if (parent.isValid()) {
-        return createIndex(row, 0, parent.row()+1);
+        return createIndex(row, column, parent.row()+1);
     } else
-        return createIndex(row, 0);
+        return createIndex(row, column);
 }
 
 
@@ -76,17 +92,18 @@ int ActionGroupModel::rowCount(const QModelIndex &parent) const
 {
     if (!parent.isValid()) {
         return m_actions->uniqueKeys().count();
-    } else {
+    } else if (!parent.parent().isValid()) {
         QString key = m_actions->uniqueKeys().at(parent.row());
         return m_actions->values(key).count();
-    }
+    } else
+        return 0;
 
 }
 
 int ActionGroupModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    return 1;
+    return 5;
 }
 
 QStringList ActionGroupModel::mimeTypes() const
