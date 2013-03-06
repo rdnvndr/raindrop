@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>267</width>
-    <height>271</height>
+    <width>258</width>
+    <height>232</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -172,10 +172,14 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QLineEdit" name="lineEditFilter"/>
-          </item>
-          <item>
-           <widget class="QTreeView" name="treeViewHotKey"/>
+           <widget class="QTreeView" name="treeViewHotKey">
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="rootIsDecorated">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -194,7 +198,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEditHotKey"/>
+           <widget class="HotKeyLineEdit" name="lineEditHotKey"/>
           </item>
           <item>
            <widget class="QPushButton" name="pushButtonClear">
@@ -269,6 +273,11 @@
    <class>ListView</class>
    <extends>QListView</extends>
    <header>listview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>HotKeyLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>hotkeylineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

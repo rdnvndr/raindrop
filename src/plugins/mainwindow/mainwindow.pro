@@ -21,7 +21,9 @@ HEADERS += \
     actionprop.h \
     toolbar.h \
     toolbarmodel.h \
-    toolbarprop.h
+    toolbarprop.h \
+    hotkeylineedit.h \
+    hotkeydelegate.h
 SOURCES += \
            mainwindow.cpp \
     menubar.cpp \
@@ -33,7 +35,9 @@ SOURCES += \
     actionprop.cpp \
     toolbar.cpp \
     toolbarmodel.cpp \
-    toolbarprop.cpp
+    toolbarprop.cpp \
+    hotkeylineedit.cpp \
+    hotkeydelegate.cpp
 
 FORMS += \
            mainwindow.ui \

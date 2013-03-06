@@ -42,6 +42,21 @@ private slots:
     //! Переименование панели инструментов
     void renameToolBar();
 
+    //! Смена горячих клавишей
+    void changeHotKey(QKeySequence keySequence);
+
+    //! Смена строки в дереве горячих клавиш
+    void hotKeyCurrentChange(QModelIndex current, QModelIndex old);
+
+    //! Смена строки в дереве категорий
+    void listCategoryCurrentChange(QModelIndex current, QModelIndex old);
+
+    //! //! Смена строки в дереве команд
+    void listCommandsCurrentChange(QModelIndex current, QModelIndex old);
+
+    //! Сброс смены горячей клавиши
+    void resetHotKey();
+
 private:
     //! Хранит модель команд
     ActionGroupModel *m_actionGroupModel;
