@@ -43,11 +43,39 @@ QVariant ActionGroupModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+bool ActionGroupModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (role == Qt::EditRole && index.internalId()>0) {
+        QString key = m_actions->uniqueKeys().at(index.internalId()-1);
+        QAction *action = m_actions->values(key).at(index.row());
+        switch (index.column()) {
+        case 0:
+            action->setText(value.toString());
+            break;
+        case 1:
+            action->setShortcut(value.value<QKeySequence>());
+            break;
+        case 2:
+            action->setWhatsThis(value.toString());
+            break;
+        case 3:
+            action->setToolTip(value.toString());
+            break;
+        case 4:
+            action->setStatusTip(value.toString());
+            break;
+        }
+        emit dataChanged(index,index);
+        return true;
+    }
+    return false;
+}
+
 Qt::ItemFlags ActionGroupModel::flags(const QModelIndex &index) const
 {
     Q_UNUSED(index)
     return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled |
-            Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+            Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
 }
 
 QVariant ActionGroupModel::headerData(int section, Qt::Orientation orientation, int role) const
