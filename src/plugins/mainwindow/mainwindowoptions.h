@@ -57,6 +57,9 @@ private slots:
     //! Сброс смены горячей клавиши
     void resetHotKey();
 
+    //! Удаление горячей клавиши
+    void deleteHotKey();
+
 private:
     //! Хранит модель команд
     ActionGroupModel *m_actionGroupModel;

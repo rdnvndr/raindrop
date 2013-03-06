@@ -294,6 +294,9 @@ void MainWindow::addAction(QString category, QAction *action)
             menuItem->action = action;
             createBranchAction(menuItem);
         }
+    QKeySequence hotkey = m_hotkey.value(action->objectName());
+    if (hotkey != QKeySequence())
+        action->setShortcut(hotkey);
 
     connect(action,SIGNAL(destroyed(QObject*)),
             this, SLOT(removeAction(QObject*)));
@@ -367,12 +370,17 @@ void MainWindow::refreshAllBar(bool readingBarSettings)
             cleanBranchAction(item);
 
     foreach (QAction* action, m_actions.values()) {
-        if (action)
+        if (action) {
             foreach (MenuItemHash actionItem, m_actionItem)
                 foreach (MenuItem *menuItem, actionItem.values(action->objectName())) {
                     menuItem->action = action;
                     createBranchAction(menuItem);
                 }
+            QKeySequence hotkey = m_hotkey.value(action->objectName());
+            if (hotkey != QKeySequence())
+                action->setShortcut(hotkey);
+        }
+
     }
     settings()->beginGroup("IMainWindow");
     restoreState(settings()->value("state").toByteArray());
@@ -525,6 +533,18 @@ void MainWindow::writeBarSettings() {
     }
     settings()->endArray();
 
+    settings()->beginWriteArray("HotKeySettings");
+    m_menuArrayIndex = 0;
+    foreach (QAction* action, m_actions.values())
+        if (action)
+            if (action->shortcut() != QKeySequence()){
+                settings()->setArrayIndex(m_menuArrayIndex);
+                m_menuArrayIndex++;
+                settings()->setValue("name", action->objectName());
+                settings()->setValue("hotkey",action->shortcut());
+            }
+    settings()->endArray();
+
     settings()->endGroup();
 }
 
@@ -583,6 +603,17 @@ void MainWindow::readBarSettings()
 
     }
     settings()->endArray();
+
+    m_hotkey.clear();
+    size = settings()->beginReadArray("HotKeySettings");
+    for (int i = 0; i < size; ++i) {
+        settings()->setArrayIndex(i);
+        QString name = settings()->value("name").toString();
+        QKeySequence hotkey = settings()->value("hotkey").value<QKeySequence>();
+        m_hotkey.insert(name,hotkey);
+    }
+    settings()->endArray();
+
     settings()->endGroup();
 }
 

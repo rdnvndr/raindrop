@@ -17,7 +17,8 @@ MainWindowOptions::MainWindowOptions(QWidget *parent) :
     connect(pushButtonRename,SIGNAL(clicked()),this,SLOT(renameToolBar()));
     connect(lineEditHotKey,SIGNAL(changeHotKey(QKeySequence)),
             this, SLOT(changeHotKey(QKeySequence)));
-    connect(pushButtonClear,SIGNAL(clicked()),this,SLOT(resetHotKey()));
+    connect(pushButtonKeyClear,SIGNAL(clicked()),this,SLOT(resetHotKey()));
+    connect(pushButtonKeyDelete,SIGNAL(clicked()),this,SLOT(deleteHotKey()));
     treeViewHotKey->setItemDelegate(new HotKeyDelegate());
 }
 
@@ -118,6 +119,16 @@ void MainWindowOptions::listCommandsCurrentChange(QModelIndex current, QModelInd
 void MainWindowOptions::resetHotKey()
 {
     lineEditHotKey->resetKeySequence();
+    QModelIndex currentIndex = treeViewHotKey->currentIndex();
+    if (currentIndex.isValid() && currentIndex.parent().isValid()) {
+        m_actionGroupModel->setData(currentIndex.sibling(currentIndex.row(),1),
+                                    lineEditHotKey->keySequence());
+    }
+}
+
+void MainWindowOptions::deleteHotKey()
+{
+    lineEditHotKey->setKeySequence(QKeySequence());
     QModelIndex currentIndex = treeViewHotKey->currentIndex();
     if (currentIndex.isValid() && currentIndex.parent().isValid()) {
         m_actionGroupModel->setData(currentIndex.sibling(currentIndex.row(),1),

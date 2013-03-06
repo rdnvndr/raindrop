@@ -225,6 +225,9 @@ private:
 
     //! Окно настройки главного меню окна
     MainWindowOptions *m_optionsDialog;
+
+    //! Cписок горячих клавиш команд
+    QHash <QString, QKeySequence> m_hotkey;
 };
 
 #endif
