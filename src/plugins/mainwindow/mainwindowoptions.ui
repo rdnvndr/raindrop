@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>258</width>
+    <width>341</width>
     <height>232</height>
    </rect>
   </property>
@@ -201,7 +201,14 @@
            <widget class="HotKeyLineEdit" name="lineEditHotKey"/>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButtonClear">
+           <widget class="QPushButton" name="pushButtonKeyDelete">
+            <property name="text">
+             <string>Удалить</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonKeyClear">
             <property name="text">
              <string>Сбросить</string>
             </property>
