@@ -164,6 +164,10 @@ private slots:
     //! Вызов отмены сохранения настроек меню
     void cancelOptionsDialog();
 
+    //! Изменение состояние окна настройки меню
+    void optionsDialogStateChanged(Qt::WindowStates oldState,
+                                   Qt::WindowStates newState);
+
     //! Выполнение действий после загрузки плагина
     void endLoadingPlugins();
 
@@ -183,6 +187,12 @@ private:
 
     //! Запись настроек меню определенного уровня
     void writeMenu(QWidget *menu, int level = 0);
+
+    //! Установка режима редактирования меню
+    void setEditedMenu(QWidget *widget, bool edited);
+
+    //! Установка режима редактирования для всех меню
+    void setEditedAllMenu(bool edited);
 
     //! Команда закрытия окна
     QAction *actionWindowClose;

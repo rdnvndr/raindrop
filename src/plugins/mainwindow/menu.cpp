@@ -16,6 +16,7 @@ Menu::Menu(QWidget *parent) :
     setAcceptDrops(true);    
     m_dragPos = QPoint(-1,-1);
     setContextMenuPolicy(Qt::NoContextMenu);
+    m_edited = false;
 }
 
 Menu::Menu(const QString &title, QWidget *parent):
@@ -24,6 +25,7 @@ Menu::Menu(const QString &title, QWidget *parent):
     setAcceptDrops(true);
     m_dragPos = QPoint(-1,-1);
     setContextMenuPolicy(Qt::NoContextMenu);
+    m_edited = false;
 }
 
 Menu::~Menu() {
@@ -91,6 +93,16 @@ QSize Menu::sizeHint() const
     }
 
     return QMenu::sizeHint();
+}
+
+void Menu::setEdited(bool edited)
+{
+    m_edited = edited;
+}
+
+bool Menu::isEdited()
+{
+    return m_edited;
 }
 
 void Menu::removeContextAction()

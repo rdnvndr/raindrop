@@ -13,6 +13,7 @@ MenuBar::MenuBar(QWidget *parent) :
 {
     setAcceptDrops(true);
     m_dragPos = QPoint(-1,-1);
+    m_edited = false;
 }
 
 MenuBar::~MenuBar()
@@ -143,4 +144,14 @@ void MenuBar::showActionProp()
     if (actionProp->exec() == QDialog::Accepted) {
         m_contextAction->setText(actionProp->lineEditName->text());
     }
+}
+
+void MenuBar::setEdited(bool edited)
+{
+    m_edited = edited;
+}
+
+bool MenuBar::isEdited()
+{
+    return m_edited;
 }

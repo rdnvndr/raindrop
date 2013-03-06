@@ -42,6 +42,12 @@ public:
     //! Рекомендованный размер widget
     QSize sizeHint() const;
 
+    //! Перевод меню в режим редактирования
+    void setEdited(bool edited);
+
+    //! Возращает режим редактирования
+    bool isEdited();
+
 private slots:
 
     //! Удаление QAction на котором вызвано контекстное меню
@@ -57,7 +63,9 @@ private:
 
     //! Активный QAction при вызове контекстного меню
     QAction *m_contextAction;
-    
+
+    //! Определяет является ли меню редактируемым
+    bool m_edited;
 };
 
 #endif // MENU_H

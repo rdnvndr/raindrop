@@ -440,6 +440,9 @@ void MainWindow::showOptionsDialog()
         m_optionsDialog->createToolBarModel(this);
 
         QMdiSubWindow *subWindow = addSubWindow(m_optionsDialog);
+        connect(subWindow,SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)),
+                this,SLOT(optionsDialogStateChanged(Qt::WindowStates,Qt::WindowStates)));
+        setEditedAllMenu(true);
 
         connect(m_optionsDialog,SIGNAL(accepted()),
                 this,SLOT(saveOptionsDialog()));
@@ -465,6 +468,23 @@ void MainWindow::cancelOptionsDialog()
 {
     refreshAllBar();
     m_optionsDialog = NULL;
+}
+
+void MainWindow::optionsDialogStateChanged(Qt::WindowStates oldState,
+                                           Qt::WindowStates newState)
+{
+    bool edited;
+    if (newState.testFlag(Qt::WindowActive)) {
+        if (oldState.testFlag(Qt::WindowActive)) {
+            edited = true;
+        }
+    } else {
+        if (oldState.testFlag(Qt::WindowActive)) {
+            edited = false;
+        }
+    }
+
+    setEditedAllMenu(edited);
 }
 
 void MainWindow::endLoadingPlugins()
@@ -502,6 +522,38 @@ void MainWindow::writeMenu(QWidget *menu, int level)
 
         if (child->menu())
             writeMenu(child->menu(), level+1);
+    }
+}
+
+void MainWindow::setEditedMenu(QWidget *widget, bool edited)
+{
+    MenuBar *menuBar = qobject_cast<MenuBar *>(widget);
+    if (menuBar)
+        menuBar->setEdited(edited);
+
+    ToolBar *toolBar = qobject_cast<ToolBar *>(widget);
+    if (toolBar)
+        toolBar->setEdited(edited);
+
+    Menu *menu = qobject_cast<Menu *>(widget);
+    if (menu)
+        menu->setEdited(edited);
+
+    for (int row = 0;row < widget->actions().count(); row++) {
+        QAction *child = widget->actions().at(row);
+        if (child->menu())
+            setEditedMenu(child->menu(),edited);
+    }
+}
+
+void MainWindow::setEditedAllMenu(bool edited)
+{
+    qDebug() << "Edited:" << edited;
+    setEditedMenu(this->menuBar(), edited);
+
+    const QList<ToolBar *> toolBars = this->findChildren<ToolBar *> ();
+    foreach (ToolBar* toolBar,toolBars) {
+        setEditedMenu(toolBar, edited);
     }
 }
 

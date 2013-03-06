@@ -20,6 +20,8 @@ ToolBar::ToolBar(QWidget *parent) :
     m_dragPos = QPoint(-1,-1);
     m_activeAction = NULL;
     setContextMenuPolicy(Qt::NoContextMenu);
+
+    m_edited = false;
 }
 
 ToolBar::~ToolBar()
@@ -177,4 +179,14 @@ void ToolBar::showActionProp()
     if (actionProp->exec() == QDialog::Accepted) {
         m_contextAction->setText(actionProp->lineEditName->text());
     }
+}
+
+void ToolBar::setEdited(bool edited)
+{
+    m_edited = edited;
+}
+
+bool ToolBar::isEdited()
+{
+    return m_edited;
 }
