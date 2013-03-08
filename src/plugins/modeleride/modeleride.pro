@@ -8,7 +8,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
   QT += widgets
 }
 QT += xml
-LIBS += -lplugin -ltreedockwidget -lmdiextarea -ltreexmlmodel -ltreecombobox
+LIBS += -lplugin -ltreedockwidget -lmdiextarea -ltreexmlmodel -ltreecombobox -lpushbuttonimage
 include(../plugins.pri)
 # Input
 HEADERS += modelerideplug.h \
@@ -21,8 +21,7 @@ HEADERS += modelerideplug.h \
     compositionwidget.h \
     propcomposition.h \
     compositionpropwidget.h \
-    xmldelegate.h \
-    pushbuttonimage.h
+    xmldelegate.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -32,8 +31,7 @@ SOURCES += modelerideplug.cpp \
     compositionwidget.cpp \
     propcomposition.cpp \
     compositionpropwidget.cpp \
-    xmldelegate.cpp \
-    pushbuttonimage.cpp
+    xmldelegate.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \

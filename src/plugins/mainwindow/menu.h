@@ -48,6 +48,14 @@ public:
     //! Возращает режим редактирования
     bool isEdited();
 
+    //! Установка иконки
+    void setIcon(const QString &fileName);
+    void setIcon(const QIcon &icon);
+    void setNativeIcon(QByteArray data);
+
+    //! Возращает иконку в исходном виде
+    QByteArray nativeIcon();
+
 private slots:
 
     //! Удаление QAction на котором вызвано контекстное меню
@@ -66,6 +74,9 @@ private:
 
     //! Определяет является ли меню редактируемым
     bool m_edited;
+
+    //! Иконка в исходном формате
+    QByteArray m_icon;
 };
 
 #endif // MENU_H

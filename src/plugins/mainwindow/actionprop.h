@@ -9,6 +9,7 @@ class ActionProp : public QDialog, public Ui::ActionProp
     
 public:
     explicit ActionProp(QWidget *parent = 0);
+
 };
 
 #endif // ACTIONPROP_H

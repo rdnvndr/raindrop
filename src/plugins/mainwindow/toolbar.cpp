@@ -68,6 +68,7 @@ void ToolBar::dropEvent(QDropEvent *event)
             if (aAction->objectName() == "actionNewMenu") {
                 Menu *menu =  new Menu(aAction->text());
                 menu->setEdited(true);
+                menu->setIcon(aAction->icon());
                 aAction = menu->menuAction();
             }
 
@@ -178,10 +179,21 @@ void ToolBar::removeContextAction()
 void ToolBar::showActionProp()
 {
     ActionProp *actionProp = new ActionProp();
+    actionProp->pushButtonIcon->setIcon(m_contextAction->icon());
+    Menu *menu = qobject_cast<Menu *>(m_contextAction->menu());
+    if (!menu)
+        actionProp->groupBoxIcon->setDisabled(true);
+
     actionProp->lineEditName->setText(m_contextAction->text());
     if (actionProp->exec() == QDialog::Accepted) {
         m_contextAction->setText(actionProp->lineEditName->text());
+        if (menu) {
+            QIcon icon = actionProp->pushButtonIcon->icon();
+            menu->setNativeIcon(actionProp->pushButtonIcon->data());
+            m_contextAction->setIcon(icon);
+        }
     }
+    delete actionProp;
 }
 
 void ToolBar::setEdited(bool edited)

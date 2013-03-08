@@ -232,6 +232,11 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
                     ? menuBar()->insertMenu(prevAction,currentMenu)
                     : menuBar()->addMenu(currentMenu);
         }
+        QPixmap pixmap;
+        pixmap.loadFromData(menuItem->icon);
+        QIcon icon = QIcon(pixmap);
+        currentMenu->setNativeIcon(menuItem->icon);
+        currentAction->setIcon(icon);
         menuItem->action = currentAction;
         currentAction->setObjectName(menuItem->name);
         return currentAction;
@@ -512,13 +517,13 @@ void MainWindow::writeMenu(QWidget *menu, int level)
         } else if (child->menu()) {
             settings()->setValue("type", "Menu");
             settings()->setValue("name",  QUuid::createUuid().toString());
+            Menu *menu = qobject_cast<Menu *>(child->menu());
+            settings()->setValue("icon", menu->nativeIcon());
         } else {
             settings()->setValue("type", "Action");
             settings()->setValue("name", child->objectName());
         }
         settings()->setValue("text", child->text());
-
-        //settings()->setValue("icon", child->icon());
 
         if (child->menu())
             writeMenu(child->menu(), level+1);
@@ -639,6 +644,7 @@ void MainWindow::readBarSettings()
         currentItem = new MenuItem;
         currentItem->name = name;
         currentItem->text = text;
+        currentItem->icon = settings()->value("icon").toByteArray();
         currentItem->type = typeAction;
         currentItem->action = NULL;
         currentItem->parentItem = parentItem;
