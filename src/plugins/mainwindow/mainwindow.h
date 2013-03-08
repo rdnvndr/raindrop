@@ -43,6 +43,7 @@ public:
         QString name;                 //!< Имя объекта
         QString text;                 //!< Название
         QString type;                 //!< Тип
+        QByteArray icon;              //!< Иконка
         MenuItem *parentItem;         //!< Родитель
         QList<MenuItem *> childItems; //!< Потомки
         QAction *action;              //!< Созданный объект

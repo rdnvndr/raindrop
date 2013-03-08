@@ -143,10 +143,21 @@ void MenuBar::removeContextAction()
 void MenuBar::showActionProp()
 {
     ActionProp *actionProp = new ActionProp();
+    actionProp->pushButtonIcon->setIcon(m_contextAction->icon());
+    Menu *menu = qobject_cast<Menu *>(m_contextAction->menu());
+    if (!menu)
+        actionProp->groupBoxIcon->setDisabled(true);
+
     actionProp->lineEditName->setText(m_contextAction->text());
     if (actionProp->exec() == QDialog::Accepted) {
         m_contextAction->setText(actionProp->lineEditName->text());
+        if (menu) {
+            QIcon icon = actionProp->pushButtonIcon->icon();
+            menu->setNativeIcon(actionProp->pushButtonIcon->data());
+            m_contextAction->setIcon(icon);
+        }
     }
+    delete actionProp;
 }
 
 void MenuBar::setEdited(bool edited)

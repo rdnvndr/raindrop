@@ -1,4 +1,4 @@
-LIBS += -lplugin -lmdiextarea
+LIBS += -lplugin -lmdiextarea -lpushbuttonimage
 include(../plugins.pri)
 
 DEPENDPATH += .

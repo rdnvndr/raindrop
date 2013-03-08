@@ -29,7 +29,7 @@ Menu::Menu(const QString &title, QWidget *parent):
 }
 
 Menu::~Menu() {
-
+    m_icon.clear();
 }
 
 void Menu::dropEvent(QDropEvent *event)
@@ -111,6 +111,32 @@ bool Menu::isEdited()
     return m_edited;
 }
 
+void Menu::setIcon(const QString &fileName)
+{
+    QFile file(fileName);
+    if (file.open(QIODevice::ReadOnly)) {
+        m_icon.clear();
+        m_icon = file.readAll();
+        file.close();
+        QMenu::setIcon(QIcon(fileName));
+    }
+}
+
+void Menu::setIcon(const QIcon &icon)
+{
+    QMenu::setIcon(icon);
+}
+
+void Menu::setNativeIcon(QByteArray data)
+{
+    m_icon = data;
+}
+
+QByteArray Menu::nativeIcon()
+{
+    return m_icon;
+}
+
 void Menu::removeContextAction()
 {
     removeAction(m_contextAction);
@@ -119,10 +145,21 @@ void Menu::removeContextAction()
 void Menu::showActionProp()
 {
     ActionProp *actionProp = new ActionProp();
+    actionProp->pushButtonIcon->setIcon(m_contextAction->icon());
+    Menu *menu = qobject_cast<Menu *>(m_contextAction->menu());
+    if (!menu)
+        actionProp->groupBoxIcon->setDisabled(true);
+
     actionProp->lineEditName->setText(m_contextAction->text());
     if (actionProp->exec() == QDialog::Accepted) {
         m_contextAction->setText(actionProp->lineEditName->text());
+        if (menu) {
+            QIcon icon = actionProp->pushButtonIcon->icon();
+            menu->setNativeIcon(actionProp->pushButtonIcon->data());
+            m_contextAction->setIcon(icon);
+        }
     }
+    delete actionProp;
 }
 
 void Menu::mouseMoveEvent(QMouseEvent *event)

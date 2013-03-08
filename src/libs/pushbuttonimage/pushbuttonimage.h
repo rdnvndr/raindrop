@@ -1,6 +1,7 @@
 #ifndef PUSHBUTTONIMAGE_H
 #define PUSHBUTTONIMAGE_H
 
+#include "pushbuttonimageglobal.h"
 #include <QPushButton>
 
 //! Класс PushButtonImage является кнопкой-изображением
@@ -8,7 +9,7 @@
  *  виде кнопки, загрузки с диска, сохранения на диск
  */
 
-class PushButtonImage : public QPushButton
+class PUSHBUTTONIMAGELIB PushButtonImage : public QPushButton
 {
     Q_OBJECT
 public:
@@ -21,7 +22,7 @@ public:
     //! Получение рисунка
     QByteArray data() const;
 signals:
-    
+
 public slots:
 
     //! Открытие рисунка с диска
@@ -38,4 +39,5 @@ private:
     QByteArray m_data;
 };
 
-#endif // PUSHBUTTONIMAGE_H
+#endif
+
