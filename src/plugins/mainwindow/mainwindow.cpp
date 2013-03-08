@@ -1,12 +1,13 @@
 #include <QCloseEvent>
 #include <QString>
+#include <QWhatsThis>
+#include <QUuid>
+#include <plugin/pluginmanager.h>
+
 #include "mainwindow.h"
 #include "menubar.h"
 #include "menu.h"
 #include "toolbar.h"
-
-#include <plugin/pluginmanager.h>
-#include <QUuid>
 
 MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
 {
@@ -43,6 +44,15 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     actionExit = new QAction(QIcon(":exit"), tr("Выход"), this);
     actionExit->setObjectName("actionExit");
 
+    actionAboutQt = new QAction(QIcon(":qt"), tr("О Qt..."), this);
+    actionAboutQt->setObjectName("actionAboutQt");
+
+    actionWhatsThis = new QAction(QIcon(":whatsthis"), tr("Что это?"), this);
+    actionWhatsThis->setObjectName("actionWhatsThis");
+    actionWhatsThis->setShortcut(tr("Shift+F1"));
+
+    connect(actionWhatsThis, SIGNAL(triggered()), this, SLOT(showWhatsThis()));
+    connect(actionAboutQt, SIGNAL(triggered()), this, SLOT(aboutQt()));
     connect(actionExit, SIGNAL(triggered()), this, SLOT(close()));
     connect(actionWindowClose, SIGNAL(triggered()), mdiArea, SLOT(closeActiveSubWindow()));
     connect(actionWindowCloseAll, SIGNAL(triggered()), mdiArea, SLOT(closeAllSubWindows()));
@@ -55,6 +65,8 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
 
     readBarSettings();
+    addAction(tr("Справка"),actionWhatsThis);
+    addAction(tr("Справка"),actionAboutQt);
     addAction(tr("Файл"),actionExit);
     addAction(tr("Окно"),actionWindowCascade);
     addAction(tr("Окно"),actionWindowClose);
@@ -106,6 +118,8 @@ MainWindow::~MainWindow()
     delete actionWindowGui;
     delete actionGuiOptions;
     delete actionExit;
+    delete actionAboutQt;
+    delete actionWhatsThis;
 }
 
 void MainWindow::readSettings()
@@ -432,6 +446,16 @@ QMenu *MainWindow::createPopupMenu()
 MdiExtArea *MainWindow::getMdiArea()
 {
     return mdiArea;
+}
+
+void MainWindow::aboutQt()
+{
+    QApplication::aboutQt();
+}
+
+void MainWindow::showWhatsThis()
+{
+    QWhatsThis::enterWhatsThisMode();
 }
 
 void MainWindow::showOptionsDialog()

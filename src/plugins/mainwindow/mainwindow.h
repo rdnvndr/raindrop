@@ -151,6 +151,12 @@ public slots:
     //! Получение области подокон
     MdiExtArea* getMdiArea();
 
+    //! Вызов окна "О Qt..."
+    void aboutQt();
+
+    //! Перейти в режим "Что это?"
+    void showWhatsThis();
+
     //! Вызов настройки главного окна
     void showOptionsDialog();
 
@@ -221,6 +227,12 @@ private:
 
     //! Команда выхода
     QAction *actionExit;
+
+    //! Команда вызова окна "О Qt..."
+    QAction *actionAboutQt;
+
+    //! Команда вызова "Что это?"
+    QAction *actionWhatsThis;
 
     //! Индекс для записи настроек меню
     int m_menuArrayIndex;
