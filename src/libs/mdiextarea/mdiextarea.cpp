@@ -21,10 +21,6 @@ QMdiSubWindow *MdiExtArea::addSubWindow(QWidget *widget, Qt::WindowFlags flags){
 }
 
 void MdiExtArea::setViewMode(ViewMode mode){
-    if (mode == QMdiArea::TabbedView)
-        for (int i=0;i<this->subWindowList().count();i++)
-            this->subWindowList().at(i)->showMaximized();
-
     QMdiArea::setViewMode(mode);
     if (mode == QMdiArea::TabbedView){
         QTabBar *tabBar = findChild <QTabBar*>();
@@ -32,10 +28,7 @@ void MdiExtArea::setViewMode(ViewMode mode){
             tabBar->setTabsClosable(true);
             tabBar->parentWidget()->adjustSize();
         }
-        if (activeSubWindow()!=NULL)
-            activeSubWindow()->showMaximized();
     }
-    this->setOption(QMdiArea::DontMaximizeSubWindowOnActivation,true);
 }
 
 QMdiSubWindow* MdiExtArea::subWindow(QString widgetName) {
@@ -65,14 +58,14 @@ void MdiExtArea::setActiveSubWindow(QMdiSubWindow *window)
 void MdiExtArea::closeActiveSubWindow(){
     QMdiSubWindow* subWindow = activeSubWindow();
     activateNextSubWindow();
-    removeSubWindow(subWindow);
+    subWindow->close();
 }
 
 void MdiExtArea::closeAllSubWindows(){
     QMdiSubWindow* subWindow = activeSubWindow();
     while (subWindow){
         activateNextSubWindow();
-        removeSubWindow(subWindow);
+        subWindow->close();
         subWindow = activeSubWindow();
     }
 }

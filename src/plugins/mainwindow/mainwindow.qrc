@@ -1,5 +1,11 @@
 <RCC>
-  <qresource prefix="/">
-    <file alias="exit">icons/application-exit.svg</file>
-  </qresource>
+    <qresource prefix="/">
+        <file alias="exit">icons/application-exit.svg</file>
+        <file alias="empty">icons/empty_icon.svg</file>
+        <file alias="guioptions">icons/marker.svg</file>
+        <file alias="menu">icons/menu.svg</file>
+        <file alias="separator">icons/separator.svg</file>
+        <file alias="qt">icons/Qt.svg</file>
+        <file alias="whatsthis">icons/help-faq.svg</file>
+    </qresource>
 </RCC>

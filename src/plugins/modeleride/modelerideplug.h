@@ -27,11 +27,27 @@ class ModelerIDEPlug:
 public:
 
 // IPlugin
-    //! Инициализация плагина
-    bool initialize();
 
     //! Получение экземпляра
     QObject *instance() { return this; }
+
+    //! Получение имени плагина
+    QString name() {return tr("Редактор модели данных");};
+
+    //! Получение иконки плагина
+    QIcon icon() {return QIcon(":/modeleride");}
+
+    //! Описание плагина
+    QString descript() {return tr("");};
+
+    //! Категория в которой состоит плагин
+    QString category() {return tr("");};
+
+    //! Версия плагина
+    QString version() {return tr("");};
+
+    //! Производитель плагина
+    QString vendor() {return tr("");};
 
 // ModelerIDEPlug
     //! Конструктор плагина

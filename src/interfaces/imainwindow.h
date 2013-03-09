@@ -23,6 +23,24 @@ public:
 
 public slots:
 
+    //! Добавления QAction для использования в главном окне
+    virtual void addAction(QString category, QAction *action) = 0;
+
+    //! Удаление QAction из главного окна
+    virtual void removeAction(QAction *action) = 0;
+
+    //! Запись настроек меню
+    virtual void writeBarSettings() = 0;
+
+    //! Чтение настроек меню
+    virtual void readBarSettings() = 0;
+
+    //! Чтение и применение настроек главного окна
+    virtual void readSettings() = 0;
+
+    //! Запись настроек главного окна
+    virtual void writeSettings() = 0;
+
     //! Слот обработки события закрытия главного окна
     virtual void closeEvent(QCloseEvent *event) = 0;
 
@@ -49,21 +67,6 @@ public slots:
         по его имени
      */
     virtual QMdiSubWindow *setActiveSubWindow(QString objName) = 0;
-
-    //! Получение меню File
-    virtual QMenu* getMenuFile() = 0;
-
-    //! Получение меню Edit
-    virtual QMenu* getMenuEdit() = 0;
-
-    //! Получение меню Settings
-    virtual QMenu* getMenuSettings() = 0;
-
-    //! Получение меню Help
-    virtual QMenu* getMenuHelp() = 0;
-
-    //! Получение панели инструментов
-    virtual QToolBar*   getToolBarMain() = 0;
 
     //! Получение области подокон
     virtual MdiExtArea* getMdiArea() = 0;

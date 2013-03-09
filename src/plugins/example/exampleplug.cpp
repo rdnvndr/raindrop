@@ -3,15 +3,7 @@
 #include <QTextEdit>
 
 ExamplePlug::ExamplePlug(QObject *parent):
-    QObject(parent)
-{
-    setName(tr("Пример плагина"));
-    setIcon(QIcon(":/example"));
-    addDepend("ITreeDockWidget");
-    addDepend("IMainWindow");
-}
-
-bool ExamplePlug::initialize()
+    QObject(parent), IPlugin("IMainWindow ITreeDockWidget")
 {
     // Получение интерфейса ITreeDockWidget
     PluginManager* pluginManager = PluginManager::instance();
@@ -49,8 +41,6 @@ bool ExamplePlug::initialize()
     itemnode->setText(0, tr("Создание диалога"));
     dockWidget->setFuncTreeItem(itemnode, this,"createDlgWindow");
     tree->insertTopLevelItems(0,items);
-
-    return true;
 }
 
 void ExamplePlug::createTab(){
