@@ -50,11 +50,12 @@ QVariant ToolBarModel::data(const QModelIndex &index, int role) const
 
     if (role == Qt::DisplayRole || role == Qt::EditRole){
         return m_toolBars.at(index.row())->windowTitle();
-    } else if (role == Qt::CheckStateRole)
+    } else if (role == Qt::CheckStateRole) {
         if (m_toolBars.at(index.row())->isVisible())
             return Qt::Checked;
         else
             return Qt::Unchecked;
+    }
 
     return QVariant();
 }

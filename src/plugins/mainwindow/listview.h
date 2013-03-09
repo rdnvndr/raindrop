@@ -3,6 +3,9 @@
 
 #include <QListView>
 
+//! Список команд
+//! Список команд отличается от стандартного поддержкой Drag and Drop
+
 class ListView : public QListView
 {
     Q_OBJECT

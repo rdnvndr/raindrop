@@ -13,6 +13,7 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
 {
     setupUi(this);
     this->setMenuBar(new MenuBar());
+    setIconSize(QSize(20,20));
 
     m_optionsDialog = NULL;
 
@@ -484,10 +485,15 @@ void MainWindow::showOptionsDialog()
                 subWindow,SLOT(close()));
     } else
         addSubWindow(m_optionsDialog);
+
+    m_optionsDialog->setIconSize(this->iconSize());
+    m_optionsDialog->setIconStyle(this->toolButtonStyle());
 }
 
 void MainWindow::saveOptionsDialog()
 {
+    this->setIconSize(m_optionsDialog->iconSize());
+    this->setToolButtonStyle(m_optionsDialog->iconStyle());
     writeBarSettings();
     settings()->sync();
     m_optionsDialog = NULL;
@@ -589,6 +595,9 @@ void MainWindow::writeBarSettings() {
 
     settings()->beginGroup("IMainWindow");
 
+    settings()->setValue("IconSize",this->iconSize());
+    settings()->setValue("IconStyle",this->toolButtonStyle());
+
     m_menuArrayIndex = 0;
     settings()->beginWriteArray("BarSettings");
 
@@ -642,6 +651,11 @@ void MainWindow::readBarSettings()
     m_actionItem.append(MenuItemHash());
 
     settings()->beginGroup("IMainWindow");
+
+    this->setIconSize(settings()->value("IconSize").value<QSize>());
+    Qt::ToolButtonStyle style =
+            (Qt::ToolButtonStyle)settings()->value("IconStyle").toInt();
+    this->setToolButtonStyle(style);
 
     int prevLevel = -1;
     MenuItem *parentItem  = NULL;

@@ -6,6 +6,8 @@
 #include <QSignalMapper>
 #include "toolbar.h"
 
+//! Модель отображения панелей инструментов в главном окне
+
 class ToolBarModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -59,6 +61,7 @@ private:
     //! Маппер сигналов для панелей инструментов
     QSignalMapper *m_mapper;
 
+    //! Главное окно
     QMainWindow *m_mainWindow;
     
 };
