@@ -15,7 +15,6 @@ ToolBar::ToolBar(QWidget *parent) :
     QToolBar(parent)
 {
     setAcceptDrops(true);
-    setIconSize(QSize(20,20));
 
     m_dragPos = QPoint(-1,-1);
     m_activeAction = NULL;

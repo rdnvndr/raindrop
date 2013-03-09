@@ -20,6 +20,9 @@ MainWindowOptions::MainWindowOptions(QWidget *parent) :
     connect(pushButtonKeyClear,SIGNAL(clicked()),this,SLOT(resetHotKey()));
     connect(pushButtonKeyDelete,SIGNAL(clicked()),this,SLOT(deleteHotKey()));
     treeViewHotKey->setItemDelegate(new HotKeyDelegate());
+    connect(radioButtonOther,SIGNAL(toggled(bool)),
+            this, SLOT(selectOtherSize(bool)));
+    spinBoxIconSize->setDisabled(true);
 }
 
 MainWindowOptions::~MainWindowOptions()
@@ -58,6 +61,64 @@ void MainWindowOptions::createToolBarModel(QMainWindow *mainWindow)
     m_toolBarModel = new ToolBarModel(mainWindow);
     listToolBars->setModel(m_toolBarModel);
     listToolBars->setCurrentIndex(m_toolBarModel->index(0,0));
+}
+
+void MainWindowOptions::setIconSize(const QSize &iconSize)
+{
+    if (iconSize.height() == 16 && iconSize.width() == 16)
+        radioButtonSmall->setChecked(true);
+    else if (iconSize.height() == 24 && iconSize.width() == 24)
+        radioButtonMedium->setChecked(true);
+    else if (iconSize.height() == 32 && iconSize.width() == 32)
+        radioButtonLarge->setChecked(true);
+    else if (iconSize.height() == 20 && iconSize.width() == 20)
+        radioButtonSystem->setChecked(true);
+    else
+        radioButtonOther->setChecked(true);
+
+    spinBoxIconSize->setValue(iconSize.height());
+}
+
+QSize MainWindowOptions::iconSize()
+{
+    if (radioButtonSmall->isChecked())
+        return QSize(16,16);
+    else if (radioButtonMedium->isChecked())
+        return QSize(24,24);
+    else if (radioButtonLarge->isChecked())
+        return QSize(32,32);
+    else if (radioButtonOther->isChecked())
+        return QSize(spinBoxIconSize->value(),spinBoxIconSize->value());
+
+    return QSize(20,20);
+}
+
+void MainWindowOptions::setIconStyle(Qt::ToolButtonStyle iconStyle)
+{
+    if (iconStyle == Qt::ToolButtonIconOnly)
+        radioButtonIconOnly->setChecked(true);
+    else if (iconStyle == Qt::ToolButtonTextOnly)
+        radioButtonTextOnly->setChecked(true);
+    else if (iconStyle == Qt::ToolButtonTextBesideIcon)
+        radioButtonTextBeside->setChecked(true);
+    else if (iconStyle == Qt::ToolButtonTextUnderIcon)
+        radioButtonTextUnder->setChecked(true);
+    else if (iconStyle == Qt::ToolButtonFollowStyle)
+        radioButtonSytemStyle->setChecked(true);
+}
+
+Qt::ToolButtonStyle MainWindowOptions::iconStyle()
+{
+    if (radioButtonIconOnly->isChecked())
+        return Qt::ToolButtonIconOnly;
+    else if (radioButtonTextOnly->isChecked())
+        return Qt::ToolButtonTextOnly;
+    else if (radioButtonTextBeside->isChecked())
+        return Qt::ToolButtonTextBesideIcon;
+    else if (radioButtonTextUnder->isChecked())
+        return Qt::ToolButtonTextUnderIcon;
+
+    return Qt::ToolButtonFollowStyle;
 }
 
 void MainWindowOptions::insertToolBar()
@@ -101,17 +162,20 @@ void MainWindowOptions::changeHotKey(QKeySequence keySequence)
 
 void MainWindowOptions::hotKeyCurrentChange(QModelIndex current, QModelIndex old)
 {
+    Q_UNUSED(old)
     QVariant key = m_actionGroupModel->data(current.sibling(current.row(),1));
     lineEditHotKey->setKeySequence(key.value<QKeySequence>());
 }
 
 void MainWindowOptions::listCategoryCurrentChange(QModelIndex current, QModelIndex old)
 {
+    Q_UNUSED(old)
     listCommands->setCurrentIndex(current.child(0,0));
 }
 
 void MainWindowOptions::listCommandsCurrentChange(QModelIndex current, QModelIndex old)
 {
+    Q_UNUSED(old)
     QVariant whatsThis = m_actionGroupModel->data(current.sibling(current.row(),2));
     labelDescription->setText(whatsThis.toString());
 }
@@ -134,4 +198,9 @@ void MainWindowOptions::deleteHotKey()
         m_actionGroupModel->setData(currentIndex.sibling(currentIndex.row(),1),
                                     lineEditHotKey->keySequence());
     }
+}
+
+void MainWindowOptions::selectOtherSize(bool check)
+{
+    spinBoxIconSize->setEnabled(check);
 }

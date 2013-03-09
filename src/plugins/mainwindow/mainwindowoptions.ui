@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>341</width>
-    <height>232</height>
+    <width>410</width>
+    <height>310</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -223,6 +223,248 @@
       <attribute name="title">
        <string>Опции</string>
       </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Панель инструментов:</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="5" column="5">
+           <widget class="QRadioButton" name="radioButtonTextUnder">
+            <property name="text">
+             <string>Текст под иконкой</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroupStyle</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="1" column="5">
+           <widget class="QRadioButton" name="radioButtonSytemStyle">
+            <property name="text">
+             <string>Системный стиль</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroupStyle</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="3" column="5">
+           <widget class="QRadioButton" name="radioButtonTextOnly">
+            <property name="text">
+             <string>Только текст</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroupStyle</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="4" column="1" colspan="2">
+           <widget class="QRadioButton" name="radioButtonLarge">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Большой (32 x 32)</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroupSize</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="2" column="1" colspan="2">
+           <widget class="QRadioButton" name="radioButtonSmall">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Маленький (16 x 16)</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroupSize</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QRadioButton" name="radioButtonOther">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Другой:</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroupSize</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="3" column="6">
+           <spacer name="horizontalSpacerToolBar">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="1" colspan="2">
+           <widget class="QRadioButton" name="radioButtonSystem">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Системный (20 x 20)</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroupSize</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="IconSizeSpinBox" name="spinBoxIconSize">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="3">
+           <spacer name="horizontalSpacerOther">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Minimum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0" colspan="3">
+           <widget class="QLabel" name="labelIconSize">
+            <property name="text">
+             <string>Размер иконок:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <spacer name="horizontalSpacerSize">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Minimum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="4" column="5">
+           <widget class="QRadioButton" name="radioButtonTextBeside">
+            <property name="text">
+             <string>Текст рядом с иконкой</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroupStyle</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="2" column="5">
+           <widget class="QRadioButton" name="radioButtonIconOnly">
+            <property name="text">
+             <string>Только иконки</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroupStyle</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="2">
+           <widget class="QRadioButton" name="radioButtonMedium">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Средний (24 x 24)</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroupSize</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <spacer name="horizontalSpacerStyle">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Minimum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="4" colspan="2">
+           <widget class="QLabel" name="labelIconStyle">
+            <property name="text">
+             <string>Стиль иконок:</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacerOptions">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>
@@ -286,6 +528,11 @@
    <extends>QLineEdit</extends>
    <header>hotkeylineedit.h</header>
   </customwidget>
+  <customwidget>
+   <class>IconSizeSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>iconsizespinbox.h</header>
+  </customwidget>
  </customwidgets>
  <resources/>
  <connections>
@@ -322,4 +569,8 @@
    </hints>
   </connection>
  </connections>
+ <buttongroups>
+  <buttongroup name="buttonGroupSize"/>
+  <buttongroup name="buttonGroupStyle"/>
+ </buttongroups>
 </ui>

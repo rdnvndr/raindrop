@@ -23,7 +23,8 @@ HEADERS += \
     toolbarmodel.h \
     toolbarprop.h \
     hotkeylineedit.h \
-    hotkeydelegate.h
+    hotkeydelegate.h \
+    iconsizespinbox.h
 SOURCES += \
            mainwindow.cpp \
     menubar.cpp \
@@ -37,7 +38,8 @@ SOURCES += \
     toolbarmodel.cpp \
     toolbarprop.cpp \
     hotkeylineedit.cpp \
-    hotkeydelegate.cpp
+    hotkeydelegate.cpp \
+    iconsizespinbox.cpp
 
 FORMS += \
            mainwindow.ui \

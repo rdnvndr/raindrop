@@ -31,6 +31,18 @@ public:
     //! Создание модели панелей инструментов
     void createToolBarModel(QMainWindow *mainWindow);
 
+    //! Установка размера иконки
+    void setIconSize(const QSize & iconSize);
+
+    //! Получение размера иконки
+    QSize iconSize();
+
+    //! Установка стиля иконки для панелей инструментов
+    void  setIconStyle(Qt::ToolButtonStyle iconStyle);
+
+    //! Получение стиля иконки для панелей инструментов
+    Qt::ToolButtonStyle iconStyle();
+
 private slots:
 
     //! Создание новой панели инструментов
@@ -59,6 +71,9 @@ private slots:
 
     //! Удаление горячей клавиши
     void deleteHotKey();
+
+    //! Обработка выбора размера иконки "Другой"
+    void selectOtherSize(bool check);
 
 private:
     //! Хранит модель команд
