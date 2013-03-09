@@ -3,6 +3,7 @@
 
 #include "mainwindowglobal.h"
 #include "ui_mainwindow.h"
+#include "mainwindowoptions.h"
 #include <imainwindow.h>
 #include <plugin/iplugin.h>
 #include <mdiextarea/mdiextarea.h>
@@ -38,6 +39,16 @@ class MAINWINDOWLIB MainWindow:
 #endif
 
 public:
+    struct MenuItem {
+        QString name;                 //!< Имя объекта
+        QString text;                 //!< Название
+        QString type;                 //!< Тип
+        QByteArray icon;              //!< Иконка
+        MenuItem *parentItem;         //!< Родитель
+        QList<MenuItem *> childItems; //!< Потомки
+        QAction *action;              //!< Созданный объект
+    };
+    typedef QMultiHash <QString, MenuItem *> MenuItemHash;
 
     //! Конструктор плагина главного окна
     explicit MainWindow(QMainWindow* pwgt = 0);
@@ -45,19 +56,28 @@ public:
     //! Деструктор плагина главного окна
     virtual ~MainWindow();
 
-    //! Чтение и применение настроек плагина главного окна
-    void readSettings();
-
-    //! Запись настроек плагина главного окна
-    void writeSettings();
-
 // IPlugin
-
-    //! Инициализация плагина главного окна
-    bool initialize();
 
     //! Получение экземпляра
     QObject *instance() { return this; }
+
+    //! Получение имени плагина
+    QString name() {return tr("Главное окно");};
+
+    //! Получение иконки плагина
+    QIcon icon() {return QIcon();}
+
+    //! Описание плагина
+    QString descript() {return tr("");};
+
+    //! Категория в которой состоит плагин
+    QString category() {return tr("");};
+
+    //! Версия плагина
+    QString version() {return tr("");};
+
+    //! Производитель плагина
+    QString vendor() {return tr("");};
 
 // IMainWindow
 
@@ -71,7 +91,32 @@ public:
     */
     QList<QMdiSubWindow *> subWindowList() const;
 
+    //! Возращает всплывающее
+    /*! Предназначено для отображения всплывающего меню с списком панелей
+        инструментов и главного меню которые можно выбрать для отображения при
+        помощи переключателей.
+    */
+    QMenu *createPopupMenu();
+
 public slots:
+
+    //! Добавления QAction для использования в главном окне
+    void addAction(QString category, QAction *action);
+
+    //! Удаление QAction из главного окна
+    void removeAction(QAction *action);
+
+    //! Запись настроек меню и панелей инструментов
+    void writeBarSettings();
+
+    //! Чтение настроек меню и панелей инструментов
+    void readBarSettings();
+
+    //! Чтение и применение настроек плагина главного окна
+    void readSettings();
+
+    //! Запись настроек плагина главного окна
+    void writeSettings();
 
     //! Слот обработки события закрытия главного окна
     void closeEvent(QCloseEvent *event);
@@ -81,6 +126,9 @@ public slots:
         пунктов меню при изменении состояния приложения
     */
     void updateMenus();
+
+    //! Обновляет главное меню окна и панели инструментов по структуре
+    void refreshAllBar(bool readingBarSettings = true);
 
     //! Слот установки оконного режима
     /*! Слот предназначен переключение приложения в закладочный
@@ -100,23 +148,109 @@ public slots:
      */
     QMdiSubWindow *setActiveSubWindow(QString objName);
 
-    //! Получение меню File
-    QMenu* getMenuFile();
-
-    //! Получение меню Edit
-    QMenu* getMenuEdit();
-
-    //! Получение меню Settings
-    QMenu* getMenuSettings();
-
-    //! Получение меню Help
-    QMenu* getMenuHelp();
-
-    //! Получение панели инструментов
-    QToolBar*   getToolBarMain();
-
     //! Получение области подокон
     MdiExtArea* getMdiArea();
+
+    //! Вызов окна "О Qt..."
+    void aboutQt();
+
+    //! Перейти в режим "Что это?"
+    void showWhatsThis();
+
+    //! Вызов настройки главного окна
+    void showOptionsDialog();
+
+private slots:
+
+    //! Удаление QAction из главного окна
+    void removeAction(QObject *obj);
+
+    //! Вызов сохранение настроек меню
+    void saveOptionsDialog();
+
+    //! Вызов отмены сохранения настроек меню
+    void cancelOptionsDialog();
+
+    //! Изменение состояние окна настройки меню
+    void optionsDialogStateChanged(Qt::WindowStates oldState,
+                                   Qt::WindowStates newState);
+
+    //! Выполнение действий после загрузки плагина
+    void endLoadingPlugins();
+
+private:
+
+    //! Создание пунктов меню
+    QAction *createBranchAction(MenuItem *menuItem);
+
+    //! Удаление указанного пункта меню
+    void deleteBranchAction(MenuItem *menuItem);
+
+    //! Удаление ветки меню начиная с указанного узла
+    void removeBranchAction(MenuItem *menuItem);
+
+    //! Очистка меню начиная с указанного узла
+    void cleanBranchAction(MenuItem *menuItem);
+
+    //! Запись настроек меню определенного уровня
+    void writeMenu(QWidget *menu, int level = 0);
+
+    //! Установка режима редактирования меню
+    void setEditedMenu(QWidget *widget, bool edited);
+
+    //! Установка режима редактирования для всех меню
+    void setEditedAllMenu(bool edited);
+
+    //! Команда закрытия окна
+    QAction *actionWindowClose;
+
+    //! Команда закрытия всех окон
+    QAction *actionWindowCloseAll;
+
+    //! Команда расположения окон каскадом
+    QAction *actionWindowCascade;
+
+    //! Команда расположения окон плиткой
+    QAction *actionWindowTile;
+
+    //! Команда выбора следующего окна
+    QAction *actionWindowNext;
+
+    //! Команда выбора предыдущего окна
+    QAction *actionWindowPrev;
+
+    //! Команда выбора типа отображения окон
+    QAction *actionWindowGui;
+
+    //! Команда вызова настроек меню и панелей инструментов
+    QAction *actionGuiOptions;
+
+    //! Команда выхода
+    QAction *actionExit;
+
+    //! Команда вызова окна "О Qt..."
+    QAction *actionAboutQt;
+
+    //! Команда вызова "Что это?"
+    QAction *actionWhatsThis;
+
+    //! Индекс для записи настроек меню
+    int m_menuArrayIndex;
+
+    //! Список команд по группам
+    QMultiHash <QString, QAction *> m_actions;
+
+    //! Список команд в структуре
+    QList <MenuItemHash> m_actionItem;
+
+    //! Ссылка на структуру меню
+    QList <MenuItem *> m_item;
+
+    //! Окно настройки главного меню окна
+    MainWindowOptions *m_optionsDialog;
+
+    //! Cписок горячих клавиш команд
+    QHash <QString, QKeySequence> m_hotkey;
 };
 
 #endif
