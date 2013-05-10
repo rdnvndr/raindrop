@@ -13,6 +13,7 @@
 #include "modelerideplug.h"
 #include "propclass.h"
 #include "propcomposition.h"
+#include "propfilter.h"
 #include "dbxmlstruct.h"
 
 ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
@@ -545,6 +546,8 @@ void ModelerIDEPlug::showPropClass(const QModelIndex &indexSource)
         propClass->setCurrentClass(indexSource);
         connect(propClass,SIGNAL(editComposition(QModelIndex)),
                 this,SLOT(showPropComposition(QModelIndex)));
+        connect(propClass,SIGNAL(editFilter(QModelIndex)),
+                this,SLOT(showPropFilter(QModelIndex)));
     } else {
         PropClass* propClass = qobject_cast<PropClass*>(subWindow->widget());
         propClass->setCurrentClass(indexSource);
@@ -563,11 +566,6 @@ void ModelerIDEPlug::showPropComposition(const QModelIndex &indexSource)
     IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    QString className = indexSource.sibling(indexSource.row(),m_model->columnDisplayedAttr(
-                                 DBCOMPXML::COMP,
-                                 DBCOMPXML::NAME
-                                 )).data().toString();
-
     QString classId = indexSource.sibling(indexSource.row(),m_model->columnDisplayedAttr(
                                  DBCOMPXML::COMP,
                                  DBCOMPXML::NAME
@@ -585,6 +583,39 @@ void ModelerIDEPlug::showPropComposition(const QModelIndex &indexSource)
     } else {
         PropComposition* propComposition = qobject_cast<PropComposition*>(subWindow->widget());
         propComposition->setCurrentClass(indexSource);
+    }
+}
+
+void ModelerIDEPlug::showPropFilter(const QModelIndex &indexSource)
+{
+
+    if (!indexSource.isValid())
+        return;
+
+    if (indexSource.data(Qt::UserRole)!=DBFILTERXML::FILTER)
+        return;
+
+    PluginManager* pluginManager = PluginManager::instance();
+    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
+                pluginManager->interfaceObject("IMainWindow"));
+
+    QString classId = indexSource.sibling(indexSource.row(),m_model->columnDisplayedAttr(
+                                 DBFILTERXML::FILTER,
+                                 DBFILTERXML::NAME
+                                 )).data().toString();
+
+    QString subWindowName = "PropFilter::" + classId;
+    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
+
+    if (!subWindow) {
+        PropFilter* propFilter = new PropFilter();
+        subWindow =  mainWindow->addSubWindow(propFilter);
+        propFilter->setObjectName(subWindowName);
+        propFilter->setModel(m_model);
+        propFilter->setCurrentClass(indexSource);
+    } else {
+        PropFilter* propFilter = qobject_cast<PropFilter*>(subWindow->widget());
+        propFilter->setCurrentClass(indexSource);
     }
 }
 

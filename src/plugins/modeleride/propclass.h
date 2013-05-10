@@ -33,6 +33,9 @@ signals:
     //! Сигнал вызова редактирования состава
     void editComposition(const QModelIndex &index);
 
+    //! Сигнал вызова редактирования фильтра
+    void editFilter(const QModelIndex &index);
+
 public slots:
     //! Установка текущего класса
     void setCurrentClass(const QModelIndex &index);
@@ -45,6 +48,10 @@ public slots:
 
     //! Вызов редактирования состава
     void onEditComposition(const QModelIndex &index);
+
+    //! Вызов редактирования фильтра
+    void onEditFilter(const QModelIndex &index);
+
 private:
     //! Получение данных модели
     QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);

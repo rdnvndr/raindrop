@@ -20,7 +20,7 @@ public:
     explicit FilterWidget(QWidget *parent = 0);
 
     //! Деструктор редактора фильтров
-    ~FilterWidget();
+    virtual ~FilterWidget();
 
     //! Установка модели для редактирования составов класса
     void setModel(TreeXMLModel *model);

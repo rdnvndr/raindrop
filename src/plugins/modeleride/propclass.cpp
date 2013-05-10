@@ -22,6 +22,8 @@ PropClass::PropClass(QWidget *parent) :
             this,SLOT(closeTab(QModelIndex)));
     connect(compWidget,SIGNAL(dataEdited(QModelIndex)),
             this,SLOT(onEditComposition(QModelIndex)));
+    connect(filterWidget,SIGNAL(dataEdited(QModelIndex)),
+            this,SLOT(onEditFilter(QModelIndex)));
 }
 
 PropClass::~PropClass()
@@ -75,4 +77,10 @@ QVariant PropClass::modelData(const QString &tag, const QString &attr, const QMo
 TreeXMLModel *PropClass::model()
 {
     return m_model;
+}
+
+
+void PropClass::onEditFilter(const QModelIndex &index)
+{
+    emit editFilter(index);
 }
