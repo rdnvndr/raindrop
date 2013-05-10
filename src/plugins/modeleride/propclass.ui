@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>125</width>
-    <height>45</height>
+    <width>141</width>
+    <height>44</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -76,17 +76,27 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tabFilter">
+      <attribute name="title">
+       <string>Фильтры</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>5</number>
+       </property>
+       <property name="margin">
+        <number>5</number>
+       </property>
+       <item>
+        <widget class="FilterWidget" name="filterWidget" native="true"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>ClassWidget</class>
-   <extends>QWidget</extends>
-   <header>classwidget.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>AttrWidget</class>
    <extends>QWidget</extends>
@@ -94,9 +104,21 @@
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>ClassWidget</class>
+   <extends>QWidget</extends>
+   <header>classwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>CompositionWidget</class>
    <extends>QWidget</extends>
    <header>compositionwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FilterWidget</class>
+   <extends>QWidget</extends>
+   <header>filterwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

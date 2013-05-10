@@ -21,7 +21,8 @@ HEADERS += modelerideplug.h \
     compositionwidget.h \
     propcomposition.h \
     compositionpropwidget.h \
-    xmldelegate.h
+    xmldelegate.h \
+    filterwidget.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -31,7 +32,8 @@ SOURCES += modelerideplug.cpp \
     compositionwidget.cpp \
     propcomposition.cpp \
     compositionpropwidget.cpp \
-    xmldelegate.cpp
+    xmldelegate.cpp \
+    filterwidget.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
@@ -41,4 +43,5 @@ FORMS += \
     classwidget.ui \
     compositionwidget.ui \
     propcomposition.ui \
-    compositionpropwidget.ui
+    compositionpropwidget.ui \
+    filterwidget.ui

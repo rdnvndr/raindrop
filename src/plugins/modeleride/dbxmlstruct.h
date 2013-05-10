@@ -70,4 +70,34 @@ const QStringList DBXMLCLASSTYPE = (QStringList()
                                << "User"
                                );
 
+//! Ключевые слова XML файла для описания фильтра
+namespace DBFILTERXML{
+    const QString FILTER = "RTPFilter";
+    const QString NAME = "name";
+    const QString DESCRIPTION = "description";
+    const QString PARENT = "parent";
+    const QString CLASS = "Class";
+    const QString DIRECTDESCRIPTION = "directDescription";
+    const QString INVERSEDESCRIPTION = "inverseDescription";
+    const QString ID = "guid";
+}
+
+//! Ключевые слова XML файла для описания условий фильтра
+namespace DBCONDITIONXML{
+    const QString COND = "RTPCondition";
+    const QString FIRSTATTR = "firstAttr";
+    const QString PARENT = "parent";
+    const QString SECONDATTR = "secondAttr";
+    const QString OPERATOR = "operator";
+    const QString LINKOF = "linkOf";
+    const QString ID = "guid";
+}
+
+//! Ключевые слова XML файла для описания условий фильтра
+namespace DBFILTERBLOCKXML{
+    const QString BLOCK = "RTPFilterBlock";
+    const QString PARENT = "parent";
+    const QString LINKOF = "linkOf";
+    const QString ID = "guid";
+}
 #endif // DBXMLSTRUCT_H

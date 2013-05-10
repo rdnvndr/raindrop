@@ -157,10 +157,13 @@ public slots:
     void showContextMenu(const QPoint &point);
 
     //! Установка отображения атрибутов в дереве классов
-    void setShownAttr(bool shown);
+    void setShowAttr(bool shown);
 
     //! Установка отображения состава в дереве классов
-    void setShownComp(bool shown);
+    void setShowComp(bool shown);
+
+    //! Установка отображения фильтров в дереве классов
+    void setShowFilter(bool shown);
 
     //! Устанавливает активность QAction "Сохранить модель"
     void actionSaveEnable();
