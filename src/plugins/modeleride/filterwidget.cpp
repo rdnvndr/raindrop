@@ -34,7 +34,7 @@ void FilterWidget::setModel(TreeXMLModel *model)
     m_model = model;
 
     m_filterModel->setSourceModel(m_model);
-    m_filterModel->setHeaderData(0, Qt::Horizontal, tr("Название фильтра"));
+    m_filterModel->setHeaderData(0, Qt::Horizontal, tr("Имя фильтра"));
     m_filterModel->setHeaderData(1, Qt::Horizontal, tr("Описание"));
     m_filterModel->setHeaderData(2, Qt::Horizontal, tr("Первый класс"));
     m_filterModel->setHeaderData(3, Qt::Horizontal, tr("Второй класс"));
@@ -52,14 +52,33 @@ void FilterWidget::setModel(TreeXMLModel *model)
 
 void FilterWidget::add()
 {
+    QModelIndex srcIndex = m_filterModel->mapToSource(tableViewFilter->rootIndex());
+    m_model->setInsTagName(DBFILTERXML::FILTER);
+    if (m_model->insertRow(0,srcIndex)){
+        QModelIndex srcCurrentIndex = m_model->lastInsertRow();
+        tableViewFilter->setCurrentIndex(
+                    m_filterModel->mapFromSource(srcCurrentIndex));
+        emit dataEdited(srcCurrentIndex);
+    }
 }
 
 void FilterWidget::remove()
 {
+    QModelIndex srcIndex = m_filterModel->mapToSource(tableViewFilter->rootIndex());
+    QModelIndex curIndex = m_filterModel->mapToSource(tableViewFilter->currentIndex());
+    if (srcIndex.isValid() && curIndex.isValid()){
+        emit dataRemoved(srcIndex);
+        m_model->removeRow(curIndex.row(),srcIndex);
+    } else
+        QMessageBox::warning(NULL,tr("Предупреждение"),
+                             tr("Невозможно удалить состав, поскольку ничего не выбрано."));
+
 }
 
 void FilterWidget::edit()
 {
+    QModelIndex index = m_filterModel->mapToSource(tableViewFilter->currentIndex());
+    emit dataEdited(index);
 }
 
 void FilterWidget::showParent(bool flag)
