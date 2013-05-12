@@ -221,9 +221,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                      << DBFILTERBLOCKXML::PARENT;
 
     QStringList propsCondition;
-    propsComposition << DBCONDITIONXML::FIRSTATTR << DBCONDITIONXML::SECONDATTR
-                     << DBCONDITIONXML::ID        << DBCONDITIONXML::LINKOF
-                     << DBCONDITIONXML::OPERATOR  << DBCONDITIONXML::PARENT;
+    propsComposition << DBCONDITIONXML::FIRSTATTR   << DBCONDITIONXML::OPERATOR
+                     << DBCONDITIONXML::SECONDATTR  << DBCONDITIONXML::LINKOF
+                     << DBCONDITIONXML::PARENT      << DBCONDITIONXML::ID;
 
 
     m_model->setHeaderData(0, Qt::Horizontal, tr("Имя атрибута"));
