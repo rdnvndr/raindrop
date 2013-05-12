@@ -2,6 +2,7 @@
 #define FILTERPROPWIDGET_H
 
 #include "ui_filterpropwidget.h"
+#include "conditionproxymodel.h"
 #include <QDataWidgetMapper>
 #include <treexmlmodel/treexmlmodel.h>
 
@@ -66,6 +67,9 @@ private:
 
     //! Хранит индекс предыдущего активного фильтра
     int  m_oldIndex;
+
+    //! Модель редактора условий
+    ConditionProxyModel *m_conditionModel;
 };
 
 #endif // FILTERPROPWIDGET_H

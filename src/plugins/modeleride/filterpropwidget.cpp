@@ -12,6 +12,8 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     m_mapper->setItemDelegate(new XmlDelegate(this));
     m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
+    m_conditionModel = new ConditionProxyModel();
+
     lineEditSrcClass->setReadOnly(true);
 
     connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));
@@ -24,6 +26,7 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
 
 FilterPropWidget::~FilterPropWidget()
 {
+    delete m_conditionModel;
     delete m_mapper;
 }
 
@@ -67,6 +70,15 @@ void FilterPropWidget::setModel(TreeXMLModel *model)
     m_mapper->addMapping(comboBoxDestClass,
                          model->columnDisplayedAttr(DBFILTERXML::FILTER,
                                                    DBFILTERXML::CLASS));
+
+    m_conditionModel->setSourceModel(model);
+    m_conditionModel->setHeaderData(0,Qt::Horizontal,tr("("));
+    m_conditionModel->setHeaderData(1,Qt::Horizontal,tr("Атрибут"));
+    m_conditionModel->setHeaderData(2,Qt::Horizontal,tr("Условие"));
+    m_conditionModel->setHeaderData(3,Qt::Horizontal,tr("Значение"));
+    m_conditionModel->setHeaderData(4,Qt::Horizontal,tr(")"));
+    m_conditionModel->setHeaderData(5,Qt::Horizontal,tr("И/ИЛИ"));
+    tableViewCondition->setModel(m_conditionModel);
 }
 
 void FilterPropWidget::add()
@@ -103,6 +115,8 @@ void FilterPropWidget::setCurrent(const QModelIndex &index)
     m_mapper->setRootIndex(index.parent());
     m_mapper->setCurrentModelIndex(index);
     edit(false);
+
+    tableViewCondition->setRootIndex(m_conditionModel->mapFromSource(index));
 
     emit currentIndexChanged(index);
 }
