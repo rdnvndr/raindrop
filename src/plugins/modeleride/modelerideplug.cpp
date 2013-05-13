@@ -182,19 +182,13 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addTagFilter(DBFILTERBLOCKXML::BLOCK);
     m_model->addTagFilter(DBCONDITIONXML::COND);
 
-
     QStringList propsClass;
     propsClass << DBCLASSXML::NAME     << DBCLASSXML::ISABSTARCT  <<
                   DBCLASSXML::TYPE     << DBCLASSXML::DESCRIPTION <<
                   DBCLASSXML::PARENT   << DBCLASSXML::ISACTIVE    <<
                   DBCLASSXML::TEMPLATE << DBCLASSXML::ID          <<
                   DBCLASSXML::ICON;
-
-
     m_model->addDisplayedAttr(DBCLASSXML::CLASS,propsClass,QIcon(":/modeleride"));
-    m_model->addDisplayedAttr(DBATTRXML::ATTR,propsClass,QIcon(":/attribute"));
-    m_model->addDisplayedAttr(DBCOMPXML::COMP,propsClass,QIcon(":/composition"));
-    m_model->addDisplayedAttr(DBFILTERXML::FILTER,propsClass,QIcon(":/filter"));
 
     QStringList propsAttr;
     propsAttr << DBATTRXML::NAME           << DBATTRXML::DESCRIPTION
@@ -203,28 +197,37 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
               << DBATTRXML::INITIALVAL     << DBATTRXML::GROUP
               << DBATTRXML::ISNULLALLOWED  << DBATTRXML::ISUNIQUE
               << DBATTRXML::ISCANDIDATEKEY << DBATTRXML::ID;
+    m_model->addDisplayedAttr(DBATTRXML::ATTR,propsAttr, QIcon(":/attribute"));
+    m_model->addAttrTag(DBATTRXML::ATTR);
 
     QStringList propsComposition;
     propsComposition << DBCOMPXML::NAME              << DBCOMPXML::DESCRIPTION
                      << DBCOMPXML::PARENT            << DBCOMPXML::CLASS
                      << DBCOMPXML::DIRECTDESCRIPTION << DBCOMPXML::INVERSEDESCRIPTION
                      << DBCOMPXML::ID;
+    m_model->addDisplayedAttr(DBCOMPXML::COMP,propsComposition, QIcon(":/composition"));
+    m_model->addAttrTag(DBCOMPXML::COMP);
 
     QStringList propsFilter;
     propsFilter << DBFILTERXML::NAME              << DBFILTERXML::DESCRIPTION
                 << DBFILTERXML::PARENT            << DBFILTERXML::CLASS
                 << DBFILTERXML::DIRECTDESCRIPTION << DBFILTERXML::INVERSEDESCRIPTION
                 << DBFILTERXML::ID;
+    m_model->addDisplayedAttr(DBFILTERXML::FILTER,propsFilter, QIcon(":/filter"));
+    m_model->addAttrTag(DBFILTERXML::FILTER);
 
     QStringList propsFilterBlock;
-    propsFilterBlock << DBFILTERBLOCKXML::ID << DBFILTERBLOCKXML::LINKOF
-                     << DBFILTERBLOCKXML::PARENT;
+    propsFilterBlock << DBFILTERBLOCKXML::LINKOF << DBFILTERBLOCKXML::PARENT
+                     << DBFILTERBLOCKXML::ID;
+    m_model->addDisplayedAttr(DBFILTERBLOCKXML::BLOCK,propsFilterBlock);
+    m_model->addAttrTag(DBFILTERBLOCKXML::BLOCK);
 
     QStringList propsCondition;
-    propsComposition << DBCONDITIONXML::FIRSTATTR   << DBCONDITIONXML::OPERATOR
+    propsCondition << DBCONDITIONXML::FIRSTATTR   << DBCONDITIONXML::OPERATOR
                      << DBCONDITIONXML::SECONDATTR  << DBCONDITIONXML::LINKOF
                      << DBCONDITIONXML::PARENT      << DBCONDITIONXML::ID;
-
+    m_model->addDisplayedAttr(DBCONDITIONXML::COND, propsCondition);
+    m_model->addAttrTag(DBCONDITIONXML::COND);
 
     m_model->setHeaderData(0, Qt::Horizontal, tr("Имя атрибута"));
     m_model->setHeaderData(1, Qt::Horizontal, tr("Описание"));
@@ -238,18 +241,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->setHeaderData(9, Qt::Horizontal, tr("Уникальный"));
     m_model->setHeaderData(10, Qt::Horizontal, tr("Кандидат в ключ"));
 
-    m_model->addDisplayedAttr(DBATTRXML::ATTR,propsAttr);
-    m_model->addAttrTag(DBATTRXML::ATTR);
-
-    m_model->addDisplayedAttr(DBCOMPXML::COMP,propsComposition);
-    m_model->addAttrTag(DBCOMPXML::COMP);
-
-    m_model->addDisplayedAttr(DBFILTERXML::FILTER,propsFilter);
-    m_model->addAttrTag(DBFILTERXML::FILTER);
-
 
     QStringList insertTags;
-    insertTags << DBATTRXML::ATTR     << DBCLASSXML::CLASS << DBCOMPXML::COMP
+    insertTags << DBATTRXML::ATTR  << DBCLASSXML::CLASS << DBCOMPXML::COMP
                << DBFILTERXML::FILTER;
     m_model->addInsertTags(DBCLASSXML::CLASS,insertTags);
 
@@ -287,6 +281,15 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                 TreeXMLModel::Uuid);
     m_model->addHashAttr(DBCOMPXML::COMP,
                                 DBCOMPXML::ID,
+                                TreeXMLModel::Uuid);
+    m_model->addHashAttr(DBFILTERXML::FILTER,
+                                DBFILTERXML::ID,
+                                TreeXMLModel::Uuid);
+    m_model->addHashAttr(DBFILTERBLOCKXML::BLOCK,
+                                DBFILTERBLOCKXML::ID,
+                                TreeXMLModel::Uuid);
+    m_model->addHashAttr(DBCONDITIONXML::COND,
+                                DBCONDITIONXML::ID,
                                 TreeXMLModel::Uuid);
 
     m_model->addRelation(DBATTRXML::ATTR,DBATTRXML::REFCLASS,

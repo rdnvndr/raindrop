@@ -72,13 +72,11 @@ void FilterPropWidget::setModel(TreeXMLModel *model)
                                                    DBFILTERXML::CLASS));
 
     m_conditionModel->setSourceModel(model);
-    m_conditionModel->setHeaderData(0,Qt::Horizontal,tr("("));
-    m_conditionModel->setHeaderData(1,Qt::Horizontal,tr("Атрибут"));
-    m_conditionModel->setHeaderData(2,Qt::Horizontal,tr("Условие"));
-    m_conditionModel->setHeaderData(3,Qt::Horizontal,tr("Значение"));
-    m_conditionModel->setHeaderData(4,Qt::Horizontal,tr(")"));
-    m_conditionModel->setHeaderData(5,Qt::Horizontal,tr("И/ИЛИ"));
-    tableViewCondition->setModel(m_conditionModel);
+    m_conditionModel->setHeaderData(0,Qt::Horizontal,tr("Атрибут"));
+    m_conditionModel->setHeaderData(1,Qt::Horizontal,tr("Оператор"));
+    m_conditionModel->setHeaderData(2,Qt::Horizontal,tr("Значение"));
+    m_conditionModel->setHeaderData(3,Qt::Horizontal,tr("Коннектор"));
+    treeViewCondition->setModel(m_conditionModel);
 }
 
 void FilterPropWidget::add()
@@ -116,7 +114,7 @@ void FilterPropWidget::setCurrent(const QModelIndex &index)
     m_mapper->setCurrentModelIndex(index);
     edit(false);
 
-    tableViewCondition->setRootIndex(m_conditionModel->mapFromSource(index));
+    treeViewCondition->setRootIndex(m_conditionModel->mapFromSource(index));
 
     emit currentIndexChanged(index);
 }
