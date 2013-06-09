@@ -131,6 +131,7 @@ void FilterPropWidget::edit(bool flag)
         toolButtonAdd->setEnabled(true);
 
     groupBoxProp->setEnabled(flag);
+    groupBoxCondition->setEnabled(flag);
     pushButtonPropSave->setEnabled(flag);
     pushButtonPropCancel->setEnabled(flag);
     toolButtonEdit->setDisabled(flag);
@@ -155,6 +156,7 @@ void FilterPropWidget::submit()
     }
 
     m_mapper->submit();
+    m_conditionModel->submitAll();
     removeEmpty();
     edit(false);
 

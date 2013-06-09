@@ -11,9 +11,10 @@ struct PrivateModelIndex
 
 
 ConditionProxyModel::ConditionProxyModel(QObject *parent) :
-    QAbstractProxyModel(parent)
+    ModifyProxyModel(parent)
 {
 }
+
 int ConditionProxyModel::columnCount(const QModelIndex& parent) const
 {
     if(!sourceModel())
@@ -21,7 +22,7 @@ int ConditionProxyModel::columnCount(const QModelIndex& parent) const
 
     return 4;
 }
-
+/*
 int ConditionProxyModel::rowCount(const QModelIndex& parent) const
 {
     if(!sourceModel())
@@ -72,15 +73,13 @@ QModelIndex ConditionProxyModel::mapToSource(const QModelIndex& index) const
 
     return sourceIndex;
 }
-
+*/
 QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) const
 {
-
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
         TreeXMLModel *xmlModel = qobject_cast<TreeXMLModel *>(sourceModel());
-        QModelIndex sourceIndex = mapToSource(proxyIndex);
 
-        if (xmlModel->data(sourceIndex,Qt::UserRole)
+        if (ModifyProxyModel::data(proxyIndex,Qt::UserRole)
                 == DBFILTERBLOCKXML::BLOCK) {
 
             switch (proxyIndex.column()) {
@@ -89,9 +88,9 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
                 break;
             case 3:
                 if (proxyIndex.row() < rowCount(proxyIndex.parent())-1)
-                    return xmlModel->data(
-                                sourceIndex.sibling(
-                                    sourceIndex.row(),
+                    return ModifyProxyModel::data(
+                                proxyIndex.sibling(
+                                    proxyIndex.row(),
                                     xmlModel->columnDisplayedAttr(
                                         DBFILTERBLOCKXML::BLOCK,
                                         DBFILTERBLOCKXML::LINKOF)),
@@ -101,39 +100,39 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
             }
         }
 
-        if (xmlModel->data(sourceIndex,Qt::UserRole)
+        if (ModifyProxyModel::data(proxyIndex,Qt::UserRole)
                 == DBCONDITIONXML::COND) {
 
             switch (proxyIndex.column()) {
             case 0:
-                return xmlModel->data(
-                            sourceIndex.sibling(
-                                sourceIndex.row(),
+                return ModifyProxyModel::data(
+                            proxyIndex.sibling(
+                                proxyIndex.row(),
                                 xmlModel->columnDisplayedAttr(
                                     DBCONDITIONXML::COND,
                                     DBCONDITIONXML::FIRSTATTR)),
                             role);
             case 1:
-                return xmlModel->data(
-                            sourceIndex.sibling(
-                                sourceIndex.row(),
+                return ModifyProxyModel::data(
+                            proxyIndex.sibling(
+                                proxyIndex.row(),
                                 xmlModel->columnDisplayedAttr(
                                     DBCONDITIONXML::COND,
                                     DBCONDITIONXML::OPERATOR)),
                             role);
             case 2:
-                return xmlModel->data(
-                            sourceIndex.sibling(
-                                sourceIndex.row(),
+                return ModifyProxyModel::data(
+                            proxyIndex.sibling(
+                                proxyIndex.row(),
                                 xmlModel->columnDisplayedAttr(
                                     DBCONDITIONXML::COND,
                                     DBCONDITIONXML::SECONDATTR)),
                             role);
             case 3:
                 if (proxyIndex.row() < rowCount(proxyIndex.parent())-1)
-                    return xmlModel->data(
-                                sourceIndex.sibling(
-                                    sourceIndex.row(),
+                    return ModifyProxyModel::data(
+                                proxyIndex.sibling(
+                                    proxyIndex.row(),
                                     xmlModel->columnDisplayedAttr(
                                         DBCONDITIONXML::COND,
                                         DBCONDITIONXML::LINKOF)),
@@ -150,9 +149,9 @@ bool ConditionProxyModel::setData(const QModelIndex &proxyIndex, const QVariant 
 {
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
         TreeXMLModel *xmlModel = qobject_cast<TreeXMLModel *>(sourceModel());
-        QModelIndex sourceIndex = mapToSource(proxyIndex);
+        // QModelIndex sourceIndex = mapToSource(proxyIndex);
 
-        if (xmlModel->data(sourceIndex,Qt::UserRole)
+        if (ModifyProxyModel::data(proxyIndex,Qt::UserRole)
                 == DBFILTERBLOCKXML::BLOCK) {
 
             int column;
@@ -163,19 +162,19 @@ bool ConditionProxyModel::setData(const QModelIndex &proxyIndex, const QVariant 
                             DBFILTERBLOCKXML::LINKOF);
                 if (proxyIndex.row() == rowCount(proxyIndex.parent())-1) {
                     if (proxyIndex.row()==0)
-                        return xmlModel->setData(
-                                    sourceIndex.sibling(sourceIndex.row(),column),
+                        return ModifyProxyModel::setData(
+                                    proxyIndex.sibling(proxyIndex.row(),column),
                                     "И",
                                     role);
                     else
-                        return xmlModel->setData(
-                                    sourceIndex.sibling(sourceIndex.row(), column),
+                        return ModifyProxyModel::setData(
+                                    proxyIndex.sibling(proxyIndex.row(), column),
                                     data(proxyIndex.sibling(proxyIndex.row()-1, 3),
                                          role),
                                     role);
                 } else {
-                    return xmlModel->setData(
-                                sourceIndex.sibling(sourceIndex.row(),column),
+                    return ModifyProxyModel::setData(
+                                proxyIndex.sibling(proxyIndex.row(),column),
                                 value,
                                 role);
                 }
@@ -184,15 +183,15 @@ bool ConditionProxyModel::setData(const QModelIndex &proxyIndex, const QVariant 
             }
         }
 
-        if (xmlModel->data(sourceIndex,Qt::UserRole)
+        if (ModifyProxyModel::data(proxyIndex,Qt::UserRole)
                 == DBCONDITIONXML::COND) {
 
             int column;
             switch (proxyIndex.column()) {
             case 0:
-                return xmlModel->setData(
-                            sourceIndex.sibling(
-                                sourceIndex.row(),
+                return ModifyProxyModel::setData(
+                            proxyIndex.sibling(
+                                proxyIndex.row(),
                                 xmlModel->columnDisplayedAttr(
                                     DBCONDITIONXML::COND,
                                     DBCONDITIONXML::FIRSTATTR)),
@@ -200,9 +199,9 @@ bool ConditionProxyModel::setData(const QModelIndex &proxyIndex, const QVariant 
                             role);
                 break;
             case 1:
-                return xmlModel->setData(
-                            sourceIndex.sibling(
-                                sourceIndex.row(),
+                return ModifyProxyModel::setData(
+                            proxyIndex.sibling(
+                                proxyIndex.row(),
                                 xmlModel->columnDisplayedAttr(
                                     DBCONDITIONXML::COND,
                                     DBCONDITIONXML::OPERATOR)),
@@ -210,9 +209,9 @@ bool ConditionProxyModel::setData(const QModelIndex &proxyIndex, const QVariant 
                             role);
                 break;
             case 2:
-                return xmlModel->setData(
-                            sourceIndex.sibling(
-                                sourceIndex.row(),
+                return ModifyProxyModel::setData(
+                            proxyIndex.sibling(
+                                proxyIndex.row(),
                                 xmlModel->columnDisplayedAttr(
                                     DBCONDITIONXML::COND,
                                     DBCONDITIONXML::SECONDATTR)),
@@ -226,18 +225,18 @@ bool ConditionProxyModel::setData(const QModelIndex &proxyIndex, const QVariant 
 
                 if (proxyIndex.row() == rowCount(proxyIndex.parent())-1) {
                     if (proxyIndex.row()==0)
-                        return xmlModel->setData(
-                                    sourceIndex.sibling(sourceIndex.row(),column),
+                        return ModifyProxyModel::setData(
+                                    proxyIndex.sibling(proxyIndex.row(),column),
                                     "И",
                                     role);
                     else
-                        return xmlModel->setData(
-                                    sourceIndex.sibling(sourceIndex.row(),column),
+                        return ModifyProxyModel::setData(
+                                    proxyIndex.sibling(proxyIndex.row(),column),
                                     data(proxyIndex.sibling(proxyIndex.row()-1, 3), role),
                                     role);
                 } else
-                    return xmlModel->setData(
-                                sourceIndex.sibling(sourceIndex.row(),column),
+                    return ModifyProxyModel::setData(
+                                proxyIndex.sibling(proxyIndex.row(),column),
                                 value,
                                 role);
             default:
@@ -249,8 +248,9 @@ bool ConditionProxyModel::setData(const QModelIndex &proxyIndex, const QVariant 
 
     return false;
 }
-
+/*
 bool ConditionProxyModel::hasChildren(const QModelIndex &parent) const
 {
     return rowCount(parent);
 }
+*/
