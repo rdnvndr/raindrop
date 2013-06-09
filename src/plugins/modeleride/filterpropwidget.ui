@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>255</width>
-    <height>370</height>
+    <height>408</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -186,6 +186,9 @@
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <layout class="QHBoxLayout" name="horizontalLayoutConditionButton">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QToolButton" name="toolButtonCondAdd">
           <property name="text">
