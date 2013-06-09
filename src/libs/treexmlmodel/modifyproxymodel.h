@@ -80,7 +80,9 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 
     //! Вставка строки
-    bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
+    bool insertRows(int  row, int count, const QModelIndex &parent = QModelIndex());
+    bool insertRows(int *row, int count, const QModelIndex &parent = QModelIndex());
+    bool insertRow (int *row, const QModelIndex &parent);
 
     //! Проверка является ли строка вставленной
     bool isInsertRow(const QModelIndex &index) const;

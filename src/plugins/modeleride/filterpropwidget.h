@@ -27,6 +27,15 @@ public slots:
     //! Удаление фильтра
     void remove();
 
+    //! Добавление условие фильтра
+    void addCondition();
+
+    //! Удаление условия фильтра
+    void removeCondition();
+
+    //! Добавление блока фильтра
+    void addBlock();
+
     //! Удаление пустого фильтра
     void removeEmpty();
 
