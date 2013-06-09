@@ -261,7 +261,6 @@ QModelIndex ModifyProxyModel::mapToSource(const QModelIndex &index) const
 
 QVariant ModifyProxyModel::data(const QModelIndex &proxyIndex, int role) const
 {
-
     QPersistentModelIndex dataIndex(proxyIndex);
 
     // Устанавливает зачеркивание удаленной строки
@@ -276,9 +275,11 @@ QVariant ModifyProxyModel::data(const QModelIndex &proxyIndex, int role) const
     }
 
     // Получение измененных данных
-    if (m_updatedRow.contains(dataIndex)
-            && (role == Qt::EditRole || role == Qt::DisplayRole))
-        return m_updatedRow[dataIndex][(role==Qt::DisplayRole)?Qt::EditRole:role];
+    if (m_updatedRow.contains(dataIndex))  {
+        int updateRole = (role==Qt::DisplayRole) ? Qt::EditRole : role;
+        if (m_updatedRow[dataIndex].contains(updateRole))
+            return m_updatedRow[dataIndex][updateRole];
+    }
 
     // Пустое значение для вставленных строк
     if (isInsertRow(proxyIndex))
@@ -289,13 +290,12 @@ QVariant ModifyProxyModel::data(const QModelIndex &proxyIndex, int role) const
 
 bool ModifyProxyModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    Q_UNUSED(role)
-
     QPersistentModelIndex dataIndex(index);
-    m_updatedRow[dataIndex][role] = value;
+    int updateRole = (role==Qt::DisplayRole) ? Qt::EditRole : role;
+    m_updatedRow[dataIndex][updateRole] = value;
     emit dataChanged(index,index);
 
-    return false;
+    return true;
 }
 
 bool ModifyProxyModel::hasChildren(const QModelIndex &parent) const
@@ -416,6 +416,22 @@ bool ModifyProxyModel::removeRows(int row, int count, const QModelIndex &parent)
 bool ModifyProxyModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(row)
+    /*QPersistentModelIndex rowIndex(parent.sibling(parent.row(),0));
+
+    int lastRow = rowCount(rowIndex);
+
+    beginInsertRows(parent,lastRow,lastRow+count-1);
+    for (int i = lastRow; i < lastRow+count; i++) {
+        QPersistentModelIndex *index = new QPersistentModelIndex(rowIndex);
+        m_insertedRow[rowIndex].append(index);
+    }
+    endInsertRows();*/
+    insertRows(&row,count,parent);
+    return true;
+}
+
+bool ModifyProxyModel::insertRows(int *row, int count, const QModelIndex &parent)
+{
     QPersistentModelIndex rowIndex(parent.sibling(parent.row(),0));
 
     int lastRow = rowCount(rowIndex);
@@ -427,7 +443,13 @@ bool ModifyProxyModel::insertRows(int row, int count, const QModelIndex &parent)
     }
     endInsertRows();
 
+    *row = lastRow;
     return true;
+}
+
+bool ModifyProxyModel::insertRow(int *row, const QModelIndex &parent)
+{
+    return insertRows(row,1,parent);
 }
 
 bool ModifyProxyModel::isInsertRow(const QModelIndex &index) const

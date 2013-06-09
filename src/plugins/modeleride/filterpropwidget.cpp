@@ -1,6 +1,7 @@
 #include "filterpropwidget.h"
 #include <QMessageBox>
 #include <QSortFilterProxyModel>
+#include <QMenu>
 #include "xmldelegate.h"
 #include "dbxmlstruct.h"
 
@@ -8,6 +9,12 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
+
+    QMenu *menuAddCondition = new QMenu(tr("Добавить"), this);
+    QAction *actionAddBlock = menuAddCondition->addAction(tr("Блок"));
+    QAction *actionAddCondition = menuAddCondition->addAction(tr("Выражение"));
+    toolButtonCondAdd->setMenu(menuAddCondition);
+
     m_mapper = new QDataWidgetMapper();
     m_mapper->setItemDelegate(new XmlDelegate(this));
     m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -21,6 +28,11 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     connect(pushButtonPropSave,SIGNAL(clicked()),this,SLOT(submit()));
     connect(pushButtonPropCancel,SIGNAL(clicked()),this,SLOT(revert()));
     connect(toolButtonEdit,SIGNAL(clicked()),this,SLOT(edit()));
+    connect(actionAddCondition,SIGNAL(triggered()),this,SLOT(addCondition()));
+    connect(actionAddBlock,SIGNAL(triggered()),this,SLOT(addBlock()));
+    connect(toolButtonCondAdd,SIGNAL(clicked()),toolButtonCondAdd,SLOT(showMenu()));
+    connect(toolButtonCondDel,SIGNAL(clicked()),this,SLOT(removeCondition()));
+
     m_oldIndex = -1;
 }
 
@@ -103,6 +115,31 @@ void FilterPropWidget::remove()
     m_model->removeRow(srcIndex.row(),srcIndex.parent());
 }
 
+void FilterPropWidget::addCondition()
+{
+    QModelIndex parent = treeViewCondition->currentIndex();
+    int row = 0;
+    m_conditionModel->insertRow(&row,parent);
+    m_conditionModel->setData(parent.child(row,0),
+                              DBCONDITIONXML::COND, Qt::UserRole);
+    m_conditionModel->setData(parent.child(row,3),tr("И"));
+}
+
+void FilterPropWidget::removeCondition()
+{
+    QModelIndex index = treeViewCondition->currentIndex();
+    m_conditionModel->removeRow(index.row(),index.parent());
+}
+
+void FilterPropWidget::addBlock()
+{
+    QModelIndex parent = treeViewCondition->currentIndex();
+    int row = 0;
+    m_conditionModel->insertRow(&row,parent);
+    m_conditionModel->setData(parent.child(row,0),
+                              DBFILTERBLOCKXML::BLOCK, Qt::UserRole);
+    m_conditionModel->setData(parent.child(row,3),tr("И"));
+}
 
 void FilterPropWidget::setCurrent(const QModelIndex &index)
 {
