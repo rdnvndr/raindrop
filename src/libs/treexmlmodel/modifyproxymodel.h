@@ -81,10 +81,9 @@ public:
 
     //! Вставка строки
     bool insertRows(int  row, int count, const QModelIndex &parent = QModelIndex());
-    //! Вставка строки
-    bool insertRows(int *row, int count, const QModelIndex &parent = QModelIndex());
-    //! Вставка строки
-    bool insertRow (int *row, const QModelIndex &parent);
+
+    //! Получение индекса последней вставленной строки
+    QModelIndex lastInsertRow();
 
     //! Проверка является ли строка вставленной
     bool isInsertRow(const QModelIndex &index) const;
@@ -135,6 +134,9 @@ private:
 
     //! Флаг скрытия удаленных строк
     bool m_hiddenRow;
+
+    //! Индекс последней вставленной строки
+    QModelIndex m_lastInsRow;
 } ;
 
 #endif
