@@ -5,7 +5,7 @@
 #include "pluginglobal.h"
 #include "iplugin.h"
 
-class PLUGINLIB IPlugin;
+class IPlugin;
 
 //! Класс для управления плагинами
 /*! Данный класс предназначен для загрузки плагинов,

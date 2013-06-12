@@ -107,7 +107,7 @@ QT_END_NAMESPACE
     \endcode
 */
 
-class IPlugin
+class PLUGINLIB IPlugin
 {
 
 public:

@@ -40,12 +40,11 @@ void HotKeyLineEdit::keyPressEvent(QKeyEvent *event)
         key = 0;
     }
 
-    m_keySequence
-            = QKeySequence(
-                (0 != (event->modifiers() & Qt::MetaModifier)    ? Qt::META  : 0) +
-                (0 != (event->modifiers() & Qt::ShiftModifier)   ? Qt::SHIFT : 0) +
-                (0 != (event->modifiers() & Qt::ControlModifier) ? Qt::CTRL  : 0) +
-                (0 != (event->modifiers() & Qt::AltModifier)     ? Qt::ALT   : 0) +
+    m_keySequence = QKeySequence (
+                (0 != (event->modifiers() & Qt::MetaModifier)    ? Qt::META  : Qt::UNICODE_ACCEL) +
+                (0 != (event->modifiers() & Qt::ShiftModifier)   ? Qt::SHIFT : Qt::UNICODE_ACCEL) +
+                (0 != (event->modifiers() & Qt::ControlModifier) ? Qt::CTRL  : Qt::UNICODE_ACCEL) +
+                (0 != (event->modifiers() & Qt::AltModifier)     ? Qt::ALT   : Qt::UNICODE_ACCEL) +
                 key
                 );
 
