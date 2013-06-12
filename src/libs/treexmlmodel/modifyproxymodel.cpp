@@ -1,4 +1,5 @@
 #include "modifyproxymodel.h"
+#include "treexmlmodel.h"
 #include <QFont>
 
 struct PrivateModelIndex
@@ -77,7 +78,9 @@ void ModifyProxyModel::sourceDataChanged(const QModelIndex &left,
 void ModifyProxyModel::sourceRowsRemoved(const QModelIndex &parent,
                                          int start, int end)
 {
-
+    Q_UNUSED(parent)
+    Q_UNUSED(start)
+    Q_UNUSED(end)
 }
 
 void ModifyProxyModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent,
@@ -113,32 +116,52 @@ bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
     int count = m_insertedRow[parent].count();
     QPersistentModelIndex srcParent = (sourceParent.isValid())?
                 sourceParent : QPersistentModelIndex(mapToSource(parent));
-    int beginRow = sourceModel()->rowCount(srcParent);
 
-    for (int row = beginRow; row < beginRow+count; row++) {
-        QPersistentModelIndex indexProxy(index(row, 0, parent));
+    TreeXMLModel *xmlModel = qobject_cast<TreeXMLModel *>(sourceModel());
+    for (int i = 0; i < count; i++) {
+        bool isInserted = false;
+        int row = sourceModel()->rowCount(srcParent);
 
-        sourceModel()->insertRow(row, srcParent);
+        QPersistentModelIndex indexProxy(
+                    index((srcParent == mapToSource(parent))? row + i: row,
+                          0,
+                          parent));
 
-        QPersistentModelIndex indexSource(sourceModel()->index(row, 0, srcParent));
+        int lastRow = row;
+        // Обработка TreeXMLModel
+        if (xmlModel) {
+            if (m_updatedRow.contains(indexProxy))
+                if (m_updatedRow[indexProxy].contains(Qt::UserRole)) {
+                    xmlModel->setInsTagName(m_updatedRow[indexProxy][Qt::UserRole].toString());
+                    isInserted = xmlModel->insertRow(lastRow,srcParent);
+                    lastRow = xmlModel->lastInsertRow().row();
+                }
+        } else
+            isInserted = sourceModel()->insertRow(lastRow, srcParent);
 
-        // Модификация потомков
-        if (m_insertedRow.contains(indexProxy)) {
-            insertSourceRows(indexProxy,indexSource);
+        QPersistentModelIndex indexSource;
+        if (isInserted) {
+            indexSource = QPersistentModelIndex(sourceModel()->index(
+                                                    lastRow, 0, srcParent));
+            // Модификация потомков
+            if (m_insertedRow.contains(indexProxy))
+                insertSourceRows(indexProxy,indexSource);
         }
 
         // Запись значений
-        for (int column = 0; column < columnCount(parent);column++) {
+        for (int column = 0; column < columnCount(parent); column++) {
             QModelIndex index = indexProxy.sibling(indexProxy.row(),column);
             if (m_updatedRow.contains(index)) {
-                QHashIterator<int, QVariant> iterRole(m_updatedRow[index]);
-                while (iterRole.hasNext()) {
-                    iterRole.next();
-                    QVariant value = iterRole.value();
-                    int role = iterRole.key();
-                    sourceModel()->setData(
-                                indexSource.sibling(indexSource.row(),column),
-                                value,role);
+                if (isInserted) {
+                    QHashIterator<int, QVariant> iterRole(m_updatedRow[index]);
+                    while (iterRole.hasNext()) {
+                        iterRole.next();
+                        QVariant value = iterRole.value();
+                        int role = iterRole.key();
+                        sourceModel()->setData(
+                                    indexSource.sibling(indexSource.row(),column),
+                                    value,role);
+                    }
                 }
                 m_updatedRow[index].clear();
                 m_updatedRow.remove(QPersistentModelIndex(index));

@@ -256,7 +256,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addInsertTags(DBFILTERXML::FILTER,insertTags);
 
     insertTags.clear();
-    insertTags << DBCONDITIONXML::COND;
+    insertTags << DBCONDITIONXML::COND << DBFILTERBLOCKXML::BLOCK;
     m_model->addInsertTags(DBFILTERBLOCKXML::BLOCK,insertTags);
 
 
