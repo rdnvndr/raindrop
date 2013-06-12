@@ -3,6 +3,7 @@
 
 #include <QAbstractProxyModel>
 #include <QSet>
+#include "treexmlmodelglobal.h"
 
 //! Класс прокси модель  для кэшеирования измений в модели источника
 /*! Данный класс предназначен для кэшеирования изменений в модели-источнике
@@ -18,7 +19,7 @@
     \endcode
 */
 
-class ModifyProxyModel : public QAbstractItemModel
+class XMLMODELLIB ModifyProxyModel : public QAbstractItemModel
 {
     Q_OBJECT
 

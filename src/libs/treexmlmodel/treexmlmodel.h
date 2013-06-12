@@ -9,7 +9,7 @@
 #include <QIcon>
 #include "treexmlmodelglobal.h"
 
-class XMLMODELLIB TagXMLItem;
+class TagXMLItem;
 
 //! Класс модель дерева для XML данных
 /*! Данный класс предназначен для создания дерева на основе,
