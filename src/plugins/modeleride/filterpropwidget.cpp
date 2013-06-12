@@ -118,11 +118,10 @@ void FilterPropWidget::remove()
 void FilterPropWidget::addCondition()
 {
     QModelIndex parent = treeViewCondition->currentIndex();
-    int row = 0;
-    m_conditionModel->insertRow(&row,parent);
-    m_conditionModel->setData(parent.child(row,0),
-                              DBCONDITIONXML::COND, Qt::UserRole);
-    m_conditionModel->setData(parent.child(row,3),tr("И"));
+    m_conditionModel->insertRow(0,parent);
+    QModelIndex index = m_conditionModel->lastInsertRow();
+    m_conditionModel->setData(index, DBCONDITIONXML::COND, Qt::UserRole);
+    m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
 
 void FilterPropWidget::removeCondition()
@@ -134,11 +133,10 @@ void FilterPropWidget::removeCondition()
 void FilterPropWidget::addBlock()
 {
     QModelIndex parent = treeViewCondition->currentIndex();
-    int row = 0;
-    m_conditionModel->insertRow(&row,parent);
-    m_conditionModel->setData(parent.child(row,0),
-                              DBFILTERBLOCKXML::BLOCK, Qt::UserRole);
-    m_conditionModel->setData(parent.child(row,3),tr("И"));
+    m_conditionModel->insertRow(0,parent);
+    QModelIndex index = m_conditionModel->lastInsertRow();
+    m_conditionModel->setData(index, DBFILTERBLOCKXML::BLOCK, Qt::UserRole);
+    m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
 
 void FilterPropWidget::setCurrent(const QModelIndex &index)
@@ -187,7 +185,7 @@ void FilterPropWidget::submit()
             if (lineEditName->text() == childIndex.data() &&
                     srcIndex != childIndex.sibling(row,0)) {
                 QMessageBox::warning(this,tr("Предуреждение"),
-                                     tr("Фильтр с таким имененм уже существует"));
+                                     tr("Фильтр с таким именем уже существует"));
                 return;
             }
     }
