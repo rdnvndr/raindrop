@@ -53,7 +53,9 @@ bool ModifyProxyModel::submitAll()
     while (iterRemoveIndex.hasNext())
     {
         QModelIndex index = iterRemoveIndex.next();
+        beginRemoveRows(mapFromSource(index.parent()),index.row(),index.row());
         sourceModel()->removeRow(index.row(),index.parent());
+        endRemoveRows();
     }
     m_removedRow.clear();
     return true;
