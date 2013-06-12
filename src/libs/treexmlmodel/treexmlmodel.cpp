@@ -74,20 +74,21 @@ bool TreeXMLModel::makeHashingData(const QModelIndex &index, QString &dataValue)
         QString attr = displayedAttr(tag,index.column());
         if (m_hashAttr[tag].contains(attr)){
             QModelIndex existIndex = indexHashAttr(tag,attr,dataValue);
-            if (existIndex.isValid())
-                if (existIndex!=index){
-                    if (m_hashAttr[tag][attr] == TreeXMLModel::UniqueRename){
-                        int position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
-                        int number = 1;
-                        if (position != -1)
-                            number = dataValue.mid(position+1).toInt()+1;
-                        dataValue = dataValue.left(position)+QString("_%1").arg(number);
-                    } else if (m_hashAttr[tag][attr] == TreeXMLModel::Unique) {
-                        return false;
-                    } else if (m_hashAttr[tag][attr] == TreeXMLModel::Uuid) {
-                        dataValue = QUuid::createUuid().toString();
-                    }
-                }
+            while (existIndex.isValid() && existIndex!=index) {
+                if (m_hashAttr[tag][attr] == TreeXMLModel::UniqueRename){
+                    int position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
+                    int number = 1;
+                    if (position != -1)
+                        number = dataValue.mid(position+1).toInt()+1;
+                    dataValue = dataValue.left(position)+QString("_%1").arg(number);
+                } else if (m_hashAttr[tag][attr] == TreeXMLModel::Unique) {
+                    return false;
+                } else if (m_hashAttr[tag][attr] == TreeXMLModel::Uuid) {
+                    dataValue = QUuid::createUuid().toString();
+                } else
+                    break;
+                existIndex = indexHashAttr(tag,attr,dataValue);
+            }
             TagXMLItem *item = toItem(index);
 
             m_hashValue[tag][attr].remove(

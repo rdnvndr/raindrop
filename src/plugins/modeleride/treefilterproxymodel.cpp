@@ -176,7 +176,7 @@ bool TreeFilterProxyModel::unpackData(const QModelIndex &parent, QDataStream &st
                 nextTag = true;
             index = xmlModel->lastInsertRow();
         } else if (nameAttr==QString("{")) {
-            unpackData(xmlModel->lastInsertRow(),stream,row);
+            unpackData(xmlModel->lastInsertRow(),stream,row,move);
         } else if (nameAttr==QString("}")) {
             return true;
         } else if (!nextTag){

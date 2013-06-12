@@ -81,7 +81,9 @@ public:
 
     //! Вставка строки
     bool insertRows(int  row, int count, const QModelIndex &parent = QModelIndex());
+    //! Вставка строки
     bool insertRows(int *row, int count, const QModelIndex &parent = QModelIndex());
+    //! Вставка строки
     bool insertRow (int *row, const QModelIndex &parent);
 
     //! Проверка является ли строка вставленной
