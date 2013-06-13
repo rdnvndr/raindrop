@@ -69,6 +69,13 @@ public:
     //! Возвращает флаг записи
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
+    //! Устанавливает разрешение на редактирование
+    void setEditable(bool flag);
+
+    //! Возращает разрешение на редактирование
+    bool isEditable();
+
+
     //! Возращает название заголовка
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
@@ -99,6 +106,9 @@ public slots:
 
     //! Применение изменений сделанных в прокси модели к модели-источнику
     bool submitAll();
+
+    //! Отмена изменений сделанных в прокси модели
+    void revertAll();
 
     //! Слот обработки сигнала изменения данных источника
     void sourceDataChanged(const QModelIndex &left, const QModelIndex &right);
@@ -138,6 +148,9 @@ private:
 
     //! Индекс последней вставленной строки
     QModelIndex m_lastInsRow;
+
+    //! Флаг разрешения на редактирование
+    bool m_editable;
 } ;
 
 #endif

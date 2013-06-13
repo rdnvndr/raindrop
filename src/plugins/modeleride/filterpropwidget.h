@@ -4,6 +4,8 @@
 #include "ui_filterpropwidget.h"
 #include "conditionproxymodel.h"
 #include <QDataWidgetMapper>
+#include <QMenu>
+#include <QAction>
 #include <treexmlmodel/treexmlmodel.h>
 
 class FilterPropWidget : public QWidget, private Ui::FilterPropWidget
@@ -27,14 +29,20 @@ public slots:
     //! Удаление фильтра
     void remove();
 
-    //! Добавление условие фильтра
+    //! Добавление выражения фильтра
     void addCondition();
+
+    //! Добавление подвыражение фильтра
+    void addSubCondition();
 
     //! Удаление условия фильтра
     void removeCondition();
 
     //! Добавление блока фильтра
     void addBlock();
+
+    //! Добавление подблока фильтра
+    void addSubBlock();
 
     //! Удаление пустого фильтра
     void removeEmpty();
@@ -79,6 +87,21 @@ private:
 
     //! Модель редактора условий
     ConditionProxyModel *m_conditionModel;
+
+    //! Меню добавить условие
+    QMenu *menuAddCondition = new QMenu(tr("Добавить"), this);
+
+    //! Действие добавить блок
+    QAction *actionAddBlock;
+
+    //! Действие добавить выражение
+    QAction *actionAddCondition;
+
+    //! Действие добавить подблок
+    QAction *actionAddSubBlock;
+
+    //! Действие добавить подвыражение
+    QAction *actionAddSubCondition;
 };
 
 #endif // FILTERPROPWIDGET_H

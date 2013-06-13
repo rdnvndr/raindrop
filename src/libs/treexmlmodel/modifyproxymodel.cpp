@@ -13,6 +13,7 @@ ModifyProxyModel::ModifyProxyModel(QObject* parent) :
     QAbstractItemModel (parent)
 {
     m_hiddenRow = true;
+    m_editable  = false;
 }
 
 bool ModifyProxyModel::submitAll()
@@ -59,6 +60,42 @@ bool ModifyProxyModel::submitAll()
     }
     m_removedRow.clear();
     return true;
+}
+
+void ModifyProxyModel::revertAll()
+{
+    // Отмена вставки строк
+    QHashIterator<QPersistentModelIndex,
+            QList<QPersistentModelIndex *> > iterParentList(m_insertedRow);
+    while (iterParentList.hasNext())
+    {
+        iterParentList.next();
+        QPersistentModelIndex parent = iterParentList.key();
+        if (parent.isValid()) {
+            int count = m_insertedRow[parent].count();
+            removeRows(rowCount(parent)-count,count,parent);
+        }
+        m_insertedRow[parent].clear();
+        m_insertedRow.remove(parent);
+    }
+
+    // Отмена модификации строк
+    QHashIterator<QPersistentModelIndex,
+            QHash<int, QVariant> > iterIndex(m_updatedRow);
+    while (iterIndex.hasNext())
+    {
+        iterIndex.next();
+        QModelIndex index = iterIndex.key();
+        m_updatedRow[index].clear();
+        emit dataChanged(index, index);
+    }
+    m_updatedRow.clear();
+
+    // Отмена удаления строк
+    if (!m_removedRow.isEmpty()) {
+        emit layoutChanged();
+        m_removedRow.clear();
+    }
 }
 
 void ModifyProxyModel::sourceDataChanged(const QModelIndex &left,
@@ -352,8 +389,20 @@ Qt::ItemFlags ModifyProxyModel::flags(const QModelIndex &index) const
 {
     Q_UNUSED(index)
 
-    return /*Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled |*/
-            Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+    if (m_editable)
+        return  Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+
+    return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+}
+
+void ModifyProxyModel::setEditable(bool flag)
+{
+    m_editable = flag;
+}
+
+bool ModifyProxyModel::isEditable()
+{
+    return m_editable;
 }
 
 QVariant ModifyProxyModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -429,7 +478,7 @@ bool ModifyProxyModel::removeRows(int row, int count, const QModelIndex &parent)
         }
     }
 
-    // Удаление строк в тсходной модели
+    // Удаление строк в исходной модели
     for (int i = row; i< beginRowInsert; i++) {
         QModelIndex insertIndex = index(i,0, parent);
         m_removedRow.insert(QPersistentModelIndex(mapToSource(insertIndex)));

@@ -10,9 +10,11 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    QMenu *menuAddCondition = new QMenu(tr("Добавить"), this);
-    QAction *actionAddBlock = menuAddCondition->addAction(tr("Блок"));
-    QAction *actionAddCondition = menuAddCondition->addAction(tr("Выражение"));
+    menuAddCondition = new QMenu(tr("Добавить"), this);
+    actionAddBlock = menuAddCondition->addAction(tr("Блок"));
+    actionAddCondition = menuAddCondition->addAction(tr("Выражение"));
+    actionAddSubBlock = menuAddCondition->addAction(tr("Подблок"));
+    actionAddSubCondition = menuAddCondition->addAction(tr("Подвыражение"));
     toolButtonCondAdd->setMenu(menuAddCondition);
 
     m_mapper = new QDataWidgetMapper();
@@ -28,8 +30,12 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     connect(pushButtonPropSave,SIGNAL(clicked()),this,SLOT(submit()));
     connect(pushButtonPropCancel,SIGNAL(clicked()),this,SLOT(revert()));
     connect(toolButtonEdit,SIGNAL(clicked()),this,SLOT(edit()));
+
     connect(actionAddCondition,SIGNAL(triggered()),this,SLOT(addCondition()));
     connect(actionAddBlock,SIGNAL(triggered()),this,SLOT(addBlock()));
+    connect(actionAddSubCondition,SIGNAL(triggered()),this,SLOT(addCondition()));
+    connect(actionAddSubBlock,SIGNAL(triggered()),this,SLOT(addBlock()));
+
     connect(toolButtonCondAdd,SIGNAL(clicked()),toolButtonCondAdd,SLOT(showMenu()));
     connect(toolButtonCondDel,SIGNAL(clicked()),this,SLOT(removeCondition()));
 
@@ -40,6 +46,11 @@ FilterPropWidget::~FilterPropWidget()
 {
     delete m_conditionModel;
     delete m_mapper;
+    delete actionAddBlock;
+    delete actionAddCondition;
+    delete actionAddSubBlock;
+    delete actionAddSubCondition;
+    delete menuAddCondition;
 }
 
 void FilterPropWidget::setModel(TreeXMLModel *model)
@@ -124,6 +135,11 @@ void FilterPropWidget::addCondition()
     m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
 
+void FilterPropWidget::addSubCondition()
+{
+
+}
+
 void FilterPropWidget::removeCondition()
 {
     QModelIndex index = treeViewCondition->currentIndex();
@@ -137,6 +153,11 @@ void FilterPropWidget::addBlock()
     QModelIndex index = m_conditionModel->lastInsertRow();
     m_conditionModel->setData(index, DBFILTERBLOCKXML::BLOCK, Qt::UserRole);
     m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
+}
+
+void FilterPropWidget::addSubBlock()
+{
+
 }
 
 void FilterPropWidget::setCurrent(const QModelIndex &index)
@@ -166,7 +187,9 @@ void FilterPropWidget::edit(bool flag)
         toolButtonAdd->setEnabled(true);
 
     groupBoxProp->setEnabled(flag);
-    groupBoxCondition->setEnabled(flag);
+    toolButtonCondAdd->setEnabled(flag);
+    toolButtonCondDel->setEnabled(flag);
+    m_conditionModel->setEditable(flag);
     pushButtonPropSave->setEnabled(flag);
     pushButtonPropCancel->setEnabled(flag);
     toolButtonEdit->setDisabled(flag);
@@ -201,6 +224,7 @@ void FilterPropWidget::submit()
 void FilterPropWidget::revert()
 {
     m_mapper->revert();
+    m_conditionModel->revertAll();
     removeEmpty();
     edit(false);
 }
