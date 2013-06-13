@@ -100,11 +100,6 @@ void ModifyProxyModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent,
         if (m_removedRow.contains(QPersistentModelIndex(index)))
             m_removedRow.remove(QPersistentModelIndex(index));
     }
-
-    QModelIndex index = mapFromSource(parent);
-    beginRemoveRows(index, start, end);
-
-    endRemoveRows();
 }
 
 void ModifyProxyModel::sourceRowsInserted(const QModelIndex &parent, int start, int end)
