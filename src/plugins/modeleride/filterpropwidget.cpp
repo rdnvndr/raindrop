@@ -11,10 +11,15 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     setupUi(this);
 
     menuAddCondition = new QMenu(tr("Добавить"), this);
-    actionAddBlock = menuAddCondition->addAction(tr("Блок"));
-    actionAddCondition = menuAddCondition->addAction(tr("Выражение"));
-    actionAddSubBlock = menuAddCondition->addAction(tr("Подблок"));
-    actionAddSubCondition = menuAddCondition->addAction(tr("Подвыражение"));
+
+    actionAddCondition = menuAddCondition->addAction(QIcon(":/expression"),
+                                                     tr("Выражение"));
+    actionAddSubCondition = menuAddCondition->addAction(QIcon(":/expression"),
+                                                        tr("Подвыражение"));
+    actionAddBlock = menuAddCondition->addAction(QIcon(":/block"),tr("Блок"));
+    actionAddSubBlock = menuAddCondition->addAction(QIcon(":/block"),tr("Подблок"));
+
+
     toolButtonCondAdd->setMenu(menuAddCondition);
 
     m_mapper = new QDataWidgetMapper();
@@ -127,10 +132,10 @@ void FilterPropWidget::remove()
     m_model->removeRow(srcIndex.row(),srcIndex.parent());
 }
 
-void FilterPropWidget::addCondition()
+void FilterPropWidget::addSubCondition()
 {
     QModelIndex parent = (treeViewCondition->currentIndex().isValid())
-            ? treeViewCondition->currentIndex().parent()
+            ? treeViewCondition->currentIndex()
             : treeViewCondition->rootIndex();
 
     m_conditionModel->insertRow(0,parent);
@@ -139,10 +144,11 @@ void FilterPropWidget::addCondition()
     m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
 
-void FilterPropWidget::addSubCondition()
+void FilterPropWidget::addCondition()
 {
     QModelIndex parent = treeViewCondition->rootIndex();
-    if (treeViewCondition->currentIndex().isValid())
+    if (treeViewCondition->currentIndex().isValid()
+            && parent != treeViewCondition->currentIndex())
         if (treeViewCondition->currentIndex().parent().isValid())
             parent = treeViewCondition->currentIndex().parent();
 
@@ -155,28 +161,30 @@ void FilterPropWidget::addSubCondition()
 void FilterPropWidget::removeCondition()
 {
     QModelIndex index = treeViewCondition->currentIndex();
-    if (index.isValid())
+    if (index.isValid()) {
         m_conditionModel->removeRow(index.row(),index.parent());
-    else
+        treeViewCondition->setCurrentIndex(treeViewCondition->rootIndex());
+    } else
         QMessageBox::warning(this,tr("Предуреждение"),
                              tr("Удалить невозможно. Ничего не выбрано."));
 }
 
-void FilterPropWidget::addBlock()
+void FilterPropWidget::addSubBlock()
 {
     QModelIndex parent = (treeViewCondition->currentIndex().isValid())
-            ? treeViewCondition->currentIndex().parent()
-            : treeViewCondition->rootIndex();
+            ? treeViewCondition->currentIndex() : treeViewCondition->rootIndex();
+
     m_conditionModel->insertRow(0,parent);
     QModelIndex index = m_conditionModel->lastInsertRow();
     m_conditionModel->setData(index, DBFILTERBLOCKXML::BLOCK, Qt::UserRole);
     m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
 
-void FilterPropWidget::addSubBlock()
+void FilterPropWidget::addBlock()
 {
     QModelIndex parent = treeViewCondition->rootIndex();
-    if (treeViewCondition->currentIndex().isValid())
+    if (treeViewCondition->currentIndex().isValid()
+            && parent != treeViewCondition->currentIndex())
         if (treeViewCondition->currentIndex().parent().isValid())
             parent = treeViewCondition->currentIndex().parent();
 

@@ -26,9 +26,6 @@ int ConditionProxyModel::columnCount(const QModelIndex& parent) const
 
 QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) const
 {
-    if (role == Qt::UserRole)
-        return ModifyProxyModel::data(proxyIndex.sibling(proxyIndex.row(),0),role);
-
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
         TreeXMLModel *xmlModel = qobject_cast<TreeXMLModel *>(sourceModel());
 
@@ -37,7 +34,7 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
 
             switch (proxyIndex.column()) {
             case 0:
-                return QString("(...)");
+                return QString("{Блок}");
                 break;
             case 3:
                 if (proxyIndex.row() < rowCount(proxyIndex.parent())-1)
@@ -94,6 +91,16 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
                 return QVariant();
             }
         }
+    }
+
+    if (role == Qt::UserRole)
+        return ModifyProxyModel::data(proxyIndex.sibling(proxyIndex.row(),0),role);
+
+    if (role == Qt::DecorationRole && proxyIndex.column() == 0) {
+        if (data(proxyIndex,Qt::UserRole) == DBFILTERBLOCKXML::BLOCK)
+            return QIcon(":/block");
+        if (data(proxyIndex,Qt::UserRole) == DBCONDITIONXML::COND)
+            return QIcon(":/expression");
     }
 
     return QVariant();
@@ -204,4 +211,12 @@ bool ConditionProxyModel::setData(const QModelIndex &proxyIndex,
     }
 
     return ModifyProxyModel::setData(proxyIndex,value,role);
+}
+
+bool ConditionProxyModel::insertRows(int row, int count, const QModelIndex &parent)
+{
+    if (data(parent,Qt::UserRole) == DBCONDITIONXML::COND)
+        return false;
+
+    return ModifyProxyModel::insertRows(row, count, parent);
 }

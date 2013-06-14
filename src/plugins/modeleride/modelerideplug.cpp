@@ -219,14 +219,16 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     QStringList propsFilterBlock;
     propsFilterBlock << DBFILTERBLOCKXML::LINKOF << DBFILTERBLOCKXML::PARENT
                      << DBFILTERBLOCKXML::ID;
-    m_model->addDisplayedAttr(DBFILTERBLOCKXML::BLOCK,propsFilterBlock);
+    m_model->addDisplayedAttr(DBFILTERBLOCKXML::BLOCK, propsFilterBlock,
+                              QIcon(":/block"));
     m_model->addAttrTag(DBFILTERBLOCKXML::BLOCK);
 
     QStringList propsCondition;
     propsCondition << DBCONDITIONXML::FIRSTATTR   << DBCONDITIONXML::OPERATOR
                      << DBCONDITIONXML::SECONDATTR  << DBCONDITIONXML::LINKOF
                      << DBCONDITIONXML::PARENT      << DBCONDITIONXML::ID;
-    m_model->addDisplayedAttr(DBCONDITIONXML::COND, propsCondition);
+    m_model->addDisplayedAttr(DBCONDITIONXML::COND, propsCondition,
+                              QIcon(":/expression"));
     m_model->addAttrTag(DBCONDITIONXML::COND);
 
     m_model->setHeaderData(0, Qt::Horizontal, tr("Имя атрибута"));

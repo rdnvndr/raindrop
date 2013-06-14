@@ -13,5 +13,7 @@
         <file alias="edit">icons/gtk-edit.svg</file>
         <file alias="composition">icons/insert-link.svg</file>
         <file alias="filter">icons/edit-find.svg</file>
+        <file alias="block">icons/block.svg</file>
+        <file alias="expression">icons/formula.svg</file>
     </qresource>
 </RCC>
