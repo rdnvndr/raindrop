@@ -113,6 +113,9 @@ private:
     //! Команда отображения состава в дереве классов
     QAction* actionShowComp;
 
+    //! Команда отображения фильтров в дереве классов
+    QAction* actionShowFilter;
+
     //! Команда разделитель
     QAction* actionSeparator;
 

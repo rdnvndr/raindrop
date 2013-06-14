@@ -54,6 +54,11 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     contextMenu->addAction(actionShowComp);
     connect(actionShowComp,SIGNAL(triggered(bool)),this,SLOT(setShowComp(bool)));
 
+    actionShowFilter = new QAction(tr("Показать фильтры"),this);
+    actionShowFilter->setCheckable(true);
+    contextMenu->addAction(actionShowFilter);
+    connect(actionShowFilter,SIGNAL(triggered(bool)),this,SLOT(setShowFilter(bool)));
+
     treeClassView->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(treeClassView->treeView,SIGNAL(customContextMenuRequested(const QPoint&)),
             this,SLOT(showContextMenu(const QPoint&)));
@@ -113,6 +118,7 @@ ModelerIDEPlug::~ModelerIDEPlug()
     delete actionRemoveClass;
     delete actionShowAttr;
     delete actionShowComp;
+    delete actionShowFilter;
     delete actionSeparator;
     delete contextMenu;
 }
@@ -158,7 +164,7 @@ void ModelerIDEPlug::setShowFilter(bool shown)
 
     QRegExp regex = classFilterModel->filterRegExp();
     classFilterModel->setFilterRegExp(regex);
-    //actionShowFilter->setChecked(shown);
+    actionShowFilter->setChecked(shown);
 }
 
 void ModelerIDEPlug::actionSaveEnable()
@@ -327,6 +333,11 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     classFilterModel->setDynamicSortFilter(true);
     classFilterModel->sort(0);
 
+    classFilterModel->addHiddenTag(DBFILTERBLOCKXML::BLOCK);
+    classFilterModel->addHiddenTag(DBCONDITIONXML::COND);
+    QRegExp regex = classFilterModel->filterRegExp();
+    classFilterModel->setFilterRegExp(regex);
+
     setShowComp(false);
     setShowAttr(false);
     setShowFilter(false);
@@ -391,6 +402,9 @@ void ModelerIDEPlug::dblClickTree(const QModelIndex &index)
 
     if (indexSource.data(Qt::UserRole)==DBCOMPXML::COMP)
         showPropComposition(indexSource);
+
+    if (indexSource.data(Qt::UserRole)==DBFILTERXML::FILTER)
+        showPropFilter(indexSource);
 }
 
 // Метод совпадает с bool ClassWidget::isRemove(const QModelIndex &srcIndex)
