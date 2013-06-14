@@ -19,7 +19,6 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     actionAddBlock = menuAddCondition->addAction(QIcon(":/block"),tr("Блок"));
     actionAddSubBlock = menuAddCondition->addAction(QIcon(":/block"),tr("Подблок"));
 
-
     toolButtonCondAdd->setMenu(menuAddCondition);
 
     m_mapper = new QDataWidgetMapper();
