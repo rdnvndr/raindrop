@@ -89,7 +89,7 @@ private:
     ConditionProxyModel *m_conditionModel;
 
     //! Меню добавить условие
-    QMenu *menuAddCondition = new QMenu(tr("Добавить"), this);
+    QMenu *menuAddCondition;
 
     //! Действие добавить блок
     QAction *actionAddBlock;

@@ -33,8 +33,8 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
 
     connect(actionAddCondition,SIGNAL(triggered()),this,SLOT(addCondition()));
     connect(actionAddBlock,SIGNAL(triggered()),this,SLOT(addBlock()));
-    connect(actionAddSubCondition,SIGNAL(triggered()),this,SLOT(addCondition()));
-    connect(actionAddSubBlock,SIGNAL(triggered()),this,SLOT(addBlock()));
+    connect(actionAddSubCondition,SIGNAL(triggered()),this,SLOT(addSubCondition()));
+    connect(actionAddSubBlock,SIGNAL(triggered()),this,SLOT(addSubBlock()));
 
     connect(toolButtonCondAdd,SIGNAL(clicked()),toolButtonCondAdd,SLOT(showMenu()));
     connect(toolButtonCondDel,SIGNAL(clicked()),this,SLOT(removeCondition()));
@@ -118,7 +118,8 @@ void FilterPropWidget::add()
 
 void FilterPropWidget::remove()
 {
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(), 0,
+                                          m_mapper->rootIndex());
     m_mapper->revert();
     setCurrent(srcIndex.parent());
 
@@ -128,7 +129,10 @@ void FilterPropWidget::remove()
 
 void FilterPropWidget::addCondition()
 {
-    QModelIndex parent = treeViewCondition->currentIndex();
+    QModelIndex parent = (treeViewCondition->currentIndex().isValid())
+            ? treeViewCondition->currentIndex().parent()
+            : treeViewCondition->rootIndex();
+
     m_conditionModel->insertRow(0,parent);
     QModelIndex index = m_conditionModel->lastInsertRow();
     m_conditionModel->setData(index, DBCONDITIONXML::COND, Qt::UserRole);
@@ -137,18 +141,32 @@ void FilterPropWidget::addCondition()
 
 void FilterPropWidget::addSubCondition()
 {
+    QModelIndex parent = treeViewCondition->rootIndex();
+    if (treeViewCondition->currentIndex().isValid())
+        if (treeViewCondition->currentIndex().parent().isValid())
+            parent = treeViewCondition->currentIndex().parent();
 
+    m_conditionModel->insertRow(0,parent);
+    QModelIndex index = m_conditionModel->lastInsertRow();
+    m_conditionModel->setData(index, DBCONDITIONXML::COND, Qt::UserRole);
+    m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
 
 void FilterPropWidget::removeCondition()
 {
     QModelIndex index = treeViewCondition->currentIndex();
-    m_conditionModel->removeRow(index.row(),index.parent());
+    if (index.isValid())
+        m_conditionModel->removeRow(index.row(),index.parent());
+    else
+        QMessageBox::warning(this,tr("Предуреждение"),
+                             tr("Удалить невозможно. Ничего не выбрано."));
 }
 
 void FilterPropWidget::addBlock()
 {
-    QModelIndex parent = treeViewCondition->currentIndex();
+    QModelIndex parent = (treeViewCondition->currentIndex().isValid())
+            ? treeViewCondition->currentIndex().parent()
+            : treeViewCondition->rootIndex();
     m_conditionModel->insertRow(0,parent);
     QModelIndex index = m_conditionModel->lastInsertRow();
     m_conditionModel->setData(index, DBFILTERBLOCKXML::BLOCK, Qt::UserRole);
@@ -157,7 +175,15 @@ void FilterPropWidget::addBlock()
 
 void FilterPropWidget::addSubBlock()
 {
+    QModelIndex parent = treeViewCondition->rootIndex();
+    if (treeViewCondition->currentIndex().isValid())
+        if (treeViewCondition->currentIndex().parent().isValid())
+            parent = treeViewCondition->currentIndex().parent();
 
+    m_conditionModel->insertRow(0,parent);
+    QModelIndex index = m_conditionModel->lastInsertRow();
+    m_conditionModel->setData(index, DBFILTERBLOCKXML::BLOCK, Qt::UserRole);
+    m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
 
 void FilterPropWidget::setCurrent(const QModelIndex &index)
@@ -198,7 +224,9 @@ void FilterPropWidget::edit(bool flag)
 void FilterPropWidget::submit()
 {
     QModelIndex rootIndex = m_mapper->rootIndex();
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+    QModelIndex srcIndex = m_model->index(
+                m_mapper->currentIndex(),0,m_mapper->rootIndex());
+
     for (int row=0; row < m_model->rowCount(rootIndex); row++){
         QModelIndex childIndex = m_model->index(row, m_model->columnDisplayedAttr(
                                                     DBFILTERXML::FILTER,
@@ -239,12 +267,14 @@ void FilterPropWidget::rowsRemoved(const QModelIndex &index, int start, int end)
         }
     }
 
-    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1 && m_oldIndex <0)
+    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1
+            && m_oldIndex <0)
         emit dataRemoved(QModelIndex());
 }
 
 
-QVariant FilterPropWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
+QVariant FilterPropWidget::modelData(const QString &tag, const QString &attr,
+                                     const QModelIndex &index)
 {
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
                              tag,attr)).data();
@@ -264,4 +294,3 @@ void FilterPropWidget::removeEmpty()
         }
     }
 }
-
