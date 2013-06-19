@@ -25,7 +25,8 @@ HEADERS += modelerideplug.h \
     filterwidget.h \
     propfilter.h \
     filterpropwidget.h \
-    conditionproxymodel.h
+    conditionproxymodel.h \
+    conditiondelegate.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -39,7 +40,8 @@ SOURCES += modelerideplug.cpp \
     filterwidget.cpp \
     propfilter.cpp \
     filterpropwidget.cpp \
-    conditionproxymodel.cpp
+    conditionproxymodel.cpp \
+    conditiondelegate.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \

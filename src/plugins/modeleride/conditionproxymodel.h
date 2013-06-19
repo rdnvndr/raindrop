@@ -6,7 +6,7 @@
 
 class ConditionProxyModel : public ModifyProxyModel
 {
-
+    Q_OBJECT
 public:
     ConditionProxyModel(QObject *parent = 0);
 
