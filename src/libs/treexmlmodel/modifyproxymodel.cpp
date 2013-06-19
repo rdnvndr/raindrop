@@ -234,17 +234,8 @@ int ModifyProxyModel::rowCount(const QModelIndex &parent) const
     if (isInsertRow(parent))
         return  insertRowCount;
 
-    // Поиск удаленных строк в конце
     int parentRowCount = sourceModel()->rowCount(mapToSource(parent));
-    int removeRowCount = 0;
-    for (int row = parentRowCount - 1; row >=0; row--) {
-        QModelIndex index =  sourceModel()->index(row,0,mapToSource(parent));
-        if (m_removedRow.contains(QPersistentModelIndex(index))) {
-            removeRowCount++;
-        } else
-            break;
-    }
-    return parentRowCount + insertRowCount - removeRowCount;
+    return parentRowCount + insertRowCount;
 }
 
 QModelIndex ModifyProxyModel::index(int row, int column, const QModelIndex &parent) const
