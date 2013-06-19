@@ -131,7 +131,7 @@ public:
     void addDisplayedAttr(const QString &tag,const QStringList &value,QIcon icon = QIcon());
 
     //! Указывает тэги разрешенные для вставки
-    void addInsertTags(const QString &tag,const QStringList &value);
+    void addInsertTags(const QString &tag, const QStringList &value);
 
     //! Получение индекса поля в тэге
     int columnDisplayedAttr(const QString &tag, const QString &attr) const;
