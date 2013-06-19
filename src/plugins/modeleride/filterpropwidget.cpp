@@ -1,7 +1,8 @@
 #include "filterpropwidget.h"
 #include <QMessageBox>
-#include <QSortFilterProxyModel>
 #include <QMenu>
+#include <QSortFilterProxyModel>
+#include "conditiondelegate.h"
 #include "xmldelegate.h"
 #include "dbxmlstruct.h"
 
@@ -26,6 +27,11 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
     m_conditionModel = new ConditionProxyModel();
+    ConditionDelegate *conditionDelegate = new ConditionDelegate();
+    treeViewCondition->setItemDelegate(conditionDelegate);
+
+    connect(comboBoxDestClass,SIGNAL(currentIndexChanged(QString)),
+            this,SLOT(changeDestClass(QString)));
 
     lineEditSrcClass->setReadOnly(true);
 
@@ -73,8 +79,8 @@ void FilterPropWidget::setModel(TreeXMLModel *model)
     classFilterModel->setDynamicSortFilter(true);
     classFilterModel->sort(0);
     comboBoxDestClass->setModel(classFilterModel);
-    comboBoxDestClass->setIndexColumn(m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                                  DBATTRXML::ID));
+    comboBoxDestClass->setIndexColumn(m_model->columnDisplayedAttr(
+                                          DBCLASSXML::CLASS, DBATTRXML::ID));
 
     m_mapper->addMapping(lineEditName,
                          model->columnDisplayedAttr(DBFILTERXML::FILTER,
@@ -203,6 +209,10 @@ void FilterPropWidget::setCurrent(const QModelIndex &index)
     m_mapper->setCurrentModelIndex(index);
     edit(false);
 
+    ConditionDelegate *conditionDelegate =
+            qobject_cast<ConditionDelegate *>(treeViewCondition->itemDelegate());
+    conditionDelegate->setFirstIndex(index.parent());
+
     treeViewCondition->setRootIndex(m_conditionModel->mapFromSource(index));
 
     emit currentIndexChanged(index);
@@ -277,6 +287,16 @@ void FilterPropWidget::rowsRemoved(const QModelIndex &index, int start, int end)
     if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1
             && m_oldIndex <0)
         emit dataRemoved(QModelIndex());
+}
+
+void FilterPropWidget::changeDestClass(const QString &nameClass)
+{
+    QModelIndex index = m_model->indexHashAttr(
+                DBCLASSXML::CLASS, DBCLASSXML::NAME, nameClass);
+
+    ConditionDelegate *conditionDelegate =
+            qobject_cast<ConditionDelegate *>(treeViewCondition->itemDelegate());
+    conditionDelegate->setSecondIndex(index);
 }
 
 

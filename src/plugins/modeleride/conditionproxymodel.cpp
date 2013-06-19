@@ -54,14 +54,23 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
                 == DBCONDITIONXML::COND) {
 
             switch (proxyIndex.column()) {
-            case 0:
-                return ModifyProxyModel::data(
+            case 0: {
+                QVariant value = ModifyProxyModel::data(
                             proxyIndex.sibling(
                                 proxyIndex.row(),
                                 xmlModel->columnDisplayedAttr(
                                     DBCONDITIONXML::COND,
                                     DBCONDITIONXML::FIRSTATTR)),
                             role);
+                QModelIndex index = xmlModel->indexHashAttr(DBATTRXML::ATTR, DBATTRXML::ID, value);
+                if (index.isValid() &&  role == Qt::DisplayRole)
+                    return index.sibling(
+                                index.row(),
+                                xmlModel->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::NAME)
+                                ).data();
+                else
+                    return value;
+            }
             case 1:
                 return ModifyProxyModel::data(
                             proxyIndex.sibling(
@@ -70,14 +79,23 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
                                     DBCONDITIONXML::COND,
                                     DBCONDITIONXML::OPERATOR)),
                             role);
-            case 2:
-                return ModifyProxyModel::data(
+            case 2: {
+                QVariant value = ModifyProxyModel::data(
                             proxyIndex.sibling(
                                 proxyIndex.row(),
                                 xmlModel->columnDisplayedAttr(
                                     DBCONDITIONXML::COND,
                                     DBCONDITIONXML::SECONDATTR)),
                             role);
+                QModelIndex index = xmlModel->indexHashAttr(DBATTRXML::ATTR, DBATTRXML::ID, value);
+                if (index.isValid() && role == Qt::DisplayRole)
+                    return index.sibling(
+                                index.row(),
+                                xmlModel->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::NAME)
+                                ).data();
+                else
+                    return value;
+            }
             case 3:
                 if (proxyIndex.row() < rowCount(proxyIndex.parent())-1)
                     return ModifyProxyModel::data(

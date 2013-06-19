@@ -62,6 +62,9 @@ public slots:
     //! Удаление фильтра
     void rowsRemoved(const QModelIndex &index,int start,int end);
 
+    //! Установка индексов для делегата ConditionDelegate
+    void changeDestClass(const QString& nameClass);
+
 signals:
     //! Сигнал об изменении данных
     void dataChanged(const QModelIndex &index);
