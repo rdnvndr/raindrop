@@ -134,9 +134,9 @@ void ModelerIDEPlug::showContextMenu(const QPoint& point)
 void ModelerIDEPlug::setShowAttr(bool shown)
 {
     if (shown)
-        classFilterModel->removeHiddenTag(DBATTRXML::ATTR);
+        classFilterModel->addVisibleTag(DBATTRXML::ATTR);
     else
-        classFilterModel->addHiddenTag(DBATTRXML::ATTR);
+        classFilterModel->removeVisibleTag(DBATTRXML::ATTR);
 
     QRegExp regex = classFilterModel->filterRegExp();
     classFilterModel->setFilterRegExp(regex);
@@ -146,9 +146,9 @@ void ModelerIDEPlug::setShowAttr(bool shown)
 void ModelerIDEPlug::setShowComp(bool shown)
 {
     if (shown)
-        classFilterModel->removeHiddenTag(DBCOMPXML::COMP);
+        classFilterModel->addVisibleTag(DBCOMPXML::COMP);
     else
-        classFilterModel->addHiddenTag(DBCOMPXML::COMP);
+        classFilterModel->removeVisibleTag(DBCOMPXML::COMP);
 
     QRegExp regex = classFilterModel->filterRegExp();
     classFilterModel->setFilterRegExp(regex);
@@ -158,9 +158,9 @@ void ModelerIDEPlug::setShowComp(bool shown)
 void ModelerIDEPlug::setShowFilter(bool shown)
 {
     if (shown)
-        classFilterModel->removeHiddenTag(DBFILTERXML::FILTER);
+        classFilterModel->addVisibleTag(DBFILTERXML::FILTER);
     else
-        classFilterModel->addHiddenTag(DBFILTERXML::FILTER);
+        classFilterModel->removeVisibleTag(DBFILTERXML::FILTER);
 
     QRegExp regex = classFilterModel->filterRegExp();
     classFilterModel->setFilterRegExp(regex);
@@ -333,14 +333,11 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     classFilterModel->setDynamicSortFilter(true);
     classFilterModel->sort(0);
 
-    classFilterModel->addHiddenTag(DBFILTERBLOCKXML::BLOCK);
-    classFilterModel->addHiddenTag(DBCONDITIONXML::COND);
+    classFilterModel->addVisibleTag(DBCLASSXML::CLASS);
+    classFilterModel->addVisibleTag(DBROOTXML::ROOT);
+
     QRegExp regex = classFilterModel->filterRegExp();
     classFilterModel->setFilterRegExp(regex);
-
-    setShowComp(false);
-    setShowAttr(false);
-    setShowFilter(false);
 
     connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)),
             this,SLOT(actionSaveEnable()));

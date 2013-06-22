@@ -15,14 +15,16 @@ public:
     //! Конструктор прокси модели
     TreeFilterProxyModel();
 
-    //! Добавление скрытых тэгов
-    void addHiddenTag(const QString &tag);
 
-    //! Удаление скрытых тэгов
-    void removeHiddenTag(const QString &tag);
+    //! Добавление тэгов для отображения
+    void addVisibleTag(const QString &tag);
 
-    //! Список скрытых тэгов
-    QSet<QString> hiddenTags();
+    //! Удаление тэгов для отображения
+    void removeVisibleTag(const QString &tag);
+
+    //! Список тэгов для отображения
+    QSet<QString> visibleTags();
+
 
     //! Обработчик окрнчания перетаскивания данных путем Drag and Drop
     bool dropMimeData(const QMimeData *data, Qt::DropAction action,
