@@ -4,6 +4,11 @@
 #include <QString>
 #include <QStringList>
 
+//! Ключевые слова XML файла для описания Root класса
+namespace DBROOTXML{
+    const QString ROOT = "#document";
+}
+
 //! Ключевые слова XML файла для описания класса
 namespace DBCLASSXML{
     const QString CLASS = "RTPClass";

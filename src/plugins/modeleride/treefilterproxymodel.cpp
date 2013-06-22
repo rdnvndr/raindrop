@@ -9,17 +9,17 @@ TreeFilterProxyModel::TreeFilterProxyModel()
 
 }
 
-void TreeFilterProxyModel::addHiddenTag(const QString &tag)
+void TreeFilterProxyModel::addVisibleTag(const QString &tag)
 {
     m_filterTags.insert(tag);
 }
 
-void TreeFilterProxyModel::removeHiddenTag(const QString &tag)
+void TreeFilterProxyModel::removeVisibleTag(const QString &tag)
 {
     m_filterTags.remove(tag);
 }
 
-QSet<QString> TreeFilterProxyModel::hiddenTags()
+QSet<QString> TreeFilterProxyModel::visibleTags()
 {
     return m_filterTags;
 }
@@ -27,9 +27,9 @@ QSet<QString> TreeFilterProxyModel::hiddenTags()
 bool TreeFilterProxyModel::filterAcceptsRow(int source_row,
                                             const QModelIndex &source_parent) const{
 
-    if (m_filterTags.contains(sourceModel()->data(
+    if (!m_filterTags.contains(sourceModel()->data(
                                   source_parent.child(source_row,0),
-                                  Qt::UserRole).toString()))
+                                  Qt::UserRole).toString()) && source_parent.isValid())
             return false;
 
     // Если узел удолетворяет  фильтру то показать этот узел
@@ -46,9 +46,9 @@ bool TreeFilterProxyModel::filterAcceptsRow(int source_row,
 bool TreeFilterProxyModel::filterAcceptsRowItself(int source_row,
                                                   const QModelIndex &source_parent) const
 {
-    if (m_filterTags.contains(sourceModel()->data(
+    if (!m_filterTags.contains(sourceModel()->data(
                                   source_parent.child(source_row,0),
-                                  Qt::UserRole).toString()))
+                                  Qt::UserRole).toString()) && source_parent.isValid())
         return false;
 
     return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
