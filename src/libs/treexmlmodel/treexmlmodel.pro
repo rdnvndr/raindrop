@@ -5,15 +5,15 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 QT += xml
 DEFINES += XMLMODEL_LIBRARY
 HEADERS += \
-    treexmlmodel.h \
     tagxmlitem.h \
     tablexmlproxymodel.h \
     treexmlmodelglobal.h \
-    modifyproxymodel.h
+    modifyproxymodel.h \
+    treexmlhashmodel.h
 
 SOURCES += \ 
-    treexmlmodel.cpp \
     tagxmlitem.cpp \
     tablexmlproxymodel.cpp \
-    modifyproxymodel.cpp
+    modifyproxymodel.cpp \
+    treexmlhashmodel.cpp
 

@@ -2,9 +2,9 @@
 #include <QMessageBox>
 #include <QUuid>
 #include "tagxmlitem.h"
-#include "treexmlmodel.h"
+#include "treexmlhashmodel.h"
 
-TreeXMLModel::TreeXMLModel(QDomNode document, QObject *parent)
+TreeXmlHashModel::TreeXmlHashModel(QDomNode document, QObject *parent)
     : QAbstractItemModel(parent)
 {
     m_rootItem = new TagXMLItem(document, NULL);
@@ -12,50 +12,50 @@ TreeXMLModel::TreeXMLModel(QDomNode document, QObject *parent)
     m_insTag = "element";
 }
 
-TreeXMLModel::~TreeXMLModel()
+TreeXmlHashModel::~TreeXmlHashModel()
 {   
     m_hashValue.clear();
     m_hashAttr.clear();
     delete m_rootItem;
 }
 
-int TreeXMLModel::columnCount(const QModelIndex & parent) const
+int TreeXmlHashModel::columnCount(const QModelIndex & parent) const
 {
     Q_UNUSED(parent);
     return  m_column;
 }
 
-void TreeXMLModel::addTagFilter(const QString &tag)
+void TreeXmlHashModel::addTagFilter(const QString &tag)
 {
     m_filterTags << tag;
 }
 
-void TreeXMLModel::clearTagsFilter()
+void TreeXmlHashModel::clearTagsFilter()
 {
     m_filterTags.clear();
 }
 
-void TreeXMLModel::addAttrTag(const QString &tag)
+void TreeXmlHashModel::addAttrTag(const QString &tag)
 {
     m_attrTags << tag;
 }
 
-void TreeXMLModel::clearAttrTags(){
+void TreeXmlHashModel::clearAttrTags(){
     m_attrTags.clear();
 }
 
-bool TreeXMLModel::isInherited(const QModelIndex &index) const
+bool TreeXmlHashModel::isInherited(const QModelIndex &index) const
 {
     TagXMLItem *item = toItem(index);
     return item->isInherited();
 }
 
-void TreeXMLModel::addHashAttr(const QString &tag, const QString &value, UniqueAttr unique)
+void TreeXmlHashModel::addHashAttr(const QString &tag, const QString &value, UniqueAttr unique)
 {
     m_hashAttr[tag].insert(value,unique);
 }
 
-void TreeXMLModel::makeHashingOne(TagXMLItem *item, bool remove)
+void TreeXmlHashModel::makeHashingOne(TagXMLItem *item, bool remove)
 {
     QString tag = item->nodeName();
     foreach (const QString& attr, m_hashAttr[tag].keys()){
@@ -66,7 +66,7 @@ void TreeXMLModel::makeHashingOne(TagXMLItem *item, bool remove)
     }
 }
 
-bool TreeXMLModel::makeHashingData(const QModelIndex &index, QString &dataValue)
+bool TreeXmlHashModel::makeHashingData(const QModelIndex &index, QString &dataValue)
 {
     // Обновление хэша контроля уникальности
     if (!isInherited(index)) {
@@ -75,15 +75,15 @@ bool TreeXMLModel::makeHashingData(const QModelIndex &index, QString &dataValue)
         if (m_hashAttr[tag].contains(attr)){
             QModelIndex existIndex = indexHashAttr(tag,attr,dataValue);
             while (existIndex.isValid() && existIndex!=index) {
-                if (m_hashAttr[tag][attr] == TreeXMLModel::UniqueRename){
+                if (m_hashAttr[tag][attr] == TreeXmlHashModel::UniqueRename){
                     int position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
                     int number = 1;
                     if (position != -1)
                         number = dataValue.mid(position+1).toInt()+1;
                     dataValue = dataValue.left(position)+QString("_%1").arg(number);
-                } else if (m_hashAttr[tag][attr] == TreeXMLModel::Unique) {
+                } else if (m_hashAttr[tag][attr] == TreeXmlHashModel::Unique) {
                     return false;
-                } else if (m_hashAttr[tag][attr] == TreeXMLModel::Uuid) {
+                } else if (m_hashAttr[tag][attr] == TreeXmlHashModel::Uuid) {
                     dataValue = QUuid::createUuid().toString();
                 } else
                     break;
@@ -99,7 +99,7 @@ bool TreeXMLModel::makeHashingData(const QModelIndex &index, QString &dataValue)
     return true;
 }
 
-void TreeXMLModel::insertUuid(const QModelIndex &index)
+void TreeXmlHashModel::insertUuid(const QModelIndex &index)
 {
     QString attr = uuidAttr(m_insTag);
     if (!attr.isEmpty()) {
@@ -110,7 +110,7 @@ void TreeXMLModel::insertUuid(const QModelIndex &index)
     }
 }
 
-void TreeXMLModel::makeHashing(TagXMLItem *item, bool remove)
+void TreeXmlHashModel::makeHashing(TagXMLItem *item, bool remove)
 {    
     makeHashingOne(item, remove);
     for (int row=0; row < item->count(m_filterTags); row++) {
@@ -119,7 +119,7 @@ void TreeXMLModel::makeHashing(TagXMLItem *item, bool remove)
     }
 }
 
-QModelIndex TreeXMLModel::indexHashAttr(const QString &tag, const QString &attr,
+QModelIndex TreeXmlHashModel::indexHashAttr(const QString &tag, const QString &attr,
                                          const QVariant &value, int number) const
 {
     int column = columnDisplayedAttr(tag,attr);
@@ -133,12 +133,12 @@ QModelIndex TreeXMLModel::indexHashAttr(const QString &tag, const QString &attr,
     return QModelIndex();
 }
 
-void TreeXMLModel::refreshHashing(const QModelIndex &index, bool remove)
+void TreeXmlHashModel::refreshHashing(const QModelIndex &index, bool remove)
 {
     makeHashing(toItem(index),remove);
 }
 
-void TreeXMLModel::refreshHashingOne(const QModelIndex &index, bool remove)
+void TreeXmlHashModel::refreshHashingOne(const QModelIndex &index, bool remove)
 {
     QString tag = index.data(Qt::UserRole).toString();
     QString attr = displayedAttr(tag,index.column());
@@ -150,22 +150,22 @@ void TreeXMLModel::refreshHashingOne(const QModelIndex &index, bool remove)
     }
 }
 
-void TreeXMLModel::addRelation(const QString &tag, const QString &attr,
+void TreeXmlHashModel::addRelation(const QString &tag, const QString &attr,
                                const QString &linkTag, const QString &linkAttr)
 {
     m_linkAttr[tag][attr][linkTag] = linkAttr;
 }
 
-QList<TreeXMLModel::TagWithAttr> TreeXMLModel::fromRelation(const QString &linkTag, const QString &linkAttr)
+QList<TreeXmlHashModel::TagWithAttr> TreeXmlHashModel::fromRelation(const QString &linkTag, const QString &linkAttr)
 {
-    QList<TreeXMLModel::TagWithAttr> list;
+    QList<TreeXmlHashModel::TagWithAttr> list;
     foreach (const QString &tag,m_linkAttr.keys())
         foreach (const QString &attr,m_linkAttr[tag].keys())
             foreach (const QString &lTag,m_linkAttr[tag][attr].keys())
                 if (lTag == linkTag
                         && (m_linkAttr[tag][attr][lTag] == linkAttr || linkAttr.isEmpty()))
                 {
-                    TreeXMLModel::TagWithAttr tagWithAttr;
+                    TreeXmlHashModel::TagWithAttr tagWithAttr;
                     tagWithAttr.tag =  tag;
                     tagWithAttr.attr = attr;
                     list << tagWithAttr;
@@ -173,9 +173,9 @@ QList<TreeXMLModel::TagWithAttr> TreeXMLModel::fromRelation(const QString &linkT
     return list;
 }
 
-TreeXMLModel::TagWithAttr TreeXMLModel::toRelation(const QString &tag, const QString &attr)
+TreeXmlHashModel::TagWithAttr TreeXmlHashModel::toRelation(const QString &tag, const QString &attr)
 {
-    TreeXMLModel::TagWithAttr tagWithAttr;
+    TreeXmlHashModel::TagWithAttr tagWithAttr;
     foreach (const QString &linkTag,m_linkAttr[tag][attr].keys()) {
         tagWithAttr.tag =  linkTag;
         tagWithAttr.attr = m_linkAttr[tag][attr][linkTag];
@@ -184,7 +184,7 @@ TreeXMLModel::TagWithAttr TreeXMLModel::toRelation(const QString &tag, const QSt
     return tagWithAttr;
 }
 
-QModelIndex TreeXMLModel::indexLink(const QModelIndex &index) const
+QModelIndex TreeXmlHashModel::indexLink(const QModelIndex &index) const
 {
     TagXMLItem *item = toItem(index);
     QString tag = item->nodeName();
@@ -204,7 +204,7 @@ QModelIndex TreeXMLModel::indexLink(const QModelIndex &index) const
     return QModelIndex();
 }
 
-bool TreeXMLModel::isAttr(const QModelIndex &index) const
+bool TreeXmlHashModel::isAttr(const QModelIndex &index) const
 {
     TagXMLItem *item = toItem(index);
     foreach (const QString &tagName,m_attrTags)
@@ -213,7 +213,7 @@ bool TreeXMLModel::isAttr(const QModelIndex &index) const
     return false;
 }
 
-bool TreeXMLModel::isInsert(const QModelIndex &index) const
+bool TreeXmlHashModel::isInsert(const QModelIndex &index) const
 {
     TagXMLItem *item = toItem(index);
 
@@ -233,13 +233,13 @@ bool TreeXMLModel::isInsert(const QModelIndex &index) const
     return false;
 }
 
-bool TreeXMLModel::hasChildren(const QModelIndex &parent) const
+bool TreeXmlHashModel::hasChildren(const QModelIndex &parent) const
 {
     Q_UNUSED (parent);
     return true;
 }
 
-bool TreeXMLModel::unpackData(const QModelIndex &parent, QDataStream &stream, int row, bool move)
+bool TreeXmlHashModel::unpackData(const QModelIndex &parent, QDataStream &stream, int row, bool move)
 {
     QString tag;
     QModelIndex index;
@@ -278,7 +278,7 @@ bool TreeXMLModel::unpackData(const QModelIndex &parent, QDataStream &stream, in
     return true;
 }
 
-void TreeXMLModel::packData(const QModelIndex &parent, QDataStream &stream) const
+void TreeXmlHashModel::packData(const QModelIndex &parent, QDataStream &stream) const
 {
     bool isFirstNode=true;
 
@@ -312,7 +312,7 @@ void TreeXMLModel::packData(const QModelIndex &parent, QDataStream &stream) cons
         stream << QString("}");
 }
 
-void TreeXMLModel::addDisplayedAttr(const QString &tag, const QStringList &value, QIcon icon)
+void TreeXmlHashModel::addDisplayedAttr(const QString &tag, const QStringList &value, QIcon icon)
 {
     if (value.count()>m_column)
         m_column = value.count();
@@ -322,12 +322,12 @@ void TreeXMLModel::addDisplayedAttr(const QString &tag, const QStringList &value
         m_displayedIcon[tag] = icon;
 }
 
-void TreeXMLModel::addInsertTags(const QString &tag, const QStringList &value)
+void TreeXmlHashModel::addInsertTags(const QString &tag, const QStringList &value)
 {
     m_insertTags.insert(tag,value);
 }
 
-int TreeXMLModel::columnDisplayedAttr(const QString &tag, const QString &attr) const
+int TreeXmlHashModel::columnDisplayedAttr(const QString &tag, const QString &attr) const
 {
     for (int i=0;i<m_displayedAttr[tag].count();i++){
         if (m_displayedAttr[tag].at(i)==attr)
@@ -336,14 +336,14 @@ int TreeXMLModel::columnDisplayedAttr(const QString &tag, const QString &attr) c
     return -1;
 }
 
-QString TreeXMLModel::displayedAttr(const QString &tag, int column) const
+QString TreeXmlHashModel::displayedAttr(const QString &tag, int column) const
 {
     if (m_displayedAttr[tag].count()<=column)
         return QString("");
     return m_displayedAttr[tag].at(column);
 }
 
-void TreeXMLModel::removeDisplayedAttr(const QString &tag)
+void TreeXmlHashModel::removeDisplayedAttr(const QString &tag)
 {
     bool flagcolumn = false;
     if (m_displayedAttr[tag].count() == m_column)
@@ -360,7 +360,7 @@ void TreeXMLModel::removeDisplayedAttr(const QString &tag)
     }
 }
 
-QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
+QVariant TreeXmlHashModel::data(const QModelIndex &index, int role) const
 {
     TagXMLItem *item = toItem(index);
     QString tag = item->nodeName();
@@ -406,7 +406,7 @@ QVariant TreeXMLModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void TreeXMLModel::updateModifyRow(int emptyRowAttr, const QModelIndex &parent)
+void TreeXmlHashModel::updateModifyRow(int emptyRowAttr, const QModelIndex &parent)
 {
     int rowCount = this->rowCount(parent);
     for (int i=0;i<rowCount;i++){
@@ -420,7 +420,7 @@ void TreeXMLModel::updateModifyRow(int emptyRowAttr, const QModelIndex &parent)
     }
 }
 
-bool TreeXMLModel::setData(const QModelIndex &index, const QVariant &value,
+bool TreeXmlHashModel::setData(const QModelIndex &index, const QVariant &value,
                            int role)
 {
     if (role != Qt::EditRole) return false;
@@ -459,12 +459,12 @@ bool TreeXMLModel::setData(const QModelIndex &index, const QVariant &value,
     return true;
 }
 
-TagXMLItem *TreeXMLModel::rootItem()
+TagXMLItem *TreeXmlHashModel::rootItem()
 {
     return m_rootItem;
 }
 
-Qt::ItemFlags TreeXMLModel::flags(const QModelIndex &index) const
+Qt::ItemFlags TreeXmlHashModel::flags(const QModelIndex &index) const
 {
     if (index.isValid())
         return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled |
@@ -473,7 +473,7 @@ Qt::ItemFlags TreeXMLModel::flags(const QModelIndex &index) const
         return Qt::ItemIsDropEnabled;
 }
 
-QVariant TreeXMLModel::headerData(int section, Qt::Orientation orientation,
+QVariant TreeXmlHashModel::headerData(int section, Qt::Orientation orientation,
                                   int role) const
 {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
@@ -485,7 +485,7 @@ QVariant TreeXMLModel::headerData(int section, Qt::Orientation orientation,
     return  QVariant();
 }
 
-bool TreeXMLModel::setHeaderData(int section, Qt::Orientation orientation,
+bool TreeXmlHashModel::setHeaderData(int section, Qt::Orientation orientation,
                                  const QVariant &value, int role)
 {
     if (role != Qt::EditRole || orientation != Qt::Horizontal)
@@ -497,7 +497,7 @@ bool TreeXMLModel::setHeaderData(int section, Qt::Orientation orientation,
     return true;
 }
 
-QModelIndex TreeXMLModel::index(int row, int column, const QModelIndex &parent)
+QModelIndex TreeXmlHashModel::index(int row, int column, const QModelIndex &parent)
 const
 {
     if (!hasIndex(row, column, parent))
@@ -512,7 +512,7 @@ const
         return QModelIndex();
 }
 
-QModelIndex TreeXMLModel::parent(const QModelIndex &child) const
+QModelIndex TreeXmlHashModel::parent(const QModelIndex &child) const
 {
     if (!child.isValid())
         return QModelIndex();
@@ -523,21 +523,21 @@ QModelIndex TreeXMLModel::parent(const QModelIndex &child) const
     return fromItem(parentItem);
 }
 
-int TreeXMLModel::rowCount(const QModelIndex &parent) const
+int TreeXmlHashModel::rowCount(const QModelIndex &parent) const
 {
     TagXMLItem *parentItem = toItem(parent);
 
     return parentItem->count(m_filterTags,m_attrTags);
 }
 
-int TreeXMLModel::rowCount(const QModelIndex &parent, const QStringList &tags) const
+int TreeXmlHashModel::rowCount(const QModelIndex &parent, const QStringList &tags) const
 {
     TagXMLItem *parentItem = toItem(parent);
 
     return parentItem->count(tags,m_attrTags);
 }
 
-bool TreeXMLModel::insertRows(int row, int count, const QModelIndex &parent)
+bool TreeXmlHashModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(row);
 
@@ -566,7 +566,7 @@ bool TreeXMLModel::insertRows(int row, int count, const QModelIndex &parent)
     return success;
 }
 
-void TreeXMLModel::updateInsertRows(int row,int count, const QModelIndex &parent)
+void TreeXmlHashModel::updateInsertRows(int row,int count, const QModelIndex &parent)
 {
     QModelIndex curIndex = parent.child(row,0);
     if (isAttr(curIndex))
@@ -579,7 +579,7 @@ void TreeXMLModel::updateInsertRows(int row,int count, const QModelIndex &parent
     endInsertRows();
 }
 
-void TreeXMLModel::updateRemoveRows(int emptyRowAttr,int count, const QModelIndex &parent)
+void TreeXmlHashModel::updateRemoveRows(int emptyRowAttr,int count, const QModelIndex &parent)
 {
     // Если атрибут то обновляем по дереву наследования
     int rowCount = this->rowCount(parent);
@@ -594,7 +594,7 @@ void TreeXMLModel::updateRemoveRows(int emptyRowAttr,int count, const QModelInde
     }
 }
 
-bool TreeXMLModel::removeRows(int row, int count, const QModelIndex &parent)
+bool TreeXmlHashModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     TagXMLItem *parentItem = toItem(parent);
 
@@ -625,12 +625,12 @@ bool TreeXMLModel::removeRows(int row, int count, const QModelIndex &parent)
     return true;
 }
 
-QModelIndex TreeXMLModel::lastInsertRow()
+QModelIndex TreeXmlHashModel::lastInsertRow()
 {
     return m_lastInsRow;
 }
 
-bool TreeXMLModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
+bool TreeXmlHashModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
                                 int row, int column, const QModelIndex &parent)
 {
     if (!parent.isValid())
@@ -654,12 +654,12 @@ bool TreeXMLModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
 }
 
 
-void TreeXMLModel::setInsTagName(const QString &tag)
+void TreeXmlHashModel::setInsTagName(const QString &tag)
 {
     m_insTag = tag;
 }
 
-TagXMLItem *TreeXMLModel::toItem(const QModelIndex &index) const
+TagXMLItem *TreeXmlHashModel::toItem(const QModelIndex &index) const
 {
     if (index.isValid()) {
         TagXMLItem *item = static_cast<TagXMLItem*>(index.internalPointer());
@@ -668,7 +668,7 @@ TagXMLItem *TreeXMLModel::toItem(const QModelIndex &index) const
     return m_rootItem;
 }
 
-QModelIndex TreeXMLModel::fromItem(TagXMLItem *item) const
+QModelIndex TreeXmlHashModel::fromItem(TagXMLItem *item) const
 {
     if (!item || item == m_rootItem)
         return QModelIndex();
@@ -678,24 +678,24 @@ QModelIndex TreeXMLModel::fromItem(TagXMLItem *item) const
     return createIndex(row , 0, item);
 }
 
-Qt::DropActions TreeXMLModel::supportedDropActions() const
+Qt::DropActions TreeXmlHashModel::supportedDropActions() const
 {
     return Qt::CopyAction | Qt::MoveAction;
 }
 
-Qt::DropActions TreeXMLModel::supportedDragActions() const
+Qt::DropActions TreeXmlHashModel::supportedDragActions() const
 {
     return Qt::CopyAction | Qt::MoveAction;
 }
 
-QStringList TreeXMLModel::mimeTypes() const
+QStringList TreeXmlHashModel::mimeTypes() const
 {
     QStringList types;
     types << "application/classxmlmodel";
     return types;
 }
 
-QMimeData *TreeXMLModel::mimeData(const QModelIndexList &indexes)
+QMimeData *TreeXmlHashModel::mimeData(const QModelIndexList &indexes)
 {
     QByteArray encodedData;
     QDataStream stream(&encodedData, QIODevice::WriteOnly);
@@ -724,10 +724,10 @@ QMimeData *TreeXMLModel::mimeData(const QModelIndexList &indexes)
     return mimeData;
 }
 
-QString TreeXMLModel::uuidAttr(const QString &tag) const
+QString TreeXmlHashModel::uuidAttr(const QString &tag) const
 {
     foreach (QString attr,m_hashAttr[tag].keys())
-        if (m_hashAttr[tag][attr]==TreeXMLModel::Uuid)
+        if (m_hashAttr[tag][attr]==TreeXmlHashModel::Uuid)
             return attr;
     return QString();
 }

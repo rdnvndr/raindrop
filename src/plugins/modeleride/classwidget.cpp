@@ -31,7 +31,7 @@ ClassWidget::~ClassWidget()
     delete m_mapper;
 }
 
-void ClassWidget::setModel(TreeXMLModel *model)
+void ClassWidget::setModel(TreeXmlHashModel *model)
 {
     m_model = model;
     connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
@@ -106,7 +106,7 @@ bool ClassWidget::isRemove(const QModelIndex &srcIndex)
                                          tag,fieldId))
             .data().toString();
 
-    foreach (TreeXMLModel::TagWithAttr tagWithAttr,
+    foreach (TreeXmlHashModel::TagWithAttr tagWithAttr,
              m_model->fromRelation(tag))
     {
         int number = 0;

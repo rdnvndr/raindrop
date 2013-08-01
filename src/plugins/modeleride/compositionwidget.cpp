@@ -29,7 +29,7 @@ CompositionWidget::~CompositionWidget()
     delete m_compositionModel;
 }
 
-void CompositionWidget::setModel(TreeXMLModel *model)
+void CompositionWidget::setModel(TreeXmlHashModel *model)
 {
     m_model = model;
 

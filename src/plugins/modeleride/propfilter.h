@@ -11,10 +11,10 @@ public:
     explicit PropFilter(QWidget *parent = 0);
 
     //! Установка модели структуры классов
-    void setModel(TreeXMLModel *model);
+    void setModel(TreeXmlHashModel *model);
 
     //! Получение модели структуры классов
-    TreeXMLModel* model();
+    TreeXmlHashModel* model();
 
 public slots:
     //! Установка текущего класса
@@ -31,7 +31,7 @@ private:
     QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
 
     //! Модель структуры классов
-    TreeXMLModel* m_model;
+    TreeXmlHashModel* m_model;
 };
 
 #endif // PROPFILTER_H

@@ -2,7 +2,7 @@
 #define PROPCOMPOSITION_H
 
 #include "ui_propcomposition.h"
-#include <treexmlmodel/treexmlmodel.h>
+#include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <QDataWidgetMapper>
 #include <QStringListModel>
@@ -21,10 +21,10 @@ public:
     explicit PropComposition(QWidget *parent = 0);
 
     //! Установка модели структуры классов
-    void setModel(TreeXMLModel *model);
+    void setModel(TreeXmlHashModel *model);
 
     //! Получение модели структуры классов
-    TreeXMLModel* model();
+    TreeXmlHashModel* model();
 
 public slots:
     //! Установка текущего класса
@@ -41,7 +41,7 @@ private:
     QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
 
     //! Модель структуры классов
-    TreeXMLModel* m_model;
+    TreeXmlHashModel* m_model;
 };
 
 #endif // PROPCOMPOSITION_H

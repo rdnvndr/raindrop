@@ -17,7 +17,7 @@ PropFilter::PropFilter(QWidget *parent) :
             this,SLOT(closeTab(QModelIndex)));
 }
 
-void PropFilter::setModel(TreeXMLModel *model)
+void PropFilter::setModel(TreeXmlHashModel *model)
 {
     propWidget->setModel(model);
     // attrWidget->setModel(model);
@@ -25,7 +25,7 @@ void PropFilter::setModel(TreeXMLModel *model)
 
 }
 
-TreeXMLModel *PropFilter::model()
+TreeXmlHashModel *PropFilter::model()
 {
     return m_model;
 }

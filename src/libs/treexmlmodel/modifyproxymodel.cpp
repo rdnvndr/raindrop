@@ -1,5 +1,5 @@
 #include "modifyproxymodel.h"
-#include "treexmlmodel.h"
+#include "treexmlhashmodel.h"
 #include <QFont>
 
 struct PrivateModelIndex
@@ -152,7 +152,7 @@ bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
     QPersistentModelIndex srcParent = (sourceParent.isValid())?
                 sourceParent : QPersistentModelIndex(mapToSource(parent));
 
-    TreeXMLModel *xmlModel = qobject_cast<TreeXMLModel *>(sourceModel());
+    TreeXmlHashModel *xmlModel = qobject_cast<TreeXmlHashModel *>(sourceModel());
     for (int i = 0; i < count; i++) {
         bool isInserted = false;
         int row = sourceModel()->rowCount(srcParent);

@@ -63,7 +63,7 @@ FilterPropWidget::~FilterPropWidget()
     delete menuAddCondition;
 }
 
-void FilterPropWidget::setModel(TreeXMLModel *model)
+void FilterPropWidget::setModel(TreeXmlHashModel *model)
 {
     m_model = model;
     connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),

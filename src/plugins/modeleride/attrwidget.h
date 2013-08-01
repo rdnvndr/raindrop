@@ -6,7 +6,7 @@
 
 #include "ui_attrwidget.h"
 #include <treexmlmodel/tablexmlproxymodel.h>
-#include <treexmlmodel/treexmlmodel.h>
+#include <treexmlmodel/treexmlhashmodel.h>
 
 
 //! Диалог редактирования атрибутов класса
@@ -26,7 +26,7 @@ public:
     virtual ~AttrWidget();
 
     //! Установка модели для редактирования атрибутов класса
-    void setModel(TreeXMLModel *model);
+    void setModel(TreeXmlHashModel *model);
 
 public slots:
     //! Добавление атрибута класса
@@ -75,7 +75,7 @@ private:
     TableXMLProxyModel* m_attrModel;
 
     //! Модель структуры классов
-    TreeXMLModel* m_model;
+    TreeXmlHashModel* m_model;
 
     //! Mapper для свойств атрибутов
     QDataWidgetMapper* m_mapperAttr;

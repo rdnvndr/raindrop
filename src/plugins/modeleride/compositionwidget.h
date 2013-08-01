@@ -3,7 +3,7 @@
 
 #include "ui_compositionwidget.h"
 #include <treexmlmodel/tablexmlproxymodel.h>
-#include <treexmlmodel/treexmlmodel.h>
+#include <treexmlmodel/treexmlhashmodel.h>
 #include <QDataWidgetMapper>
 
 //! Диалог редактирования составов класса
@@ -23,7 +23,7 @@ public:
     virtual ~CompositionWidget();
 
       //! Установка модели для редактирования составов класса
-    void setModel(TreeXMLModel *model);
+    void setModel(TreeXmlHashModel *model);
 
 public slots:
     //! Добавление состава класса
@@ -65,7 +65,7 @@ private:
     TableXMLProxyModel* m_compositionModel;
 
     //! Модель структуры классов
-    TreeXMLModel* m_model;
+    TreeXmlHashModel* m_model;
 };
 
 #endif // COMPOSITIONWIDGET_H

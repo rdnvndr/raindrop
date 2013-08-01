@@ -3,7 +3,7 @@
 
 #include <QDataWidgetMapper>
 #include "ui_compositionpropwidget.h"
-#include <treexmlmodel/treexmlmodel.h>
+#include <treexmlmodel/treexmlhashmodel.h>
 
 //! Диалог редактирования состава
 /*! Диалог предназначен для состава
@@ -21,7 +21,7 @@ public:
     virtual ~CompositionPropWidget();
 
     //! Установка модели структуры классов
-    void setModel(TreeXMLModel *model);
+    void setModel(TreeXmlHashModel *model);
 
 public slots:
     //! Добавление состава
@@ -63,7 +63,7 @@ private:
     QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
 
     //! Модель структуры классов
-    TreeXMLModel* m_model;
+    TreeXmlHashModel* m_model;
 
     //! Mapper для свойств состава
     QDataWidgetMapper* m_mapper;

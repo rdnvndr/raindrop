@@ -2,7 +2,7 @@
 #define PROPCLASS_H
 
 #include "ui_propclass.h"
-#include <treexmlmodel/treexmlmodel.h>
+#include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <QDataWidgetMapper>
 #include <QStringListModel>
@@ -24,10 +24,10 @@ public:
     virtual ~PropClass();
 
     //! Установка модели структуры классов
-    void setModel(TreeXMLModel *model);
+    void setModel(TreeXmlHashModel *model);
 
     //! Получение модели структуры классов
-    TreeXMLModel* model();
+    TreeXmlHashModel* model();
 
 signals:
     //! Сигнал вызова редактирования состава
@@ -57,7 +57,7 @@ private:
     QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
 
     //! Модель структуры классов
-    TreeXMLModel* m_model;
+    TreeXmlHashModel* m_model;
 };
 
 #endif // PROPCLASS_H

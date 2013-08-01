@@ -44,7 +44,7 @@ AttrWidget::~AttrWidget()
     delete m_attrModel;
 }
 
-void AttrWidget::setModel(TreeXMLModel *model)
+void AttrWidget::setModel(TreeXmlHashModel *model)
 {
     m_model = model;
 

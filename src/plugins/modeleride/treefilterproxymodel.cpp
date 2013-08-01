@@ -2,7 +2,7 @@
 #include <QDebug>
 #include "dbxmlstruct.h"
 #include <QMimeData>
-#include <treexmlmodel/treexmlmodel.h>
+#include <treexmlmodel/treexmlhashmodel.h>
 
 TreeFilterProxyModel::TreeFilterProxyModel()
 {
@@ -130,7 +130,7 @@ QMimeData *TreeFilterProxyModel::mimeData(const QModelIndexList &indexes) const
 {
     QByteArray encodedData;
     QDataStream stream(&encodedData, QIODevice::WriteOnly);
-    TreeXMLModel* xmlModel = qobject_cast<TreeXMLModel*>(sourceModel());
+    TreeXmlHashModel* xmlModel = qobject_cast<TreeXmlHashModel*>(sourceModel());
 
     foreach (const QModelIndex& index,indexes){
         QModelIndex sourceIndex = mapToSource(index);
@@ -184,7 +184,7 @@ bool TreeFilterProxyModel::unpackData(const QModelIndex &parent, QDataStream &st
 {
     QString tag;
     QModelIndex index,ii;
-    TreeXMLModel* xmlModel = qobject_cast<TreeXMLModel*>(sourceModel());
+    TreeXmlHashModel* xmlModel = qobject_cast<TreeXmlHashModel*>(sourceModel());
     bool nextTag = false;
 
     while (!stream.atEnd()) {
@@ -223,7 +223,7 @@ bool TreeFilterProxyModel::unpackData(const QModelIndex &parent, QDataStream &st
 void TreeFilterProxyModel::packData(QModelIndex parent, QDataStream &stream) const
 {
     bool isFirstNode=true;
-    TreeXMLModel* xmlModel = qobject_cast<TreeXMLModel*>(sourceModel());
+    TreeXmlHashModel* xmlModel = qobject_cast<TreeXmlHashModel*>(sourceModel());
 
     for (int row=0;row<xmlModel->rowCount(parent);row++)
     {

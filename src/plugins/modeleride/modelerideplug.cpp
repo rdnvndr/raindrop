@@ -172,14 +172,14 @@ void ModelerIDEPlug::actionSaveEnable()
     actionSaveModel->setEnabled(true);
 }
 
-TreeXMLModel *ModelerIDEPlug::model()
+TreeXmlHashModel *ModelerIDEPlug::model()
 {
     return m_model;
 }
 
 void ModelerIDEPlug::createClassModel(QDomDocument document)
 {
-    m_model = new TreeXMLModel(document, this);
+    m_model = new TreeXmlHashModel(document, this);
 
     m_model->addTagFilter(DBCLASSXML::CLASS);
     m_model->addTagFilter(DBATTRXML::ATTR);
@@ -270,35 +270,35 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     m_model->addHashAttr(DBCLASSXML::CLASS,
                                 DBCLASSXML::NAME,
-                                TreeXMLModel::UniqueRename);
+                                TreeXmlHashModel::UniqueRename);
     m_model->addHashAttr(DBATTRXML::ATTR,
                                 DBATTRXML::REFCLASS,
-                                TreeXMLModel::NoUnique);
+                                TreeXmlHashModel::NoUnique);
     m_model->addHashAttr(DBCOMPXML::COMP,
                                 DBCOMPXML::CLASS,
-                                TreeXMLModel::NoUnique);
+                                TreeXmlHashModel::NoUnique);
     m_model->addHashAttr(DBFILTERXML::FILTER,
                                 DBFILTERXML::CLASS,
-                                TreeXMLModel::NoUnique);
+                                TreeXmlHashModel::NoUnique);
 
     m_model->addHashAttr(DBCLASSXML::CLASS,
                                 DBCLASSXML::ID,
-                                TreeXMLModel::Uuid);
+                                TreeXmlHashModel::Uuid);
     m_model->addHashAttr(DBATTRXML::ATTR,
                                 DBATTRXML::ID,
-                                TreeXMLModel::Uuid);
+                                TreeXmlHashModel::Uuid);
     m_model->addHashAttr(DBCOMPXML::COMP,
                                 DBCOMPXML::ID,
-                                TreeXMLModel::Uuid);
+                                TreeXmlHashModel::Uuid);
     m_model->addHashAttr(DBFILTERXML::FILTER,
                                 DBFILTERXML::ID,
-                                TreeXMLModel::Uuid);
+                                TreeXmlHashModel::Uuid);
     m_model->addHashAttr(DBFILTERBLOCKXML::BLOCK,
                                 DBFILTERBLOCKXML::ID,
-                                TreeXMLModel::Uuid);
+                                TreeXmlHashModel::Uuid);
     m_model->addHashAttr(DBCONDITIONXML::COND,
                                 DBCONDITIONXML::ID,
-                                TreeXMLModel::Uuid);
+                                TreeXmlHashModel::Uuid);
 
     m_model->addRelation(DBATTRXML::ATTR,DBATTRXML::REFCLASS,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
@@ -428,7 +428,7 @@ bool ModelerIDEPlug::isRemoveClass(const QModelIndex &srcIndex)
                                          tag,fieldId))
             .data().toString();
 
-    foreach (TreeXMLModel::TagWithAttr tagWithAttr,
+    foreach (TreeXmlHashModel::TagWithAttr tagWithAttr,
              m_model->fromRelation(tag))
     {
         int number = 0;

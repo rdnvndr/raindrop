@@ -27,7 +27,7 @@ CompositionPropWidget::~CompositionPropWidget()
     delete m_mapper;
 }
 
-void CompositionPropWidget::setModel(TreeXMLModel *model)
+void CompositionPropWidget::setModel(TreeXmlHashModel *model)
 {
     m_model = model;
     connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
