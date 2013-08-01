@@ -6,7 +6,7 @@
 #include <QDataWidgetMapper>
 #include <QMenu>
 #include <QAction>
-#include <treexmlmodel/treexmlmodel.h>
+#include <treexmlmodel/treexmlhashmodel.h>
 
 class FilterPropWidget : public QWidget, private Ui::FilterPropWidget
 {
@@ -20,7 +20,7 @@ public:
     virtual ~FilterPropWidget();
 
     //! Установка модели структуры классов
-    void setModel(TreeXMLModel *model);
+    void setModel(TreeXmlHashModel *model);
 
 public slots:
     //! Добавление фильтра
@@ -80,7 +80,7 @@ private:
     QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
 
     //! Модель структуры классов
-    TreeXMLModel* m_model;
+    TreeXmlHashModel* m_model;
 
     //! Mapper для свойств фильтра
     QDataWidgetMapper* m_mapper;

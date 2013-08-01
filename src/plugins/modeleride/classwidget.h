@@ -3,7 +3,7 @@
 
 #include "ui_classwidget.h"
 #include <treexmlmodel/tablexmlproxymodel.h>
-#include <treexmlmodel/treexmlmodel.h>
+#include <treexmlmodel/treexmlhashmodel.h>
 #include <QDataWidgetMapper>
 #include <QMessageBox>
 #include <QStringListModel>
@@ -24,7 +24,7 @@ public:
     virtual ~ClassWidget();
 
     //! Установка модели структуры классов
-    void setModel(TreeXMLModel *model);
+    void setModel(TreeXmlHashModel *model);
 
     //! Проверка на возможность удаления класса
     bool isRemove(const QModelIndex &srcIndex);
@@ -69,7 +69,7 @@ private:
     QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
 
     //! Модель структуры классов
-    TreeXMLModel* m_model;
+    TreeXmlHashModel* m_model;
 
      //! Mapper для свойств класса
     QDataWidgetMapper* m_mapper;

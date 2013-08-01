@@ -1,5 +1,5 @@
 #include "conditionproxymodel.h"
-#include <treexmlmodel/treexmlmodel.h>
+#include <treexmlmodel/treexmlhashmodel.h>
 #include "dbxmlstruct.h"
 
 struct PrivateModelIndex
@@ -27,7 +27,7 @@ int ConditionProxyModel::columnCount(const QModelIndex& parent) const
 QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) const
 {
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
-        TreeXMLModel *xmlModel = qobject_cast<TreeXMLModel *>(sourceModel());
+        TreeXmlHashModel *xmlModel = qobject_cast<TreeXmlHashModel *>(sourceModel());
 
         if (data(proxyIndex,Qt::UserRole)
                 == DBFILTERBLOCKXML::BLOCK) {
@@ -131,7 +131,7 @@ bool ConditionProxyModel::setData(const QModelIndex &proxyIndex,
         return ModifyProxyModel::setData(proxyIndex.sibling(proxyIndex.row(),0),value,role);
 
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
-        TreeXMLModel *xmlModel = qobject_cast<TreeXMLModel *>(sourceModel());
+        TreeXmlHashModel *xmlModel = qobject_cast<TreeXmlHashModel *>(sourceModel());
 
         if (data(proxyIndex,Qt::UserRole)
                 == DBFILTERBLOCKXML::BLOCK) {

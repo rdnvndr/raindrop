@@ -1,5 +1,5 @@
-#ifndef TREEXMLMODEL_H
-#define TREEXMLMODEL_H
+#ifndef TREEXMLHASHMODEL_H
+#define TREEXMLHASHMODEL_H
 
 #include <QAbstractItemModel>
 #include <QtXml/QDomDocument>
@@ -49,7 +49,7 @@ class TagXMLItem;
     \endcode
 
 */
-class XMLMODELLIB TreeXMLModel : public QAbstractItemModel
+class XMLMODELLIB TreeXmlHashModel : public QAbstractItemModel
 {
     Q_OBJECT
 
@@ -69,9 +69,9 @@ public:
     };
 
      //! Конструктор модели
-    TreeXMLModel(QDomNode document, QObject *parent = 0);
+    TreeXmlHashModel(QDomNode document, QObject *parent = 0);
     //! Деструктор модели
-    virtual ~TreeXMLModel();
+    virtual ~TreeXmlHashModel();
 
     //! Возращает хранимые данные
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole ) const;
@@ -197,7 +197,7 @@ public:
 
     //! Добавления поля для хешеирования
     void addHashAttr(const QString &tag, const QString &value,
-                      UniqueAttr unique = TreeXMLModel::NoUnique);
+                      UniqueAttr unique = TreeXmlHashModel::NoUnique);
 
     //! Возращает индекс по значению хешеированного поля
     QModelIndex indexHashAttr(const QString &tag, const QString &attr,

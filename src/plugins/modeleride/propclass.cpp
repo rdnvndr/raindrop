@@ -31,7 +31,7 @@ PropClass::~PropClass()
 
 }
 
-void PropClass::setModel(TreeXMLModel *model)
+void PropClass::setModel(TreeXmlHashModel *model)
 {
     classWidget->setModel(model);
     attrWidget->setModel(model);
@@ -74,7 +74,7 @@ QVariant PropClass::modelData(const QString &tag, const QString &attr, const QMo
                       tag,attr)).data();
 }
 
-TreeXMLModel *PropClass::model()
+TreeXmlHashModel *PropClass::model()
 {
     return m_model;
 }

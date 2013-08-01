@@ -1,7 +1,7 @@
 #include "conditiondelegate.h"
 #include <QComboBox>
 #include <QStringList>
-#include <treexmlmodel/treexmlmodel.h>
+#include <treexmlmodel/treexmlhashmodel.h>
 #include <QAbstractItemView>
 #include "dbxmlstruct.h"
 #include "conditionproxymodel.h"
@@ -30,7 +30,7 @@ QWidget *ConditionDelegate::createEditor(QWidget *parent, const
             ConditionProxyModel *proxyModel = qobject_cast<ConditionProxyModel *>(
                         const_cast<QAbstractItemModel *>(index.model()));
             if (proxyModel) {
-                TreeXMLModel *xmlModel = qobject_cast<TreeXMLModel *>(
+                TreeXmlHashModel *xmlModel = qobject_cast<TreeXmlHashModel *>(
                             proxyModel->sourceModel());
                 if (xmlModel) {
 
@@ -61,7 +61,7 @@ QWidget *ConditionDelegate::createEditor(QWidget *parent, const
             ConditionProxyModel *proxyModel = qobject_cast<ConditionProxyModel *>(
                         const_cast<QAbstractItemModel *>(index.model()));
             if (proxyModel) {
-                TreeXMLModel *xmlModel = qobject_cast<TreeXMLModel *>(
+                TreeXmlHashModel *xmlModel = qobject_cast<TreeXmlHashModel *>(
                             proxyModel->sourceModel());
                 if (xmlModel) {
                     int column = xmlModel->columnDisplayedAttr(DBATTRXML::ATTR,
@@ -99,7 +99,7 @@ void ConditionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
         ConditionProxyModel *proxyModel = qobject_cast<ConditionProxyModel *>(
                     const_cast<QAbstractItemModel *>(index.model()));
         if (proxyModel) {
-            TreeXMLModel *xmlModel = qobject_cast<TreeXMLModel *>(
+            TreeXmlHashModel *xmlModel = qobject_cast<TreeXmlHashModel *>(
                         proxyModel->sourceModel());
             if (xmlModel) {
                 QModelIndex currentIndex = comboBox->view()->currentIndex();
@@ -127,7 +127,7 @@ void ConditionDelegate::setEditorData(QWidget *editor, const QModelIndex &index)
         ConditionProxyModel *proxyModel = qobject_cast<ConditionProxyModel *>(
                     const_cast<QAbstractItemModel *>(index.model()));
         if (proxyModel) {
-            TreeXMLModel *xmlModel = qobject_cast<TreeXMLModel *>(
+            TreeXmlHashModel *xmlModel = qobject_cast<TreeXmlHashModel *>(
                         proxyModel->sourceModel());
             if (xmlModel) {
 

@@ -29,7 +29,7 @@ FilterWidget::~FilterWidget()
     delete m_filterModel;
 }
 
-void FilterWidget::setModel(TreeXMLModel *model)
+void FilterWidget::setModel(TreeXmlHashModel *model)
 {
     m_model = model;
 

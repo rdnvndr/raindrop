@@ -17,7 +17,7 @@ PropComposition::PropComposition(QWidget *parent) :
             this,SLOT(closeTab(QModelIndex)));
 }
 
-void PropComposition::setModel(TreeXMLModel *model)
+void PropComposition::setModel(TreeXmlHashModel *model)
 {
     propWidget->setModel(model);
     attrWidget->setModel(model);
@@ -53,7 +53,7 @@ QVariant PropComposition::modelData(const QString &tag, const QString &attr, con
                       tag,attr)).data();
 }
 
-TreeXMLModel *PropComposition::model()
+TreeXmlHashModel *PropComposition::model()
 {
     return m_model;
 }

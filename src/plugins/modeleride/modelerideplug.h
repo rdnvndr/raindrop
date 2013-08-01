@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <plugin/iplugin.h>
-#include <treexmlmodel/treexmlmodel.h>
+#include <treexmlmodel/treexmlhashmodel.h>
 #include "classtreeview.h"
 #include "treefilterproxymodel.h"
 
@@ -57,7 +57,7 @@ public:
     virtual ~ModelerIDEPlug();
 
     //! Получение Модели данных плагина
-    TreeXMLModel* model();
+    TreeXmlHashModel* model();
 
     //! Создание класса
     void createClassModel(QDomDocument document);
@@ -75,7 +75,7 @@ private:
     QString m_fileName;
 
     //! Модель дерева классов
-    TreeXMLModel* m_model;
+    TreeXmlHashModel* m_model;
 
     //! Прокси модель дерева классов. Отвечает за сортировку и фильтрацию дерева классов
     TreeFilterProxyModel* classFilterModel;

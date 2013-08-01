@@ -3,7 +3,7 @@
 
 #include "ui_filterwidget.h"
 #include <treexmlmodel/tablexmlproxymodel.h>
-#include <treexmlmodel/treexmlmodel.h>
+#include <treexmlmodel/treexmlhashmodel.h>
 #include <QDataWidgetMapper>
 
 //! Диалог редактирования фильтров класса
@@ -23,7 +23,7 @@ public:
     virtual ~FilterWidget();
 
     //! Установка модели для редактирования составов класса
-    void setModel(TreeXMLModel *model);
+    void setModel(TreeXmlHashModel *model);
 
 public slots:
     //! Добавление фильтра класса
@@ -65,7 +65,7 @@ private:
     TableXMLProxyModel* m_filterModel;
 
     //! Модель структуры классов
-    TreeXMLModel* m_model;
+    TreeXmlHashModel* m_model;
 
 };
 
