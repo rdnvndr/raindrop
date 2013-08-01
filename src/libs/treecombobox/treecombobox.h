@@ -34,7 +34,8 @@ public:
     //! Возращает текущий индекс модели списка
     QModelIndex currentModelIndex ();
 
-    virtual void paintEvent(QPaintEvent *);
+    //! Событие для перерисовки
+    void paintEvent(QPaintEvent *);
 
     //! Утанавливает текст по умолчанию
     void setDisplayText(QString text);
@@ -42,6 +43,7 @@ public:
     //! Получение текста по умолчанию
     QString displayText() const;
 
+    //! Установка колонки для индекса
     void setIndexColumn(int column);
 
 private:
@@ -54,7 +56,7 @@ private:
     //! Скрывает выпадающий список в виде дерева
     void hidePopup();
 
-    //! Флаг пропуска показа спсика
+    //! Флаг пропуска показа спиcка
     bool skipNextHide;
 
     //! Древовидный список
