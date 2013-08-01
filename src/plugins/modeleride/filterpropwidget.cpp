@@ -207,6 +207,7 @@ void FilterPropWidget::setCurrent(const QModelIndex &index)
 
     m_mapper->setRootIndex(index.parent());
     m_mapper->setCurrentModelIndex(index);
+
     edit(false);
 
     ConditionDelegate *conditionDelegate =
