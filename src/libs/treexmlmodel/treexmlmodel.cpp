@@ -1,6 +1,7 @@
 #include <QtXml>
 #include <QMessageBox>
 #include <QUuid>
+#include "mimedataindex.h"
 #include "tagxmlitem.h"
 #include "treexmlmodel.h"
 
@@ -53,6 +54,53 @@ bool TreeXmlModel::isInherited(const QModelIndex &index) const
     return item->isInherited();
 }
 
+bool TreeXmlModel::moveIndex(const QModelIndex &srcIndex,
+                             const QModelIndex &destIndex, bool recursively,
+                             bool first)
+{
+    if (!copyIndex(srcIndex, destIndex, recursively))
+        return false;
+
+    if (!first)
+        if (!removeRow(srcIndex.row(),srcIndex.parent()))
+            return false;
+
+    return true;
+}
+
+bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex,
+                             const QModelIndex &destIndex, bool recursively)
+{
+    QString tag = srcIndex.data(Qt::UserRole).toString();
+    setInsTagName(tag);
+
+    if (!insertRow(0,destIndex))
+        return false;
+
+    QModelIndex index = lastInsertRow();
+
+    int i = 0;
+    while (!displayedAttr(tag, i).isEmpty()) {
+        QString nameAttr = displayedAttr(tag, i);
+        QVariant value = srcIndex.data(Qt::EditRole);
+
+        int column = columnDisplayedAttr(tag,nameAttr);
+        setData(index.sibling(index.row(),column),value);
+        i++;
+    }
+
+    bool success = true;
+    if (recursively)
+        for (int row = 0; row < srcIndex.model()->rowCount(srcIndex); row++) {
+            QModelIndex childIndex = srcIndex.child(row,0);
+            if (childIndex.isValid())
+                if (!isInherited(childIndex))
+                    success = copyIndex(childIndex, index, recursively) && success;
+        }
+
+    return success;
+}
+
 bool TreeXmlModel::isAttr(const QModelIndex &index) const
 {
     TagXmlItem *item = toItem(index);
@@ -86,75 +134,6 @@ bool TreeXmlModel::hasChildren(const QModelIndex &parent) const
 {
     Q_UNUSED (parent);
     return true;
-}
-
-bool TreeXmlModel::unpackData(const QModelIndex &parent, QDataStream &stream, int row, bool move)
-{
-    QString tag;
-    QModelIndex index;
-    bool nextTag = false;
-
-    while (!stream.atEnd()) {
-        QString nameAttr;
-        stream >> nameAttr;
-        if (nameAttr==QString("^")){
-            stream >> tag;
-            setInsTagName(tag);
-            if (insertRow(row,parent))
-                nextTag = false;
-            else
-                nextTag = true;
-            index = lastInsertRow();
-        } else if (nameAttr==QString("{")) {
-            unpackData(lastInsertRow(),stream,row);
-        } else if (nameAttr==QString("}")) {
-            return true;
-        } else if (!nextTag){
-            QVariant value;
-            stream >> value;
-            int column = columnDisplayedAttr(tag,nameAttr);
-
-            if (!setData(index.sibling(index.row(),column),value)){
-                nextTag = true;
-                removeRow(index.row(),index.parent());
-            }
-        }
-    }
-    return true;
-}
-
-void TreeXmlModel::packData(const QModelIndex &parent, QDataStream &stream) const
-{
-    bool isFirstNode=true;
-
-    for (int row=0;row<rowCount(parent);row++)
-    {
-        QModelIndex childIndex = parent.child(row,0);
-        // Разделитель
-        if (isFirstNode){
-            stream << QString("{");
-            isFirstNode = false;
-        }
-
-        if (childIndex.isValid())
-            if (!isInherited(childIndex)) {
-                stream << QString("^");
-                QString tag = data(childIndex,Qt::UserRole).toString();
-                stream << tag;
-                for (int i = 0; i < columnCount(childIndex); i++) {
-                    QString attrName = displayedAttr(tag,i);
-                    if (!attrName.isEmpty()){
-                        stream << attrName;
-                        stream << childIndex.sibling(childIndex.row(),i).data(Qt::EditRole);
-                    }
-                }
-                if (!isAttr(childIndex))
-                    packData(childIndex,stream);
-            }
-    }
-
-    if (!isFirstNode)
-        stream << QString("}");
 }
 
 void TreeXmlModel::addDisplayedAttr(const QString &tag, const QStringList &value, QIcon icon)
@@ -444,6 +423,8 @@ QModelIndex TreeXmlModel::lastInsertRow()
 bool TreeXmlModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
                                 int row, int column, const QModelIndex &parent)
 {
+    Q_UNUSED(row)
+
     if (!parent.isValid())
         return false;
 
@@ -456,12 +437,17 @@ bool TreeXmlModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     if (isAttr(parent))
         return false;
 
-    QByteArray encodedData = data->data("application/classxmlmodel");
-    QDataStream stream(&encodedData, QIODevice::ReadOnly);
+    const  MimeDataIndex *mimeData
+            = qobject_cast<const MimeDataIndex *>(data);
+    foreach (const QModelIndex& index, mimeData->indexes()){
+        if (index.isValid())
+            if (action == Qt::MoveAction)
+                return moveIndex(index, parent, true, true);
+            else
+                return copyIndex(index, parent, true);
+    }
 
-    return unpackData(parent,stream,row,
-                      data->parent() == this
-                      && action == Qt::MoveAction);
+    return true;
 }
 
 
@@ -513,29 +499,15 @@ QStringList TreeXmlModel::mimeTypes() const
 
 QMimeData *TreeXmlModel::mimeData(const QModelIndexList &indexes)
 {
-    QByteArray encodedData;
-    QDataStream stream(&encodedData, QIODevice::WriteOnly);
+    PersistentIndexes persistentIndex;
 
     foreach (const QModelIndex& index,indexes){
         if (index.isValid())
-            if (!isInherited(index)){
-                stream << QString("^");
-                QString tag = data(index,Qt::UserRole).toString();
-                stream << tag;
-                for (int i = 0; i < columnCount(index); i++) {
-                    QString attrName = displayedAttr(tag,i);
-                    if (!attrName.isEmpty()){
-                        stream << attrName;
-                        stream << index.sibling(index.row(),i).data(Qt::EditRole);
-                    }
-                }
-                if (!isAttr(index))
-                    packData(index,stream);
-            }
+            if (!isInherited(index))
+                persistentIndex.append(QPersistentModelIndex(index));
     }
 
-    QMimeData *mimeData = new QMimeData();
-    mimeData->setData("application/classxmlmodel", encodedData);
-    mimeData->setParent(this);
+    MimeDataIndex *mimeData = new MimeDataIndex();
+    mimeData->setIndexes(persistentIndex);
     return mimeData;
 }

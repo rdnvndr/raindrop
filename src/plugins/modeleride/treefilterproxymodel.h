@@ -31,18 +31,7 @@ public:
                       int row, int column, const QModelIndex &parent);
 
     //! Возращает объект с упакованными данными по списку индексов
-    /*! Возращает объект с упакованными данными по списку индексов\n
-        Упаковка данных производится в виде:
-        \code
-          ^Tag1 prop1 ... propN
-          {
-             ^Tag2 prop1 ... propN
-             ^Tag3 prop1 ... propN
-             ^...
-          }
-          ^...
-          ^TagN
-        \endcode
+    /*! Возращает объект с упакованными данными по списку индексов
     */
     QMimeData *mimeData(const QModelIndexList &indexes) const;
 

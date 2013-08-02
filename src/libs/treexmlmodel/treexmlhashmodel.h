@@ -50,6 +50,11 @@ public:
     //! Удаление строки
     bool removeRows (int row, int count, const QModelIndex & parent);
 
+    //! Перемещение элемента
+    bool moveIndex(const QModelIndex &srcIndex,
+                           const QModelIndex &destIndex, bool recursively = false,
+                           bool first = false);
+
     //! Добавления поля для хешеирования
     void addHashAttr(const QString &tag, const QString &value,
                       UniqueAttr unique = TreeXmlHashModel::NoUnique);
@@ -94,9 +99,6 @@ private:
 
     //! Заполнение UUID при вставке строки
     void insertUuid(const QModelIndex &index);
-
-    //! Распаковка данных из потока
-    bool unpackData(const QModelIndex &parent, QDataStream &stream, int row, bool move = false);
 
     //! Список атрибутов для хэшеированя [тэг][атрибут][уникальность]
     QHash<QString, QHash<QString,UniqueAttr> > m_hashAttr;
