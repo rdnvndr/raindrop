@@ -6,17 +6,17 @@
 #include "treexmlmodelglobal.h"
 
 //! Класс узла дерева TreeXMLModel
-class XMLMODELLIB TagXMLItem
+class XMLMODELLIB TagXmlItem
 {
 public:
     //! Конструктор узла дерева
-    TagXMLItem(QDomNode &node, TagXMLItem *parent = 0);
+    TagXmlItem(QDomNode &node, TagXmlItem *parent = 0);
 
     //! Деструктор узла дерева
-    virtual ~TagXMLItem();
+    virtual ~TagXmlItem();
 
     //! Возращает родителя
-    TagXMLItem *parent();
+    TagXmlItem *parent();
 
     //! Возращает тэг
     QDomNode node() const;
@@ -31,10 +31,10 @@ public:
     int count(QStringList tags = QStringList(), QStringList parenttags = QStringList());
 
     //! Возращает потомка
-    TagXMLItem *child(int i, QStringList tags = QStringList(), QStringList parenttags = QStringList());
+    TagXmlItem *child(int i, QStringList tags = QStringList(), QStringList parenttags = QStringList());
 
     //! Возращает номер потомка
-    int childNumber(TagXMLItem *child, QStringList tags, QStringList parenttags);
+    int childNumber(TagXmlItem *child, QStringList tags, QStringList parenttags);
 
     //! Вставка узла
     bool insertChild(const QString &tagname);
@@ -55,16 +55,16 @@ private:
     QDomNode domNode;
 
     //! Родитель
-    TagXMLItem *parentItem;
+    TagXmlItem *parentItem;
 
     //! Список потомков
-    QList<TagXMLItem*> childItems;
+    QList<TagXmlItem*> childItems;
 
     //! Указатель на узел, где находится тэг
-    TagXMLItem *locationItem;
+    TagXmlItem *locationItem;
 
     //! Список записей с унаследованными тэгами
-    QList<TagXMLItem*> contentItems;
+    QList<TagXmlItem*> contentItems;
 };
 
 #endif
