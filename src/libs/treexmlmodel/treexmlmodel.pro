@@ -9,11 +9,15 @@ HEADERS += \
     tablexmlproxymodel.h \
     treexmlmodelglobal.h \
     modifyproxymodel.h \
-    treexmlhashmodel.h
+    treexmlhashmodel.h \
+    treexmlmodel.h \
+    treexmlhashmodel1.h
 
 SOURCES += \ 
     tagxmlitem.cpp \
     tablexmlproxymodel.cpp \
     modifyproxymodel.cpp \
-    treexmlhashmodel.cpp
+    treexmlhashmodel.cpp \
+    treexmlmodel.cpp \
+    treexmlhashmodel1.cpp
 
