@@ -9,12 +9,12 @@
 #include <QIcon>
 #include "treexmlmodelglobal.h"
 
-class TagXMLItem;
+class TagXmlItem;
 
 //! Класс модель дерева для XML данных
 /*! Данный класс предназначен для создания дерева на основе,
     XML данных. Позволяет отображать указанные наследуемые тэги. Узлы дерева
-    (записи таблицы) связаны между указателем класса TagXMLItem. \n
+    (записи таблицы) связаны между указателем класса TagXmlItem. \n
     Пример использования:
     \code
 
@@ -23,7 +23,7 @@ class TagXMLItem;
     if (file.open(QIODevice::ReadOnly)) {
         QDomDocument document;
         if (document.setContent(&file)) {
-            dbStructModel = new TreeXMLModel(document, this);
+            dbStructModel = new TreeXmlModel(document, this);
 
             dbStructModel->addTagFilter("Class");
             dbStructModel->addTagFilter("Attribute");
@@ -49,7 +49,7 @@ class TagXMLItem;
     \endcode
 
 */
-class XMLMODELLIB TreeXMLModel : public QAbstractItemModel
+class XMLMODELLIB TreeXmlModel : public QAbstractItemModel
 {
     Q_OBJECT
 
@@ -62,9 +62,9 @@ public:
     };
 
      //! Конструктор модели
-    TreeXMLModel(QDomNode document, QObject *parent = 0);
+    TreeXmlModel(QDomNode document, QObject *parent = 0);
     //! Деструктор модели
-    virtual ~TreeXMLModel();
+    virtual ~TreeXmlModel();
 
     //! Возращает хранимые данные
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole ) const;
@@ -118,10 +118,10 @@ public:
     bool isAttr(const QModelIndex &index) const;
 
     //! Получает класс связку TagXMLItem по индексу модели
-    TagXMLItem *toItem(const QModelIndex &index) const;
+    TagXmlItem *toItem(const QModelIndex &index) const;
 
     //! Получает  индекс модели по классу связке TagXMLItem
-    QModelIndex fromItem(TagXMLItem *item) const;
+    QModelIndex fromItem(TagXmlItem *item) const;
 
     //! Указывает xml атрибуты тэга для отображения
     void addDisplayedAttr(const QString &tag,const QStringList &value,QIcon icon = QIcon());
@@ -139,7 +139,7 @@ public:
     void removeDisplayedAttr(const QString &tag);
 
     //! Получение корневой узла дерева
-    TagXMLItem* rootItem();
+    TagXmlItem* rootItem();
 
     //! Установить наименование тэга для вставки строки
     void setInsTagName(const QString &tag);
@@ -212,7 +212,7 @@ private:
     void updateRemoveRows(int emptyRowAttr, int count, const QModelIndex &parent);
 
     //! Корневой узел
-    TagXMLItem *m_rootItem;
+    TagXmlItem *m_rootItem;
 
     //! Количество колонок
     int m_column;
@@ -240,9 +240,6 @@ private:
 
     //! Список тэгов в которые нельзя вставлять строки
     QHash<QString, QStringList> m_insertTags;
-
-    //! Список зависимых полей [тэг][атрибут][ссылочныйТэг] = ссылочныйАтрибут
-    QHash<QString, QHash<QString, QMap<QString, QString> > > m_linkAttr;
 };
 
 #endif
