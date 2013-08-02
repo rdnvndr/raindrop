@@ -3,6 +3,7 @@
 #include "dbxmlstruct.h"
 #include <QMimeData>
 #include <treexmlmodel/treexmlhashmodel.h>
+#include <treexmlmodel/mimedataindex.h>
 
 TreeFilterProxyModel::TreeFilterProxyModel()
 {
@@ -128,32 +129,19 @@ Qt::DropActions TreeFilterProxyModel::supportedDragActions() const
 
 QMimeData *TreeFilterProxyModel::mimeData(const QModelIndexList &indexes) const
 {
-    QByteArray encodedData;
-    QDataStream stream(&encodedData, QIODevice::WriteOnly);
     TreeXmlHashModel* xmlModel = qobject_cast<TreeXmlHashModel*>(sourceModel());
+
+    PersistentIndexes persistentIndex;
 
     foreach (const QModelIndex& index,indexes){
         QModelIndex sourceIndex = mapToSource(index);
         if (sourceIndex.isValid())
-            if (!xmlModel->isInherited(sourceIndex)){
-                stream << QString("^");
-                QString tag = xmlModel->data(sourceIndex,Qt::UserRole).toString();
-                stream << tag;
-                for (int i = 0; i < xmlModel->columnCount(sourceIndex); i++){
-                    QString attrName = xmlModel->displayedAttr(tag,i);
-                    if (!attrName.isEmpty()){
-                        stream << attrName;
-                        stream << sourceIndex.sibling(sourceIndex.row(),i).data(Qt::EditRole);
-                    }
-                }
-                if (!xmlModel->isAttr(sourceIndex))
-                    packData(sourceIndex,stream);
-            }
+            if (!xmlModel->isInherited(sourceIndex))
+                persistentIndex.append(QPersistentModelIndex(sourceIndex));
     }
 
-    QMimeData *mimeData = new QMimeData();
-    mimeData->setParent(sourceModel());
-    mimeData->setData("application/classxmlmodel", encodedData);
+    MimeDataIndex *mimeData = new MimeDataIndex();
+    mimeData->setIndexes(persistentIndex);
     return mimeData;
 }
 
@@ -162,6 +150,9 @@ bool TreeFilterProxyModel::dropMimeData(const QMimeData *data,
                                         int row, int column,
                                         const QModelIndex &parent)
 {
+    Q_UNUSED(row)
+    TreeXmlHashModel* xmlModel = qobject_cast<TreeXmlHashModel*>(sourceModel());
+
     if (!parent.isValid())
         return false;
 
@@ -172,12 +163,20 @@ bool TreeFilterProxyModel::dropMimeData(const QMimeData *data,
     if (column >= columnCount(parent))
         return false;
 
-    QByteArray encodedData = data->data("application/classxmlmodel");
-    QDataStream stream(&encodedData, QIODevice::ReadOnly);
+    if (xmlModel->isAttr(mapToSource(parent)))
+        return false;
 
-    return unpackData(mapToSource(parent),stream,row,
-                      data->parent() == sourceModel()
-                      && action == Qt::MoveAction);
+    const  MimeDataIndex *mimeData
+            = qobject_cast<const MimeDataIndex *>(data);
+    foreach (const QModelIndex& index, mimeData->indexes()){
+        if (index.isValid())
+            if (action == Qt::MoveAction)
+                return xmlModel->moveIndex(index, mapToSource(parent), true, true);
+            else
+                return xmlModel->copyIndex(index, mapToSource(parent), true);
+    }
+
+    return true;
 }
 
 bool TreeFilterProxyModel::unpackData(const QModelIndex &parent, QDataStream &stream, int row, bool move)

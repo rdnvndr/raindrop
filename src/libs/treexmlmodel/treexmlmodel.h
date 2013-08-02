@@ -161,18 +161,7 @@ public:
                       int row, int column, const QModelIndex &parent);
 
     //! Возращает объект с упакованными данными по списку индексов
-    /*! Возращает объект с упакованными данными по списку индексов\n
-        Упаковка данных производится в виде:
-        \code
-          ^Tag1 prop1 ... propN
-          {
-             ^Tag2 prop1 ... propN
-             ^Tag3 prop1 ... propN
-             ^...
-          }
-          ^...
-          ^TagN
-        \endcode
+    /*! Возращает объект с упакованными данными по списку индексов
     */
     QMimeData *mimeData(const QModelIndexList &indexes);
 
@@ -194,15 +183,18 @@ public:
     //! Возращает True если унаследован
     bool isInherited(const QModelIndex &index) const;
 
+    //! Перемещение элемента
+    virtual bool moveIndex(const QModelIndex &srcIndex,
+                           const QModelIndex &destIndex, bool recursively = false,
+                           bool first = false);
+
+    //! Копирование элемента
+    virtual bool copyIndex(const QModelIndex &srcIndex,
+                           const QModelIndex &destIndex, bool recursively = false);
+
 private:
 
-    //! Распаковка данных из потока
-    bool unpackData(const QModelIndex &parent, QDataStream &stream, int row, bool move = false);
-
-    //! Упаковка данных в поток
-    void packData(const QModelIndex &parent, QDataStream &stream) const;
-
-     //! Обновление отредактированных унаследованных строк
+    //! Обновление отредактированных унаследованных строк
     void updateModifyRow(int emptyRowAttr, const QModelIndex &parent);
 
     //! Обновление вставленных унаследованных строк

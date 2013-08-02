@@ -1,6 +1,7 @@
 #ifndef MIMEDATAINDEX_H
 #define MIMEDATAINDEX_H
 
+#include "treexmlmodelglobal.h"
 #include <QMimeData>
 #include <QPersistentModelIndex>
 #include <QModelIndex>
@@ -14,7 +15,7 @@
 
 typedef QList<QPersistentModelIndex> PersistentIndexes;
 
-class MimeDataIndex : public QMimeData
+class XMLMODELLIB MimeDataIndex : public QMimeData
 {
     Q_OBJECT
 public:
