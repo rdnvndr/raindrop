@@ -169,11 +169,12 @@ bool TreeFilterProxyModel::dropMimeData(const QMimeData *data,
     const  MimeDataIndex *mimeData
             = qobject_cast<const MimeDataIndex *>(data);
     foreach (const QModelIndex& index, mimeData->indexes()){
-        if (index.isValid())
+        if (index.isValid()) {
             if (action == Qt::MoveAction)
                 return xmlModel->moveIndex(index, mapToSource(parent), true, true);
             else
                 return xmlModel->copyIndex(index, mapToSource(parent), true);
+        }
     }
 
     return true;

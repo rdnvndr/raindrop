@@ -440,11 +440,12 @@ bool TreeXmlModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     const  MimeDataIndex *mimeData
             = qobject_cast<const MimeDataIndex *>(data);
     foreach (const QModelIndex& index, mimeData->indexes()){
-        if (index.isValid())
+        if (index.isValid()) {
             if (action == Qt::MoveAction)
                 return moveIndex(index, parent, true, true);
             else
                 return copyIndex(index, parent, true);
+        }
     }
 
     return true;
