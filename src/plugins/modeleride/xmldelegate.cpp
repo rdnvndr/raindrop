@@ -11,18 +11,19 @@ XmlDelegate::XmlDelegate(QObject *parent) :
 {
 }
 
-QWidget*  XmlDelegate::createEditor ( QWidget * parent, const QStyleOptionViewItem & option,
+QWidget*  XmlDelegate::createEditor (QWidget * parent, const QStyleOptionViewItem & option,
         const QModelIndex & index ) const
 {
     return QStyledItemDelegate::createEditor(parent,option,index);
 }
 
-void XmlDelegate::setEditorData( QWidget * editor, const QModelIndex & index )const
+void XmlDelegate::setEditorData(QWidget * editor, const QModelIndex & index) const
 {
 
     TreeComboBox* treeComboBox = dynamic_cast<TreeComboBox*>(editor);
     if (treeComboBox) {
-        treeComboBox->setDisplayText(index.model()->data(index,Qt::DisplayRole).toString());
+        treeComboBox->setDisplayText(
+                    index.model()->data(index,Qt::DisplayRole).toString());
         if (!treeComboBox->isEnabled())
             treeComboBox->repaint();
         return;
