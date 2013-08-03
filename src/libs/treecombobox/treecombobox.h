@@ -38,13 +38,25 @@ public:
     void paintEvent(QPaintEvent *);
 
     //! Утанавливает текст по умолчанию
-    void setDisplayText(QString text);
+    void setDisplayText(const QString &text);
 
     //! Получение текста по умолчанию
     QString displayText() const;
 
+    //! Утанавливает иконку по умолчанию
+    void setDisplayIcon(const QIcon &icon);
+
+    //! Получение иконки по умолчанию
+    QIcon displayIcon() const;
+
     //! Установка колонки для индекса
     void setIndexColumn(int column);
+
+    //! Утанавливать режим Показа иконки
+    void setShowingIcon(bool showing);
+
+    //! Получить режим показа иконки
+    bool showingIcon();
 
 private:
     //! Фильтр событий
@@ -64,6 +76,12 @@ private:
 
     //! Текст по умолчанию
     QString m_displayText;
+
+    //! Иконка по умолчанию
+    QIcon   m_displayIcon;
+
+    //! Режим показа иконки
+    bool m_showingIcon;
 
     //! Колонка со значением
     int m_indexColumn ;

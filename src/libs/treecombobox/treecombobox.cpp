@@ -15,6 +15,7 @@ TreeComboBox::TreeComboBox(QWidget *parent):QComboBox(parent),skipNextHide(false
     view()->setAlternatingRowColors(true);
 
     m_indexColumn = 0;
+    m_showingIcon = false;
 }
 
 TreeComboBox::~TreeComboBox()
@@ -75,15 +76,19 @@ void TreeComboBox::paintEvent(QPaintEvent *)
     painter.setPen(palette().color(QPalette::Text));
     QStyleOptionComboBox opt;
     initStyleOption(&opt);
-    if(currentIndex()==-1)
+    if(currentIndex()==-1) {
         opt.currentText = m_displayText;
+        opt.currentIcon = m_displayIcon;
+    }
+    if (!m_showingIcon)
+        opt.currentIcon = QIcon();
 
     painter.drawComplexControl(QStyle::CC_ComboBox, opt);
     painter.drawControl(QStyle::CE_ComboBoxLabel, opt);
 }
 
 
-void TreeComboBox::setDisplayText(QString text)
+void TreeComboBox::setDisplayText(const QString &text)
 {
     m_displayText = text;
 }
@@ -93,7 +98,27 @@ QString TreeComboBox::displayText() const
     return m_displayText;
 }
 
+void TreeComboBox::setDisplayIcon(const QIcon &icon)
+{
+    m_displayIcon = icon;
+}
+
+QIcon TreeComboBox::displayIcon() const
+{
+    return m_displayIcon;
+}
+
 void TreeComboBox::setIndexColumn(int column)
 {
     m_indexColumn = column;
+}
+
+void TreeComboBox::setShowingIcon(bool showing)
+{
+    m_showingIcon = showing;
+}
+
+bool TreeComboBox::showingIcon()
+{
+    return m_showingIcon;
 }
