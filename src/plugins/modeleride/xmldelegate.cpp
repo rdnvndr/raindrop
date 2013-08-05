@@ -24,8 +24,8 @@ void XmlDelegate::setEditorData(QWidget * editor, const QModelIndex & index) con
     if (treeComboBox) {
         treeComboBox->setDisplayText(
                     index.model()->data(index,Qt::DisplayRole).toString());
-        if (!treeComboBox->isEnabled())
-            treeComboBox->repaint();
+
+        treeComboBox->repaint();
         return;
     }
 

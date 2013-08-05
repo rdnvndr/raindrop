@@ -223,6 +223,7 @@ void AttrWidget::edit(bool flag)
 void AttrWidget::revert()
 {
     m_mapperAttr->revert();
+    this->setCurrent(tableViewAttr->currentIndex());
     edit(false);
 }
 
@@ -285,10 +286,6 @@ void AttrWidget::setCurrent(const QModelIndex &index)
 {
     edit(false);
     if (!index.isValid())
-        return;
-
-    if (m_mapperAttr->rootIndex() == index.parent() &&
-            index.row() == m_mapperAttr->currentIndex())
         return;
 
     tableViewAttr->setCurrentIndex(index);
