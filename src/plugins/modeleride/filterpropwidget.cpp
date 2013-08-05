@@ -5,6 +5,7 @@
 #include "conditiondelegate.h"
 #include "xmldelegate.h"
 #include "dbxmlstruct.h"
+#include <QDebug>
 
 FilterPropWidget::FilterPropWidget(QWidget *parent) :
     QWidget(parent)
@@ -217,6 +218,7 @@ void FilterPropWidget::setCurrent(const QModelIndex &index)
     treeViewCondition->setRootIndex(m_conditionModel->mapFromSource(index));
 
     emit currentIndexChanged(index);
+    changeDestClass(comboBoxDestClass->displayText());
 }
 
 void FilterPropWidget::edit(bool flag)
