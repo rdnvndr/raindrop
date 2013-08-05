@@ -25,6 +25,8 @@ QWidget *ConditionDelegate::createEditor(QWidget *parent, const
                                          QStyleOptionViewItem &option,
                                          const QModelIndex &index) const
 {
+    Q_UNUSED(option)
+
     if (index.data(Qt::UserRole) == DBCONDITIONXML::COND) {
         if (index.column() == 0) {
             ConditionProxyModel *proxyModel = qobject_cast<ConditionProxyModel *>(
@@ -78,7 +80,11 @@ QWidget *ConditionDelegate::createEditor(QWidget *parent, const
                 }
             }
         }
-
+    }
+    if (index.row() < index.model()->rowCount(index.parent())-1
+            && (index.data(Qt::UserRole) == DBCONDITIONXML::COND
+            || index.data(Qt::UserRole) == DBFILTERBLOCKXML::BLOCK))
+    {
         if (index.column() == 3) {
             QComboBox *comboBoxAttr = new QComboBox(parent);
             QStringList operatorList;
@@ -88,14 +94,14 @@ QWidget *ConditionDelegate::createEditor(QWidget *parent, const
         }
     }
 
-    return XmlDelegate::createEditor(parent,option,index);
+    return NULL;
 }
 
 void ConditionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                                      const QModelIndex &index) const
 {
     QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
-    if (comboBox && (index.column() == 0 || index.column() == 0)) {
+    if (comboBox && index.column() == 0) {
         ConditionProxyModel *proxyModel = qobject_cast<ConditionProxyModel *>(
                     const_cast<QAbstractItemModel *>(index.model()));
         if (proxyModel) {
@@ -123,7 +129,7 @@ void ConditionDelegate::setEditorData(QWidget *editor, const QModelIndex &index)
 {
 
     QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
-    if (comboBox && (index.column() == 0 || index.column() == 0)) {
+    if (comboBox && index.column() == 0) {
         ConditionProxyModel *proxyModel = qobject_cast<ConditionProxyModel *>(
                     const_cast<QAbstractItemModel *>(index.model()));
         if (proxyModel) {
