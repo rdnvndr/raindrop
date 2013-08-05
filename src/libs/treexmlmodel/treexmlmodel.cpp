@@ -58,6 +58,9 @@ bool TreeXmlModel::moveIndex(const QModelIndex &srcIndex,
                              const QModelIndex &destIndex, bool recursively,
                              bool first)
 {
+    if (isInherited(srcIndex))
+        return false;
+
     if (!copyIndex(srcIndex, destIndex, recursively))
         return false;
 
@@ -71,6 +74,9 @@ bool TreeXmlModel::moveIndex(const QModelIndex &srcIndex,
 bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex,
                              const QModelIndex &destIndex, bool recursively)
 {
+    if (isInherited(srcIndex))
+        return false;
+
     QString tag = srcIndex.data(Qt::UserRole).toString();
     setInsTagName(tag);
 
@@ -94,7 +100,6 @@ bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex,
         for (int row = 0; row < srcIndex.model()->rowCount(srcIndex); row++) {
             QModelIndex childIndex = srcIndex.child(row,0);
             if (childIndex.isValid())
-                if (!isInherited(childIndex))
                     success = copyIndex(childIndex, index, recursively) && success;
         }
 

@@ -126,7 +126,6 @@ Qt::DropActions TreeFilterProxyModel::supportedDragActions() const
     return Qt::CopyAction | Qt::MoveAction;
 }
 
-
 QMimeData *TreeFilterProxyModel::mimeData(const QModelIndexList &indexes) const
 {
     TreeXmlHashModel* xmlModel = qobject_cast<TreeXmlHashModel*>(sourceModel());
@@ -170,88 +169,96 @@ bool TreeFilterProxyModel::dropMimeData(const QMimeData *data,
             = qobject_cast<const MimeDataIndex *>(data);
     foreach (const QModelIndex& index, mimeData->indexes()){
         if (index.isValid()) {
-            if (action == Qt::MoveAction)
-                return xmlModel->moveIndex(index, mapToSource(parent), true, true);
-            else
-                return xmlModel->copyIndex(index, mapToSource(parent), true);
+            if (!xmlModel->isInherited(index)) {
+                if (action == Qt::MoveAction)
+                    return moveSourceIndex(index, mapToSource(parent), true, true);
+                else
+                    return copySourceIndex(index, mapToSource(parent), true);
+            }
         }
     }
 
     return true;
 }
 
-bool TreeFilterProxyModel::unpackData(const QModelIndex &parent, QDataStream &stream, int row, bool move)
+bool TreeFilterProxyModel::moveSourceIndex(const QModelIndex &srcIndex,
+                             const QModelIndex &destIndex, bool recursively,
+                             bool first)
 {
-    QString tag;
-    QModelIndex index,ii;
     TreeXmlHashModel* xmlModel = qobject_cast<TreeXmlHashModel*>(sourceModel());
-    bool nextTag = false;
+    if (xmlModel->isInherited(srcIndex))
+        return false;
 
-    while (!stream.atEnd()) {
-        QString nameAttr;
-        stream >> nameAttr;
-        if (nameAttr==QString("^")){
-            stream >> tag;
-            xmlModel->setInsTagName(tag);
-            if (insertRow(0, mapFromSource(parent)))
-                nextTag = false;
-            else
-                nextTag = true;
-            index = xmlModel->lastInsertRow();
-        } else if (nameAttr==QString("{")) {
-            unpackData(xmlModel->lastInsertRow(),stream,row,move);
-        } else if (nameAttr==QString("}")) {
-            return true;
-        } else if (!nextTag){
-            QVariant value;
-            stream >> value;
-            int column = xmlModel->columnDisplayedAttr(tag,nameAttr);
+    QString tag = srcIndex.data(Qt::UserRole).toString();
+    xmlModel->setInsTagName(tag);
 
-            QModelIndex existIndex = xmlModel->indexHashAttr(tag,nameAttr,value);
-            if (existIndex.isValid() && move)
-                xmlModel->refreshHashingOne(existIndex,true);
+    if (!insertRow(0,mapFromSource(destIndex)))
+        return false;
 
-            if (!xmlModel->setData(index.sibling(index.row(),column),value)){
-                nextTag = true;
-                xmlModel->removeRow(index.row(),index.parent());
-            }
-        }
+    QModelIndex index = xmlModel->lastInsertRow();
+
+    int i = 0;
+    while (!xmlModel->displayedAttr(tag, i).isEmpty()) {
+        QString nameAttr = xmlModel->displayedAttr(tag, i);
+        QVariant value = srcIndex.data(Qt::EditRole);
+
+        int column = xmlModel->columnDisplayedAttr(tag,nameAttr);
+
+        QModelIndex existIndex = xmlModel->indexHashAttr(tag,nameAttr,value);
+        if (existIndex.isValid())
+            xmlModel->refreshHashingOne(existIndex,true);
+
+        xmlModel->setData(index.sibling(index.row(),column),value);
+        i++;
     }
-    return true;
+
+    bool success = true;
+    if (recursively)
+        for (int row = 0; row < srcIndex.model()->rowCount(srcIndex); row++) {
+            QModelIndex childIndex = srcIndex.child(row,0);
+            if (childIndex.isValid())
+                    success = moveSourceIndex(childIndex, index, recursively) && success;
+        }
+
+    if (!first)
+        if (!xmlModel->removeRow(srcIndex.row(),srcIndex.parent()))
+            return false;
+
+    return success;
 }
 
-void TreeFilterProxyModel::packData(QModelIndex parent, QDataStream &stream) const
+bool TreeFilterProxyModel::copySourceIndex(const QModelIndex &srcIndex,
+                             const QModelIndex &destIndex, bool recursively)
 {
-    bool isFirstNode=true;
     TreeXmlHashModel* xmlModel = qobject_cast<TreeXmlHashModel*>(sourceModel());
+    if (xmlModel->isInherited(srcIndex))
+        return false;
 
-    for (int row=0;row<xmlModel->rowCount(parent);row++)
-    {
-        QModelIndex sourceIndex = xmlModel->index(row,0,parent);
+    QString tag = srcIndex.data(Qt::UserRole).toString();
+    xmlModel->setInsTagName(tag);
 
-        // Разделитель
-        if (isFirstNode){
-            stream << QString("{");
-            isFirstNode = false;
-        }
+    if (!insertRow(0,mapFromSource(destIndex)))
+        return false;
 
-        if (sourceIndex.isValid())
-            if (!xmlModel->isInherited(sourceIndex)) {
-                stream << QString("^");
-                QString tag = xmlModel->data(sourceIndex,Qt::UserRole).toString();
-                stream << tag;
-                for (int i = 0; i < xmlModel->columnCount(sourceIndex); i++) {
-                    QString attrName = xmlModel->displayedAttr(tag,i);
-                    if (!attrName.isEmpty()){
-                        stream << attrName;
-                        stream << sourceIndex.sibling(sourceIndex.row(),i).data(Qt::EditRole);
-                    }
-                }
-                if (!xmlModel->isAttr(sourceIndex))
-                    packData(sourceIndex,stream);
-            }
+    QModelIndex index = xmlModel->lastInsertRow();
+
+    int i = 0;
+    while (!xmlModel->displayedAttr(tag, i).isEmpty()) {
+        QString nameAttr = xmlModel->displayedAttr(tag, i);
+        QVariant value = srcIndex.data(Qt::EditRole);
+
+        int column = xmlModel->columnDisplayedAttr(tag,nameAttr);
+        xmlModel->setData(index.sibling(index.row(),column),value);
+        i++;
     }
 
-    if (!isFirstNode)
-        stream << QString("}");
+    bool success = true;
+    if (recursively)
+        for (int row = 0; row < srcIndex.model()->rowCount(srcIndex); row++) {
+            QModelIndex childIndex = srcIndex.child(row,0);
+            if (childIndex.isValid())
+                    success = copySourceIndex(childIndex, index, recursively) && success;
+        }
+
+    return success;
 }
