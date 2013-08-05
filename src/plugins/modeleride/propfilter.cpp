@@ -7,8 +7,6 @@ PropFilter::PropFilter(QWidget *parent) :
 {
     setupUi(this);
 
-    /*connect(propWidget,SIGNAL(currentIndexChanged(QModelInex)),
-            attrWidget,SLOT(setRootIndex(QModelIndex)));*/
     connect(propWidget,SIGNAL(currentIndexChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
     connect(propWidget,SIGNAL(dataChanged(QModelIndex)),
@@ -20,7 +18,6 @@ PropFilter::PropFilter(QWidget *parent) :
 void PropFilter::setModel(TreeXmlHashModel *model)
 {
     propWidget->setModel(model);
-    // attrWidget->setModel(model);
     m_model = model;
 
 }
