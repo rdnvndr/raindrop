@@ -91,6 +91,7 @@ void TreeComboBox::paintEvent(QPaintEvent *)
 void TreeComboBox::setDisplayText(const QString &text)
 {
     m_displayText = text;
+    treeView->setCurrentIndex(treeView->currentIndex().sibling(-1,-1));
 }
 
 QString TreeComboBox::displayText() const

@@ -206,10 +206,6 @@ void ClassWidget::remove()
 
 void ClassWidget::setCurrent(const QModelIndex &index)
 {
-    if (m_mapper->rootIndex() == index.parent() &&
-            index.row() == m_mapper->currentIndex())
-        return;
-
     m_mapper->setRootIndex(index.parent());
     m_mapper->setCurrentModelIndex(index);
     edit(false);
@@ -261,6 +257,8 @@ void ClassWidget::submit()
 void ClassWidget::revert()
 {
     m_mapper->revert();
+    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+    setCurrent(srcIndex);
     removeEmpty();
     edit(false);
 }
