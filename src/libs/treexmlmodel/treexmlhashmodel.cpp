@@ -269,6 +269,9 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex,
                                  const QModelIndex &destIndex, bool recursively,
                                  bool first)
 {
+    if (isInherited(srcIndex))
+        return false;
+
     QString tag = srcIndex.data(Qt::UserRole).toString();
     setInsTagName(tag);
 
@@ -297,7 +300,6 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex,
         for (int row = 0; row < srcIndex.model()->rowCount(srcIndex); row++) {
             QModelIndex childIndex = srcIndex.child(row,0);
             if (childIndex.isValid())
-                if (!isInherited(childIndex))
                     success = moveIndex(childIndex, index, recursively) && success;
         }
 
