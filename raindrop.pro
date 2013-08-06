@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS += src \
-                tests
+SUBDIRS += src
+!isEmpty(BUILD_TESTS):SUBDIRS += tests
 CONFIG += ordered
 
