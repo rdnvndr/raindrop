@@ -10,7 +10,7 @@ LIBS +=-L$$LIBRARY_PATH
 LIBS +=-L$$PLUGINS_PATH
 
 TEMPLATE = app
-DESTDIR = $$APP_PATH
+# DESTDIR = $$APP_PATH
 
 # prefix test binary with tst_
 !contains(TARGET, ^tst_.*):TARGET = $$join(TARGET,,"tst_")
