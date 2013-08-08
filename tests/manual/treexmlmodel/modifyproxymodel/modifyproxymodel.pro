@@ -8,7 +8,8 @@ FORMS       = mainwindow.ui
 HEADERS     = mainwindow.h \
               treeitem.h \
               treemodel.h
-RESOURCES   = editabletreemodel.qrc
+RESOURCES   = \
+    modifyproxymodel.qrc
 SOURCES     = mainwindow.cpp \
               treeitem.cpp \
               treemodel.cpp \
