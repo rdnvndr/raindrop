@@ -36,7 +36,7 @@ class TagXmlItem;
             propsAttr << "AttributeName" << "parent";
             dbStructModel->addDisplayedAttr("Attribute",propsAttr);
 
-            dbStructModel->addAttributeTag("Attribute");
+            dbStructModel->addAttrTag("Attribute");
 
             dbStructModel->setHeaderData(0, Qt::Horizontal, tr("Имя атирибута"));
             dbStructModel->setHeaderData(1, Qt::Horizontal, tr("Родитель"));
