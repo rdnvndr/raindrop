@@ -47,11 +47,11 @@ void tst_TreeXmlHashModel::initTestCase()
             m_model->addTagFilter("RTPAttribute");
 
             QStringList propsClass;
-            propsClass << "ClassName" << "parent";
+            propsClass << "name" << "parent";
             m_model->addDisplayedAttr("RTPClass",propsClass);
 
             QStringList propsAttr;
-            propsAttr << "AttributeName" << "parent";
+            propsAttr << "name" << "parent";
             m_model->addDisplayedAttr("RTPAttribute",propsAttr);
 
             m_model->setHeaderData(0, Qt::Horizontal, tr("Имя атирибута"));
