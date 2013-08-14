@@ -19,7 +19,7 @@ public slots:
 
 tst_IPlugin::tst_IPlugin(QObject *parent)
 {
-
+    Q_UNUSED(parent)
 }
 
 tst_IPlugin::~tst_IPlugin()

@@ -1,3 +1,3 @@
 include(../../subdir.pri)
 LIBS += -lplugin
-SOURCES  += tst_iplugin.cpp 
+SOURCES += tst_pluginmanager.cpp

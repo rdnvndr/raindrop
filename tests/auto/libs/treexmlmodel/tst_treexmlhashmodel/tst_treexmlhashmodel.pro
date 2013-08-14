@@ -1,4 +1,4 @@
-include(../../libs.pri)
+include(../../subdir.pri)
 QT += xml
 LIBS += -ltreexmlmodel
 

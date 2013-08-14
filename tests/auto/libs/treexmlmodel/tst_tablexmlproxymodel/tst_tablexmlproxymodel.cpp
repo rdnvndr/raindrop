@@ -30,7 +30,7 @@ private:
 tst_TableXmlProxyModel::tst_TableXmlProxyModel(QObject *parent) :
     m_model(0)
 {
-
+    Q_UNUSED(parent)
 }
 
 tst_TableXmlProxyModel::~tst_TableXmlProxyModel()
