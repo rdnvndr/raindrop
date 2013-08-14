@@ -42,7 +42,7 @@ id="A.RTPTechGroupPlugin" category="B.RTPTechGroupProjects">
             <fielddescription>Vendor name:</fielddescription>
         </field>
         <field mandatory="true" name="Version">
-            <fieldcontrol class="QLineEdit" validator="^[a-zA-Z0-9_]+$"
+            <fieldcontrol class="QLineEdit" validator="^[a-zA-Z0-9_.]+$"
             defaulttext="1.0"/>
             <fielddescription>Version:</fielddescription>
         </field>
