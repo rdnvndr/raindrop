@@ -30,7 +30,7 @@ private:
 tst_ModifyProxyModel::tst_ModifyProxyModel(QObject *parent) :
     m_model(0)
 {
-
+    Q_UNUSED(parent)
 }
 
 tst_ModifyProxyModel::~tst_ModifyProxyModel()

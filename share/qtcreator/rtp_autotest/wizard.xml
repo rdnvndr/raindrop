@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wizard version="1" kind="project" class="qt4project" firstpage="10"
+id="A.RTPTechGroupAutotest" category="B.RTPTechGroupProjects">
+    <icon>autotest.png</icon>
+    <description>Creates autotest UniversalPlatform.</description>
+    <displayname>Autotest UniversalPlatform</displayname>
+    <displaycategory>RTPTechGroup Projects</displaycategory>
+    <files>
+        <file source="autotest.cpp"  target="tst_%TestName:l%.%CppSourceSuffix%" openeditor="true"/>
+        <file source="autotest.pro"  target="tst_%TestName:l%.pro"               openproject="true"/>
+    </files>
+    <fieldpagetitle>Autotest Information</fieldpagetitle>
+    <fields>
+        <field mandatory="true" name="TestName">
+            <fieldcontrol class="QLineEdit" validator="^[a-zA-Z0-9_]+$"
+            defaulttext="MyTest"/>
+            <fielddescription>Test name:</fielddescription>
+        </field>
+        <field mandatory="true" name="VendorName">
+            <fieldcontrol class="QLineEdit" validator="^[a-zA-Z0-9_]+$"
+            defaulttext="RTPTechGroup" />
+            <fielddescription>Vendor name:</fielddescription>
+        </field>
+        <field name="Description">
+            <fieldcontrol class="QTextEdit"
+            defaulttext="Put a short description of your test here"/>
+            <fielddescription>Description:</fielddescription>
+        </field>
+    </fields>
+</wizard>

@@ -29,7 +29,7 @@ private:
 tst_TreeXmlModel::tst_TreeXmlModel(QObject *parent) :
     m_model(0)
 {
-
+    Q_UNUSED(parent)
 }
 
 tst_TreeXmlModel::~tst_TreeXmlModel()
