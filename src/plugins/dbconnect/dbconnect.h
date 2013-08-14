@@ -2,7 +2,10 @@
 #define DBCONNECT_H
 
 #include <QObject>
+#include <QAction>
+#include <QSqlDatabase>
 #include <plugin/iplugin.h>
+
 #include "dbconnectglobal.h"
 
 class  DBCONNECTLIB DbConnect:
@@ -20,7 +23,10 @@ public:
     
     //! Конструктор плагина
     explicit DbConnect(QObject *parent = 0);
-    
+
+    //! Деструктор плагина
+    virtual ~DbConnect();
+
     // IPlugin
     
     //! Получение экземпляра
@@ -43,6 +49,13 @@ public:
     
     //! Производитель плагина
     QString vendor() {return tr("RTPTechGroup");};
+
+public slots:
+    //! Слот для подключения к БД
+    void dbConnect();
+
+private:
+    QAction *actionDbConnect;
 };
 
 #endif
