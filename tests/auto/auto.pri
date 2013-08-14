@@ -1,5 +1,6 @@
 include(../tests.pri)
-INCLUDEPATH += $$PWD
+SHAREDIR = $$PWD/shared
+INCLUDEPATH += $$PWD $$SHAREDIR
 QT += testlib
 CONFIG += qt warn_on console depend_includepath testcase
 CONFIG -= app_bundle
