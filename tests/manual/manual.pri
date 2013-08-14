@@ -1,2 +1,3 @@
 include(../tests.pri)
-INCLUDEPATH += $$PWD
+SHAREDIR = $$PWD/shared
+INCLUDEPATH += $$PWD $$SHAREDIR
