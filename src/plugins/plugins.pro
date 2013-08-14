@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
 CONFIG += ordered
-SUBDIRS +=  mainwindow
+SUBDIRS +=  mainwindow \
+    dbconnect
 SUBDIRS +=  treedockwidget
 SUBDIRS +=  modeleride
 SUBDIRS +=  example

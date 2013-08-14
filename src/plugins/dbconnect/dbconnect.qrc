@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="DbConnect">icons/dbconnect.svg</file>
+    </qresource>
+</RCC>
+
