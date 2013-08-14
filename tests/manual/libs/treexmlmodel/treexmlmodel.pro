@@ -1,3 +1,2 @@
 TEMPLATE=subdirs
-SUBDIRS= \
-    modifyproxymodel
+SUBDIRS= tst_modifyproxymodel

@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS += treexmlmodel
-SUBDIRS += treexmlhashmodel
-SUBDIRS += tablexmlproxymodel
-SUBDIRS += modifyproxymodel
+SUBDIRS += tst_treexmlmodel
+SUBDIRS += tst_treexmlhashmodel
+SUBDIRS += tst_tablexmlproxymodel
+SUBDIRS += tst_modifyproxymodel
