@@ -5,8 +5,11 @@
 #include <QAction>
 #include <QSqlDatabase>
 #include <plugin/iplugin.h>
-
 #include "dbconnectglobal.h"
+
+//! Плагин соединения с базой данных
+/*! Плагин предназначен для создания соединения с БД.
+*/
 
 class  DBCONNECTLIB DbConnect:
         public QObject,
@@ -43,7 +46,7 @@ public:
     
     //! Категория в которой состоит плагин
     QString category() {return tr("");};
-    
+
     //! Версия плагина
     QString version() {return tr("1.0");};
     
@@ -55,6 +58,7 @@ public slots:
     void dbConnect();
 
 private:
+    //! Команда отображения окна соединения
     QAction *actionDbConnect;
 };
 
