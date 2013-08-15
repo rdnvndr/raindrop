@@ -15,7 +15,7 @@ DbConnect::DbConnect(QObject *parent):
     actionDbConnect = new QAction(QIcon(":connect"), tr("Соединение с  БД"), this);
     connect(actionDbConnect, SIGNAL(triggered()), this, SLOT(dbConnect()));
     actionDbConnect->setObjectName("actionDbConnect");
-    iMainWindow->addAction(tr("Файл"),actionDbConnect);
+    iMainWindow->addAction(tr("Работа с БД"),actionDbConnect);
 }
 
 DbConnect::~DbConnect()
@@ -24,6 +24,7 @@ DbConnect::~DbConnect()
         QSqlDatabase::database().close();
         QSqlDatabase::removeDatabase(QSqlDatabase::defaultConnection);
     }
+    delete actionDbConnect;
 }
 
 void DbConnect::dbConnect()
