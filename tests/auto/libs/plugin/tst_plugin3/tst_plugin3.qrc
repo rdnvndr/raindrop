@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="tst_plugin3">icons/tst_plugin3.svg</file>
+    </qresource>
+</RCC>
+
