@@ -24,9 +24,12 @@ IPlugin::IPlugin(QString depInterfaces)
 
 IPlugin::~IPlugin()
 {
-    foreach (IPlugin* plug,PluginManager::instance()->dependentPlugins(this))
-        if (plug)
-            delete plug;
+    // NOTE: Возможно надо сделать на цикле for
+    foreach (IPlugin* plug,PluginManager::instance()->dependentPlugins(this)) {
+        if (PluginManager::instance()->dependentPlugins(this).count() != 0)
+            if (plug)
+                delete plug;
+    }
 }
 
 void IPlugin::setSettings(QSettings *s){
