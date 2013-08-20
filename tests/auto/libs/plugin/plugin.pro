@@ -1,6 +1,5 @@
 TEMPLATE = subdirs
 CONFIG += ordered
-SUBDIRS += tst_iplugin
 SUBDIRS += tst_plugin1
 SUBDIRS += tst_plugin2
 SUBDIRS += tst_plugin3
