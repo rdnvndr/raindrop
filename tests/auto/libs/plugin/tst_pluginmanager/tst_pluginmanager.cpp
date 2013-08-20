@@ -2,6 +2,7 @@
 #include <QtTest/QtTest>
 #include <QSettings>
 #include <plugin/pluginmanager.h>
+#include "pluginloadlog.h"
 
 class  tst_PluginManager : public QObject
 {
@@ -27,11 +28,12 @@ private slots:
     void interfaceObjects();
     void dependentPlugins();
     void dependPlugins();
-    void loadPlugin();
+    void loadPlugins();
     void settings();
 
 private:
     PluginManager m_pluginManager;
+    PluginLoadLog *m_pluginLoadLog;
 };
 
 tst_PluginManager::tst_PluginManager(QObject *parent)
@@ -55,14 +57,39 @@ void tst_PluginManager::initTestCase()
     QString translatorFileName = QLatin1String("qt_");
     translatorFileName += QLocale::system().name();
     QTranslator *translator = new QTranslator(this);
-    if (translator->load(translatorFileName, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+    if (translator->load(translatorFileName,
+                         QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
         QApplication::installTranslator(translator);
+
+    m_pluginLoadLog = new PluginLoadLog();
+    connect(PluginManager::instance(),SIGNAL(loadedPlugin(QObject*)),
+            m_pluginLoadLog, SLOT(loadPlugin(QObject*)));
     m_pluginManager.loadPlugins();
 }
 
 void tst_PluginManager::cleanupTestCase()
 {
-    
+    PluginLoadLog *pluginUnloadLog = new PluginLoadLog();
+    connect(PluginManager::instance(),SIGNAL(removedPlugin(QObject*)),
+            pluginUnloadLog, SLOT(loadPlugin(QObject*)));
+    delete m_pluginManager.interfaceObject("Itst_plugin3");
+    QStringList plugins = pluginUnloadLog->loadedPlugins();
+    QCOMPARE(plugins.count(), 4);
+    if (plugins.at(0) == "tst_plugin2") {
+        QVERIFY(plugins.at(0) == "tst_plugin2");
+        QVERIFY(plugins.at(1) == "tst_plugin1");
+        QVERIFY(plugins.at(2) == "tst_plugin4");
+    } else {
+        QVERIFY(plugins.at(0) == "tst_plugin1");
+        QVERIFY(plugins.at(1) == "tst_plugin2"
+                || plugins.at(1) == "tst_plugin4");
+        QVERIFY(plugins.at(2) == "tst_plugin2"
+                || plugins.at(2) == "tst_plugin4");
+    }
+    QVERIFY(plugins.at(3) == "tst_plugin3");
+    delete pluginUnloadLog;
+
+    delete m_pluginLoadLog;
 }
 
 void tst_PluginManager::init()
@@ -171,9 +198,17 @@ void tst_PluginManager::dependPlugins()
     QCOMPARE(dependName4.count(),0);
 }
 
-void tst_PluginManager::loadPlugin()
+void tst_PluginManager::loadPlugins()
 {
+    QStringList plugins = m_pluginLoadLog->loadedPlugins();
+    QCOMPARE(plugins.count(), 4);
 
+    QVERIFY(plugins.at(0) == "tst_plugin3");
+    QVERIFY(plugins.at(1) == "tst_plugin2");
+    QVERIFY(plugins.at(2) == "tst_plugin1"
+            || plugins.at(2) == "tst_plugin4");
+    QVERIFY(plugins.at(3) == "tst_plugin1"
+            || plugins.at(3) == "tst_plugin4");
 }
 
 void tst_PluginManager::settings()
