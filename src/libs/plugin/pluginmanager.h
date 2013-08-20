@@ -20,9 +20,13 @@ class IPlugin;
     \endcode
 
 */
+
 class PLUGINLIB PluginManager : public QObject
 {
     Q_OBJECT
+
+    friend class IPlugin;
+
 public:
     //! Получение экземпляра менеджера плагинов
     static PluginManager *instance();
@@ -68,14 +72,20 @@ public:
     //! Получает ссылку на объект для сохранения настроек
     QSettings *settings() const;
 
-    //! Загрузка следующего плагина
-    bool nextLoadPlugin();
-
 signals:
 
     //! Сигнал с сообщениями о загрузке плагинов
+    /*! Оставлен для совместимости, в последующем необходимо уничтожить.
+     *  Взамен следует использовать  loadedPlugin(IPlugin *plugin)
+     */
     void showMessage(const QString &message, int alignment = Qt::AlignLeft | Qt::AlignBottom ,
                                             const QColor &color = Qt::black);
+
+    //! Сигнал о загрузке плагина
+    void loadedPlugin(QObject *plugin);
+
+    //! Сигнал об удалении плагина
+    void removedPlugin(QObject *plugin);
 
     //! Сигнал об окончании загрузки плагинов
     void endLoadingPlugins();
@@ -85,6 +95,9 @@ private slots:
     void removePlugin(QObject* obj);
 
 private:
+    //! Загрузка следующего плагина
+    bool nextLoadPlugin();
+
     //! Экземпляр менеджера плагинов
     static PluginManager *m_instance;
 

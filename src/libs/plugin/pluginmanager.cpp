@@ -114,6 +114,7 @@ bool PluginManager::loadPlugin(QString fileName)
                 foreach (const QString &interface, corePlugin->interfaces())
                     m_interfaces.insert(interface, plugin);
 
+                emit loadedPlugin(plugin);
                 emit showMessage(tr("Загружен плагин: %1").arg(corePlugin->name()));
                 qDebug()<<"Load plugin: "<<corePlugin->name();
                 return true;
@@ -145,6 +146,6 @@ void PluginManager::removePlugin(QObject *obj)
                 m_interfaces.remove(interface,plug);
                 qDebug() << "clean:" << plug->objectName();
             }
-
+    emit removedPlugin(obj);
     qDebug() << "Remove plugin:" << obj->objectName();
 }
