@@ -28,11 +28,11 @@ int main(int argc, char* argv[])
             if (translator->load(fileName,translationDir.absolutePath()))
                 app->installTranslator(translator);
 
-    QSettings *settings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope,
                                  QLatin1String("RTPTechGroup"), QLatin1String("Raindrop"));
 
     PluginManager pluginManager;
-    pluginManager.setSettings(settings);
+    pluginManager.setSettings(&settings);
     pluginManager.loadPlugins();
 
     return app->exec();
