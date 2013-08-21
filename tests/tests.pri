@@ -21,3 +21,7 @@ win32 {
     # the below gets added to later by testcase.prf    
     check.commands = cd . & set PATH=$$lib;%PATH%& cmd /c
 }
+
+sub_dir = $$_PRO_FILE_PWD_
+sub_dir ~= s,^$${PWD},,
+DESTDIR = $$TESTS_PATH$$sub_dir

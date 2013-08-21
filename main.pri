@@ -27,6 +27,7 @@ APP_PATH      = $$BUILD_PATH/bin
 BIN_PATH      = $$APP_PATH
 LIBRARY_PATH  = $$APP_PATH
 PLUGINS_PATH  = $$APP_PATH/plugins
+TESTS_PATH    = $$APP_PATH/tests
 
 listlib = $$find(LIBS, ^-l)
 for(onelib, listlib) {
