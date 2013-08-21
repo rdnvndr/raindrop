@@ -28,8 +28,7 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
     m_conditionModel = new ConditionProxyModel();
-    ConditionDelegate *conditionDelegate = new ConditionDelegate();
-    treeViewCondition->setItemDelegate(conditionDelegate);
+    treeViewCondition->setItemDelegate(new ConditionDelegate(this));
 
     connect(comboBoxDestClass,SIGNAL(currentIndexChanged(QString)),
             this,SLOT(changeDestClass(QString)));
