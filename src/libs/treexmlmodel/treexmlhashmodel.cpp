@@ -283,9 +283,9 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex,
     int i = 0;
     while (!displayedAttr(tag, i).isEmpty()) {
         QString nameAttr = displayedAttr(tag, i);
-        QVariant value = srcIndex.data(Qt::EditRole);
 
         int column = columnDisplayedAttr(tag,nameAttr);
+        QVariant value = srcIndex.sibling(srcIndex.row(),column).data(Qt::EditRole);
 
         QModelIndex existIndex = indexHashAttr(tag,nameAttr,value);
         if (existIndex.isValid())

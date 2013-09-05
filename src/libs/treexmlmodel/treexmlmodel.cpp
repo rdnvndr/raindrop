@@ -88,9 +88,9 @@ bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex,
     int i = 0;
     while (!displayedAttr(tag, i).isEmpty()) {
         QString nameAttr = displayedAttr(tag, i);
-        QVariant value = srcIndex.data(Qt::EditRole);
 
         int column = columnDisplayedAttr(tag,nameAttr);
+        QVariant value = srcIndex.sibling(srcIndex.row(),column).data(Qt::EditRole);
         setData(index.sibling(index.row(),column),value);
         i++;
     }

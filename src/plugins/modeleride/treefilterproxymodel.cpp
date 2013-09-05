@@ -162,9 +162,6 @@ bool TreeFilterProxyModel::dropMimeData(const QMimeData *data,
     if (column >= columnCount(parent))
         return false;
 
-    if (xmlModel->isAttr(mapToSource(parent)))
-        return false;
-
     const  MimeDataIndex *mimeData
             = qobject_cast<const MimeDataIndex *>(data);
     foreach (const QModelIndex& index, mimeData->indexes()){
@@ -199,10 +196,10 @@ bool TreeFilterProxyModel::moveSourceIndex(const QModelIndex &srcIndex,
 
     int i = 0;
     while (!xmlModel->displayedAttr(tag, i).isEmpty()) {
-        QString nameAttr = xmlModel->displayedAttr(tag, i);
-        QVariant value = srcIndex.data(Qt::EditRole);
+        QString nameAttr = xmlModel->displayedAttr(tag, i);      
 
         int column = xmlModel->columnDisplayedAttr(tag,nameAttr);
+        QVariant value = srcIndex.sibling(srcIndex.row(),column).data(Qt::EditRole);
 
         QModelIndex existIndex = xmlModel->indexHashAttr(tag,nameAttr,value);
         if (existIndex.isValid())
@@ -245,9 +242,9 @@ bool TreeFilterProxyModel::copySourceIndex(const QModelIndex &srcIndex,
     int i = 0;
     while (!xmlModel->displayedAttr(tag, i).isEmpty()) {
         QString nameAttr = xmlModel->displayedAttr(tag, i);
-        QVariant value = srcIndex.data(Qt::EditRole);
 
         int column = xmlModel->columnDisplayedAttr(tag,nameAttr);
+        QVariant value = srcIndex.sibling(srcIndex.row(),column).data(Qt::EditRole);
         xmlModel->setData(index.sibling(index.row(),column),value);
         i++;
     }
