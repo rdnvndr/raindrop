@@ -106,9 +106,24 @@
 </RTPClass>
 <RTPClass isAbstract="false" description="Окончание перехода" isActive="true" guid="{e8463bfb-e95b-4b10-92cd-d41ac163219c}" type="User" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" name="StepEnd" displayTemplate=""/>
 <RTPClass isAbstract="true" description="Подразделения" isActive="true" guid="{c2dda30d-f474-4210-97cd-654b841ca2c1}" type="User" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" name="Subdivision" displayTemplate="">
-<RTPClass isAbstract="false" description="Цех" isActive="true" guid="{81312c85-3af3-4cd0-b4c6-47be5e3d9453}" type="User" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" name="Shop" displayTemplate=""/>
-<RTPClass isAbstract="false" description="Участок" isActive="true" guid="{81b12158-8bf4-4569-8e5f-f18822deb953}" type="User" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" name="Plot" displayTemplate=""/>
+<RTPClass isAbstract="false" description="Цех" isActive="true" guid="{81312c85-3af3-4cd0-b4c6-47be5e3d9453}" type="User" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" name="Shop" displayTemplate="">
+<RTPComposition inverseDescription="Входит в" Class="{81b12158-8bf4-4569-8e5f-f18822deb953}" description="Участок" guid="{075fbe6a-54d8-40b2-9027-9094acf9cd64}" parent="{81312c85-3af3-4cd0-b4c6-47be5e3d9453}" name="Plot" directDescription="Состоит из"/>
+</RTPClass>
+<RTPClass isAbstract="false" description="Участок" isActive="true" guid="{81b12158-8bf4-4569-8e5f-f18822deb953}" type="User" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" name="Plot" displayTemplate="">
+<RTPComposition inverseDescription="Входит в" Class="{dc7535f5-e632-40e1-9938-d9305a3d5be1}" description="Рабочее место" guid="{0c73aae9-01b3-42cd-8dc3-948fe3db93eb}" parent="{81b12158-8bf4-4569-8e5f-f18822deb953}" name="Workplace" directDescription="Состоит из"/>
+</RTPClass>
 <RTPClass isAbstract="false" description="Рабочее место" isActive="true" guid="{dc7535f5-e632-40e1-9938-d9305a3d5be1}" type="User" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" name="Workplace" displayTemplate=""/>
+<RTPClass isAbstract="false" description="Предприятие" isActive="true" guid="{4679ef1c-5a50-4771-b2dd-5ed1c9edff2f}" icon="" type="Standart" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" name="Enterprise" displayTemplate="">
+<RTPComposition inverseDescription="Входит в" Class="{81312c85-3af3-4cd0-b4c6-47be5e3d9453}" description="Цех" guid="{d839f8cf-442e-4b50-9da6-696088496009}" parent="{4679ef1c-5a50-4771-b2dd-5ed1c9edff2f}" name="Shop" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{476cad2d-c9c7-4f86-ac95-cf2e5e8080b1}" description="Отдел" guid="{22d87174-f4d5-4c81-a143-051f4f4e39fd}" parent="{4679ef1c-5a50-4771-b2dd-5ed1c9edff2f}" name="Department" directDescription="Состоит из"/>
+</RTPClass>
+<RTPClass isAbstract="false" description="Отдел" isActive="true" guid="{476cad2d-c9c7-4f86-ac95-cf2e5e8080b1}" icon="" type="Standart" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" name="Department" displayTemplate="">
+<RTPComposition inverseDescription="Входит в" Class="{04cb668f-8fd1-4a6d-9635-15ad576eb941}" description="Рабочая группа" guid="{3f4f1c41-d718-42cd-a7ab-f070349e865b}" parent="{476cad2d-c9c7-4f86-ac95-cf2e5e8080b1}" name="Workgroup" directDescription="Состоит из"/>
+<RTPComposition inverseDescription="Входит в" Class="{c70a9a6a-cd68-4bf5-b1f1-0c44c36e7d19}" description="Бюро" guid="{0f222000-b981-4495-b788-a1c687674610}" parent="{476cad2d-c9c7-4f86-ac95-cf2e5e8080b1}" name="Bureau" directDescription="Состоит из"/>
+</RTPClass>
+<RTPClass isAbstract="false" description="" isActive="true" guid="{04cb668f-8fd1-4a6d-9635-15ad576eb941}" icon="" type="" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" name="Workgroup" displayTemplate=""/>
+<RTPClass isAbstract="false" description="Бюро" isActive="true" guid="{c70a9a6a-cd68-4bf5-b1f1-0c44c36e7d19}" icon="" type="Standart" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" name="Bureau" displayTemplate=""/>
+<RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Руководитель" guid="{e96c1ebe-5e26-459e-8eb3-9c2a365abf6f}" group="" type="Reference" initialValue="" name="leader" isNullsAllowed="false" referencedClass="{28f74930-f3f0-44e9-a174-e4e2a1ffc95c}"/>
 </RTPClass>
 <RTPClass isAbstract="true" description="Инструкция" isActive="true" guid="{4e1a0173-b6d3-43e1-b6ff-692baadeefca}" type="User" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" name="Instruction" displayTemplate=""/>
 </RTPClass>
@@ -137,6 +152,7 @@
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="true" description="Участок" guid="{d4d6ad16-52fb-482d-989f-aedba823f9cd}" group="Рабочее место" type="Reference" initialValue="" name="plot" isNullsAllowed="false" referencedClass="{81b12158-8bf4-4569-8e5f-f18822deb953}"/>
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Цех" guid="{4d627581-fbc9-4cbf-bc3a-06259233da87}" group="Рабочее место" type="Reference" initialValue="" name="shop" isNullsAllowed="false" referencedClass="{81312c85-3af3-4cd0-b4c6-47be5e3d9453}"/>
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Рабочее место" guid="{fcf59f36-67b9-4079-8352-b95c60575d96}" group="Рабочее место" type="Reference" initialValue="" name="workplace" isNullsAllowed="false" referencedClass="{dc7535f5-e632-40e1-9938-d9305a3d5be1}"/>
+<RTPComposition inverseDescription="Входит в" Class="{0ce8131d-e49f-4767-b788-37b4469ccb1d}" description="Рабочее место" guid="{55d04575-d4f1-4296-b640-32b3ddca1c6b}" parent="{752f6e29-37f6-4b9d-ae30-34c4a39e4e12}" name="Workplace" directDescription="Состоит из"/>
 </RTPClass>
 <RTPClass isAbstract="false" description="Время на операцию" isActive="true" guid="{48c03225-2a56-46c5-88aa-5dca59e9e223}" type="User" parent="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}" name="TPOperationTime" displayTemplate="">
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Вспомагательное время" guid="{1160bced-32fc-4579-a763-95fdacd278b0}" group="" type="Double" parent="{48c03225-2a56-46c5-88aa-5dca59e9e223}" initialValue="" name="auxiliaryTime" isNullsAllowed="false" referencedClass=""/>
@@ -185,6 +201,11 @@
 <RTPAttribute maxStringLength="0" isCandidateKey="true" isUnique="true" description="Изделие" guid="{53653eb3-960b-4b81-a5c8-a85cd2551b41}" group="" type="Reference" parent="{e1795222-c9dd-41d6-800e-20f86e9f8751}" initialValue="" name="product" isNullsAllowed="false" referencedClass="{dc665fef-8ae6-4004-8a35-68b211652483}"/>
 <RTPComposition inverseDescription="Входит в" Class="{13bc92cb-4e66-4e46-b43f-cbac1a36ecb0}" description="Переменная" guid="{7faa64a2-80fa-4f21-893f-d7f699601a58}" parent="{e1795222-c9dd-41d6-800e-20f86e9f8751}" name="Variable" directDescription="Состоит из"/>
 </RTPClass>
+<RTPClass isAbstract="false" description="Рабочее место" isActive="true" guid="{0ce8131d-e49f-4767-b788-37b4469ccb1d}" icon="" type="Standart" parent="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}" name="TPWorkplace" displayTemplate="">
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="true" description="Участок" guid="{4aeeba13-a1d6-4547-9f9b-6b0355bf469a}" group="Рабочее место" type="Reference" parent="{0ce8131d-e49f-4767-b788-37b4469ccb1d}" initialValue="" name="plot" isNullsAllowed="false" referencedClass="{81b12158-8bf4-4569-8e5f-f18822deb953}"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Цех" guid="{8d9e182b-7964-4305-8a68-f26a8bf1cfe4}" group="Рабочее место" type="Reference" parent="{0ce8131d-e49f-4767-b788-37b4469ccb1d}" initialValue="" name="shop" isNullsAllowed="false" referencedClass="{81312c85-3af3-4cd0-b4c6-47be5e3d9453}"/>
+<RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="false" description="Рабочее место" guid="{06447b7e-9119-4442-bd1e-8cc242961a1d}" group="Рабочее место" type="Reference" parent="{0ce8131d-e49f-4767-b788-37b4469ccb1d}" initialValue="" name="workplace" isNullsAllowed="false" referencedClass="{dc7535f5-e632-40e1-9938-d9305a3d5be1}"/>
+</RTPClass>
 </RTPClass>
 <RTPClass isAbstract="true" description="Описание системы" isActive="true" guid="{ee28f006-40c4-401d-8b69-7540f995cd47}" icon="" type="System" parent="{dde6a61b-ab17-4812-8cac-9b8946770e15}" name="System" displayTemplate="">
 <RTPClass isAbstract="false" description="Атрибут" isActive="true" guid="{d65e189c-e2d9-4118-9058-0715bea79881}" icon="" type="System" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" name="Attribute" displayTemplate="">
@@ -230,5 +251,6 @@
 <RTPAttribute maxStringLength="512" isCandidateKey="true" isUnique="true" description="Описание" guid="{547af757-9aae-4346-958e-f7d749191414}" group="" type="String" parent="{4a66ffab-5711-420c-9072-00026b543879}" initialValue="" name="decription" isNullsAllowed="false" referencedClass=""/>
 <RTPAttribute maxStringLength="0" isCandidateKey="false" isUnique="true" description="Базовая единица" guid="{1c9eda70-ab5c-41da-a8b1-e0f7dc5ed3bd}" group="" type="Reference" parent="{4a66ffab-5711-420c-9072-00026b543879}" initialValue="" name="basicUnit" isNullsAllowed="false" referencedClass="{1c9eda70-ab5c-41da-a8b1-e0f7dc5ed3bd}"/>
 </RTPClass>
+<RTPClass isAbstract="false" description="Пользователь" isActive="true" guid="{28f74930-f3f0-44e9-a174-e4e2a1ffc95c}" icon="" type="System" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" name="User" displayTemplate=""/>
 </RTPClass>
 </RTPClass>
