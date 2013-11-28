@@ -7,10 +7,6 @@ MainWindowOptions::MainWindowOptions(QWidget *parent) :
     QDialog(parent)
 {
     setupUi(this);
-    connect(listCategory,SIGNAL(activated(QModelIndex)),
-            listCommands,SLOT(setRootIndex(QModelIndex)));
-    connect(listCategory,SIGNAL(clicked(QModelIndex)),
-            listCommands,SLOT(setRootIndex(QModelIndex)));
 
     connect(pushButtonNew,SIGNAL(clicked()),this,SLOT(insertToolBar()));
     connect(pushButtonDelete,SIGNAL(clicked()),this,SLOT(removeToolBar()));
@@ -19,7 +15,7 @@ MainWindowOptions::MainWindowOptions(QWidget *parent) :
             this, SLOT(changeHotKey(QKeySequence)));
     connect(pushButtonKeyClear,SIGNAL(clicked()),this,SLOT(resetHotKey()));
     connect(pushButtonKeyDelete,SIGNAL(clicked()),this,SLOT(deleteHotKey()));
-    treeViewHotKey->setItemDelegate(new HotKeyDelegate());
+    treeViewCommands->setItemDelegate(new HotKeyDelegate());
     connect(radioButtonOther,SIGNAL(toggled(bool)),
             this, SLOT(selectOtherSize(bool)));
     spinBoxIconSize->setDisabled(true);
@@ -34,26 +30,15 @@ MainWindowOptions::~MainWindowOptions()
 void MainWindowOptions::createActionsModel(QMultiHash <QString, QAction *> *actions)
 {
     m_actionGroupModel = new ActionGroupModel(actions);
-    listCategory->setModel(m_actionGroupModel);
-    listCommands->setModel(m_actionGroupModel);
-    treeViewHotKey->setModel(m_actionGroupModel);
-    treeViewHotKey->setColumnWidth(0,250);
-    treeViewHotKey->setColumnHidden(2,true);
-    treeViewHotKey->setColumnHidden(3,true);
-    treeViewHotKey->setColumnHidden(4,true);
-    treeViewHotKey->expandAll();
+    treeViewCommands->setModel(m_actionGroupModel);
+    treeViewCommands->setColumnWidth(0,250);
+    treeViewCommands->setColumnHidden(2,true);
+    treeViewCommands->setColumnHidden(3,true);
+    treeViewCommands->setColumnHidden(4,true);
+    treeViewCommands->expandAll();
 
-    listCategory->setCurrentIndex(m_actionGroupModel->index(0,0));
-    listCommands->setRootIndex(m_actionGroupModel->index(0,0));
-
-    connect(treeViewHotKey->selectionModel(),SIGNAL(currentChanged(QModelIndex,QModelIndex)),
-            this,SLOT(hotKeyCurrentChange(QModelIndex,QModelIndex)));
-
-    connect(listCommands->selectionModel(),SIGNAL(currentChanged(QModelIndex,QModelIndex)),
-            this,SLOT(listCommandsCurrentChange(QModelIndex,QModelIndex)));
-
-    connect(listCategory->selectionModel(),SIGNAL(currentChanged(QModelIndex,QModelIndex)),
-            this,SLOT(listCategoryCurrentChange(QModelIndex,QModelIndex)));
+    connect(treeViewCommands->selectionModel(),SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+            this,SLOT(commandCurrentChange(QModelIndex,QModelIndex)));
 }
 
 void MainWindowOptions::createToolBarModel(QMainWindow *mainWindow)
@@ -153,37 +138,24 @@ void MainWindowOptions::renameToolBar()
 
 void MainWindowOptions::changeHotKey(QKeySequence keySequence)
 {
-    QModelIndex currentIndex = treeViewHotKey->currentIndex();
+    QModelIndex currentIndex = treeViewCommands->currentIndex();
     if (currentIndex.isValid() && currentIndex.parent().isValid()) {
         m_actionGroupModel->setData(currentIndex.sibling(currentIndex.row(),1),
                                     keySequence);
     }
 }
 
-void MainWindowOptions::hotKeyCurrentChange(QModelIndex current, QModelIndex old)
+void MainWindowOptions::commandCurrentChange(QModelIndex current, QModelIndex old)
 {
     Q_UNUSED(old)
     QVariant key = m_actionGroupModel->data(current.sibling(current.row(),1));
     lineEditHotKey->setKeySequence(key.value<QKeySequence>());
 }
 
-void MainWindowOptions::listCategoryCurrentChange(QModelIndex current, QModelIndex old)
-{
-    Q_UNUSED(old)
-    listCommands->setCurrentIndex(current.child(0,0));
-}
-
-void MainWindowOptions::listCommandsCurrentChange(QModelIndex current, QModelIndex old)
-{
-    Q_UNUSED(old)
-    QVariant whatsThis = m_actionGroupModel->data(current.sibling(current.row(),2));
-    labelDescription->setText(whatsThis.toString());
-}
-
 void MainWindowOptions::resetHotKey()
 {
     lineEditHotKey->resetKeySequence();
-    QModelIndex currentIndex = treeViewHotKey->currentIndex();
+    QModelIndex currentIndex = treeViewCommands->currentIndex();
     if (currentIndex.isValid() && currentIndex.parent().isValid()) {
         m_actionGroupModel->setData(currentIndex.sibling(currentIndex.row(),1),
                                     lineEditHotKey->keySequence());
@@ -193,7 +165,7 @@ void MainWindowOptions::resetHotKey()
 void MainWindowOptions::deleteHotKey()
 {
     lineEditHotKey->setKeySequence(QKeySequence());
-    QModelIndex currentIndex = treeViewHotKey->currentIndex();
+    QModelIndex currentIndex = treeViewCommands->currentIndex();
     if (currentIndex.isValid() && currentIndex.parent().isValid()) {
         m_actionGroupModel->setData(currentIndex.sibling(currentIndex.row(),1),
                                     lineEditHotKey->keySequence());

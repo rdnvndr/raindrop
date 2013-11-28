@@ -1,16 +1,13 @@
-#include "listview.h"
-#include "mimedataobject.h"
+#include "actiongrouptreeview.h"
 #include <QDrag>
-#include <QDragEnterEvent>
-#include <QDebug>
 
-ListView::ListView(QWidget *parent) :
-    QListView(parent)
+ActionGroupTreeView::ActionGroupTreeView(QWidget *parent) :
+    QTreeView(parent)
 {
     setAcceptDrops(true);
 }
 
-void ListView::startDrag(Qt::DropActions supportedActions)
+void ActionGroupTreeView::startDrag(Qt::DropActions supportedActions)
 {
     QModelIndexList indexes = selectedIndexes();
     QList<QPersistentModelIndex> persistentIndexes;

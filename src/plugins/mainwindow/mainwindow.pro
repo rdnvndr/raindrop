@@ -17,14 +17,14 @@ HEADERS += \
     actiongroupmodel.h \
     mimedataobject.h \
     menu.h \
-    listview.h \
     actionprop.h \
     toolbar.h \
     toolbarmodel.h \
     toolbarprop.h \
     hotkeylineedit.h \
     hotkeydelegate.h \
-    iconsizespinbox.h
+    iconsizespinbox.h \
+    actiongrouptreeview.h
 SOURCES += \
            mainwindow.cpp \
     menubar.cpp \
@@ -32,14 +32,14 @@ SOURCES += \
     actiongroupmodel.cpp \
     mimedataobject.cpp \
     menu.cpp \
-    listview.cpp \
     actionprop.cpp \
     toolbar.cpp \
     toolbarmodel.cpp \
     toolbarprop.cpp \
     hotkeylineedit.cpp \
     hotkeydelegate.cpp \
-    iconsizespinbox.cpp
+    iconsizespinbox.cpp \
+    actiongrouptreeview.cpp
 
 FORMS += \
            mainwindow.ui \

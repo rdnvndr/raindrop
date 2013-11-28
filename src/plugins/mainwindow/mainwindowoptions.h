@@ -57,14 +57,8 @@ private slots:
     //! Смена горячих клавишей
     void changeHotKey(QKeySequence keySequence);
 
-    //! Смена строки в дереве горячих клавиш
-    void hotKeyCurrentChange(QModelIndex current, QModelIndex old);
-
-    //! Смена строки в дереве категорий
-    void listCategoryCurrentChange(QModelIndex current, QModelIndex old);
-
-    //! //! Смена строки в дереве команд
-    void listCommandsCurrentChange(QModelIndex current, QModelIndex old);
+    //! Смена строки в дереве команд
+    void commandCurrentChange(QModelIndex current, QModelIndex old);
 
     //! Сброс смены горячей клавиши
     void resetHotKey();
