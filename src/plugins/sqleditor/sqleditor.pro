@@ -8,9 +8,11 @@ QT += widgets sql
 
 # Input
 HEADERS   += sqleditor.h sqleditorglobal.h \
-    querysqlwidget.h
+    querysqlwidget.h \
+    sqlhighlighter.h
 SOURCES   += sqleditor.cpp \
-    querysqlwidget.cpp
+    querysqlwidget.cpp \
+    sqlhighlighter.cpp
 RESOURCES += sqleditor.qrc 
 
 FORMS += \
