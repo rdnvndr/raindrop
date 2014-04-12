@@ -8,13 +8,12 @@ QuerySqlWidget::QuerySqlWidget(QWidget *parent) :
     m_model = new QSqlQueryModel();
 
     tableView->setModel(m_model);
+    m_sqlHighlighter = new SqlHighlighter(plainQueryEdit->document());
 
     connect(toolButtonRun,SIGNAL(clicked()),this,SLOT(runQuery()));
 }
 
-void QuerySqlWidget::runQuery(){
-
-    //model->setQuery("SELECT * FROM operation3");
+void QuerySqlWidget::runQuery() {
     m_model->setQuery(plainQueryEdit->toPlainText());
     if (m_model->lastError().isValid()){
         plainLogEdit->setPlainText(m_model->lastError().text());
@@ -33,5 +32,4 @@ void QuerySqlWidget::runQuery(){
         else
             plainLogEdit->setPlainText(m_model->lastError().text());
     }
-
 }

@@ -2,6 +2,7 @@
 #define QUERYSQLWIDGET_H
 
 #include "ui_querysqlwidget.h"
+#include "sqlhighlighter.h"
 #include <QtSql>
 
 //! Редактор SQL запросов
@@ -20,6 +21,7 @@ public slots:
 
 private:
     QSqlQueryModel* m_model;
+    SqlHighlighter *m_sqlHighlighter;
 };
 
 #endif // QUERYSQLWIDGET_H
