@@ -1,4 +1,12 @@
 include(../libs.pri)
+
+VERSION = 1.0.0
+QMAKE_TARGET_COMPANY = RTPTechGroup
+QMAKE_TARGET_PRODUCT = Raindrop
+QMAKE_TARGET_DESCRIPTION = PushButtonImage Library
+QMAKE_TARGET_COPYRIGHT = Copyright (C) RTPTechGroup
+
+
 DEFINES += PUSHBUTTONIMAGE_LIBRARY
 QT += widgets
 # Input
