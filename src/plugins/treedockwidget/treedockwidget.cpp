@@ -17,6 +17,14 @@ TreeDockWidget::TreeDockWidget(QWidget *parent) :
     toolbar = new QToolBar();
     toolbar->setIconSize(QSize(20, 20));
     toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    if (QApplication::style()->objectName() == "windows")
+        toolbar->setStyleSheet(toolbar->styleSheet() +
+                "QToolBar {"
+                        "border-left: 1px solid palette(light);"
+                        "border-top: 1px solid palette(light);"
+                        "border-right: 1px solid palette(mid);"
+                        "border-bottom: 1px solid palette(mid);"
+                "}");
     verticalLayout->addWidget(toolbar);
 
     QWidget* qw = new QWidget();
@@ -27,6 +35,23 @@ TreeDockWidget::TreeDockWidget(QWidget *parent) :
     PluginManager* pluginManager = PluginManager::instance();
     QMainWindow* mainWindow = qobject_cast<QMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
+
+    if (QApplication::style()->objectName() == "windows")
+        mainWindow->setStyleSheet(mainWindow->styleSheet()+
+                "QDockWidget::title {"
+                        "border-left: 1px solid palette(light);"
+                        "border-top: 1px solid palette(light);"
+                        "border-right: 1px solid palette(mid);"
+                        "border-bottom: 1px solid palette(mid);"
+                        "text-align: left;"
+                        "padding-left: 5px;"
+                        "}"
+                        "QMainWindow::separator {"
+                        "border-left: 1px solid palette(light);"
+                        "border-top: 1px solid palette(light);"
+                        "border-right: 1px solid palette(mid);"
+                        "border-bottom: 1px solid palette(mid);"
+                "}");
 
     mainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), this);
     this->setWindowTitle(tr("Список команд"));

@@ -17,7 +17,16 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -32,7 +41,16 @@
       <property name="spacing">
        <number>2</number>
       </property>
-      <property name="margin">
+      <property name="leftMargin">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
        <number>2</number>
       </property>
       <item>
@@ -41,7 +59,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="qrc.qrc">
+         <iconset resource="treedockwidget.qrc">
           <normaloff>:/editclean</normaloff>:/editclean</iconset>
         </property>
         <property name="iconSize">
@@ -92,7 +110,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="qrc.qrc"/>
+  <include location="treedockwidget.qrc"/>
  </resources>
  <connections>
   <connection>
