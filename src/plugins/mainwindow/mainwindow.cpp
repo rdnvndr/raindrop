@@ -192,6 +192,8 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
         toolBar = this->findChild<ToolBar *>(parentItem->name);
         if (!toolBar) {
             toolBar = new ToolBar();
+            connect(this,SIGNAL(iconSizeChanged(QSize)),toolBar,SLOT(setIconSize(QSize)));
+            toolBar->setIconSize(this->iconSize());
             toolBar->setObjectName(parentItem->name);
             toolBar->setWindowTitle(parentItem->text);
             this->addToolBar(toolBar);
