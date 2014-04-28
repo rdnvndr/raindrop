@@ -14,7 +14,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 DEPENDPATH += .
 INCLUDEPATH += .
-LIBS += -lplugin -ltreedockwidget -lmdiextarea -lmainwindow
+LIBS += -lplugin -lmdiextarea -lmainwindow
 DEFINES += EXAMPLE_LIBRARY
 # Input
 HEADERS += exampleplug.h \
