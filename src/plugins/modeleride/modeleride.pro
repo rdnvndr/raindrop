@@ -15,7 +15,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
   QT += widgets
 }
 QT += xml
-LIBS += -lplugin -ltreedockwidget -lmdiextarea -ltreexmlmodel -ltreecombobox -lpushbuttonimage
+LIBS += -lplugin -lmdiextarea -ltreexmlmodel -ltreecombobox -lpushbuttonimage
 include(../plugins.pri)
 # Input
 HEADERS += modelerideplug.h \
