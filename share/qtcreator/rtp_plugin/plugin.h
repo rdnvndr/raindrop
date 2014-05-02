@@ -32,17 +32,23 @@ public:
     //! Получение иконки плагина
     QIcon icon() {return QIcon(":/%PluginName:l%");}
 
+    //! Описание продукта
+    QString product() {return APP_PRODUCT;};
+
+    //! Авторские права
+    QString copyright() {return APP_COPYRIGHT;};
+
     //! Описание плагина
-    QString descript() {return tr("%Description%");};
+    QString descript() {return tr(APP_DESCRIPTION);};
 
     //! Категория в которой состоит плагин
     QString category() {return tr("%Category%");};
 
     //! Версия плагина
-    QString version() {return tr("%Version%");};
+    QString version() {return APP_VERSION;};
 
     //! Производитель плагина
-    QString vendor() {return tr("%VendorName%");};
+    QString vendor() {return tr(APP_COMPANY);};
 };
 
 #endif
