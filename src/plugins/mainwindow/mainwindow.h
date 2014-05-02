@@ -67,17 +67,23 @@ public:
     //! Получение иконки плагина
     QIcon icon() {return QIcon();}
 
+    //! Описание продукта
+    QString product() {return tr(APP_PRODUCT);};
+
+    //! Авторские права
+    QString copyright() {return tr(APP_COPYRIGHT);};
+
     //! Описание плагина
-    QString descript() {return tr("");};
+    QString descript() {return tr(APP_DESCRIPTION);};
 
     //! Категория в которой состоит плагин
     QString category() {return tr("");};
 
     //! Версия плагина
-    QString version() {return tr("");};
+    QString version() {return APP_VERSION;};
 
     //! Производитель плагина
-    QString vendor() {return tr("");};
+    QString vendor() {return tr(APP_COMPANY);};
 
 // IMainWindow
 

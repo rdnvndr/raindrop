@@ -165,6 +165,12 @@ public:
     //! Производитель плагина
     virtual QString vendor() = 0;
 
+    //! Описание продукта
+    virtual QString product() = 0;
+
+    //! Авторские права
+    virtual QString copyright() = 0;
+
 private:
 
     //! Настройки

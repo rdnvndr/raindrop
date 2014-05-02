@@ -40,17 +40,23 @@ public:
     //! Получение иконки плагина
     QIcon icon() {return QIcon(":/sqleditor");}
     
+    //! Описание продукта
+    QString product() {return tr(APP_PRODUCT);};
+
+    //! Авторские права
+    QString copyright() {return tr(APP_COPYRIGHT);};
+
     //! Описание плагина
-    QString descript() {return tr("");};
-    
+    QString descript() {return tr(APP_DESCRIPTION);};
+
     //! Категория в которой состоит плагин
     QString category() {return tr("");};
-    
+
     //! Версия плагина
-    QString version() {return tr("1.0");};
-    
+    QString version() {return APP_VERSION;};
+
     //! Производитель плагина
-    QString vendor() {return tr("RTPTechGroup");};
+    QString vendor() {return tr(APP_COMPANY);};
 
 public slots:
     //! Отображение SQL редактора

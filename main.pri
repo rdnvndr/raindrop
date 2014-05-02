@@ -1,3 +1,12 @@
+# About
+DEFINES += \
+ APP_VERSION=\"\\\"$$VERSION\\\"\" \
+ APP_COMPANY=\"\\\"$$QMAKE_TARGET_COMPANY\\\"\" \
+ APP_PRODUCT=\"\\\"$$QMAKE_TARGET_PRODUCT\\\"\" \
+ APP_DESCRIPTION=\"\\\"$$QMAKE_TARGET_DESCRIPTION\\\"\" \
+ APP_COPYRIGHT=\"\\\"$$QMAKE_TARGET_COPYRIGHT\\\"\" \
+ APP_NAME=\\\"$$TARGET\\\"
+
 # Save Version
 win32 {
    HEADERS += version.h
