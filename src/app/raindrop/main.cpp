@@ -7,6 +7,10 @@
 int main(int argc, char* argv[])
 {
     QApplication *app = new QApplication(argc,argv);
+    app->setApplicationName(APP_NAME);
+    app->setApplicationDisplayName(APP_PRODUCT);
+    app->setApplicationVersion(APP_VERSION);
+    app->setOrganizationName(APP_COMPANY);
 
     #if QT_VERSION < 0x050000
         QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
