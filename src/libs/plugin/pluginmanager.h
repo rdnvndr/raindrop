@@ -74,13 +74,6 @@ public:
 
 signals:
 
-    //! Сигнал с сообщениями о загрузке плагинов
-    /*! Оставлен для совместимости, в последующем необходимо уничтожить.
-     *  Взамен следует использовать  loadedPlugin(IPlugin *plugin)
-     */
-    void showMessage(const QString &message, int alignment = Qt::AlignLeft | Qt::AlignBottom ,
-                                            const QColor &color = Qt::black);
-
     //! Сигнал о загрузке плагина
     void loadedPlugin(QObject *plugin);
 

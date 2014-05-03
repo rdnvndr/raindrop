@@ -62,7 +62,7 @@ public:
     QObject *instance() { return this; }
 
     //! Получение имени плагина
-    QString name() {return tr("Главное окно");};
+    QString name() {return APP_NAME;};
 
     //! Получение иконки плагина
     QIcon icon() {return QIcon();}
@@ -160,6 +160,9 @@ public slots:
     //! Вызов окна "О Qt..."
     void aboutQt();
 
+    //! Вызов окна "О программе..."
+    void about();
+
     //! Перейти в режим "Что это?"
     void showWhatsThis();
 
@@ -236,6 +239,9 @@ private:
 
     //! Команда вызова окна "О Qt..."
     QAction *actionAboutQt;
+
+    //! Команда вызова окна "О программе..."
+    QAction *actionAbout;
 
     //! Команда вызова "Что это?"
     QAction *actionWhatsThis;
