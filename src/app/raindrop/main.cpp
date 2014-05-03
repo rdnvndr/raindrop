@@ -3,6 +3,7 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <plugin/pluginmanager.h>
+#include "version.h"
 
 int main(int argc, char* argv[])
 {
@@ -11,6 +12,15 @@ int main(int argc, char* argv[])
     app->setApplicationDisplayName(APP_PRODUCT);
     app->setApplicationVersion(APP_VERSION);
     app->setOrganizationName(APP_COMPANY);
+    app->setWindowIcon(QIcon(":raindrop"));
+
+    app->setProperty("app_name",        APP_NAME);
+    app->setProperty("app_product",     APP_PRODUCT);
+    app->setProperty("app_version",     APP_VERSION);
+    app->setProperty("app_company",     APP_COMPANY);
+    app->setProperty("app_copyright",   APP_COPYRIGHT);
+    app->setProperty("app_description", APP_DESCRIPTION);
+    app->setProperty("app_revision",    VER_REV);
 
     #if QT_VERSION < 0x050000
         QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));

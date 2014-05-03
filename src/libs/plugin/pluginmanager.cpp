@@ -115,7 +115,6 @@ bool PluginManager::loadPlugin(QString fileName)
                     m_interfaces.insert(interface, plugin);
 
                 emit loadedPlugin(plugin);
-                emit showMessage(tr("Загружен плагин: %1").arg(corePlugin->name()));
                 qDebug()<<"Load plugin: "<<corePlugin->name();
                 return true;
             }else {

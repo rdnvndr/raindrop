@@ -71,6 +71,11 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     connect(actionAboutQt, SIGNAL(triggered()), this, SLOT(aboutQt()));
     addAction(tr("Справка"),actionAboutQt);
 
+    actionAbout = new QAction(QIcon(":about"), tr("О программе..."), this);
+    actionAbout->setObjectName("actionAbout");
+    connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
+    addAction(tr("Справка"),actionAbout);
+
     actionWhatsThis = new QAction(QIcon(":whatsthis"), tr("Что это?"), this);
     actionWhatsThis->setObjectName("actionWhatsThis");
     actionWhatsThis->setShortcut(tr("Shift+F1"));
@@ -118,6 +123,7 @@ MainWindow::~MainWindow()
     delete actionWindowGui;
     delete actionGuiOptions;
     delete actionExit;
+    delete actionAbout;
     delete actionAboutQt;
     delete actionWhatsThis;
 }
@@ -453,6 +459,18 @@ MdiExtArea *MainWindow::getMdiArea()
 void MainWindow::aboutQt()
 {
     QApplication::aboutQt();
+}
+
+void MainWindow::about()
+{
+    QMessageBox::about(this, tr("О программе"),
+              "<h3>"+ qApp->property("app_product").toString()  + " "
+                    + qApp->property("app_version").toString()  + "</h3>" +
+              "<p>" + tr("Собран ") + qApp->property("app_revision").toString()
+                    + "<br>"
+              "<p>" + qApp->property("app_copyright").toString() +". "
+                    + tr("Все права защищены.") +
+              "<p>" + qApp->property("app_description").toString() + ".");
 }
 
 void MainWindow::showWhatsThis()

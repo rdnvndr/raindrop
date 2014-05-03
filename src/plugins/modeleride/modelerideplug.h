@@ -32,7 +32,7 @@ public:
     QObject *instance() { return this; }
 
     //! Получение имени плагина
-    QString name() {return tr("Редактор модели данных");};
+    QString name() {return tr(APP_NAME);};
 
     //! Получение иконки плагина
     QIcon icon() {return QIcon(":/modeleride");}

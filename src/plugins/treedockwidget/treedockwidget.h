@@ -34,7 +34,7 @@ public:
     QObject *instance() { return this; }
 
     //! Получение имени плагина
-    QString name() {return tr("Дерево команд");};
+    QString name() {return APP_NAME;};
 
     //! Получение иконки плагина
     QIcon icon() {return QIcon();}

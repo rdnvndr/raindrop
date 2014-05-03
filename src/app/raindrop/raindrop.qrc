@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="raindrop">icons/raindrop,svg</file>
+    </qresource>
+</RCC>
