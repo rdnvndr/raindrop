@@ -465,9 +465,9 @@ void MainWindow::about()
 {
     QMessageBox::about(this, tr("О программе"),
               "<h3>"+ qApp->property("app_product").toString()  + " "
-                    + qApp->property("app_version").toString()  + "</h3>" +
-              "<p>" + tr("Собран ") + qApp->property("app_revision").toString()
-                    + "<br>"
+                    + qApp->property("app_version").toString()  + "</h3>"
+                    + tr("Собран ") + qApp->property("app_revision").toString()
+                    + "<br>" +
               "<p>" + qApp->property("app_copyright").toString() +". "
                     + tr("Все права защищены.") +
               "<p>" + qApp->property("app_description").toString() + ".");
