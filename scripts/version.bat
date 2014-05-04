@@ -11,8 +11,11 @@ if exist version.h (
 )
 
 if not %test%=="%ver%" (
+  for /f "tokens=*" %%i in ('git show -s --format=format:"%ci" %ver%') do (
+    set date_ver=%%i
+  )
   echo #ifndef VERSION_H > version.h
   echo #define VERSION_H >> version.h
-  echo #define VER_REV "%ver%" >> version.h
+  echo #define VER_REV "%datever% (%ver%)" >> version.h
   echo #endif >> version.h
 )
