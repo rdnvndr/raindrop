@@ -5,13 +5,14 @@ for /f "tokens=*" %%i in ('git describe --tags --always') do (
 )
 set test=-
 if exist version.h (
-  for /F "TOKENS=2,3*" %%i in (version.h) do ( 
+  for /F "TOKENS=2,3*" %%j in (version.h) do ( 
     set test=%%j
   ) 
 )
-for /f "tokens=*" %%i in ('git show -s --format^=format:%%ci %ver%') do (
-    set date_ver=%%i
-  )
+for /f "tokens=*" %%k in ('git show -s --format^=format:%%ci %ver%') do (
+    set datever=%%k
+)
+
 if not %test%=="%ver%" (  
   echo #ifndef VERSION_H > version.h
   echo #define VERSION_H >> version.h
