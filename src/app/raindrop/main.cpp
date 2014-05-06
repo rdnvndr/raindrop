@@ -9,7 +9,9 @@ int main(int argc, char* argv[])
 {
     QApplication *app = new QApplication(argc,argv);
     app->setApplicationName(APP_NAME);
-    app->setApplicationDisplayName(APP_PRODUCT);
+    #if QT_VERSION >= 0x050000
+        app->setApplicationDisplayName(APP_PRODUCT);
+    #endif
     app->setApplicationVersion(APP_VERSION);
     app->setOrganizationName(APP_COMPANY);
     app->setWindowIcon(QIcon(":raindrop"));
