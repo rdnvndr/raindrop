@@ -17,7 +17,16 @@
    <property name="spacing">
     <number>5</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -29,7 +38,16 @@
       <property name="spacing">
        <number>5</number>
       </property>
-      <property name="margin">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
        <number>5</number>
       </property>
       <item>
@@ -249,31 +267,30 @@
         <string>Свойства типа</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="1" column="1">
-         <widget class="QSpinBox" name="spinBoxStringLen">
-          <property name="maximum">
-           <number>8000</number>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="labelDefaultValue">
-          <property name="text">
-           <string>По умолчанию:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="labelTypeAttr">
-          <property name="text">
-           <string>Тип атрибута:</string>
-          </property>
-         </widget>
+        <item row="2" column="1">
+         <widget class="TreeComboBox" name="comboBoxLinkAttr"/>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="labelStringLen">
           <property name="text">
            <string>Длина строки:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="lineEditDefaultValue"/>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="labelLowerBound">
+          <property name="text">
+           <string>Нижняя граница:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="spinBoxStringLen">
+          <property name="maximum">
+           <number>8000</number>
           </property>
          </widget>
         </item>
@@ -284,14 +301,35 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="TreeComboBox" name="comboBoxLinkAttr"/>
-        </item>
         <item row="0" column="1">
          <widget class="QComboBox" name="comboBoxTypeAttr"/>
         </item>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="lineEditDefaultValue"/>
+        <item row="0" column="0">
+         <widget class="QLabel" name="labelTypeAttr">
+          <property name="text">
+           <string>Тип атрибута:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="labelDefaultValue">
+          <property name="text">
+           <string>По умолчанию:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="labelUpperBound">
+          <property name="text">
+           <string>Верхняя граница:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLineEdit" name="lineEditLowerBound"/>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLineEdit" name="lineEditUpperBound"/>
         </item>
        </layout>
        <zorder>labelTypeAttr</zorder>
@@ -302,6 +340,10 @@
        <zorder>labelDefaultValue</zorder>
        <zorder>lineEditDefaultValue</zorder>
        <zorder>spinBoxStringLen</zorder>
+       <zorder>labelLowerBound</zorder>
+       <zorder>labelUpperBound</zorder>
+       <zorder>lineEditLowerBound</zorder>
+       <zorder>lineEditUpperBound</zorder>
       </widget>
      </item>
     </layout>

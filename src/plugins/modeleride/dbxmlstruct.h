@@ -35,6 +35,8 @@ namespace DBATTRXML{
     const QString ISUNIQUE = "isUnique";
     const QString ISCANDIDATEKEY = "isCandidateKey";
     const QString INITIALVAL = "initialValue";
+    const QString LOWERBOUND = "lowerBound";
+    const QString UPPERBOUND = "upperBound";
     const QString REFCLASS = "referencedClass";
     const QString PARENT = "parent";
     const QString ID = "guid";

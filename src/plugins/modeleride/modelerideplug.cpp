@@ -200,7 +200,8 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     propsAttr << DBATTRXML::NAME           << DBATTRXML::DESCRIPTION
               << DBATTRXML::TYPE           << DBATTRXML::MAXSTRLEN
               << DBATTRXML::REFCLASS       << DBATTRXML::PARENT
-              << DBATTRXML::INITIALVAL     << DBATTRXML::GROUP
+              << DBATTRXML::INITIALVAL     << DBATTRXML::LOWERBOUND
+              << DBATTRXML::UPPERBOUND     << DBATTRXML::GROUP
               << DBATTRXML::ISNULLALLOWED  << DBATTRXML::ISUNIQUE
               << DBATTRXML::ISCANDIDATEKEY << DBATTRXML::ID;
     m_model->addDisplayedAttr(DBATTRXML::ATTR,propsAttr, QIcon(":/attribute"));
@@ -237,17 +238,20 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                               QIcon(":/expression"));
     m_model->addAttrTag(DBCONDITIONXML::COND);
 
-    m_model->setHeaderData(0, Qt::Horizontal, tr("Имя атрибута"));
-    m_model->setHeaderData(1, Qt::Horizontal, tr("Описание"));
-    m_model->setHeaderData(2, Qt::Horizontal, tr("Тип"));
-    m_model->setHeaderData(3, Qt::Horizontal, tr("Длина строки"));
-    m_model->setHeaderData(4, Qt::Horizontal, tr("Ссылочный класс"));
-    m_model->setHeaderData(5, Qt::Horizontal, tr("Класс"));
-    m_model->setHeaderData(6, Qt::Horizontal, tr("По умолчанию"));
-    m_model->setHeaderData(7, Qt::Horizontal, tr("Группа"));
-    m_model->setHeaderData(8, Qt::Horizontal, tr("Нулевые значения"));
-    m_model->setHeaderData(9, Qt::Horizontal, tr("Уникальный"));
-    m_model->setHeaderData(10, Qt::Horizontal, tr("Кандидат в ключ"));
+    m_model->setHeaderData(0,  Qt::Horizontal, tr("Имя атрибута"));
+    m_model->setHeaderData(1,  Qt::Horizontal, tr("Описание"));
+    m_model->setHeaderData(2,  Qt::Horizontal, tr("Тип"));
+    m_model->setHeaderData(3,  Qt::Horizontal, tr("Длина строки"));
+    m_model->setHeaderData(4,  Qt::Horizontal, tr("Ссылочный класс"));
+    m_model->setHeaderData(5,  Qt::Horizontal, tr("Класс"));
+    m_model->setHeaderData(6,  Qt::Horizontal, tr("По умолчанию"));
+    m_model->setHeaderData(7,  Qt::Horizontal, tr("Нижняя граница"));
+    m_model->setHeaderData(8,  Qt::Horizontal, tr("Верхняя гранница"));
+    m_model->setHeaderData(9,  Qt::Horizontal, tr("Группа"));
+    m_model->setHeaderData(10, Qt::Horizontal, tr("Нулевые значения"));
+    m_model->setHeaderData(11, Qt::Horizontal, tr("Уникальный"));
+    m_model->setHeaderData(12, Qt::Horizontal, tr("Кандидат в ключ"));
+    m_model->setHeaderData(13, Qt::Horizontal, tr("Индетификатор"));
 
 
     QStringList insertTags;
