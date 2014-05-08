@@ -49,25 +49,27 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     m_model = model;
 
     m_attrModel->setSourceModel(m_model);
-    m_attrModel->setHeaderData(0, Qt::Horizontal, tr("Имя атрибута"));
-    m_attrModel->setHeaderData(1, Qt::Horizontal, tr("Описание"));
-    m_attrModel->setHeaderData(2, Qt::Horizontal, tr("Тип"));
-    m_attrModel->setHeaderData(3, Qt::Horizontal, tr("Длина строки"));
-    m_attrModel->setHeaderData(4, Qt::Horizontal, tr("Ссылочный класс"));
-    m_attrModel->setHeaderData(5, Qt::Horizontal, tr("Класс"));
-    m_attrModel->setHeaderData(6, Qt::Horizontal, tr("По умолчанию"));
-    m_attrModel->setHeaderData(7, Qt::Horizontal, tr("Группа"));
-    m_attrModel->setHeaderData(8, Qt::Horizontal, tr("Нулевые значения"));
-    m_attrModel->setHeaderData(9, Qt::Horizontal, tr("Уникальный"));
-    m_attrModel->setHeaderData(10, Qt::Horizontal, tr("Кандидат в ключ"));
-    m_attrModel->setHeaderData(11, Qt::Horizontal, tr("Индетификатор"));
+    m_attrModel->setHeaderData(0,  Qt::Horizontal, tr("Имя атрибута"));
+    m_attrModel->setHeaderData(1,  Qt::Horizontal, tr("Описание"));
+    m_attrModel->setHeaderData(2,  Qt::Horizontal, tr("Тип"));
+    m_attrModel->setHeaderData(3,  Qt::Horizontal, tr("Длина строки"));
+    m_attrModel->setHeaderData(4,  Qt::Horizontal, tr("Ссылочный класс"));
+    m_attrModel->setHeaderData(5,  Qt::Horizontal, tr("Класс"));
+    m_attrModel->setHeaderData(6,  Qt::Horizontal, tr("По умолчанию"));
+    m_attrModel->setHeaderData(7,  Qt::Horizontal, tr("Нижняя граница"));
+    m_attrModel->setHeaderData(8,  Qt::Horizontal, tr("Верхняя гранница"));
+    m_attrModel->setHeaderData(9,  Qt::Horizontal, tr("Группа"));
+    m_attrModel->setHeaderData(10, Qt::Horizontal, tr("Нулевые значения"));
+    m_attrModel->setHeaderData(11, Qt::Horizontal, tr("Уникальный"));
+    m_attrModel->setHeaderData(12, Qt::Horizontal, tr("Кандидат в ключ"));
+    m_attrModel->setHeaderData(13, Qt::Horizontal, tr("Индетификатор"));
 
     m_attrModel->setDynamicSortFilter(true);
 
     tableViewAttr->setSortingEnabled(true);
     tableViewAttr->setModel(m_attrModel);
     tableViewAttr->sortByColumn(0,Qt::AscendingOrder);
-    tableViewAttr->setColumnHidden(11,true);
+    tableViewAttr->setColumnHidden(13,true);
 
     m_mapperAttr->setModel(m_attrModel);
 
@@ -100,6 +102,12 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     m_mapperAttr->addMapping(lineEditDefaultValue,
                              m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::INITIALVAL));
+    m_mapperAttr->addMapping(lineEditLowerBound,
+                             m_model->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                         DBATTRXML::LOWERBOUND));
+    m_mapperAttr->addMapping(lineEditUpperBound,
+                             m_model->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                         DBATTRXML::UPPERBOUND));
     m_mapperAttr->addMapping(checkBoxIsNull,
                              m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::ISNULLALLOWED));
@@ -258,6 +266,8 @@ void AttrWidget::changeType(const QString &typeName)
         comboBoxLinkAttr->setDisplayText("");
         comboBoxLinkAttr->setCurrentIndex(-1);
         lineEditDefaultValue->setEnabled(true);
+        lineEditLowerBound->setEnabled(true);
+        lineEditUpperBound->setEnabled(true);
     } else if( DBXMLATTRTYPE.at(9)==typeName){
         //Reference
         spinBoxStringLen->setEnabled(false);
@@ -265,6 +275,10 @@ void AttrWidget::changeType(const QString &typeName)
         comboBoxLinkAttr->setEnabled(true);
         lineEditDefaultValue->setEnabled(false);
         lineEditDefaultValue->setText("");
+        lineEditLowerBound->setEnabled(false);
+        lineEditLowerBound->setText("");
+        lineEditUpperBound->setEnabled(false);
+        lineEditUpperBound->setText("");
     } else {
         spinBoxStringLen->setEnabled(false);
         spinBoxStringLen->setValue(0);
@@ -272,6 +286,8 @@ void AttrWidget::changeType(const QString &typeName)
         comboBoxLinkAttr->setDisplayText("");
         comboBoxLinkAttr->setCurrentIndex(-1);
         lineEditDefaultValue->setEnabled(true);
+        lineEditLowerBound->setEnabled(true);
+        lineEditUpperBound->setEnabled(true);
     }
 }
 
