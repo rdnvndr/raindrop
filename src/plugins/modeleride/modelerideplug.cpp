@@ -207,10 +207,10 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addAttrTag(DBATTRXML::ATTR);
 
     QStringList propsComposition;
-    propsComposition << DBCOMPXML::NAME              << DBCOMPXML::DESCRIPTION
-                     << DBCOMPXML::PARENT            << DBCOMPXML::CLASS
-                     << DBCOMPXML::DIRECTDESCRIPTION << DBCOMPXML::INVERSEDESCRIPTION
-                     << DBCOMPXML::ID;
+    propsComposition << DBCOMPXML::NAME               << DBCOMPXML::DESCRIPTION
+                     << DBCOMPXML::PARENT             << DBCOMPXML::CLASS
+                     << DBCOMPXML::ISVIEW             << DBCOMPXML::DIRECTDESCRIPTION
+                     << DBCOMPXML::INVERSEDESCRIPTION << DBCOMPXML::ID;
     m_model->addDisplayedAttr(DBCOMPXML::COMP,propsComposition, QIcon(":/composition"));
     m_model->addAttrTag(DBCOMPXML::COMP);
 

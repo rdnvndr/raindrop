@@ -47,6 +47,7 @@ namespace DBCOMPXML{
     const QString DESCRIPTION = "description";
     const QString PARENT = "parent";
     const QString CLASS = "Class";
+    const QString ISVIEW = "isView";
     const QString DIRECTDESCRIPTION = "directDescription";
     const QString INVERSEDESCRIPTION = "inverseDescription";
     const QString ID = "guid";
