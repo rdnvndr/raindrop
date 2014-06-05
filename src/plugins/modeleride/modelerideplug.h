@@ -74,6 +74,9 @@ public:
     //! Проверка на возможность удаления класса
     bool isRemoveClass(const QModelIndex &srcIndex);
 
+    //! Проверка на возможность удаления элементов
+    bool isRemove(const QModelIndex &srcIndex);
+
     //! Получение индетификатора класса по индексу
     QString classId(const QModelIndex &index);
 private:
@@ -140,6 +143,9 @@ public slots:
 
     //! Слот вызова окна редактирования фильтра
     void showPropFilter(const QModelIndex &indexSource);
+
+    //! Слот вызова окна редактирования сущности единицы измерения
+    void showPropEntity(const QModelIndex &indexSource);
 
     //! Создание новой структуры классов
     void newClassModel();

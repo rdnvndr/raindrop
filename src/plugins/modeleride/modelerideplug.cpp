@@ -14,6 +14,7 @@
 #include "propclass.h"
 #include "propcomposition.h"
 #include "propfilter.h"
+#include "propentity.h"
 #include "dbxmlstruct.h"
 
 ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
@@ -187,6 +188,11 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addTagFilter(DBFILTERXML::FILTER);
     m_model->addTagFilter(DBFILTERBLOCKXML::BLOCK);
     m_model->addTagFilter(DBCONDITIONXML::COND);
+    m_model->addTagFilter(DBMSRENTITYXML::ENTITY);
+    m_model->addTagFilter(DBMSRUNITXML::UNIT);
+    m_model->addTagFilter(DBCLASSLISTXML::CLASSLIST);
+    m_model->addTagFilter(DBENTITYLISTXML::ENTITYLIST);
+    m_model->addTagFilter(DBMODELXML::MODEL);
 
     QStringList propsClass;
     propsClass << DBCLASSXML::NAME     << DBCLASSXML::ISABSTARCT  <<
@@ -231,12 +237,40 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addAttrTag(DBFILTERBLOCKXML::BLOCK);
 
     QStringList propsCondition;
-    propsCondition << DBCONDITIONXML::FIRSTATTR   << DBCONDITIONXML::OPERATOR
+    propsCondition   << DBCONDITIONXML::FIRSTATTR   << DBCONDITIONXML::OPERATOR
                      << DBCONDITIONXML::SECONDATTR  << DBCONDITIONXML::LINKOF
                      << DBCONDITIONXML::PARENT      << DBCONDITIONXML::ID;
     m_model->addDisplayedAttr(DBCONDITIONXML::COND, propsCondition,
                               QIcon(":/expression"));
     m_model->addAttrTag(DBCONDITIONXML::COND);
+
+    QStringList propsEntity;
+    propsEntity << DBMSRENTITYXML::NAME      << DBMSRENTITYXML::DESCRIPTION
+                << DBMSRENTITYXML::BASICUNIT << DBMSRENTITYXML::ID;
+    m_model->addDisplayedAttr(DBMSRENTITYXML::ENTITY,propsEntity, QIcon(":/entity"));
+
+    QStringList propsUnit;
+    propsUnit << DBMSRUNITXML::DESIGNATION << DBMSRUNITXML::SYMBOL
+              << DBMSRUNITXML::CODE        << DBMSRUNITXML::PARENT
+              << DBMSRUNITXML::COEFF       << DBMSRUNITXML::DELTA
+              << DBMSRUNITXML::ID;
+    m_model->addDisplayedAttr(DBMSRUNITXML::UNIT,propsUnit, QIcon(":/unit"));
+
+    QStringList propsClassList;
+    propsClassList << DBCLASSLISTXML::NAME   << DBCLASSLISTXML::DESCRIPTION
+                   << DBCLASSLISTXML::PARENT << DBCLASSLISTXML::ID;
+    m_model->addDisplayedAttr(DBCLASSLISTXML::CLASSLIST,propsClassList, QIcon(":/classes"));
+
+    QStringList propsEntityList;
+    propsEntityList << DBENTITYLISTXML::NAME   << DBENTITYLISTXML::DESCRIPTION
+                    << DBENTITYLISTXML::PARENT << DBENTITYLISTXML::ID;
+    m_model->addDisplayedAttr(DBENTITYLISTXML::ENTITYLIST, propsEntityList, QIcon(":/units"));
+
+    QStringList propsModel;
+    propsModel << DBMODELXML::NAME   << DBMODELXML::DESCRIPTION
+               << DBMODELXML::PARENT << DBMODELXML::ID;
+    m_model->addDisplayedAttr(DBMODELXML::MODEL, propsModel, QIcon(":/model"));
+
 
     m_model->setHeaderData(0,  Qt::Horizontal, tr("Имя атрибута"));
     m_model->setHeaderData(1,  Qt::Horizontal, tr("Описание"));
@@ -271,6 +305,22 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     insertTags << DBCONDITIONXML::COND << DBFILTERBLOCKXML::BLOCK;
     m_model->addInsertTags(DBFILTERBLOCKXML::BLOCK,insertTags);
 
+    insertTags.clear();
+    insertTags << DBCLASSXML::CLASS;
+    m_model->addInsertTags(DBCLASSLISTXML::CLASSLIST,insertTags);
+
+    insertTags.clear();
+    insertTags << DBMSRENTITYXML::ENTITY;
+    m_model->addInsertTags(DBENTITYLISTXML::ENTITYLIST,insertTags);
+
+    insertTags.clear();
+    insertTags << DBMSRUNITXML::UNIT;
+    m_model->addInsertTags(DBMSRENTITYXML::ENTITY,insertTags);
+
+    insertTags.clear();
+    insertTags << DBCLASSLISTXML::CLASSLIST << DBENTITYLISTXML::ENTITYLIST;
+    m_model->addInsertTags(DBMODELXML::MODEL,insertTags);
+
 
     m_model->addHashAttr(DBCLASSXML::CLASS,
                                 DBCLASSXML::NAME,
@@ -303,6 +353,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addHashAttr(DBCONDITIONXML::COND,
                                 DBCONDITIONXML::ID,
                                 TreeXmlHashModel::Uuid);
+
 
     m_model->addRelation(DBATTRXML::ATTR,DBATTRXML::REFCLASS,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
@@ -338,6 +389,10 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     classFilterModel->sort(0);
 
     classFilterModel->addVisibleTag(DBCLASSXML::CLASS);
+    classFilterModel->addVisibleTag(DBCLASSLISTXML::CLASSLIST);
+    classFilterModel->addVisibleTag(DBMSRENTITYXML::ENTITY);
+    classFilterModel->addVisibleTag(DBENTITYLISTXML::ENTITYLIST);
+    classFilterModel->addVisibleTag(DBMODELXML::MODEL);
     classFilterModel->addVisibleTag(DBROOTXML::ROOT);
 
     QRegExp regex = classFilterModel->filterRegExp();
@@ -366,12 +421,26 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
 void ModelerIDEPlug::addClass()
 {
-    m_model->setInsTagName(DBCLASSXML::CLASS);
     QModelIndex indexSource = classFilterModel->mapToSource(treeClassView->treeView->currentIndex());
-    if (m_model->insertRow(0,indexSource)){
-        QModelIndex index = classFilterModel->mapFromSource(m_model->lastInsertRow());
-        treeClassView->treeView->setCurrentIndex(index);
-        showPropClass(m_model->lastInsertRow());
+    if (!indexSource.isValid())
+        return;
+
+    if (indexSource.data(Qt::UserRole)==DBCLASSLISTXML::CLASSLIST
+            || indexSource.data(Qt::UserRole)==DBCLASSXML::CLASS)
+    {
+        m_model->setInsTagName(DBCLASSXML::CLASS);
+        if (m_model->insertRow(0,indexSource)){
+            QModelIndex index = classFilterModel->mapFromSource(m_model->lastInsertRow());
+            treeClassView->treeView->setCurrentIndex(index);
+            showPropClass(m_model->lastInsertRow());
+        }
+    } else if (indexSource.data(Qt::UserRole)==DBENTITYLISTXML::ENTITYLIST) {
+        m_model->setInsTagName(DBMSRENTITYXML::ENTITY);
+        if (m_model->insertRow(0,indexSource)){
+            QModelIndex index = classFilterModel->mapFromSource(m_model->lastInsertRow());
+            treeClassView->treeView->setCurrentIndex(index);
+            showPropEntity(m_model->lastInsertRow());
+        }
     }
 }
 
@@ -398,7 +467,7 @@ void ModelerIDEPlug::dblClickTree(const QModelIndex &index)
     if (!indexSource.isValid())
         return;
 
-    if (!m_model->isAttr(indexSource))
+    if (indexSource.data(Qt::UserRole)==DBCLASSXML::CLASS)
         showPropClass(indexSource);
 
     if (indexSource.data(Qt::UserRole)==DBCOMPXML::COMP)
@@ -406,6 +475,10 @@ void ModelerIDEPlug::dblClickTree(const QModelIndex &index)
 
     if (indexSource.data(Qt::UserRole)==DBFILTERXML::FILTER)
         showPropFilter(indexSource);
+
+    if (indexSource.data(Qt::UserRole)==DBMSRENTITYXML::ENTITY)
+        showPropEntity(indexSource);
+
 }
 
 // Метод совпадает с bool ClassWidget::isRemove(const QModelIndex &srcIndex)
@@ -515,12 +588,28 @@ bool ModelerIDEPlug::isRemoveClass(const QModelIndex &srcIndex)
     return success;
 }
 
+bool ModelerIDEPlug::isRemove(const QModelIndex &srcIndex)
+{
+    if (srcIndex.data(Qt::UserRole) == DBMODELXML::MODEL
+            || srcIndex.data(Qt::UserRole) == DBCLASSLISTXML::CLASSLIST
+            || srcIndex.data(Qt::UserRole) == DBENTITYLISTXML::ENTITYLIST)
+    {
+        return false;
+    }
+
+    return true;
+}
+
 void ModelerIDEPlug::removeClass()
 {
     QModelIndex currentIndex = classFilterModel->mapToSource(
                 treeClassView->treeView->currentIndex());
 
     if (currentIndex.isValid()){
+
+        if (!isRemove(currentIndex))
+            return;
+
         if (!className(currentIndex).isEmpty())
         {
             if (!isRemoveClass(currentIndex))
@@ -639,6 +728,30 @@ void ModelerIDEPlug::showPropFilter(const QModelIndex &indexSource)
     }
 }
 
+void ModelerIDEPlug::showPropEntity(const QModelIndex &indexSource)
+{
+    if (!indexSource.isValid())
+        return;
+
+    PluginManager* pluginManager = PluginManager::instance();
+    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
+                pluginManager->interfaceObject("IMainWindow"));
+
+    QString subWindowName = "PropEntity::" + this->classId(indexSource);
+    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
+
+    if (!subWindow) {
+        PropEntity* propEntity = new PropEntity();
+        subWindow =  mainWindow->addSubWindow(propEntity);
+        propEntity->setObjectName(subWindowName);
+//        propEntity->setModel(m_model);
+//        propEntity->setCurrentClass(indexSource);
+    } else {
+        PropEntity* propClass = qobject_cast<PropEntity*>(subWindow->widget());
+//        PropEntity->setCurrentClass(indexSource);
+    }
+}
+
 void ModelerIDEPlug::newClassModel()
 {
     closeClassModel();
@@ -646,6 +759,54 @@ void ModelerIDEPlug::newClassModel()
     QDomNode node = document.createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
     document.insertBefore(node, document.firstChild());
     createClassModel(document);
+
+
+    QModelIndex indexSource = classFilterModel->mapToSource(treeClassView->treeView->currentIndex());
+    m_model->setInsTagName(DBMODELXML::MODEL);
+    if (m_model->insertRow(0,indexSource)){
+        QModelIndex index = classFilterModel->mapFromSource(m_model->lastInsertRow());
+        treeClassView->treeView->setCurrentIndex(index);
+        QModelIndex lastIndex = m_model->lastInsertRow();
+
+        int column = m_model->columnDisplayedAttr(DBMODELXML::MODEL,
+                                                  DBMODELXML::NAME);
+        m_model->setData(lastIndex.sibling(lastIndex.row(),column),tr("Model"));
+
+        column = m_model->columnDisplayedAttr(DBMODELXML::MODEL,
+                                              DBMODELXML::DESCRIPTION);
+        m_model->setData(lastIndex.sibling(lastIndex.row(),column),tr("Модель"));
+
+        indexSource = lastIndex;
+        m_model->setInsTagName(DBCLASSLISTXML::CLASSLIST);
+        if (m_model->insertRow(0,indexSource)){
+            QModelIndex index = classFilterModel->mapFromSource(m_model->lastInsertRow());
+            treeClassView->treeView->setCurrentIndex(index);
+            QModelIndex lastIndex = m_model->lastInsertRow();
+
+            int column = m_model->columnDisplayedAttr(DBCLASSLISTXML::CLASSLIST,
+                                                      DBCLASSLISTXML::NAME);
+            m_model->setData(lastIndex.sibling(lastIndex.row(),column),tr("Classes"));
+
+            column = m_model->columnDisplayedAttr(DBCLASSLISTXML::CLASSLIST,
+                                                  DBCLASSLISTXML::DESCRIPTION);
+            m_model->setData(lastIndex.sibling(lastIndex.row(),column),tr("Классы"));
+        }
+
+        m_model->setInsTagName(DBENTITYLISTXML::ENTITYLIST);
+        if (m_model->insertRow(0,indexSource)){
+            QModelIndex index = classFilterModel->mapFromSource(m_model->lastInsertRow());
+            treeClassView->treeView->setCurrentIndex(index);
+            QModelIndex lastIndex = m_model->lastInsertRow();
+
+            int column = m_model->columnDisplayedAttr(DBENTITYLISTXML::ENTITYLIST,
+                                                      DBENTITYLISTXML::NAME);
+            m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("Units"));
+
+            column = m_model->columnDisplayedAttr(DBENTITYLISTXML::ENTITYLIST,
+                                                  DBENTITYLISTXML::DESCRIPTION);
+            m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("Единицы измерения"));
+        }
+    }
 }
 
 void ModelerIDEPlug::openClassModel()

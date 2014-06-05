@@ -116,6 +116,7 @@ namespace DBMSRENTITYXML {
     const QString DESCRIPTION = "decription";
     const QString ID = "guid";
     const QString NAME = "name";
+    const QString PARENT = "parent";
 }
 
 //! Ключевые слова XML файла для описания единиц измерения
@@ -125,23 +126,36 @@ namespace DBMSRUNITXML {
     const QString COEFF = "coeff";
     const QString DELTA = "delta";
     const QString DESIGNATION = "designation";
-    const QString ENTITY = "entity";
     const QString ID = "guid";
     const QString SYMBOL = "symbol";
+    const QString PARENT = "parent";
 }
 
 //! Ключевые слова XML файла для описания списка классов
-namespace DBMCLASSLISTXML {
+namespace DBCLASSLISTXML {
     const QString CLASSLIST = "RTPClassList";
     const QString NAME = "name";
     const QString DESCRIPTION = "description";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
 }
 
 //! Ключевые слова XML файла для описания списка единиц измерения
-namespace DBMENTITYLISTXML {
+namespace DBENTITYLISTXML {
     const QString ENTITYLIST = "RTPEntityList";
     const QString NAME = "name";
     const QString DESCRIPTION = "description";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
+//! Ключевые слова XML файла для описания модели
+namespace DBMODELXML {
+    const QString MODEL = "RTPModel";
+    const QString NAME = "name";
+    const QString DESCRIPTION = "description";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
 }
 
 #endif // DBXMLSTRUCT_H
