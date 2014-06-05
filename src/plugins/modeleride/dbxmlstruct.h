@@ -108,4 +108,40 @@ namespace DBFILTERBLOCKXML{
     const QString LINKOF = "linkOf";
     const QString ID = "guid";
 }
+
+//! Ключевые слова XML файла для описания измеряемой сущности
+namespace DBMSRENTITYXML {
+    const QString ENTITY = "RTPMeasuredEntity";
+    const QString BASICUNIT = "basicUnit";
+    const QString DESCRIPTION = "decription";
+    const QString ID = "guid";
+    const QString NAME = "name";
+}
+
+//! Ключевые слова XML файла для описания единиц измерения
+namespace DBMSRUNITXML {
+    const QString UNIT = "RTPMeasureUnit";
+    const QString CODE = "code";
+    const QString COEFF = "coeff";
+    const QString DELTA = "delta";
+    const QString DESIGNATION = "designation";
+    const QString ENTITY = "entity";
+    const QString ID = "guid";
+    const QString SYMBOL = "symbol";
+}
+
+//! Ключевые слова XML файла для описания списка классов
+namespace DBMCLASSLISTXML {
+    const QString CLASSLIST = "RTPClassList";
+    const QString NAME = "name";
+    const QString DESCRIPTION = "description";
+}
+
+//! Ключевые слова XML файла для описания списка единиц измерения
+namespace DBMENTITYLISTXML {
+    const QString ENTITYLIST = "RTPEntityList";
+    const QString NAME = "name";
+    const QString DESCRIPTION = "description";
+}
+
 #endif // DBXMLSTRUCT_H
