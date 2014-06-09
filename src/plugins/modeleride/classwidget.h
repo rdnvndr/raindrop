@@ -9,7 +9,7 @@
 #include <QStringListModel>
 
 //! Диалог редактирования класса
-/*! Диалог предназначен для класса
+/*! Диалог предназначен для редактирования класса
  */
 
 class ClassWidget : public QWidget, private Ui::ClassWidget
