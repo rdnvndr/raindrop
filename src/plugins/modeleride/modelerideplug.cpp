@@ -334,6 +334,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addHashAttr(DBFILTERXML::FILTER,
                                 DBFILTERXML::CLASS,
                                 TreeXmlHashModel::NoUnique);
+    m_model->addHashAttr(DBMSRENTITYXML::ENTITY,
+                                DBMSRENTITYXML::NAME,
+                                TreeXmlHashModel::UniqueRename);
 
     m_model->addHashAttr(DBCLASSXML::CLASS,
                                 DBCLASSXML::ID,
@@ -744,11 +747,11 @@ void ModelerIDEPlug::showPropEntity(const QModelIndex &indexSource)
         PropEntity* propEntity = new PropEntity();
         subWindow =  mainWindow->addSubWindow(propEntity);
         propEntity->setObjectName(subWindowName);
-//        propEntity->setModel(m_model);
-//        propEntity->setCurrentClass(indexSource);
+        propEntity->setModel(m_model);
+        propEntity->setCurrentEntity(indexSource);
     } else {
-        PropEntity* propClass = qobject_cast<PropEntity*>(subWindow->widget());
-//        PropEntity->setCurrentClass(indexSource);
+        PropEntity* propEntity = qobject_cast<PropEntity*>(subWindow->widget());
+        propEntity->setCurrentEntity(indexSource);
     }
 }
 
