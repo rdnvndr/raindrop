@@ -414,27 +414,27 @@ void ModelTest::data()
     // General Purpose roles that should return a QString
     QVariant variant = model->data ( model->index ( 0, 0 ), Qt::ToolTipRole );
     if ( variant.isValid() ) {
-        QVERIFY( qVariantCanConvert<QString> ( variant ) );
+        QVERIFY(variant.canConvert<QString>());
     }
     variant = model->data ( model->index ( 0, 0 ), Qt::StatusTipRole );
     if ( variant.isValid() ) {
-        QVERIFY( qVariantCanConvert<QString> ( variant ) );
+        QVERIFY(variant.canConvert<QString>());
     }
     variant = model->data ( model->index ( 0, 0 ), Qt::WhatsThisRole );
     if ( variant.isValid() ) {
-        QVERIFY( qVariantCanConvert<QString> ( variant ) );
+        QVERIFY(variant.canConvert<QString>());
     }
 
     // General Purpose roles that should return a QSize
     variant = model->data ( model->index ( 0, 0 ), Qt::SizeHintRole );
     if ( variant.isValid() ) {
-        QVERIFY( qVariantCanConvert<QSize> ( variant ) );
+        QVERIFY(variant.canConvert<QSize>());
     }
 
     // General Purpose roles that should return a QFont
     QVariant fontVariant = model->data ( model->index ( 0, 0 ), Qt::FontRole );
     if ( fontVariant.isValid() ) {
-        QVERIFY( qVariantCanConvert<QFont> ( fontVariant ) );
+        QVERIFY(fontVariant.canConvert<QFont>());
     }
 
     // Check that the alignment is one we know about
@@ -447,12 +447,12 @@ void ModelTest::data()
     // General Purpose roles that should return a QColor
     QVariant colorVariant = model->data ( model->index ( 0, 0 ), Qt::BackgroundColorRole );
     if ( colorVariant.isValid() ) {
-        QVERIFY( qVariantCanConvert<QColor> ( colorVariant ) );
+        QVERIFY(colorVariant.canConvert<QColor>());
     }
 
     colorVariant = model->data ( model->index ( 0, 0 ), Qt::TextColorRole );
     if ( colorVariant.isValid() ) {
-        QVERIFY( qVariantCanConvert<QColor> ( colorVariant ) );
+        QVERIFY(colorVariant.canConvert<QColor>());
     }
 
     // Check that the "check state" is one we know about.
@@ -472,7 +472,7 @@ void ModelTest::data()
  */
 void ModelTest::rowsAboutToBeInserted ( const QModelIndex &parent, int start, int end )
 {
-//     Q_UNUSED(end);
+     Q_UNUSED(end);
 //    qDebug() << "rowsAboutToBeInserted" << "start=" << start << "end=" << end << "parent=" << model->data ( parent ).toString()
 //    << "current count of parent=" << model->rowCount ( parent ); // << "display of last=" << model->data( model->index(start-1, 0, parent) );
 //     qDebug() << model->index(start-1, 0, parent) << model->data( model->index(start-1, 0, parent) );
