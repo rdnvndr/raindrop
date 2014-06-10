@@ -42,6 +42,7 @@
 
 #include <QtTest/QtTest>
 #include <QtGui/QtGui>
+#include <QTreeWidgetItem>
 
 #include "modeltest.h"
 #include "dynamictreemodel.h"
