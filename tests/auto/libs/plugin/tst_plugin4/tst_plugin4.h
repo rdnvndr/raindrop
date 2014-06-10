@@ -29,22 +29,28 @@ public:
     QObject *instance() { return this; }
     
     //! Получение имени плагина
-    QString name() {return tr("tst_plugin4");};
-    
+    QString name() {return APP_NAME;};
+
     //! Получение иконки плагина
-    QIcon icon() {return QIcon(":/tst_plugin4");}
-    
+    QIcon icon() {return QIcon(":/tst_plugin4");};
+
+    //! Описание продукта
+    QString product() {return tr(APP_PRODUCT);};
+
+    //! Авторские права
+    QString copyright() {return tr(APP_COPYRIGHT);};
+
     //! Описание плагина
-    QString descript() {return tr(" ");};
-    
-     //! Категория в которой состоит плагин
-    QString category() {return tr(" ");};
-    
+    QString descript() {return tr(APP_DESCRIPTION);};
+
+    //! Категория в которой состоит плагин
+    QString category() {return tr("");};
+
     //! Версия плагина
-    QString version() {return tr("1.0");};
-    
+    QString version() {return APP_VERSION;};
+
     //! Производитель плагина
-    QString vendor() {return tr("RTPTechGroup");};
+    QString vendor() {return tr(APP_COMPANY);};
 };
 
 #endif
