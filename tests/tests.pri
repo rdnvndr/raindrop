@@ -1,4 +1,7 @@
-load(qttest_p4)
+!greaterThan(QT_MAJOR_VERSION, 4) {
+  load(qttest_p4)
+}
+
 include(../main.pri)
 INCLUDEPATH += $$PWD/../src/libs $$PWD/../src/shared $$PWD/../src/plugins
 

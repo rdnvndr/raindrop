@@ -1,6 +1,7 @@
 #include <QObject>
 #include <QtTest/QtTest>
 #include <QSettings>
+#include <QApplication>
 #include <plugin/pluginmanager.h>
 #include "pluginloadlog.h"
 
