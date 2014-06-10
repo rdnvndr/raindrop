@@ -11,7 +11,7 @@
 //! Диалог редактирования сущности ЕИ
 /*! Диалог предназначен для редактирования сущности ЕИ
  */
-class MsrEntityWidget : public QWidget, public Ui::MsrEntityWidget
+class MsrEntityWidget : public QWidget, private Ui::MsrEntityWidget
 {
     Q_OBJECT
 
