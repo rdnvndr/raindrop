@@ -53,5 +53,5 @@ void MsrUnitWidget::setRootIndex(const QModelIndex &index)
 
 QVariant MsrUnitWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
 {
-
+    return QVariant();
 }

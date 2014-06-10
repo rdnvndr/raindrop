@@ -76,9 +76,6 @@ QVariant PropEntity::modelData(const QString &tag, const QString &attr, const QM
 
 void PropEntity::edit(bool flag)
 {
-    if (msrEntityWidget->groupBoxEntity->isEnabled()==flag)
-        return;
-
     if (msrEntityWidget->isEmpty()){
         toolButtonAddEntity->setDisabled(true);
         flag = true;

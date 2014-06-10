@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>273</width>
-    <height>114</height>
+    <width>261</width>
+    <height>105</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -104,21 +104,10 @@
     </layout>
    </item>
    <item>
-    <widget class="MsrEntityWidget" name="msrEntityWidget" native="true">
-     <layout class="QGridLayout" name="gridLayout"/>
-    </widget>
+    <widget class="MsrEntityWidget" name="msrEntityWidget" native="true"/>
    </item>
    <item>
-    <widget class="MsrUnitWidget" name="msrUnitWidget" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="spacing">
-       <number>5</number>
-      </property>
-      <property name="margin">
-       <number>5</number>
-      </property>
-     </layout>
-    </widget>
+    <widget class="MsrUnitWidget" name="msrUnitWidget" native="true"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutPropSave">
