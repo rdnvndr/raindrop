@@ -251,8 +251,8 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     QStringList propsUnit;
     propsUnit << DBMSRUNITXML::DESIGNATION << DBMSRUNITXML::SYMBOL
-              << DBMSRUNITXML::CODE        << DBMSRUNITXML::PARENT
-              << DBMSRUNITXML::COEFF       << DBMSRUNITXML::DELTA
+              << DBMSRUNITXML::CODE        << DBMSRUNITXML::COEFF
+              << DBMSRUNITXML::DELTA       << DBMSRUNITXML::PARENT
               << DBMSRUNITXML::ID;
     m_model->addDisplayedAttr(DBMSRUNITXML::UNIT,propsUnit, QIcon(":/unit"));
 
@@ -337,6 +337,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addHashAttr(DBMSRENTITYXML::ENTITY,
                                 DBMSRENTITYXML::NAME,
                                 TreeXmlHashModel::UniqueRename);
+    m_model->addHashAttr(DBMSRUNITXML::UNIT,
+                                DBMSRUNITXML::DESIGNATION,
+                                TreeXmlHashModel::UniqueRename);
 
     m_model->addHashAttr(DBCLASSXML::CLASS,
                                 DBCLASSXML::ID,
@@ -355,6 +358,12 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                 TreeXmlHashModel::Uuid);
     m_model->addHashAttr(DBCONDITIONXML::COND,
                                 DBCONDITIONXML::ID,
+                                TreeXmlHashModel::Uuid);
+    m_model->addHashAttr(DBMSRENTITYXML::ENTITY,
+                                DBMSRENTITYXML::ID,
+                                TreeXmlHashModel::Uuid);
+    m_model->addHashAttr(DBMSRUNITXML::UNIT,
+                                DBMSRUNITXML::ID,
                                 TreeXmlHashModel::Uuid);
 
 
@@ -382,6 +391,11 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                DBATTRXML::ATTR, DBATTRXML::NAME);
     m_model->addRelation(DBCONDITIONXML::COND, DBCONDITIONXML::SECONDATTR,
                                DBATTRXML::ATTR, DBATTRXML::NAME);
+
+    m_model->addRelation(DBMSRENTITYXML::ENTITY, DBMSRENTITYXML::BASICUNIT,
+                               DBMSRUNITXML::UNIT, DBMSRUNITXML::DESIGNATION);
+    m_model->addRelation(DBMSRUNITXML::UNIT, DBMSRUNITXML::PARENT,
+                               DBMSRENTITYXML::ENTITY, DBMSRENTITYXML::NAME);
 
 
     m_model->refreshHashing();
