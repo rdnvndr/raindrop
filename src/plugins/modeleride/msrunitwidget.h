@@ -69,7 +69,7 @@ private:
     TreeXmlHashModel* m_model;
 
     //! Mapper для свойств ЕИ
-    QDataWidgetMapper* m_mapperAttr;
+    QDataWidgetMapper* m_mapperUnit;
 };
 
 #endif // MSRUNITWIDGET_H
