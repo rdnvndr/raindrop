@@ -79,6 +79,16 @@ public:
 
     //! Получение индетификатора класса по индексу
     QString classId(const QModelIndex &index);
+
+    //! Получение индетификатора сущности ЕИ по индексу
+    QString entityId(const QModelIndex &index);
+
+    //! Получение индетификатора состава ЕИ по индексу
+    QString compositionId(const QModelIndex &index);
+
+    //! Получение индетификатора фильтра по индексу
+    QString filterId(const QModelIndex &index);
+
 private:
     //! Имя файла структуры
     QString m_fileName;
