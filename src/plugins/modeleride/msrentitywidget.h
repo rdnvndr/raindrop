@@ -71,12 +71,13 @@ signals:
 
 private:
      //! Получение данных модели
-    QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
+    QVariant modelData(const QString &tag, const QString &attr,
+                       const QModelIndex &index, int role = Qt::DisplayRole);
 
     //! Модель структуры классов
     TreeXmlHashModel* m_model;
 
-     //! Mapper для свойств сущности ЕИ
+    //! Mapper для свойств сущности ЕИ
     QDataWidgetMapper* m_mapper;
 
     //! Хранит индекс предыдущей активной сущности ЕИ
