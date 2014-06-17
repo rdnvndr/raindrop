@@ -477,6 +477,30 @@ QString ModelerIDEPlug::classId(const QModelIndex& index)
                              )).data().toString();
 }
 
+QString ModelerIDEPlug::entityId(const QModelIndex& index)
+{
+    return index.sibling(index.row(),m_model->columnDisplayedAttr(
+                             DBMSRENTITYXML::ENTITY,
+                             DBMSRENTITYXML::ID
+                             )).data().toString();
+}
+
+QString ModelerIDEPlug::compositionId(const QModelIndex &index)
+{
+    return index.sibling(index.row(),m_model->columnDisplayedAttr(
+                             DBCOMPXML::COMP,
+                             DBCOMPXML::ID
+                             )).data().toString();
+}
+
+QString ModelerIDEPlug::filterId(const QModelIndex &index)
+{
+    return index.sibling(index.row(),m_model->columnDisplayedAttr(
+                             DBFILTERXML::FILTER,
+                             DBFILTERXML::ID
+                             )).data().toString();
+}
+
 void ModelerIDEPlug::dblClickTree(const QModelIndex &index)
 {
     QModelIndex indexSource = classFilterModel->mapToSource(index);
@@ -692,10 +716,7 @@ void ModelerIDEPlug::showPropComposition(const QModelIndex &indexSource)
     IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    QString classId = indexSource.sibling(indexSource.row(),m_model->columnDisplayedAttr(
-                                 DBCOMPXML::COMP,
-                                 DBCOMPXML::NAME
-                                 )).data().toString();
+    QString classId = this->compositionId(indexSource);
 
     QString subWindowName = "PropComposition::" + classId;
     QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
@@ -725,10 +746,7 @@ void ModelerIDEPlug::showPropFilter(const QModelIndex &indexSource)
     IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    QString classId = indexSource.sibling(indexSource.row(),m_model->columnDisplayedAttr(
-                                 DBFILTERXML::FILTER,
-                                 DBFILTERXML::NAME
-                                 )).data().toString();
+    QString classId = this->filterId(indexSource);
 
     QString subWindowName = "PropFilter::" + classId;
     QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
@@ -754,7 +772,7 @@ void ModelerIDEPlug::showPropEntity(const QModelIndex &indexSource)
     IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    QString subWindowName = "PropEntity::" + this->classId(indexSource);
+    QString subWindowName = "PropEntity::" + this->entityId(indexSource);
     QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
 
     if (!subWindow) {
