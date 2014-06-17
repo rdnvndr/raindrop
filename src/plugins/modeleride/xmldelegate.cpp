@@ -5,6 +5,7 @@
 #include <QAbstractItemView>
 #include <QLineEdit>
 #include <treecombobox/treecombobox.h>
+#include <treexmlmodel/treexmlhashmodel.h>
 
 XmlDelegate::XmlDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -31,7 +32,13 @@ void XmlDelegate::setEditorData(QWidget * editor, const QModelIndex & index) con
 
     QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
     if (comboBox) {
-        comboBox->setEditText(index.model()->data(index,Qt::EditRole).toString());
+        TreeXmlHashModel* hashModel = dynamic_cast<TreeXmlHashModel*>(comboBox->model());
+        if (hashModel && hashModel == index.model()) {
+            QModelIndex curIndex = hashModel->indexLink(index);
+            comboBox->setCurrentIndex(curIndex.row());
+        } else
+            comboBox->setEditText(index.model()->data(index,Qt::EditRole).toString());
+
         return;
     }
 
@@ -64,7 +71,19 @@ void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, co
     // Если QComboBox присваиваем текущий текст, а не индекс
     QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
     if (comboBox) {
-        model->setData(index,comboBox->currentText(),Qt::EditRole);
+        TreeXmlHashModel* hashModel = dynamic_cast<TreeXmlHashModel*>(comboBox->model());
+        if (hashModel && hashModel == model) {
+            QString tag  = index.data(Qt::UserRole).toString();
+            QString attr = hashModel->displayedAttr(tag, index.column());
+            int column = hashModel->columnDisplayedAttr(hashModel->toRelation(tag,attr).tag,
+                                                        hashModel->uuidAttr(tag));
+            QModelIndex curIndex = comboBox->view()->currentIndex();
+            model->setData(index,
+                           curIndex.sibling(curIndex.row(),
+                           column).data(Qt::EditRole),
+                           Qt::EditRole);
+        } else
+            model->setData(index,comboBox->currentText(),Qt::EditRole);
         return;
     }
 

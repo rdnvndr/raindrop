@@ -2,6 +2,7 @@
 #include "dbxmlstruct.h"
 #include "xmldelegate.h"
 #include <QStringListModel>
+#include <QDebug>
 
 MsrEntityWidget::MsrEntityWidget(QWidget *parent) :
     QWidget(parent)
@@ -11,25 +12,30 @@ MsrEntityWidget::MsrEntityWidget(QWidget *parent) :
     m_mapper = new QDataWidgetMapper();
     m_mapper->setItemDelegate(new XmlDelegate(this));
     m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-//    m_typeClassModel = new QStringListModel();
-//    m_typeClassModel->setStringList(DBXMLCLASSTYPE);
+
     m_oldIndex = -1;
 }
 
 MsrEntityWidget::~MsrEntityWidget()
 {
-//    delete m_typeClassModel;
     delete m_mapper;
 }
 
 void MsrEntityWidget::setModel(TreeXmlHashModel *model)
 {
     m_model = model;
+
     connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
             this,SLOT(rowsRemoved(QModelIndex,int,int)));
     m_mapper->setModel(m_model);
 
-//    comboBoxClassType->setModel(m_typeClassModel);
+    comboBoxBasicUnit->setItemDelegate(new XmlDelegate(this));
+    comboBoxBasicUnit->setModel(m_model);
+
+    comboBoxBasicUnit->setModelColumn(
+                model->columnDisplayedAttr(DBMSRUNITXML::UNIT,
+                                           DBMSRUNITXML::DESIGNATION));
+
 
     m_mapper->addMapping(lineEditEntityName,
                          model->columnDisplayedAttr(DBMSRENTITYXML::ENTITY,
@@ -38,9 +44,9 @@ void MsrEntityWidget::setModel(TreeXmlHashModel *model)
                          model->columnDisplayedAttr(DBMSRENTITYXML::ENTITY,
                                                    DBMSRENTITYXML::DESCRIPTION));
 
-//    m_mapper->addMapping(comboBoxBasicUnit,
-//                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-//                                                   DBCLASSXML::TYPE));
+    m_mapper->addMapping(comboBoxBasicUnit,
+                         model->columnDisplayedAttr(DBMSRENTITYXML::ENTITY,
+                                                    DBMSRENTITYXML::BASICUNIT));
 
 }
 
@@ -199,19 +205,19 @@ void MsrEntityWidget::removeEmpty()
 
 void MsrEntityWidget::setCurrent(const QModelIndex &index)
 {
+    comboBoxBasicUnit->setRootModelIndex(index);
     m_mapper->setRootIndex(index.parent());
     m_mapper->setCurrentModelIndex(index);
+
     edit(false);
     emit currentIndexChanged(index);
 }
 
 void MsrEntityWidget::edit(bool flag)
 {
-    if (groupBoxEntity->isEnabled()==flag)
-        return;
-
     if (isEmpty()) flag = true;
     groupBoxEntity->setEnabled(flag);
+
     emit edited(flag);
 }
 
@@ -259,10 +265,11 @@ void MsrEntityWidget::rowsRemoved(const QModelIndex &index, int start, int end)
         emit dataRemoved(QModelIndex());
 }
 
-QVariant MsrEntityWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
+QVariant MsrEntityWidget::modelData(const QString &tag, const QString &attr,
+                                    const QModelIndex &index, int role)
 {
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                             tag,attr)).data();
+                             tag,attr)).data(role);
 }
 
 

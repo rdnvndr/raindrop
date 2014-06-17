@@ -18,6 +18,7 @@ PropEntity::PropEntity(QWidget *parent) :
             this,SLOT(closeTab(QModelIndex)));
 
     connect(msrEntityWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));
+    connect(msrEntityWidget, SIGNAL(edited(bool)), msrUnitWidget, SLOT(edit(bool)));
 
     connect(toolButtonAddEntity,  SIGNAL(clicked()), msrEntityWidget, SLOT(add()));
     connect(toolButtonDelEntity,  SIGNAL(clicked()), msrEntityWidget, SLOT(remove()));
@@ -25,6 +26,8 @@ PropEntity::PropEntity(QWidget *parent) :
 
     connect(pushButtonPropSave,   SIGNAL(clicked()), msrEntityWidget, SLOT(submit()));
     connect(pushButtonPropCancel, SIGNAL(clicked()), msrEntityWidget, SLOT(revert()));
+    connect(pushButtonPropSave,   SIGNAL(clicked()), msrUnitWidget, SLOT(submit()));
+    connect(pushButtonPropCancel, SIGNAL(clicked()), msrUnitWidget, SLOT(revert()));
 }
 
 PropEntity::~PropEntity()
