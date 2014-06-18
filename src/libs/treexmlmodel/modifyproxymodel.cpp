@@ -319,13 +319,14 @@ QVariant ModifyProxyModel::data(const QModelIndex &proxyIndex, int role) const
 
     // Устанавливает зачеркивание удаленной строки
     if (role == Qt::FontRole) {
-        QFont font = sourceModel()->data(
-                    mapToSource(proxyIndex),role).value<QFont>();
         QPersistentModelIndex removeIndex(
                     mapToSource(proxyIndex.sibling(proxyIndex.row(),0)));
-        if (m_removedRow.contains(removeIndex))
+        if (m_removedRow.contains(removeIndex)) {
+            QFont font = sourceModel()->data(
+                        mapToSource(proxyIndex),role).value<QFont>();
             font.setStrikeOut(true);
-        return font;
+            return font;
+        }
     }
 
     // Получение измененных данных
