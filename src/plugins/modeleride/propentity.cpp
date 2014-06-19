@@ -16,6 +16,8 @@ PropEntity::PropEntity(QWidget *parent) :
             this,SLOT(setTabName(QModelIndex)));
     connect(msrEntityWidget,SIGNAL(dataRemoved(QModelIndex)),
             this,SLOT(closeTab(QModelIndex)));
+    connect(msrUnitWidget,SIGNAL(proxyIndexChanged(QModelIndex)),
+            msrEntityWidget, SLOT(setUnitRootIndex(QModelIndex)));
 
     connect(msrEntityWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));
     connect(msrEntityWidget, SIGNAL(edited(bool)), msrUnitWidget, SLOT(edit(bool)));
@@ -24,10 +26,11 @@ PropEntity::PropEntity(QWidget *parent) :
     connect(toolButtonDelEntity,  SIGNAL(clicked()), msrEntityWidget, SLOT(remove()));
     connect(toolButtonEditEntity, SIGNAL(clicked()), msrEntityWidget, SLOT(edit()));
 
-    connect(pushButtonPropSave,   SIGNAL(clicked()), msrEntityWidget, SLOT(submit()));
+    connect(pushButtonPropCancel, SIGNAL(clicked()), msrUnitWidget, SLOT(revert()));
     connect(pushButtonPropCancel, SIGNAL(clicked()), msrEntityWidget, SLOT(revert()));
     connect(pushButtonPropSave,   SIGNAL(clicked()), msrUnitWidget, SLOT(submit()));
-    connect(pushButtonPropCancel, SIGNAL(clicked()), msrUnitWidget, SLOT(revert()));
+    connect(pushButtonPropSave,   SIGNAL(clicked()), msrEntityWidget, SLOT(submit()));
+
 }
 
 PropEntity::~PropEntity()
@@ -39,6 +42,14 @@ void PropEntity::setModel(TreeXmlHashModel *model)
 {
     msrEntityWidget->setModel(model);
     msrUnitWidget->setModel(model);
+
+    msrEntityWidget->setUnitModel(msrUnitWidget->proxyModel());
+    msrEntityWidget->setUnitColumn(
+                model->columnDisplayedAttr(
+                    DBMSRUNITXML::UNIT,
+                    DBMSRUNITXML::DESIGNATION
+                    )
+                );
     m_model = model;
 }
 

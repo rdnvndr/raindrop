@@ -56,6 +56,16 @@ public slots:
     //! Удаление сущности ЕИ
     void rowsRemoved(const QModelIndex &index,int start,int end);
 
+
+    //! Установка модели ЕИ
+    void setUnitModel(QAbstractItemModel *model);
+
+    //! Установка корневого индекса модели ЕИ
+    void setUnitRootIndex(const QModelIndex &index);
+
+    //! Установка колонки отображения для ЕИ
+    void setUnitColumn(int column);
+
 signals:
     //! Сигнал об изменении данных
     void dataChanged(const QModelIndex &index);
@@ -70,7 +80,7 @@ signals:
     void edited(bool flag);
 
 private:
-     //! Получение данных модели
+    //! Получение данных модели
     QVariant modelData(const QString &tag, const QString &attr,
                        const QModelIndex &index, int role = Qt::DisplayRole);
 
@@ -82,6 +92,9 @@ private:
 
     //! Хранит индекс предыдущей активной сущности ЕИ
     int  m_oldIndex;
+
+    //! Модель ЕИ
+    QAbstractItemModel *m_unitModel;
 };
 
 #endif // MSRENTITYWIDGET_H

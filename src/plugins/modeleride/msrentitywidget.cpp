@@ -29,14 +29,6 @@ void MsrEntityWidget::setModel(TreeXmlHashModel *model)
             this,SLOT(rowsRemoved(QModelIndex,int,int)));
     m_mapper->setModel(m_model);
 
-    comboBoxBasicUnit->setItemDelegate(new XmlDelegate(this));
-    comboBoxBasicUnit->setModel(m_model);
-
-    comboBoxBasicUnit->setModelColumn(
-                model->columnDisplayedAttr(DBMSRUNITXML::UNIT,
-                                           DBMSRUNITXML::DESIGNATION));
-
-
     m_mapper->addMapping(lineEditEntityName,
                          model->columnDisplayedAttr(DBMSRENTITYXML::ENTITY,
                                                    DBMSRENTITYXML::NAME));
@@ -56,14 +48,6 @@ bool MsrEntityWidget::isRemove(const QModelIndex &srcIndex)
     QString msg;
 
     QString tag = srcIndex.data(Qt::UserRole).toString();
-//    QStringList tags;
-//    tags << tag;
-//    if (m_model->rowCount(srcIndex,tags)) {
-//        msg += tr("Необходимо удалить классы-потомки.\n\n");
-//        if (success)
-//            success = false;
-//    }
-
     QString fieldId = m_model->uuidAttr(tag);
     if (fieldId.isEmpty())
         return true;
@@ -205,12 +189,11 @@ void MsrEntityWidget::removeEmpty()
 
 void MsrEntityWidget::setCurrent(const QModelIndex &index)
 {
-    comboBoxBasicUnit->setRootModelIndex(index);
     m_mapper->setRootIndex(index.parent());
+    emit currentIndexChanged(index);
     m_mapper->setCurrentModelIndex(index);
 
     edit(false);
-    emit currentIndexChanged(index);
 }
 
 void MsrEntityWidget::edit(bool flag)
@@ -263,6 +246,22 @@ void MsrEntityWidget::rowsRemoved(const QModelIndex &index, int start, int end)
 
     if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1 && m_oldIndex <0)
         emit dataRemoved(QModelIndex());
+}
+
+void MsrEntityWidget::setUnitModel(QAbstractItemModel *model)
+{
+    m_unitModel = model;
+    comboBoxBasicUnit->setModel(model);
+}
+
+void MsrEntityWidget::setUnitRootIndex(const QModelIndex &index)
+{
+    comboBoxBasicUnit->setRootModelIndex(index);
+}
+
+void MsrEntityWidget::setUnitColumn(int column)
+{
+    comboBoxBasicUnit->setModelColumn(column);
 }
 
 QVariant MsrEntityWidget::modelData(const QString &tag, const QString &attr,
