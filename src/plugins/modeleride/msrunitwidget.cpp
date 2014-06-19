@@ -2,35 +2,26 @@
 #include "dbxmlstruct.h"
 #include "xmldelegate.h"
 #include <QStringListModel>
+#include <QTreeView>
 #include <QMessageBox>
 #include "treefilterproxymodel.h"
+#include <QDebug>
 
 MsrUnitWidget::MsrUnitWidget(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
 
-    m_mapperUnit = new QDataWidgetMapper();
-    m_mapperUnit->setItemDelegate(new XmlDelegate(this));
-    m_mapperUnit->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+    m_unitModel = new ModifyProxyModel();
+    m_unitModel->setEditable(true);
+    m_unitModel->setHiddenRow(true);
 
-    m_unitModel = new TableXMLProxyModel();
-    QStringList tags;
-    tags << DBMSRUNITXML::UNIT;
-    m_unitModel->setAttributeTags(tags);
-
-    tableViewUnit->setItemDelegate(new XmlDelegate(this));
-    tableViewUnit->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
-    connect(tableViewUnit,SIGNAL(clicked(QModelIndex)),
-            this,SLOT(setCurrent(QModelIndex)));
     connect(toolButtonAddUnit,SIGNAL(clicked()),this,SLOT(add()));
     connect(toolButtonDeleteUnit,SIGNAL(clicked()),this,SLOT(remove()));
 }
 
 MsrUnitWidget::~MsrUnitWidget()
 {
-    delete m_mapperUnit;
     delete m_unitModel;
 }
 
@@ -46,64 +37,46 @@ void MsrUnitWidget::setModel(TreeXmlHashModel *model)
     m_unitModel->setHeaderData(4,  Qt::Horizontal, tr("Разница"));
     m_unitModel->setHeaderData(5,  Qt::Horizontal, tr("Сущность ЕИ"));
     m_unitModel->setHeaderData(6,  Qt::Horizontal, tr("Индентификатор"));
-    m_unitModel->setDynamicSortFilter(true);
-
-    tableViewUnit->setSortingEnabled(true);
     tableViewUnit->setModel(m_unitModel);
-    tableViewUnit->sortByColumn(0,Qt::AscendingOrder);
+
     for (int column = 5; column < 14; column++)
         tableViewUnit->setColumnHidden(column,true);
-    m_mapperUnit->setModel(m_unitModel);
+}
+
+ModifyProxyModel *MsrUnitWidget::proxyModel()
+{
+    return m_unitModel;
 }
 
 void MsrUnitWidget::add()
 {
-    QModelIndex srcIndex = m_unitModel->mapToSource(tableViewUnit->rootIndex());
-    m_model->setInsTagName(DBMSRUNITXML::UNIT);
-    if (m_model->insertRow(0,srcIndex)){
-        QModelIndex srcCurrentIndex = m_model->lastInsertRow();
-        this->setCurrent(m_unitModel->mapFromSource(srcCurrentIndex));
+    QModelIndex srcIndex = tableViewUnit->rootIndex();
+    if (m_unitModel->insertRow(0,srcIndex)) {
+        QModelIndex index = m_unitModel->lastInsertRow();
+        m_unitModel->setData(index, DBMSRUNITXML::UNIT, Qt::UserRole);
+        m_unitModel->setData(index, QIcon(":/unit"), Qt::DecorationRole);
+        tableViewUnit->setCurrentIndex(index);
     }
 }
 
 void MsrUnitWidget::remove()
-{
-    QModelIndex srcIndex = m_unitModel->mapToSource(tableViewUnit->rootIndex());
-    QModelIndex curIndex = m_unitModel->mapToSource(tableViewUnit->currentIndex());
+{    
+
+    QModelIndex srcIndex = tableViewUnit->rootIndex();
+    QModelIndex curIndex = tableViewUnit->currentIndex();
     if (srcIndex.isValid() && curIndex.isValid()){
-        emit dataRemoved(srcIndex);
-        m_model->removeRow(curIndex.row(),srcIndex);
-        this->setCurrent(tableViewUnit->currentIndex());
+        tableViewUnit->setCurrentIndex(tableViewUnit->rootIndex());
+        m_unitModel->removeRow(curIndex.row(),srcIndex);
+        tableViewUnit->setModel(m_unitModel);
     } else
         QMessageBox::warning(NULL,tr("Предупреждение"),
                              tr("Невозможно удалить ЕИ, поскольку нет выбраных ЕИ."));
 }
 
-void MsrUnitWidget::setCurrent(const QModelIndex &index)
-{
-    if (!index.isValid())
-        return;
-
-    tableViewUnit->setCurrentIndex(index);
-    m_mapperUnit->setCurrentModelIndex(index);
-
-    emit currentIndexChanged(index);
-}
-
 void MsrUnitWidget::submit()
 {
-    QModelIndex rootIndex = (tableViewUnit->rootIndex());
-    QModelIndex srcIndex = m_mapperUnit->rootIndex().child(m_mapperUnit->currentIndex(),0);
-    for (int row=0; row < m_unitModel->rowCount(rootIndex); row++){
-        QModelIndex childIndex = m_unitModel->index(row,
-                                                    m_model->columnDisplayedAttr(
-                                                        DBMSRUNITXML::UNIT,
-                                                        DBMSRUNITXML::DESIGNATION),
-                                                    rootIndex);
-    }
     edit(false);
-    m_mapperUnit->submit();
-    emit dataChanged(srcIndex);
+    m_unitModel->submitAll();
 }
 
 void MsrUnitWidget::edit(bool flag)
@@ -112,13 +85,13 @@ void MsrUnitWidget::edit(bool flag)
         return;
 
     if (flag == false)
-        tableViewUnit->setCurrentIndex(QModelIndex());
+        tableViewUnit->setCurrentIndex(tableViewUnit->rootIndex());
     groupBoxUnit->setEnabled(flag);
 }
 
 void MsrUnitWidget::revert()
 {
-    m_mapperUnit->revert();
+    m_unitModel->revertAll();
     edit(false);
 }
 
@@ -128,25 +101,7 @@ void MsrUnitWidget::setRootIndex(const QModelIndex &index)
     if (rootIndex == index)
         return;
 
-    m_unitModel->setFilterIndex(index);
-//    for (int row=0;row<comboBoxAttrGroup->count();row++)
-//        comboBoxAttrGroup->removeItem(row);
-
-//    for (int row=0;row<m_attrModel->rowCount(m_attrModel->mapFromSource(index));row++){
-//        QString insText = m_attrModel->mapFromSource(index).child(
-//                    row,m_model->columnDisplayedAttr(DBATTRXML::ATTR,
-//                                                    DBATTRXML::GROUP)).data().toString();
-//        if (comboBoxAttrGroup->findText(insText)==-1)
-//            comboBoxAttrGroup->addItem(insText);
-//    }
-
-    m_unitModel->setSourceModel(m_model);
     tableViewUnit->setRootIndex(m_unitModel->mapFromSource(index));
-    m_mapperUnit->setRootIndex(m_unitModel->mapFromSource(index));
+    emit proxyIndexChanged(tableViewUnit->rootIndex());
 }
 
-QVariant MsrUnitWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
-{
-    return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                             tag,attr)).data();
-}
