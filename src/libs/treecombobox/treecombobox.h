@@ -58,6 +58,12 @@ public:
     //! Получить режим показа иконки
     bool showingIcon();
 
+    //! Устанавливает корневой индекс
+    void setRootModelIndex(const QModelIndex & index);
+
+    //! Получение корневого индекса
+    QModelIndex rootModelIndex();
+
 private:
     //! Фильтр событий
     bool eventFilter(QObject*object,QEvent*event);
@@ -85,6 +91,9 @@ private:
 
     //! Колонка со значением
     int m_indexColumn ;
+
+    //! Корневой индекс
+    QModelIndex m_rootIndex;
 };
 
 #endif // TREECOMBOBOX_H
