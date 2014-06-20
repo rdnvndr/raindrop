@@ -4,6 +4,7 @@
 #include <QStringListModel>
 #include <QMessageBox>
 #include "treefilterproxymodel.h"
+#include <QDebug>
 
 AttrWidget::AttrWidget(QWidget *parent) :
     QWidget(parent)
@@ -55,35 +56,66 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     m_attrModel->setHeaderData(3,  Qt::Horizontal, tr("Длина строки"));
     m_attrModel->setHeaderData(4,  Qt::Horizontal, tr("Ссылочный класс"));
     m_attrModel->setHeaderData(5,  Qt::Horizontal, tr("Класс"));
-    m_attrModel->setHeaderData(6,  Qt::Horizontal, tr("По умолчанию"));
-    m_attrModel->setHeaderData(7,  Qt::Horizontal, tr("Нижняя граница"));
-    m_attrModel->setHeaderData(8,  Qt::Horizontal, tr("Верхняя гранница"));
-    m_attrModel->setHeaderData(9,  Qt::Horizontal, tr("Группа"));
-    m_attrModel->setHeaderData(10, Qt::Horizontal, tr("Нулевые значения"));
-    m_attrModel->setHeaderData(11, Qt::Horizontal, tr("Уникальный"));
-    m_attrModel->setHeaderData(12, Qt::Horizontal, tr("Кандидат в ключ"));
-    m_attrModel->setHeaderData(13, Qt::Horizontal, tr("Индетификатор"));
+    m_attrModel->setHeaderData(6,  Qt::Horizontal, tr("ЕИ"));
+    m_attrModel->setHeaderData(7,  Qt::Horizontal, tr("По умолчанию"));
+    m_attrModel->setHeaderData(8,  Qt::Horizontal, tr("Нижняя граница"));
+    m_attrModel->setHeaderData(9,  Qt::Horizontal, tr("Верхняя гранница"));
+    m_attrModel->setHeaderData(10, Qt::Horizontal, tr("Группа"));
+    m_attrModel->setHeaderData(11, Qt::Horizontal, tr("Нулевые значения"));
+    m_attrModel->setHeaderData(12, Qt::Horizontal, tr("Уникальный"));
+    m_attrModel->setHeaderData(13, Qt::Horizontal, tr("Кандидат в ключ"));
+    m_attrModel->setHeaderData(14, Qt::Horizontal, tr("Индетификатор"));
 
     m_attrModel->setDynamicSortFilter(true);
 
     tableViewAttr->setSortingEnabled(true);
     tableViewAttr->setModel(m_attrModel);
     tableViewAttr->sortByColumn(0,Qt::AscendingOrder);
-    tableViewAttr->setColumnHidden(13,true);
+    tableViewAttr->setColumnHidden(14,true);
 
     m_mapperAttr->setModel(m_attrModel);
 
     QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
     classFilterModel->setFilterKeyColumn(0);
     classFilterModel->setFilterRole(Qt::UserRole);
-    classFilterModel->setFilterRegExp(DBCLASSXML::CLASS);
+    classFilterModel->setFilterRegExp(DBCLASSXML::CLASS + "|" +
+                                      DBMODELXML::MODEL + "|" +
+                                      DBCLASSLISTXML::CLASSLIST);
     classFilterModel->setSourceModel(m_model);
     classFilterModel->setDynamicSortFilter(true);
     classFilterModel->sort(0);
 
     comboBoxLinkAttr->setModel(classFilterModel);
+    comboBoxLinkAttr->setRootModelIndex(
+                classFilterModel->mapFromSource(
+                    m_model->indexHashAttr(DBCLASSLISTXML::CLASSLIST,
+                                           DBCLASSLISTXML::PARENT,
+                                           m_model->index(0,
+                                                          m_model->columnDisplayedAttr(
+                                                              DBMODELXML::MODEL,
+                                                              DBMODELXML::ID))
+                                           .data())));
     comboBoxLinkAttr->setIndexColumn(m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                                  DBATTRXML::ID));
+
+    QSortFilterProxyModel* unitFilterModel = new QSortFilterProxyModel(this);
+    unitFilterModel->setFilterKeyColumn(0);
+    unitFilterModel->setFilterRole(Qt::UserRole);
+    unitFilterModel->setFilterRegExp(DBMSRUNITXML::UNIT + "|" +
+                                     DBMODELXML::MODEL + "|" +
+                                     DBENTITYLISTXML::ENTITYLIST + "|" +
+                                     DBMSRENTITYXML::ENTITY);
+    unitFilterModel->setSourceModel(m_model);
+    unitFilterModel->setDynamicSortFilter(true);
+    unitFilterModel->sort(0);
+
+    comboBoxUnitAttr->setModel(unitFilterModel);
+    comboBoxUnitAttr->setRootModelIndex(
+                unitFilterModel->mapFromSource(
+                    m_model->index(0,0).child(1,0)));
+    comboBoxUnitAttr->setIndexColumn(
+                m_model->columnDisplayedAttr(DBMSRUNITXML::UNIT,
+                                             DBMSRUNITXML::ID));
 
     comboBoxTypeAttr->setModel(m_typeAttrModel);
 
@@ -123,6 +155,10 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     m_mapperAttr->addMapping(comboBoxAttrGroup,
                              m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::GROUP));
+    m_mapperAttr->addMapping(comboBoxUnitAttr,
+                             m_model->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                         DBATTRXML::REFUNIT));
+
 }
 
 void AttrWidget::setRootIndex(const QModelIndex &index)
@@ -268,6 +304,9 @@ void AttrWidget::changeType(const QString &typeName)
         lineEditDefaultValue->setEnabled(true);
         lineEditLowerBound->setEnabled(true);
         lineEditUpperBound->setEnabled(true);
+        comboBoxUnitAttr->setEnabled(false);
+        comboBoxUnitAttr->setDisplayText("");
+        comboBoxUnitAttr->setCurrentIndex(-1);
     } else if( DBXMLATTRTYPE.at(9)==typeName){
         //Reference
         spinBoxStringLen->setEnabled(false);
@@ -279,6 +318,9 @@ void AttrWidget::changeType(const QString &typeName)
         lineEditLowerBound->setText("");
         lineEditUpperBound->setEnabled(false);
         lineEditUpperBound->setText("");
+        comboBoxUnitAttr->setEnabled(false);
+        comboBoxUnitAttr->setDisplayText("");
+        comboBoxUnitAttr->setCurrentIndex(-1);
     } else {
         spinBoxStringLen->setEnabled(false);
         spinBoxStringLen->setValue(0);
@@ -288,6 +330,20 @@ void AttrWidget::changeType(const QString &typeName)
         lineEditDefaultValue->setEnabled(true);
         lineEditLowerBound->setEnabled(true);
         lineEditUpperBound->setEnabled(true);
+
+        // Decimal, Dimension, Double, Integer, Rage
+        if( DBXMLATTRTYPE.at(4)==typeName
+         || DBXMLATTRTYPE.at(5)==typeName
+         || DBXMLATTRTYPE.at(6)==typeName
+         || DBXMLATTRTYPE.at(7)==typeName
+         || DBXMLATTRTYPE.at(10)==typeName )
+        {
+            comboBoxUnitAttr->setEnabled(true);
+        } else {
+            comboBoxUnitAttr->setEnabled(false);
+            comboBoxUnitAttr->setDisplayText("");
+            comboBoxUnitAttr->setCurrentIndex(-1);
+        }
     }
 }
 
