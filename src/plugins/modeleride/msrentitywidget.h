@@ -66,6 +66,10 @@ public slots:
     //! Установка колонки отображения для ЕИ
     void setUnitColumn(int column);
 
+private slots:
+    //! Обработка изменения базовой ЕИ
+    void changeUnit(int current);
+
 signals:
     //! Сигнал об изменении данных
     void dataChanged(const QModelIndex &index);
@@ -92,9 +96,6 @@ private:
 
     //! Хранит индекс предыдущей активной сущности ЕИ
     int  m_oldIndex;
-
-    //! Модель ЕИ
-    QAbstractItemModel *m_unitModel;
 };
 
 #endif // MSRENTITYWIDGET_H
