@@ -13,6 +13,9 @@ MsrEntityWidget::MsrEntityWidget(QWidget *parent) :
     m_mapper->setItemDelegate(new XmlDelegate(this));
     m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
+    connect(comboBoxBasicUnit, SIGNAL(activated(int)),
+            this, SLOT(changeUnit(int)));
+
     m_oldIndex = -1;
 }
 
@@ -250,7 +253,6 @@ void MsrEntityWidget::rowsRemoved(const QModelIndex &index, int start, int end)
 
 void MsrEntityWidget::setUnitModel(QAbstractItemModel *model)
 {
-    m_unitModel = model;
     comboBoxBasicUnit->setModel(model);
 }
 
@@ -262,6 +264,37 @@ void MsrEntityWidget::setUnitRootIndex(const QModelIndex &index)
 void MsrEntityWidget::setUnitColumn(int column)
 {
     comboBoxBasicUnit->setModelColumn(column);
+}
+
+void MsrEntityWidget::changeUnit(int current)
+{
+    Q_UNUSED(current)
+
+    // Для перевода ЕИ необходимо разделить на текущий koeff и отнять delta
+    // т.е. x/koeff - delta
+
+    QModelIndex index  = comboBoxBasicUnit->view()->currentIndex();
+    QModelIndex parent = comboBoxBasicUnit->rootModelIndex();
+    QAbstractItemModel *model = comboBoxBasicUnit->model();
+
+    int count  = parent.model()->rowCount(parent);
+    int columnCoeff = m_model->columnDisplayedAttr(
+                DBMSRUNITXML::UNIT,
+                DBMSRUNITXML::COEFF);
+    int columnDelta = m_model->columnDisplayedAttr(
+                DBMSRUNITXML::UNIT,
+                DBMSRUNITXML::DELTA);
+
+    float coeff = index.sibling(index.row(),columnCoeff).data().toFloat();
+    float delta = index.sibling(index.row(),columnDelta).data().toFloat();
+    coeff = (coeff==0)? 1: coeff;
+
+    for (int row = 0; row < count; row++) {
+        index = parent.child(row, columnCoeff);
+        model->setData(index,index.data().toFloat()/coeff);
+        index = parent.child(row, columnDelta);
+        model->setData(index,index.data().toFloat()-delta);
+    }
 }
 
 QVariant MsrEntityWidget::modelData(const QString &tag, const QString &attr,
