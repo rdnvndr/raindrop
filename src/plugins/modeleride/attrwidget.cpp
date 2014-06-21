@@ -11,6 +11,9 @@ AttrWidget::AttrWidget(QWidget *parent) :
 {
     setupUi(this);
 
+    lineEditAttrName->setValidator(
+                new QRegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{26}")));
+
     m_mapperAttr = new QDataWidgetMapper();
     m_mapperAttr->setItemDelegate(new XmlDelegate(this));
     m_mapperAttr->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -40,6 +43,8 @@ AttrWidget::AttrWidget(QWidget *parent) :
 
 AttrWidget::~AttrWidget()
 {
+    delete lineEditAttrName->validator();
+
     delete m_typeAttrModel;
     delete m_mapperAttr;
     delete m_attrModel;

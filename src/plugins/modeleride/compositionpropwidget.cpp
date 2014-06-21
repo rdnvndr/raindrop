@@ -8,6 +8,10 @@ CompositionPropWidget::CompositionPropWidget(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
+
+    lineEditName->setValidator(
+                new QRegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{26}")));
+
     m_mapper = new QDataWidgetMapper();
     m_mapper->setItemDelegate(new XmlDelegate(this));
     m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -24,6 +28,7 @@ CompositionPropWidget::CompositionPropWidget(QWidget *parent) :
 
 CompositionPropWidget::~CompositionPropWidget()
 {
+    delete lineEditName->validator();
     delete m_mapper;
 }
 

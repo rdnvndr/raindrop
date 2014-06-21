@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>212</width>
-    <height>106</height>
+    <height>119</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,7 +46,11 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEditEntityName"/>
+       <widget class="QLineEdit" name="lineEditEntityName">
+        <property name="maxLength">
+         <number>256</number>
+        </property>
+       </widget>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="labelEntityDesc">
@@ -56,7 +60,11 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEditEntityDesc"/>
+       <widget class="QLineEdit" name="lineEditEntityDesc">
+        <property name="maxLength">
+         <number>256</number>
+        </property>
+       </widget>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="labelBasicUnit">

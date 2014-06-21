@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>261</width>
-    <height>257</height>
+    <width>276</width>
+    <height>307</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -136,10 +136,18 @@
        <widget class="TreeComboBox" name="comboBoxDestClass"/>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEditDesc"/>
+       <widget class="QLineEdit" name="lineEditDesc">
+        <property name="maxLength">
+         <number>256</number>
+        </property>
+       </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLineEdit" name="lineEditDirectDesc"/>
+       <widget class="QLineEdit" name="lineEditDirectDesc">
+        <property name="maxLength">
+         <number>256</number>
+        </property>
+       </widget>
       </item>
       <item row="5" column="0">
        <widget class="QLabel" name="labelDestClass">
@@ -163,7 +171,11 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLineEdit" name="lineEditInverseDesc"/>
+       <widget class="QLineEdit" name="lineEditInverseDesc">
+        <property name="maxLength">
+         <number>256</number>
+        </property>
+       </widget>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="labelDirectDesc">
