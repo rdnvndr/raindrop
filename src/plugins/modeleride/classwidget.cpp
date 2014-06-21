@@ -8,6 +8,9 @@ ClassWidget::ClassWidget(QWidget *parent) :
 {
     setupUi(this);
 
+    lineEditClassName->setValidator(
+                new QRegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{26}")));
+
     m_mapper = new QDataWidgetMapper();
     m_mapper->setItemDelegate(new XmlDelegate(this));
     m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -27,6 +30,7 @@ ClassWidget::ClassWidget(QWidget *parent) :
 
 ClassWidget::~ClassWidget()
 {
+    delete lineEditClassName->validator();
     delete m_typeClassModel;
     delete m_mapper;
 }

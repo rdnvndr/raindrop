@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>255</width>
+    <width>258</width>
     <height>415</height>
    </rect>
   </property>
@@ -17,7 +17,16 @@
    <property name="spacing">
     <number>5</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -227,7 +236,11 @@
        <widget class="QComboBox" name="comboBoxClassType"/>
       </item>
       <item row="1" column="1" colspan="2">
-       <widget class="QLineEdit" name="lineEditClassDesc"/>
+       <widget class="QLineEdit" name="lineEditClassDesc">
+        <property name="maxLength">
+         <number>256</number>
+        </property>
+       </widget>
       </item>
       <item row="0" column="1" colspan="2">
        <widget class="QLineEdit" name="lineEditClassName"/>
@@ -254,7 +267,16 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="margin">
+         <property name="leftMargin">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>2</number>
+         </property>
+         <property name="bottomMargin">
           <number>2</number>
          </property>
          <item>

@@ -204,7 +204,11 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="lineEditAttrDesc"/>
+         <widget class="QLineEdit" name="lineEditAttrDesc">
+          <property name="maxLength">
+           <number>256</number>
+          </property>
+         </widget>
         </item>
         <item row="5" column="1">
          <widget class="QCheckBox" name="checkBoxIsNull">
@@ -228,7 +232,11 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="lineEditAttrName"/>
+         <widget class="QLineEdit" name="lineEditAttrName">
+          <property name="maxLength">
+           <number>32767</number>
+          </property>
+         </widget>
         </item>
         <item row="3" column="1">
          <widget class="QCheckBox" name="checkBoxIsCandidateKey">

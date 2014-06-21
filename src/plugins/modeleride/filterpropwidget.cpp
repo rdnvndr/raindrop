@@ -12,6 +12,9 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
 {
     setupUi(this);
 
+    lineEditName->setValidator(
+                new QRegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{26}")));
+
     menuAddCondition = new QMenu(tr("Добавить"), this);
 
     actionAddCondition = menuAddCondition->addAction(QIcon(":/expression"),
@@ -54,6 +57,7 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
 
 FilterPropWidget::~FilterPropWidget()
 {
+    delete lineEditName->validator();
     delete m_conditionModel;
     delete m_mapper;
     delete actionAddBlock;
