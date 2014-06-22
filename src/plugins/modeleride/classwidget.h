@@ -54,6 +54,9 @@ public slots:
     //! Удаление классов
     void rowsRemoved(const QModelIndex &index,int start,int end);
 
+    //! Сообщение о неверном имени класса
+    void validateClassName(QValidator::State state) const;
+
 signals:
     //! Сигнал об изменении данных
     void dataChanged(const QModelIndex &index);
@@ -65,7 +68,8 @@ signals:
     void currentIndexChanged(const QModelIndex &index);
 
 private:
-     //! Получение данных модели
+
+    //! Получение данных модели
     QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
 
     //! Модель структуры классов
