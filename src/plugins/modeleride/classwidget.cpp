@@ -10,10 +10,10 @@ ClassWidget::ClassWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    RegExpValidator *classValidator =
-            new RegExpValidator(QRegExp("^[A-Za-z]{0,26}"));
-    lineEditClassName->setValidator(classValidator);
-    connect(classValidator,SIGNAL(stateChanged(QValidator::State)),
+    RegExpValidator *validator =
+            new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{0,26}|^[A-Za-z]{0}"));
+    lineEditClassName->setValidator(validator);
+    connect(validator,SIGNAL(stateChanged(QValidator::State)),
             this,SLOT(validateClassName(QValidator::State)));
 
     m_mapper = new QDataWidgetMapper();

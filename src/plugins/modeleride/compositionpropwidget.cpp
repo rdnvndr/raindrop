@@ -1,16 +1,21 @@
 #include <QMessageBox>
 #include <QSortFilterProxyModel>
+#include <QToolTip>
 #include "compositionpropwidget.h"
 #include "xmldelegate.h"
 #include "dbxmlstruct.h"
+#include "regexpvalidator.h"
 
 CompositionPropWidget::CompositionPropWidget(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
 
-    lineEditName->setValidator(
-                new QRegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{26}")));
+    RegExpValidator *validator =
+            new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{0,26}|^[A-Za-z]{0}"));
+    lineEditName->setValidator(validator);
+    connect(validator,SIGNAL(stateChanged(QValidator::State)),
+            this,SLOT(validateCompositionName(QValidator::State)));
 
     m_mapper = new QDataWidgetMapper();
     m_mapper->setItemDelegate(new XmlDelegate(this));
@@ -177,6 +182,16 @@ void CompositionPropWidget::rowsRemoved(const QModelIndex &index, int start, int
 
     if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1 && m_oldIndex <0)
         emit dataRemoved(QModelIndex());
+}
+
+void CompositionPropWidget::validateCompositionName(QValidator::State state) const
+{
+    if(state != QValidator::Acceptable)
+        QToolTip::showText(lineEditName->mapToGlobal(QPoint(0,5)),
+                           tr("Имя состава должно содержать только латинские\n"
+                              "символы и цифры длиной не более 27 символов"));
+    else
+        QToolTip::hideText();
 }
 
 
