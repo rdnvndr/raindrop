@@ -2,18 +2,23 @@
 #include <QMessageBox>
 #include <QMenu>
 #include <QSortFilterProxyModel>
+#include <QToolTip>
 #include "conditiondelegate.h"
 #include "xmldelegate.h"
 #include "dbxmlstruct.h"
-#include <QDebug>
+#include "regexpvalidator.h"
+
 
 FilterPropWidget::FilterPropWidget(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
 
-    lineEditName->setValidator(
-                new QRegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{26}")));
+    RegExpValidator *validator =
+            new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{0,26}|^[A-Za-z]{0}"));
+    lineEditName->setValidator(validator);
+    connect(validator,SIGNAL(stateChanged(QValidator::State)),
+            this,SLOT(validateFilterName(QValidator::State)));
 
     menuAddCondition = new QMenu(tr("Добавить"), this);
 
@@ -303,6 +308,16 @@ void FilterPropWidget::changeDestClass(const QString &nameClass)
     ConditionDelegate *conditionDelegate =
             qobject_cast<ConditionDelegate *>(treeViewCondition->itemDelegate());
     conditionDelegate->setSecondIndex(index);
+}
+
+void FilterPropWidget::validateFilterName(QValidator::State state) const
+{
+    if(state != QValidator::Acceptable)
+        QToolTip::showText(lineEditName->mapToGlobal(QPoint(0,5)),
+                           tr("Имя фильтра должно содержать только латинские\n"
+                              "символы и цифры длиной не более 27 символов"));
+    else
+        QToolTip::hideText();
 }
 
 

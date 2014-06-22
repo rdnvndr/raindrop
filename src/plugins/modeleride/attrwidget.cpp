@@ -3,16 +3,20 @@
 #include "xmldelegate.h"
 #include <QStringListModel>
 #include <QMessageBox>
+#include <QToolTip>
 #include "treefilterproxymodel.h"
-#include <QDebug>
+#include "regexpvalidator.h"
 
 AttrWidget::AttrWidget(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
 
-    lineEditAttrName->setValidator(
-                new QRegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{26}")));
+    RegExpValidator *validator =
+            new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{0,26}|^[A-Za-z]{0}"));
+    lineEditAttrName->setValidator(validator);
+    connect(validator,SIGNAL(stateChanged(QValidator::State)),
+            this,SLOT(validateAttrName(QValidator::State)));
 
     m_mapperAttr = new QDataWidgetMapper();
     m_mapperAttr->setItemDelegate(new XmlDelegate(this));
@@ -190,6 +194,16 @@ void AttrWidget::setRootIndex(const QModelIndex &index)
     m_mapperAttr->setRootIndex(m_attrModel->mapFromSource(index));
 
     this->setCurrent(tableViewAttr->rootIndex().child(0,0));
+}
+
+void AttrWidget::validateAttrName(QValidator::State state) const
+{
+    if(state != QValidator::Acceptable)
+        QToolTip::showText(lineEditAttrName->mapToGlobal(QPoint(0,5)),
+                           tr("Имя атрибута должно содержать только латинские\n"
+                              "символы и цифры длиной не более 27 символов"));
+    else
+        QToolTip::hideText();
 }
 
 void AttrWidget::add()

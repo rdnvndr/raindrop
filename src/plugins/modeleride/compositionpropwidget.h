@@ -48,6 +48,9 @@ public slots:
     //! Удаление составов
     void rowsRemoved(const QModelIndex &index,int start,int end);
 
+    //! Сообщение о неверном имени состава
+    void validateCompositionName(QValidator::State state) const;
+
 signals:
     //! Сигнал об изменении данных
     void dataChanged(const QModelIndex &index);
