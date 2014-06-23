@@ -56,6 +56,9 @@ public slots:
     //! Установка родителя атрибутов
     void setRootIndex(const QModelIndex &index);
 
+    //! Сообщение о неверном имени атрибута
+    void validateAttrName(QValidator::State state) const;
+
 signals:
     //! Сигнал об изменении данных
     void dataChanged(const QModelIndex &index);

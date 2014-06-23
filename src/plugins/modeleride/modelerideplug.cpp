@@ -206,10 +206,11 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     propsAttr << DBATTRXML::NAME           << DBATTRXML::DESCRIPTION
               << DBATTRXML::TYPE           << DBATTRXML::MAXSTRLEN
               << DBATTRXML::REFCLASS       << DBATTRXML::PARENT
-              << DBATTRXML::INITIALVAL     << DBATTRXML::LOWERBOUND
-              << DBATTRXML::UPPERBOUND     << DBATTRXML::GROUP
-              << DBATTRXML::ISNULLALLOWED  << DBATTRXML::ISUNIQUE
-              << DBATTRXML::ISCANDIDATEKEY << DBATTRXML::ID;
+              << DBATTRXML::REFUNIT        << DBATTRXML::INITIALVAL
+              << DBATTRXML::LOWERBOUND     << DBATTRXML::UPPERBOUND
+              << DBATTRXML::GROUP          << DBATTRXML::ISNULLALLOWED
+              << DBATTRXML::ISUNIQUE       << DBATTRXML::ISCANDIDATEKEY
+              << DBATTRXML::ID;
     m_model->addDisplayedAttr(DBATTRXML::ATTR,propsAttr, QIcon(":/attribute"));
     m_model->addAttrTag(DBATTRXML::ATTR);
 
@@ -278,14 +279,15 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->setHeaderData(3,  Qt::Horizontal, tr("Длина строки"));
     m_model->setHeaderData(4,  Qt::Horizontal, tr("Ссылочный класс"));
     m_model->setHeaderData(5,  Qt::Horizontal, tr("Класс"));
-    m_model->setHeaderData(6,  Qt::Horizontal, tr("По умолчанию"));
-    m_model->setHeaderData(7,  Qt::Horizontal, tr("Нижняя граница"));
-    m_model->setHeaderData(8,  Qt::Horizontal, tr("Верхняя гранница"));
-    m_model->setHeaderData(9,  Qt::Horizontal, tr("Группа"));
-    m_model->setHeaderData(10, Qt::Horizontal, tr("Нулевые значения"));
-    m_model->setHeaderData(11, Qt::Horizontal, tr("Уникальный"));
-    m_model->setHeaderData(12, Qt::Horizontal, tr("Кандидат в ключ"));
-    m_model->setHeaderData(13, Qt::Horizontal, tr("Индетификатор"));
+    m_model->setHeaderData(6,  Qt::Horizontal, tr("ЕИ"));
+    m_model->setHeaderData(7,  Qt::Horizontal, tr("По умолчанию"));
+    m_model->setHeaderData(8,  Qt::Horizontal, tr("Нижняя граница"));
+    m_model->setHeaderData(9,  Qt::Horizontal, tr("Верхняя гранница"));
+    m_model->setHeaderData(10, Qt::Horizontal, tr("Группа"));
+    m_model->setHeaderData(11, Qt::Horizontal, tr("Нулевые значения"));
+    m_model->setHeaderData(12, Qt::Horizontal, tr("Уникальный"));
+    m_model->setHeaderData(13, Qt::Horizontal, tr("Кандидат в ключ"));
+    m_model->setHeaderData(14, Qt::Horizontal, tr("Индетификатор"));
 
 
     QStringList insertTags;
@@ -366,6 +368,13 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                 DBMSRUNITXML::ID,
                                 TreeXmlHashModel::Uuid);
 
+    m_model->addHashAttr(DBCLASSLISTXML::CLASSLIST,
+                         DBCLASSLISTXML::PARENT,
+                         TreeXmlHashModel::Unique);
+    m_model->addHashAttr(DBENTITYLISTXML::ENTITYLIST,
+                         DBENTITYLISTXML::PARENT,
+                         TreeXmlHashModel::Unique);
+
 
     m_model->addRelation(DBATTRXML::ATTR,DBATTRXML::REFCLASS,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
@@ -373,6 +382,8 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
     m_model->addRelation(DBATTRXML::ATTR,DBATTRXML::PARENT,
                                DBCOMPXML::COMP, DBCOMPXML::NAME);
+    m_model->addRelation(DBATTRXML::ATTR,DBATTRXML::REFUNIT,
+                               DBMSRUNITXML::UNIT, DBMSRUNITXML::DESIGNATION);
 
     m_model->addRelation(DBCLASSXML::CLASS, DBCLASSXML::PARENT,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);

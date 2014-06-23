@@ -65,6 +65,9 @@ public slots:
     //! Установка индексов для делегата ConditionDelegate
     void changeDestClass(const QString& nameClass);
 
+    //! Сообщение о неверном имени фильтра
+    void validateFilterName(QValidator::State state) const;
+
 signals:
     //! Сигнал об изменении данных
     void dataChanged(const QModelIndex &index);
