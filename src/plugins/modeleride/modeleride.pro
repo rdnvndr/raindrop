@@ -34,7 +34,11 @@ HEADERS += modelerideplug.h \
     propfilter.h \
     filterpropwidget.h \
     conditionproxymodel.h \
-    conditiondelegate.h
+    conditiondelegate.h \
+    msrunitwidget.h \
+    msrentitywidget.h \
+    propentity.h \
+    regexpvalidator.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -49,7 +53,11 @@ SOURCES += modelerideplug.cpp \
     propfilter.cpp \
     filterpropwidget.cpp \
     conditionproxymodel.cpp \
-    conditiondelegate.cpp
+    conditiondelegate.cpp \
+    msrunitwidget.cpp \
+    msrentitywidget.cpp \
+    propentity.cpp \
+    regexpvalidator.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
@@ -62,4 +70,7 @@ FORMS += \
     compositionpropwidget.ui \
     filterwidget.ui \
     propfilter.ui \
-    filterpropwidget.ui
+    filterpropwidget.ui \
+    msrunitwidget.ui \
+    msrentitywidget.ui \
+    propentity.ui

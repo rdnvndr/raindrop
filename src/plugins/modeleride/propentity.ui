@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CompositionPropWidget</class>
- <widget class="QWidget" name="CompositionPropWidget">
+ <class>PropEntity</class>
+ <widget class="QWidget" name="PropEntity">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>276</width>
-    <height>307</height>
+    <width>261</width>
+    <height>105</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutPropTool">
      <property name="spacing">
       <number>0</number>
      </property>
      <item>
-      <widget class="QToolButton" name="toolButtonAdd">
+      <widget class="QToolButton" name="toolButtonAddEntity">
        <property name="text">
         <string>Добавить</string>
        </property>
@@ -43,7 +43,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="toolButtonEdit">
+      <widget class="QToolButton" name="toolButtonEditEntity">
        <property name="text">
         <string>Изменить</string>
        </property>
@@ -66,7 +66,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="toolButtonDel">
+      <widget class="QToolButton" name="toolButtonDelEntity">
        <property name="text">
         <string>Удалить</string>
        </property>
@@ -104,112 +104,10 @@
     </layout>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBoxProp">
-     <property name="title">
-      <string/>
-     </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="lineEditSrcClass"/>
-      </item>
-      <item row="7" column="1">
-       <spacer name="verticalSpacerProp">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="labelSrcClass">
-        <property name="text">
-         <string>Исходный класс:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="TreeComboBox" name="comboBoxDestClass"/>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEditDesc">
-        <property name="maxLength">
-         <number>256</number>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="lineEditDirectDesc">
-        <property name="maxLength">
-         <number>256</number>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="labelDestClass">
-        <property name="text">
-         <string>Входящий класс:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelDesc">
-        <property name="text">
-         <string>Описание:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="labelName">
-        <property name="text">
-         <string>Имя состава:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="lineEditInverseDesc">
-        <property name="maxLength">
-         <number>256</number>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="labelDirectDesc">
-        <property name="text">
-         <string>Описание включения:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="labelInverseDesc">
-        <property name="text">
-         <string>Описание вхождения:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEditName"/>
-      </item>
-      <item row="6" column="0">
-       <widget class="QLabel" name="labelDestIsView">
-        <property name="text">
-         <string>Представление:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
-       <widget class="QCheckBox" name="checkBoxDestIsView">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+    <widget class="MsrEntityWidget" name="msrEntityWidget" native="true"/>
+   </item>
+   <item>
+    <widget class="MsrUnitWidget" name="msrUnitWidget" native="true"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutPropSave">
@@ -259,9 +157,16 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TreeComboBox</class>
-   <extends>QComboBox</extends>
-   <header>treecombobox/treecombobox.h</header>
+   <class>MsrEntityWidget</class>
+   <extends>QWidget</extends>
+   <header>msrentitywidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MsrUnitWidget</class>
+   <extends>QWidget</extends>
+   <header>msrunitwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

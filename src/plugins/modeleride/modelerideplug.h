@@ -74,8 +74,21 @@ public:
     //! Проверка на возможность удаления класса
     bool isRemoveClass(const QModelIndex &srcIndex);
 
+    //! Проверка на возможность удаления элементов
+    bool isRemove(const QModelIndex &srcIndex);
+
     //! Получение индетификатора класса по индексу
     QString classId(const QModelIndex &index);
+
+    //! Получение индетификатора сущности ЕИ по индексу
+    QString entityId(const QModelIndex &index);
+
+    //! Получение индетификатора состава ЕИ по индексу
+    QString compositionId(const QModelIndex &index);
+
+    //! Получение индетификатора фильтра по индексу
+    QString filterId(const QModelIndex &index);
+
 private:
     //! Имя файла структуры
     QString m_fileName;
@@ -140,6 +153,9 @@ public slots:
 
     //! Слот вызова окна редактирования фильтра
     void showPropFilter(const QModelIndex &indexSource);
+
+    //! Слот вызова окна редактирования сущности единицы измерения
+    void showPropEntity(const QModelIndex &indexSource);
 
     //! Создание новой структуры классов
     void newClassModel();

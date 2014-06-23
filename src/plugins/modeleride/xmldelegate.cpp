@@ -5,6 +5,8 @@
 #include <QAbstractItemView>
 #include <QLineEdit>
 #include <treecombobox/treecombobox.h>
+#include <treexmlmodel/treexmlhashmodel.h>
+#include <treexmlmodel/modifyproxymodel.h>
 
 XmlDelegate::XmlDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -31,6 +33,20 @@ void XmlDelegate::setEditorData(QWidget * editor, const QModelIndex & index) con
 
     QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
     if (comboBox) {
+
+        ModifyProxyModel* modifyModel = dynamic_cast<ModifyProxyModel*>(comboBox->model());
+        TreeXmlHashModel* hashModel = (modifyModel)?
+                    dynamic_cast<TreeXmlHashModel*>(modifyModel->sourceModel())
+                  : dynamic_cast<TreeXmlHashModel*>(comboBox->model());
+
+        if (hashModel && hashModel == index.model()) {
+            QModelIndex curIndex = (modifyModel)?
+                        modifyModel->mapFromSource(hashModel->indexLink(index))
+                      : hashModel->indexLink(index);
+            comboBox->setCurrentIndex(curIndex.row());
+            return;
+        }
+
         comboBox->setEditText(index.model()->data(index,Qt::EditRole).toString());
         return;
     }
@@ -64,6 +80,26 @@ void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, co
     // Если QComboBox присваиваем текущий текст, а не индекс
     QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
     if (comboBox) {
+        ModifyProxyModel* modifyModel = dynamic_cast<ModifyProxyModel*>(comboBox->model());
+        TreeXmlHashModel* hashModel = (modifyModel)?
+                    dynamic_cast<TreeXmlHashModel*>(modifyModel->sourceModel())
+                  : dynamic_cast<TreeXmlHashModel*>(comboBox->model());
+
+        if (hashModel && hashModel == model) {
+            QString tag  = index.data(Qt::UserRole).toString();
+            QString attr = hashModel->displayedAttr(tag, index.column());
+            int column = hashModel->columnDisplayedAttr(hashModel->toRelation(tag,attr).tag,
+                                                        hashModel->uuidAttr(tag));
+
+            QModelIndex curIndex = (modifyModel)?
+                        modifyModel->mapFromSource(comboBox->view()->currentIndex())
+                      : comboBox->view()->currentIndex();
+
+            curIndex = curIndex.sibling(curIndex.row(), column);
+            if (curIndex.isValid())
+                model->setData(index, curIndex.data(Qt::EditRole), Qt::EditRole);
+            return;
+        }
         model->setData(index,comboBox->currentText(),Qt::EditRole);
         return;
     }
