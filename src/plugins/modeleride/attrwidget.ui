@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>414</width>
-    <height>305</height>
+    <width>450</width>
+    <height>399</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -204,7 +204,11 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="lineEditAttrDesc"/>
+         <widget class="QLineEdit" name="lineEditAttrDesc">
+          <property name="maxLength">
+           <number>256</number>
+          </property>
+         </widget>
         </item>
         <item row="5" column="1">
          <widget class="QCheckBox" name="checkBoxIsNull">
@@ -213,8 +217,12 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="lineEditAttrName"/>
+        <item row="2" column="0">
+         <widget class="QLabel" name="labelAttrGroup">
+          <property name="text">
+           <string>Группа:</string>
+          </property>
+         </widget>
         </item>
         <item row="0" column="0">
          <widget class="QLabel" name="labelAttrName">
@@ -223,10 +231,10 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="labelAttrGroup">
-          <property name="text">
-           <string>Группа:</string>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="lineEditAttrName">
+          <property name="maxLength">
+           <number>32767</number>
           </property>
          </widget>
         </item>
@@ -267,6 +275,13 @@
         <string>Свойства типа</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
+        <item row="4" column="0">
+         <widget class="QLabel" name="labelDefaultValue">
+          <property name="text">
+           <string>По умолчанию:</string>
+          </property>
+         </widget>
+        </item>
         <item row="2" column="1">
          <widget class="TreeComboBox" name="comboBoxLinkAttr"/>
         </item>
@@ -277,10 +292,10 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
+        <item row="4" column="1">
          <widget class="QLineEdit" name="lineEditDefaultValue"/>
         </item>
-        <item row="4" column="0">
+        <item row="6" column="0">
          <widget class="QLabel" name="labelLowerBound">
           <property name="text">
            <string>Нижняя граница:</string>
@@ -294,16 +309,6 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="labelLinkClass">
-          <property name="text">
-           <string>Ссылка на класс:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QComboBox" name="comboBoxTypeAttr"/>
-        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="labelTypeAttr">
           <property name="text">
@@ -311,25 +316,38 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="labelDefaultValue">
+        <item row="0" column="1">
+         <widget class="QComboBox" name="comboBoxTypeAttr"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="labelLinkClass">
           <property name="text">
-           <string>По умолчанию:</string>
+           <string>Ссылка на класс:</string>
           </property>
          </widget>
         </item>
-        <item row="5" column="0">
+        <item row="7" column="0">
          <widget class="QLabel" name="labelUpperBound">
           <property name="text">
            <string>Верхняя граница:</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
+        <item row="6" column="1">
          <widget class="QLineEdit" name="lineEditLowerBound"/>
         </item>
-        <item row="5" column="1">
+        <item row="7" column="1">
          <widget class="QLineEdit" name="lineEditUpperBound"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="labelUnitAttr">
+          <property name="text">
+           <string>Един. измерения:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="TreeComboBox" name="comboBoxUnitAttr"/>
         </item>
        </layout>
        <zorder>labelTypeAttr</zorder>
@@ -344,6 +362,8 @@
        <zorder>labelUpperBound</zorder>
        <zorder>lineEditLowerBound</zorder>
        <zorder>lineEditUpperBound</zorder>
+       <zorder>labelUnitAttr</zorder>
+       <zorder>comboBoxUnitAttr</zorder>
       </widget>
      </item>
     </layout>

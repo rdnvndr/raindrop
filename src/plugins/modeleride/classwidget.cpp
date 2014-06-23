@@ -2,11 +2,19 @@
 #include "dbxmlstruct.h"
 #include "xmldelegate.h"
 #include <QStringListModel>
+#include <QToolTip>
+#include "regexpvalidator.h"
 
 ClassWidget::ClassWidget(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
+
+    RegExpValidator *validator =
+            new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{0,26}|^[A-Za-z]{0}"));
+    lineEditClassName->setValidator(validator);
+    connect(validator,SIGNAL(stateChanged(QValidator::State)),
+            this,SLOT(validateClassName(QValidator::State)));
 
     m_mapper = new QDataWidgetMapper();
     m_mapper->setItemDelegate(new XmlDelegate(this));
@@ -23,10 +31,12 @@ ClassWidget::ClassWidget(QWidget *parent) :
     connect(pushButtonPropCancel,SIGNAL(clicked()),this,SLOT(revert()));
     connect(toolButtonEditClass,SIGNAL(clicked()),this,SLOT(edit()));
     m_oldIndex = -1;
+
 }
 
 ClassWidget::~ClassWidget()
 {
+    delete lineEditClassName->validator();
     delete m_typeClassModel;
     delete m_mapper;
 }
@@ -275,6 +285,17 @@ void ClassWidget::rowsRemoved(const QModelIndex &index, int start, int end)
 
     if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1 && m_oldIndex <0)
         emit dataRemoved(QModelIndex());
+}
+
+void ClassWidget::validateClassName(QValidator::State state) const
+{
+
+    if(state != QValidator::Acceptable)
+        QToolTip::showText(lineEditClassName->mapToGlobal(QPoint(0,5)),
+                           tr("Имя класса должно содержать только латинские\n"
+                              "символы и цифры длиной не более 27 символов"));
+    else
+        QToolTip::hideText();
 }
 
 QVariant ClassWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)

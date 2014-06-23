@@ -6,6 +6,7 @@
 
 TreeComboBox::TreeComboBox(QWidget *parent):QComboBox(parent),skipNextHide(false)
 {
+    m_rootIndex = QModelIndex();
     QComboBox::resize(250,30);
     treeView = new QTreeView();
     setView(treeView);
@@ -42,13 +43,13 @@ void TreeComboBox::showPopup()
 
 void TreeComboBox::hidePopup()
 {
-    setRootModelIndex(view()->currentIndex().parent());
+    QComboBox::setRootModelIndex(view()->currentIndex().parent());
     setCurrentIndex(view()->currentIndex().row());
 
     if(skipNextHide)skipNextHide=false;
     else QComboBox::hidePopup();
 
-    view()->setRootIndex(QModelIndex());
+    view()->setRootIndex(m_rootIndex);
 }
 
 void TreeComboBox::setModel(QAbstractItemModel *model)
@@ -122,4 +123,14 @@ void TreeComboBox::setShowingIcon(bool showing)
 bool TreeComboBox::showingIcon()
 {
     return m_showingIcon;
+}
+
+void TreeComboBox::setRootModelIndex(const QModelIndex &index)
+{
+    m_rootIndex = index;
+}
+
+QModelIndex TreeComboBox::rootModelIndex()
+{
+    return m_rootIndex;
 }
