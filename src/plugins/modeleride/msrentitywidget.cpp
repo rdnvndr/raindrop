@@ -1,112 +1,56 @@
-#include "classwidget.h"
+#include "msrentitywidget.h"
 #include "dbxmlstruct.h"
 #include "xmldelegate.h"
 #include <QStringListModel>
-#include <QToolTip>
-#include "regexpvalidator.h"
+#include <QDebug>
 
-ClassWidget::ClassWidget(QWidget *parent) :
+MsrEntityWidget::MsrEntityWidget(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
-
-    RegExpValidator *validator =
-            new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{0,26}|^[A-Za-z]{0}"));
-    lineEditClassName->setValidator(validator);
-    connect(validator,SIGNAL(stateChanged(QValidator::State)),
-            this,SLOT(validateClassName(QValidator::State)));
 
     m_mapper = new QDataWidgetMapper();
     m_mapper->setItemDelegate(new XmlDelegate(this));
     m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
-    m_typeClassModel = new QStringListModel();
-    m_typeClassModel->setStringList(DBXMLCLASSTYPE);
+    connect(comboBoxBasicUnit, SIGNAL(activated(int)),
+            this, SLOT(changeUnit(int)));
 
-    lineEditClassParent->setReadOnly(true);
-
-    connect(toolButtonAddClass,SIGNAL(clicked()),this,SLOT(add()));
-    connect(toolButtonDelClass,SIGNAL(clicked()),this,SLOT(remove()));
-    connect(pushButtonPropSave,SIGNAL(clicked()),this,SLOT(submit()));
-    connect(pushButtonPropCancel,SIGNAL(clicked()),this,SLOT(revert()));
-    connect(toolButtonEditClass,SIGNAL(clicked()),this,SLOT(edit()));
     m_oldIndex = -1;
-
 }
 
-ClassWidget::~ClassWidget()
+MsrEntityWidget::~MsrEntityWidget()
 {
-    delete lineEditClassName->validator();
-    delete m_typeClassModel;
     delete m_mapper;
 }
 
-void ClassWidget::setModel(TreeXmlHashModel *model)
+void MsrEntityWidget::setModel(TreeXmlHashModel *model)
 {
     m_model = model;
+
     connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
             this,SLOT(rowsRemoved(QModelIndex,int,int)));
     m_mapper->setModel(m_model);
 
-    comboBoxClassType->setModel(m_typeClassModel);
+    m_mapper->addMapping(lineEditEntityName,
+                         model->columnDisplayedAttr(DBMSRENTITYXML::ENTITY,
+                                                   DBMSRENTITYXML::NAME));
+    m_mapper->addMapping(lineEditEntityDesc,
+                         model->columnDisplayedAttr(DBMSRENTITYXML::ENTITY,
+                                                   DBMSRENTITYXML::DESCRIPTION));
 
-    m_mapper->addMapping(lineEditClassName,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::NAME));
-    m_mapper->addMapping(lineEditClassDesc,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::DESCRIPTION));
+    m_mapper->addMapping(comboBoxBasicUnit,
+                         model->columnDisplayedAttr(DBMSRENTITYXML::ENTITY,
+                                                    DBMSRENTITYXML::BASICUNIT));
 
-    m_mapper->addMapping(comboBoxClassType,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::TYPE));
-
-    m_mapper->addMapping(lineEditClassParent,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::PARENT));
-
-    m_mapper->addMapping(checkBoxAbsClass,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::ISABSTARCT));
-    m_mapper->addMapping(checkBoxActiveClass,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::ISACTIVE));
-    m_mapper->addMapping(plainTextEditShowAttr,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::TEMPLATE));
-    m_mapper->addMapping(pushButtonIcon,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                    DBCLASSXML::ICON));
 }
 
-void ClassWidget::add()
-{
-    m_oldIndex = m_mapper->currentIndex();
-    QModelIndex srcIndex =  m_model->index(m_mapper->currentIndex(),
-                                           0,m_mapper->rootIndex()).parent();
-    m_model->setInsTagName(DBCLASSXML::CLASS);
-    if (m_model->insertRow(0,srcIndex)) {
-        QModelIndex srcCurrentIndex = m_model->lastInsertRow();
-        setCurrent(srcCurrentIndex);
-        edit(true);
-    }
-}
-
-// Метод совпадает с bool ModelerIDEPlug::isRemoveClass(const QModelIndex &srcIndex)
-bool ClassWidget::isRemove(const QModelIndex &srcIndex)
+bool MsrEntityWidget::isRemove(const QModelIndex &srcIndex)
 {
     bool success = true;
     QString msg;
 
     QString tag = srcIndex.data(Qt::UserRole).toString();
-    QStringList tags;
-    tags << tag;
-    if (m_model->rowCount(srcIndex,tags)) {
-        msg += tr("Необходимо удалить классы-потомки.\n\n");
-        if (success)
-            success = false;
-    }
-
     QString fieldId = m_model->uuidAttr(tag);
     if (fieldId.isEmpty())
         return true;
@@ -199,7 +143,25 @@ bool ClassWidget::isRemove(const QModelIndex &srcIndex)
     return success;
 }
 
-void ClassWidget::remove()
+bool MsrEntityWidget::isEmpty()
+{
+    return lineEditEntityName->text().isEmpty();
+}
+
+void MsrEntityWidget::add()
+{
+    m_oldIndex = m_mapper->currentIndex();
+    QModelIndex srcIndex =  m_model->index(m_mapper->currentIndex(),
+                                           0,m_mapper->rootIndex()).parent();
+    m_model->setInsTagName(DBMSRENTITYXML::ENTITY);
+    if (m_model->insertRow(0,srcIndex)) {
+        QModelIndex srcCurrentIndex = m_model->lastInsertRow();
+        setCurrent(srcCurrentIndex);
+        edit(true);
+    }
+}
+
+void MsrEntityWidget::remove()
 {
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
 
@@ -213,47 +175,49 @@ void ClassWidget::remove()
     emit dataRemoved(srcIndex);
 }
 
+void MsrEntityWidget::removeEmpty()
+{
+    if (lineEditEntityName->text().isEmpty()){
+        if (m_oldIndex>=0){
+            m_model->removeRow(m_mapper->currentIndex(),
+                               m_mapper->rootIndex());
+            setCurrent(m_mapper->rootIndex().child(m_oldIndex,0));
+            m_oldIndex = -1;
+        }else {
+            remove();
+            return;
+        }
+    }
+}
 
-void ClassWidget::setCurrent(const QModelIndex &index)
+void MsrEntityWidget::setCurrent(const QModelIndex &index)
 {
     m_mapper->setRootIndex(index.parent());
-    m_mapper->setCurrentModelIndex(index);
-    edit(false);
-    int indexType = comboBoxClassType->findText(modelData(DBCLASSXML::CLASS,
-                                                          DBCLASSXML::TYPE,
-                                                          index).toString());
-    comboBoxClassType->setCurrentIndex(indexType);
     emit currentIndexChanged(index);
+    m_mapper->setCurrentModelIndex(index);
+
+    edit(false);
 }
 
-void ClassWidget::edit(bool flag)
+void MsrEntityWidget::edit(bool flag)
 {
-    if (groupBoxClass->isEnabled()==flag)
-        return;
+    if (isEmpty()) flag = true;
+    groupBoxEntity->setEnabled(flag);
 
-    if (lineEditClassName->text().isEmpty()){
-        toolButtonAddClass->setDisabled(true);
-        flag = true;
-    }else
-        toolButtonAddClass->setEnabled(true);
-
-    groupBoxClass->setEnabled(flag);
-    pushButtonPropSave->setEnabled(flag);
-    pushButtonPropCancel->setEnabled(flag);
-    toolButtonEditClass->setDisabled(flag);
+    emit edited(flag);
 }
 
-void ClassWidget::submit()
+void MsrEntityWidget::submit()
 {
-    QModelIndex existIndex = m_model->indexHashAttr(DBCLASSXML::CLASS,
-                                                     DBCLASSXML::NAME,
-                                                     lineEditClassName->text());
+    QModelIndex existIndex = m_model->indexHashAttr(DBMSRENTITYXML::ENTITY,
+                                                     DBMSRENTITYXML::NAME,
+                                                     lineEditEntityName->text());
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
 
     if (existIndex.isValid()){
         if (existIndex.sibling(existIndex.row(),0)!=srcIndex){
             QMessageBox::warning(this,tr("Предупреждение"),
-                                 tr("Класс с таким именем уже существует"));
+                                 tr("Сущность ЕИ с таким именем уже существует"));
             return;
         }
     }
@@ -264,7 +228,7 @@ void ClassWidget::submit()
     emit dataChanged(srcIndex);
 }
 
-void ClassWidget::revert()
+void MsrEntityWidget::revert()
 {
     m_mapper->revert();
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
@@ -273,7 +237,7 @@ void ClassWidget::revert()
     edit(false);
 }
 
-void ClassWidget::rowsRemoved(const QModelIndex &index, int start, int end)
+void MsrEntityWidget::rowsRemoved(const QModelIndex &index, int start, int end)
 {
     if (index == m_mapper->rootIndex()){
         if (m_oldIndex > end)
@@ -287,34 +251,58 @@ void ClassWidget::rowsRemoved(const QModelIndex &index, int start, int end)
         emit dataRemoved(QModelIndex());
 }
 
-void ClassWidget::validateClassName(QValidator::State state) const
+void MsrEntityWidget::setUnitModel(QAbstractItemModel *model)
 {
-
-    if(state != QValidator::Acceptable)
-        QToolTip::showText(lineEditClassName->mapToGlobal(QPoint(0,5)),
-                           tr("Имя класса должно содержать только латинские\n"
-                              "символы и цифры длиной не более 27 символов"));
-    else
-        QToolTip::hideText();
+    comboBoxBasicUnit->setModel(model);
 }
 
-QVariant ClassWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
+void MsrEntityWidget::setUnitRootIndex(const QModelIndex &index)
 {
-    return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                             tag,attr)).data();
+    comboBoxBasicUnit->setRootModelIndex(index);
 }
 
-void ClassWidget::removeEmpty()
+void MsrEntityWidget::setUnitColumn(int column)
 {
-    if (lineEditClassName->text().isEmpty()){
-        if (m_oldIndex>=0){
-            m_model->removeRow(m_mapper->currentIndex(),
-                               m_mapper->rootIndex());
-            setCurrent(m_mapper->rootIndex().child(m_oldIndex,0));
-            m_oldIndex = -1;
-        }else {
-            remove();
-            return;
-        }
+    comboBoxBasicUnit->setModelColumn(column);
+}
+
+void MsrEntityWidget::changeUnit(int current)
+{
+    Q_UNUSED(current)
+
+    // Для перевода ЕИ необходимо разделить на текущий koeff и отнять delta
+    // т.е. x/koeff - delta
+
+    QModelIndex index  = comboBoxBasicUnit->view()->currentIndex();
+    QModelIndex parent = comboBoxBasicUnit->rootModelIndex();
+    QAbstractItemModel *model = comboBoxBasicUnit->model();
+
+    int count  = parent.model()->rowCount(parent);
+    int columnCoeff = m_model->columnDisplayedAttr(
+                DBMSRUNITXML::UNIT,
+                DBMSRUNITXML::COEFF);
+    int columnDelta = m_model->columnDisplayedAttr(
+                DBMSRUNITXML::UNIT,
+                DBMSRUNITXML::DELTA);
+
+    float coeff = index.sibling(index.row(),columnCoeff).data().toFloat();
+    float delta = index.sibling(index.row(),columnDelta).data().toFloat();
+    coeff = (coeff==0)? 1: coeff;
+
+    for (int row = 0; row < count; row++) {
+        index = parent.child(row, columnCoeff);
+        model->setData(index,index.data().toFloat()/coeff);
+        index = parent.child(row, columnDelta);
+        model->setData(index,index.data().toFloat()-delta);
     }
 }
+
+QVariant MsrEntityWidget::modelData(const QString &tag, const QString &attr,
+                                    const QModelIndex &index, int role)
+{
+    return index.sibling(index.row(), m_model->columnDisplayedAttr(
+                             tag,attr)).data(role);
+}
+
+
+
