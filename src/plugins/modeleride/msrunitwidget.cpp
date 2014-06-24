@@ -55,6 +55,28 @@ void MsrUnitWidget::add()
         QModelIndex index = m_unitModel->lastInsertRow();
         m_unitModel->setData(index, DBMSRUNITXML::UNIT, Qt::UserRole);
         m_unitModel->setData(index, QIcon(":/unit"), Qt::DecorationRole);
+        m_unitModel->setData(index.sibling(
+                                 index.row(),
+                                 m_model->columnDisplayedAttr(
+                                     DBMSRUNITXML::UNIT,
+                                     DBMSRUNITXML::COEFF)
+                                 ),
+                             1);
+        m_unitModel->setData(index.sibling(
+                                 index.row(),
+                                 m_model->columnDisplayedAttr(
+                                     DBMSRUNITXML::UNIT,
+                                     DBMSRUNITXML::DELTA)
+                                 ),
+                             0);
+        m_unitModel->setData(index.sibling(
+                                 index.row(),
+                                 m_model->columnDisplayedAttr(
+                                     DBMSRUNITXML::UNIT,
+                                     DBMSRUNITXML::CODE)
+                                 ),
+                             0);
+
         tableViewUnit->setCurrentIndex(index);
     }
 }
