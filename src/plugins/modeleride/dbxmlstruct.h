@@ -111,7 +111,7 @@ namespace DBFILTERBLOCKXML{
 }
 
 //! Ключевые слова XML файла для описания измеряемой сущности
-namespace DBMSRENTITYXML {
+namespace DBENTITYXML {
     const QString ENTITY = "RTPMeasuredEntity";
     const QString BASICUNIT = "basicUnit";
     const QString DESCRIPTION = "decription";
@@ -121,14 +121,17 @@ namespace DBMSRENTITYXML {
 }
 
 //! Ключевые слова XML файла для описания единиц измерения
-namespace DBMSRUNITXML {
+namespace DBUNITXML {
     const QString UNIT = "RTPMeasureUnit";
     const QString CODE = "code";
     const QString COEFF = "coeff";
     const QString DELTA = "delta";
-    const QString DESIGNATION = "designation";
+    const QString NAME = "designation";
     const QString ID = "guid";
+    const QString DESIGNATION = "designation";
+    const QString INTDESIGNATION = "intDesignation";
     const QString SYMBOL = "symbol";
+    const QString INTSYMBOL = "intSymbol";
     const QString PARENT = "parent";
 }
 

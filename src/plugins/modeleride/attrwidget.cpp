@@ -110,10 +110,10 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     QSortFilterProxyModel* unitFilterModel = new QSortFilterProxyModel(this);
     unitFilterModel->setFilterKeyColumn(0);
     unitFilterModel->setFilterRole(Qt::UserRole);
-    unitFilterModel->setFilterRegExp(DBMSRUNITXML::UNIT + "|" +
+    unitFilterModel->setFilterRegExp(DBUNITXML::UNIT + "|" +
                                      DBMODELXML::MODEL + "|" +
                                      DBENTITYLISTXML::ENTITYLIST + "|" +
-                                     DBMSRENTITYXML::ENTITY);
+                                     DBENTITYXML::ENTITY);
     unitFilterModel->setSourceModel(m_model);
     unitFilterModel->setDynamicSortFilter(true);
     unitFilterModel->sort(0);
@@ -123,8 +123,8 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
                 unitFilterModel->mapFromSource(
                     m_model->index(0,0).child(1,0)));
     comboBoxUnitAttr->setIndexColumn(
-                m_model->columnDisplayedAttr(DBMSRUNITXML::UNIT,
-                                             DBMSRUNITXML::ID));
+                m_model->columnDisplayedAttr(DBUNITXML::UNIT,
+                                             DBUNITXML::ID));
 
     comboBoxTypeAttr->setModel(m_typeAttrModel);
 

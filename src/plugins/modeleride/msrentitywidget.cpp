@@ -33,15 +33,15 @@ void MsrEntityWidget::setModel(TreeXmlHashModel *model)
     m_mapper->setModel(m_model);
 
     m_mapper->addMapping(lineEditEntityName,
-                         model->columnDisplayedAttr(DBMSRENTITYXML::ENTITY,
-                                                   DBMSRENTITYXML::NAME));
+                         model->columnDisplayedAttr(DBENTITYXML::ENTITY,
+                                                   DBENTITYXML::NAME));
     m_mapper->addMapping(lineEditEntityDesc,
-                         model->columnDisplayedAttr(DBMSRENTITYXML::ENTITY,
-                                                   DBMSRENTITYXML::DESCRIPTION));
+                         model->columnDisplayedAttr(DBENTITYXML::ENTITY,
+                                                   DBENTITYXML::DESCRIPTION));
 
     m_mapper->addMapping(comboBoxBasicUnit,
-                         model->columnDisplayedAttr(DBMSRENTITYXML::ENTITY,
-                                                    DBMSRENTITYXML::BASICUNIT));
+                         model->columnDisplayedAttr(DBENTITYXML::ENTITY,
+                                                    DBENTITYXML::BASICUNIT));
 
 }
 
@@ -153,7 +153,7 @@ void MsrEntityWidget::add()
     m_oldIndex = m_mapper->currentIndex();
     QModelIndex srcIndex =  m_model->index(m_mapper->currentIndex(),
                                            0,m_mapper->rootIndex()).parent();
-    m_model->setInsTagName(DBMSRENTITYXML::ENTITY);
+    m_model->setInsTagName(DBENTITYXML::ENTITY);
     if (m_model->insertRow(0,srcIndex)) {
         QModelIndex srcCurrentIndex = m_model->lastInsertRow();
         setCurrent(srcCurrentIndex);
@@ -209,8 +209,8 @@ void MsrEntityWidget::edit(bool flag)
 
 void MsrEntityWidget::submit()
 {
-    QModelIndex existIndex = m_model->indexHashAttr(DBMSRENTITYXML::ENTITY,
-                                                     DBMSRENTITYXML::NAME,
+    QModelIndex existIndex = m_model->indexHashAttr(DBENTITYXML::ENTITY,
+                                                     DBENTITYXML::NAME,
                                                      lineEditEntityName->text());
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
 
@@ -279,11 +279,11 @@ void MsrEntityWidget::changeUnit(int current)
 
     int count  = parent.model()->rowCount(parent);
     int columnCoeff = m_model->columnDisplayedAttr(
-                DBMSRUNITXML::UNIT,
-                DBMSRUNITXML::COEFF);
+                DBUNITXML::UNIT,
+                DBUNITXML::COEFF);
     int columnDelta = m_model->columnDisplayedAttr(
-                DBMSRUNITXML::UNIT,
-                DBMSRUNITXML::DELTA);
+                DBUNITXML::UNIT,
+                DBUNITXML::DELTA);
 
     float coeff = index.sibling(index.row(),columnCoeff).data().toFloat();
     float delta = index.sibling(index.row(),columnDelta).data().toFloat();
