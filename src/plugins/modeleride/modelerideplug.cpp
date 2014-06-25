@@ -247,6 +247,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     QStringList propsEntity;
     propsEntity << DBENTITYXML::NAME      << DBENTITYXML::DESCRIPTION
+                << DBENTITYXML::DIMENSIONSYMBOL
                 << DBENTITYXML::BASICUNIT << DBENTITYXML::ID;
     m_model->addDisplayedAttr(DBENTITYXML::ENTITY,propsEntity, QIcon(":/entity"));
 

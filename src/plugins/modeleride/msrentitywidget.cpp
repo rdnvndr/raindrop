@@ -38,7 +38,9 @@ void MsrEntityWidget::setModel(TreeXmlHashModel *model)
     m_mapper->addMapping(lineEditEntityDesc,
                          model->columnDisplayedAttr(DBENTITYXML::ENTITY,
                                                    DBENTITYXML::DESCRIPTION));
-
+    m_mapper->addMapping(lineEditDimensionSymbol,
+                         model->columnDisplayedAttr(DBENTITYXML::ENTITY,
+                                                    DBENTITYXML::DIMENSIONSYMBOL));
     m_mapper->addMapping(comboBoxBasicUnit,
                          model->columnDisplayedAttr(DBENTITYXML::ENTITY,
                                                     DBENTITYXML::BASICUNIT));

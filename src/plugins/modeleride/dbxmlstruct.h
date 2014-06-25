@@ -117,6 +117,7 @@ namespace DBENTITYXML {
     const QString DESCRIPTION = "decription";
     const QString ID = "guid";
     const QString NAME = "name";
+    const QString DIMENSIONSYMBOL = "dimensionSymbol";
     const QString PARENT = "parent";
 }
 
