@@ -46,8 +46,8 @@ void PropEntity::setModel(TreeXmlHashModel *model)
     msrEntityWidget->setUnitModel(msrUnitWidget->proxyModel());
     msrEntityWidget->setUnitColumn(
                 model->columnDisplayedAttr(
-                    DBMSRUNITXML::UNIT,
-                    DBMSRUNITXML::DESIGNATION
+                    DBUNITXML::UNIT,
+                    DBUNITXML::NAME
                     )
                 );
     m_model = model;
@@ -67,8 +67,8 @@ void PropEntity::setTabName(const QModelIndex &index)
 {
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
 
-    QString entityName = modelData(DBMSRENTITYXML::ENTITY, DBMSRENTITYXML::NAME,index).toString();
-    QString id = modelData(DBMSRENTITYXML::ENTITY, DBMSRENTITYXML::ID,index).toString();
+    QString entityName = modelData(DBENTITYXML::ENTITY, DBENTITYXML::NAME,index).toString();
+    QString id = modelData(DBENTITYXML::ENTITY, DBENTITYXML::ID,index).toString();
 
     this->setObjectName("PropEntity::" + id);
     subWindow->setWindowTitle(tr("Сущность ЕИ: ")+entityName);

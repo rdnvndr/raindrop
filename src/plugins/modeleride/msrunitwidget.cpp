@@ -30,16 +30,19 @@ void MsrUnitWidget::setModel(TreeXmlHashModel *model)
     m_model = model;
 
     m_unitModel->setSourceModel(m_model);
-    m_unitModel->setHeaderData(0,  Qt::Horizontal, tr("Обозначение"));
-    m_unitModel->setHeaderData(1,  Qt::Horizontal, tr("Условное обозначение"));
-    m_unitModel->setHeaderData(2,  Qt::Horizontal, tr("Код ОКЕИ"));
-    m_unitModel->setHeaderData(3,  Qt::Horizontal, tr("Коэффициент"));
-    m_unitModel->setHeaderData(4,  Qt::Horizontal, tr("Разница"));
-    m_unitModel->setHeaderData(5,  Qt::Horizontal, tr("Сущность ЕИ"));
-    m_unitModel->setHeaderData(6,  Qt::Horizontal, tr("Индентификатор"));
+    m_unitModel->setHeaderData(0,  Qt::Horizontal, tr("Наименование"));
+    m_unitModel->setHeaderData(1,  Qt::Horizontal, tr("Код ОКЕИ"));
+    m_unitModel->setHeaderData(2,  Qt::Horizontal, tr("Коэффициент"));
+    m_unitModel->setHeaderData(3,  Qt::Horizontal, tr("Разница"));
+    m_unitModel->setHeaderData(4,  Qt::Horizontal, tr("Обозначение"));
+    m_unitModel->setHeaderData(5,  Qt::Horizontal, tr("Символы"));
+    m_unitModel->setHeaderData(6,  Qt::Horizontal, tr("Обозначение (межд.)"));
+    m_unitModel->setHeaderData(7,  Qt::Horizontal, tr("Символы (межд.)"));
+    m_unitModel->setHeaderData(8,  Qt::Horizontal, tr("Сущность ЕИ"));
+    m_unitModel->setHeaderData(9,  Qt::Horizontal, tr("Индентификатор"));
     tableViewUnit->setModel(m_unitModel);
 
-    for (int column = 5; column < 15; column++)
+    for (int column = 8; column < 15; column++)
         tableViewUnit->setColumnHidden(column,true);
 }
 
@@ -53,27 +56,27 @@ void MsrUnitWidget::add()
     QModelIndex srcIndex = tableViewUnit->rootIndex();
     if (m_unitModel->insertRow(0,srcIndex)) {
         QModelIndex index = m_unitModel->lastInsertRow();
-        m_unitModel->setData(index, DBMSRUNITXML::UNIT, Qt::UserRole);
+        m_unitModel->setData(index, DBUNITXML::UNIT, Qt::UserRole);
         m_unitModel->setData(index, QIcon(":/unit"), Qt::DecorationRole);
         m_unitModel->setData(index.sibling(
                                  index.row(),
                                  m_model->columnDisplayedAttr(
-                                     DBMSRUNITXML::UNIT,
-                                     DBMSRUNITXML::COEFF)
+                                     DBUNITXML::UNIT,
+                                     DBUNITXML::COEFF)
                                  ),
                              1);
         m_unitModel->setData(index.sibling(
                                  index.row(),
                                  m_model->columnDisplayedAttr(
-                                     DBMSRUNITXML::UNIT,
-                                     DBMSRUNITXML::DELTA)
+                                     DBUNITXML::UNIT,
+                                     DBUNITXML::DELTA)
                                  ),
                              0);
         m_unitModel->setData(index.sibling(
                                  index.row(),
                                  m_model->columnDisplayedAttr(
-                                     DBMSRUNITXML::UNIT,
-                                     DBMSRUNITXML::CODE)
+                                     DBUNITXML::UNIT,
+                                     DBUNITXML::CODE)
                                  ),
                              0);
 
