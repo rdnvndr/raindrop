@@ -127,7 +127,7 @@ namespace DBUNITXML {
     const QString CODE = "code";
     const QString COEFF = "coeff";
     const QString DELTA = "delta";
-    const QString NAME = "designation";
+    const QString NAME = "name";
     const QString ID = "guid";
     const QString DESIGNATION = "designation";
     const QString INTDESIGNATION = "intDesignation";
