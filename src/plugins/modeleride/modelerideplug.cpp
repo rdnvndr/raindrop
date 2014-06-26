@@ -370,14 +370,6 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                 DBUNITXML::ID,
                                 TreeXmlHashModel::Uuid);
 
-    m_model->addHashAttr(DBCLASSLISTXML::CLASSLIST,
-                         DBCLASSLISTXML::PARENT,
-                         TreeXmlHashModel::Unique);
-    m_model->addHashAttr(DBENTITYLISTXML::ENTITYLIST,
-                         DBENTITYLISTXML::PARENT,
-                         TreeXmlHashModel::Unique);
-
-
     m_model->addRelation(DBATTRXML::ATTR,DBATTRXML::REFCLASS,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
     m_model->addRelation(DBATTRXML::ATTR,DBATTRXML::PARENT,
