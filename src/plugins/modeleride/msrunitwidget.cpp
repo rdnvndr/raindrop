@@ -13,7 +13,6 @@ MsrUnitWidget::MsrUnitWidget(QWidget *parent) :
     setupUi(this);
 
     m_unitModel = new ModifyProxyModel();
-    m_unitModel->setEditable(true);
     m_unitModel->setHiddenRow(true);
 
     connect(toolButtonAddUnit,SIGNAL(clicked()),this,SLOT(add()));
@@ -81,6 +80,7 @@ void MsrUnitWidget::add()
                              0);
 
         tableViewUnit->setCurrentIndex(index);
+        edit(true);
     }
 }
 
@@ -106,12 +106,15 @@ void MsrUnitWidget::submit()
 
 void MsrUnitWidget::edit(bool flag)
 {
-    if (groupBoxUnit->isEnabled()== flag)
+    if (toolButtonAddUnit->isEnabled() == flag)
         return;
 
     if (flag == false)
         tableViewUnit->setCurrentIndex(tableViewUnit->rootIndex());
-    groupBoxUnit->setEnabled(flag);
+
+    toolButtonAddUnit->setEnabled(flag);
+    toolButtonDeleteUnit->setEnabled(flag);
+    m_unitModel->setEditable(flag);
 }
 
 void MsrUnitWidget::revert()
