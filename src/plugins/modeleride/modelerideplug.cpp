@@ -16,6 +16,7 @@
 #include "propfilter.h"
 #include "propentity.h"
 #include "dbxmlstruct.h"
+#include "propentitygroup.h"
 
 ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     QObject(parent), IPlugin("ITreeDockWidget IMainWindow")
@@ -190,6 +191,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addTagFilter(DBCONDITIONXML::COND);
     m_model->addTagFilter(DBENTITYXML::ENTITY);
     m_model->addTagFilter(DBUNITXML::UNIT);
+    m_model->addTagFilter(DBENTITYGROUPXML::ENTITYGROUP);
     m_model->addTagFilter(DBCLASSLISTXML::CLASSLIST);
     m_model->addTagFilter(DBENTITYLISTXML::ENTITYLIST);
     m_model->addTagFilter(DBMODELXML::MODEL);
@@ -259,6 +261,11 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
               << DBUNITXML::PARENT         << DBUNITXML::ID;
     m_model->addDisplayedAttr(DBUNITXML::UNIT,propsUnit, QIcon(":/unit"));
 
+    QStringList propsGroup;
+    propsGroup << DBENTITYGROUPXML::NAME   << DBENTITYGROUPXML::DESCRIPTION
+                   << DBENTITYGROUPXML::PARENT << DBENTITYGROUPXML::ID;
+    m_model->addDisplayedAttr(DBENTITYGROUPXML::ENTITYGROUP,propsGroup, QIcon(":/entitygroup"));
+
     QStringList propsClassList;
     propsClassList << DBCLASSLISTXML::NAME   << DBCLASSLISTXML::DESCRIPTION
                    << DBCLASSLISTXML::PARENT << DBCLASSLISTXML::ID;
@@ -314,7 +321,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addInsertTags(DBCLASSLISTXML::CLASSLIST,insertTags);
 
     insertTags.clear();
-    insertTags << DBENTITYXML::ENTITY;
+    insertTags << DBENTITYXML::ENTITY << DBENTITYGROUPXML::ENTITYGROUP;
     m_model->addInsertTags(DBENTITYLISTXML::ENTITYLIST,insertTags);
 
     insertTags.clear();
@@ -324,6 +331,10 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     insertTags.clear();
     insertTags << DBCLASSLISTXML::CLASSLIST << DBENTITYLISTXML::ENTITYLIST;
     m_model->addInsertTags(DBMODELXML::MODEL,insertTags);
+
+    insertTags.clear();
+    insertTags << DBENTITYXML::ENTITY;
+    m_model->addInsertTags(DBENTITYGROUPXML::ENTITYGROUP,insertTags);
 
 
     m_model->addHashAttr(DBCLASSXML::CLASS,
@@ -343,6 +354,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                 TreeXmlHashModel::UniqueRename);
     m_model->addHashAttr(DBUNITXML::UNIT,
                                 DBUNITXML::NAME,
+                                TreeXmlHashModel::UniqueRename);
+    m_model->addHashAttr(DBENTITYGROUPXML::ENTITYGROUP,
+                                DBENTITYGROUPXML::NAME,
                                 TreeXmlHashModel::UniqueRename);
 
     m_model->addHashAttr(DBCLASSXML::CLASS,
@@ -369,6 +383,10 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addHashAttr(DBUNITXML::UNIT,
                                 DBUNITXML::ID,
                                 TreeXmlHashModel::Uuid);
+    m_model->addHashAttr(DBENTITYGROUPXML::ENTITYGROUP,
+                                DBENTITYGROUPXML::ID,
+                                TreeXmlHashModel::Uuid);
+
 
     m_model->addRelation(DBATTRXML::ATTR,DBATTRXML::REFCLASS,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
@@ -412,6 +430,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     classFilterModel->addVisibleTag(DBCLASSXML::CLASS);
     classFilterModel->addVisibleTag(DBCLASSLISTXML::CLASSLIST);
+    classFilterModel->addVisibleTag(DBENTITYGROUPXML::ENTITYGROUP);
     classFilterModel->addVisibleTag(DBENTITYXML::ENTITY);
     classFilterModel->addVisibleTag(DBENTITYLISTXML::ENTITYLIST);
     classFilterModel->addVisibleTag(DBMODELXML::MODEL);
@@ -457,6 +476,13 @@ void ModelerIDEPlug::addClass()
             showPropClass(m_model->lastInsertRow());
         }
     } else if (indexSource.data(Qt::UserRole)==DBENTITYLISTXML::ENTITYLIST) {
+        m_model->setInsTagName(DBENTITYGROUPXML::ENTITYGROUP);
+        if (m_model->insertRow(0,indexSource)){
+            QModelIndex index = classFilterModel->mapFromSource(m_model->lastInsertRow());
+            treeClassView->treeView->setCurrentIndex(index);
+            showPropEntityGroup(m_model->lastInsertRow());
+        }
+    } else if (indexSource.data(Qt::UserRole)==DBENTITYGROUPXML::ENTITYGROUP) {
         m_model->setInsTagName(DBENTITYXML::ENTITY);
         if (m_model->insertRow(0,indexSource)){
             QModelIndex index = classFilterModel->mapFromSource(m_model->lastInsertRow());
@@ -506,6 +532,14 @@ QString ModelerIDEPlug::filterId(const QModelIndex &index)
                              )).data().toString();
 }
 
+QString ModelerIDEPlug::entityGroupId(const QModelIndex &index)
+{
+    return index.sibling(index.row(),m_model->columnDisplayedAttr(
+                             DBENTITYGROUPXML::ENTITYGROUP,
+                             DBENTITYGROUPXML::ID
+                             )).data().toString();
+}
+
 void ModelerIDEPlug::dblClickTree(const QModelIndex &index)
 {
     QModelIndex indexSource = classFilterModel->mapToSource(index);
@@ -524,6 +558,9 @@ void ModelerIDEPlug::dblClickTree(const QModelIndex &index)
 
     if (indexSource.data(Qt::UserRole)==DBENTITYXML::ENTITY)
         showPropEntity(indexSource);
+
+    if (indexSource.data(Qt::UserRole)==DBENTITYGROUPXML::ENTITYGROUP)
+        showPropEntityGroup(indexSource);
 
 }
 
@@ -789,6 +826,30 @@ void ModelerIDEPlug::showPropEntity(const QModelIndex &indexSource)
     } else {
         PropEntity* propEntity = qobject_cast<PropEntity*>(subWindow->widget());
         propEntity->setCurrentEntity(indexSource);
+    }
+}
+
+void ModelerIDEPlug::showPropEntityGroup(const QModelIndex &indexSource)
+{
+    if (!indexSource.isValid())
+        return;
+
+    PluginManager* pluginManager = PluginManager::instance();
+    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
+                pluginManager->interfaceObject("IMainWindow"));
+
+    QString subWindowName = "PropEntityGroup::" + this->entityGroupId(indexSource);
+    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
+
+    if (!subWindow) {
+        PropEntityGroup* propEntityGroup = new PropEntityGroup();
+        subWindow =  mainWindow->addSubWindow(propEntityGroup);
+        propEntityGroup->setObjectName(subWindowName);
+        propEntityGroup->setModel(m_model);
+        propEntityGroup->setCurrentEntityGroup(indexSource);
+    } else {
+        PropEntityGroup* propEntityGroup = qobject_cast<PropEntityGroup*>(subWindow->widget());
+        propEntityGroup->setCurrentEntityGroup(indexSource);
     }
 }
 

@@ -89,6 +89,9 @@ public:
     //! Получение индетификатора фильтра по индексу
     QString filterId(const QModelIndex &index);
 
+     //! Получение индетификатора группы сущности ЕИ по индексу
+    QString entityGroupId(const QModelIndex &index);
+
 private:
     //! Имя файла структуры
     QString m_fileName;
@@ -157,6 +160,9 @@ public slots:
     //! Слот вызова окна редактирования сущности единицы измерения
     void showPropEntity(const QModelIndex &indexSource);
 
+    //! Слот вызова окна редактирования группы сущности единицы измерения
+    void showPropEntityGroup(const QModelIndex &indexSource);
+
     //! Создание новой структуры классов
     void newClassModel();
 
@@ -195,6 +201,7 @@ public slots:
 
     //! Устанавливает активность QAction "Сохранить модель"
     void actionSaveEnable();
+
 };
 
 #endif
