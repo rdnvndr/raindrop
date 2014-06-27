@@ -62,8 +62,8 @@ public slots:
     //! Закрытие вкладки/подокна
     void closeTab(const QModelIndex &index);
 
-    //! Перевод сущности группы сущности ЕИ в режим редактирования
-    void edit(bool flag);
+    //! Перевод группы сущности ЕИ в режим редактирования
+    void edit(bool flag = true);
 
     //! Применение изменений группы сущности ЕИ
     void submit();

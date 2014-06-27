@@ -237,8 +237,20 @@ void PropEntityGroup::closeTab(const QModelIndex &index)
 
 void PropEntityGroup::edit(bool flag)
 {
-    if (isEmpty()) flag = true;
+
+    if (groupBoxEntityGroup->isEnabled()==flag)
+        return;
+
+    if (isEmpty()) {
+        toolButtonAdd->setDisabled(true);
+        flag = true;
+    } else
+        toolButtonAdd->setEnabled(true);
+
     groupBoxEntityGroup->setEnabled(flag);
+    pushButtonPropSave->setEnabled(flag);
+    pushButtonPropCancel->setEnabled(flag);
+    toolButtonEdit->setDisabled(flag);
 
     emit edited(flag);
 }
