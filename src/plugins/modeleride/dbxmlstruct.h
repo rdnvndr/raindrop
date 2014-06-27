@@ -136,6 +136,15 @@ namespace DBUNITXML {
     const QString PARENT = "parent";
 }
 
+//! Ключевые слова XML файла для описания групп единиц измерения
+namespace DBENTITYGROUPXML {
+    const QString ENTITYGROUP = "RTPEntityGroup";
+    const QString NAME = "name";
+    const QString DESCRIPTION = "description";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
 //! Ключевые слова XML файла для описания списка классов
 namespace DBCLASSLISTXML {
     const QString CLASSLIST = "RTPClassList";

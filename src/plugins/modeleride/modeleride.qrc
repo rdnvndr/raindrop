@@ -20,5 +20,6 @@
         <file alias="unit">icons/unit.svg</file>
         <file alias="units">icons/units.svg</file>
         <file alias="classes">icons/classes.svg</file>
+        <file alias="entitygroup">icons/entitygroup.svg</file>
     </qresource>
 </RCC>

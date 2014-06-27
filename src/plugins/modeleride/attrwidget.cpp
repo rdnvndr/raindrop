@@ -113,15 +113,14 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     unitFilterModel->setFilterRegExp(DBUNITXML::UNIT + "|" +
                                      DBMODELXML::MODEL + "|" +
                                      DBENTITYLISTXML::ENTITYLIST + "|" +
+                                     DBENTITYGROUPXML::ENTITYGROUP + "|" +
                                      DBENTITYXML::ENTITY);
     unitFilterModel->setSourceModel(m_model);
     unitFilterModel->setDynamicSortFilter(true);
     unitFilterModel->sort(0);
 
     comboBoxUnitAttr->setModel(unitFilterModel);
-    comboBoxUnitAttr->setRootModelIndex(
-                unitFilterModel->mapFromSource(
-                    m_model->index(0,0).child(1,0)));
+    comboBoxUnitAttr->setRootModelIndex(unitFilterModel->index(0,0).child(0,0));
     comboBoxUnitAttr->setIndexColumn(
                 m_model->columnDisplayedAttr(DBUNITXML::UNIT,
                                              DBUNITXML::ID));
