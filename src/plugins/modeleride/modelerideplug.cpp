@@ -321,7 +321,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addInsertTags(DBCLASSLISTXML::CLASSLIST,insertTags);
 
     insertTags.clear();
-    insertTags << DBENTITYXML::ENTITY << DBENTITYGROUPXML::ENTITYGROUP;
+    insertTags << DBENTITYGROUPXML::ENTITYGROUP;
     m_model->addInsertTags(DBENTITYLISTXML::ENTITYLIST,insertTags);
 
     insertTags.clear();
@@ -419,6 +419,8 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                DBUNITXML::UNIT, DBUNITXML::NAME);
     m_model->addRelation(DBUNITXML::UNIT, DBUNITXML::PARENT,
                                DBENTITYXML::ENTITY, DBENTITYXML::NAME);
+    m_model->addRelation(DBENTITYXML::ENTITY, DBENTITYXML::PARENT,
+                               DBENTITYGROUPXML::ENTITYGROUP, DBENTITYGROUPXML::NAME);
 
 
     m_model->refreshHashing();
