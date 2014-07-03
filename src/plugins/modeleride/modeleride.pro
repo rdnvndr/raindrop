@@ -39,7 +39,8 @@ HEADERS += modelerideplug.h \
     msrentitywidget.h \
     propentity.h \
     regexpvalidator.h \
-    propentitygroup.h
+    propentitygroup.h \
+    unitdelegate.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -59,7 +60,8 @@ SOURCES += modelerideplug.cpp \
     msrentitywidget.cpp \
     propentity.cpp \
     regexpvalidator.cpp \
-    propentitygroup.cpp
+    propentitygroup.cpp \
+    unitdelegate.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
