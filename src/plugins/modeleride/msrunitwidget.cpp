@@ -1,10 +1,10 @@
 #include "msrunitwidget.h"
 #include "dbxmlstruct.h"
-#include "xmldelegate.h"
 #include <QStringListModel>
 #include <QTreeView>
 #include <QMessageBox>
 #include "treefilterproxymodel.h"
+#include "unitdelegate.h"
 #include <QDebug>
 
 MsrUnitWidget::MsrUnitWidget(QWidget *parent) :
@@ -17,6 +17,7 @@ MsrUnitWidget::MsrUnitWidget(QWidget *parent) :
 
     connect(toolButtonAddUnit,SIGNAL(clicked()),this,SLOT(add()));
     connect(toolButtonDeleteUnit,SIGNAL(clicked()),this,SLOT(remove()));
+    tableViewUnit->setItemDelegate(new UnitDelegate());
 }
 
 MsrUnitWidget::~MsrUnitWidget()

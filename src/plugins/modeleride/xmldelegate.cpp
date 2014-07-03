@@ -1,7 +1,6 @@
 #include "xmldelegate.h"
 #include "pushbuttonimage.h"
 #include <QComboBox>
-#include <QDebug>
 #include <QAbstractItemView>
 #include <QLineEdit>
 #include <treecombobox/treecombobox.h>
