@@ -83,11 +83,14 @@ void FilterPropWidget::setModel(TreeXmlHashModel *model)
     QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
     classFilterModel->setFilterKeyColumn(0);
     classFilterModel->setFilterRole(Qt::UserRole);
-    classFilterModel->setFilterRegExp(DBCLASSXML::CLASS);
+    classFilterModel->setFilterRegExp(DBCLASSXML::CLASS + "|" +
+                                      DBMODELXML::MODEL + "|" +
+                                      DBCLASSLISTXML::CLASSLIST);
     classFilterModel->setSourceModel(m_model);
     classFilterModel->setDynamicSortFilter(true);
     classFilterModel->sort(0);
     comboBoxDestClass->setModel(classFilterModel);
+    comboBoxDestClass->setRootModelIndex(classFilterModel->index(0,0).child(0,0));
     comboBoxDestClass->setIndexColumn(m_model->columnDisplayedAttr(
                                           DBCLASSXML::CLASS, DBATTRXML::ID));
 

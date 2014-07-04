@@ -95,15 +95,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     classFilterModel->sort(0);
 
     comboBoxLinkAttr->setModel(classFilterModel);
-    comboBoxLinkAttr->setRootModelIndex(
-                classFilterModel->mapFromSource(
-                    m_model->indexHashAttr(DBCLASSLISTXML::CLASSLIST,
-                                           DBCLASSLISTXML::PARENT,
-                                           m_model->index(0,
-                                                          m_model->columnDisplayedAttr(
-                                                              DBMODELXML::MODEL,
-                                                              DBMODELXML::ID))
-                                           .data())));
+    comboBoxLinkAttr->setRootModelIndex(classFilterModel->index(0,0).child(0,0));
     comboBoxLinkAttr->setIndexColumn(m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                                  DBATTRXML::ID));
 

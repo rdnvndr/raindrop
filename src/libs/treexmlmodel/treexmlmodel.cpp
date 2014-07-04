@@ -109,9 +109,10 @@ bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex,
 bool TreeXmlModel::isAttr(const QModelIndex &index) const
 {
     TagXmlItem *item = toItem(index);
-    foreach (const QString &tagName,m_attrTags)
-        if (tagName == item->nodeName())
-            return true;
+    QString nodeName = item->nodeName();
+    if (m_attrTags.contains(nodeName))
+        return true;
+
     return false;
 }
 
@@ -120,9 +121,8 @@ bool TreeXmlModel::isInsert(const QModelIndex &index) const
     TagXmlItem *item = toItem(index);
 
     if (index.isValid()){
-        foreach (const QString &tagName,m_insertTags[item->nodeName()])
-            if (tagName == m_insTag)
-                return true;
+        if (m_insertTags[item->nodeName()].contains(m_insTag))
+            return true;
         return false;
     } else {
         if (rowCount(index) == 0)

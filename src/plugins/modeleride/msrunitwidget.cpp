@@ -22,6 +22,7 @@ MsrUnitWidget::MsrUnitWidget(QWidget *parent) :
 
 MsrUnitWidget::~MsrUnitWidget()
 {
+    delete tableViewUnit->itemDelegate();
     delete m_unitModel;
 }
 
