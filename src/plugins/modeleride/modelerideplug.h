@@ -123,6 +123,10 @@ private:
     //! Команда отображения фильтров в дереве классов
     QAction* actionShowFilter;
 
+    //! Команда отображения ЕИ в дереве классов
+    QAction* actionShowUnit;
+
+
     //! Команда разделитель
     QAction* actionSeparator;
 
@@ -190,6 +194,9 @@ public slots:
 
     //! Установка отображения фильтров в дереве классов
     void setShowFilter(bool shown);
+
+    //! Установка отображения ЕИ в дереве классов
+    void setShowUnit(bool shown);
 
     //! Устанавливает активность QAction "Сохранить модель"
     void actionSaveEnable();
