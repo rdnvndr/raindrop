@@ -61,6 +61,11 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     contextMenu->addAction(actionShowFilter);
     connect(actionShowFilter,SIGNAL(triggered(bool)),this,SLOT(setShowFilter(bool)));
 
+    actionShowUnit = new QAction(tr("Показать ЕИ"),this);
+    actionShowUnit->setCheckable(true);
+    contextMenu->addAction(actionShowUnit);
+    connect(actionShowUnit,SIGNAL(triggered(bool)),this,SLOT(setShowUnit(bool)));
+
     treeClassView->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(treeClassView->treeView,SIGNAL(customContextMenuRequested(const QPoint&)),
             this,SLOT(showContextMenu(const QPoint&)));
@@ -122,6 +127,7 @@ ModelerIDEPlug::~ModelerIDEPlug()
     delete actionShowComp;
     delete actionShowFilter;
     delete actionSeparator;
+    delete actionShowUnit;
     delete contextMenu;
 }
 
@@ -167,6 +173,18 @@ void ModelerIDEPlug::setShowFilter(bool shown)
     QRegExp regex = classFilterModel->filterRegExp();
     classFilterModel->setFilterRegExp(regex);
     actionShowFilter->setChecked(shown);
+}
+
+void ModelerIDEPlug::setShowUnit(bool shown)
+{
+    if (shown)
+        classFilterModel->addVisibleTag(DBUNITXML::UNIT);
+    else
+        classFilterModel->removeVisibleTag(DBUNITXML::UNIT);
+
+    QRegExp regex = classFilterModel->filterRegExp();
+    classFilterModel->setFilterRegExp(regex);
+    actionShowUnit->setChecked(shown);
 }
 
 void ModelerIDEPlug::actionSaveEnable()
