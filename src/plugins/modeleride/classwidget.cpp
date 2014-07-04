@@ -93,35 +93,39 @@ void ClassWidget::add()
 }
 
 // Метод совпадает с bool ModelerIDEPlug::isRemoveClass(const QModelIndex &srcIndex)
-bool ClassWidget::isRemove(const QModelIndex &srcIndex)
+bool ClassWidget::isRemove(QModelIndex srcIndex)
 {
+    const TreeXmlHashModel *model = dynamic_cast<const TreeXmlHashModel *>(srcIndex.model());
+    if (!model)
+        return false;
+
     bool success = true;
     QString msg;
 
     QString tag = srcIndex.data(Qt::UserRole).toString();
     QStringList tags;
     tags << tag;
-    if (m_model->rowCount(srcIndex,tags)) {
+    if (model->rowCount(srcIndex,tags)) {
         msg += tr("Необходимо удалить классы-потомки.\n\n");
         if (success)
             success = false;
     }
 
-    QString fieldId = m_model->uuidAttr(tag);
+    QString fieldId = model->uuidAttr(tag);
     if (fieldId.isEmpty())
         return true;
 
     QString guid =  srcIndex.sibling(srcIndex.row(),
-                                     m_model->columnDisplayedAttr(
+                                     model->columnDisplayedAttr(
                                          tag,fieldId))
             .data().toString();
 
     foreach (TreeXmlHashModel::TagWithAttr tagWithAttr,
-             m_model->fromRelation(tag))
+             model->fromRelation(tag))
     {
         int number = 0;
 
-        QModelIndex linkIndex = m_model->indexHashAttr(
+        QModelIndex linkIndex = model->indexHashAttr(
                     tagWithAttr.tag,
                     tagWithAttr.attr,
                     guid,
@@ -136,7 +140,7 @@ bool ClassWidget::isRemove(const QModelIndex &srcIndex)
                 if (linkIndex.data(Qt::UserRole) == DBCLASSXML::CLASS) {
                     name = tr("класс ")
                             + linkIndex.sibling(linkIndex.row(),
-                                                m_model->columnDisplayedAttr(
+                                                model->columnDisplayedAttr(
                                                     DBCLASSXML::CLASS,
                                                     DBCLASSXML::NAME)
                                                 ).data().toString();
@@ -145,7 +149,7 @@ bool ClassWidget::isRemove(const QModelIndex &srcIndex)
                         parentName = tr(" принадлежащий составу ")
                                 + linkParent.sibling(
                                     linkParent.row(),
-                                    m_model->columnDisplayedAttr(
+                                    model->columnDisplayedAttr(
                                         DBCOMPXML::COMP,
                                         DBCOMPXML::NAME)
                                     ).data().toString();
@@ -153,7 +157,7 @@ bool ClassWidget::isRemove(const QModelIndex &srcIndex)
                         parentName = tr(" принадлежащий классу ")
                                 + linkParent.sibling(
                                     linkParent.row(),
-                                    m_model->columnDisplayedAttr(
+                                    model->columnDisplayedAttr(
                                         DBCLASSXML::CLASS,
                                         DBCLASSXML::NAME)
                                     ).data().toString();
@@ -161,14 +165,14 @@ bool ClassWidget::isRemove(const QModelIndex &srcIndex)
                     if  (linkIndex.data(Qt::UserRole) == DBCOMPXML::COMP)
                         name = tr("состав ")
                                 + linkIndex.sibling(linkIndex.row(),
-                                                    m_model->columnDisplayedAttr(
+                                                    model->columnDisplayedAttr(
                                                         DBCOMPXML::COMP,
                                                         DBCOMPXML::NAME)
                                                     ).data().toString();
                     else
                         name = tr("атрибут ")
                                 + linkIndex.sibling(linkIndex.row(),
-                                                    m_model->columnDisplayedAttr(
+                                                    model->columnDisplayedAttr(
                                                         DBATTRXML::ATTR,
                                                         DBATTRXML::NAME)
                                                     ).data().toString();
@@ -180,7 +184,7 @@ bool ClassWidget::isRemove(const QModelIndex &srcIndex)
                     success = false;
             }
             number++;
-            linkIndex = m_model->indexHashAttr(
+            linkIndex = model->indexHashAttr(
                         tagWithAttr.tag,
                         tagWithAttr.attr,
                         guid,

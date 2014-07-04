@@ -68,29 +68,14 @@ public:
     //! Создание класса
     void createClassModel(QDomDocument document);
 
-    //! Получение имени класса по индексу
-    QString className(const QModelIndex &index);
-
-    //! Проверка на возможность удаления класса
-    bool isRemoveClass(const QModelIndex &srcIndex);
+    //! Получение имени по индексу
+    QString dataName(const QModelIndex &index);
 
     //! Проверка на возможность удаления элементов
     bool isRemove(const QModelIndex &srcIndex);
 
-    //! Получение индетификатора класса по индексу
-    QString classId(const QModelIndex &index);
-
-    //! Получение индетификатора сущности ЕИ по индексу
-    QString entityId(const QModelIndex &index);
-
-    //! Получение индетификатора состава ЕИ по индексу
-    QString compositionId(const QModelIndex &index);
-
-    //! Получение индетификатора фильтра по индексу
-    QString filterId(const QModelIndex &index);
-
-     //! Получение индетификатора группы сущности ЕИ по индексу
-    QString entityGroupId(const QModelIndex &index);
+    //! Получение индетификатора по индексу
+    QString dataId(const QModelIndex &index);
 
 private:
     //! Имя файла структуры
@@ -148,6 +133,7 @@ public slots:
     //! Слот обработки двойного щелчка по дереву классов
     void dblClickTree(const QModelIndex &index);
 
+
     //! Слот вызова окна редактирования класса
     void showPropClass(const QModelIndex &indexSource);
 
@@ -162,6 +148,11 @@ public slots:
 
     //! Слот вызова окна редактирования группы сущности единицы измерения
     void showPropEntityGroup(const QModelIndex &indexSource);
+
+
+    //! Закрытие окна по индексу
+    void closePropWindow(const QModelIndex& index);
+
 
     //! Создание новой структуры классов
     void newClassModel();
@@ -181,14 +172,15 @@ public slots:
     //! Закрытие структуры классов
     void closeClassModel();
 
-    //! Добавление класса
-    void addClass();
+    //! Добавление элемента модели класса
+    void add();
 
-    //! Удаление класса
-    void removeClass();
+    //! Удаление элемента модели класса
+    void remove();
 
     //! Слот вызова отображения контекстного меню дерева классов
     void showContextMenu(const QPoint &point);
+
 
     //! Установка отображения атрибутов в дереве классов
     void setShowAttr(bool shown);
