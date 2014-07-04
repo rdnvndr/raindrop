@@ -27,7 +27,7 @@ public:
     void setModel(TreeXmlHashModel *model);
 
     //! Проверка на возможность удаления класса
-    bool isRemove(const QModelIndex &srcIndex);
+    static bool isRemove(QModelIndex srcIndex);
 
 public slots:
     //! Добавление класса

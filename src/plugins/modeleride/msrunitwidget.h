@@ -25,6 +25,9 @@ public:
     //! Возращает прокси модель ЕИ
     ModifyProxyModel* proxyModel();
 
+    //! Проверка на возможность удаления ЕИ
+    static bool isRemove(const QModelIndex &srcIndex);
+
 signals:
     //! Сигнал об изменении корневого индекса в прокси ЕИ
     void proxyIndexChanged(const QModelIndex &index);

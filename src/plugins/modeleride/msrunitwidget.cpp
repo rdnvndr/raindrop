@@ -51,6 +51,93 @@ ModifyProxyModel *MsrUnitWidget::proxyModel()
     return m_unitModel;
 }
 
+bool MsrUnitWidget::isRemove(const QModelIndex &srcIndex)
+{
+    const TreeXmlHashModel *model = dynamic_cast<const TreeXmlHashModel *>(srcIndex.model());
+    if (!model)
+        return false;
+
+    bool success = true;
+    QString msg;
+
+    QString tag = srcIndex.data(Qt::UserRole).toString();
+
+    QString fieldId = model->uuidAttr(tag);
+    if (fieldId.isEmpty())
+        return true;
+
+    QString guid =  srcIndex.sibling(srcIndex.row(),
+                                     model->columnDisplayedAttr(
+                                         tag,fieldId))
+            .data().toString();
+
+    foreach (TreeXmlHashModel::TagWithAttr tagWithAttr,
+             model->fromRelation(tag))
+    {
+        int number = 0;
+
+        QModelIndex linkIndex = model->indexHashAttr(
+                    tagWithAttr.tag,
+                    tagWithAttr.attr,
+                    guid,
+                    number
+                    );
+
+        while (linkIndex.isValid()) {
+            QModelIndex linkParent = linkIndex.parent();
+            if (linkParent.sibling(linkIndex.parent().row(),0)!= srcIndex){
+                QString parentName;
+                QString name;
+
+                if (linkParent.data(Qt::UserRole) == DBCOMPXML::COMP)
+                    parentName = tr(" принадлежащий составу ")
+                            + linkParent.sibling(
+                                linkParent.row(),
+                                model->columnDisplayedAttr(
+                                    DBCOMPXML::COMP,
+                                    DBCOMPXML::NAME)
+                                ).data().toString();
+                else
+                    parentName = tr(" принадлежащий классу ")
+                            + linkParent.sibling(
+                                linkParent.row(),
+                                model->columnDisplayedAttr(
+                                    DBCLASSXML::CLASS,
+                                    DBCLASSXML::NAME)
+                                ).data().toString();
+
+                name = tr("атрибут ")
+                        + linkIndex.sibling(linkIndex.row(),
+                                            model->columnDisplayedAttr(
+                                                DBATTRXML::ATTR,
+                                                DBATTRXML::NAME)
+                                            ).data().toString();
+
+                msg += QString(tr("Необходимо удалить %1%2.\n\n")).
+                        arg(name).arg(parentName);
+                if (success)
+                    success = false;
+            }
+            number++;
+            linkIndex = model->indexHashAttr(
+                        tagWithAttr.tag,
+                        tagWithAttr.attr,
+                        guid,
+                        number
+                        );
+        }
+    }
+    if (!success) {
+        QMessageBox msgBox;
+        msgBox.setText(tr("Удаление данного объекта не воможно."));
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setDetailedText(msg);
+        msgBox.setWindowTitle(tr("Предупреждение"));
+        msgBox.exec();
+    }
+    return success;
+}
+
 void MsrUnitWidget::add()
 {
     QModelIndex srcIndex = tableViewUnit->rootIndex();
@@ -91,6 +178,8 @@ void MsrUnitWidget::remove()
     QModelIndex srcIndex = tableViewUnit->rootIndex();
     QModelIndex curIndex = tableViewUnit->currentIndex();
     if (srcIndex.isValid() && curIndex.isValid()){
+        if (!isRemove(curIndex))
+            return;
         tableViewUnit->setCurrentIndex(tableViewUnit->rootIndex());
         m_unitModel->removeRow(curIndex.row(),srcIndex);
         tableViewUnit->setModel(m_unitModel);

@@ -24,7 +24,7 @@ public:
     TreeXmlHashModel* model();
 
     //! Проверка на возможность удаления группы сущности ЕИ
-    bool isRemove(const QModelIndex &srcIndex);
+    static bool isRemove(const QModelIndex &srcIndex);
 
     //! Проверка запонена ли имя сущности группы сущности ЕИ
     bool isEmpty();
