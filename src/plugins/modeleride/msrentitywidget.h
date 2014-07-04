@@ -26,7 +26,7 @@ public:
     void setModel(TreeXmlHashModel *model);
 
     //! Проверка на возможность удаления сущности ЕИ
-    bool isRemove(const QModelIndex &srcIndex);
+    static bool isRemove(const QModelIndex &srcIndex);
 
     //! Проверка запонена ли имя сущности ЕИ
     bool isEmpty();

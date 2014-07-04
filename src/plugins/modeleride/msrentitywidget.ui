@@ -52,12 +52,8 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelEntityDesc">
-        <property name="text">
-         <string>Описание:</string>
-        </property>
-       </widget>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="comboBoxBasicUnit"/>
       </item>
       <item row="1" column="1">
        <widget class="QLineEdit" name="lineEditEntityDesc">
@@ -66,15 +62,29 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="labelBasicUnit">
         <property name="text">
          <string>Базовая единица:</string>
         </property>
        </widget>
       </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelEntityDesc">
+        <property name="text">
+         <string>Описание:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelDimensionSymbol">
+        <property name="text">
+         <string>Размерность:</string>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="1">
-       <widget class="QComboBox" name="comboBoxBasicUnit"/>
+       <widget class="QLineEdit" name="lineEditDimensionSymbol"/>
       </item>
      </layout>
     </widget>

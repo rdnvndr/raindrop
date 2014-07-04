@@ -123,7 +123,7 @@ void TreeXmlHashModel::addRelation(const QString &tag, const QString &attr,
 }
 
 QList<TreeXmlHashModel::TagWithAttr> TreeXmlHashModel::fromRelation(const QString &linkTag,
-                                                                      const QString &linkAttr)
+                                                                      const QString &linkAttr) const
 {
     QList<TreeXmlHashModel::TagWithAttr> list;
     foreach (const QString &tag,m_linkAttr.keys())

@@ -75,7 +75,7 @@ public:
 
     //! Получить поля которые ссылаются на указанное поле
     QList<TagWithAttr> fromRelation(const QString &linkTag,
-                                    const QString &linkAttr = QString());
+                                    const QString &linkAttr = QString()) const;
 
     //! Получить поле на которое ссылается указанное поле
     TagWithAttr toRelation(const QString &tag, const QString &attr);

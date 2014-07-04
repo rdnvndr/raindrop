@@ -33,104 +33,34 @@ void MsrEntityWidget::setModel(TreeXmlHashModel *model)
     m_mapper->setModel(m_model);
 
     m_mapper->addMapping(lineEditEntityName,
-                         model->columnDisplayedAttr(DBMSRENTITYXML::ENTITY,
-                                                   DBMSRENTITYXML::NAME));
+                         model->columnDisplayedAttr(DBENTITYXML::ENTITY,
+                                                   DBENTITYXML::NAME));
     m_mapper->addMapping(lineEditEntityDesc,
-                         model->columnDisplayedAttr(DBMSRENTITYXML::ENTITY,
-                                                   DBMSRENTITYXML::DESCRIPTION));
-
+                         model->columnDisplayedAttr(DBENTITYXML::ENTITY,
+                                                   DBENTITYXML::DESCRIPTION));
+    m_mapper->addMapping(lineEditDimensionSymbol,
+                         model->columnDisplayedAttr(DBENTITYXML::ENTITY,
+                                                    DBENTITYXML::DIMENSIONSYMBOL));
     m_mapper->addMapping(comboBoxBasicUnit,
-                         model->columnDisplayedAttr(DBMSRENTITYXML::ENTITY,
-                                                    DBMSRENTITYXML::BASICUNIT));
+                         model->columnDisplayedAttr(DBENTITYXML::ENTITY,
+                                                    DBENTITYXML::BASICUNIT));
 
 }
 
 bool MsrEntityWidget::isRemove(const QModelIndex &srcIndex)
 {
+    const TreeXmlHashModel *model = dynamic_cast<const TreeXmlHashModel *>(srcIndex.model());
+    if (!model)
+        return false;
+
     bool success = true;
     QString msg;
 
-    QString tag = srcIndex.data(Qt::UserRole).toString();
-    QString fieldId = m_model->uuidAttr(tag);
-    if (fieldId.isEmpty())
-        return true;
-
-    QString guid =  srcIndex.sibling(srcIndex.row(),
-                                     m_model->columnDisplayedAttr(
-                                         tag,fieldId))
-            .data().toString();
-
-    foreach (TreeXmlHashModel::TagWithAttr tagWithAttr,
-             m_model->fromRelation(tag))
-    {
-        int number = 0;
-
-        QModelIndex linkIndex = m_model->indexHashAttr(
-                    tagWithAttr.tag,
-                    tagWithAttr.attr,
-                    guid,
-                    number
-                    );
-
-        while (linkIndex.isValid()) {
-            QModelIndex linkParent = linkIndex.parent();
-            if (linkParent.sibling(linkIndex.parent().row(),0)!= srcIndex){
-                QString parentName;
-                QString name;
-                if (linkIndex.data(Qt::UserRole) == DBCLASSXML::CLASS) {
-                    name = tr("класс ")
-                            + linkIndex.sibling(linkIndex.row(),
-                                                m_model->columnDisplayedAttr(
-                                                    DBCLASSXML::CLASS,
-                                                    DBCLASSXML::NAME)
-                                                ).data().toString();
-                } else {
-                    if (linkParent.data(Qt::UserRole) == DBCOMPXML::COMP)
-                        parentName = tr(" принадлежащий составу ")
-                                + linkParent.sibling(
-                                    linkParent.row(),
-                                    m_model->columnDisplayedAttr(
-                                        DBCOMPXML::COMP,
-                                        DBCOMPXML::NAME)
-                                    ).data().toString();
-                    else
-                        parentName = tr(" принадлежащий классу ")
-                                + linkParent.sibling(
-                                    linkParent.row(),
-                                    m_model->columnDisplayedAttr(
-                                        DBCLASSXML::CLASS,
-                                        DBCLASSXML::NAME)
-                                    ).data().toString();
-
-                    if  (linkIndex.data(Qt::UserRole) == DBCOMPXML::COMP)
-                        name = tr("состав ")
-                                + linkIndex.sibling(linkIndex.row(),
-                                                    m_model->columnDisplayedAttr(
-                                                        DBCOMPXML::COMP,
-                                                        DBCOMPXML::NAME)
-                                                    ).data().toString();
-                    else
-                        name = tr("атрибут ")
-                                + linkIndex.sibling(linkIndex.row(),
-                                                    m_model->columnDisplayedAttr(
-                                                        DBATTRXML::ATTR,
-                                                        DBATTRXML::NAME)
-                                                    ).data().toString();
-
-                }
-                msg += QString(tr("Необходимо удалить %1%2.\n\n")).
-                        arg(name).arg(parentName);
-                if (success)
-                    success = false;
-            }
-            number++;
-            linkIndex = m_model->indexHashAttr(
-                        tagWithAttr.tag,
-                        tagWithAttr.attr,
-                        guid,
-                        number
-                        );
-        }
+    QStringList tags;
+    tags << DBUNITXML::UNIT;
+    if (model->rowCount(srcIndex,tags)) {
+        msg += tr("Необходимо удалить ЕИ.\n\n");
+        success = false;
     }
     if (!success) {
         QMessageBox msgBox;
@@ -153,7 +83,7 @@ void MsrEntityWidget::add()
     m_oldIndex = m_mapper->currentIndex();
     QModelIndex srcIndex =  m_model->index(m_mapper->currentIndex(),
                                            0,m_mapper->rootIndex()).parent();
-    m_model->setInsTagName(DBMSRENTITYXML::ENTITY);
+    m_model->setInsTagName(DBENTITYXML::ENTITY);
     if (m_model->insertRow(0,srcIndex)) {
         QModelIndex srcCurrentIndex = m_model->lastInsertRow();
         setCurrent(srcCurrentIndex);
@@ -209,8 +139,8 @@ void MsrEntityWidget::edit(bool flag)
 
 void MsrEntityWidget::submit()
 {
-    QModelIndex existIndex = m_model->indexHashAttr(DBMSRENTITYXML::ENTITY,
-                                                     DBMSRENTITYXML::NAME,
+    QModelIndex existIndex = m_model->indexHashAttr(DBENTITYXML::ENTITY,
+                                                     DBENTITYXML::NAME,
                                                      lineEditEntityName->text());
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
 
@@ -279,11 +209,11 @@ void MsrEntityWidget::changeUnit(int current)
 
     int count  = parent.model()->rowCount(parent);
     int columnCoeff = m_model->columnDisplayedAttr(
-                DBMSRUNITXML::UNIT,
-                DBMSRUNITXML::COEFF);
+                DBUNITXML::UNIT,
+                DBUNITXML::COEFF);
     int columnDelta = m_model->columnDisplayedAttr(
-                DBMSRUNITXML::UNIT,
-                DBMSRUNITXML::DELTA);
+                DBUNITXML::UNIT,
+                DBUNITXML::DELTA);
 
     float coeff = index.sibling(index.row(),columnCoeff).data().toFloat();
     float delta = index.sibling(index.row(),columnDelta).data().toFloat();
