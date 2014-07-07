@@ -50,13 +50,23 @@ bool ModifyProxyModel::submitAll()
     m_updatedRow.clear();
 
     // Удаление строк
-    QSetIterator<QPersistentModelIndex> iterRemoveIndex(m_removedRow);
-    while (iterRemoveIndex.hasNext())
+    QHashIterator<QPersistentModelIndex,
+            QList<QPersistentModelIndex> > iterRemovedParentIndex(m_removedRow);
+    while (iterRemovedParentIndex.hasNext())
     {
-        QModelIndex index = iterRemoveIndex.next();
-        beginRemoveRows(mapFromSource(index.parent()),index.row(),index.row());
-        sourceModel()->removeRow(index.row(),index.parent());
-        endRemoveRows();
+        iterRemovedParentIndex.next();
+        QListIterator<QPersistentModelIndex> iterRemovedIndex(
+                    iterRemovedParentIndex.value());
+        while (iterRemovedIndex.hasNext()){
+            QPersistentModelIndex index = iterRemovedIndex.next();
+            if (!m_hiddenRow) {
+                beginRemoveRows(mapFromSource(index.parent()),
+                                index.row(),index.row());
+                sourceModel()->removeRow(index.row(),index.parent());
+                endRemoveRows();
+            } else
+                sourceModel()->removeRow(index.row(),index.parent());
+        }
     }
     m_removedRow.clear();
     return true;
@@ -93,8 +103,8 @@ void ModifyProxyModel::revertAll()
 
     // Отмена удаления строк
     if (!m_removedRow.isEmpty()) {
-        emit layoutChanged();
         m_removedRow.clear();
+        emit layoutChanged();
     }
 }
 
@@ -106,7 +116,7 @@ void ModifyProxyModel::sourceDataChanged(const QModelIndex &left,
             void *p = left.sibling(row, column).internalPointer();
             QPersistentModelIndex removeIndex(createIndex(row,column,p));
             if (m_updatedRow.contains(removeIndex)) {
-                m_updatedRow[removeIndex].clear();
+//                m_updatedRow[removeIndex].clear();
                 m_updatedRow.remove(removeIndex);
             }
         }
@@ -130,12 +140,14 @@ void ModifyProxyModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent,
         for (int j = 0; j < sourceModel()->columnCount(parent);j++) {
             QPersistentModelIndex removeIndex(mapFromSource(index.sibling(i,j)));
             if (m_updatedRow.contains(removeIndex)) {
-                m_updatedRow[removeIndex].clear();
+//                m_updatedRow[removeIndex].clear();
                 m_updatedRow.remove(removeIndex);
             }
         }
-        if (m_removedRow.contains(QPersistentModelIndex(index)))
-            m_removedRow.remove(QPersistentModelIndex(index));
+        if (m_removedRow.contains(index.parent())) {
+            if (m_removedRow[index.parent()].contains(QPersistentModelIndex(index)))
+                m_removedRow[index.parent()].removeOne(QPersistentModelIndex(index));
+        }
     }
 }
 
@@ -158,7 +170,7 @@ bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
         int row = sourceModel()->rowCount(srcParent);
 
         QPersistentModelIndex indexProxy(
-                    index((srcParent == mapToSource(parent))? row + i: row,
+                    index((sourceParent.isValid())? row + i: row,
                           0,
                           parent));
 
@@ -234,8 +246,14 @@ int ModifyProxyModel::rowCount(const QModelIndex &parent) const
     if (isInsertRow(parent))
         return  insertRowCount;
 
+    // Количество удаленных строк
+    int removeRowCount = 0;
+    if (m_removedRow.contains(QPersistentModelIndex(mapToSource(parent))) && m_hiddenRow)
+        removeRowCount =
+                m_removedRow[QPersistentModelIndex(mapToSource(parent))].count();
+
     int parentRowCount = sourceModel()->rowCount(mapToSource(parent));
-    return parentRowCount + insertRowCount;
+    return parentRowCount + insertRowCount - removeRowCount;
 }
 
 QModelIndex ModifyProxyModel::index(int row, int column, const QModelIndex &parent) const
@@ -257,10 +275,18 @@ QModelIndex ModifyProxyModel::index(int row, int column, const QModelIndex &pare
     }
 
     // Скрытие удаленных строк
+    int removeRowCount = 0;
+    if (m_removedRow.contains(mapToSource(parent)) && m_hiddenRow) {
+        foreach (const QPersistentModelIndex &removedIndex,
+                 m_removedRow[QPersistentModelIndex(mapToSource(parent))])
+        {
+            if (mapFromSource(removedIndex).row() <= row)
+                removeRowCount++;
+
+        }
+    }
     QPersistentModelIndex removeIndex(m_sourceModel->index(
-                                          row, column, mapToSource(parent)));
-    if (m_hiddenRow && m_removedRow.contains(removeIndex))
-        return QModelIndex();
+                                          row+removeRowCount, column, mapToSource(parent)));
 
     return mapFromSource(removeIndex);
 }
@@ -285,7 +311,19 @@ QModelIndex ModifyProxyModel::parent(const QModelIndex &index) const
 QModelIndex ModifyProxyModel::mapFromSource(const QModelIndex &index) const
 {
     if(index.isValid()) {
-        QModelIndex sourceIndex = createIndex(index.row(), index.column(),
+        int removeRowCount = 0;
+        if (m_removedRow.contains(QPersistentModelIndex(index.parent())) && m_hiddenRow) {
+            foreach (const QPersistentModelIndex &removedIndex,
+                     m_removedRow[QPersistentModelIndex(index.parent())])
+            {
+                if (index.row() > removedIndex.row())
+                    removeRowCount++;
+
+            }
+        }
+
+        QModelIndex sourceIndex = createIndex(index.row() - removeRowCount,
+                                              index.column(),
                                               index.internalPointer());
         if (sourceIndex.isValid())
             return sourceIndex;
@@ -307,6 +345,17 @@ QModelIndex ModifyProxyModel::mapToSource(const QModelIndex &index) const
     hack->p = index.internalPointer();
     hack->m = sourceModel();
 
+    int removeRowCount = 0;
+    if (m_removedRow.contains(QPersistentModelIndex(sourceIndex.parent())) && m_hiddenRow)
+        foreach (const QPersistentModelIndex &removedIndex,
+                 m_removedRow[QPersistentModelIndex(sourceIndex.parent())])
+        {
+            if (mapFromSource(removedIndex).row() <= index.row())
+                removeRowCount++;
+
+        }
+    hack->r = sourceIndex.row() + removeRowCount;
+
     if (!sourceIndex.isValid())
         return QModelIndex();
 
@@ -316,18 +365,6 @@ QModelIndex ModifyProxyModel::mapToSource(const QModelIndex &index) const
 QVariant ModifyProxyModel::data(const QModelIndex &proxyIndex, int role) const
 {
     QPersistentModelIndex dataIndex(proxyIndex);
-
-    // Устанавливает зачеркивание удаленной строки
-    if (role == Qt::FontRole) {
-        QPersistentModelIndex removeIndex(
-                    mapToSource(proxyIndex.sibling(proxyIndex.row(),0)));
-        if (m_removedRow.contains(removeIndex)) {
-            QFont font = sourceModel()->data(
-                        mapToSource(proxyIndex),role).value<QFont>();
-            font.setStrikeOut(true);
-            return font;
-        }
-    }
 
     // Получение измененных данных
     if (m_updatedRow.contains(dataIndex))  {
@@ -339,6 +376,19 @@ QVariant ModifyProxyModel::data(const QModelIndex &proxyIndex, int role) const
     // Пустое значение для вставленных строк
     if (isInsertRow(proxyIndex))
         return QVariant();
+
+    // Устанавливает зачеркивание удаленной строки
+    if (role == Qt::FontRole && !m_hiddenRow) {
+        QPersistentModelIndex removeIndex = mapToSource(proxyIndex);
+        if (m_removedRow.contains(removeIndex.parent()))
+            if (m_removedRow[removeIndex.parent()].contains(removeIndex)) {
+                QFont font = sourceModel()->data(
+                            mapToSource(proxyIndex),role).value<QFont>();
+                font.setStrikeOut(true);
+                return font;
+            }
+    }
+
 
     return sourceModel()->data(mapToSource(proxyIndex),role);
 }
@@ -450,7 +500,7 @@ bool ModifyProxyModel::removeRows(int row, int count, const QModelIndex &parent)
                 for (int j = 0; j < sourceModel()->columnCount(parent);j++) {
                     QPersistentModelIndex removeIndex(parent.child(i,j));
                     if (m_updatedRow.contains(removeIndex)) {
-                        m_updatedRow[removeIndex].clear();
+//                        m_updatedRow[removeIndex].clear();
                         m_updatedRow.remove(removeIndex);
                     }
                 }
@@ -465,15 +515,19 @@ bool ModifyProxyModel::removeRows(int row, int count, const QModelIndex &parent)
             if (m_insertedRow[rowIndex].isEmpty())
                 m_insertedRow.remove(rowIndex);
 
-
             endRemoveRows();
         }
     }
 
     // Удаление строк в исходной модели
     for (int i = row; i< beginRowInsert; i++) {
-        QModelIndex insertIndex = index(i,0, parent);
-        m_removedRow.insert(QPersistentModelIndex(mapToSource(insertIndex)));
+        QModelIndex insertIndex = mapToSource(index(i,0, parent));
+        if (m_hiddenRow) {
+            beginRemoveRows(parent, i, i);
+            m_removedRow[insertIndex.parent()].append(QPersistentModelIndex(insertIndex));
+            endRemoveRows();
+        } else
+            m_removedRow[insertIndex.parent()].append(QPersistentModelIndex(insertIndex));
     }
     emit layoutChanged();
 
