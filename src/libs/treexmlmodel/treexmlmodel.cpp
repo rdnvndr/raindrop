@@ -50,6 +50,8 @@ void TreeXmlModel::clearAttrTags(){
 
 bool TreeXmlModel::isInherited(const QModelIndex &index) const
 {
+    if (!index.isValid())
+        return false;
     TagXmlItem *item = toItem(index);
     return item->isInherited();
 }
@@ -167,7 +169,7 @@ int TreeXmlModel::columnDisplayedAttr(const QString &tag, const QString &attr) c
 
 QString TreeXmlModel::displayedAttr(const QString &tag, int column) const
 {
-    if (m_displayedAttr[tag].count()<=column)
+    if (m_displayedAttr[tag].count()<=column || column < 0)
         return QString("");
     return m_displayedAttr[tag].at(column);
 }
