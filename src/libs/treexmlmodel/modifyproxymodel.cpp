@@ -170,7 +170,7 @@ bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
         int row = sourceModel()->rowCount(srcParent);
 
         QPersistentModelIndex indexProxy(
-                    index((sourceParent.isValid())? row + i: row,
+                    index((sourceParent.isValid())? row: row+i,
                           0,
                           parent));
 
@@ -178,7 +178,8 @@ bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
         // Обработка TreeXMLModel
         if (xmlModel) {
             if (m_updatedRow.contains(indexProxy))
-                if (m_updatedRow[indexProxy].contains(Qt::UserRole)) {
+                if (m_updatedRow[indexProxy].contains(Qt::UserRole))
+                {
                     xmlModel->setInsTagName(m_updatedRow[indexProxy][Qt::UserRole].toString());
                     isInserted = xmlModel->insertRow(lastRow,srcParent);
                     lastRow = xmlModel->lastInsertRow().row();
