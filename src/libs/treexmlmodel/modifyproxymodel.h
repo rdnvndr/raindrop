@@ -138,7 +138,7 @@ private:
     QHash <QPersistentModelIndex, QList<QPersistentModelIndex *> > m_insertedRow;
 
     //! Список удаленных строк
-    QSet  <QPersistentModelIndex> m_removedRow;
+    QHash  <QPersistentModelIndex,QList<QPersistentModelIndex> > m_removedRow;
 
     //! Список названий заголовков
     QMap<int, QString> m_header;

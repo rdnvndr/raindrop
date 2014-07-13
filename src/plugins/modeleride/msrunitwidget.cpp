@@ -54,7 +54,11 @@ ModifyProxyModel *MsrUnitWidget::proxyModel()
 
 bool MsrUnitWidget::isRemove(const QModelIndex &srcIndex)
 {
-    const TreeXmlHashModel *model = dynamic_cast<const TreeXmlHashModel *>(srcIndex.model());
+    const ModifyProxyModel* modifyModel = dynamic_cast<const ModifyProxyModel*>(srcIndex.model());
+    const TreeXmlHashModel *model = (modifyModel)?
+                dynamic_cast<const TreeXmlHashModel*>(modifyModel->sourceModel())
+              : dynamic_cast<const TreeXmlHashModel*>(srcIndex.model());
+
     if (!model)
         return false;
 
@@ -84,7 +88,7 @@ bool MsrUnitWidget::isRemove(const QModelIndex &srcIndex)
                     number
                     );
 
-        while (linkIndex.isValid()) {
+        while (linkIndex.isValid() && guid!="") {
             QModelIndex linkParent = linkIndex.parent();
             if (linkParent.sibling(linkIndex.parent().row(),0)!= srcIndex){
                 QString parentName;
