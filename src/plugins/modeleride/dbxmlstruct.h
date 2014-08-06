@@ -172,4 +172,32 @@ namespace DBMODELXML {
     const QString ID = "guid";
 }
 
+//! Ключевые слова XML файла для описания списка списков значений
+namespace DBLOVLISTXML {
+    const QString LOVLIST = "RTPLOVList";
+    const QString NAME = "name";
+    const QString DESCRIPTION = "description";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
+//! Ключевые слова XML файла для списка значений
+namespace DBLOVXML{
+    const QString LOV = "RTPLOV";
+    const QString NAME = "name";
+    const QString DESCRIPTION = "description";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+    const QString TYPE = "type";
+}
+
+//! Ключевые слова XML файла для значений списка
+namespace DBLOVVALUEXML{
+    const QString LOVVALUE = "RTPLOVValue";
+    const QString NAME = "name";
+    const QString VALUE = "description";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
 #endif // DBXMLSTRUCT_H
