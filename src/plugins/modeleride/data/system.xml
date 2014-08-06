@@ -544,4 +544,5 @@
 </RTPMeasuredEntity>
 </RTPEntityGroup>
 </RTPEntityList>
+<RTPLOVList name="List of Value" description="Список значений"/>
 </RTPModel>

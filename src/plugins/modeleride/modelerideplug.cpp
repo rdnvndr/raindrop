@@ -17,6 +17,7 @@
 #include "propentity.h"
 #include "dbxmlstruct.h"
 #include "propentitygroup.h"
+#include "lovwidget.h"
 
 ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     QObject(parent), IPlugin("ITreeDockWidget IMainWindow")
@@ -134,6 +135,22 @@ ModelerIDEPlug::~ModelerIDEPlug()
 void ModelerIDEPlug::showContextMenu(const QPoint& point)
 {
     if (m_model){
+        QModelIndex indexSource = classFilterModel->mapToSource(treeClassView->treeView->currentIndex());
+        if (!indexSource.isValid())
+            return;
+        if (indexSource.data(Qt::UserRole)==DBMODELXML::MODEL)
+            return;
+
+        if (indexSource.data(Qt::UserRole)==DBCLASSLISTXML::CLASSLIST
+            || indexSource.data(Qt::UserRole)==DBENTITYLISTXML::ENTITYLIST
+            || indexSource.data(Qt::UserRole)==DBENTITYGROUPXML::ENTITYGROUP
+            || indexSource.data(Qt::UserRole)==DBLOVLISTXML::LOVLIST
+            || indexSource.data(Qt::UserRole)==DBCLASSXML::CLASS)
+        {
+            contextMenu->actions().at(0)->setVisible(true);
+        } else {
+            contextMenu->actions().at(0)->setVisible(false);
+        }
         contextMenu->exec(treeClassView->treeView->mapToGlobal(point));
     }
     return;
@@ -213,6 +230,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addTagFilter(DBCLASSLISTXML::CLASSLIST);
     m_model->addTagFilter(DBENTITYLISTXML::ENTITYLIST);
     m_model->addTagFilter(DBMODELXML::MODEL);
+    m_model->addTagFilter(DBLOVLISTXML::LOVLIST);
+    m_model->addTagFilter(DBLOVXML::LOV);
+    m_model->addTagFilter(DBLOVVALUEXML::LOVVALUE);
 
     QStringList propsClass;
     propsClass << DBCLASSXML::NAME     << DBCLASSXML::ISABSTARCT  <<
@@ -294,11 +314,26 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                     << DBENTITYLISTXML::PARENT << DBENTITYLISTXML::ID;
     m_model->addDisplayedAttr(DBENTITYLISTXML::ENTITYLIST, propsEntityList, QIcon(":/units"));
 
+    QStringList propsVLLList;
+    propsVLLList << DBLOVLISTXML::NAME   << DBLOVLISTXML::DESCRIPTION
+                 << DBLOVLISTXML::PARENT << DBLOVLISTXML::ID;
+    m_model->addDisplayedAttr(DBLOVLISTXML::LOVLIST, propsVLLList, QIcon(":/vlllist"));
+
     QStringList propsModel;
     propsModel << DBMODELXML::NAME   << DBMODELXML::DESCRIPTION
                << DBMODELXML::PARENT << DBMODELXML::ID;
     m_model->addDisplayedAttr(DBMODELXML::MODEL, propsModel, QIcon(":/model"));
 
+    QStringList propsValueList;
+    propsValueList << DBLOVXML::NAME   << DBLOVXML::DESCRIPTION
+                   << DBLOVXML::PARENT << DBLOVXML::ID
+                   << DBLOVXML::TYPE;
+    m_model->addDisplayedAttr(DBLOVXML::LOV, propsValueList, QIcon(":/valuelist"));
+
+    QStringList propsValueOfList;
+    propsValueOfList << DBLOVVALUEXML::NAME   << DBLOVVALUEXML::VALUE
+                     << DBLOVVALUEXML::PARENT << DBLOVVALUEXML::ID;
+    m_model->addDisplayedAttr(DBLOVVALUEXML::LOVVALUE, propsValueList, QIcon(":/valueoflist"));
 
     m_model->setHeaderData(0,  Qt::Horizontal, tr("Имя атрибута"));
     m_model->setHeaderData(1,  Qt::Horizontal, tr("Описание"));
@@ -347,12 +382,21 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addInsertTags(DBENTITYXML::ENTITY,insertTags);
 
     insertTags.clear();
-    insertTags << DBCLASSLISTXML::CLASSLIST << DBENTITYLISTXML::ENTITYLIST;
+    insertTags << DBCLASSLISTXML::CLASSLIST << DBENTITYLISTXML::ENTITYLIST
+               << DBLOVLISTXML::LOVLIST;
     m_model->addInsertTags(DBMODELXML::MODEL,insertTags);
 
     insertTags.clear();
     insertTags << DBENTITYXML::ENTITY;
     m_model->addInsertTags(DBENTITYGROUPXML::ENTITYGROUP,insertTags);
+
+    insertTags.clear();
+    insertTags << DBLOVXML::LOV;
+    m_model->addInsertTags(DBLOVLISTXML::LOVLIST,insertTags);
+
+    insertTags.clear();
+    insertTags << DBLOVVALUEXML::LOVVALUE;
+    m_model->addInsertTags(DBLOVXML::LOV,insertTags);
 
 
     m_model->addHashAttr(DBCLASSXML::CLASS,
@@ -379,6 +423,13 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addHashAttr(DBENTITYGROUPXML::ENTITYGROUP,
                                 DBENTITYGROUPXML::NAME,
                                 TreeXmlHashModel::UniqueRename);
+    m_model->addHashAttr(DBLOVXML::LOV,
+                                DBLOVXML::NAME,
+                                TreeXmlHashModel::UniqueRename);
+    m_model->addHashAttr(DBLOVVALUEXML::LOVVALUE,
+                                DBLOVVALUEXML::NAME,
+                                TreeXmlHashModel::UniqueRename);
+
 
     m_model->addHashAttr(DBCLASSXML::CLASS,
                                 DBCLASSXML::ID,
@@ -406,6 +457,12 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                 TreeXmlHashModel::Uuid);
     m_model->addHashAttr(DBENTITYGROUPXML::ENTITYGROUP,
                                 DBENTITYGROUPXML::ID,
+                                TreeXmlHashModel::Uuid);
+    m_model->addHashAttr(DBLOVXML::LOV,
+                                DBLOVXML::ID,
+                                TreeXmlHashModel::Uuid);
+    m_model->addHashAttr(DBLOVVALUEXML::LOVVALUE,
+                                DBLOVVALUEXML::ID,
                                 TreeXmlHashModel::Uuid);
 
 
@@ -438,10 +495,14 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     m_model->addRelation(DBENTITYXML::ENTITY, DBENTITYXML::BASICUNIT,
                                DBUNITXML::UNIT, DBUNITXML::NAME);
-    m_model->addRelation(DBUNITXML::UNIT, DBUNITXML::PARENT,
-                               DBENTITYXML::ENTITY, DBENTITYXML::NAME);
     m_model->addRelation(DBENTITYXML::ENTITY, DBENTITYXML::PARENT,
                                DBENTITYGROUPXML::ENTITYGROUP, DBENTITYGROUPXML::NAME);
+
+    m_model->addRelation(DBUNITXML::UNIT, DBUNITXML::PARENT,
+                               DBENTITYXML::ENTITY, DBENTITYXML::NAME);
+
+    m_model->addRelation(DBLOVVALUEXML::LOVVALUE, DBLOVVALUEXML::PARENT,
+                               DBLOVXML::LOV, DBLOVXML::NAME);
 
 
     m_model->refreshHashing();
@@ -456,6 +517,8 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     classFilterModel->addVisibleTag(DBENTITYGROUPXML::ENTITYGROUP);
     classFilterModel->addVisibleTag(DBENTITYXML::ENTITY);
     classFilterModel->addVisibleTag(DBENTITYLISTXML::ENTITYLIST);
+    classFilterModel->addVisibleTag(DBLOVLISTXML::LOVLIST);
+    classFilterModel->addVisibleTag(DBLOVXML::LOV);
     classFilterModel->addVisibleTag(DBMODELXML::MODEL);
     classFilterModel->addVisibleTag(DBROOTXML::ROOT);
 
@@ -512,6 +575,13 @@ void ModelerIDEPlug::add()
             treeClassView->treeView->setCurrentIndex(index);
             showPropEntity(m_model->lastInsertRow());
         }
+    } else if (indexSource.data(Qt::UserRole)==DBLOVLISTXML::LOVLIST) {
+        m_model->setInsTagName(DBLOVXML::LOV);
+        if (m_model->insertRow(0,indexSource)){
+            QModelIndex index = classFilterModel->mapFromSource(m_model->lastInsertRow());
+            treeClassView->treeView->setCurrentIndex(index);
+            showPropLov(m_model->lastInsertRow());
+        }
     }
 }
 
@@ -553,6 +623,13 @@ QString ModelerIDEPlug::dataName(const QModelIndex& index)
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBENTITYGROUPXML::ENTITYGROUP,
                                  DBENTITYGROUPXML::NAME
+                                 )).data().toString();
+    }
+
+    if (index.data(Qt::UserRole) == DBLOVXML::LOV) {
+        return index.sibling(index.row(),m_model->columnDisplayedAttr(
+                                 DBLOVXML::LOV,
+                                 DBLOVXML::NAME
                                  )).data().toString();
     }
 
@@ -600,6 +677,14 @@ QString ModelerIDEPlug::dataId(const QModelIndex &index)
                                  )).data().toString();
     }
 
+
+    if (index.data(Qt::UserRole) == DBLOVXML::LOV) {
+        return index.sibling(index.row(),m_model->columnDisplayedAttr(
+                                 DBLOVXML::LOV,
+                                 DBLOVXML::ID
+                                 )).data().toString();
+    }
+
     return "";
 }
 
@@ -625,13 +710,17 @@ void ModelerIDEPlug::dblClickTree(const QModelIndex &index)
     if (indexSource.data(Qt::UserRole)==DBENTITYGROUPXML::ENTITYGROUP)
         showPropEntityGroup(indexSource);
 
+    if (indexSource.data(Qt::UserRole)==DBLOVXML::LOV)
+        showPropLov(indexSource);
+
 }
 
 bool ModelerIDEPlug::isRemove(const QModelIndex &srcIndex)
 {
     if (srcIndex.data(Qt::UserRole) == DBMODELXML::MODEL
             || srcIndex.data(Qt::UserRole) == DBCLASSLISTXML::CLASSLIST
-            || srcIndex.data(Qt::UserRole) == DBENTITYLISTXML::ENTITYLIST)
+            || srcIndex.data(Qt::UserRole) == DBENTITYLISTXML::ENTITYLIST
+            || srcIndex.data(Qt::UserRole) == DBLOVLISTXML::LOVLIST)
     {
         return false;
     }
@@ -647,6 +736,10 @@ bool ModelerIDEPlug::isRemove(const QModelIndex &srcIndex)
 
     if (srcIndex.data(Qt::UserRole) == DBCLASSXML::CLASS)
         return ClassWidget::isRemove(srcIndex);
+
+    if (srcIndex.data(Qt::UserRole) == DBLOVXML::LOV)
+        return LovWidget::isRemove(srcIndex);
+
 
     return true;
 }
@@ -811,6 +904,30 @@ void ModelerIDEPlug::showPropEntityGroup(const QModelIndex &indexSource)
     }
 }
 
+void ModelerIDEPlug::showPropLov(const QModelIndex &indexSource)
+{
+    if (!indexSource.isValid())
+        return;
+
+    PluginManager* pluginManager = PluginManager::instance();
+    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
+                pluginManager->interfaceObject("IMainWindow"));
+
+    QString subWindowName = "PropLov::" + this->dataId(indexSource);
+    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
+
+    if (!subWindow) {
+        LovWidget* propLov = new LovWidget();
+        subWindow =  mainWindow->addSubWindow(propLov);
+        propLov->setObjectName(subWindowName);
+        propLov->setModel(m_model);
+        propLov->setCurrentLov(indexSource);
+    } else {
+        LovWidget* propLov = qobject_cast<LovWidget*>(subWindow->widget());
+        propLov->setCurrentLov(indexSource);
+    }
+}
+
 void ModelerIDEPlug::closePropWindow(const QModelIndex &index)
 {
     PluginManager* pluginManager = PluginManager::instance();
@@ -833,6 +950,10 @@ void ModelerIDEPlug::closePropWindow(const QModelIndex &index)
 
     if (index.data(Qt::UserRole)==DBENTITYGROUPXML::ENTITYGROUP)
         subWindowName = "PropEntityGroup::" + subWindowName;
+
+    if (index.data(Qt::UserRole)==DBLOVXML::LOV)
+        subWindowName = "PropLov::" + subWindowName;
+
 
     QMdiSubWindow *subWindow = mainWindow->subWindow(subWindowName);
     if (subWindow)
@@ -892,6 +1013,21 @@ void ModelerIDEPlug::newClassModel()
             column = m_model->columnDisplayedAttr(DBENTITYLISTXML::ENTITYLIST,
                                                   DBENTITYLISTXML::DESCRIPTION);
             m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("Единицы измерения"));
+        }
+
+        m_model->setInsTagName(DBLOVLISTXML::LOVLIST);
+        if (m_model->insertRow(0,indexSource)){
+            QModelIndex index = classFilterModel->mapFromSource(m_model->lastInsertRow());
+            treeClassView->treeView->setCurrentIndex(index);
+            QModelIndex lastIndex = m_model->lastInsertRow();
+
+            int column = m_model->columnDisplayedAttr(DBLOVLISTXML::LOVLIST,
+                                                      DBLOVLISTXML::NAME);
+            m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("List of Value"));
+
+            column = m_model->columnDisplayedAttr(DBLOVLISTXML::LOVLIST,
+                                                  DBLOVLISTXML::DESCRIPTION);
+            m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("Список значений"));
         }
     }
 }
@@ -978,9 +1114,15 @@ void ModelerIDEPlug::closeClassModel()
     IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
     foreach (QMdiSubWindow* subWindow, mainWindow->subWindowList())
-        if (subWindow->widget()->objectName().indexOf(QRegExp("^PropClass::"))
-                || subWindow->widget()->objectName().indexOf(QRegExp("^PropComposition::")))
+        if (subWindow->widget()->objectName().indexOf(QRegExp("^PropClass::"))  != -1
+         || subWindow->widget()->objectName().indexOf(QRegExp("^PropComposition::"))  != -1
+         || subWindow->widget()->objectName().indexOf(QRegExp("^PropFilter::"))  != -1
+         || subWindow->widget()->objectName().indexOf(QRegExp("^PropEntityGroup::"))  != -1
+         || subWindow->widget()->objectName().indexOf(QRegExp("^PropEntity::"))  != -1
+         || subWindow->widget()->objectName().indexOf(QRegExp("^PropLov::"))  != -1
+        ) {
             subWindow->close();
+        }
 
     if (m_model){
         delete classFilterModel;

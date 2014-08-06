@@ -153,6 +153,9 @@ public slots:
     //! Слот вызова окна редактирования группы сущности единицы измерения
     void showPropEntityGroup(const QModelIndex &indexSource);
 
+    //! Слот вызова окна редактирования списка значений
+    void showPropLov(const QModelIndex &indexSource);
+
 
     //! Закрытие окна по индексу
     void closePropWindow(const QModelIndex& index);
