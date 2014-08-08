@@ -28,7 +28,7 @@ public:
     //! Проверка на возможность удаления сущности ЕИ
     static bool isRemove(const QModelIndex &srcIndex);
 
-    //! Проверка запонена ли имя сущности ЕИ
+    //! Проверка запонено ли имя сущности ЕИ
     bool isEmpty();
 
 public slots:
