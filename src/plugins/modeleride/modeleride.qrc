@@ -21,5 +21,8 @@
         <file alias="units">icons/units.svg</file>
         <file alias="classes">icons/classes.svg</file>
         <file alias="entitygroup">icons/entitygroup.svg</file>
+        <file alias="lovlist">icons/lovlist.svg</file>
+        <file alias="lov">icons/lov.svg</file>
+        <file alias="lovvalue">icons/lovvalue.svg</file>
     </qresource>
 </RCC>

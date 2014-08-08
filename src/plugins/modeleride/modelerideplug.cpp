@@ -314,26 +314,26 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                     << DBENTITYLISTXML::PARENT << DBENTITYLISTXML::ID;
     m_model->addDisplayedAttr(DBENTITYLISTXML::ENTITYLIST, propsEntityList, QIcon(":/units"));
 
-    QStringList propsVLLList;
-    propsVLLList << DBLOVLISTXML::NAME   << DBLOVLISTXML::DESCRIPTION
+    QStringList propsLovList;
+    propsLovList << DBLOVLISTXML::NAME   << DBLOVLISTXML::DESCRIPTION
                  << DBLOVLISTXML::PARENT << DBLOVLISTXML::ID;
-    m_model->addDisplayedAttr(DBLOVLISTXML::LOVLIST, propsVLLList, QIcon(":/vlllist"));
+    m_model->addDisplayedAttr(DBLOVLISTXML::LOVLIST, propsLovList, QIcon(":/lovlist"));
 
     QStringList propsModel;
     propsModel << DBMODELXML::NAME   << DBMODELXML::DESCRIPTION
                << DBMODELXML::PARENT << DBMODELXML::ID;
     m_model->addDisplayedAttr(DBMODELXML::MODEL, propsModel, QIcon(":/model"));
 
-    QStringList propsValueList;
-    propsValueList << DBLOVXML::NAME   << DBLOVXML::DESCRIPTION
+    QStringList propsLov;
+    propsLov << DBLOVXML::NAME   << DBLOVXML::DESCRIPTION
                    << DBLOVXML::PARENT << DBLOVXML::ID
                    << DBLOVXML::TYPE;
-    m_model->addDisplayedAttr(DBLOVXML::LOV, propsValueList, QIcon(":/valuelist"));
+    m_model->addDisplayedAttr(DBLOVXML::LOV, propsLov, QIcon(":/lov"));
 
-    QStringList propsValueOfList;
-    propsValueOfList << DBLOVVALUEXML::NAME   << DBLOVVALUEXML::VALUE
+    QStringList propsLovValue;
+    propsLovValue << DBLOVVALUEXML::NAME   << DBLOVVALUEXML::VALUE
                      << DBLOVVALUEXML::PARENT << DBLOVVALUEXML::ID;
-    m_model->addDisplayedAttr(DBLOVVALUEXML::LOVVALUE, propsValueList, QIcon(":/valueoflist"));
+    m_model->addDisplayedAttr(DBLOVVALUEXML::LOVVALUE, propsLov, QIcon(":/lovvalue"));
 
     m_model->setHeaderData(0,  Qt::Horizontal, tr("Имя атрибута"));
     m_model->setHeaderData(1,  Qt::Horizontal, tr("Описание"));
