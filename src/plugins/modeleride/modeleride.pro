@@ -41,7 +41,9 @@ HEADERS += modelerideplug.h \
     regexpvalidator.h \
     propentitygroup.h \
     unitdelegate.h \
-    lovwidget.h
+    lovwidget.h \
+    proplov.h \
+    lovvaluewidget.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -63,7 +65,9 @@ SOURCES += modelerideplug.cpp \
     regexpvalidator.cpp \
     propentitygroup.cpp \
     unitdelegate.cpp \
-    lovwidget.cpp
+    lovwidget.cpp \
+    proplov.cpp \
+    lovvaluewidget.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
@@ -81,4 +85,6 @@ FORMS += \
     msrentitywidget.ui \
     propentity.ui \
     propentitygroup.ui \
-    lovwidget.ui
+    lovwidget.ui \
+    proplov.ui \
+    lovvaluewidget.ui

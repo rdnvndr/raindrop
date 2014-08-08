@@ -18,6 +18,7 @@
 #include "dbxmlstruct.h"
 #include "propentitygroup.h"
 #include "lovwidget.h"
+#include "proplov.h"
 
 ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     QObject(parent), IPlugin("ITreeDockWidget IMainWindow")
@@ -917,13 +918,13 @@ void ModelerIDEPlug::showPropLov(const QModelIndex &indexSource)
     QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
 
     if (!subWindow) {
-        LovWidget* propLov = new LovWidget();
+        PropLov* propLov = new PropLov();
         subWindow =  mainWindow->addSubWindow(propLov);
         propLov->setObjectName(subWindowName);
         propLov->setModel(m_model);
         propLov->setCurrentLov(indexSource);
     } else {
-        LovWidget* propLov = qobject_cast<LovWidget*>(subWindow->widget());
+        PropLov* propLov = qobject_cast<PropLov*>(subWindow->widget());
         propLov->setCurrentLov(indexSource);
     }
 }
