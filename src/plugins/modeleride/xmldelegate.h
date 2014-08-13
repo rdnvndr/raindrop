@@ -2,7 +2,7 @@
 #define XMLDELEGATE_H
 
 #include <QStyledItemDelegate>
-
+#include <treexmlmodel/treexmlhashmodel.h>
 //! Делегат XML модели
 /*! Данный делегат предназначен для ввода данных в XML модель
     TreeXMLModel
@@ -29,10 +29,16 @@ public:
 
     //! Перерисовка делегата
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-signals:
-    
-public slots:
-    
+
+private:
+    //! Получение хэш модели
+    TreeXmlHashModel *sourceModel(QAbstractItemModel *model) const;
+
+    //! Получение индекса прокси модели
+    QModelIndex mapToSource(QModelIndex index) const;
+
+    //! Получение индекса хэш модели
+    QModelIndex mapFromSource(QAbstractItemModel *toModel, QModelIndex index) const;
 };
 
 #endif // XMLDELEGATE_H

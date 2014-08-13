@@ -43,7 +43,7 @@ void MsrUnitWidget::setModel(TreeXmlHashModel *model)
     m_unitModel->setHeaderData(9,  Qt::Horizontal, tr("Индентификатор"));
     tableViewUnit->setModel(m_unitModel);
 
-    for (int column = 8; column < 15; column++)
+    for (int column = 8; column < 16; column++)
         tableViewUnit->setColumnHidden(column,true);
 }
 
