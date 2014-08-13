@@ -56,28 +56,29 @@ namespace DBCOMPXML{
     const QString ID = "guid";
 }
 
-//! Список типов атрибута
-const QStringList DBXMLATTRTYPE = (QStringList()
-                               << "Boolean"
-                               << "Binary"
-                               << "Char"
-                               << "Date"
-                               << "Decimal"
-                               << "Dimension"
-                               << "Double"
-                               << "Integer"
-                               << "String"
-                               << "Reference"
-                               << "Range"
-                               << "Time"
-                               << "Timeshtamp"
-                               );
-//! Список типов класса
-const QStringList DBXMLCLASSTYPE = (QStringList()
-                               << "System"
-                               << "Standart"
-                               << "User"
-                               );
+//! Типы атрибутов
+namespace DBTYPEXML{
+    const QString BOOLEAN = "Boolean";
+    const QString BINARY = "Binary";
+    const QString CHAR = "Char";
+    const QString DATE = "Date";
+    const QString DECIMAL = "Decimal";
+    const QString DIMENSION = "Dimension";
+    const QString DOUBLE = "Double";
+    const QString INTEGER = "Integer";
+    const QString STRING = "String";
+    const QString REFERENCE = "Reference";
+    const QString RANGE = "Range";
+    const QString TIME = "Time";
+    const QString TIMESHTAMP = "Timeshtamp";
+}
+
+//! Типы классов
+namespace DBCLASSTYPEXML{
+    const QString SYSTEM = "System";
+    const QString STANDART = "Standart";
+    const QString USER = "User";
+}
 
 //! Ключевые слова XML файла для описания фильтра
 namespace DBFILTERXML{
@@ -195,7 +196,7 @@ namespace DBLOVXML{
 namespace DBLOVVALUEXML{
     const QString LOVVALUE = "RTPLOVValue";
     const QString NAME = "name";
-    const QString VALUE = "description";
+    const QString VALUE = "value";
     const QString PARENT = "parent";
     const QString ID = "guid";
 }

@@ -28,7 +28,22 @@ AttrWidget::AttrWidget(QWidget *parent) :
     m_attrModel->setAttributeTags(tags);
 
     m_typeAttrModel = new QStringListModel();
-    m_typeAttrModel->setStringList(DBXMLATTRTYPE);
+    const QStringList attrTypeList = (QStringList()
+                                       << DBTYPEXML::BOOLEAN
+                                       << DBTYPEXML::BINARY
+                                       << DBTYPEXML::CHAR
+                                       << DBTYPEXML::DATE
+                                       << DBTYPEXML::DECIMAL
+                                       << DBTYPEXML::DIMENSION
+                                       << DBTYPEXML::DOUBLE
+                                       << DBTYPEXML::INTEGER
+                                       << DBTYPEXML::STRING
+                                       << DBTYPEXML::REFERENCE
+                                       << DBTYPEXML::RANGE
+                                       << DBTYPEXML::TIME
+                                       << DBTYPEXML::TIMESHTAMP
+                                       );
+    m_typeAttrModel->setStringList(attrTypeList);
 
     tableViewAttr->setItemDelegate(new XmlDelegate(this));
     tableViewAttr->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -305,7 +320,7 @@ void AttrWidget::showParentAttr(bool flag)
 
 void AttrWidget::changeType(const QString &typeName)
 {
-    if (DBXMLATTRTYPE.at(8)==typeName){
+    if (DBTYPEXML::STRING==typeName){
         // String
         spinBoxStringLen->setEnabled(true);
         comboBoxLinkAttr->setEnabled(false);
@@ -317,7 +332,7 @@ void AttrWidget::changeType(const QString &typeName)
         comboBoxUnitAttr->setEnabled(false);
         comboBoxUnitAttr->setDisplayText("");
         comboBoxUnitAttr->setCurrentIndex(-1);
-    } else if( DBXMLATTRTYPE.at(9)==typeName){
+    } else if(DBTYPEXML::REFERENCE==typeName){
         //Reference
         spinBoxStringLen->setEnabled(false);
         spinBoxStringLen->setValue(0);
@@ -342,11 +357,11 @@ void AttrWidget::changeType(const QString &typeName)
         lineEditUpperBound->setEnabled(true);
 
         // Decimal, Dimension, Double, Integer, Rage
-        if( DBXMLATTRTYPE.at(4)==typeName
-         || DBXMLATTRTYPE.at(5)==typeName
-         || DBXMLATTRTYPE.at(6)==typeName
-         || DBXMLATTRTYPE.at(7)==typeName
-         || DBXMLATTRTYPE.at(10)==typeName )
+        if( DBTYPEXML::DECIMAL   == typeName
+         || DBTYPEXML::DIMENSION == typeName
+         || DBTYPEXML::DOUBLE    == typeName
+         || DBTYPEXML::INTEGER   == typeName
+         || DBTYPEXML::RANGE     == typeName )
         {
             comboBoxUnitAttr->setEnabled(true);
         } else {

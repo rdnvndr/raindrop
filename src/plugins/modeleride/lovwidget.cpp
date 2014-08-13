@@ -2,16 +2,40 @@
 #include "xmldelegate.h"
 #include "dbxmlstruct.h"
 #include <QMessageBox>
+#include <QToolTip>
+#include "regexpvalidator.h"
 
 LovWidget::LovWidget(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
 
+    RegExpValidator *validator =
+            new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{0,26}|^[A-Za-z]{0}"));
+    lineEditLovName->setValidator(validator);
+    connect(validator,SIGNAL(stateChanged(QValidator::State)),
+            this,SLOT(validateLovName(QValidator::State)));
+
     m_mapper = new QDataWidgetMapper();
     m_mapper->setItemDelegate(new XmlDelegate(this));
     m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
+    m_typeAttrModel = new QStringListModel();
+    const QStringList attrTypeList = (QStringList()
+                                       << DBTYPEXML::BOOLEAN
+                                       << DBTYPEXML::BINARY
+                                       << DBTYPEXML::CHAR
+                                       << DBTYPEXML::DATE
+                                       << DBTYPEXML::DECIMAL
+                                       << DBTYPEXML::DIMENSION
+                                       << DBTYPEXML::DOUBLE
+                                       << DBTYPEXML::INTEGER
+                                       << DBTYPEXML::STRING
+                                       << DBTYPEXML::RANGE
+                                       << DBTYPEXML::TIME
+                                       << DBTYPEXML::TIMESHTAMP
+                                       );
+    m_typeAttrModel->setStringList(attrTypeList);
     m_oldIndex = -1;
 }
 
@@ -107,9 +131,10 @@ void LovWidget::setModel(TreeXmlHashModel *model)
     m_mapper->addMapping(lineEditLovDesc,
                          model->columnDisplayedAttr(DBLOVXML::LOV,
                                                    DBLOVXML::DESCRIPTION));
-    m_mapper->addMapping(lineEditLovType,
+    m_mapper->addMapping(comboBoxLovType,
                          model->columnDisplayedAttr(DBLOVXML::LOV,
                                                     DBLOVXML::TYPE));
+    comboBoxLovType->setModel(m_typeAttrModel);
 }
 
 void LovWidget::setCurrent(const QModelIndex &index)
@@ -171,6 +196,16 @@ void LovWidget::rowsRemoved(const QModelIndex &index, int start, int end)
 
     if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1 && m_oldIndex <0)
         emit dataRemoved(QModelIndex());
+}
+
+void LovWidget::validateLovName(QValidator::State state) const
+{
+    if(state != QValidator::Acceptable)
+        QToolTip::showText(lineEditLovName->mapToGlobal(QPoint(0,5)),
+                           tr("Имя списка значений должно содержать только латинские\n"
+                              "символы и цифры длиной не более 27 символов"));
+    else
+        QToolTip::hideText();
 }
 
 QVariant LovWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index, int role)

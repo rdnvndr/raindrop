@@ -16,8 +16,6 @@ PropLov::PropLov(QWidget *parent) :
             this,SLOT(setTabName(QModelIndex)));
     connect(lovWidget,SIGNAL(dataRemoved(QModelIndex)),
             this,SLOT(closeTab(QModelIndex)));
-    connect(lovValueWidget,SIGNAL(proxyIndexChanged(QModelIndex)),
-            lovWidget, SLOT(setUnitRootIndex(QModelIndex)));
 
     connect(lovWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));
     connect(lovWidget, SIGNAL(edited(bool)), lovValueWidget, SLOT(edit(bool)));
@@ -59,11 +57,11 @@ void PropLov::setTabName(const QModelIndex &index)
 {
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
 
-    QString entityName = modelData(DBENTITYXML::ENTITY, DBENTITYXML::NAME,index).toString();
-    QString id = modelData(DBENTITYXML::ENTITY, DBENTITYXML::ID,index).toString();
+    QString lovName = modelData(DBLOVXML::LOV, DBLOVXML::NAME,index).toString();
+    QString id = modelData(DBLOVXML::LOV, DBLOVXML::ID,index).toString();
 
     this->setObjectName("PropLov::" + id);
-    subWindow->setWindowTitle(tr("Сущность ЕИ: ")+entityName);
+    subWindow->setWindowTitle(tr("Список значений: ")+lovName);
 }
 
 void PropLov::closeTab(const QModelIndex &index)

@@ -151,8 +151,8 @@ void PropEntityGroup::setTabName(const QModelIndex &index)
                            DBENTITYGROUPXML::ID,
                            index).toString();
 
-    this->setObjectName("PropEntity::" + id);
-    subWindow->setWindowTitle(tr("Сущность ЕИ: ")+entityGroupName);
+    this->setObjectName("PropEntityGroup::" + id);
+    subWindow->setWindowTitle(tr("Группа ЕИ: ")+entityGroupName);
 }
 
 void PropEntityGroup::closeTab(const QModelIndex &index)
