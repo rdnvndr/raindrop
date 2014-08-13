@@ -143,6 +143,12 @@ void LovWidget::setCurrent(const QModelIndex &index)
     emit currentIndexChanged(index);
     m_mapper->setCurrentModelIndex(index);
 
+    int indexType = comboBoxLovType->findText(modelData(
+                                                   DBLOVXML::LOV,
+                                                   DBLOVXML::TYPE,
+                                                   index).toString());
+    comboBoxLovType->setCurrentIndex(indexType);
+
     edit(false);
 }
 

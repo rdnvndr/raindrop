@@ -6,6 +6,7 @@
 #include <QToolTip>
 #include "treefilterproxymodel.h"
 #include "regexpvalidator.h"
+#include <QDebug>
 
 AttrWidget::AttrWidget(QWidget *parent) :
     QWidget(parent)
@@ -46,6 +47,7 @@ AttrWidget::AttrWidget(QWidget *parent) :
     m_typeAttrModel->setStringList(attrTypeList);
 
     tableViewAttr->setItemDelegate(new XmlDelegate(this));
+    comboBoxLov->setItemDelegate(new XmlDelegate(this));
     tableViewAttr->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     connect(tableViewAttr,SIGNAL(clicked(QModelIndex)),
@@ -98,6 +100,28 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     tableViewAttr->setColumnHidden(14,true);
 
     m_mapperAttr->setModel(m_attrModel);
+
+    TableXMLProxyModel* lovFilterModel = new TableXMLProxyModel();
+    QStringList tags;
+    tags << DBLOVLISTXML::LOVLIST;
+    lovFilterModel->setAttributeTags(tags);
+    lovFilterModel->setSourceModel(m_model);
+    lovFilterModel->setFilterIndex(m_model->index(0,0));
+    lovFilterModel->setFilterRole(Qt::EditRole);
+    lovFilterModel->setFilterKeyColumn(m_model->columnDisplayedAttr(
+                                           DBLOVXML::LOV,DBLOVXML::TYPE));
+    lovFilterModel->setDynamicSortFilter(true);
+    lovFilterModel->sort(0);
+    comboBoxLov->setModel(lovFilterModel);
+
+    comboBoxLov->setRootModelIndex(lovFilterModel->index(0,0).child(0,0));
+    lovFilterModel->setFilterIndex(lovFilterModel->mapToSource(lovFilterModel->index(0,0).child(0,0)));
+    tags << DBLOVXML::LOV;
+    lovFilterModel->setAttributeTags(tags);
+
+    QModelIndex lovSrcIndex = lovFilterModel->mapToSource(comboBoxLov->rootModelIndex());
+    lovFilterModel->setFilterRegExp(DBTYPEXML::REFERENCE);
+    comboBoxLov->setRootModelIndex(lovFilterModel->mapFromSource(lovSrcIndex));
 
     QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
     classFilterModel->setFilterKeyColumn(0);
@@ -173,6 +197,10 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     m_mapperAttr->addMapping(comboBoxUnitAttr,
                              m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::REFUNIT));
+
+    m_mapperAttr->addMapping(comboBoxLov,
+                             m_model->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                         DBATTRXML::REFLOV));
 
 }
 
@@ -320,12 +348,18 @@ void AttrWidget::showParentAttr(bool flag)
 
 void AttrWidget::changeType(const QString &typeName)
 {
+    TableXMLProxyModel *lovFilterModel = qobject_cast<TableXMLProxyModel *>(comboBoxLov->model());
+    QModelIndex lovSrcIndex = lovFilterModel->mapToSource(comboBoxLov->rootModelIndex());
+    lovFilterModel->setFilterRegExp(typeName);
+    comboBoxLov->setRootModelIndex(lovFilterModel->mapFromSource(lovSrcIndex));
+
     if (DBTYPEXML::STRING==typeName){
         // String
         spinBoxStringLen->setEnabled(true);
         comboBoxLinkAttr->setEnabled(false);
         comboBoxLinkAttr->setDisplayText("");
         comboBoxLinkAttr->setCurrentIndex(-1);
+        comboBoxLov->setEnabled(true);
         lineEditDefaultValue->setEnabled(true);
         lineEditLowerBound->setEnabled(true);
         lineEditUpperBound->setEnabled(true);
@@ -337,6 +371,7 @@ void AttrWidget::changeType(const QString &typeName)
         spinBoxStringLen->setEnabled(false);
         spinBoxStringLen->setValue(0);
         comboBoxLinkAttr->setEnabled(true);
+        comboBoxLov->setEnabled(false);
         lineEditDefaultValue->setEnabled(false);
         lineEditDefaultValue->setText("");
         lineEditLowerBound->setEnabled(false);
@@ -352,6 +387,7 @@ void AttrWidget::changeType(const QString &typeName)
         comboBoxLinkAttr->setEnabled(false);
         comboBoxLinkAttr->setDisplayText("");
         comboBoxLinkAttr->setCurrentIndex(-1);
+        comboBoxLov->setEnabled(true);
         lineEditDefaultValue->setEnabled(true);
         lineEditLowerBound->setEnabled(true);
         lineEditUpperBound->setEnabled(true);
