@@ -86,18 +86,19 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     m_attrModel->setHeaderData(7,  Qt::Horizontal, tr("По умолчанию"));
     m_attrModel->setHeaderData(8,  Qt::Horizontal, tr("Нижняя граница"));
     m_attrModel->setHeaderData(9,  Qt::Horizontal, tr("Верхняя гранница"));
-    m_attrModel->setHeaderData(10, Qt::Horizontal, tr("Группа"));
-    m_attrModel->setHeaderData(11, Qt::Horizontal, tr("Нулевые значения"));
-    m_attrModel->setHeaderData(12, Qt::Horizontal, tr("Уникальный"));
-    m_attrModel->setHeaderData(13, Qt::Horizontal, tr("Кандидат в ключ"));
-    m_attrModel->setHeaderData(14, Qt::Horizontal, tr("Индетификатор"));
+    m_attrModel->setHeaderData(10, Qt::Horizontal, tr("Список значений"));
+    m_attrModel->setHeaderData(11, Qt::Horizontal, tr("Группа"));
+    m_attrModel->setHeaderData(12, Qt::Horizontal, tr("Нулевые значения"));
+    m_attrModel->setHeaderData(13, Qt::Horizontal, tr("Уникальный"));
+    m_attrModel->setHeaderData(14, Qt::Horizontal, tr("Кандидат в ключ"));
+    m_attrModel->setHeaderData(15, Qt::Horizontal, tr("Индетификатор"));
 
     m_attrModel->setDynamicSortFilter(true);
 
     tableViewAttr->setSortingEnabled(true);
     tableViewAttr->setModel(m_attrModel);
     tableViewAttr->sortByColumn(0,Qt::AscendingOrder);
-    tableViewAttr->setColumnHidden(14,true);
+    tableViewAttr->setColumnHidden(15,true);
 
     m_mapperAttr->setModel(m_attrModel);
 
