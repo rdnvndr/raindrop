@@ -249,9 +249,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
               << DBATTRXML::REFCLASS       << DBATTRXML::PARENT
               << DBATTRXML::REFUNIT        << DBATTRXML::INITIALVAL
               << DBATTRXML::LOWERBOUND     << DBATTRXML::UPPERBOUND
-              << DBATTRXML::GROUP          << DBATTRXML::ISNULLALLOWED
-              << DBATTRXML::ISUNIQUE       << DBATTRXML::ISCANDIDATEKEY
-              << DBATTRXML::ID;
+              << DBATTRXML::REFLOV         << DBATTRXML::GROUP
+              << DBATTRXML::ISNULLALLOWED  << DBATTRXML::ISUNIQUE
+              << DBATTRXML::ISCANDIDATEKEY << DBATTRXML::ID;
     m_model->addDisplayedAttr(DBATTRXML::ATTR,propsAttr, QIcon(":/attribute"));
     m_model->addAttrTag(DBATTRXML::ATTR);
 
@@ -346,11 +346,12 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->setHeaderData(7,  Qt::Horizontal, tr("По умолчанию"));
     m_model->setHeaderData(8,  Qt::Horizontal, tr("Нижняя граница"));
     m_model->setHeaderData(9,  Qt::Horizontal, tr("Верхняя гранница"));
-    m_model->setHeaderData(10, Qt::Horizontal, tr("Группа"));
-    m_model->setHeaderData(11, Qt::Horizontal, tr("Нулевые значения"));
-    m_model->setHeaderData(12, Qt::Horizontal, tr("Уникальный"));
-    m_model->setHeaderData(13, Qt::Horizontal, tr("Кандидат в ключ"));
-    m_model->setHeaderData(14, Qt::Horizontal, tr("Индетификатор"));
+    m_model->setHeaderData(10, Qt::Horizontal, tr("Список значений"));
+    m_model->setHeaderData(11, Qt::Horizontal, tr("Группа"));
+    m_model->setHeaderData(12, Qt::Horizontal, tr("Нулевые значения"));
+    m_model->setHeaderData(13, Qt::Horizontal, tr("Уникальный"));
+    m_model->setHeaderData(14, Qt::Horizontal, tr("Кандидат в ключ"));
+    m_model->setHeaderData(15, Qt::Horizontal, tr("Индетификатор"));
 
 
     QStringList insertTags;
@@ -408,6 +409,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                 TreeXmlHashModel::NoUnique);
     m_model->addHashAttr(DBATTRXML::ATTR,
                                 DBATTRXML::REFUNIT,
+                                TreeXmlHashModel::NoUnique);
+    m_model->addHashAttr(DBATTRXML::ATTR,
+                                DBATTRXML::REFLOV,
                                 TreeXmlHashModel::NoUnique);
     m_model->addHashAttr(DBCOMPXML::COMP,
                                 DBCOMPXML::CLASS,
@@ -475,6 +479,8 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                DBCOMPXML::COMP, DBCOMPXML::NAME);
     m_model->addRelation(DBATTRXML::ATTR,DBATTRXML::REFUNIT,
                                DBUNITXML::UNIT, DBUNITXML::NAME);
+    m_model->addRelation(DBATTRXML::ATTR,DBATTRXML::REFLOV,
+                               DBLOVXML::LOV, DBLOVXML::NAME);
 
     m_model->addRelation(DBCLASSXML::CLASS, DBCLASSXML::PARENT,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);

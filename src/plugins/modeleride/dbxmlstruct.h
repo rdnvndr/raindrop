@@ -39,6 +39,7 @@ namespace DBATTRXML{
     const QString UPPERBOUND = "upperBound";
     const QString REFCLASS = "referencedClass";
     const QString REFUNIT =  "referencedUnit";
+    const QString REFLOV =  "referencedLov";
     const QString PARENT = "parent";
     const QString ID = "guid";
 }

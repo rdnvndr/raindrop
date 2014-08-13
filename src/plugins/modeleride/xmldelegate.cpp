@@ -34,14 +34,25 @@ void XmlDelegate::setEditorData(QWidget * editor, const QModelIndex & index) con
     if (comboBox) {
 
         ModifyProxyModel* modifyModel = dynamic_cast<ModifyProxyModel*>(comboBox->model());
-        TreeXmlHashModel* hashModel = (modifyModel)?
-                    dynamic_cast<TreeXmlHashModel*>(modifyModel->sourceModel())
-                  : dynamic_cast<TreeXmlHashModel*>(comboBox->model());
+        QAbstractProxyModel *proxyModel = dynamic_cast<QAbstractProxyModel*>(comboBox->model());
+
+        TreeXmlHashModel* hashModel;
+        if (modifyModel)
+            hashModel = dynamic_cast<TreeXmlHashModel*>(modifyModel->sourceModel());
+        else if (proxyModel)
+            hashModel = dynamic_cast<TreeXmlHashModel*>(proxyModel->sourceModel());
+        else
+            hashModel = dynamic_cast<TreeXmlHashModel*>(comboBox->model());
 
         if (hashModel && hashModel == index.model()) {
-            QModelIndex curIndex = (modifyModel)?
-                        modifyModel->mapFromSource(hashModel->indexLink(index))
-                      : hashModel->indexLink(index);
+
+            QModelIndex curIndex;
+            if (modifyModel)
+                curIndex = modifyModel->mapFromSource(hashModel->indexLink(index));
+            else if (proxyModel)
+                curIndex = proxyModel->mapFromSource(hashModel->indexLink(index));
+            else
+                curIndex = hashModel->indexLink(index);
             comboBox->setCurrentIndex(curIndex.row());
             return;
         }
@@ -80,9 +91,16 @@ void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, co
     QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
     if (comboBox) {
         ModifyProxyModel* modifyModel = dynamic_cast<ModifyProxyModel*>(comboBox->model());
-        TreeXmlHashModel* hashModel = (modifyModel)?
-                    dynamic_cast<TreeXmlHashModel*>(modifyModel->sourceModel())
-                  : dynamic_cast<TreeXmlHashModel*>(comboBox->model());
+        QAbstractProxyModel *proxyModel = dynamic_cast<QAbstractProxyModel*>(comboBox->model());
+
+        TreeXmlHashModel* hashModel;
+        if (modifyModel)
+            hashModel = dynamic_cast<TreeXmlHashModel*>(modifyModel->sourceModel());
+        else if (proxyModel)
+            hashModel = dynamic_cast<TreeXmlHashModel*>(proxyModel->sourceModel());
+        else
+            hashModel = dynamic_cast<TreeXmlHashModel*>(comboBox->model());
+
 
         if (hashModel && hashModel == model) {
             QString tag  = index.data(Qt::UserRole).toString();
@@ -90,9 +108,13 @@ void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, co
             int column = hashModel->columnDisplayedAttr(hashModel->toRelation(tag,attr).tag,
                                                         hashModel->uuidAttr(tag));
 
-            QModelIndex curIndex = (modifyModel)?
-                        modifyModel->mapFromSource(comboBox->view()->currentIndex())
-                      : comboBox->view()->currentIndex();
+            QModelIndex curIndex;
+            if (modifyModel)
+                curIndex = modifyModel->mapFromSource(comboBox->view()->currentIndex());
+            else if (proxyModel)
+                curIndex = proxyModel->mapFromSource(comboBox->view()->currentIndex());
+            else
+                comboBox->view()->currentIndex();
 
             curIndex = curIndex.sibling(curIndex.row(), column);
             if (curIndex.isValid())
