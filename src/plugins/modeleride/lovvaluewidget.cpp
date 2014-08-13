@@ -31,7 +31,7 @@ void LovValueWidget::setModel(TreeXmlHashModel *model)
     m_lovValueModel->setHeaderData(0,  Qt::Horizontal, tr("Наименование"));
     m_lovValueModel->setHeaderData(1,  Qt::Horizontal, tr("Значение"));
     m_lovValueModel->setHeaderData(2,  Qt::Horizontal, tr("Список значений"));
-    m_lovValueModel->setHeaderData(3,  Qt::Horizontal, tr("Индентификатор"));
+    m_lovValueModel->setHeaderData(3,  Qt::Horizontal, tr("Идентификатор"));
     tableViewLovValue->setModel(m_lovValueModel);
 
     for (int column = 2; column < 16; column++)

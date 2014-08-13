@@ -40,7 +40,7 @@ void MsrUnitWidget::setModel(TreeXmlHashModel *model)
     m_unitModel->setHeaderData(6,  Qt::Horizontal, tr("Обозначение (межд.)"));
     m_unitModel->setHeaderData(7,  Qt::Horizontal, tr("Символы (межд.)"));
     m_unitModel->setHeaderData(8,  Qt::Horizontal, tr("Сущность ЕИ"));
-    m_unitModel->setHeaderData(9,  Qt::Horizontal, tr("Индентификатор"));
+    m_unitModel->setHeaderData(9,  Qt::Horizontal, tr("Идентификатор"));
     tableViewUnit->setModel(m_unitModel);
 
     for (int column = 8; column < 16; column++)
