@@ -43,7 +43,8 @@ HEADERS += modelerideplug.h \
     unitdelegate.h \
     lovwidget.h \
     proplov.h \
-    lovvaluewidget.h
+    lovvaluewidget.h \
+    lovdelegate.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -67,7 +68,8 @@ SOURCES += modelerideplug.cpp \
     unitdelegate.cpp \
     lovwidget.cpp \
     proplov.cpp \
-    lovvaluewidget.cpp
+    lovvaluewidget.cpp \
+    lovdelegate.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \

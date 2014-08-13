@@ -201,9 +201,6 @@ void MsrUnitWidget::submit()
 
 void MsrUnitWidget::edit(bool flag)
 {
-    if (toolButtonAddUnit->isEnabled() == flag)
-        return;
-
     if (flag == false)
         tableViewUnit->setCurrentIndex(tableViewUnit->rootIndex());
 

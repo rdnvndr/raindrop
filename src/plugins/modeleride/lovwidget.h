@@ -4,6 +4,7 @@
 #include "ui_lovwidget.h"
 #include "treexmlmodel/treexmlhashmodel.h"
 #include <QDataWidgetMapper>
+#include <QStringListModel>
 
 class LovWidget : public QWidget, private Ui::LovWidget
 {
@@ -50,6 +51,9 @@ public slots:
     //! Удаление списка значений
     void rowsRemoved(const QModelIndex &index,int start,int end);
 
+    //! Сообщение о неверном имени списка значений
+    void validateLovName(QValidator::State state) const;
+
 signals:
     //! Сигнал об изменении данных
     void dataChanged(const QModelIndex &index);
@@ -77,6 +81,8 @@ private:
     //! Хранит индекс предыдущего активного списка значений
     int  m_oldIndex;
 
+    //! Список типов значений
+    QStringListModel *m_typeAttrModel;
 };
 
 #endif // LOVWIDGET_H

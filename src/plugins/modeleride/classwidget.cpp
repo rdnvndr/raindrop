@@ -21,7 +21,12 @@ ClassWidget::ClassWidget(QWidget *parent) :
     m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
     m_typeClassModel = new QStringListModel();
-    m_typeClassModel->setStringList(DBXMLCLASSTYPE);
+    const QStringList classType = (QStringList()
+                                   << DBCLASSTYPEXML::SYSTEM
+                                   << DBCLASSTYPEXML::STANDART
+                                   << DBCLASSTYPEXML::USER
+                                   );
+    m_typeClassModel->setStringList(classType);
 
     lineEditClassParent->setReadOnly(true);
 
