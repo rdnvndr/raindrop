@@ -114,15 +114,10 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     lovFilterModel->setDynamicSortFilter(true);
     lovFilterModel->sort(0);
     comboBoxLov->setModel(lovFilterModel);
-
     comboBoxLov->setRootModelIndex(lovFilterModel->index(0,0).child(0,0));
     lovFilterModel->setFilterIndex(lovFilterModel->mapToSource(lovFilterModel->index(0,0).child(0,0)));
     tags << DBLOVXML::LOV;
     lovFilterModel->setAttributeTags(tags);
-
-    QModelIndex lovSrcIndex = lovFilterModel->mapToSource(comboBoxLov->rootModelIndex());
-    lovFilterModel->setFilterRegExp(DBTYPEXML::REFERENCE);
-    comboBoxLov->setRootModelIndex(lovFilterModel->mapFromSource(lovSrcIndex));
 
     QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
     classFilterModel->setFilterKeyColumn(0);
@@ -349,11 +344,6 @@ void AttrWidget::showParentAttr(bool flag)
 
 void AttrWidget::changeType(const QString &typeName)
 {
-    TableXMLProxyModel *lovFilterModel = qobject_cast<TableXMLProxyModel *>(comboBoxLov->model());
-    QModelIndex lovSrcIndex = lovFilterModel->mapToSource(comboBoxLov->rootModelIndex());
-    lovFilterModel->setFilterRegExp(typeName);
-    comboBoxLov->setRootModelIndex(lovFilterModel->mapFromSource(lovSrcIndex));
-
     if (DBTYPEXML::STRING==typeName){
         // String
         spinBoxStringLen->setEnabled(true);
@@ -407,6 +397,11 @@ void AttrWidget::changeType(const QString &typeName)
             comboBoxUnitAttr->setCurrentIndex(-1);
         }
     }
+
+    TableXMLProxyModel *lovFilterModel = qobject_cast<TableXMLProxyModel *>(comboBoxLov->model());
+    lovFilterModel->setFilterRegExp(typeName);
+    if (groupBoxPropType->isEnabled())
+      comboBoxLov->setCurrentIndex(-1);
 }
 
 QVariant AttrWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
@@ -423,7 +418,7 @@ void AttrWidget::setCurrent(const QModelIndex &index)
         return;
 
     tableViewAttr->setCurrentIndex(index);
-    m_mapperAttr->setCurrentModelIndex(index);
+
 
     int indexType = comboBoxTypeAttr->findText(modelData(
                                                    DBATTRXML::ATTR,
@@ -431,9 +426,9 @@ void AttrWidget::setCurrent(const QModelIndex &index)
                                                    index).toString());
     comboBoxTypeAttr->setCurrentIndex(indexType);
 
+    m_mapperAttr->setCurrentModelIndex(index);
+
     comboBoxAttrGroup->setEditText(modelData(DBATTRXML::ATTR,DBATTRXML::GROUP,
                                                      index).toString());
-
-    changeType(comboBoxTypeAttr->currentText());
     emit currentIndexChanged(index);
 }
