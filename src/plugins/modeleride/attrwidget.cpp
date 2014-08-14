@@ -297,6 +297,15 @@ void AttrWidget::submit()
     edit(false);
     m_mapperAttr->submit();
 
+    // Занулить если выбраны неверные данные в comboBoxUnitAttr
+    QModelIndex unitIndex = srcIndex.sibling(
+                srcIndex.row(),
+                m_model->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::REFUNIT));
+    if (unitIndex.data().isNull()) {
+        comboBoxUnitAttr->setCurrentIndex(-1);
+        comboBoxUnitAttr->setCurrentText("");
+    }
+
     emit dataChanged(srcIndex);
 }
 
