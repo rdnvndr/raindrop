@@ -8,6 +8,9 @@
 #include <treexmlmodel/modifyproxymodel.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 
+//! Диалог редактирования ЕИ
+/*! Диалог предназначен для редактирования ЕИ
+*/
 class MsrUnitWidget : public QWidget, private Ui::MsrUnitWidget
 {
     Q_OBJECT

@@ -5,6 +5,10 @@
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/modifyproxymodel.h>
 
+//! Диалог редактирования значений списка
+/*! Диалог предназначен для редактирования значений списка
+*/
+
 class LovValueWidget : public QWidget, private Ui::LovValueWidget
 {
     Q_OBJECT

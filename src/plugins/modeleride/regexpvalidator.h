@@ -4,13 +4,16 @@
 #include <QRegExpValidator>
 
 //! Класс для проверки значения при помощи регулярного выражения
-//!
+/*! Класс предназначен для проверки значения при помощи регулярного выражения
+*/
 class RegExpValidator : public QRegExpValidator
 {
     Q_OBJECT
 public:
     //! Конструктор класса
     RegExpValidator(QObject * parent = 0);
+
+    //! Конструктор класса
     RegExpValidator(const QRegExp & rx, QObject * parent = 0);
 
 public slots:
