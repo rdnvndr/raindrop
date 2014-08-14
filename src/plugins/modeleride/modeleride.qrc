@@ -24,5 +24,6 @@
         <file alias="lovlist">icons/lovlist.svg</file>
         <file alias="lov">icons/lov.svg</file>
         <file alias="lovvalue">icons/lovvalue.svg</file>
+        <file alias="editclean">icons/reditclean.svg</file>
     </qresource>
 </RCC>

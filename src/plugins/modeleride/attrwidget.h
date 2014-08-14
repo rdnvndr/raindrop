@@ -59,6 +59,13 @@ public slots:
     //! Сообщение о неверном имени атрибута
     void validateAttrName(QValidator::State state) const;
 
+    //! Очистка поля ввода ЕИ
+    void cleanUnit();
+
+    //! Очистка поля ввода списка значений
+    void cleanLov();
+
+
 signals:
     //! Сигнал об изменении данных
     void dataChanged(const QModelIndex &index);

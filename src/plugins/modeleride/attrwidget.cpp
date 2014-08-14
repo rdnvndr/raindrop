@@ -60,6 +60,9 @@ AttrWidget::AttrWidget(QWidget *parent) :
     connect(pushButtonAttrCancel,SIGNAL(clicked()),this,SLOT(revert()));
     connect(toolButtonEditAttr,SIGNAL(clicked()),this,SLOT(edit()));
     connect(checkBoxInInherited,SIGNAL(clicked(bool)),this,SLOT(showParentAttr(bool)));
+
+    connect(toolButtonUnitAttrClean, SIGNAL(clicked()), this, SLOT(cleanUnit()));
+    connect(toolButtonLovClean, SIGNAL(clicked()), this, SLOT(cleanLov()));
 }
 
 AttrWidget::~AttrWidget()
@@ -236,6 +239,17 @@ void AttrWidget::validateAttrName(QValidator::State state) const
         QToolTip::hideText();
 }
 
+void AttrWidget::cleanUnit()
+{
+    comboBoxUnitAttr->setDisplayText("");
+    comboBoxUnitAttr->setCurrentIndex(-1);
+}
+
+void AttrWidget::cleanLov()
+{
+    comboBoxLov->setCurrentIndex(-1);
+}
+
 void AttrWidget::add()
 {
     QModelIndex srcIndex = m_attrModel->mapToSource(tableViewAttr->rootIndex());
@@ -282,6 +296,7 @@ void AttrWidget::submit()
     }
     edit(false);
     m_mapperAttr->submit();
+
     emit dataChanged(srcIndex);
 }
 

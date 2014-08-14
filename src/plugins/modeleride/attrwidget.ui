@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>443</width>
-    <height>513</height>
+    <width>454</width>
+    <height>425</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayoutAttrWidget">
    <property name="spacing">
     <number>5</number>
    </property>
@@ -283,22 +283,12 @@
       <item row="2" column="1">
        <widget class="TreeComboBox" name="comboBoxLinkAttr"/>
       </item>
-      <item row="0" column="2">
-       <widget class="QLabel" name="labelLov">
-        <property name="text">
-         <string>Список значений:</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="0">
        <widget class="QLabel" name="labelStringLen">
         <property name="text">
          <string>Длина строки:</string>
         </property>
        </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="TreeComboBox" name="comboBoxUnitAttr"/>
       </item>
       <item row="1" column="1">
        <widget class="QSpinBox" name="spinBoxStringLen">
@@ -338,37 +328,89 @@
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QComboBox" name="comboBoxLov"/>
+       <widget class="QLineEdit" name="lineEditDefaultValue"/>
       </item>
-      <item row="1" column="2">
+      <item row="1" column="3">
+       <widget class="QLineEdit" name="lineEditLowerBound"/>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLineEdit" name="lineEditUpperBound"/>
+      </item>
+      <item row="0" column="2">
        <widget class="QLabel" name="labelDefaultValue">
         <property name="text">
          <string>По умолчанию:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="3">
-       <widget class="QLineEdit" name="lineEditDefaultValue"/>
-      </item>
-      <item row="2" column="2">
+      <item row="1" column="2">
        <widget class="QLabel" name="labelLowerBound">
         <property name="text">
          <string>Нижняя граница:</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="3">
-       <widget class="QLineEdit" name="lineEditLowerBound"/>
-      </item>
-      <item row="3" column="2">
+      <item row="2" column="2">
        <widget class="QLabel" name="labelUpperBound">
         <property name="text">
          <string>Верхняя граница:</string>
         </property>
        </widget>
       </item>
+      <item row="3" column="2">
+       <widget class="QLabel" name="labelLov">
+        <property name="text">
+         <string>Список значений:</string>
+        </property>
+       </widget>
+      </item>
       <item row="3" column="3">
-       <widget class="QLineEdit" name="lineEditUpperBound"/>
+       <layout class="QHBoxLayout" name="horizontalLayoutLov">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QComboBox" name="comboBoxLov"/>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButtonLovClean">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../treedockwidget/treedockwidget.qrc">
+            <normaloff>:/editclean</normaloff>:/editclean</iconset>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayoutUnitAttr">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="TreeComboBox" name="comboBoxUnitAttr"/>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButtonUnitAttrClean">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../treedockwidget/treedockwidget.qrc">
+            <normaloff>:/editclean</normaloff>:/editclean</iconset>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
      <zorder>labelTypeAttr</zorder>
@@ -378,19 +420,20 @@
      <zorder>comboBoxLinkAttr</zorder>
      <zorder>spinBoxStringLen</zorder>
      <zorder>labelUnitAttr</zorder>
-     <zorder>comboBoxUnitAttr</zorder>
-     <zorder>labelLov</zorder>
-     <zorder>comboBoxLov</zorder>
-     <zorder>labelDefaultValue</zorder>
      <zorder>lineEditDefaultValue</zorder>
-     <zorder>labelLowerBound</zorder>
      <zorder>lineEditLowerBound</zorder>
-     <zorder>labelUpperBound</zorder>
      <zorder>lineEditUpperBound</zorder>
+     <zorder>labelDefaultValue</zorder>
+     <zorder>labelLowerBound</zorder>
+     <zorder>labelUpperBound</zorder>
+     <zorder>labelLov</zorder>
     </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutAttrSave">
+     <property name="spacing">
+      <number>6</number>
+     </property>
      <item>
       <spacer name="horizontalSpacerLeftAttr">
        <property name="orientation">
@@ -443,6 +486,7 @@
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../treedockwidget/treedockwidget.qrc"/>
   <include location="modeleride.qrc"/>
  </resources>
  <connections/>
