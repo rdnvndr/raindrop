@@ -72,6 +72,8 @@ void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, co
     if (treeComboBox) {
         if (treeComboBox->currentModelIndex().isValid())
             model->setData(index,treeComboBox->currentModelIndex().data(),Qt::EditRole);
+        else
+            model->setData(index, QVariant(), Qt::EditRole);
         return;
     }
     // Если QComboBox присваиваем текущий текст, а не индекс
@@ -93,6 +95,8 @@ void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, co
             curIndex = curIndex.sibling(curIndex.row(), column);
             if (curIndex.isValid())
                 model->setData(index, curIndex.data(Qt::EditRole), Qt::EditRole);
+            else
+                model->setData(index, QVariant(), Qt::EditRole);
             return;
         }
         model->setData(index,comboBox->currentText(),Qt::EditRole);
