@@ -8,6 +8,9 @@
 #include <QAction>
 #include <treexmlmodel/treexmlhashmodel.h>
 
+//! Диалог редактирования фильтра
+/*! Диалог предназначен для редактирования фильтра
+*/
 class FilterPropWidget : public QWidget, private Ui::FilterPropWidget
 {
     Q_OBJECT

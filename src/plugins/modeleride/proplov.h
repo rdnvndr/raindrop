@@ -4,6 +4,10 @@
 #include "ui_proplov.h"
 #include <treexmlmodel/treexmlhashmodel.h>
 
+//! Диалог редактирования списка значений
+/*! Диалог предназначен для редактирования списка значений
+*/
+
 class PropLov : public QWidget, private Ui::PropLov
 {
     Q_OBJECT

@@ -3,6 +3,10 @@
 
 #include "ui_propfilter.h"
 
+//! Диалог редактирования фильтра
+/*! Диалог предназначен для редактирования фильтра
+*/
+
 class PropFilter : public QWidget, private Ui::PropFilter
 {
     Q_OBJECT

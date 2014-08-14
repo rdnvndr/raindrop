@@ -6,6 +6,10 @@
 #include <QDataWidgetMapper>
 #include <QStringListModel>
 
+//! Диалог редактирования списка значений
+/*! Диалог предназначен для редактирования списка значений
+*/
+
 class LovWidget : public QWidget, private Ui::LovWidget
 {
     Q_OBJECT
