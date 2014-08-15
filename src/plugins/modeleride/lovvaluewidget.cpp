@@ -137,8 +137,8 @@ bool LovValueWidget::isRemove(const QModelIndex &srcIndex)
 void LovValueWidget::add()
 {
     QModelIndex srcIndex = tableViewLovValue->rootIndex();
-    if (m_lovValueModel->insertRow(0,srcIndex)) {
-        QModelIndex index = m_lovValueModel->lastInsertRow();
+    QModelIndex index = m_lovValueModel->insertLastRows(0,1,srcIndex);
+    if (index.isValid()) {
         m_lovValueModel->setData(index, DBLOVVALUEXML::LOVVALUE, Qt::UserRole);
         m_lovValueModel->setData(index, QIcon(":/lovvalue"), Qt::DecorationRole);
 //        m_lovValueModel->setData(index.sibling(

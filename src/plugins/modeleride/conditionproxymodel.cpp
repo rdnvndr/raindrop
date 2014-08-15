@@ -238,3 +238,11 @@ bool ConditionProxyModel::insertRows(int row, int count, const QModelIndex &pare
 
     return ModifyProxyModel::insertRows(row, count, parent);
 }
+
+QModelIndex ConditionProxyModel::insertLastRows(int row, int count, const QModelIndex &parent)
+{
+    if (data(parent,Qt::UserRole) == DBCONDITIONXML::COND)
+        return QModelIndex().child(-1,-1);
+
+    return ModifyProxyModel::insertLastRows(row, count, parent);
+}

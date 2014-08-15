@@ -54,8 +54,8 @@ void FilterWidget::add()
 {
     QModelIndex srcIndex = m_filterModel->mapToSource(tableViewFilter->rootIndex());
     m_model->setInsTagName(DBFILTERXML::FILTER);
-    if (m_model->insertRow(0,srcIndex)){
-        QModelIndex srcCurrentIndex = m_model->lastInsertRow();
+    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex);
+    if (srcCurrentIndex.isValid()){
         tableViewFilter->setCurrentIndex(
                     m_filterModel->mapFromSource(srcCurrentIndex));
         emit dataEdited(srcCurrentIndex);

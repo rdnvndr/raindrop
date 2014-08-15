@@ -131,8 +131,8 @@ void FilterPropWidget::add()
                                           0,m_mapper->rootIndex()).parent();
 
     m_model->setInsTagName(DBFILTERXML::FILTER);
-    if (m_model->insertRow(0,srcIndex)){
-        QModelIndex srcCurrentIndex = m_model->lastInsertRow();
+    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex);
+    if (srcCurrentIndex.isValid()){
         setCurrent(srcCurrentIndex);
         edit(true);
     }
@@ -155,8 +155,7 @@ void FilterPropWidget::addSubCondition()
             ? treeViewCondition->currentIndex()
             : treeViewCondition->rootIndex();
 
-    m_conditionModel->insertRow(0,parent);
-    QModelIndex index = m_conditionModel->lastInsertRow();
+    QModelIndex index = m_conditionModel->insertLastRows(0,1,parent);
     m_conditionModel->setData(index, DBCONDITIONXML::COND, Qt::UserRole);
     m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
@@ -169,8 +168,8 @@ void FilterPropWidget::addCondition()
         if (treeViewCondition->currentIndex().parent().isValid())
             parent = treeViewCondition->currentIndex().parent();
 
-    m_conditionModel->insertRow(0,parent);
-    QModelIndex index = m_conditionModel->lastInsertRow();
+
+    QModelIndex index = m_conditionModel->insertLastRows(0,1,parent);
     m_conditionModel->setData(index, DBCONDITIONXML::COND, Qt::UserRole);
     m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
@@ -191,8 +190,7 @@ void FilterPropWidget::addSubBlock()
     QModelIndex parent = (treeViewCondition->currentIndex().isValid())
             ? treeViewCondition->currentIndex() : treeViewCondition->rootIndex();
 
-    m_conditionModel->insertRow(0,parent);
-    QModelIndex index = m_conditionModel->lastInsertRow();
+    QModelIndex index = m_conditionModel->insertLastRows(0,1,parent);
     m_conditionModel->setData(index, DBFILTERBLOCKXML::BLOCK, Qt::UserRole);
     m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
@@ -205,8 +203,7 @@ void FilterPropWidget::addBlock()
         if (treeViewCondition->currentIndex().parent().isValid())
             parent = treeViewCondition->currentIndex().parent();
 
-    m_conditionModel->insertRow(0,parent);
-    QModelIndex index = m_conditionModel->lastInsertRow();
+    QModelIndex index = m_conditionModel->insertLastRows(0,1,parent);
     m_conditionModel->setData(index, DBFILTERBLOCKXML::BLOCK, Qt::UserRole);
     m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }

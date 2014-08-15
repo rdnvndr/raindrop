@@ -22,8 +22,8 @@ ClassWidget::ClassWidget(QWidget *parent) :
 
     m_typeClassModel = new QStringListModel();
     const QStringList classType = (QStringList()
-                                   << DBCLASSTYPEXML::SYSTEM
                                    << DBCLASSTYPEXML::STANDART
+                                   << DBCLASSTYPEXML::SYSTEM
                                    << DBCLASSTYPEXML::USER
                                    );
     m_typeClassModel->setStringList(classType);
@@ -90,9 +90,10 @@ void ClassWidget::add()
     QModelIndex srcIndex =  m_model->index(m_mapper->currentIndex(),
                                            0,m_mapper->rootIndex()).parent();
     m_model->setInsTagName(DBCLASSXML::CLASS);
-    if (m_model->insertRow(0,srcIndex)) {
-        QModelIndex srcCurrentIndex = m_model->lastInsertRow();
+    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex);
+    if (srcCurrentIndex.isValid()){
         setCurrent(srcCurrentIndex);
+        comboBoxClassType->setCurrentIndex(0);
         edit(true);
     }
 }

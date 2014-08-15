@@ -56,8 +56,8 @@ void CompositionWidget::add()
 {
     QModelIndex srcIndex = m_compositionModel->mapToSource(tableViewComp->rootIndex());
     m_model->setInsTagName(DBCOMPXML::COMP);
-    if (m_model->insertRow(0,srcIndex)){
-        QModelIndex srcCurrentIndex = m_model->lastInsertRow();
+    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex);
+    if (srcCurrentIndex.isValid()){
         tableViewComp->setCurrentIndex(
                     m_compositionModel->mapFromSource(srcCurrentIndex));
         emit dataEdited(srcCurrentIndex);

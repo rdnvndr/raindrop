@@ -189,10 +189,13 @@ bool TreeFilterProxyModel::moveSourceIndex(const QModelIndex &srcIndex,
     QString tag = srcIndex.data(Qt::UserRole).toString();
     xmlModel->setInsTagName(tag);
 
-    if (!insertRow(0,mapFromSource(destIndex)))
-        return false;
+//    if (!insertRow(0,mapFromSource(destIndex)))
+//        return false;
 
-    QModelIndex index = xmlModel->lastInsertRow();
+//    QModelIndex index = xmlModel->lastInsertRow();
+    QModelIndex index = xmlModel->insertLastRows(0,1,destIndex);
+    if (!index.isValid())
+        return false;
 
     int i = 0;
     while (!xmlModel->displayedAttr(tag, i).isEmpty()) {
@@ -234,10 +237,13 @@ bool TreeFilterProxyModel::copySourceIndex(const QModelIndex &srcIndex,
     QString tag = srcIndex.data(Qt::UserRole).toString();
     xmlModel->setInsTagName(tag);
 
-    if (!insertRow(0,mapFromSource(destIndex)))
-        return false;
+//    if (!insertRow(0,mapFromSource(destIndex)))
+//        return false;
+//    QModelIndex index = xmlModel->lastInsertRow();
 
-    QModelIndex index = xmlModel->lastInsertRow();
+    QModelIndex index = xmlModel->insertLastRows(0,1,destIndex);
+    if (!index.isValid())
+        return false;
 
     int i = 0;
     while (!xmlModel->displayedAttr(tag, i).isEmpty()) {
