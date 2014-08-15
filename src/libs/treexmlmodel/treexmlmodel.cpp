@@ -393,12 +393,13 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
 
     updateInsertRows(position,count,parent);
 
-    // Добавление корнего узла
-    if (success)
+    // Добавление корневого узла
+    if (success) {
         if (parent.isValid())
             return parent.child(position+count-1,0);
         else
             return index(position+count-1,0,parent);
+    }
 
     return QModelIndex().child(-1,-1);
 }
@@ -538,7 +539,7 @@ QStringList TreeXmlModel::mimeTypes() const
     return types;
 }
 
-QMimeData *TreeXmlModel::mimeData(const QModelIndexList &indexes)
+QMimeData *TreeXmlModel::mimeData(const QModelIndexList &indexes) const
 {
     PersistentIndexes persistentIndex;
 

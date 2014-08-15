@@ -164,7 +164,7 @@ public:
                       int row, int column, const QModelIndex &parent);
 
     //! Возращает объект с упакованными данными по списку индексов
-    QMimeData *mimeData(const QModelIndexList &indexes);
+    QMimeData *mimeData(const QModelIndexList &indexes) const;
 
     //! Возращает список типов, которые могут быть упакованы
     QStringList mimeTypes() const;
