@@ -82,10 +82,9 @@ bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex,
     QString tag = srcIndex.data(Qt::UserRole).toString();
     setInsTagName(tag);
 
-    if (!insertRow(0,destIndex))
+    QModelIndex index = insertLastRows(0,1,destIndex);
+    if (!index.isValid())
         return false;
-
-    QModelIndex index = lastInsertRow();
 
     int i = 0;
     while (!displayedAttr(tag, i).isEmpty()) {
@@ -349,9 +348,42 @@ bool TreeXmlModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(row);
 
+    QModelIndex index = insertLastRows(row, count, parent);
+    if (index.isValid()) {
+        m_lastInsRow = index;
+        return true;
+    }
+
+    return false;
+
+//    TagXmlItem *parentItem = toItem(parent);
+//    if (!isInsert(parent))
+//        return false;
+//    bool success = true;
+
+//    int position = parentItem->count(m_filterTags);
+
+//    for (int i=0;i<count;i++)
+//        success = parentItem->insertChild(m_insTag) && success;
+
+//    updateInsertRows(position,count,parent);
+
+//    // Добавление корнего узла
+//    if (parent.isValid())
+//        m_lastInsRow = parent.child(position+count-1,0);
+//    else
+//        m_lastInsRow = index(position+count-1,0,parent);
+
+//    return success;
+}
+
+QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &parent)
+{
+    Q_UNUSED(row);
+
     TagXmlItem *parentItem = toItem(parent);
     if (!isInsert(parent))
-        return false;
+        return QModelIndex().child(-1,-1);
     bool success = true;
 
     int position = parentItem->count(m_filterTags);
@@ -362,12 +394,13 @@ bool TreeXmlModel::insertRows(int row, int count, const QModelIndex &parent)
     updateInsertRows(position,count,parent);
 
     // Добавление корнего узла
-    if (parent.isValid())
-        m_lastInsRow = parent.child(position+count-1,0);
-    else
-        m_lastInsRow = index(position+count-1,0,parent);
+    if (success)
+        if (parent.isValid())
+            return parent.child(position+count-1,0);
+        else
+            return index(position+count-1,0,parent);
 
-    return success;
+    return QModelIndex().child(-1,-1);
 }
 
 void TreeXmlModel::updateInsertRows(int row,int count, const QModelIndex &parent)

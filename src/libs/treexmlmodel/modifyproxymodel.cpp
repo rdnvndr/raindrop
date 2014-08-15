@@ -181,8 +181,9 @@ bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
                 if (m_updatedRow[indexProxy].contains(Qt::UserRole))
                 {
                     xmlModel->setInsTagName(m_updatedRow[indexProxy][Qt::UserRole].toString());
-                    isInserted = xmlModel->insertRow(lastRow,srcParent);
-                    lastRow = xmlModel->lastInsertRow().row();
+                    QModelIndex lastIndexRow = xmlModel->insertLastRows(lastRow,1,srcParent);
+                    isInserted = lastIndexRow.isValid();
+                    lastRow = lastIndexRow.row();
                 }
         } else
             isInserted = sourceModel()->insertRow(lastRow, srcParent);
@@ -501,7 +502,6 @@ bool ModifyProxyModel::removeRows(int row, int count, const QModelIndex &parent)
                 for (int j = 0; j < sourceModel()->columnCount(parent);j++) {
                     QPersistentModelIndex removeIndex(parent.child(i,j));
                     if (m_updatedRow.contains(removeIndex)) {
-//                        m_updatedRow[removeIndex].clear();
                         m_updatedRow.remove(removeIndex);
                     }
                 }
@@ -537,6 +537,29 @@ bool ModifyProxyModel::removeRows(int row, int count, const QModelIndex &parent)
 
 bool ModifyProxyModel::insertRows(int row, int count, const QModelIndex &parent)
 {
+    m_lastInsRow = insertLastRows(row, count, parent);
+//    Q_UNUSED(row)
+//    QPersistentModelIndex rowIndex(parent.sibling(parent.row(),0));
+
+//    int position = rowCount(rowIndex);
+
+//    beginInsertRows(parent,position,position+count-1);
+//    for (int i = position; i < position+count; i++) {
+//        QPersistentModelIndex *index = new QPersistentModelIndex(rowIndex);
+//        m_insertedRow[rowIndex].append(index);
+//    }
+//    endInsertRows();
+
+//    if (parent.isValid())
+//        m_lastInsRow = parent.child(position+count-1,0);
+//    else
+//        m_lastInsRow = index(position+count-1,0,parent);
+
+    return true;
+}
+
+QModelIndex ModifyProxyModel::insertLastRows(int row, int count, const QModelIndex &parent)
+{
     Q_UNUSED(row)
     QPersistentModelIndex rowIndex(parent.sibling(parent.row(),0));
 
@@ -550,10 +573,9 @@ bool ModifyProxyModel::insertRows(int row, int count, const QModelIndex &parent)
     endInsertRows();
 
     if (parent.isValid())
-        m_lastInsRow = parent.child(position+count-1,0);
+        return m_lastInsRow = parent.child(position+count-1,0);
     else
-        m_lastInsRow = index(position+count-1,0,parent);
-    return true;
+        return index(position+count-1,0,parent);
 }
 
 QModelIndex ModifyProxyModel::lastInsertRow()

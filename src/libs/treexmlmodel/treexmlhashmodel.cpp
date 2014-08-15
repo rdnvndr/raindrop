@@ -230,22 +230,28 @@ bool TreeXmlHashModel::setData(const QModelIndex &index, const QVariant &value,
 
 bool TreeXmlHashModel::insertRows(int row, int count, const QModelIndex &parent)
 {
+    return insertLastRows(row,count,parent).isValid();
+}
+
+QModelIndex TreeXmlHashModel::insertLastRows(int row, int count, const QModelIndex &parent)
+{
     Q_UNUSED(row);
 
     TagXmlItem *parentItem = toItem(parent);
     if (!isInsert(parent))
-        return false;
+        return QModelIndex().child(-1,-1);
 
     int position = parentItem->count(tagsFilter());
 
-    if (!TreeXmlModel::insertRows(row, count, parent))
-        return false;
+    QModelIndex lastInsertRow = TreeXmlModel::insertLastRows(row, count, parent);
+    if (!lastInsertRow.isValid())
+        return QModelIndex().child(-1,-1);
 
     for (int i=0;i<count;i++) {
         insertUuid(index(position+i,0,parent));
     }
 
-    return true;
+    return lastInsertRow;
 }
 
 bool TreeXmlHashModel::removeRows(int row, int count, const QModelIndex &parent)
@@ -275,10 +281,9 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex,
     QString tag = srcIndex.data(Qt::UserRole).toString();
     setInsTagName(tag);
 
-    if (!insertRow(0,destIndex))
-        return false;
-
-    QModelIndex index = lastInsertRow();
+    QModelIndex index = insertLastRows(0,1,destIndex);
+    if (!index.isValid())
+        return false;   
 
     int i = 0;
     while (!displayedAttr(tag, i).isEmpty()) {

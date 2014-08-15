@@ -90,8 +90,11 @@ public:
     //! Вставка строки
     bool insertRows(int  row, int count, const QModelIndex &parent = QModelIndex());
 
+    //! Вставка строки
+    QModelIndex insertLastRows(int  row, int count, const QModelIndex &parent = QModelIndex());
+
     //! Получение индекса последней вставленной строки
-    QModelIndex lastInsertRow();
+    Q_DECL_DEPRECATED QModelIndex lastInsertRow();
 
     //! Проверка является ли строка вставленной
     bool isInsertRow(const QModelIndex &index) const;

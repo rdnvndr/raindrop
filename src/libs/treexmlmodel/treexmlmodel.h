@@ -150,11 +150,14 @@ public:
     //! Вставка строки
     bool insertRows (int row, int count, const QModelIndex & parent);
 
+    //! Вставка строки
+    QModelIndex insertLastRows (int row, int count, const QModelIndex & parent);
+
     //! Удаление строки
     bool removeRows (int row, int count, const QModelIndex & parent);
 
     //! Получение индекса последней вставленной строки
-    QModelIndex lastInsertRow();
+    Q_DECL_DEPRECATED QModelIndex lastInsertRow();
 
     //! Обработчик окрнчания перетаскивания данных путем Drag and Drop
     bool dropMimeData(const QMimeData *data, Qt::DropAction action,

@@ -146,8 +146,8 @@ bool MsrUnitWidget::isRemove(const QModelIndex &srcIndex)
 void MsrUnitWidget::add()
 {
     QModelIndex srcIndex = tableViewUnit->rootIndex();
-    if (m_unitModel->insertRow(0,srcIndex)) {
-        QModelIndex index = m_unitModel->lastInsertRow();
+    QModelIndex index = m_unitModel->insertLastRows(0,1,srcIndex);
+    if (index.isValid()) {
         m_unitModel->setData(index, DBUNITXML::UNIT, Qt::UserRole);
         m_unitModel->setData(index, QIcon(":/unit"), Qt::DecorationRole);
         m_unitModel->setData(index.sibling(

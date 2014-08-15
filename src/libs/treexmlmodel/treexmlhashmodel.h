@@ -47,6 +47,9 @@ public:
     //! Вставка строки
     bool insertRows (int row, int count, const QModelIndex & parent);
 
+    //! Вставка строки
+    QModelIndex insertLastRows (int row, int count, const QModelIndex & parent);
+
     //! Удаление строки
     bool removeRows (int row, int count, const QModelIndex & parent);
 
