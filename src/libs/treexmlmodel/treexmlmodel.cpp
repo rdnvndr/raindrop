@@ -411,7 +411,7 @@ void TreeXmlModel::updateInsertRows(int row,int count, const QModelIndex &parent
         for (int i=0;i<this->rowCount(parent);i++){
             QModelIndex index = parent.child(i,0);
             if (!isAttr(index))
-                updateInsertRows(this->rowCount(index)-count,count,index);
+                updateInsertRows(this->rowCount(index),count,index);
         }
     beginInsertRows(parent,row,row+count-1);
     endInsertRows();
