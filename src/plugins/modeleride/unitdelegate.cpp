@@ -42,33 +42,31 @@ void UnitDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, cons
 
 QWidget *UnitDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    Q_UNUSED(option)
 
-    QWidget *widget = QStyledItemDelegate::createEditor(parent,option,index);
+    QLineEdit* lineEdit = new QLineEdit(parent);
 
-    QLineEdit* lineEdit = dynamic_cast<QLineEdit*>(widget);
-    if (lineEdit) {
-        const ModifyProxyModel *modifyModel = dynamic_cast<const ModifyProxyModel *>(index.model());
-        const TreeXmlHashModel* hashModel = (modifyModel)?
-                    dynamic_cast<const TreeXmlHashModel*>(modifyModel->sourceModel())
-                  : dynamic_cast<const TreeXmlHashModel*>(index.model());
+    const ModifyProxyModel *modifyModel = dynamic_cast<const ModifyProxyModel *>(index.model());
+    const TreeXmlHashModel* hashModel = (modifyModel)?
+                dynamic_cast<const TreeXmlHashModel*>(modifyModel->sourceModel())
+              : dynamic_cast<const TreeXmlHashModel*>(index.model());
 
-        if (hashModel) {
-            QString tag  = index.data(Qt::UserRole).toString();
-            QString attr = hashModel->displayedAttr(tag, index.column());
-            if (tag == DBUNITXML::UNIT && attr == DBUNITXML::CODE) {
+    if (hashModel) {
+        QString tag  = index.data(Qt::UserRole).toString();
+        QString attr = hashModel->displayedAttr(tag, index.column());
+        if (tag == DBUNITXML::UNIT) {
+            if (attr == DBUNITXML::CODE)
                 lineEdit->setValidator(new QIntValidator(0, 9999, lineEdit));
-            }
+            else if (attr == DBUNITXML::COEFF)
+                lineEdit->setValidator(new QDoubleValidator(lineEdit));
+            else if (attr == DBUNITXML::DELTA)
+                lineEdit->setValidator(new QDoubleValidator(lineEdit));
         }
     }
-
-    return widget;
+    return lineEdit;
 }
 
 void UnitDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 { 
-    QLineEdit* lineEdit = dynamic_cast<QLineEdit*>(editor);
-    if (lineEdit) {
-        lineEdit->setMaxLength(16);
-    }
     QStyledItemDelegate::setEditorData(editor, index);
 }
