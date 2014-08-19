@@ -139,8 +139,6 @@ void ModelerIDEPlug::showContextMenu(const QPoint& point)
         QModelIndex indexSource = classFilterModel->mapToSource(treeClassView->treeView->currentIndex());
         if (!indexSource.isValid())
             return;
-        if (indexSource.data(Qt::UserRole)==DBMODELXML::MODEL)
-            return;
 
         if (indexSource.data(Qt::UserRole)==DBCLASSLISTXML::CLASSLIST
             || indexSource.data(Qt::UserRole)==DBENTITYLISTXML::ENTITYLIST
@@ -151,6 +149,16 @@ void ModelerIDEPlug::showContextMenu(const QPoint& point)
             contextMenu->actions().at(0)->setVisible(true);
         } else {
             contextMenu->actions().at(0)->setVisible(false);
+        }
+
+        if (indexSource.data(Qt::UserRole)==DBCLASSLISTXML::CLASSLIST
+            || indexSource.data(Qt::UserRole)==DBENTITYLISTXML::ENTITYLIST
+            || indexSource.data(Qt::UserRole)==DBLOVLISTXML::LOVLIST
+            || indexSource.data(Qt::UserRole)==DBMODELXML::MODEL)
+        {
+            contextMenu->actions().at(1)->setVisible(false);
+        } else {
+            contextMenu->actions().at(1)->setVisible(true);
         }
         contextMenu->exec(treeClassView->treeView->mapToGlobal(point));
     }
@@ -1144,6 +1152,11 @@ void ModelerIDEPlug::closeClassModel()
         actionSaveModel->setDisabled(true);
         actionSaveAsModel->setDisabled(true);
         actionPublishModel->setDisabled(true);
+
+        actionShowAttr->setChecked(false);
+        actionShowComp->setChecked(false);
+        actionShowFilter->setChecked(false);
+        actionShowUnit->setChecked(false);
     }
 }
 #if QT_VERSION < 0x050000
