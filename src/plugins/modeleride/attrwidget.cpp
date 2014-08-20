@@ -308,9 +308,14 @@ void AttrWidget::submit()
     emit dataChanged(srcIndex);
 }
 
+bool AttrWidget::isEdit()
+{
+    return groupBoxPropAttr->isEnabled();
+}
+
 void AttrWidget::edit(bool flag)
 {
-    if (groupBoxPropAttr->isEnabled()==flag && tableViewAttr->currentIndex().isValid())
+    if (isEdit()==flag && tableViewAttr->currentIndex().isValid())
         return;
 
     if (lineEditAttrName->text().isEmpty() && flag==false)
@@ -324,7 +329,7 @@ void AttrWidget::edit(bool flag)
         toolButtonAddAttr->setEnabled(true);
     } else {
         toolButtonEditAttr->setDisabled(flag);
-        toolButtonDeleteAttr->setEnabled(true);
+        toolButtonDeleteAttr->setDisabled(flag);
         toolButtonAddAttr->setDisabled(flag);
     }
 

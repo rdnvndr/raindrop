@@ -42,6 +42,9 @@ public slots:
     //! Установка текущего класса
     void setCurrent(const QModelIndex &index);
 
+    //! Возращает находится ли в режиме редактирования
+    bool isEdit();
+
     //! Перевод класса в режим редактирования
     void edit(bool flag = true);
 
