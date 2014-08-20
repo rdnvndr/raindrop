@@ -303,7 +303,6 @@ void AttrWidget::submit()
                 m_model->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::REFUNIT));
     if (unitIndex.data().isNull()) {
         comboBoxUnitAttr->setCurrentIndex(-1);
-        comboBoxUnitAttr->setCurrentText("");
     }
 
     emit dataChanged(srcIndex);
