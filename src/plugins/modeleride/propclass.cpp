@@ -48,6 +48,7 @@ void PropClass::setCurrentClass(const QModelIndex &index)
 
 void PropClass::setTabName(const QModelIndex &index){
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
+    if (!subWindow) return;
 
     QString className = modelData(DBCLASSXML::CLASS, DBCLASSXML::NAME,index).toString();
     QString id = modelData(DBCLASSXML::CLASS, DBCLASSXML::ID,index).toString();
@@ -61,7 +62,8 @@ void PropClass::closeTab(const QModelIndex &index)
     Q_UNUSED(index);
 
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
-    subWindow->close();
+    if (subWindow)
+        subWindow->close();
 }
 
 void PropClass::onEditComposition(const QModelIndex &index)

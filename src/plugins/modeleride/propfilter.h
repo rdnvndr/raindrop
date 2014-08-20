@@ -13,6 +13,7 @@ class PropFilter : public QWidget, private Ui::PropFilter
     
 public:
     explicit PropFilter(QWidget *parent = 0);
+    virtual ~PropFilter();
 
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
