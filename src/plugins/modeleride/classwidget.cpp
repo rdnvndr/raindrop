@@ -236,9 +236,14 @@ void ClassWidget::setCurrent(const QModelIndex &index)
     emit currentIndexChanged(index);
 }
 
+bool ClassWidget::isEdit()
+{
+    return groupBoxClass->isEnabled();
+}
+
 void ClassWidget::edit(bool flag)
 {
-    if (groupBoxClass->isEnabled()==flag)
+    if (isEdit()==flag)
         return;
 
     if (lineEditClassName->text().isEmpty()){

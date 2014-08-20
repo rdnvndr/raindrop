@@ -28,7 +28,8 @@ PropClass::PropClass(QWidget *parent) :
 
 PropClass::~PropClass()
 {
-
+    if (classWidget->isEdit()) classWidget->revert();
+    if (attrWidget->isEdit())  attrWidget->revert();
 }
 
 void PropClass::setModel(TreeXmlHashModel *model)
