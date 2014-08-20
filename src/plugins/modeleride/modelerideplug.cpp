@@ -772,14 +772,8 @@ void ModelerIDEPlug::remove()
 
         if (!isRemove(currentIndex))
             return;
-
-        if (!dataName(currentIndex).isEmpty())
-        {
-            closePropWindow(currentIndex);
-            m_model->removeRow(currentIndex.row(),currentIndex.parent());
-        } else
-            QMessageBox::warning(NULL,tr("Предупреждение"),
-                                 tr("Невозможно удалить узел, поскольку он еще не сохранен."));
+        closePropWindow(currentIndex);
+        m_model->removeRow(currentIndex.row(),currentIndex.parent());
     } else
         QMessageBox::warning(NULL,tr("Предупреждение"),
                              tr("Невозможно удалить узел, поскольку он не выбран."));
