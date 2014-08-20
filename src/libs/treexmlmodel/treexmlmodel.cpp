@@ -376,10 +376,11 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
             revertCount = i;
             break;
         }
-
     }
 
     if (success) {
+        beginInsertRows(parent,position,position+count-1);
+        endInsertRows();
         // Добавление корневого узла
         if (parent.isValid())
             return parent.child(position+count-1,0);
@@ -389,34 +390,40 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
         // Возрат изменений
         for (int i = revertCount-1; i>=0; i--)
             parentItem->removeChild(position+revertCount);
-        revertInsertRows(position, count, parent);
+        revertInsertRows(position, count, parent, true);
     }
 
     return QModelIndex().child(-1,-1);
 }
 
-void TreeXmlModel::updateInsertRows(int row,int count, const QModelIndex &parent)
+void TreeXmlModel::updateInsertRows(int row, int count, const QModelIndex &parent, bool updatingRoot)
 {
+    // Если атрибут
     if (m_attrTags.contains(m_insTag))
         for (int i=0;i<this->rowCount(parent);i++){
             QModelIndex index = parent.child(i,0);
             if (!isAttr(index) && parent.data(Qt::UserRole) == index.data(Qt::UserRole))
-                updateInsertRows(this->rowCount(index),count,index);
+                updateInsertRows(this->rowCount(index),count,index, true);
         }
-    beginInsertRows(parent,row,row+count-1);
-    endInsertRows();
+    if (updatingRoot) {
+        beginInsertRows(parent,row,row+count-1);
+        endInsertRows();
+    }
 }
 
-void TreeXmlModel::revertInsertRows(int row, int count, const QModelIndex &parent)
+void TreeXmlModel::revertInsertRows(int row, int count, const QModelIndex &parent, bool updatingRoot)
 {
+     // Если атрибут
     if (m_attrTags.contains(m_insTag))
         for (int i=0;i<this->rowCount(parent);i++){
             QModelIndex index = parent.child(i,0);
             if (!isAttr(index) && parent.data(Qt::UserRole) == index.data(Qt::UserRole))
-                updateInsertRows(this->rowCount(index),count,index);
+                revertInsertRows(this->rowCount(index),count,index, true);
         }
-    beginRemoveRows(parent,row,row+count-1);
-    endRemoveRows();
+    if (updatingRoot) {
+        beginRemoveRows(parent,row,row+count-1);
+        endRemoveRows();
+    }
 }
 
 void TreeXmlModel::updateRemoveRows(int emptyRowAttr,int count, const QModelIndex &parent)
