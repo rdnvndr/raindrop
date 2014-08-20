@@ -20,6 +20,9 @@ public:
     //! Конструктор диалога редактирования состава
     explicit PropComposition(QWidget *parent = 0);
 
+    //! Деструктор диалога редактирования состава
+    virtual ~PropComposition();
+
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
 

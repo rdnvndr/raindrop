@@ -229,9 +229,14 @@ void FilterPropWidget::setCurrent(const QModelIndex &index)
     changeDestClass(comboBoxDestClass->displayText());
 }
 
+bool FilterPropWidget::isEdit()
+{
+    return groupBoxProp->isEnabled();
+}
+
 void FilterPropWidget::edit(bool flag)
 {
-    if (groupBoxProp->isEnabled()==flag)
+    if (isEdit()==flag)
         return;
 
     if (lineEditName->text().isEmpty()){

@@ -36,6 +36,9 @@ public slots:
     //! Установка текущего состава
     void setCurrent(const QModelIndex &index);
 
+    //! Возращает находится ли в режиме редактирования
+    bool isEdit();
+
     //! Перевод состава в режим редактирования
     void edit(bool flag = true);
 
