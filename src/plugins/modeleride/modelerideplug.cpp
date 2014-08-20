@@ -574,6 +574,11 @@ void ModelerIDEPlug::add()
         QModelIndex lastInsertRow = m_model->insertLastRows(0,1,indexSource);
         if (lastInsertRow.isValid()){
             QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
+            int column = m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                      DBCLASSXML::TYPE);
+            m_model->setData(lastInsertRow.sibling(lastInsertRow.row(),column),
+                             DBCLASSTYPEXML::STANDART);
+
             treeClassView->treeView->setCurrentIndex(index);
             showPropClass(lastInsertRow);
         }
