@@ -42,7 +42,8 @@ void PropComposition::setTabName(const QModelIndex &index){
     QString id = modelData(DBCOMPXML::COMP, DBCOMPXML::ID,index).toString();
 
     this->setObjectName("PropComposition::" + id);
-    subWindow->setWindowTitle(tr("Состав: ")+className);
+    if (subWindow)
+        subWindow->setWindowTitle(tr("Состав: ")+className);
 }
 
 void PropComposition::closeTab(const QModelIndex &index)
@@ -50,7 +51,8 @@ void PropComposition::closeTab(const QModelIndex &index)
     Q_UNUSED(index);
 
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
-    subWindow->close();
+    if (subWindow)
+        subWindow->close();
 }
 
 QVariant PropComposition::modelData(const QString &tag, const QString &attr, const QModelIndex& index)

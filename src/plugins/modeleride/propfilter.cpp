@@ -15,6 +15,11 @@ PropFilter::PropFilter(QWidget *parent) :
             this,SLOT(closeTab(QModelIndex)));
 }
 
+PropFilter::~PropFilter()
+{
+    if (propWidget->isEdit()) propWidget->revert();
+}
+
 void PropFilter::setModel(TreeXmlHashModel *model)
 {
     propWidget->setModel(model);
@@ -40,7 +45,8 @@ void PropFilter::setTabName(const QModelIndex &index)
     QString id = modelData(DBFILTERXML::FILTER, DBFILTERXML::ID,index).toString();
 
     this->setObjectName("PropFilter::" + id);
-    subWindow->setWindowTitle(tr("Фильтр: ")+className);
+    if (subWindow)
+        subWindow->setWindowTitle(tr("Фильтр: ")+className);
 }
 
 void PropFilter::closeTab(const QModelIndex &index)
@@ -48,7 +54,8 @@ void PropFilter::closeTab(const QModelIndex &index)
     Q_UNUSED(index);
 
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
-    subWindow->close();
+    if (subWindow)
+        subWindow->close();
 }
 
 QVariant PropFilter::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
