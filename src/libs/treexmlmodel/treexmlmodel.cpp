@@ -443,6 +443,9 @@ void TreeXmlModel::updateRemoveRows(int emptyRowAttr,int count, const QModelInde
 
 bool TreeXmlModel::removeRows(int row, int count, const QModelIndex &parent)
 {
+    if (!parent.isValid())
+        return false;
+
     TagXmlItem *parentItem = toItem(parent);
 
     if  (!parentItem->checkRemoveChild(row))
