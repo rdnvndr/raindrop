@@ -20,45 +20,48 @@ QWidget*  XmlDelegate::createEditor (QWidget * parent, const QStyleOptionViewIte
 
 void XmlDelegate::setEditorData(QWidget * editor, const QModelIndex & index) const
 {
+    if (index.isValid()) {
+        TreeComboBox* treeComboBox = dynamic_cast<TreeComboBox*>(editor);
+        if (treeComboBox) {
+            treeComboBox->setDisplayText(
+                        index.model()->data(index,Qt::DisplayRole).toString());
 
-    TreeComboBox* treeComboBox = dynamic_cast<TreeComboBox*>(editor);
-    if (treeComboBox) {
-        treeComboBox->setDisplayText(
-                    index.model()->data(index,Qt::DisplayRole).toString());
-
-        treeComboBox->repaint();
-        return;
-    }
-
-    QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
-    if (comboBox) {
-        TreeXmlHashModel* hashModel = this->sourceModel(comboBox->model());
-        TreeXmlHashModel* indexModel = this->sourceModel(
-                    const_cast<QAbstractItemModel*>(index.model()));
-        if (hashModel && hashModel == indexModel) {
-            QModelIndex curIndex = mapFromSource(comboBox->model(),
-                                                  hashModel->indexLink(
-                                                      mapToSource(index)
-                                                      ));
-            comboBox->setCurrentIndex(curIndex.row());
+            treeComboBox->repaint();
             return;
         }
 
-        comboBox->setEditText(index.model()->data(index,Qt::EditRole).toString());
-        return;
-    }
+        QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
+        if (comboBox) {
+            TreeXmlHashModel* hashModel = this->sourceModel(comboBox->model());
+            TreeXmlHashModel* indexModel = this->sourceModel(
+                        const_cast<QAbstractItemModel*>(index.model()));
+            if (hashModel && hashModel == indexModel) {
+                QModelIndex curIndex = mapFromSource(comboBox->model(),
+                                                     hashModel->indexLink(
+                                                         mapToSource(index)
+                                                         ));
+                comboBox->setCurrentIndex(curIndex.row());
+                return;
+            }
 
-    QLineEdit* lineEdit = dynamic_cast<QLineEdit*>(editor);
-    if (lineEdit) {
-        lineEdit->setText(index.model()->data(index,Qt::DisplayRole).toString());
-        return;
-    }
+            comboBox->setEditText(index.model()->data(index,Qt::EditRole).toString());
+            return;
+        }
 
-    PushButtonImage *pushButton = dynamic_cast<PushButtonImage*>(editor);
-    if (pushButton) {
-        QByteArray bytes = QByteArray::fromBase64(index.data().toByteArray());
-        pushButton->setData(bytes);
-        return;
+        QLineEdit* lineEdit = dynamic_cast<QLineEdit*>(editor);
+        if (lineEdit) {
+            if (index.isValid())
+                lineEdit->setText(
+                            index.model()->data(index,Qt::DisplayRole).toString());
+            return;
+        }
+
+        PushButtonImage *pushButton = dynamic_cast<PushButtonImage*>(editor);
+        if (pushButton) {
+            QByteArray bytes = QByteArray::fromBase64(index.data().toByteArray());
+            pushButton->setData(bytes);
+            return;
+        }
     }
 
     QStyledItemDelegate::setEditorData(editor, index);
