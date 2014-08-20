@@ -124,9 +124,14 @@ void CompositionPropWidget::setCurrent(const QModelIndex &index)
     emit currentIndexChanged(index);
 }
 
+bool CompositionPropWidget::isEdit()
+{
+    return groupBoxProp->isEnabled();
+}
+
 void CompositionPropWidget::edit(bool flag)
 {
-    if (groupBoxProp->isEnabled()==flag)
+    if (isEdit()==flag)
         return;
 
     if (lineEditName->text().isEmpty()){

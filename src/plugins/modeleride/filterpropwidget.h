@@ -53,6 +53,9 @@ public slots:
     //! Установка текущего фильра
     void setCurrent(const QModelIndex &index);
 
+    //! Возращает находится ли в режиме редактирования
+    bool isEdit();
+
     //! Перевод фильтра в режим редактирования
     void edit(bool flag = true);
 

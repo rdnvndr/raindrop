@@ -17,6 +17,12 @@ PropComposition::PropComposition(QWidget *parent) :
             this,SLOT(closeTab(QModelIndex)));
 }
 
+PropComposition::~PropComposition()
+{
+    if (attrWidget->isEdit()) attrWidget->revert();
+    if (propWidget->isEdit()) propWidget->revert();
+}
+
 void PropComposition::setModel(TreeXmlHashModel *model)
 {
     propWidget->setModel(model);
