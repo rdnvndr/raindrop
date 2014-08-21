@@ -124,7 +124,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
 
     QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
     classFilterModel->setFilterKeyColumn(0);
-    classFilterModel->setFilterRole(Qt::UserRole);
+    classFilterModel->setFilterRole(TreeXmlModel::TagRole);
     classFilterModel->setFilterRegExp(DBCLASSXML::CLASS + "|" +
                                       DBMODELXML::MODEL + "|" +
                                       DBCLASSLISTXML::CLASSLIST);
@@ -139,7 +139,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
 
     QSortFilterProxyModel* unitFilterModel = new QSortFilterProxyModel(this);
     unitFilterModel->setFilterKeyColumn(0);
-    unitFilterModel->setFilterRole(Qt::UserRole);
+    unitFilterModel->setFilterRole(TreeXmlModel::TagRole);
     unitFilterModel->setFilterRegExp(DBUNITXML::UNIT + "|" +
                                      DBMODELXML::MODEL + "|" +
                                      DBENTITYLISTXML::ENTITYLIST + "|" +

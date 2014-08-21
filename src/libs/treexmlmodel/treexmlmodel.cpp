@@ -78,7 +78,7 @@ bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex,
     if (isInherited(srcIndex))
         return false;
 
-    QString tag = srcIndex.data(Qt::UserRole).toString();
+    QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
 
     QModelIndex index = insertLastRows(0,1,destIndex,tag);
     if (!index.isValid())
@@ -197,7 +197,7 @@ QVariant TreeXmlModel::data(const QModelIndex &index, int role) const
         if (!m_displayedIcon[tag].isNull()&&index.column()==0)
             return m_displayedIcon[tag];
 
-    if (role == Qt::UserRole){
+    if (role == TreeXmlModel::TagRole){
         return tag;
     }
 
@@ -396,7 +396,7 @@ void TreeXmlModel::updateInsertRows(int row, int count, const QModelIndex &paren
     if (m_attrTags.contains(tag))
         for (int i=0;i<this->rowCount(parent);i++){
             QModelIndex index = parent.child(i,0);
-            if (!isAttr(index) && parent.data(Qt::UserRole) == index.data(Qt::UserRole))
+            if (!isAttr(index) && parent.data(TreeXmlModel::TagRole) == index.data(TreeXmlModel::TagRole))
                 updateInsertRows(this->rowCount(index),count,index, tag);
         }
 
@@ -410,7 +410,7 @@ void TreeXmlModel::revertInsertRows(int row, int count, const QModelIndex &paren
     if (m_attrTags.contains(tag))
         for (int i=0;i<this->rowCount(parent);i++){
             QModelIndex index = parent.child(i,0);
-            if (!isAttr(index) && parent.data(Qt::UserRole) == index.data(Qt::UserRole))
+            if (!isAttr(index) && parent.data(TreeXmlModel::TagRole) == index.data(TreeXmlModel::TagRole))
                 revertInsertRows(this->rowCount(index),count,index, tag);
         }
 

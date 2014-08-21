@@ -108,7 +108,7 @@ bool ClassWidget::isRemove(QModelIndex srcIndex)
     bool success = true;
     QString msg;
 
-    QString tag = srcIndex.data(Qt::UserRole).toString();
+    QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
     QStringList tags;
     tags << tag;
     if (model->rowCount(srcIndex,tags)) {
@@ -143,7 +143,7 @@ bool ClassWidget::isRemove(QModelIndex srcIndex)
             if (linkParent.sibling(linkIndex.parent().row(),0)!= srcIndex){
                 QString parentName;
                 QString name;
-                if (linkIndex.data(Qt::UserRole) == DBCLASSXML::CLASS) {
+                if (linkIndex.data(TreeXmlModel::TagRole) == DBCLASSXML::CLASS) {
                     name = tr("класс ")
                             + linkIndex.sibling(linkIndex.row(),
                                                 model->columnDisplayedAttr(
@@ -151,7 +151,7 @@ bool ClassWidget::isRemove(QModelIndex srcIndex)
                                                     DBCLASSXML::NAME)
                                                 ).data().toString();
                 } else {
-                    if (linkParent.data(Qt::UserRole) == DBCOMPXML::COMP)
+                    if (linkParent.data(TreeXmlModel::TagRole) == DBCOMPXML::COMP)
                         parentName = tr(" принадлежащий составу ")
                                 + linkParent.sibling(
                                     linkParent.row(),
@@ -168,7 +168,7 @@ bool ClassWidget::isRemove(QModelIndex srcIndex)
                                         DBCLASSXML::NAME)
                                     ).data().toString();
 
-                    if  (linkIndex.data(Qt::UserRole) == DBCOMPXML::COMP)
+                    if  (linkIndex.data(TreeXmlModel::TagRole) == DBCOMPXML::COMP)
                         name = tr("состав ")
                                 + linkIndex.sibling(linkIndex.row(),
                                                     model->columnDisplayedAttr(

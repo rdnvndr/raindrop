@@ -27,7 +27,7 @@ QWidget *ConditionDelegate::createEditor(QWidget *parent, const
 {
     Q_UNUSED(option)
 
-    if (index.data(Qt::UserRole) == DBCONDITIONXML::COND) {
+    if (index.data(TreeXmlModel::TagRole) == DBCONDITIONXML::COND) {
         if (index.column() == 0) {
             ConditionProxyModel *proxyModel = qobject_cast<ConditionProxyModel *>(
                         const_cast<QAbstractItemModel *>(index.model()));
@@ -82,8 +82,8 @@ QWidget *ConditionDelegate::createEditor(QWidget *parent, const
         }
     }
     if (index.row() < index.model()->rowCount(index.parent())-1
-            && (index.data(Qt::UserRole) == DBCONDITIONXML::COND
-            || index.data(Qt::UserRole) == DBFILTERBLOCKXML::BLOCK))
+            && (index.data(TreeXmlModel::TagRole) == DBCONDITIONXML::COND
+            || index.data(TreeXmlModel::TagRole) == DBFILTERBLOCKXML::BLOCK))
     {
         if (index.column() == 3) {
             QComboBox *comboBoxAttr = new QComboBox(parent);

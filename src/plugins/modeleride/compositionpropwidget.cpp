@@ -47,7 +47,7 @@ void CompositionPropWidget::setModel(TreeXmlHashModel *model)
 
     QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
     classFilterModel->setFilterKeyColumn(0);
-    classFilterModel->setFilterRole(Qt::UserRole);
+    classFilterModel->setFilterRole(TreeXmlModel::TagRole);
     classFilterModel->setFilterRegExp(DBCLASSXML::CLASS + "|" +
                                       DBMODELXML::MODEL + "|" +
                                       DBCLASSLISTXML::CLASSLIST);
@@ -155,7 +155,7 @@ void CompositionPropWidget::submit()
                                                     DBCOMPXML::COMP,
                                                     DBCOMPXML::NAME),
                                                 rootIndex);
-        if (childIndex.data(Qt::UserRole) == DBCOMPXML::COMP)
+        if (childIndex.data(TreeXmlModel::TagRole) == DBCOMPXML::COMP)
             if (lineEditName->text() == childIndex.data() &&
                     srcIndex != childIndex.sibling(row,0)) {
                 QMessageBox::warning(this,tr("Предуреждение"),

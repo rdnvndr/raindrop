@@ -140,21 +140,21 @@ void ModelerIDEPlug::showContextMenu(const QPoint& point)
         if (!indexSource.isValid())
             return;
 
-        if (indexSource.data(Qt::UserRole)==DBCLASSLISTXML::CLASSLIST
-            || indexSource.data(Qt::UserRole)==DBENTITYLISTXML::ENTITYLIST
-            || indexSource.data(Qt::UserRole)==DBENTITYGROUPXML::ENTITYGROUP
-            || indexSource.data(Qt::UserRole)==DBLOVLISTXML::LOVLIST
-            || indexSource.data(Qt::UserRole)==DBCLASSXML::CLASS)
+        if (indexSource.data(TreeXmlModel::TagRole)==DBCLASSLISTXML::CLASSLIST
+            || indexSource.data(TreeXmlModel::TagRole)==DBENTITYLISTXML::ENTITYLIST
+            || indexSource.data(TreeXmlModel::TagRole)==DBENTITYGROUPXML::ENTITYGROUP
+            || indexSource.data(TreeXmlModel::TagRole)==DBLOVLISTXML::LOVLIST
+            || indexSource.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS)
         {
             contextMenu->actions().at(0)->setVisible(true);
         } else {
             contextMenu->actions().at(0)->setVisible(false);
         }
 
-        if (indexSource.data(Qt::UserRole)==DBCLASSLISTXML::CLASSLIST
-            || indexSource.data(Qt::UserRole)==DBENTITYLISTXML::ENTITYLIST
-            || indexSource.data(Qt::UserRole)==DBLOVLISTXML::LOVLIST
-            || indexSource.data(Qt::UserRole)==DBMODELXML::MODEL)
+        if (indexSource.data(TreeXmlModel::TagRole)==DBCLASSLISTXML::CLASSLIST
+            || indexSource.data(TreeXmlModel::TagRole)==DBENTITYLISTXML::ENTITYLIST
+            || indexSource.data(TreeXmlModel::TagRole)==DBLOVLISTXML::LOVLIST
+            || indexSource.data(TreeXmlModel::TagRole)==DBMODELXML::MODEL)
         {
             contextMenu->actions().at(1)->setVisible(false);
         } else {
@@ -567,8 +567,8 @@ void ModelerIDEPlug::add()
     if (!indexSource.isValid())
         return;
 
-    if (indexSource.data(Qt::UserRole)==DBCLASSLISTXML::CLASSLIST
-            || indexSource.data(Qt::UserRole)==DBCLASSXML::CLASS)
+    if (indexSource.data(TreeXmlModel::TagRole)==DBCLASSLISTXML::CLASSLIST
+            || indexSource.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS)
     {
         QModelIndex lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBCLASSXML::CLASS);
@@ -582,7 +582,7 @@ void ModelerIDEPlug::add()
             treeClassView->treeView->setCurrentIndex(index);
             showPropClass(lastInsertRow);
         }
-    } else if (indexSource.data(Qt::UserRole)==DBENTITYLISTXML::ENTITYLIST) {
+    } else if (indexSource.data(TreeXmlModel::TagRole)==DBENTITYLISTXML::ENTITYLIST) {
         QModelIndex lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBENTITYGROUPXML::ENTITYGROUP);
         if (lastInsertRow.isValid()){
@@ -590,7 +590,7 @@ void ModelerIDEPlug::add()
             treeClassView->treeView->setCurrentIndex(index);
             showPropEntityGroup(lastInsertRow);
         }
-    } else if (indexSource.data(Qt::UserRole)==DBENTITYGROUPXML::ENTITYGROUP) {
+    } else if (indexSource.data(TreeXmlModel::TagRole)==DBENTITYGROUPXML::ENTITYGROUP) {
         QModelIndex lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBENTITYXML::ENTITY);
         if (lastInsertRow.isValid()){
@@ -598,7 +598,7 @@ void ModelerIDEPlug::add()
             treeClassView->treeView->setCurrentIndex(index);
             showPropEntity(lastInsertRow);
         }
-    } else if (indexSource.data(Qt::UserRole)==DBLOVLISTXML::LOVLIST) {
+    } else if (indexSource.data(TreeXmlModel::TagRole)==DBLOVLISTXML::LOVLIST) {
         QModelIndex lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBLOVXML::LOV);
         if (lastInsertRow.isValid()){
@@ -611,7 +611,7 @@ void ModelerIDEPlug::add()
 
 QString ModelerIDEPlug::dataName(const QModelIndex& index)
 {
-    if (index.data(Qt::UserRole) == DBCLASSXML::CLASS)
+    if (index.data(TreeXmlModel::TagRole) == DBCLASSXML::CLASS)
     {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBCLASSXML::CLASS,
@@ -619,7 +619,7 @@ QString ModelerIDEPlug::dataName(const QModelIndex& index)
                                  )).data().toString();
     }
 
-    if (index.data(Qt::UserRole) == DBENTITYXML::ENTITY)
+    if (index.data(TreeXmlModel::TagRole) == DBENTITYXML::ENTITY)
     {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBENTITYXML::ENTITY,
@@ -627,7 +627,7 @@ QString ModelerIDEPlug::dataName(const QModelIndex& index)
                                  )).data().toString();
     }
 
-    if (index.data(Qt::UserRole) == DBCOMPXML::COMP)
+    if (index.data(TreeXmlModel::TagRole) == DBCOMPXML::COMP)
     {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBCOMPXML::COMP,
@@ -635,7 +635,7 @@ QString ModelerIDEPlug::dataName(const QModelIndex& index)
                                  )).data().toString();
     }
 
-    if (index.data(Qt::UserRole) == DBFILTERXML::FILTER)
+    if (index.data(TreeXmlModel::TagRole) == DBFILTERXML::FILTER)
     {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBFILTERXML::FILTER,
@@ -643,14 +643,14 @@ QString ModelerIDEPlug::dataName(const QModelIndex& index)
                                  )).data().toString();
     }
 
-    if (index.data(Qt::UserRole) == DBENTITYGROUPXML::ENTITYGROUP) {
+    if (index.data(TreeXmlModel::TagRole) == DBENTITYGROUPXML::ENTITYGROUP) {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBENTITYGROUPXML::ENTITYGROUP,
                                  DBENTITYGROUPXML::NAME
                                  )).data().toString();
     }
 
-    if (index.data(Qt::UserRole) == DBLOVXML::LOV) {
+    if (index.data(TreeXmlModel::TagRole) == DBLOVXML::LOV) {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBLOVXML::LOV,
                                  DBLOVXML::NAME
@@ -662,7 +662,7 @@ QString ModelerIDEPlug::dataName(const QModelIndex& index)
 
 QString ModelerIDEPlug::dataId(const QModelIndex &index)
 {
-    if (index.data(Qt::UserRole) == DBCLASSXML::CLASS)
+    if (index.data(TreeXmlModel::TagRole) == DBCLASSXML::CLASS)
     {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBCLASSXML::CLASS,
@@ -670,7 +670,7 @@ QString ModelerIDEPlug::dataId(const QModelIndex &index)
                                  )).data().toString();
     }
 
-    if (index.data(Qt::UserRole) == DBENTITYXML::ENTITY)
+    if (index.data(TreeXmlModel::TagRole) == DBENTITYXML::ENTITY)
     {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBENTITYXML::ENTITY,
@@ -678,7 +678,7 @@ QString ModelerIDEPlug::dataId(const QModelIndex &index)
                                  )).data().toString();
     }
 
-    if (index.data(Qt::UserRole) == DBCOMPXML::COMP)
+    if (index.data(TreeXmlModel::TagRole) == DBCOMPXML::COMP)
     {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBCOMPXML::COMP,
@@ -686,7 +686,7 @@ QString ModelerIDEPlug::dataId(const QModelIndex &index)
                                  )).data().toString();
     }
 
-    if (index.data(Qt::UserRole) == DBFILTERXML::FILTER)
+    if (index.data(TreeXmlModel::TagRole) == DBFILTERXML::FILTER)
     {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBFILTERXML::FILTER,
@@ -694,7 +694,7 @@ QString ModelerIDEPlug::dataId(const QModelIndex &index)
                                  )).data().toString();
     }
 
-    if (index.data(Qt::UserRole) == DBENTITYGROUPXML::ENTITYGROUP) {
+    if (index.data(TreeXmlModel::TagRole) == DBENTITYGROUPXML::ENTITYGROUP) {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBENTITYGROUPXML::ENTITYGROUP,
                                  DBENTITYGROUPXML::ID
@@ -702,7 +702,7 @@ QString ModelerIDEPlug::dataId(const QModelIndex &index)
     }
 
 
-    if (index.data(Qt::UserRole) == DBLOVXML::LOV) {
+    if (index.data(TreeXmlModel::TagRole) == DBLOVXML::LOV) {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBLOVXML::LOV,
                                  DBLOVXML::ID
@@ -719,49 +719,49 @@ void ModelerIDEPlug::dblClickTree(const QModelIndex &index)
     if (!indexSource.isValid())
         return;
 
-    if (indexSource.data(Qt::UserRole)==DBCLASSXML::CLASS)
+    if (indexSource.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS)
         showPropClass(indexSource);
 
-    if (indexSource.data(Qt::UserRole)==DBCOMPXML::COMP)
+    if (indexSource.data(TreeXmlModel::TagRole)==DBCOMPXML::COMP)
         showPropComposition(indexSource);
 
-    if (indexSource.data(Qt::UserRole)==DBFILTERXML::FILTER)
+    if (indexSource.data(TreeXmlModel::TagRole)==DBFILTERXML::FILTER)
         showPropFilter(indexSource);
 
-    if (indexSource.data(Qt::UserRole)==DBENTITYXML::ENTITY)
+    if (indexSource.data(TreeXmlModel::TagRole)==DBENTITYXML::ENTITY)
         showPropEntity(indexSource);
 
-    if (indexSource.data(Qt::UserRole)==DBENTITYGROUPXML::ENTITYGROUP)
+    if (indexSource.data(TreeXmlModel::TagRole)==DBENTITYGROUPXML::ENTITYGROUP)
         showPropEntityGroup(indexSource);
 
-    if (indexSource.data(Qt::UserRole)==DBLOVXML::LOV)
+    if (indexSource.data(TreeXmlModel::TagRole)==DBLOVXML::LOV)
         showPropLov(indexSource);
 
 }
 
 bool ModelerIDEPlug::isRemove(const QModelIndex &srcIndex)
 {
-    if (srcIndex.data(Qt::UserRole) == DBMODELXML::MODEL
-            || srcIndex.data(Qt::UserRole) == DBCLASSLISTXML::CLASSLIST
-            || srcIndex.data(Qt::UserRole) == DBENTITYLISTXML::ENTITYLIST
-            || srcIndex.data(Qt::UserRole) == DBLOVLISTXML::LOVLIST)
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBMODELXML::MODEL
+            || srcIndex.data(TreeXmlModel::TagRole) == DBCLASSLISTXML::CLASSLIST
+            || srcIndex.data(TreeXmlModel::TagRole) == DBENTITYLISTXML::ENTITYLIST
+            || srcIndex.data(TreeXmlModel::TagRole) == DBLOVLISTXML::LOVLIST)
     {
         return false;
     }
 
-    if (srcIndex.data(Qt::UserRole) == DBENTITYGROUPXML::ENTITYGROUP)
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBENTITYGROUPXML::ENTITYGROUP)
         return PropEntityGroup::isRemove(srcIndex);
 
-    if (srcIndex.data(Qt::UserRole) == DBENTITYXML::ENTITY)
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBENTITYXML::ENTITY)
         return MsrEntityWidget::isRemove(srcIndex);
 
-    if (srcIndex.data(Qt::UserRole) == DBUNITXML::UNIT)
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBUNITXML::UNIT)
         return MsrUnitWidget::isRemove(srcIndex);
 
-    if (srcIndex.data(Qt::UserRole) == DBCLASSXML::CLASS)
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBCLASSXML::CLASS)
         return ClassWidget::isRemove(srcIndex);
 
-    if (srcIndex.data(Qt::UserRole) == DBLOVXML::LOV)
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBLOVXML::LOV)
         return LovWidget::isRemove(srcIndex);
 
 
@@ -820,7 +820,7 @@ void ModelerIDEPlug::showPropComposition(const QModelIndex &indexSource)
     if (!indexSource.isValid())
         return;
 
-    if (indexSource.data(Qt::UserRole)!=DBCOMPXML::COMP)
+    if (indexSource.data(TreeXmlModel::TagRole)!=DBCOMPXML::COMP)
         return;
 
     PluginManager* pluginManager = PluginManager::instance();
@@ -850,7 +850,7 @@ void ModelerIDEPlug::showPropFilter(const QModelIndex &indexSource)
     if (!indexSource.isValid())
         return;
 
-    if (indexSource.data(Qt::UserRole)!=DBFILTERXML::FILTER)
+    if (indexSource.data(TreeXmlModel::TagRole)!=DBFILTERXML::FILTER)
         return;
 
     PluginManager* pluginManager = PluginManager::instance();
@@ -954,22 +954,22 @@ void ModelerIDEPlug::closePropWindow(const QModelIndex &index)
 
     QString subWindowName = this->dataId(index);
 
-    if (index.data(Qt::UserRole)==DBCLASSXML::CLASS)
+    if (index.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS)
         subWindowName = "PropClass::" + subWindowName;
 
-    if (index.data(Qt::UserRole)==DBCOMPXML::COMP)
+    if (index.data(TreeXmlModel::TagRole)==DBCOMPXML::COMP)
         subWindowName = "PropComposition::" + subWindowName;
 
-    if (index.data(Qt::UserRole)==DBFILTERXML::FILTER)
+    if (index.data(TreeXmlModel::TagRole)==DBFILTERXML::FILTER)
         subWindowName = "PropFilter::" + subWindowName;
 
-    if (index.data(Qt::UserRole)==DBENTITYXML::ENTITY)
+    if (index.data(TreeXmlModel::TagRole)==DBENTITYXML::ENTITY)
         subWindowName = "PropEntiry::" + subWindowName;
 
-    if (index.data(Qt::UserRole)==DBENTITYGROUPXML::ENTITYGROUP)
+    if (index.data(TreeXmlModel::TagRole)==DBENTITYGROUPXML::ENTITYGROUP)
         subWindowName = "PropEntityGroup::" + subWindowName;
 
-    if (index.data(Qt::UserRole)==DBLOVXML::LOV)
+    if (index.data(TreeXmlModel::TagRole)==DBLOVXML::LOV)
         subWindowName = "PropLov::" + subWindowName;
 
 
@@ -1101,20 +1101,20 @@ void ModelerIDEPlug::publishClassModel(const QModelIndex &index)
 {
     for (int row=0;row < m_model->rowCount(index);row++){
         QModelIndex childIndex = m_model->index(row,0,index);
-        if (childIndex.data(Qt::UserRole)==DBATTRXML::ATTR){
+        if (childIndex.data(TreeXmlModel::TagRole)==DBATTRXML::ATTR){
             // Создание атрибута
             if (m_model->isInherited(childIndex))
                 qDebug() << "Унаследованный атрибут:" << childIndex.data().toString();
             else
                 qDebug() << "Атрибут:" << childIndex.data().toString();
-        } else if (childIndex.data(Qt::UserRole)==DBCOMPXML::COMP) {
+        } else if (childIndex.data(TreeXmlModel::TagRole)==DBCOMPXML::COMP) {
             // Создание состава
             if (m_model->isInherited(childIndex))
                 qDebug() << "Унаследованный состав:" <<childIndex.data().toString();
             else
                 qDebug() << "Состав:" <<childIndex.data().toString();
             publishClassModel(childIndex);
-        } else if (childIndex.data(Qt::UserRole)==DBCLASSXML::CLASS) {
+        } else if (childIndex.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS) {
             // Создание класса
             qDebug() << "Класс:" << childIndex.data().toString();
             publishClassModel(childIndex);

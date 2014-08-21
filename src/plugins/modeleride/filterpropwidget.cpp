@@ -82,7 +82,7 @@ void FilterPropWidget::setModel(TreeXmlHashModel *model)
 
     QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
     classFilterModel->setFilterKeyColumn(0);
-    classFilterModel->setFilterRole(Qt::UserRole);
+    classFilterModel->setFilterRole(TreeXmlModel::TagRole);
     classFilterModel->setFilterRegExp(DBCLASSXML::CLASS + "|" +
                                       DBMODELXML::MODEL + "|" +
                                       DBCLASSLISTXML::CLASSLIST);
@@ -156,7 +156,7 @@ void FilterPropWidget::addSubCondition()
             : treeViewCondition->rootIndex();
 
     QModelIndex index = m_conditionModel->insertLastRows(0,1,parent);
-    m_conditionModel->setData(index, DBCONDITIONXML::COND, Qt::UserRole);
+    m_conditionModel->setData(index, DBCONDITIONXML::COND, TreeXmlModel::TagRole);
     m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
 
@@ -170,7 +170,7 @@ void FilterPropWidget::addCondition()
 
 
     QModelIndex index = m_conditionModel->insertLastRows(0,1,parent);
-    m_conditionModel->setData(index, DBCONDITIONXML::COND, Qt::UserRole);
+    m_conditionModel->setData(index, DBCONDITIONXML::COND, TreeXmlModel::TagRole);
     m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
 
@@ -191,7 +191,7 @@ void FilterPropWidget::addSubBlock()
             ? treeViewCondition->currentIndex() : treeViewCondition->rootIndex();
 
     QModelIndex index = m_conditionModel->insertLastRows(0,1,parent);
-    m_conditionModel->setData(index, DBFILTERBLOCKXML::BLOCK, Qt::UserRole);
+    m_conditionModel->setData(index, DBFILTERBLOCKXML::BLOCK, TreeXmlModel::TagRole);
     m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
 
@@ -204,7 +204,7 @@ void FilterPropWidget::addBlock()
             parent = treeViewCondition->currentIndex().parent();
 
     QModelIndex index = m_conditionModel->insertLastRows(0,1,parent);
-    m_conditionModel->setData(index, DBFILTERBLOCKXML::BLOCK, Qt::UserRole);
+    m_conditionModel->setData(index, DBFILTERBLOCKXML::BLOCK, TreeXmlModel::TagRole);
     m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
 
@@ -265,7 +265,7 @@ void FilterPropWidget::submit()
                                                     DBFILTERXML::FILTER,
                                                     DBFILTERXML::NAME),
                                                 rootIndex);
-        if (childIndex.data(Qt::UserRole) == DBFILTERXML::FILTER)
+        if (childIndex.data(TreeXmlModel::TagRole) == DBFILTERXML::FILTER)
             if (lineEditName->text() == childIndex.data() &&
                     srcIndex != childIndex.sibling(row,0)) {
                 QMessageBox::warning(this,tr("Предуреждение"),

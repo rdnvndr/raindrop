@@ -29,7 +29,7 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
         TreeXmlHashModel *xmlModel = qobject_cast<TreeXmlHashModel *>(sourceModel());
 
-        if (data(proxyIndex,Qt::UserRole)
+        if (data(proxyIndex,TreeXmlModel::TagRole)
                 == DBFILTERBLOCKXML::BLOCK) {
 
             switch (proxyIndex.column()) {
@@ -50,7 +50,7 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
             }
         }
 
-        if (data(proxyIndex,Qt::UserRole)
+        if (data(proxyIndex,TreeXmlModel::TagRole)
                 == DBCONDITIONXML::COND) {
 
             switch (proxyIndex.column()) {
@@ -111,13 +111,13 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
         }
     }
 
-    if (role == Qt::UserRole)
+    if (role == TreeXmlModel::TagRole)
         return ModifyProxyModel::data(proxyIndex.sibling(proxyIndex.row(),0),role);
 
     if (role == Qt::DecorationRole && proxyIndex.column() == 0) {
-        if (data(proxyIndex,Qt::UserRole) == DBFILTERBLOCKXML::BLOCK)
+        if (data(proxyIndex,TreeXmlModel::TagRole) == DBFILTERBLOCKXML::BLOCK)
             return QIcon(":/block");
-        if (data(proxyIndex,Qt::UserRole) == DBCONDITIONXML::COND)
+        if (data(proxyIndex,TreeXmlModel::TagRole) == DBCONDITIONXML::COND)
             return QIcon(":/expression");
     }
 
@@ -127,13 +127,13 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
 bool ConditionProxyModel::setData(const QModelIndex &proxyIndex,
                                   const QVariant &value, int role)
 {
-    if (role == Qt::UserRole)
+    if (role == TreeXmlModel::TagRole)
         return ModifyProxyModel::setData(proxyIndex.sibling(proxyIndex.row(),0),value,role);
 
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
         TreeXmlHashModel *xmlModel = qobject_cast<TreeXmlHashModel *>(sourceModel());
 
-        if (data(proxyIndex,Qt::UserRole)
+        if (data(proxyIndex,TreeXmlModel::TagRole)
                 == DBFILTERBLOCKXML::BLOCK) {
 
             int column;
@@ -165,7 +165,7 @@ bool ConditionProxyModel::setData(const QModelIndex &proxyIndex,
             }
         }
 
-        if (data(proxyIndex,Qt::UserRole)
+        if (data(proxyIndex,TreeXmlModel::TagRole)
                 == DBCONDITIONXML::COND) {
 
             int column;
@@ -233,7 +233,7 @@ bool ConditionProxyModel::setData(const QModelIndex &proxyIndex,
 
 bool ConditionProxyModel::insertRows(int row, int count, const QModelIndex &parent)
 {
-    if (data(parent,Qt::UserRole) == DBCONDITIONXML::COND)
+    if (data(parent,TreeXmlModel::TagRole) == DBCONDITIONXML::COND)
         return false;
 
     return ModifyProxyModel::insertRows(row, count, parent);
@@ -241,7 +241,7 @@ bool ConditionProxyModel::insertRows(int row, int count, const QModelIndex &pare
 
 QModelIndex ConditionProxyModel::insertLastRows(int row, int count, const QModelIndex &parent)
 {
-    if (data(parent,Qt::UserRole) == DBCONDITIONXML::COND)
+    if (data(parent,TreeXmlModel::TagRole) == DBCONDITIONXML::COND)
         return QModelIndex().child(-1,-1);
 
     return ModifyProxyModel::insertLastRows(row, count, parent);

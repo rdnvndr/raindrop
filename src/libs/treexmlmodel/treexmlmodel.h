@@ -61,8 +61,14 @@ public:
         QString attr;   //!< Поле с атрибутом
     };
 
+    //! Перечисления ролей
+    enum AttrRole {
+        TagRole =  Qt::UserRole + 1    //!< Роль Тэга
+    };
+
      //! Конструктор модели
     TreeXmlModel(QDomNode document, QObject *parent = 0);
+
     //! Деструктор модели
     virtual ~TreeXmlModel();
 

@@ -36,7 +36,7 @@ bool TreeXmlHashModel::makeHashingData(const QModelIndex &index, QString &dataVa
 {
     // Обновление хэша контроля уникальности
     if (!isInherited(index)) {
-        QString tag  = index.data(Qt::UserRole).toString();
+        QString tag  = index.data(TreeXmlModel::TagRole).toString();
         QString attr = displayedAttr(tag,index.column());
         if (m_hashAttr[tag].contains(attr)){
             QModelIndex existIndex = indexHashAttr(tag,attr,dataValue);
@@ -106,7 +106,7 @@ void TreeXmlHashModel::refreshHashing(const QModelIndex &index, bool remove)
 
 void TreeXmlHashModel::refreshHashingOne(const QModelIndex &index, bool remove)
 {
-    QString tag = index.data(Qt::UserRole).toString();
+    QString tag = index.data(TreeXmlModel::TagRole).toString();
     QString attr = displayedAttr(tag,index.column());
     if (m_hashAttr[tag].contains(attr)){
         if (remove )
@@ -279,7 +279,7 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex,
     if (isInherited(srcIndex))
         return false;
 
-    QString tag = srcIndex.data(Qt::UserRole).toString();
+    QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
 
     QModelIndex index = insertLastRows(0,1,destIndex, tag);
     if (!index.isValid())

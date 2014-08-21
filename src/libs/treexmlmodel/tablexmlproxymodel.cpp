@@ -1,4 +1,5 @@
 #include "tablexmlproxymodel.h"
+#include "treexmlmodel.h"
 #include <QtCore>
 #include <QDebug>
 
@@ -15,7 +16,7 @@ bool TableXMLProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) co
         return true;
 
     if (parent.internalPointer() ==  m_index.internalPointer()){
-        QString tag = sourceModel()->data(source_index, Qt::UserRole).toString();
+        QString tag = sourceModel()->data(source_index, TreeXmlModel::TagRole).toString();
         foreach (const QString& tagName,this->m_tags)
             if (tag.contains(tagName)){
                 if (filterRegExp() == QRegExp("\\S*")){
