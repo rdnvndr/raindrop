@@ -30,7 +30,7 @@ bool TreeFilterProxyModel::filterAcceptsRow(int source_row,
 
     if (!m_filterTags.contains(sourceModel()->data(
                                   source_parent.child(source_row,0),
-                                  Qt::UserRole).toString()) && source_parent.isValid())
+                                  TreeXmlModel::TagRole).toString()) && source_parent.isValid())
             return false;
 
     // Если узел удолетворяет  фильтру то показать этот узел
@@ -49,7 +49,7 @@ bool TreeFilterProxyModel::filterAcceptsRowItself(int source_row,
 {
     if (!m_filterTags.contains(sourceModel()->data(
                                   source_parent.child(source_row,0),
-                                  Qt::UserRole).toString()) && source_parent.isValid())
+                                  TreeXmlModel::TagRole).toString()) && source_parent.isValid())
         return false;
 
     return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
@@ -78,29 +78,29 @@ bool TreeFilterProxyModel::hasAcceptedChildren(int source_row,
 
 bool TreeFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    if (right.data(Qt::UserRole)!=DBCLASSXML::CLASS) {
-        if (left.data(Qt::UserRole)==DBCLASSXML::CLASS)
+    if (right.data(TreeXmlModel::TagRole)!=DBCLASSXML::CLASS) {
+        if (left.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS)
             return true;
     } else {
-        if (left.data(Qt::UserRole)==DBCLASSXML::CLASS)
+        if (left.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS)
             return QSortFilterProxyModel::lessThan(left,right);
         return false;
     }
 
-    if (right.data(Qt::UserRole)!=DBCOMPXML::COMP) {
-        if (left.data(Qt::UserRole)==DBCOMPXML::COMP)
+    if (right.data(TreeXmlModel::TagRole)!=DBCOMPXML::COMP) {
+        if (left.data(TreeXmlModel::TagRole)==DBCOMPXML::COMP)
             return true;
     } else {
-        if (left.data(Qt::UserRole)==DBCOMPXML::COMP)
+        if (left.data(TreeXmlModel::TagRole)==DBCOMPXML::COMP)
             return QSortFilterProxyModel::lessThan(left,right);
         return false;
     }
 
-    if (right.data(Qt::UserRole)!=DBFILTERXML::FILTER) {
-        if (left.data(Qt::UserRole)==DBFILTERXML::FILTER )
+    if (right.data(TreeXmlModel::TagRole)!=DBFILTERXML::FILTER) {
+        if (left.data(TreeXmlModel::TagRole)==DBFILTERXML::FILTER )
             return true;
     } else {
-        if (left.data(Qt::UserRole)==DBFILTERXML::FILTER )
+        if (left.data(TreeXmlModel::TagRole)==DBFILTERXML::FILTER )
             return QSortFilterProxyModel::lessThan(left,right);
         return false;
     }

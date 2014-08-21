@@ -88,7 +88,7 @@ void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, co
                     const_cast<QAbstractItemModel*>(model));
 
         if (hashModel && hashModel == indexModel) {
-            QString tag  = index.data(Qt::UserRole).toString();
+            QString tag  = index.data(TreeXmlModel::TagRole).toString();
             QString attr = hashModel->displayedAttr(tag, mapToSource(index).column());
             int column = hashModel->columnDisplayedAttr(hashModel->toRelation(tag,attr).tag,
                                                         hashModel->uuidAttr(tag));

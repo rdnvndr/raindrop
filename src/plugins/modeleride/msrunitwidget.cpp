@@ -65,7 +65,7 @@ bool MsrUnitWidget::isRemove(const QModelIndex &srcIndex)
     bool success = true;
     QString msg;
 
-    QString tag = srcIndex.data(Qt::UserRole).toString();
+    QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
 
     QString fieldId = model->uuidAttr(tag);
     if (fieldId.isEmpty())
@@ -94,7 +94,7 @@ bool MsrUnitWidget::isRemove(const QModelIndex &srcIndex)
                 QString parentName;
                 QString name;
 
-                if (linkParent.data(Qt::UserRole) == DBCOMPXML::COMP)
+                if (linkParent.data(TreeXmlModel::TagRole) == DBCOMPXML::COMP)
                     parentName = tr(" принадлежащий составу ")
                             + linkParent.sibling(
                                 linkParent.row(),
@@ -148,7 +148,7 @@ void MsrUnitWidget::add()
     QModelIndex srcIndex = tableViewUnit->rootIndex();
     QModelIndex index = m_unitModel->insertLastRows(0,1,srcIndex);
     if (index.isValid()) {
-        m_unitModel->setData(index, DBUNITXML::UNIT, Qt::UserRole);
+        m_unitModel->setData(index, DBUNITXML::UNIT, TreeXmlModel::TagRole);
         m_unitModel->setData(index, QIcon(":/unit"), Qt::DecorationRole);
         m_unitModel->setData(index.sibling(
                                  index.row(),

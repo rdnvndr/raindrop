@@ -178,11 +178,11 @@ bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
         // Обработка TreeXMLModel
         if (xmlModel) {
             if (m_updatedRow.contains(indexProxy))
-                if (m_updatedRow[indexProxy].contains(Qt::UserRole))
+                if (m_updatedRow[indexProxy].contains(TreeXmlModel::TagRole))
                 {
                     QModelIndex lastIndexRow =
                             xmlModel->insertLastRows(lastRow,1,srcParent,
-                                                     m_updatedRow[indexProxy][Qt::UserRole].toString());
+                                                     m_updatedRow[indexProxy][TreeXmlModel::TagRole].toString());
                     isInserted = lastIndexRow.isValid();
                     lastRow = lastIndexRow.row();
                 }

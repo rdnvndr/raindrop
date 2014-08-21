@@ -21,7 +21,7 @@ void UnitDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, cons
                   : dynamic_cast<TreeXmlHashModel*>(model);
 
         if (hashModel) {
-            QString tag  = index.data(Qt::UserRole).toString();
+            QString tag  = index.data(TreeXmlModel::TagRole).toString();
             QString attr = hashModel->displayedAttr(tag, index.column());
 
             if (tag == DBUNITXML::UNIT && attr == DBUNITXML::CODE) {
@@ -52,7 +52,7 @@ QWidget *UnitDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
               : dynamic_cast<const TreeXmlHashModel*>(index.model());
 
     if (hashModel) {
-        QString tag  = index.data(Qt::UserRole).toString();
+        QString tag  = index.data(TreeXmlModel::TagRole).toString();
         QString attr = hashModel->displayedAttr(tag, index.column());
         if (tag == DBUNITXML::UNIT) {
             if (attr == DBUNITXML::CODE)
