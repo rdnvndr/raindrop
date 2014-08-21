@@ -151,9 +151,6 @@ public:
     //! Удаление строки
     bool removeRows (int row, int count, const QModelIndex & parent);
 
-    //! Получение индекса последней вставленной строки
-    Q_DECL_DEPRECATED QModelIndex lastInsertRow();
-
     //! Обработчик окрнчания перетаскивания данных путем Drag and Drop
     bool dropMimeData(const QMimeData *data, Qt::DropAction action,
                       int row, int column, const QModelIndex &parent);
@@ -224,9 +221,6 @@ private:
 
     //! Список названий заголовков
     QMap<int, QString> m_header;
-
-    //! Индекс последней вставленной строки
-    QModelIndex m_lastInsRow;
 
     //! Список тэгов в которые нельзя вставлять строки
     QHash<QString, QStringList> m_insertTags;

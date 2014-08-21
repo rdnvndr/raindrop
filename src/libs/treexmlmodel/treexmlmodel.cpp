@@ -347,10 +347,8 @@ bool TreeXmlModel::insertRows(int row, int count, const QModelIndex &parent)
     Q_UNUSED(row);
 
     QModelIndex index = insertLastRows(row, count, parent);
-    if (index.isValid()) {
-        m_lastInsRow = index;
+    if (index.isValid())
         return true;
-    }
 
     return false;
 }
@@ -460,11 +458,6 @@ bool TreeXmlModel::removeRows(int row, int count, const QModelIndex &parent)
     updateRemoveRows(emptyRowAttr,count,parent);
 
     return true;
-}
-
-QModelIndex TreeXmlModel::lastInsertRow()
-{
-    return m_lastInsRow;
 }
 
 bool TreeXmlModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
