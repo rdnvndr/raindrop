@@ -570,8 +570,8 @@ void ModelerIDEPlug::add()
     if (indexSource.data(Qt::UserRole)==DBCLASSLISTXML::CLASSLIST
             || indexSource.data(Qt::UserRole)==DBCLASSXML::CLASS)
     {
-        m_model->setInsTagName(DBCLASSXML::CLASS);
-        QModelIndex lastInsertRow = m_model->insertLastRows(0,1,indexSource);
+        QModelIndex lastInsertRow =
+                m_model->insertLastRows(0,1,indexSource,DBCLASSXML::CLASS);
         if (lastInsertRow.isValid()){
             QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
             int column = m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
@@ -583,24 +583,24 @@ void ModelerIDEPlug::add()
             showPropClass(lastInsertRow);
         }
     } else if (indexSource.data(Qt::UserRole)==DBENTITYLISTXML::ENTITYLIST) {
-        m_model->setInsTagName(DBENTITYGROUPXML::ENTITYGROUP);
-        QModelIndex lastInsertRow = m_model->insertLastRows(0,1,indexSource);
+        QModelIndex lastInsertRow =
+                m_model->insertLastRows(0,1,indexSource,DBENTITYGROUPXML::ENTITYGROUP);
         if (lastInsertRow.isValid()){
             QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
             treeClassView->treeView->setCurrentIndex(index);
             showPropEntityGroup(lastInsertRow);
         }
     } else if (indexSource.data(Qt::UserRole)==DBENTITYGROUPXML::ENTITYGROUP) {
-        m_model->setInsTagName(DBENTITYXML::ENTITY);
-        QModelIndex lastInsertRow = m_model->insertLastRows(0,1,indexSource);
+        QModelIndex lastInsertRow =
+                m_model->insertLastRows(0,1,indexSource,DBENTITYXML::ENTITY);
         if (lastInsertRow.isValid()){
             QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
             treeClassView->treeView->setCurrentIndex(index);
             showPropEntity(lastInsertRow);
         }
     } else if (indexSource.data(Qt::UserRole)==DBLOVLISTXML::LOVLIST) {
-        m_model->setInsTagName(DBLOVXML::LOV);
-        QModelIndex lastInsertRow = m_model->insertLastRows(0,1,indexSource);
+        QModelIndex lastInsertRow =
+                m_model->insertLastRows(0,1,indexSource,DBLOVXML::LOV);
         if (lastInsertRow.isValid()){
             QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
             treeClassView->treeView->setCurrentIndex(index);
@@ -988,8 +988,7 @@ void ModelerIDEPlug::newClassModel()
 
 
     QModelIndex indexSource = classFilterModel->mapToSource(treeClassView->treeView->currentIndex());
-    m_model->setInsTagName(DBMODELXML::MODEL);
-    QModelIndex lastIndex = m_model->insertLastRows(0,1,indexSource);
+    QModelIndex lastIndex = m_model->insertLastRows(0,1,indexSource,DBMODELXML::MODEL);
     if (lastIndex.isValid()){
         QModelIndex index = classFilterModel->mapFromSource(lastIndex);
         treeClassView->treeView->setCurrentIndex(index);
@@ -1002,9 +1001,8 @@ void ModelerIDEPlug::newClassModel()
                                               DBMODELXML::DESCRIPTION);
         m_model->setData(lastIndex.sibling(lastIndex.row(),column),tr("Модель"));
 
-        indexSource = lastIndex;
-        m_model->setInsTagName(DBCLASSLISTXML::CLASSLIST);
-        QModelIndex lastIndex = m_model->insertLastRows(0,1,indexSource);
+        indexSource = lastIndex;        
+        QModelIndex lastIndex = m_model->insertLastRows(0,1,indexSource,DBCLASSLISTXML::CLASSLIST);
         if (lastIndex.isValid()){
             QModelIndex index = classFilterModel->mapFromSource(lastIndex);
             treeClassView->treeView->setCurrentIndex(index);
@@ -1018,8 +1016,7 @@ void ModelerIDEPlug::newClassModel()
             m_model->setData(lastIndex.sibling(lastIndex.row(),column),tr("Классы"));
         }
 
-        m_model->setInsTagName(DBENTITYLISTXML::ENTITYLIST);
-        lastIndex = m_model->insertLastRows(0,1,indexSource);
+        lastIndex = m_model->insertLastRows(0,1,indexSource,DBENTITYLISTXML::ENTITYLIST);
         if (lastIndex.isValid()){
             QModelIndex index = classFilterModel->mapFromSource(lastIndex);
             treeClassView->treeView->setCurrentIndex(index);
@@ -1033,8 +1030,7 @@ void ModelerIDEPlug::newClassModel()
             m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("Единицы измерения"));
         }
 
-        m_model->setInsTagName(DBLOVLISTXML::LOVLIST);
-        lastIndex = m_model->insertLastRows(0,1,indexSource);
+        lastIndex = m_model->insertLastRows(0,1,indexSource, DBLOVLISTXML::LOVLIST);
         if (lastIndex.isValid()){
             QModelIndex index = classFilterModel->mapFromSource(lastIndex);
             treeClassView->treeView->setCurrentIndex(index);

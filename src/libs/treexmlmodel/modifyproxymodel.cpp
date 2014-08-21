@@ -180,8 +180,9 @@ bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
             if (m_updatedRow.contains(indexProxy))
                 if (m_updatedRow[indexProxy].contains(Qt::UserRole))
                 {
-                    xmlModel->setInsTagName(m_updatedRow[indexProxy][Qt::UserRole].toString());
-                    QModelIndex lastIndexRow = xmlModel->insertLastRows(lastRow,1,srcParent);
+                    QModelIndex lastIndexRow =
+                            xmlModel->insertLastRows(lastRow,1,srcParent,
+                                                     m_updatedRow[indexProxy][Qt::UserRole].toString());
                     isInserted = lastIndexRow.isValid();
                     lastRow = lastIndexRow.row();
                 }

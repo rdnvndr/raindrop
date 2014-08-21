@@ -130,8 +130,8 @@ void FilterPropWidget::add()
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),
                                           0,m_mapper->rootIndex()).parent();
 
-    m_model->setInsTagName(DBFILTERXML::FILTER);
-    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex);
+    QModelIndex srcCurrentIndex =
+            m_model->insertLastRows(0,1,srcIndex, DBFILTERXML::FILTER);
     if (srcCurrentIndex.isValid()){
         setCurrent(srcCurrentIndex);
         edit(true);

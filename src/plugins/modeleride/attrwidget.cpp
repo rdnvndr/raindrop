@@ -253,8 +253,8 @@ void AttrWidget::cleanLov()
 void AttrWidget::add()
 {
     QModelIndex srcIndex = m_attrModel->mapToSource(tableViewAttr->rootIndex());
-    m_model->setInsTagName(DBATTRXML::ATTR);
-    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex);
+    QModelIndex srcCurrentIndex =
+            m_model->insertLastRows(0,1,srcIndex,DBATTRXML::ATTR);
     if (srcCurrentIndex.isValid()){
         this->setCurrent(m_attrModel->mapFromSource(srcCurrentIndex));
         comboBoxTypeAttr->setCurrentIndex(5);

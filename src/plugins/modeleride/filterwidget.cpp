@@ -53,8 +53,8 @@ void FilterWidget::setModel(TreeXmlHashModel *model)
 void FilterWidget::add()
 {
     QModelIndex srcIndex = m_filterModel->mapToSource(tableViewFilter->rootIndex());
-    m_model->setInsTagName(DBFILTERXML::FILTER);
-    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex);
+    QModelIndex srcCurrentIndex =
+            m_model->insertLastRows(0,1,srcIndex,DBFILTERXML::FILTER);
     if (srcCurrentIndex.isValid()){
         tableViewFilter->setCurrentIndex(
                     m_filterModel->mapFromSource(srcCurrentIndex));

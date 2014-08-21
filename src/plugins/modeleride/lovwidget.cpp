@@ -80,8 +80,8 @@ void LovWidget::add()
     m_oldIndex = m_mapper->currentIndex();
     QModelIndex srcIndex =  m_model->index(m_mapper->currentIndex(),
                                            0,m_mapper->rootIndex()).parent();
-    m_model->setInsTagName(DBLOVXML::LOV);
-    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex);
+    QModelIndex srcCurrentIndex =
+            m_model->insertLastRows(0,1,srcIndex,DBLOVXML::LOV);
     if (srcCurrentIndex.isValid()) {
         setCurrent(srcCurrentIndex);
         edit(true);

@@ -94,8 +94,8 @@ void PropEntityGroup::add()
     m_oldIndex = m_mapper->currentIndex();
     QModelIndex srcIndex =  m_model->index(m_mapper->currentIndex(),
                                            0,m_mapper->rootIndex()).parent();
-    m_model->setInsTagName(DBENTITYGROUPXML::ENTITYGROUP);
-    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex);
+    QModelIndex srcCurrentIndex =
+            m_model->insertLastRows(0,1,srcIndex,DBENTITYGROUPXML::ENTITYGROUP);
     if (srcCurrentIndex.isValid()) {
         setCurrentEntityGroup(srcCurrentIndex);
         edit(true);

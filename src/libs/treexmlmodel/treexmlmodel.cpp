@@ -10,7 +10,6 @@ TreeXmlModel::TreeXmlModel(QDomNode document, QObject *parent)
 {
     m_rootItem = new TagXmlItem(document, NULL);
     m_column = 1;
-    m_insTag = "element";
 }
 
 TreeXmlModel::~TreeXmlModel()
@@ -80,9 +79,8 @@ bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex,
         return false;
 
     QString tag = srcIndex.data(Qt::UserRole).toString();
-    setInsTagName(tag);
 
-    QModelIndex index = insertLastRows(0,1,destIndex);
+    QModelIndex index = insertLastRows(0,1,destIndex,tag);
     if (!index.isValid())
         return false;
 
@@ -117,12 +115,12 @@ bool TreeXmlModel::isAttr(const QModelIndex &index) const
     return false;
 }
 
-bool TreeXmlModel::isInsert(const QModelIndex &index) const
+bool TreeXmlModel::isInsert(const QModelIndex &index, QString tag) const
 {
     TagXmlItem *item = toItem(index);
 
     if (index.isValid()){
-        if (m_insertTags[item->nodeName()].contains(m_insTag))
+        if (m_insertTags[item->nodeName()].contains(tag))
             return true;
         return false;
     } else {
@@ -357,21 +355,21 @@ bool TreeXmlModel::insertRows(int row, int count, const QModelIndex &parent)
     return false;
 }
 
-QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &parent)
+QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &parent, QString tag)
 {
     Q_UNUSED(row);
 
     TagXmlItem *parentItem = toItem(parent);
-    if (!isInsert(parent))
+    if (!isInsert(parent, tag))
         return QModelIndex().child(-1,-1);
 
     int position = parentItem->count(m_filterTags);
-    updateInsertRows(position,count,parent);
+    updateInsertRows(position,count,parent,tag);
 
     bool success = true;
     int revertCount;
     for (int i = 0; i < count; i++) {
-        success = parentItem->insertChild(m_insTag);
+        success = parentItem->insertChild(tag);
         if (!success) {
             revertCount = i;
             break;
@@ -388,34 +386,34 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
         // Возрат изменений
         for (int i = revertCount-1; i>=0; i--)
             parentItem->removeChild(position+revertCount);
-        revertInsertRows(position, count, parent);
+        revertInsertRows(position, count, parent, tag);
     }
 
     return QModelIndex().child(-1,-1);
 }
 
-void TreeXmlModel::updateInsertRows(int row, int count, const QModelIndex &parent)
+void TreeXmlModel::updateInsertRows(int row, int count, const QModelIndex &parent, QString tag)
 {
     // Если атрибут
-    if (m_attrTags.contains(m_insTag))
+    if (m_attrTags.contains(tag))
         for (int i=0;i<this->rowCount(parent);i++){
             QModelIndex index = parent.child(i,0);
             if (!isAttr(index) && parent.data(Qt::UserRole) == index.data(Qt::UserRole))
-                updateInsertRows(this->rowCount(index),count,index);
+                updateInsertRows(this->rowCount(index),count,index, tag);
         }
 
     beginInsertRows(parent,row,row+count-1);
     endInsertRows();
 }
 
-void TreeXmlModel::revertInsertRows(int row, int count, const QModelIndex &parent)
+void TreeXmlModel::revertInsertRows(int row, int count, const QModelIndex &parent, QString tag)
 {
     // Если атрибут
-    if (m_attrTags.contains(m_insTag))
+    if (m_attrTags.contains(tag))
         for (int i=0;i<this->rowCount(parent);i++){
             QModelIndex index = parent.child(i,0);
             if (!isAttr(index) && parent.data(Qt::UserRole) == index.data(Qt::UserRole))
-                revertInsertRows(this->rowCount(index),count,index);
+                revertInsertRows(this->rowCount(index),count,index, tag);
         }
 
     beginRemoveRows(parent,row,row+count-1);
@@ -498,17 +496,6 @@ bool TreeXmlModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     }
 
     return true;
-}
-
-
-void TreeXmlModel::setInsTagName(const QString &tag)
-{
-    m_insTag = tag;
-}
-
-QString TreeXmlModel::insTagName()
-{
-    return m_insTag;
 }
 
 TagXmlItem *TreeXmlModel::toItem(const QModelIndex &index) const
