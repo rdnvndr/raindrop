@@ -138,8 +138,8 @@ bool TreeXmlModel::isInsert(const QModelIndex &index) const
 
 bool TreeXmlModel::hasChildren(const QModelIndex &parent) const
 {
-    Q_UNUSED (parent);
-    return true;
+    TagXmlItem *parentItem = toItem(parent);
+    return parentItem->hasChildren(m_filterTags,m_attrTags);
 }
 
 void TreeXmlModel::addDisplayedAttr(const QString &tag, const QStringList &value, QIcon icon)
@@ -379,8 +379,6 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
     }
 
     if (success) {
-        beginInsertRows(parent,position,position+count-1);
-        endInsertRows();
         // Добавление корневого узла
         if (parent.isValid())
             return parent.child(position+count-1,0);
@@ -390,40 +388,38 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
         // Возрат изменений
         for (int i = revertCount-1; i>=0; i--)
             parentItem->removeChild(position+revertCount);
-        revertInsertRows(position, count, parent, true);
+        revertInsertRows(position, count, parent);
     }
 
     return QModelIndex().child(-1,-1);
 }
 
-void TreeXmlModel::updateInsertRows(int row, int count, const QModelIndex &parent, bool updatingRoot)
+void TreeXmlModel::updateInsertRows(int row, int count, const QModelIndex &parent)
 {
     // Если атрибут
     if (m_attrTags.contains(m_insTag))
         for (int i=0;i<this->rowCount(parent);i++){
             QModelIndex index = parent.child(i,0);
             if (!isAttr(index) && parent.data(Qt::UserRole) == index.data(Qt::UserRole))
-                updateInsertRows(this->rowCount(index),count,index, true);
+                updateInsertRows(this->rowCount(index),count,index);
         }
-    if (updatingRoot) {
-        beginInsertRows(parent,row,row+count-1);
-        endInsertRows();
-    }
+
+    beginInsertRows(parent,row,row+count-1);
+    endInsertRows();
 }
 
-void TreeXmlModel::revertInsertRows(int row, int count, const QModelIndex &parent, bool updatingRoot)
+void TreeXmlModel::revertInsertRows(int row, int count, const QModelIndex &parent)
 {
-     // Если атрибут
+    // Если атрибут
     if (m_attrTags.contains(m_insTag))
         for (int i=0;i<this->rowCount(parent);i++){
             QModelIndex index = parent.child(i,0);
             if (!isAttr(index) && parent.data(Qt::UserRole) == index.data(Qt::UserRole))
-                revertInsertRows(this->rowCount(index),count,index, true);
+                revertInsertRows(this->rowCount(index),count,index);
         }
-    if (updatingRoot) {
-        beginRemoveRows(parent,row,row+count-1);
-        endRemoveRows();
-    }
+
+    beginRemoveRows(parent,row,row+count-1);
+    endRemoveRows();
 }
 
 void TreeXmlModel::updateRemoveRows(int emptyRowAttr,int count, const QModelIndex &parent)

@@ -66,6 +66,37 @@ int TagXmlItem::count(QStringList tags,QStringList parenttags){
     return count;
 }
 
+int TagXmlItem::hasChildren(QStringList tags, QStringList parenttags)
+{
+    // Поиск количества потомков
+    if (tags.count()>0)
+        for (QDomNode childNode = domNode.firstChild();!childNode.isNull();childNode = childNode.nextSibling())
+        {
+            QString nodeName = childNode.nodeName();
+            if (tags.contains(nodeName))
+                    return true;
+        }
+    else if (!domNode.childNodes().isEmpty())
+        return true;
+
+    // Поиск количества наследуемых потомков
+    if (parenttags.count()>0){
+        // У наследуемых узлов потомков не отображать
+        QString nodeName = domNode.nodeName();
+        if (parenttags.contains(nodeName))
+                return false;
+
+        // Считаем количество унаследованных узлов
+        if (parentItem != NULL)
+            foreach (const QString &tag,parenttags)
+                if (tags.contains(tag)){
+                    return parent()->hasChildren(parenttags,parenttags);
+                }
+    }
+
+    return false;
+}
+
 TagXmlItem *TagXmlItem::parent()
 {
     return parentItem;
