@@ -141,17 +141,12 @@ public:
     //! Получение корневой узла дерева
     TagXmlItem* rootItem();
 
-    //! Установить наименование тэга для вставки строки
-    void setInsTagName(const QString &tag);
-
-    //! Установить наименование тэга для вставки строки
-    QString insTagName();
-
     //! Вставка строки
     bool insertRows (int row, int count, const QModelIndex & parent);
 
     //! Вставка строки
-    QModelIndex insertLastRows (int row, int count, const QModelIndex & parent);
+    QModelIndex insertLastRows (int row, int count,
+                                const QModelIndex & parent, QString tag = "element");
 
     //! Удаление строки
     bool removeRows (int row, int count, const QModelIndex & parent);
@@ -176,7 +171,7 @@ public:
     Qt::DropActions supportedDragActions() const;
 
     //! Возращает True если можно вставить строку
-    bool isInsert(const QModelIndex &index) const;
+    bool isInsert(const QModelIndex &index, QString tag) const;
 
     //! Возращает True если имеются потомки
     bool hasChildren(const QModelIndex &parent) const;
@@ -199,10 +194,12 @@ private:
     void updateModifyRow(int emptyRowAttr, const QModelIndex &parent);
 
     //! Обновление вставленных унаследованных строк
-    void updateInsertRows(int row, int count, const QModelIndex &parent);
+    void updateInsertRows(int row, int count,
+                          const QModelIndex &parent, QString tag);
 
     //! Удаление вставленных унаследованных строк
-    void revertInsertRows(int row, int count, const QModelIndex &parent);
+    void revertInsertRows(int row, int count,
+                          const QModelIndex &parent, QString tag);
 
     //! Обновление удаленных унаследованных строк
     void updateRemoveRows(int emptyRowAttr, int count, const QModelIndex &parent);
@@ -218,9 +215,6 @@ private:
 
     //! Список тэгов которые являются атрибутами
     QStringList m_attrTags;
-
-    //! Наименование тэга для вставки строки
-    QString m_insTag;
 
     //! Список атрибутов тэга для отображения
     QHash<QString, QStringList> m_displayedAttr;

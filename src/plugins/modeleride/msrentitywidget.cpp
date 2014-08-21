@@ -83,8 +83,8 @@ void MsrEntityWidget::add()
     m_oldIndex = m_mapper->currentIndex();
     QModelIndex srcIndex =  m_model->index(m_mapper->currentIndex(),
                                            0,m_mapper->rootIndex()).parent();
-    m_model->setInsTagName(DBENTITYXML::ENTITY);
-    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex);
+    QModelIndex srcCurrentIndex =
+            m_model->insertLastRows(0,1,srcIndex,DBENTITYXML::ENTITY);
     if (srcCurrentIndex.isValid()) {
         setCurrent(srcCurrentIndex);
         edit(true);

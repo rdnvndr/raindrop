@@ -55,8 +55,8 @@ void CompositionWidget::setModel(TreeXmlHashModel *model)
 void CompositionWidget::add()
 {
     QModelIndex srcIndex = m_compositionModel->mapToSource(tableViewComp->rootIndex());
-    m_model->setInsTagName(DBCOMPXML::COMP);
-    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex);
+    QModelIndex srcCurrentIndex =
+            m_model->insertLastRows(0,1,srcIndex, DBCOMPXML::COMP);
     if (srcCurrentIndex.isValid()){
         tableViewComp->setCurrentIndex(
                     m_compositionModel->mapFromSource(srcCurrentIndex));

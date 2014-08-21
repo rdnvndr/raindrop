@@ -89,8 +89,8 @@ void ClassWidget::add()
     m_oldIndex = m_mapper->currentIndex();
     QModelIndex srcIndex =  m_model->index(m_mapper->currentIndex(),
                                            0,m_mapper->rootIndex()).parent();
-    m_model->setInsTagName(DBCLASSXML::CLASS);
-    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex);
+    QModelIndex srcCurrentIndex =
+            m_model->insertLastRows(0,1,srcIndex,DBCLASSXML::CLASS);
     if (srcCurrentIndex.isValid()){
         setCurrent(srcCurrentIndex);
         comboBoxClassType->setCurrentIndex(0);

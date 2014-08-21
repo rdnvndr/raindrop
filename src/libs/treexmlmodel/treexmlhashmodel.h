@@ -48,7 +48,8 @@ public:
     bool insertRows (int row, int count, const QModelIndex & parent);
 
     //! Вставка строки
-    QModelIndex insertLastRows (int row, int count, const QModelIndex & parent);
+    QModelIndex insertLastRows (int row, int count,
+                                const QModelIndex & parent, QString tag = "element");
 
     //! Удаление строки
     bool removeRows (int row, int count, const QModelIndex & parent);
@@ -101,7 +102,7 @@ private:
     bool makeHashingData(const QModelIndex &index, QString &dataValue);
 
     //! Заполнение UUID при вставке строки
-    void insertUuid(const QModelIndex &index);
+    void insertUuid(const QModelIndex &index, QString tag);
 
     //! Список атрибутов для хэшеированя [тэг][атрибут][уникальность]
     QHash<QString, QHash<QString,UniqueAttr> > m_hashAttr;

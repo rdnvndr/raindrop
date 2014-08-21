@@ -92,8 +92,8 @@ void CompositionPropWidget::add()
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),
                                           0,m_mapper->rootIndex()).parent();
 
-    m_model->setInsTagName(DBCOMPXML::COMP);
-    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex);
+    QModelIndex srcCurrentIndex =
+            m_model->insertLastRows(0,1,srcIndex,DBCOMPXML::COMP);
     if (srcCurrentIndex.isValid()){
         setCurrent(srcCurrentIndex);
         edit(true);

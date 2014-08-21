@@ -65,14 +65,14 @@ bool TreeXmlHashModel::makeHashingData(const QModelIndex &index, QString &dataVa
     return true;
 }
 
-void TreeXmlHashModel::insertUuid(const QModelIndex &index)
+void TreeXmlHashModel::insertUuid(const QModelIndex &index, QString tag)
 {
-    QString attr = uuidAttr(insTagName());
+    QString attr = uuidAttr(tag);
     if (!attr.isEmpty()) {
         TagXmlItem *item = toItem(index);
         QString value = QUuid::createUuid().toString();
         item->setValue(attr,value);
-        m_hashValue[insTagName()][attr].insert(value,item);
+        m_hashValue[tag][attr].insert(value,item);
     }
 }
 
@@ -233,22 +233,23 @@ bool TreeXmlHashModel::insertRows(int row, int count, const QModelIndex &parent)
     return insertLastRows(row,count,parent).isValid();
 }
 
-QModelIndex TreeXmlHashModel::insertLastRows(int row, int count, const QModelIndex &parent)
+QModelIndex TreeXmlHashModel::insertLastRows(int row, int count,
+                                             const QModelIndex &parent, QString tag)
 {
     Q_UNUSED(row);
 
     TagXmlItem *parentItem = toItem(parent);
-    if (!isInsert(parent))
+    if (!isInsert(parent, tag))
         return QModelIndex().child(-1,-1);
 
     int position = parentItem->count(tagsFilter());
 
-    QModelIndex lastInsertRow = TreeXmlModel::insertLastRows(row, count, parent);
+    QModelIndex lastInsertRow = TreeXmlModel::insertLastRows(row, count, parent,tag);
     if (!lastInsertRow.isValid())
         return QModelIndex().child(-1,-1);
 
     for (int i=0;i<count;i++) {
-        insertUuid(index(position+i,0,parent));
+        insertUuid(index(position+i,0,parent),tag);
     }
 
     return lastInsertRow;
@@ -279,9 +280,8 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex,
         return false;
 
     QString tag = srcIndex.data(Qt::UserRole).toString();
-    setInsTagName(tag);
 
-    QModelIndex index = insertLastRows(0,1,destIndex);
+    QModelIndex index = insertLastRows(0,1,destIndex, tag);
     if (!index.isValid())
         return false;   
 
