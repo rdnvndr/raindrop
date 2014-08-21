@@ -199,10 +199,10 @@ private:
     void updateModifyRow(int emptyRowAttr, const QModelIndex &parent);
 
     //! Обновление вставленных унаследованных строк
-    void updateInsertRows(int row, int count, const QModelIndex &parent, bool updatingRoot = false);
+    void updateInsertRows(int row, int count, const QModelIndex &parent);
 
     //! Удаление вставленных унаследованных строк
-    void revertInsertRows(int row, int count, const QModelIndex &parent, bool updatingRoot = false);
+    void revertInsertRows(int row, int count, const QModelIndex &parent);
 
     //! Обновление удаленных унаследованных строк
     void updateRemoveRows(int emptyRowAttr, int count, const QModelIndex &parent);

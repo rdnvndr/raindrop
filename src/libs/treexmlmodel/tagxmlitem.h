@@ -30,6 +30,9 @@ public:
     //! Возращает количество записей
     int count(QStringList tags = QStringList(), QStringList parenttags = QStringList());
 
+    //! Возращает True при наличии записей
+    int hasChildren(QStringList tags = QStringList(), QStringList parenttags = QStringList());
+
     //! Возращает потомка
     TagXmlItem *child(int i, QStringList tags = QStringList(), QStringList parenttags = QStringList());
 
