@@ -98,8 +98,7 @@ void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, co
             curIndex = curIndex.sibling(curIndex.row(), column);
             if (curIndex.isValid())
                 model->setData(index, curIndex.data(Qt::EditRole), Qt::EditRole);
-            else
-                model->setData(index, QVariant(), Qt::EditRole);
+
             return;
         }
         model->setData(index,comboBox->currentText(),Qt::EditRole);
