@@ -148,6 +148,12 @@ void ModifyProxyModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent,
             if (m_removedRow[index.parent()].contains(QPersistentModelIndex(index)))
                 m_removedRow[index.parent()].removeOne(QPersistentModelIndex(index));
         }
+
+        if (mapFromSource(parent).isValid() && mapFromSource(parent).isValid()) {
+            beginRemoveRows(mapFromSource(index.parent()),
+                            index.row(),index.row());
+            endRemoveRows();
+        }
     }
 }
 
@@ -335,18 +341,28 @@ QModelIndex ModifyProxyModel::mapFromSource(const QModelIndex &index) const
     return QModelIndex();
 }
 
+class MyHackedModel : public QAbstractItemModel {
+ public:
+ QModelIndex myHackedCreateIndex(int row, int column, qint64 internalId) const { return createIndex(row, column, internalId); }
+ };
 QModelIndex ModifyProxyModel::mapToSource(const QModelIndex &index) const
 {
     if (!index.isValid())
         return QModelIndex();
 
     QModelIndex sourceIndex;
-    PrivateModelIndex* hack = reinterpret_cast<PrivateModelIndex*>(&sourceIndex);
+//    PrivateModelIndex* hack = reinterpret_cast<PrivateModelIndex*>(&sourceIndex);
+    const MyHackedModel *hackedModel = static_cast<const MyHackedModel*>(sourceModel()); // whaam! h4x0r!
+   sourceIndex = hackedModel->myHackedCreateIndex(index.row(), index.column(), index.internalId());
 
-    hack->r = index.row();
-    hack->c = index.column();
-    hack->p = index.internalPointer();
-    hack->m = sourceModel();
+
+//    hack->r = index.row();
+//    hack->c = index.column();
+//    hack->p = index.internalPointer();
+//    hack->m = sourceModel();
+
+    if (!sourceIndex.isValid())
+        return QModelIndex();
 
     int removeRowCount = 0;
     if (m_removedRow.contains(QPersistentModelIndex(sourceIndex.parent())) && m_hiddenRow)
@@ -357,7 +373,8 @@ QModelIndex ModifyProxyModel::mapToSource(const QModelIndex &index) const
                 removeRowCount++;
 
         }
-    hack->r = sourceIndex.row() + removeRowCount;
+    sourceIndex.sibling(sourceIndex.row() + removeRowCount,sourceIndex.column());
+//    hack->r = sourceIndex.row() + removeRowCount;
 
     if (!sourceIndex.isValid())
         return QModelIndex();
