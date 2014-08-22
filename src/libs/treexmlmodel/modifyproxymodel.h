@@ -149,9 +149,6 @@ private:
     //! Флаг скрытия удаленных строк
     bool m_hiddenRow;
 
-    //! Индекс последней вставленной строки
-    QModelIndex m_lastInsRow;
-
     //! Флаг разрешения на редактирование
     bool m_editable;
 } ;

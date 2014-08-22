@@ -293,7 +293,7 @@ QModelIndex ModifyProxyModel::index(int row, int column, const QModelIndex &pare
 
         }
     }
-    QPersistentModelIndex removeIndex(m_sourceModel->index(
+    QPersistentModelIndex removeIndex(sourceModel()->index(
                                           row+removeRowCount, column, mapToSource(parent)));
 
     return mapFromSource(removeIndex);
@@ -340,25 +340,18 @@ QModelIndex ModifyProxyModel::mapFromSource(const QModelIndex &index) const
     return QModelIndex();
 }
 
-class MyHackedModel : public QAbstractItemModel {
- public:
- QModelIndex myHackedCreateIndex(int row, int column, qint64 internalId) const { return createIndex(row, column, internalId); }
- };
 QModelIndex ModifyProxyModel::mapToSource(const QModelIndex &index) const
 {
     if (!index.isValid())
         return QModelIndex();
 
     QModelIndex sourceIndex;
-//    PrivateModelIndex* hack = reinterpret_cast<PrivateModelIndex*>(&sourceIndex);
-    const MyHackedModel *hackedModel = static_cast<const MyHackedModel*>(sourceModel()); // whaam! h4x0r!
-   sourceIndex = hackedModel->myHackedCreateIndex(index.row(), index.column(), index.internalId());
+    PrivateModelIndex* hack = reinterpret_cast<PrivateModelIndex*>(&sourceIndex);
 
-
-//    hack->r = index.row();
-//    hack->c = index.column();
-//    hack->p = index.internalPointer();
-//    hack->m = sourceModel();
+    hack->r = index.row();
+    hack->c = index.column();
+    hack->p = index.internalPointer();
+    hack->m = sourceModel();
 
     if (!sourceIndex.isValid())
         return QModelIndex();
@@ -372,8 +365,7 @@ QModelIndex ModifyProxyModel::mapToSource(const QModelIndex &index) const
                 removeRowCount++;
 
         }
-    sourceIndex.sibling(sourceIndex.row() + removeRowCount,sourceIndex.column());
-//    hack->r = sourceIndex.row() + removeRowCount;
+    hack->r = sourceIndex.row() + removeRowCount;
 
     if (!sourceIndex.isValid())
         return QModelIndex();
@@ -554,25 +546,7 @@ bool ModifyProxyModel::removeRows(int row, int count, const QModelIndex &parent)
 
 bool ModifyProxyModel::insertRows(int row, int count, const QModelIndex &parent)
 {
-    m_lastInsRow = insertLastRows(row, count, parent);
-//    Q_UNUSED(row)
-//    QPersistentModelIndex rowIndex(parent.sibling(parent.row(),0));
-
-//    int position = rowCount(rowIndex);
-
-//    beginInsertRows(parent,position,position+count-1);
-//    for (int i = position; i < position+count; i++) {
-//        QPersistentModelIndex *index = new QPersistentModelIndex(rowIndex);
-//        m_insertedRow[rowIndex].append(index);
-//    }
-//    endInsertRows();
-
-//    if (parent.isValid())
-//        m_lastInsRow = parent.child(position+count-1,0);
-//    else
-//        m_lastInsRow = index(position+count-1,0,parent);
-
-    return true;
+    return insertLastRows(row, count, parent).isValid();
 }
 
 QModelIndex ModifyProxyModel::insertLastRows(int row, int count, const QModelIndex &parent)
@@ -590,14 +564,9 @@ QModelIndex ModifyProxyModel::insertLastRows(int row, int count, const QModelInd
     endInsertRows();
 
     if (parent.isValid())
-        return m_lastInsRow = parent.child(position+count-1,0);
+        return parent.child(position+count-1,0);
     else
         return index(position+count-1,0,parent);
-}
-
-QModelIndex ModifyProxyModel::lastInsertRow()
-{
-    return m_lastInsRow;
 }
 
 bool ModifyProxyModel::isInsertRow(const QModelIndex &index) const
