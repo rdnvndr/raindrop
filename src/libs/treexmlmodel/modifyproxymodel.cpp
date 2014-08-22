@@ -140,7 +140,6 @@ void ModifyProxyModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent,
         for (int j = 0; j < sourceModel()->columnCount(parent);j++) {
             QPersistentModelIndex removeIndex(mapFromSource(index.sibling(i,j)));
             if (m_updatedRow.contains(removeIndex)) {
-//                m_updatedRow[removeIndex].clear();
                 m_updatedRow.remove(removeIndex);
             }
         }
