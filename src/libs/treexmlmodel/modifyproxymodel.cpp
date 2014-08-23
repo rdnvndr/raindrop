@@ -116,7 +116,6 @@ void ModifyProxyModel::sourceDataChanged(const QModelIndex &left,
             void *p = left.sibling(row, column).internalPointer();
             QPersistentModelIndex removeIndex(createIndex(row,column,p));
             if (m_updatedRow.contains(removeIndex)) {
-//                m_updatedRow[removeIndex].clear();
                 m_updatedRow.remove(removeIndex);
             }
         }
@@ -146,9 +145,7 @@ void ModifyProxyModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent,
         if (m_removedRow.contains(index.parent())) {
             if (m_removedRow[index.parent()].contains(QPersistentModelIndex(index)))
                 m_removedRow[index.parent()].removeOne(QPersistentModelIndex(index));
-        }
-
-        if (mapFromSource(parent).isValid() && mapFromSource(parent).isValid()) {
+        } else if (mapFromSource(parent).isValid()) {
             beginRemoveRows(mapFromSource(index.parent()),
                             index.row(),index.row());
             endRemoveRows();
