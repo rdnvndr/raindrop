@@ -145,7 +145,7 @@ void ModifyProxyModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent,
         if (m_removedRow.contains(index.parent())) {
             if (m_removedRow[index.parent()].contains(QPersistentModelIndex(index)))
                 m_removedRow[index.parent()].removeOne(QPersistentModelIndex(index));
-        } else if (mapFromSource(parent).isValid()) {
+        } else if (mapFromSource(parent).isValid() && index.isValid()) {
             beginRemoveRows(mapFromSource(index.parent()),
                             index.row(),index.row());
             endRemoveRows();
