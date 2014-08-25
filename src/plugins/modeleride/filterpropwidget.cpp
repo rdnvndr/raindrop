@@ -80,19 +80,22 @@ void FilterPropWidget::setModel(TreeXmlHashModel *model)
 
     m_mapper->setModel(m_model);
 
+
     QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
     classFilterModel->setFilterKeyColumn(0);
     classFilterModel->setFilterRole(TreeXmlModel::TagRole);
+    classFilterModel->setSourceModel(m_model);
     classFilterModel->setFilterRegExp(DBCLASSXML::CLASS + "|" +
                                       DBMODELXML::MODEL + "|" +
                                       DBCLASSLISTXML::CLASSLIST);
-    classFilterModel->setSourceModel(m_model);
     classFilterModel->setDynamicSortFilter(true);
     classFilterModel->sort(0);
     comboBoxDestClass->setModel(classFilterModel);
     comboBoxDestClass->setRootModelIndex(classFilterModel->index(0,0).child(0,0));
     comboBoxDestClass->setIndexColumn(m_model->columnDisplayedAttr(
                                           DBCLASSXML::CLASS, DBATTRXML::ID));
+    comboBoxDestClass->setCurrentModelIndex(
+                classFilterModel->index(0,0).child(0,0).child(0,0));
 
     m_mapper->addMapping(lineEditName,
                          model->columnDisplayedAttr(DBFILTERXML::FILTER,
