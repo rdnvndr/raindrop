@@ -58,7 +58,8 @@ void CompositionPropWidget::setModel(TreeXmlHashModel *model)
     comboBoxDestClass->setRootModelIndex(classFilterModel->index(0,0).child(0,0));
     comboBoxDestClass->setIndexColumn(m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                                   DBATTRXML::ID));
-    comboBoxDestClass->setCurrentIndex(0);
+    comboBoxDestClass->setCurrentModelIndex(
+                classFilterModel->index(0,0).child(0,0).child(0,0));
 
     m_mapper->addMapping(lineEditName,
                          model->columnDisplayedAttr(DBCOMPXML::COMP,
