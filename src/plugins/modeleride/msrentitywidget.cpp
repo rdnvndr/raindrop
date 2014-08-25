@@ -30,6 +30,10 @@ void MsrEntityWidget::setModel(TreeXmlHashModel *model)
 
     connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
             this,SLOT(rowsRemoved(QModelIndex,int,int)));
+
+    connect(m_model,SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
+            this,SLOT(rowsAboutToBeRemoved(QModelIndex,int,int)));
+
     m_mapper->setModel(m_model);
 
     m_mapper->addMapping(lineEditEntityName,
@@ -179,6 +183,18 @@ void MsrEntityWidget::rowsRemoved(const QModelIndex &index, int start, int end)
 
     if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1 && m_oldIndex <0)
         emit dataRemoved(QModelIndex());
+}
+
+void MsrEntityWidget::rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end)
+{
+    Q_UNUSED(parent)
+
+    for (int row = end; row >= start; row--) {
+        if (comboBoxBasicUnit->currentIndex() == row) {
+            comboBoxBasicUnit->setCurrentIndex(-1);
+            return;
+        }
+    }
 }
 
 void MsrEntityWidget::setUnitModel(QAbstractItemModel *model)

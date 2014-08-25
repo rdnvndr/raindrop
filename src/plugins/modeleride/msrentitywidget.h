@@ -56,6 +56,8 @@ public slots:
     //! Удаление сущности ЕИ
     void rowsRemoved(const QModelIndex &index,int start,int end);
 
+    //! Выполняется до удаления сущности ЕИ
+    void rowsAboutToBeRemoved(const QModelIndex &parent,int start,int end);
 
     //! Установка модели ЕИ
     void setUnitModel(QAbstractItemModel *model);
