@@ -315,7 +315,8 @@ void FilterPropWidget::changeDestClass(const QString &nameClass)
 
     ConditionDelegate *conditionDelegate =
             qobject_cast<ConditionDelegate *>(treeViewCondition->itemDelegate());
-    conditionDelegate->setSecondIndex(index);
+
+    if (index.isValid()) conditionDelegate->setSecondIndex(index);
 }
 
 void FilterPropWidget::validateFilterName(QValidator::State state) const
