@@ -26,9 +26,9 @@ void TreeXmlHashModel::makeHashingOne(TagXmlItem *item, bool remove)
     QString tag = item->nodeName();
     foreach (const QString& attr, m_hashAttr[tag].keys()){
         if (remove)
-            m_hashValue[tag][attr].remove(item->value(attr),item);
+            m_hashValue[tag][attr].remove(item->value(attr).toString(),item);
         else
-            m_hashValue[tag][attr].insert(item->value(attr),item);
+            m_hashValue[tag][attr].insert(item->value(attr).toString(),item);
     }
 }
 

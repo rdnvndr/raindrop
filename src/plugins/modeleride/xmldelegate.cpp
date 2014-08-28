@@ -1,8 +1,12 @@
 #include "xmldelegate.h"
 #include "pushbuttonimage.h"
 #include <QComboBox>
+#include <QCheckBox>
 #include <QAbstractItemView>
 #include <QLineEdit>
+#include <QApplication>
+#include <QSize>
+#include <QPainter>
 #include <treecombobox/treecombobox.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/modifyproxymodel.h>
@@ -15,12 +19,25 @@ XmlDelegate::XmlDelegate(QObject *parent) :
 QWidget*  XmlDelegate::createEditor (QWidget * parent, const QStyleOptionViewItem & option,
         const QModelIndex & index ) const
 {
+    // Для логического типа создаем QCheckbox
+    if (index.data(Qt::EditRole).type() == QVariant::Bool) {
+        QCheckBox* pRes = new  QCheckBox(parent);
+        return pRes;
+    }
+
     return QStyledItemDelegate::createEditor(parent,option,index);
 }
 
 void XmlDelegate::setEditorData(QWidget * editor, const QModelIndex & index) const
 {
     if (index.isValid()) {
+        // Логическое
+        if (index.data(Qt::EditRole).type() == QVariant::Bool) {
+            QCheckBox *pRes = static_cast<QCheckBox*>(editor);
+            pRes->setChecked(index.model()->data(index, Qt::EditRole).toBool());
+            return;
+        }
+
         TreeComboBox* treeComboBox = dynamic_cast<TreeComboBox*>(editor);
         if (treeComboBox) {
             treeComboBox->setDisplayText(
@@ -71,6 +88,13 @@ void XmlDelegate::setEditorData(QWidget * editor, const QModelIndex & index) con
 
 void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, const QModelIndex & index) const
 {
+    // Логическое
+    if (index.data(Qt::EditRole).type() == QVariant::Bool) {
+        QCheckBox *pRes = static_cast<QCheckBox*>(editor);
+        model->setData(index,pRes->isChecked(),Qt::EditRole);
+        return;
+    }
+
     TreeComboBox* treeComboBox = dynamic_cast<TreeComboBox*>(editor);
     if (treeComboBox) {
         if (treeComboBox->currentModelIndex().isValid())
@@ -125,9 +149,42 @@ void XmlDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewIt
     editor->setGeometry(option.rect);
 }
 
+QRect  XmlDelegate::getCenteredComboBoxRect(const QStyleOptionViewItem &option) const
+{
+    QSize size = QApplication::style()->sizeFromContents(QStyle::CT_CheckBox, &option, QSize());
+#ifdef Q_OS_WIN32
+    size.setWidth(size.width() + QApplication::style()->pixelMetric(QStyle::PM_CheckBoxLabelSpacing, &option));
+#endif
+
+    QPoint center = option.rect.center();
+    QRect result;
+    result.setTop(center.y() - size.height() / 2);
+    result.setLeft(center.x() - size.width() / 2);
+    result.setSize(size);
+
+    return result;
+}
+
 void XmlDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    QStyledItemDelegate::paint(painter, option, index);
+    // Логический
+    if (index.model()->data(index, Qt::EditRole).type() == QVariant::Bool){
+        QStyleOptionViewItemV4 opt = option;
+        initStyleOption(&opt, index);
+        opt.text.clear();
+
+        QStyleOptionButton checkBoxOption;
+
+        checkBoxOption.rect = getCenteredComboBoxRect(option);
+        checkBoxOption.state = opt.state | (index.data().toBool() ? QStyle::State_On : QStyle::State_Off);
+
+        if (!index.flags().testFlag(Qt::ItemIsEditable))
+            checkBoxOption.state = checkBoxOption.state & ~QStyle::State_Enabled;
+        // Рисуем фон
+        QApplication::style()->drawControl(QStyle::CE_ItemViewItem, &opt, painter);
+        QApplication::style()->drawControl(QStyle::CE_CheckBox, &checkBoxOption, painter);
+    } else
+        QStyledItemDelegate::paint(painter, option, index);
 }
 
 TreeXmlHashModel *XmlDelegate::sourceModel(QAbstractItemModel *model) const

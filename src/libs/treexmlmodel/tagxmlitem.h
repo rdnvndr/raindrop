@@ -22,10 +22,10 @@ public:
     QDomNode node() const;
 
     //! Возращает значение атрибута тэга
-    QString value(const QString& attr);
+    QVariant value(const QString& attr);
 
     //! Устанавливает значение атрибута тэга
-    void setValue(const QString& attr, const QString& val);
+    void setValue(const QString& attr, const QVariant& val);
 
     //! Возращает количество записей
     int count(QStringList tags = QStringList(), QStringList parenttags = QStringList());
