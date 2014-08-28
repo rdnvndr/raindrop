@@ -30,6 +30,7 @@ public:
     //! Перерисовка делегата
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
+    QRect getCenteredComboBoxRect(const QStyleOptionViewItem &option) const;
 private:
     //! Получение хэш модели
     TreeXmlHashModel *sourceModel(QAbstractItemModel *model) const;

@@ -203,15 +203,23 @@ int TagXmlItem::childNumber(TagXmlItem *child,QStringList tags, QStringList pare
     return -1;
 }
 
-QString TagXmlItem::value(const QString& attr)
+QVariant TagXmlItem::value(const QString& attr)
 {
     QDomNamedNodeMap attributeMap = domNode.attributes();
-    return attributeMap.namedItem(attr).nodeValue();
+    QString value = attributeMap.namedItem(attr).nodeValue();
+
+    if (value == QString("true"))
+        return QVariant(true);
+
+    if (value == QString("false"))
+        return QVariant(false);
+
+    return value;
 }
 
-void TagXmlItem::setValue(const QString& attr, const QString& val)
+void TagXmlItem::setValue(const QString& attr, const QVariant &val)
 {
-    domNode.toElement().setAttribute(attr,val);
+    domNode.toElement().setAttribute(attr,val.toString());
 }
 
 bool TagXmlItem::insertChild(const QString& tagname)
