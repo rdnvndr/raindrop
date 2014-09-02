@@ -35,7 +35,7 @@ void CompositionWidget::setModel(TreeXmlHashModel *model)
 
     m_compositionModel->setSourceModel(m_model);
     m_compositionModel->setHeaderData(0, Qt::Horizontal, tr("Имя состава"));
-    m_compositionModel->setHeaderData(1, Qt::Horizontal, tr("Описание"));
+    m_compositionModel->setHeaderData(1, Qt::Horizontal, tr("Псевдоним"));
     m_compositionModel->setHeaderData(2, Qt::Horizontal, tr("Исходный класс"));
     m_compositionModel->setHeaderData(3, Qt::Horizontal, tr("Входящий класс"));
     m_compositionModel->setHeaderData(4, Qt::Horizontal, tr("Представление"));

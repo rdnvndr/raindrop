@@ -58,9 +58,9 @@ void ClassWidget::setModel(TreeXmlHashModel *model)
     m_mapper->addMapping(lineEditClassName,
                          model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                    DBCLASSXML::NAME));
-    m_mapper->addMapping(lineEditClassDesc,
+    m_mapper->addMapping(lineEditClassAlias,
                          model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::DESCRIPTION));
+                                                   DBCLASSXML::ALIAS));
 
     m_mapper->addMapping(comboBoxClassType,
                          model->columnDisplayedAttr(DBCLASSXML::CLASS,

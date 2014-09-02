@@ -100,9 +100,9 @@ void FilterPropWidget::setModel(TreeXmlHashModel *model)
     m_mapper->addMapping(lineEditName,
                          model->columnDisplayedAttr(DBFILTERXML::FILTER,
                                                    DBFILTERXML::NAME));
-    m_mapper->addMapping(lineEditDesc,
+    m_mapper->addMapping(lineEditAlias,
                          model->columnDisplayedAttr(DBFILTERXML::FILTER,
-                                                   DBFILTERXML::DESCRIPTION));
+                                                   DBFILTERXML::ALIAS));
 
     m_mapper->addMapping(lineEditDirectDesc,
                          model->columnDisplayedAttr(DBFILTERXML::FILTER,

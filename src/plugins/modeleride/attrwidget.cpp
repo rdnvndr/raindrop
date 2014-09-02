@@ -80,7 +80,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
 
     m_attrModel->setSourceModel(m_model);
     m_attrModel->setHeaderData(0,  Qt::Horizontal, tr("Имя атрибута"));
-    m_attrModel->setHeaderData(1,  Qt::Horizontal, tr("Описание"));
+    m_attrModel->setHeaderData(1,  Qt::Horizontal, tr("Псевдоним"));
     m_attrModel->setHeaderData(2,  Qt::Horizontal, tr("Тип"));
     m_attrModel->setHeaderData(3,  Qt::Horizontal, tr("Длина строки"));
     m_attrModel->setHeaderData(4,  Qt::Horizontal, tr("Ссылочный класс"));
@@ -187,9 +187,9 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     m_mapperAttr->addMapping(checkBoxIsCandidateKey,
                              m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::ISCANDIDATEKEY));
-    m_mapperAttr->addMapping(lineEditAttrDesc,
+    m_mapperAttr->addMapping(lineEditAttrAlias,
                              m_model->columnDisplayedAttr(DBATTRXML::ATTR,
-                                                         DBATTRXML::DESCRIPTION));
+                                                         DBATTRXML::ALIAS));
     m_mapperAttr->addMapping(comboBoxAttrGroup,
                              m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::GROUP));

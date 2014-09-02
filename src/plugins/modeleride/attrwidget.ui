@@ -188,9 +188,9 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="labelAttrDesc">
+       <widget class="QLabel" name="labelAttrAlias">
         <property name="text">
-         <string>Описание:</string>
+         <string>Псевдоним:</string>
         </property>
        </widget>
       </item>
@@ -237,7 +237,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEditAttrDesc">
+       <widget class="QLineEdit" name="lineEditAttrAlias">
         <property name="maxLength">
          <number>256</number>
         </property>
@@ -378,7 +378,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../treedockwidget/treedockwidget.qrc">
+           <iconset resource="modeleride.qrc">
             <normaloff>:/editclean</normaloff>:/editclean</iconset>
           </property>
           <property name="autoRaise">
@@ -402,7 +402,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../treedockwidget/treedockwidget.qrc">
+           <iconset resource="modeleride.qrc">
             <normaloff>:/editclean</normaloff>:/editclean</iconset>
           </property>
           <property name="autoRaise">
@@ -486,7 +486,6 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../treedockwidget/treedockwidget.qrc"/>
   <include location="modeleride.qrc"/>
  </resources>
  <connections/>
