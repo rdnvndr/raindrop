@@ -329,12 +329,12 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addDisplayedAttr(DBLOVLISTXML::LOVLIST, propsLovList, QIcon(":/lovlist"));
 
     QStringList propsModel;
-    propsModel << DBMODELXML::NAME   << DBMODELXML::DESCRIPTION
+    propsModel << DBMODELXML::NAME   << DBMODELXML::ALIAS
                << DBMODELXML::PARENT << DBMODELXML::ID;
     m_model->addDisplayedAttr(DBMODELXML::MODEL, propsModel, QIcon(":/model"));
 
     QStringList propsLov;
-    propsLov << DBLOVXML::NAME   << DBLOVXML::DESCRIPTION
+    propsLov << DBLOVXML::NAME   << DBLOVXML::ALIAS
                    << DBLOVXML::PARENT << DBLOVXML::ID
                    << DBLOVXML::TYPE;
     m_model->addDisplayedAttr(DBLOVXML::LOV, propsLov, QIcon(":/lov"));
@@ -998,7 +998,7 @@ void ModelerIDEPlug::newClassModel()
         m_model->setData(lastIndex.sibling(lastIndex.row(),column),tr("Model"));
 
         column = m_model->columnDisplayedAttr(DBMODELXML::MODEL,
-                                              DBMODELXML::DESCRIPTION);
+                                              DBMODELXML::ALIAS);
         m_model->setData(lastIndex.sibling(lastIndex.row(),column),tr("Модель"));
 
         indexSource = lastIndex;        

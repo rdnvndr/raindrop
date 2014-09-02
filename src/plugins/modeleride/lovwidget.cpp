@@ -128,9 +128,9 @@ void LovWidget::setModel(TreeXmlHashModel *model)
     m_mapper->addMapping(lineEditLovName,
                          model->columnDisplayedAttr(DBLOVXML::LOV,
                                                    DBLOVXML::NAME));
-    m_mapper->addMapping(lineEditLovDesc,
+    m_mapper->addMapping(lineEditLovAlias,
                          model->columnDisplayedAttr(DBLOVXML::LOV,
-                                                   DBLOVXML::DESCRIPTION));
+                                                   DBLOVXML::ALIAS));
     m_mapper->addMapping(comboBoxLovType,
                          model->columnDisplayedAttr(DBLOVXML::LOV,
                                                     DBLOVXML::TYPE));
