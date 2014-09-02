@@ -43,9 +43,9 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="labelLovDesc">
+       <widget class="QLabel" name="labelLovAlias">
         <property name="text">
-         <string>Описание:</string>
+         <string>Псевдоним:</string>
         </property>
        </widget>
       </item>
@@ -57,7 +57,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEditLovDesc">
+       <widget class="QLineEdit" name="lineEditLovAlias">
         <property name="maxLength">
          <number>256</number>
         </property>

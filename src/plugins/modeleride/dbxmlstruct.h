@@ -169,7 +169,7 @@ namespace DBENTITYLISTXML {
 namespace DBMODELXML {
     const QString MODEL = "RTPModel";
     const QString NAME = "name";
-    const QString DESCRIPTION = "description";
+    const QString ALIAS = "description";
     const QString PARENT = "parent";
     const QString ID = "guid";
 }
@@ -187,7 +187,7 @@ namespace DBLOVLISTXML {
 namespace DBLOVXML{
     const QString LOV = "RTPLOV";
     const QString NAME = "name";
-    const QString DESCRIPTION = "description";
+    const QString ALIAS = "description";
     const QString PARENT = "parent";
     const QString ID = "guid";
     const QString TYPE = "type";
