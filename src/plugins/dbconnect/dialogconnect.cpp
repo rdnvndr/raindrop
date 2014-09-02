@@ -22,12 +22,13 @@ DialogConnect::DialogConnect(QWidget* pwgt) : QDialog(pwgt) {
     drivers.removeAll("QTDS7");
     drivers.removeAll("QSQLITE");
     //drivers.removeAll("QOCI");
-    drivers.removeAll("QTDS");
+    //drivers.removeAll("QTDS");
     if (drivers.indexOf("QODBC")!=-1)
         drivers.insert(0,"MSSQL");
     drivers.removeAll("QODBC3");
     //drivers.removeAll("QODBC");
     //drivers.removeAll("QPSQL");
+    drivers.removeAll("QIBASE");
 
     comboDriver->addItems(drivers);
 
