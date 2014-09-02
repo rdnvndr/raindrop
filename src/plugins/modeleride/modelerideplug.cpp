@@ -245,14 +245,14 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     QStringList propsClass;
     propsClass << DBCLASSXML::NAME     << DBCLASSXML::ISABSTARCT  <<
-                  DBCLASSXML::TYPE     << DBCLASSXML::DESCRIPTION <<
+                  DBCLASSXML::TYPE     << DBCLASSXML::ALIAS <<
                   DBCLASSXML::PARENT   << DBCLASSXML::ISACTIVE    <<
                   DBCLASSXML::TEMPLATE << DBCLASSXML::ID          <<
                   DBCLASSXML::ICON;
     m_model->addDisplayedAttr(DBCLASSXML::CLASS,propsClass,QIcon(":/modeleride"));
 
     QStringList propsAttr;
-    propsAttr << DBATTRXML::NAME           << DBATTRXML::DESCRIPTION
+    propsAttr << DBATTRXML::NAME           << DBATTRXML::ALIAS
               << DBATTRXML::TYPE           << DBATTRXML::MAXSTRLEN
               << DBATTRXML::REFCLASS       << DBATTRXML::PARENT
               << DBATTRXML::REFUNIT        << DBATTRXML::INITIALVAL
@@ -264,7 +264,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addAttrTag(DBATTRXML::ATTR);
 
     QStringList propsComposition;
-    propsComposition << DBCOMPXML::NAME               << DBCOMPXML::DESCRIPTION
+    propsComposition << DBCOMPXML::NAME               << DBCOMPXML::ALIAS
                      << DBCOMPXML::PARENT             << DBCOMPXML::CLASS
                      << DBCOMPXML::ISVIEW             << DBCOMPXML::DIRECTDESCRIPTION
                      << DBCOMPXML::INVERSEDESCRIPTION << DBCOMPXML::ID;
@@ -272,7 +272,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addAttrTag(DBCOMPXML::COMP);
 
     QStringList propsFilter;
-    propsFilter << DBFILTERXML::NAME              << DBFILTERXML::DESCRIPTION
+    propsFilter << DBFILTERXML::NAME              << DBFILTERXML::ALIAS
                 << DBFILTERXML::PARENT            << DBFILTERXML::CLASS
                 << DBFILTERXML::DIRECTDESCRIPTION << DBFILTERXML::INVERSEDESCRIPTION
                 << DBFILTERXML::ID;
@@ -314,17 +314,17 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addDisplayedAttr(DBENTITYGROUPXML::ENTITYGROUP,propsGroup, QIcon(":/entitygroup"));
 
     QStringList propsClassList;
-    propsClassList << DBCLASSLISTXML::NAME   << DBCLASSLISTXML::DESCRIPTION
+    propsClassList << DBCLASSLISTXML::NAME   << DBCLASSLISTXML::ALIAS
                    << DBCLASSLISTXML::PARENT << DBCLASSLISTXML::ID;
     m_model->addDisplayedAttr(DBCLASSLISTXML::CLASSLIST,propsClassList, QIcon(":/classes"));
 
     QStringList propsEntityList;
-    propsEntityList << DBENTITYLISTXML::NAME   << DBENTITYLISTXML::DESCRIPTION
+    propsEntityList << DBENTITYLISTXML::NAME   << DBENTITYLISTXML::ALIAS
                     << DBENTITYLISTXML::PARENT << DBENTITYLISTXML::ID;
     m_model->addDisplayedAttr(DBENTITYLISTXML::ENTITYLIST, propsEntityList, QIcon(":/units"));
 
     QStringList propsLovList;
-    propsLovList << DBLOVLISTXML::NAME   << DBLOVLISTXML::DESCRIPTION
+    propsLovList << DBLOVLISTXML::NAME   << DBLOVLISTXML::ALIAS
                  << DBLOVLISTXML::PARENT << DBLOVLISTXML::ID;
     m_model->addDisplayedAttr(DBLOVLISTXML::LOVLIST, propsLovList, QIcon(":/lovlist"));
 
@@ -345,7 +345,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addDisplayedAttr(DBLOVVALUEXML::LOVVALUE, propsLov, QIcon(":/lovvalue"));
 
     m_model->setHeaderData(0,  Qt::Horizontal, tr("Имя атрибута"));
-    m_model->setHeaderData(1,  Qt::Horizontal, tr("Описание"));
+    m_model->setHeaderData(1,  Qt::Horizontal, tr("Псевдоним"));
     m_model->setHeaderData(2,  Qt::Horizontal, tr("Тип"));
     m_model->setHeaderData(3,  Qt::Horizontal, tr("Длина строки"));
     m_model->setHeaderData(4,  Qt::Horizontal, tr("Ссылочный класс"));
@@ -1012,7 +1012,7 @@ void ModelerIDEPlug::newClassModel()
             m_model->setData(lastIndex.sibling(lastIndex.row(),column),tr("Classes"));
 
             column = m_model->columnDisplayedAttr(DBCLASSLISTXML::CLASSLIST,
-                                                  DBCLASSLISTXML::DESCRIPTION);
+                                                  DBCLASSLISTXML::ALIAS);
             m_model->setData(lastIndex.sibling(lastIndex.row(),column),tr("Классы"));
         }
 
@@ -1026,7 +1026,7 @@ void ModelerIDEPlug::newClassModel()
             m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("Units"));
 
             column = m_model->columnDisplayedAttr(DBENTITYLISTXML::ENTITYLIST,
-                                                  DBENTITYLISTXML::DESCRIPTION);
+                                                  DBENTITYLISTXML::ALIAS);
             m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("Единицы измерения"));
         }
 
@@ -1040,7 +1040,7 @@ void ModelerIDEPlug::newClassModel()
             m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("List of Value"));
 
             column = m_model->columnDisplayedAttr(DBLOVLISTXML::LOVLIST,
-                                                  DBLOVLISTXML::DESCRIPTION);
+                                                  DBLOVLISTXML::ALIAS);
             m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("Список значений"));
         }
     }

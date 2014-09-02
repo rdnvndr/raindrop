@@ -35,7 +35,7 @@ void FilterWidget::setModel(TreeXmlHashModel *model)
 
     m_filterModel->setSourceModel(m_model);
     m_filterModel->setHeaderData(0, Qt::Horizontal, tr("Имя фильтра"));
-    m_filterModel->setHeaderData(1, Qt::Horizontal, tr("Описание"));
+    m_filterModel->setHeaderData(1, Qt::Horizontal, tr("Псевдоним"));
     m_filterModel->setHeaderData(2, Qt::Horizontal, tr("Первый класс"));
     m_filterModel->setHeaderData(3, Qt::Horizontal, tr("Второй класс"));
     m_filterModel->setHeaderData(4, Qt::Horizontal, tr("Описание прямое"));

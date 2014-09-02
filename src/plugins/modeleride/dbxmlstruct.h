@@ -16,7 +16,7 @@ namespace DBCLASSXML{
     const QString TYPE = "type";
     const QString ISABSTARCT = "isAbstract";
     const QString ISACTIVE = "isActive";
-    const QString DESCRIPTION = "description";
+    const QString ALIAS = "description";
     const QString PARENT = "parent";
     const QString TEMPLATE = "displayTemplate";
     const QString ICON = "icon";
@@ -27,7 +27,7 @@ namespace DBCLASSXML{
 namespace DBATTRXML{
     const QString ATTR = "RTPAttribute";
     const QString NAME = "name";
-    const QString DESCRIPTION = "description";
+    const QString ALIAS = "description";
     const QString TYPE = "type";
     const QString GROUP = "group";
     const QString MAXSTRLEN = "maxStringLength";
@@ -48,7 +48,7 @@ namespace DBATTRXML{
 namespace DBCOMPXML{
     const QString COMP = "RTPComposition";
     const QString NAME = "name";
-    const QString DESCRIPTION = "description";
+    const QString ALIAS = "description";
     const QString PARENT = "parent";
     const QString CLASS = "Class";
     const QString ISVIEW = "isView";
@@ -85,7 +85,7 @@ namespace DBCLASSTYPEXML{
 namespace DBFILTERXML{
     const QString FILTER = "RTPFilter";
     const QString NAME = "name";
-    const QString DESCRIPTION = "description";
+    const QString ALIAS = "description";
     const QString PARENT = "parent";
     const QString CLASS = "Class";
     const QString DIRECTDESCRIPTION = "directDescription";
@@ -151,7 +151,7 @@ namespace DBENTITYGROUPXML {
 namespace DBCLASSLISTXML {
     const QString CLASSLIST = "RTPClassList";
     const QString NAME = "name";
-    const QString DESCRIPTION = "description";
+    const QString ALIAS = "description";
     const QString PARENT = "parent";
     const QString ID = "guid";
 }
@@ -160,7 +160,7 @@ namespace DBCLASSLISTXML {
 namespace DBENTITYLISTXML {
     const QString ENTITYLIST = "RTPEntityList";
     const QString NAME = "name";
-    const QString DESCRIPTION = "description";
+    const QString ALIAS = "description";
     const QString PARENT = "parent";
     const QString ID = "guid";
 }
@@ -178,7 +178,7 @@ namespace DBMODELXML {
 namespace DBLOVLISTXML {
     const QString LOVLIST = "RTPLOVList";
     const QString NAME = "name";
-    const QString DESCRIPTION = "description";
+    const QString ALIAS = "description";
     const QString PARENT = "parent";
     const QString ID = "guid";
 }

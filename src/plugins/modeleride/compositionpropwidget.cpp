@@ -64,9 +64,9 @@ void CompositionPropWidget::setModel(TreeXmlHashModel *model)
     m_mapper->addMapping(lineEditName,
                          model->columnDisplayedAttr(DBCOMPXML::COMP,
                                                    DBCOMPXML::NAME));
-    m_mapper->addMapping(lineEditDesc,
+    m_mapper->addMapping(lineEditAlias,
                          model->columnDisplayedAttr(DBCOMPXML::COMP,
-                                                   DBCOMPXML::DESCRIPTION));
+                                                   DBCOMPXML::ALIAS));
 
     m_mapper->addMapping(lineEditDirectDesc,
                          model->columnDisplayedAttr(DBCOMPXML::COMP,
