@@ -105,7 +105,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
 
     m_mapperAttr->setModel(m_attrModel);
 
-    TableXMLProxyModel* lovFilterModel = new TableXMLProxyModel();
+    TableXMLProxyModel* lovFilterModel = new TableXMLProxyModel(this);
     QStringList tags;
     tags << DBLOVLISTXML::LOVLIST;
     lovFilterModel->setAttributeTags(tags);

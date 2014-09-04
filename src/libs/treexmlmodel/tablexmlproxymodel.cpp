@@ -3,7 +3,7 @@
 #include <QtCore>
 #include <QDebug>
 
-TableXMLProxyModel::TableXMLProxyModel(): QSortFilterProxyModel()
+TableXMLProxyModel::TableXMLProxyModel(QObject *parent): QSortFilterProxyModel(parent)
 {
     setDynamicSortFilter(true);
     m_columnCount = 0;
