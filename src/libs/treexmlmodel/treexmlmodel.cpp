@@ -56,18 +56,10 @@ bool TreeXmlModel::isInherited(const QModelIndex &index) const
 }
 
 bool TreeXmlModel::moveIndex(const QModelIndex &srcIndex,
-                             const QModelIndex &destIndex, bool recursively,
-                             bool first)
+                             const QModelIndex &destIndex, bool recursively)
 {
-    if (isInherited(srcIndex))
-        return false;
-
     if (!copyIndex(srcIndex, destIndex, recursively))
         return false;
-
-    if (!first)
-        if (!removeRow(srcIndex.row(),srcIndex.parent()))
-            return false;
 
     return true;
 }
@@ -76,7 +68,7 @@ bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex,
                              const QModelIndex &destIndex, bool recursively)
 {
     if (isInherited(srcIndex))
-        return false;
+        return true;
 
     QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
 
@@ -482,7 +474,7 @@ bool TreeXmlModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     foreach (const QModelIndex& index, mimeData->indexes()){
         if (index.isValid()) {
             if (action == Qt::MoveAction)
-                return moveIndex(index, parent, true, true);
+                return moveIndex(index, parent, true);
             else
                 return copyIndex(index, parent, true);
         }
