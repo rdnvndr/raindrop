@@ -56,8 +56,7 @@ public:
 
     //! Перемещение элемента
     bool moveIndex(const QModelIndex &srcIndex,
-                           const QModelIndex &destIndex, bool recursively = false,
-                           bool first = false);
+                           const QModelIndex &destIndex, bool recursively = false);
 
     //! Добавления поля для хешеирования
     void addHashAttr(const QString &tag, const QString &value,

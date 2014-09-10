@@ -273,17 +273,16 @@ bool TreeXmlHashModel::removeRows(int row, int count, const QModelIndex &parent)
 }
 
 bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex,
-                                 const QModelIndex &destIndex, bool recursively,
-                                 bool first)
+                                 const QModelIndex &destIndex, bool recursively)
 {
     if (isInherited(srcIndex))
-        return false;
+        return true;
 
     QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
 
     QModelIndex index = insertLastRows(0,1,destIndex, tag);
     if (!index.isValid())
-        return false;   
+        return false;
 
     int i = 0;
     while (!displayedAttr(tag, i).isEmpty()) {
@@ -307,10 +306,6 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex,
             if (childIndex.isValid())
                     success = moveIndex(childIndex, index, recursively) && success;
         }
-
-    if (!first)
-        if (!removeRow(srcIndex.row(),srcIndex.parent()))
-            return false;
 
     return success;
 }
