@@ -33,6 +33,10 @@ public:
     //! Возращает поддерживаемые моделью операции Drag
     Qt::DropActions supportedDragActions() const;
 
+    //! Обработчик окрнчания перетаскивания данных путем Drag and Drop
+    bool dropMimeData(const QMimeData *data, Qt::DropAction action,
+                      int row, int column, const QModelIndex &parent);
+
 protected:
     //! Фильтр строчек
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
