@@ -63,6 +63,9 @@ AttrWidget::AttrWidget(QWidget *parent) :
 
     connect(toolButtonUnitAttrClean, SIGNAL(clicked()), this, SLOT(cleanUnit()));
     connect(toolButtonLovClean, SIGNAL(clicked()), this, SLOT(cleanLov()));
+
+    connect(toolButtonUpAttr,SIGNAL(clicked()),this,SLOT(upAttr()));
+    connect(toolButtonDownAttr,SIGNAL(clicked()),this,SLOT(downAttr()));
 }
 
 AttrWidget::~AttrWidget()
@@ -339,6 +342,20 @@ void AttrWidget::edit(bool flag)
     pushButtonAttrSave->setEnabled(flag);
     pushButtonAttrCancel->setEnabled(flag);
 
+}
+
+void AttrWidget::upAttr()
+{
+    QModelIndex index = m_attrModel->mapToSource(tableViewAttr->currentIndex());
+    m_model->moveIndex(index, index.parent());
+}
+
+void AttrWidget::downAttr()
+{
+    QModelIndex index = tableViewAttr->currentIndex();
+    index = m_attrModel->mapToSource(index);
+    m_attrModel->moveRow(index.parent(), index.row(),
+                           index.parent(), index.row()+1);
 }
 
 void AttrWidget::revert()
