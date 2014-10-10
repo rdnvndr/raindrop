@@ -86,6 +86,10 @@ void CompositionPropWidget::setModel(TreeXmlHashModel *model)
     m_mapper->addMapping(checkBoxDestIsView,
                          model->columnDisplayedAttr(DBCOMPXML::COMP,
                                                    DBCOMPXML::ISVIEW));
+
+    m_mapper->addMapping(checkBoxIsComp,
+                         model->columnDisplayedAttr(DBCOMPXML::COMP,
+                                                   DBCOMPXML::ISCOMP));
 }
 
 void CompositionPropWidget::add()
