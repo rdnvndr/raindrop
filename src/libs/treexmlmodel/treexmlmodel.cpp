@@ -60,6 +60,7 @@ bool TreeXmlModel::moveIndex(const QModelIndex &srcIndex,
 {
     if (!copyIndex(srcIndex, destIndex, recursively))
         return false;
+    removeRow(srcIndex.row(), srcIndex.parent());
 
     return true;
 }
@@ -472,12 +473,8 @@ bool TreeXmlModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     const  MimeDataIndex *mimeData
             = qobject_cast<const MimeDataIndex *>(data);
     foreach (const QModelIndex& index, mimeData->indexes()){
-        if (index.isValid()) {
-            if (action == Qt::MoveAction)
-                return moveIndex(index, parent, true);
-            else
-                return copyIndex(index, parent, true);
-        }
+        if (index.isValid())
+           return copyIndex(index, parent, true);
     }
 
     return true;
