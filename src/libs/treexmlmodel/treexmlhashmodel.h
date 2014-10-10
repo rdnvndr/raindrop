@@ -54,8 +54,8 @@ public:
     //! Удаление строки
     bool removeRows (int row, int count, const QModelIndex & parent);
 
-    //! Перемещение элемента
-    bool moveIndex(const QModelIndex &srcIndex,
+    //! Копирование элемента
+    bool copyIndex(const QModelIndex &srcIndex,
                            const QModelIndex &destIndex, bool recursively = false);
 
     //! Добавления поля для хешеирования
