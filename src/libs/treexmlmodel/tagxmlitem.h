@@ -42,6 +42,9 @@ public:
     //! Вставка узла
     bool insertChild(const QString &tagname);
 
+    //! Вставка узла
+    bool insertChild(const QString &tagname, int i, QStringList tags = QStringList(), QStringList parenttags = QStringList());
+
     //! Удаление узла
     bool removeChild(const int &row);
 
