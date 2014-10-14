@@ -193,7 +193,7 @@ public:
 private:
 
     //! Обновление отредактированных унаследованных строк
-    void updateModifyRow(int emptyRowAttr, const QModelIndex &parent);
+    void updateModifyRow(int emptyRowAttr, const QModelIndex &parent, int column);
 
     //! Обновление вставленных унаследованных строк
     void updateInsertRows(int row, int count,
