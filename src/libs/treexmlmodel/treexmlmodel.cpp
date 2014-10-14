@@ -359,7 +359,15 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
     bool success = true;
     int revertCount;
 
+    int emptyRowAttr = count;
+    for (int i=position+count-1; i<this->rowCount(parent); i++){
+        QModelIndex index = parent.child(i,0);
+        if (isAttr(index))
+            emptyRowAttr++;
+    }
+    updateInsertRows(emptyRowAttr, count, parent, tag);
 
+    beginInsertRows(parent,position,position+count-1);
     for (int i = 0; i < count; i++) {
         success = parentItem->insertChild(tag, position, m_filterTags, m_filterTags);
         if (!success) {
@@ -367,21 +375,10 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
             break;
         }
     }
-    beginInsertRows(parent,position,position+count-1);
-    int emptyRowAttr = 0;
-    for (int i=position+1-count;i<this->rowCount(parent);i++){
-        QModelIndex index = parent.child(i,0);
-        if (isAttr(index))
-            emptyRowAttr++;
-    }
-    updateInsertRows(emptyRowAttr,count,parent, tag);
     endInsertRows();
-
-
 
     if (success) {
         // Добавление корневого узла
-
         if (parent.isValid())
             return parent.child(position+count-1,0);
         else
@@ -399,7 +396,7 @@ void TreeXmlModel::updateInsertRows(int emptyRowAttr, int count, const QModelInd
         QModelIndex index = parent.child(i,0);
         if (!isAttr(index) && parent.data(TreeXmlModel::TagRole) == index.data(TreeXmlModel::TagRole)){
             updateInsertRows(emptyRowAttr,count,index, tag);
-            int row = this->rowCount(index)-emptyRowAttr+count-1;
+            int row = this->rowCount(index)-emptyRowAttr;
             beginInsertRows(index,row,row+count-1);
             endInsertRows();
         }
