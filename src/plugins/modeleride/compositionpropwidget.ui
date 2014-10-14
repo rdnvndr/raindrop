@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>276</width>
-    <height>307</height>
+    <width>261</width>
+    <height>295</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -109,41 +109,53 @@
       <string/>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="lineEditSrcClass"/>
-      </item>
-      <item row="7" column="1">
-       <spacer name="verticalSpacerProp">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="labelSrcClass">
+      <item row="7" column="0">
+       <widget class="QLabel" name="labelDestIsView">
         <property name="text">
-         <string>Исходный класс:</string>
+         <string>Представление:</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
-       <widget class="TreeComboBox" name="comboBoxDestClass"/>
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelInverseDesc">
+        <property name="text">
+         <string>Описание вхождения:</string>
+        </property>
+       </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEditAlias">
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelDirectDesc">
+        <property name="text">
+         <string>Описание включения:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelName">
+        <property name="text">
+         <string>Имя состава:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="lineEditInverseDesc">
         <property name="maxLength">
          <number>256</number>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="lineEditDirectDesc">
+      <item row="7" column="1">
+       <widget class="QCheckBox" name="checkBoxDestIsView">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="lineEditSrcClass"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lineEditAlias">
         <property name="maxLength">
          <number>256</number>
         </property>
@@ -163,46 +175,48 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="labelName">
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lineEditName"/>
+      </item>
+      <item row="8" column="1">
+       <spacer name="verticalSpacerProp">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelSrcClass">
         <property name="text">
-         <string>Имя состава:</string>
+         <string>Исходный класс:</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="lineEditInverseDesc">
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="lineEditDirectDesc">
         <property name="maxLength">
          <number>256</number>
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="labelDirectDesc">
-        <property name="text">
-         <string>Описание включения:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="labelInverseDesc">
-        <property name="text">
-         <string>Описание вхождения:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEditName"/>
+      <item row="5" column="1">
+       <widget class="TreeComboBox" name="comboBoxDestClass"/>
       </item>
       <item row="6" column="0">
-       <widget class="QLabel" name="labelDestIsView">
+       <widget class="QLabel" name="labelIsComp">
         <property name="text">
-         <string>Представление:</string>
+         <string>Композиция:</string>
         </property>
        </widget>
       </item>
       <item row="6" column="1">
-       <widget class="QCheckBox" name="checkBoxDestIsView">
+       <widget class="QCheckBox" name="checkBoxIsComp">
         <property name="text">
          <string/>
         </property>
