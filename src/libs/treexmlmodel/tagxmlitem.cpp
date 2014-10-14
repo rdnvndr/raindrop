@@ -203,6 +203,19 @@ int TagXmlItem::childNumber(TagXmlItem *child,QStringList tags, QStringList pare
     return -1;
 }
 
+bool TagXmlItem::insertChild(const QString &tagname)
+{
+    QDomElement node = domNode.ownerDocument().createElement(tagname);
+
+    if  (node.isNull())
+        return false;
+
+    domNode.appendChild(node);
+    TagXmlItem *childItem = new TagXmlItem(node, this);
+    childItems.append(childItem);
+    return true;
+}
+
 QVariant TagXmlItem::value(const QString& attr)
 {
     QDomNamedNodeMap attributeMap = domNode.attributes();
@@ -222,16 +235,20 @@ void TagXmlItem::setValue(const QString& attr, const QVariant &val)
     domNode.toElement().setAttribute(attr,val.toString());
 }
 
-bool TagXmlItem::insertChild(const QString& tagname)
+bool TagXmlItem::insertChild(const QString& tagname, int i, QStringList tags, QStringList parenttags)
 {
+    TagXmlItem *afterItem = child(i, tags, parenttags);
+    if (!afterItem) return false;
+    TagXmlItem *parentItem = afterItem->parent();
+    if (!parentItem) return false;
     QDomElement node = domNode.ownerDocument().createElement(tagname);
 
     if  (node.isNull())
         return false;
 
-    domNode.appendChild(node);
+    domNode.insertAfter(node, afterItem->node());
     TagXmlItem *childItem = new TagXmlItem(node, this);
-    childItems.append(childItem);
+    childItems.insert(parentItem->childItems.indexOf(afterItem), childItem);
     return true;
 }
 

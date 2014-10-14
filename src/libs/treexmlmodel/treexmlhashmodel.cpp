@@ -236,13 +236,11 @@ bool TreeXmlHashModel::insertRows(int row, int count, const QModelIndex &parent)
 QModelIndex TreeXmlHashModel::insertLastRows(int row, int count,
                                              const QModelIndex &parent, QString tag)
 {
-    Q_UNUSED(row);
-
     TagXmlItem *parentItem = toItem(parent);
     if (!isInsert(parent, tag))
         return QModelIndex().child(-1,-1);
 
-    int position = parentItem->count(tagsFilter());
+    int position = row;
 
     QModelIndex lastInsertRow = TreeXmlModel::insertLastRows(row, count, parent,tag);
     if (!lastInsertRow.isValid())
