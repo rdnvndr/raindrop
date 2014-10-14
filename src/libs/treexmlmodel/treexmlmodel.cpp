@@ -206,17 +206,18 @@ QVariant TreeXmlModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void TreeXmlModel::updateModifyRow(int emptyRowAttr, const QModelIndex &parent)
+void TreeXmlModel::updateModifyRow(int emptyRowAttr, const QModelIndex &parent, int column)
 {
     int rowCount = this->rowCount(parent);
     for (int i=0;i<rowCount;i++){
         QModelIndex index = parent.child(i,0);
         if (!isAttr(index)){
-            updateModifyRow(emptyRowAttr,index);
-            int row = this->rowCount(index)-emptyRowAttr-1;
+            updateModifyRow(emptyRowAttr, index, column);
+            int row = this->rowCount(index)-emptyRowAttr;
             QModelIndex updateIndex = index.child(row,0);
-            emit dataChanged(updateIndex,updateIndex.sibling(
-                                 updateIndex.row(), columnCount(updateIndex)));
+            emit dataChanged(updateIndex, updateIndex);
+//            emit dataChanged(updateIndex,updateIndex.sibling(
+//                                            updateIndex.row(), columnCount(updateIndex)));
         }
     }
 }
@@ -241,19 +242,19 @@ bool TreeXmlModel::setData(const QModelIndex &index, const QVariant &value,
         dataValue = data(index,Qt::EditRole).toString();
 
     item->setValue(attrName,dataValue);
-    emit dataChanged(index,index);
+
 
     if (isAttr(index)){
         int emptyRowAttr = 0;
         QModelIndex parent = index.parent();
-        for (int i=index.row()+1;i<this->rowCount(parent);i++){
-            QModelIndex idx = parent.child(i,parent.column());
+        for (int i=index.row();i<this->rowCount(parent);i++){
+            QModelIndex idx = parent.child(i,0);
             if (isAttr(idx))
                 emptyRowAttr++;
         }
-        updateModifyRow(emptyRowAttr,parent);
+        updateModifyRow(emptyRowAttr,parent, index.column());
     }
-
+emit dataChanged(index,index);
     return true;
 }
 
@@ -358,7 +359,7 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
     bool success = true;
     int revertCount;
 
-    beginInsertRows(parent,position,position+count-1);
+
     for (int i = 0; i < count; i++) {
         success = parentItem->insertChild(tag, position, m_filterTags, m_filterTags);
         if (!success) {
@@ -366,8 +367,7 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
             break;
         }
     }
-    endInsertRows();
-
+    beginInsertRows(parent,position,position+count-1);
     int emptyRowAttr = 0;
     for (int i=position+1-count;i<this->rowCount(parent);i++){
         QModelIndex index = parent.child(i,0);
@@ -375,9 +375,13 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
             emptyRowAttr++;
     }
     updateInsertRows(emptyRowAttr,count,parent, tag);
+    endInsertRows();
+
+
 
     if (success) {
         // Добавление корневого узла
+
         if (parent.isValid())
             return parent.child(position+count-1,0);
         else
