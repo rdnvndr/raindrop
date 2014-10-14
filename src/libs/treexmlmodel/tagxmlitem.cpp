@@ -246,7 +246,7 @@ bool TagXmlItem::insertChild(const QString& tagname, int i, QStringList tags, QS
     if  (node.isNull())
         return false;
 
-    domNode.insertAfter(node, afterItem->node());
+    domNode.insertBefore(node, afterItem->node());
     TagXmlItem *childItem = new TagXmlItem(node, this);
     childItems.insert(parentItem->childItems.indexOf(afterItem), childItem);
     return true;

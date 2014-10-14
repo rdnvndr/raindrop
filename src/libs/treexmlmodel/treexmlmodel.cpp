@@ -215,7 +215,7 @@ void TreeXmlModel::updateModifyRow(int emptyRowAttr, const QModelIndex &parent, 
             updateModifyRow(emptyRowAttr, index, column);
             int row = this->rowCount(index)-emptyRowAttr;
             QModelIndex updateIndex = index.child(row,0);
-            emit dataChanged(updateIndex, updateIndex);
+           emit dataChanged(updateIndex, updateIndex);
 //            emit dataChanged(updateIndex,updateIndex.sibling(
 //                                            updateIndex.row(), columnCount(updateIndex)));
         }
@@ -358,6 +358,15 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
 
     bool success = true;
     int revertCount;
+    for (int i = 0; i < count; i++) {
+        success = parentItem->insertChild(tag, position, m_filterTags, m_filterTags);
+        if (!success) {
+            revertCount = i;
+            break;
+        }
+    }
+    beginInsertRows(parent,position,position+count-1);
+    endInsertRows();
 
     int emptyRowAttr = count;
     for (int i=position+count-1; i<this->rowCount(parent); i++){
@@ -366,16 +375,6 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
             emptyRowAttr++;
     }
     updateInsertRows(emptyRowAttr, count, parent, tag);
-
-    beginInsertRows(parent,position,position+count-1);
-    for (int i = 0; i < count; i++) {
-        success = parentItem->insertChild(tag, position, m_filterTags, m_filterTags);
-        if (!success) {
-            revertCount = i;
-            break;
-        }
-    }
-    endInsertRows();
 
     if (success) {
         // Добавление корневого узла
