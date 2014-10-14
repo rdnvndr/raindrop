@@ -39,16 +39,17 @@ void CompositionWidget::setModel(TreeXmlHashModel *model)
     m_compositionModel->setHeaderData(2, Qt::Horizontal, tr("Исходный класс"));
     m_compositionModel->setHeaderData(3, Qt::Horizontal, tr("Входящий класс"));
     m_compositionModel->setHeaderData(4, Qt::Horizontal, tr("Представление"));
-    m_compositionModel->setHeaderData(5, Qt::Horizontal, tr("Описание включения"));
-    m_compositionModel->setHeaderData(6, Qt::Horizontal, tr("Описание вхождения"));
-    m_compositionModel->setHeaderData(7, Qt::Horizontal, tr("Индетификатор"));
-    m_compositionModel->setColumnCount(8);
+    m_compositionModel->setHeaderData(5, Qt::Horizontal, tr("Композиция"));
+    m_compositionModel->setHeaderData(6, Qt::Horizontal, tr("Описание включения"));
+    m_compositionModel->setHeaderData(7, Qt::Horizontal, tr("Описание вхождения"));
+    m_compositionModel->setHeaderData(8, Qt::Horizontal, tr("Индетификатор"));
+    m_compositionModel->setColumnCount(9);
     m_compositionModel->setDynamicSortFilter(true);
 
     tableViewComp->setSortingEnabled(true);
     tableViewComp->setModel(m_compositionModel);
     tableViewComp->sortByColumn(0,Qt::AscendingOrder);
-    tableViewComp->setColumnHidden(7,true);
+    tableViewComp->setColumnHidden(8,true);
 }
 
 
