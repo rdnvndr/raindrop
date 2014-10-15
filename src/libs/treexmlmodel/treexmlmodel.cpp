@@ -336,8 +336,6 @@ int TreeXmlModel::rowCount(const QModelIndex &parent, const QStringList &tags) c
 
 bool TreeXmlModel::insertRows(int row, int count, const QModelIndex &parent)
 {
-    Q_UNUSED(row);
-
     QModelIndex index = insertLastRows(row, count, parent);
     if (index.isValid())
         return true;
@@ -347,16 +345,15 @@ bool TreeXmlModel::insertRows(int row, int count, const QModelIndex &parent)
 
 QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &parent, QString tag)
 {
-
     TagXmlItem *parentItem = toItem(parent);
     if (!isInsert(parent, tag))
         return QModelIndex().child(-1,-1);
 
-    int position = row;
+    // int position = row;
 
-    beginInsertRows(parent,position,position+count-1);
+    beginInsertRows(parent,row,row+count-1);
     int emptyRowAttr = 0;
-    for (int i=position; i<this->rowCount(parent); i++){
+    for (int i=row; i<this->rowCount(parent); i++){
         QModelIndex index = parent.child(i,0);
         if (isAttr(index))
             emptyRowAttr++;
@@ -366,7 +363,7 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
     bool success = true;
     int revertCount;
     for (int i = 0; i < count; i++) {
-        success = parentItem->insertChild(tag, position, m_filterTags, m_attrTags);
+        success = parentItem->insertChild(tag, row, m_filterTags, m_attrTags);
         if (!success) {
             revertCount = i;
             break;
@@ -377,11 +374,11 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
     if (success) {
         // Добавление корневого узла
         if (parent.isValid())
-            return parent.child(position+count-1,0);
+            return parent.child(row+count-1,0);
         else
-            return index(position+count-1,0,parent);
+            return index(row+count-1,0,parent);
     } else {
-        revertInsertRows(position, revertCount, parent, tag);
+        revertInsertRows(row, revertCount, parent, tag);
     }
 
     return QModelIndex().child(-1,-1);
