@@ -349,8 +349,6 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
     if (!isInsert(parent, tag))
         return QModelIndex().child(-1,-1);
 
-    // int position = row;
-
     beginInsertRows(parent,row,row+count-1);
     int emptyRowAttr = 0;
     for (int i=row; i<this->rowCount(parent); i++){
