@@ -20,37 +20,37 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     readBarSettings();
     connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
 
-    actionWindowClose = new QAction(QIcon(), tr("Закрыть"), this);
+    actionWindowClose = new QAction(QIcon(":close"), tr("Закрыть"), this);
     actionWindowClose->setObjectName("actionWindowClose");
     connect(actionWindowClose, SIGNAL(triggered()), mdiArea, SLOT(closeActiveSubWindow()));
     addAction(tr("Окно"),actionWindowClose);
 
-    actionWindowCloseAll = new QAction(QIcon(), tr("Закрыть все"), this);
+    actionWindowCloseAll = new QAction(QIcon(":closeall"), tr("Закрыть все"), this);
     actionWindowCloseAll->setObjectName("actionWindowCloseAll");
     connect(actionWindowCloseAll, SIGNAL(triggered()), mdiArea, SLOT(closeAllSubWindows()));
     addAction(tr("Окно"),actionWindowCloseAll);
 
-    actionWindowCascade = new QAction(QIcon(), tr("Каскадом"), this);
+    actionWindowCascade = new QAction(QIcon(":cascade"), tr("Каскадом"), this);
     actionWindowCascade->setObjectName("actionWindowCascade");
     connect(actionWindowCascade, SIGNAL(triggered()), mdiArea, SLOT(cascadeSubWindows()));
     addAction(tr("Окно"),actionWindowCascade);
 
-    actionWindowTile = new QAction(QIcon(), tr("Плиткой"), this);
+    actionWindowTile = new QAction(QIcon(":tile"), tr("Плиткой"), this);
     actionWindowTile->setObjectName("actionWindowTile");
     connect(actionWindowTile, SIGNAL(triggered()), mdiArea, SLOT(tileSubWindows()));
     addAction(tr("Окно"),actionWindowTile);
 
-    actionWindowNext = new QAction(QIcon(), tr("Следующее"), this);
+    actionWindowNext = new QAction(QIcon(":next"), tr("Следующее"), this);
     actionWindowNext->setObjectName("actionWindowNext");
     connect(actionWindowNext, SIGNAL(triggered()), mdiArea, SLOT(activateNextSubWindow()));
     addAction(tr("Окно"),actionWindowNext);
 
-    actionWindowPrev = new QAction(QIcon(), tr("Предыдущее"), this);
+    actionWindowPrev = new QAction(QIcon(":previous"), tr("Предыдущее"), this);
     actionWindowPrev->setObjectName("actionWindowPrev");
     connect(actionWindowPrev, SIGNAL(triggered()), mdiArea, SLOT(activatePreviousSubWindow()));
     addAction(tr("Окно"),actionWindowPrev);
 
-    actionWindowGui = new QAction(QIcon(), tr("Оконный вид"), this);
+    actionWindowGui = new QAction(QIcon(":window"), tr("Оконный вид"), this);
     actionWindowGui->setCheckable(true);
     actionWindowGui->setObjectName("actionWindowGui");
     connect(actionWindowGui, SIGNAL(triggered(bool)), this, SLOT(setWindowModeEnable(bool)));

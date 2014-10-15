@@ -7,5 +7,12 @@
         <file alias="separator">icons/separator.svg</file>
         <file alias="qt">icons/Qt.svg</file>
         <file alias="whatsthis">icons/help-faq.svg</file>
+        <file alias="next">icons/go-next.svg</file>
+        <file alias="previous">icons/go-previous.svg</file>
+        <file alias="cascade">icons/cascade.svg</file>
+        <file alias="tile">icons/tiled.svg</file>
+        <file alias="window">icons/window.svg</file>
+        <file alias="close">icons/close.svg</file>
+        <file alias="closeall">icons/closeall.svg</file>
     </qresource>
 </RCC>
