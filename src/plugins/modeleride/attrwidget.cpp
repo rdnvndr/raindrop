@@ -354,8 +354,8 @@ void AttrWidget::downAttr()
 {
     QModelIndex index = tableViewAttr->currentIndex();
     index = m_attrModel->mapToSource(index);
-    m_attrModel->moveRow(index.parent(), index.row(),
-                           index.parent(), index.row()+1);
+//    m_attrModel->moveRow(index.parent(), index.row(),
+//                           index.parent(), index.row()+1);
 }
 
 void AttrWidget::revert()

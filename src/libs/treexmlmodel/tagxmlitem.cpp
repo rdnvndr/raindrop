@@ -153,11 +153,13 @@ TagXmlItem *TagXmlItem::child(int i,QStringList tags, QStringList parenttags){
         // Поиск наследуемого узла
         if ((i-number)>=0 && parentItem!=NULL){
             TagXmlItem *child = parentItem->child(i-number,parenttags,parenttags);
-            TagXmlItem *childItem = new TagXmlItem(child->domNode, this);
-            childItem->locationItem = child;
-            child->contentItems.append(childItem);
+            if (child) {
+                TagXmlItem *childItem = new TagXmlItem(child->domNode, this);
+                childItem->locationItem = child;
+                child->contentItems.append(childItem);
 
-            return childItem;
+                return childItem;
+            }
         }
     }
 
@@ -238,9 +240,14 @@ void TagXmlItem::setValue(const QString& attr, const QVariant &val)
 bool TagXmlItem::insertChild(const QString& tagname, int i, QStringList tags, QStringList parenttags)
 {
     TagXmlItem *afterItem = child(i, tags, parenttags);
-    if (!afterItem) return false;
+    if (!afterItem) return insertChild(tagname);
+
     TagXmlItem *parentItem = afterItem->parent();
     if (!parentItem) return false;
+
+    if (this->node() != afterItem->node().parentNode())
+        return insertChild(tagname);
+
     QDomElement node = domNode.ownerDocument().createElement(tagname);
 
     if  (node.isNull())
