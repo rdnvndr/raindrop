@@ -55,24 +55,24 @@ bool TreeXmlModel::isInherited(const QModelIndex &index) const
     return item->isInherited();
 }
 
-bool TreeXmlModel::moveIndex(const QModelIndex &srcIndex,
-                             const QModelIndex &destIndex, bool recursively)
+bool TreeXmlModel::moveIndex(const QModelIndex &srcIndex, const QModelIndex &destIndex,
+                             int row, bool recursively)
 {
-    if (!copyIndex(srcIndex, destIndex, recursively))
+    if (!copyIndex(srcIndex, destIndex, row, recursively))
         return false;
 
     return true;
 }
 
-bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex,
-                             const QModelIndex &destIndex, bool recursively)
+bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex, const QModelIndex &destIndex,
+                             int row, bool recursively)
 {
     if (isInherited(srcIndex))
         return true;
 
     QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
 
-    QModelIndex index = insertLastRows(0,1,destIndex,tag);
+    QModelIndex index = insertLastRows((row >= 0) ? row : 0, 1, destIndex, tag);
     if (!index.isValid())
         return false;
 
@@ -91,7 +91,7 @@ bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex,
         for (int row = 0; row < srcIndex.model()->rowCount(srcIndex); row++) {
             QModelIndex childIndex = srcIndex.child(row,0);
             if (childIndex.isValid())
-                    success = copyIndex(childIndex, index, recursively) && success;
+                success = copyIndex(childIndex, index, row, recursively) && success;
         }
 
     return success;
@@ -107,14 +107,18 @@ bool TreeXmlModel::isAttr(const QModelIndex &index) const
     return false;
 }
 
-bool TreeXmlModel::isInsert(const QModelIndex &index, QString tag) const
+bool TreeXmlModel::isInsert(int row, const QModelIndex &index, QString tag) const
 {
     TagXmlItem *item = toItem(index);
 
     if (index.isValid()){
-        if (m_insertTags[item->nodeName()].contains(tag))
-            return true;
-        return false;
+        if (!m_insertTags[item->nodeName()].contains(tag))
+            return false;
+
+        if (item->count(m_filterTags,QStringList())<row)
+            return false;
+
+        return true;
     } else {
         if (rowCount(index) == 0)
             return !isAttr(index);
@@ -321,16 +325,20 @@ QModelIndex TreeXmlModel::parent(const QModelIndex &child) const
 
 int TreeXmlModel::rowCount(const QModelIndex &parent) const
 {
-    TagXmlItem *parentItem = toItem(parent);
-
-    return parentItem->count(m_filterTags,m_attrTags);
+    return this->rowCount(parent, m_filterTags, m_attrTags);
 }
 
-int TreeXmlModel::rowCount(const QModelIndex &parent, const QStringList &tags) const
+int TreeXmlModel::rowCount(const QModelIndex &parent,
+                           const QStringList &tags) const
+{
+    return this->rowCount(parent, tags, m_attrTags);
+}
+
+int TreeXmlModel::rowCount(const QModelIndex &parent, const QStringList &tags,
+                           const QStringList &attrTags) const
 {
     TagXmlItem *parentItem = toItem(parent);
-
-    return parentItem->count(tags,m_attrTags);
+    return parentItem->count(tags, attrTags);
 }
 
 bool TreeXmlModel::insertRows(int row, int count, const QModelIndex &parent)
@@ -345,7 +353,7 @@ bool TreeXmlModel::insertRows(int row, int count, const QModelIndex &parent)
 QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &parent, QString tag)
 {
     TagXmlItem *parentItem = toItem(parent);
-    if (!isInsert(parent, tag))
+    if (!isInsert(row, parent, tag))
         return QModelIndex().child(-1,-1);
 
     beginInsertRows(parent,row,row+count-1);
@@ -458,8 +466,6 @@ bool TreeXmlModel::removeRows(int row, int count, const QModelIndex &parent)
 bool TreeXmlModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
                                 int row, int column, const QModelIndex &parent)
 {
-    Q_UNUSED(row)
-
     if (!parent.isValid())
         return false;
 
@@ -477,9 +483,9 @@ bool TreeXmlModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     foreach (const QModelIndex& index, mimeData->indexes())
         if (index.isValid()) {
             if (action == Qt::MoveAction)
-                return moveIndex(index, parent, true);
+                return moveIndex(index, parent, row, true);
             else
-                return copyIndex(index, parent, true);
+                return copyIndex(index, parent, row, true);
         }
 
     return true;
