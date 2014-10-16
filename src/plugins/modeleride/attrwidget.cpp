@@ -347,7 +347,7 @@ void AttrWidget::edit(bool flag)
 void AttrWidget::upAttr()
 {
     QModelIndex index = m_attrModel->mapToSource(tableViewAttr->currentIndex());
-    m_model->moveIndex(index, index.parent());
+//    m_model->moveIndex(index, index.parent());
 }
 
 void AttrWidget::downAttr()

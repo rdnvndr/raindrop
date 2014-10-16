@@ -102,6 +102,11 @@ public:
     //! Возращает количество строк указанных тэгов в индексе родителя
     int rowCount(const QModelIndex &parent, const QStringList &tags) const;
 
+    //! Возращает количество строк указанных тэгов в индексе родителя c
+    //! учетом наследумых тэгов
+    int rowCount(const QModelIndex &parent, const QStringList &tags,
+                 const QStringList &attrTags) const;
+
     //! Возращает количество столбцов в индексе родителя
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
 
@@ -174,7 +179,7 @@ public:
     Qt::DropActions supportedDragActions() const;
 
     //! Возращает True если можно вставить строку
-    bool isInsert(const QModelIndex &index, QString tag) const;
+    bool isInsert(int row, const QModelIndex &index, QString tag) const;
 
     //! Возращает True если имеются потомки
     bool hasChildren(const QModelIndex &parent) const;
@@ -183,12 +188,12 @@ public:
     bool isInherited(const QModelIndex &index) const;
 
     //! Перемещение элемента
-    virtual bool moveIndex(const QModelIndex &srcIndex,
-                           const QModelIndex &destIndex, bool recursively = false);
+    virtual bool moveIndex(const QModelIndex &srcIndex, const QModelIndex &destIndex,
+                           int row, bool recursively = false);
 
     //! Копирование элемента
-    virtual bool copyIndex(const QModelIndex &srcIndex,
-                           const QModelIndex &destIndex, bool recursively = false);
+    virtual bool copyIndex(const QModelIndex &srcIndex, const QModelIndex &destIndex,
+                           int row, bool recursively = false);
 
 private:
 
