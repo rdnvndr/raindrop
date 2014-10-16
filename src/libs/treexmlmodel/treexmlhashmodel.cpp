@@ -267,7 +267,7 @@ bool TreeXmlHashModel::removeRows(int row, int count, const QModelIndex &parent)
     return TreeXmlModel::removeRows(row, count, parent);
 }
 
-bool TreeXmlHashModel::copyIndex(const QModelIndex &srcIndex,
+bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex,
                                  const QModelIndex &destIndex, bool recursively)
 {
     if (isInherited(srcIndex))
@@ -299,7 +299,7 @@ bool TreeXmlHashModel::copyIndex(const QModelIndex &srcIndex,
         for (int row = 0; row < srcIndex.model()->rowCount(srcIndex); row++) {
             QModelIndex childIndex = srcIndex.child(row,0);
             if (childIndex.isValid())
-                    success = copyIndex(childIndex, index, recursively) && success;
+                success = moveIndex(childIndex, index, recursively) && success;
         }
 
     return success;
