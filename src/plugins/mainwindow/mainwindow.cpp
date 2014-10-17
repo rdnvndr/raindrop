@@ -383,18 +383,20 @@ void MainWindow::updateMenus()
 
 void MainWindow::refreshAllBar(bool readingBarSettings)
 {
-    QList<ToolBar *> toolBars = this->findChildren<ToolBar *> ();
-    foreach (ToolBar* toolBar,toolBars) {
-        this->removeToolBar(toolBar);
-        delete toolBar;
-    }
-    this->setMenuBar(new MenuBar());
+
 
     if (readingBarSettings)
         readBarSettings();
     else
         foreach (MenuItem *item, m_item)
             cleanBranchAction(item);
+
+    QList<ToolBar *> toolBars = this->findChildren<ToolBar *> ();
+    foreach (ToolBar* toolBar,toolBars) {
+        this->removeToolBar(toolBar);
+        delete toolBar;
+    }
+    this->setMenuBar(new MenuBar());
 
     foreach (QAction* action, m_actions.values()) {
         if (action) {
