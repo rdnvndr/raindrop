@@ -22,6 +22,9 @@ CompositionWidget::CompositionWidget(QWidget *parent) :
 
     connect(toolButtonEdit,SIGNAL(clicked()),this,SLOT(edit()));
     connect(checkBoxInInherited,SIGNAL(clicked(bool)),this,SLOT(showParent(bool)));
+
+    connect(toolButtonDown,SIGNAL(clicked()),this,SLOT(down()));
+    connect(toolButtonUp,SIGNAL(clicked()),this,SLOT(up()));
 }
 
 CompositionWidget::~CompositionWidget()
@@ -46,9 +49,7 @@ void CompositionWidget::setModel(TreeXmlHashModel *model)
     m_compositionModel->setColumnCount(9);
     m_compositionModel->setDynamicSortFilter(true);
 
-    tableViewComp->setSortingEnabled(true);
     tableViewComp->setModel(m_compositionModel);
-    tableViewComp->sortByColumn(0,Qt::AscendingOrder);
     tableViewComp->setColumnHidden(8,true);
 }
 
@@ -82,6 +83,39 @@ void CompositionWidget::edit()
 {
     QModelIndex index = m_compositionModel->mapToSource(tableViewComp->currentIndex());
     emit dataEdited(index);
+}
+
+void CompositionWidget::up()
+{
+    QPersistentModelIndex index = tableViewComp->currentIndex();
+    QPersistentModelIndex srcIndex  = m_compositionModel->mapToSource(index);
+    QPersistentModelIndex srcParent = srcIndex.parent();
+    int row = m_compositionModel->mapToSource(index.sibling(index.row()-1,0)).row();
+    if (m_model->moveIndex(srcIndex,srcParent,row)) {
+        if (row >= 0)
+            index = tableViewComp->currentIndex().sibling(index.row()-2,0);
+        else
+            index = index.sibling(0,0);
+        m_model->removeRow(srcIndex.row(),srcIndex.parent());
+        tableViewComp->setCurrentIndex(index);
+    }
+}
+
+void CompositionWidget::down()
+{
+    QPersistentModelIndex index = tableViewComp->currentIndex();
+    QPersistentModelIndex srcIndex  = m_compositionModel->mapToSource(index);
+    QPersistentModelIndex srcParent = srcIndex.parent();
+    QModelIndex indexNew = index.sibling(index.row()+2,0);
+    int row = (indexNew.isValid()) ? m_compositionModel->mapToSource(indexNew).row()
+                                   : m_model->rowCount(srcParent,
+                                                       m_model->tagsFilter(),
+                                                       QStringList());
+    if (m_model->moveIndex(srcIndex,srcParent,row)) {
+        index = tableViewComp->currentIndex().sibling(index.row()+2,0);
+        m_model->removeRow(srcIndex.row(),srcIndex.parent());
+        tableViewComp->setCurrentIndex(index);
+    }
 }
 
 QVariant CompositionWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)

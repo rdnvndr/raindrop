@@ -126,9 +126,11 @@ Qt::DropActions TreeFilterProxyModel::supportedDragActions() const
     return Qt::CopyAction | Qt::MoveAction;
 }
 
-bool TreeFilterProxyModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+bool TreeFilterProxyModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
+                                        int row, int column, const QModelIndex &parent)
 {
-    bool success = QSortFilterProxyModel::dropMimeData(data,action,row,column,parent);
+    Q_UNUSED (row)
+    bool success = QSortFilterProxyModel::dropMimeData(data,action,-1,-1,parent);
     this->setFilterKeyColumn(this->filterKeyColumn());
     return success;
 }
