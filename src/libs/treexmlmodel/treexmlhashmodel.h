@@ -55,8 +55,8 @@ public:
     bool removeRows (int row, int count, const QModelIndex & parent);
 
     //! Перемещение элемента
-    bool moveIndex(const QModelIndex &srcIndex,
-                           const QModelIndex &destIndex, bool recursively = false);
+    bool moveIndex(const QModelIndex &srcIndex, const QModelIndex &destIndex,
+                   int row, bool recursively = false);
 
     //! Добавления поля для хешеирования
     void addHashAttr(const QString &tag, const QString &value,

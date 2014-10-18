@@ -63,6 +63,9 @@ AttrWidget::AttrWidget(QWidget *parent) :
 
     connect(toolButtonUnitAttrClean, SIGNAL(clicked()), this, SLOT(cleanUnit()));
     connect(toolButtonLovClean, SIGNAL(clicked()), this, SLOT(cleanLov()));
+
+    connect(toolButtonUpAttr,SIGNAL(clicked()),this,SLOT(up()));
+    connect(toolButtonDownAttr,SIGNAL(clicked()),this,SLOT(down()));
 }
 
 AttrWidget::~AttrWidget()
@@ -98,9 +101,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
 
     m_attrModel->setDynamicSortFilter(true);
 
-    tableViewAttr->setSortingEnabled(true);
     tableViewAttr->setModel(m_attrModel);
-    tableViewAttr->sortByColumn(0,Qt::AscendingOrder);
     tableViewAttr->setColumnHidden(15,true);
 
     m_mapperAttr->setModel(m_attrModel);
@@ -339,6 +340,39 @@ void AttrWidget::edit(bool flag)
     pushButtonAttrSave->setEnabled(flag);
     pushButtonAttrCancel->setEnabled(flag);
 
+}
+
+void AttrWidget::up()
+{
+    QPersistentModelIndex index = tableViewAttr->currentIndex();
+    QPersistentModelIndex srcIndex  = m_attrModel->mapToSource(index);
+    QPersistentModelIndex srcParent = srcIndex.parent();
+    int row = m_attrModel->mapToSource(index.sibling(index.row()-1,0)).row();
+    if (m_model->moveIndex(srcIndex,srcParent,row)) {
+        if (row >= 0)
+            index = tableViewAttr->currentIndex().sibling(index.row()-2,0);
+        else
+            index = index.sibling(0,0);
+        m_model->removeRow(srcIndex.row(),srcIndex.parent());
+        setCurrent(index);
+    }
+}
+
+void AttrWidget::down()
+{
+    QPersistentModelIndex index = tableViewAttr->currentIndex();
+    QPersistentModelIndex srcIndex  = m_attrModel->mapToSource(index);
+    QPersistentModelIndex srcParent = srcIndex.parent();
+    QModelIndex indexNew = index.sibling(index.row()+2,0);
+    int row = (indexNew.isValid()) ? m_attrModel->mapToSource(indexNew).row()
+                                   : m_model->rowCount(srcParent,
+                                                       m_model->tagsFilter(),
+                                                       QStringList());
+    if (m_model->moveIndex(srcIndex,srcParent,row)) {
+        index = tableViewAttr->currentIndex().sibling(index.row()+2,0);
+        m_model->removeRow(srcIndex.row(),srcIndex.parent());
+        setCurrent(index);
+    }
 }
 
 void AttrWidget::revert()
