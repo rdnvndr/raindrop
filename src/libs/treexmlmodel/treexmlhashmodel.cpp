@@ -268,7 +268,7 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex, const QModelIndex 
                                  int row, bool recursively)
 {
     if (isInherited(srcIndex))
-        return true;
+        return false;
 
     QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
 
@@ -296,7 +296,8 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex, const QModelIndex 
         for (int row = 0; row < srcIndex.model()->rowCount(srcIndex); row++) {
             QModelIndex childIndex = srcIndex.child(row,0);
             if (childIndex.isValid())
-                success = moveIndex(childIndex, index, row, recursively) && success;
+                if (!isInherited(childIndex))
+                    success = moveIndex(childIndex, index, row, recursively) && success;
         }
 
     return success;

@@ -48,10 +48,10 @@ public slots:
     void edit(bool flag = true);
 
     //! Перемещение атрибута выше
-    void upAttr();
+    void up();
 
     //! Перемещение атрибута ниже
-    void downAttr();
+    void down();
 
     //! Отмена изменений атрибута класса
     void revert();
