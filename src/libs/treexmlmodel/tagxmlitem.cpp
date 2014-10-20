@@ -10,7 +10,6 @@ TagXmlItem::TagXmlItem(QDomNode &node,TagXmlItem *parent)
 TagXmlItem::~TagXmlItem()
 {
     qDeleteAll(childItems);
-    qDeleteAll(contentItems);
 }
 
 QDomNode TagXmlItem::node() const
@@ -155,9 +154,6 @@ TagXmlItem *TagXmlItem::child(int i,QStringList tags, QStringList parenttags){
             TagXmlItem *child = parentItem->child(i-number,parenttags,parenttags);
             if (child) {
                 TagXmlItem *childItem = new TagXmlItem(child->domNode, this);
-                childItem->locationItem = child;
-                child->contentItems.append(childItem);
-
                 return childItem;
             }
         }

@@ -65,12 +65,6 @@ private:
 
     //! Список потомков
     QList<TagXmlItem*> childItems;
-
-    //! Указатель на узел, где находится тэг
-    TagXmlItem *locationItem;
-
-    //! Список записей с унаследованными тэгами
-    QList<TagXmlItem*> contentItems;
 };
 
 #endif
