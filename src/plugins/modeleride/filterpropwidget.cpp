@@ -146,7 +146,7 @@ void FilterPropWidget::remove()
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(), 0,
                                           m_mapper->rootIndex());
     m_mapper->revert();
-    setCurrent(srcIndex.parent());
+    setCurrent(QModelIndex());
 
     emit dataRemoved(srcIndex);
     m_model->removeRow(srcIndex.row(),srcIndex.parent());
