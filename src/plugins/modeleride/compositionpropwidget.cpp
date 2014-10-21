@@ -109,8 +109,9 @@ void CompositionPropWidget::add()
 void CompositionPropWidget::remove()
 {
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+    setCurrent(QModelIndex());
     m_mapper->revert();
-    setCurrent(srcIndex.parent());
+
 
     emit dataRemoved(srcIndex);
     m_model->removeRow(srcIndex.row(),srcIndex.parent());
