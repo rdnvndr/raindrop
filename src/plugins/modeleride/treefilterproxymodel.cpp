@@ -130,6 +130,7 @@ bool TreeFilterProxyModel::dropMimeData(const QMimeData *data, Qt::DropAction ac
                                         int row, int column, const QModelIndex &parent)
 {
     Q_UNUSED (row)
+    Q_UNUSED (column)
     bool success = QSortFilterProxyModel::dropMimeData(data,action,-1,-1,parent);
     this->setFilterKeyColumn(this->filterKeyColumn());
     return success;
