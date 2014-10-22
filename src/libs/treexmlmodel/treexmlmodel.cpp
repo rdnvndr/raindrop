@@ -87,13 +87,14 @@ bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex, const QModelIndex &des
     }
 
     bool success = true;
-    if (recursively)
-        for (int row = 0; row < srcIndex.model()->rowCount(srcIndex); row++) {
-            QModelIndex childIndex = srcIndex.child(row,0);
-            if (childIndex.isValid())
-                if (!isInherited(srcIndex))
-                    success = copyIndex(childIndex, index, row, recursively) && success;
+    if (recursively && !isInherited(srcIndex)) {
+        int row = 0;
+        for (QModelIndex childIndex = srcIndex.child(row,0);
+             childIndex.isValid(); childIndex = srcIndex.child(++row,0))
+        {
+                success = copyIndex(childIndex, index, row, recursively) && success;
         }
+    }
 
     return success;
 }
@@ -212,9 +213,10 @@ QVariant TreeXmlModel::data(const QModelIndex &index, int role) const
 
 void TreeXmlModel::updateModifyRow(int emptyRowAttr, const QModelIndex &parent, int column)
 {
-    int rowCount = this->rowCount(parent);
-    for (int i=0;i<rowCount;i++){
-        QModelIndex index = parent.child(i,0);
+    int i = 0;
+    for (QModelIndex index = parent.child(i,0);
+         index.isValid(); index = parent.child(++i,0))
+    {
         if (!isAttr(index)){
             int row = this->rowCount(index)-emptyRowAttr;
             updateModifyRow(emptyRowAttr, index, column);
@@ -245,12 +247,13 @@ bool TreeXmlModel::setData(const QModelIndex &index, const QVariant &value,
 
     item->setValue(attrName,dataValue);
 
-
     if (isAttr(index)){
         int emptyRowAttr = 0;
         QModelIndex parent = index.parent();
-        for (int i=index.row();i<this->rowCount(parent);i++){
-            QModelIndex idx = parent.child(i,0);
+        int i=index.row();
+        for (QModelIndex idx = parent.child(i,0);
+                     idx.isValid(); idx = parent.child(++i,0))
+        {
             if (isAttr(idx))
                 emptyRowAttr++;
         }
