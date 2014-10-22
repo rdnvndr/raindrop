@@ -292,13 +292,15 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex, const QModelIndex 
     }
 
     bool success = true;
-    if (recursively)
-        for (int row = 0; row < srcIndex.model()->rowCount(srcIndex); row++) {
-            QModelIndex childIndex = srcIndex.child(row,0);
-            if (childIndex.isValid())
-                if (!isInherited(childIndex))
-                    success = moveIndex(childIndex, index, row, recursively) && success;
+    if (recursively) {
+        int row = 0;
+        for (QModelIndex childIndex = srcIndex.child(row,0);
+             childIndex.isValid(); childIndex = srcIndex.child(++row,0))
+        {
+            if (!isInherited(childIndex))
+                success = moveIndex(childIndex, index, row, recursively) && success;
         }
+    }
 
     return success;
 }
