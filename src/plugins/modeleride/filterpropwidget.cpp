@@ -265,8 +265,8 @@ void FilterPropWidget::submit()
     int filterNameColumn =
             m_model->columnDisplayedAttr(DBFILTERXML::FILTER, DBFILTERXML::NAME);
     int row=0;
-    for (QModelIndex childIndex = m_model->index(row, filterNameColumn, rootIndex);
-         childIndex.isValid(); childIndex = m_model->index(++row, filterNameColumn, rootIndex))
+    QModelIndex childIndex = m_model->index(row, filterNameColumn, rootIndex);
+    while (childIndex.isValid())
     {
         if (childIndex.data(TreeXmlModel::TagRole) == DBFILTERXML::FILTER)
             if (lineEditName->text() == childIndex.data() &&
@@ -275,6 +275,7 @@ void FilterPropWidget::submit()
                                      tr("Фильтр с таким именем уже существует"));
                 return;
             }
+         childIndex = m_model->index(++row, filterNameColumn, rootIndex);
     }
 
     m_mapper->submit();
