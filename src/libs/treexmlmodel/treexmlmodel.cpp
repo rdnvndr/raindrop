@@ -319,6 +319,13 @@ const
         return QModelIndex();
 }
 
+bool TreeXmlModel::hasIndex(int row, int column, const QModelIndex &parent) const
+{
+   if (row < 0 || column < 0)
+       return false;
+   return true;
+}
+
 QModelIndex TreeXmlModel::parent(const QModelIndex &child) const
 {
     if (!child.isValid())
