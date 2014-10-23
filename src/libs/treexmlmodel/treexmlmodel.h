@@ -195,6 +195,8 @@ public:
     virtual bool copyIndex(const QModelIndex &srcIndex, const QModelIndex &destIndex,
                            int row, bool recursively = false);
 
+    //! Проверка наличия подчиненного элемента у родителя
+    bool hasIndex(int row, int column, const QModelIndex &parent) const;
 private:
 
     //! Обновление отредактированных унаследованных строк
