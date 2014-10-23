@@ -214,10 +214,13 @@ void AttrWidget::setRootIndex(const QModelIndex &index)
     for (int row=0;row<comboBoxAttrGroup->count();row++)
         comboBoxAttrGroup->removeItem(row);
 
-    for (int row=0;row<m_attrModel->rowCount(m_attrModel->mapFromSource(index));row++){
-        QString insText = m_attrModel->mapFromSource(index).child(
-                    row,m_model->columnDisplayedAttr(DBATTRXML::ATTR,
-                                                    DBATTRXML::GROUP)).data().toString();
+    QModelIndex srcIndex = m_attrModel->mapFromSource(index);
+    int groupColumn = m_model->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::GROUP);
+    int row = 0;
+    for (QModelIndex srcChildIndex = srcIndex.child(row, groupColumn);
+         srcChildIndex.isValid(); srcChildIndex = srcIndex.child(++row, groupColumn))
+    {
+        QString insText = srcChildIndex.data().toString();
         if (comboBoxAttrGroup->findText(insText)==-1)
             comboBoxAttrGroup->addItem(insText);
     }
@@ -282,12 +285,12 @@ void AttrWidget::submit()
 {
     QModelIndex rootIndex = (tableViewAttr->rootIndex());
     QModelIndex srcIndex = m_mapperAttr->rootIndex().child(m_mapperAttr->currentIndex(),0);
-    for (int row=0; row < m_attrModel->rowCount(rootIndex); row++){
-        QModelIndex childIndex = m_attrModel->index(row,
-                                                    m_model->columnDisplayedAttr(
-                                                        DBATTRXML::ATTR,
-                                                        DBATTRXML::NAME),
-                                                    rootIndex);
+    int nameColumn = m_model->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::NAME);
+
+    int row = 0;
+    for (QModelIndex childIndex = m_attrModel->index(row, nameColumn, rootIndex);
+         childIndex.isValid(); childIndex = m_attrModel->index(++row, nameColumn, rootIndex))
+    {
         if (lineEditAttrName->text() == childIndex.data()
                 && childIndex.sibling(row,0)!=srcIndex) {
             QMessageBox::warning(this,tr("Предуреждение"),

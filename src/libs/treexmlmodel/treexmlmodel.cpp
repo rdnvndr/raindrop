@@ -362,9 +362,11 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
 
     beginInsertRows(parent,row,row+count-1);
     int emptyRowAttr = 0;
-    for (int i=row; i<this->rowCount(parent); i++){
-        QModelIndex index = parent.child(i,0);
-        if (isAttr(index))
+    int i = row;
+    for (QModelIndex indexChild = parent.child(i,0);
+         indexChild.isValid(); indexChild = parent.child(++i,0))
+    {
+        if (isAttr(indexChild))
             emptyRowAttr++;
     }
     updateInsertRows(emptyRowAttr, count, parent, tag);
@@ -397,9 +399,10 @@ void TreeXmlModel::updateInsertRows(int emptyRowAttr, int count, const QModelInd
 {    
     // Если атрибут то обновляем по дереву наследования
     if (m_attrTags.contains(tag)) {
-        int rowCount = this->rowCount(parent);
-        for (int i=0;i<rowCount;i++){
-            QModelIndex index = parent.child(i,0);
+        int i = 0;
+        for (QModelIndex index = parent.child(i,0);
+             index.isValid(); index = parent.child(++i,0))
+        {
             if (!isAttr(index) && parent.data(TreeXmlModel::TagRole) == index.data(TreeXmlModel::TagRole)){
                 int row = this->rowCount(index)-emptyRowAttr;
                 beginInsertRows(index,row,row+count-1);
@@ -413,12 +416,15 @@ void TreeXmlModel::updateInsertRows(int emptyRowAttr, int count, const QModelInd
 void TreeXmlModel::revertInsertRows(int row, int count, const QModelIndex &parent, QString tag)
 {
     // Если атрибут
-    if (m_attrTags.contains(tag))
-        for (int i=0;i<this->rowCount(parent);i++){
-            QModelIndex index = parent.child(i,0);
+    if (m_attrTags.contains(tag)) {
+        int i = 0;
+        for (QModelIndex index = parent.child(i,0);
+             index.isValid(); index = parent.child(++i,0))
+        {
             if (!isAttr(index) && parent.data(TreeXmlModel::TagRole) == index.data(TreeXmlModel::TagRole))
                 revertInsertRows(this->rowCount(index),count,index, tag);
         }
+    }
 
     beginRemoveRows(parent,row,row+count-1);
     endRemoveRows();
@@ -427,9 +433,10 @@ void TreeXmlModel::revertInsertRows(int row, int count, const QModelIndex &paren
 void TreeXmlModel::updateRemoveRows(int emptyRowAttr,int count, const QModelIndex &parent)
 {
     // Если атрибут то обновляем по дереву наследования
-    int rowCount = this->rowCount(parent);
-    for (int i=0;i<rowCount;i++){
-        QModelIndex index = parent.child(i,0);
+    int i = 0;
+    for (QModelIndex index = parent.child(i,0);
+         index.isValid(); index = parent.child(++i,0))
+    {
         if (!isAttr(index)){
             updateRemoveRows(emptyRowAttr,count,index);
             int row = this->rowCount(index)-emptyRowAttr;
