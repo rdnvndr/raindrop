@@ -157,11 +157,12 @@ void CompositionPropWidget::submit()
 {
     QModelIndex rootIndex = m_mapper->rootIndex();
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
-    for (int row=0; row < m_model->rowCount(rootIndex); row++){
-        QModelIndex childIndex = m_model->index(row, m_model->columnDisplayedAttr(
-                                                    DBCOMPXML::COMP,
-                                                    DBCOMPXML::NAME),
-                                                rootIndex);
+    int compNameColumn = m_model->columnDisplayedAttr(DBCOMPXML::COMP, DBCOMPXML::NAME);
+
+    int row=0;
+    for ( QModelIndex childIndex = m_model->index(row, compNameColumn, rootIndex);
+         childIndex.isValid(); childIndex = m_model->index(++row, compNameColumn, rootIndex))
+    {
         if (childIndex.data(TreeXmlModel::TagRole) == DBCOMPXML::COMP)
             if (lineEditName->text() == childIndex.data() &&
                     srcIndex != childIndex.sibling(row,0)) {

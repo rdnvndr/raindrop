@@ -262,12 +262,12 @@ void FilterPropWidget::submit()
     QModelIndex rootIndex = m_mapper->rootIndex();
     QModelIndex srcIndex = m_model->index(
                 m_mapper->currentIndex(),0,m_mapper->rootIndex());
-
-    for (int row=0; row < m_model->rowCount(rootIndex); row++){
-        QModelIndex childIndex = m_model->index(row, m_model->columnDisplayedAttr(
-                                                    DBFILTERXML::FILTER,
-                                                    DBFILTERXML::NAME),
-                                                rootIndex);
+    int filterNameColumn =
+            m_model->columnDisplayedAttr(DBFILTERXML::FILTER, DBFILTERXML::NAME);
+    int row=0;
+    for (QModelIndex childIndex = m_model->index(row, filterNameColumn, rootIndex);
+         childIndex.isValid(); childIndex = m_model->index(++row, filterNameColumn, rootIndex))
+    {
         if (childIndex.data(TreeXmlModel::TagRole) == DBFILTERXML::FILTER)
             if (lineEditName->text() == childIndex.data() &&
                     srcIndex != childIndex.sibling(row,0)) {

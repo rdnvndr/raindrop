@@ -1100,8 +1100,10 @@ void ModelerIDEPlug::saveAsClassModel()
 
 void ModelerIDEPlug::publishClassModel(const QModelIndex &index)
 {
-    for (int row=0;row < m_model->rowCount(index);row++){
-        QModelIndex childIndex = m_model->index(row,0,index);
+    int row=0;
+    for (QModelIndex childIndex = m_model->index(row,0,index);
+         childIndex.isValid(); childIndex = m_model->index(++row,0,index))
+    {
         if (childIndex.data(TreeXmlModel::TagRole)==DBATTRXML::ATTR){
             // Создание атрибута
             if (m_model->isInherited(childIndex))
