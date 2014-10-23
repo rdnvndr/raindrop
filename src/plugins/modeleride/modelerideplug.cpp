@@ -1101,8 +1101,8 @@ void ModelerIDEPlug::saveAsClassModel()
 void ModelerIDEPlug::publishClassModel(const QModelIndex &index)
 {
     int row=0;
-    for (QModelIndex childIndex = m_model->index(row,0,index);
-         childIndex.isValid(); childIndex = m_model->index(++row,0,index))
+    QModelIndex childIndex = m_model->index(row,0,index);
+    while (childIndex.isValid())
     {
         if (childIndex.data(TreeXmlModel::TagRole)==DBATTRXML::ATTR){
             // Создание атрибута
@@ -1122,6 +1122,7 @@ void ModelerIDEPlug::publishClassModel(const QModelIndex &index)
             qDebug() << "Класс:" << childIndex.data().toString();
             publishClassModel(childIndex);
         }
+        childIndex = m_model->index(++row,0,index);
     }
 }
 

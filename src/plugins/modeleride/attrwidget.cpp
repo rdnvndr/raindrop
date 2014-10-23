@@ -217,12 +217,13 @@ void AttrWidget::setRootIndex(const QModelIndex &index)
     QModelIndex srcIndex = m_attrModel->mapFromSource(index);
     int groupColumn = m_model->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::GROUP);
     int row = 0;
-    for (QModelIndex srcChildIndex = srcIndex.child(row, groupColumn);
-         srcChildIndex.isValid(); srcChildIndex = srcIndex.child(++row, groupColumn))
+    QModelIndex srcChildIndex = srcIndex.child(row, groupColumn);
+    while (srcChildIndex.isValid())
     {
         QString insText = srcChildIndex.data().toString();
         if (comboBoxAttrGroup->findText(insText)==-1)
             comboBoxAttrGroup->addItem(insText);
+        srcChildIndex = srcIndex.child(++row, groupColumn);
     }
 
     m_attrModel->setSourceModel(m_model);
@@ -288,8 +289,8 @@ void AttrWidget::submit()
     int nameColumn = m_model->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::NAME);
 
     int row = 0;
-    for (QModelIndex childIndex = m_attrModel->index(row, nameColumn, rootIndex);
-         childIndex.isValid(); childIndex = m_attrModel->index(++row, nameColumn, rootIndex))
+    QModelIndex childIndex = m_attrModel->index(row, nameColumn, rootIndex);
+    while (childIndex.isValid())
     {
         if (lineEditAttrName->text() == childIndex.data()
                 && childIndex.sibling(row,0)!=srcIndex) {
@@ -297,6 +298,7 @@ void AttrWidget::submit()
                                  tr("Атрибут с таким имененм уже существует"));
             return;
         }
+        childIndex = m_attrModel->index(++row, nameColumn, rootIndex);
     }
     edit(false);
     m_mapperAttr->submit();

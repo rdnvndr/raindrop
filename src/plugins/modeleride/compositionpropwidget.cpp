@@ -160,8 +160,8 @@ void CompositionPropWidget::submit()
     int compNameColumn = m_model->columnDisplayedAttr(DBCOMPXML::COMP, DBCOMPXML::NAME);
 
     int row=0;
-    for ( QModelIndex childIndex = m_model->index(row, compNameColumn, rootIndex);
-         childIndex.isValid(); childIndex = m_model->index(++row, compNameColumn, rootIndex))
+    QModelIndex childIndex = m_model->index(row, compNameColumn, rootIndex);
+    while (childIndex.isValid())
     {
         if (childIndex.data(TreeXmlModel::TagRole) == DBCOMPXML::COMP)
             if (lineEditName->text() == childIndex.data() &&
@@ -170,6 +170,7 @@ void CompositionPropWidget::submit()
                                      tr("Состав с таким имененм уже существует"));
                 return;
             }
+        childIndex = m_model->index(++row, compNameColumn, rootIndex);
     }
 
     m_mapper->submit();
