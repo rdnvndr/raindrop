@@ -321,9 +321,11 @@ const
 
 bool TreeXmlModel::hasIndex(int row, int column, const QModelIndex &parent) const
 {
-   if (row < 0 || column < 0)
-       return false;
-   return true;
+    Q_UNUSED (parent)
+
+    if (row < 0 || column < 0)
+        return false;
+    return true;
 }
 
 QModelIndex TreeXmlModel::parent(const QModelIndex &child) const
