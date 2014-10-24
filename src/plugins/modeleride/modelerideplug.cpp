@@ -1116,12 +1116,11 @@ void ModelerIDEPlug::publishClassModel(const QModelIndex &index)
                 qDebug() << "Унаследованный состав:" <<childIndex.data().toString();
             else
                 qDebug() << "Состав:" <<childIndex.data().toString();
-            publishClassModel(childIndex);
         } else if (childIndex.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS) {
             // Создание класса
             qDebug() << "Класс:" << childIndex.data().toString();
-            publishClassModel(childIndex);
         }
+        publishClassModel(childIndex);
         childIndex = m_model->index(++row,0,index);
     }
 }
