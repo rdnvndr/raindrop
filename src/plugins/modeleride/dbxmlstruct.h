@@ -203,4 +203,51 @@ namespace DBLOVVALUEXML{
     const QString ID = "guid";
 }
 
+//! Ключевые слова XML файла для описания списка справочников
+namespace DBREFLISTXML {
+    const QString CLASSLIST = "RTPRefList";
+    const QString NAME = "name";
+    const QString ALIAS = "alias";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
+//! Ключевые слова XML файла для описания групп справочников
+namespace DBREFGROUPXML {
+    const QString REFGROUP = "RTPRefGroup";
+    const QString NAME = "name";
+    const QString DESCRIPTION = "description";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
+//! Ключевые слова XML файла для описания ссылок на класс
+namespace DBLINKTOCLASSXML{
+    const QString LINKTOCLASS = "RTPLinkToClass";
+    const QString NAME = "name";
+    const QString ALIAS = "alias";
+    const QString REFCLASS = "refClass";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
+//! Ключевые слова XML файла для описания ссылок на фильтр
+namespace DBLINKTOFILTERXML{
+    const QString LINKTOFILTER = "RTPLinkToFilter";
+    const QString NAME = "name";
+    const QString ALIAS = "alias";
+    const QString REFFILTER = "refFilter";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
+//! Ключевые слова XML файла для описания справочника
+namespace DBREFXML {
+    const QString REF = "RTPRef";
+    const QString NAME = "name";
+    const QString ALIAS = "alias";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
 #endif // DBXMLSTRUCT_H
