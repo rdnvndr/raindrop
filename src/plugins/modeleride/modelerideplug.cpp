@@ -242,6 +242,11 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addTagFilter(DBLOVLISTXML::LOVLIST);
     m_model->addTagFilter(DBLOVXML::LOV);
     m_model->addTagFilter(DBLOVVALUEXML::LOVVALUE);
+    m_model->addTagFilter(DBREFLISTXML::REFLIST);
+    m_model->addTagFilter(DBREFGROUPXML::REFGROUP);
+    m_model->addTagFilter(DBREFXML::REF);
+    m_model->addTagFilter(DBLINKTOCLASSXML::LINKTOCLASS);
+    m_model->addTagFilter(DBLINKTOFILTERXML::LINKTOFILTER);
 
     QStringList propsClass;
     propsClass << DBCLASSXML::NAME     << DBCLASSXML::ISABSTARCT  <<
@@ -329,6 +334,11 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                  << DBLOVLISTXML::PARENT << DBLOVLISTXML::ID;
     m_model->addDisplayedAttr(DBLOVLISTXML::LOVLIST, propsLovList, QIcon(":/lovlist"));
 
+    QStringList propsRefList;
+    propsRefList << DBREFLISTXML::NAME   << DBREFLISTXML::ALIAS
+                 << DBREFLISTXML::PARENT << DBREFLISTXML::ID;
+    m_model->addDisplayedAttr(DBREFLISTXML::REFLIST, propsRefList, QIcon(":/reflist"));
+
     QStringList propsModel;
     propsModel << DBMODELXML::NAME   << DBMODELXML::ALIAS
                << DBMODELXML::PARENT << DBMODELXML::ID;
@@ -344,6 +354,31 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     propsLovValue << DBLOVVALUEXML::NAME   << DBLOVVALUEXML::VALUE
                      << DBLOVVALUEXML::PARENT << DBLOVVALUEXML::ID;
     m_model->addDisplayedAttr(DBLOVVALUEXML::LOVVALUE, propsLov, QIcon(":/lovvalue"));
+
+    QStringList propsRefGroup;
+    propsRefGroup << DBREFGROUPXML::NAME   << DBREFGROUPXML::DESCRIPTION
+                  << DBREFGROUPXML::PARENT << DBREFGROUPXML::ID;
+    m_model->addDisplayedAttr(DBREFGROUPXML::REFGROUP,
+                              propsRefGroup, QIcon(":/refgroup"));
+
+    QStringList propsRef;
+    propsRef << DBREFXML::NAME   << DBREFXML::ALIAS
+             << DBREFXML::PARENT << DBREFXML::ID;
+    m_model->addDisplayedAttr(DBREFXML::REF, propsRef, QIcon(":/ref"));
+
+    QStringList propsLinkToClass;
+    propsLinkToClass << DBLINKTOCLASSXML::NAME   << DBLINKTOCLASSXML::ALIAS
+                     << DBLINKTOCLASSXML::REFCLASS
+                     << DBLINKTOCLASSXML::PARENT << DBLINKTOCLASSXML::ID;
+    m_model->addDisplayedAttr(DBLINKTOCLASSXML::LINKTOCLASS,
+                              propsLinkToClass, QIcon(":/linktoclass"));
+
+    QStringList propsLinkToFilter;
+    propsLinkToFilter << DBLINKTOFILTERXML::NAME   << DBLINKTOFILTERXML::ALIAS
+                      << DBLINKTOFILTERXML::REFFILTER
+                      << DBLINKTOFILTERXML::PARENT << DBLINKTOFILTERXML::ID;
+    m_model->addDisplayedAttr(DBLINKTOFILTERXML::LINKTOFILTER,
+                              propsLinkToFilter, QIcon(":/linktofilter"));
 
     m_model->setHeaderData(0,  Qt::Horizontal, tr("Имя атрибута"));
     m_model->setHeaderData(1,  Qt::Horizontal, tr("Псевдоним"));
@@ -394,7 +429,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     insertTags.clear();
     insertTags << DBCLASSLISTXML::CLASSLIST << DBENTITYLISTXML::ENTITYLIST
-               << DBLOVLISTXML::LOVLIST;
+               << DBLOVLISTXML::LOVLIST << DBREFLISTXML::REFLIST;
     m_model->addInsertTags(DBMODELXML::MODEL,insertTags);
 
     insertTags.clear();
@@ -408,6 +443,22 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     insertTags.clear();
     insertTags << DBLOVVALUEXML::LOVVALUE;
     m_model->addInsertTags(DBLOVXML::LOV,insertTags);
+
+    insertTags.clear();
+    insertTags << DBREFGROUPXML::REFGROUP;
+    m_model->addInsertTags(DBREFLISTXML::REFLIST,insertTags);
+
+    insertTags.clear();
+    insertTags << DBREFXML::REF;
+    m_model->addInsertTags(DBREFGROUPXML::REFGROUP,insertTags);
+
+    insertTags.clear();
+    insertTags << DBLINKTOCLASSXML::LINKTOCLASS;
+    m_model->addInsertTags(DBREFXML::REF,insertTags);
+
+    insertTags.clear();
+    insertTags << DBLINKTOFILTERXML::LINKTOFILTER;
+    m_model->addInsertTags(DBREFXML::REF,insertTags);
 
 
     m_model->addHashAttr(DBCLASSXML::CLASS,
@@ -443,6 +494,12 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addHashAttr(DBLOVVALUEXML::LOVVALUE,
                                 DBLOVVALUEXML::NAME,
                                 TreeXmlHashModel::UniqueRename);
+    m_model->addHashAttr(DBREFGROUPXML::REFGROUP,
+                                DBREFGROUPXML::NAME,
+                                TreeXmlHashModel::UniqueRename);
+    m_model->addHashAttr(DBREFXML::REF,
+                                DBREFXML::NAME,
+                                TreeXmlHashModel::UniqueRename);
 
 
     m_model->addHashAttr(DBCLASSXML::CLASS,
@@ -477,6 +534,18 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                 TreeXmlHashModel::Uuid);
     m_model->addHashAttr(DBLOVVALUEXML::LOVVALUE,
                                 DBLOVVALUEXML::ID,
+                                TreeXmlHashModel::Uuid);
+    m_model->addHashAttr(DBREFGROUPXML::REFGROUP,
+                                DBREFGROUPXML::ID,
+                                TreeXmlHashModel::Uuid);
+    m_model->addHashAttr(DBREFXML::REF,
+                                DBREFXML::ID,
+                                TreeXmlHashModel::Uuid);
+    m_model->addHashAttr(DBLINKTOCLASSXML::LINKTOCLASS,
+                                DBLINKTOCLASSXML::ID,
+                                TreeXmlHashModel::Uuid);
+    m_model->addHashAttr(DBLINKTOFILTERXML::LINKTOFILTER,
+                                DBLINKTOFILTERXML::ID,
                                 TreeXmlHashModel::Uuid);
 
 
@@ -519,6 +588,19 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     m_model->addRelation(DBLOVVALUEXML::LOVVALUE, DBLOVVALUEXML::PARENT,
                                DBLOVXML::LOV, DBLOVXML::NAME);
+
+    m_model->addRelation(DBREFXML::REF, DBREFXML::PARENT,
+                               DBREFGROUPXML::REFGROUP, DBREFGROUPXML::NAME);
+
+    m_model->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::PARENT,
+                               DBREFXML::REF, DBREFXML::NAME);
+    m_model->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::REFCLASS,
+                               DBCLASSXML::CLASS, DBCLASSXML::NAME);
+
+    m_model->addRelation(DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::PARENT,
+                               DBREFXML::REF, DBREFXML::NAME);
+    m_model->addRelation(DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::REFFILTER,
+                               DBCLASSXML::CLASS, DBCLASSXML::NAME);
 
 
     m_model->refreshHashing();

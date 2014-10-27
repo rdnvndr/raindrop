@@ -205,7 +205,7 @@ namespace DBLOVVALUEXML{
 
 //! Ключевые слова XML файла для описания списка справочников
 namespace DBREFLISTXML {
-    const QString CLASSLIST = "RTPRefList";
+    const QString REFLIST = "RTPRefList";
     const QString NAME = "name";
     const QString ALIAS = "alias";
     const QString PARENT = "parent";
@@ -217,6 +217,15 @@ namespace DBREFGROUPXML {
     const QString REFGROUP = "RTPRefGroup";
     const QString NAME = "name";
     const QString DESCRIPTION = "description";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
+//! Ключевые слова XML файла для описания справочника
+namespace DBREFXML {
+    const QString REF = "RTPRef";
+    const QString NAME = "name";
+    const QString ALIAS = "alias";
     const QString PARENT = "parent";
     const QString ID = "guid";
 }
@@ -241,13 +250,6 @@ namespace DBLINKTOFILTERXML{
     const QString ID = "guid";
 }
 
-//! Ключевые слова XML файла для описания справочника
-namespace DBREFXML {
-    const QString REF = "RTPRef";
-    const QString NAME = "name";
-    const QString ALIAS = "alias";
-    const QString PARENT = "parent";
-    const QString ID = "guid";
-}
+
 
 #endif // DBXMLSTRUCT_H
