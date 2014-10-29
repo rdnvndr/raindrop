@@ -367,20 +367,18 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                               propsRefGroup, QIcon(":/refgroup"));
 
     QStringList propsRef;
-    propsRef << DBREFXML::NAME   << DBREFXML::ALIAS
+    propsRef << DBREFXML::NAME   << DBREFXML::DESCRIPTION
              << DBREFXML::PARENT << DBREFXML::ID;
     m_model->addDisplayedAttr(DBREFXML::REF, propsRef, QIcon(":/reference"));
 
     QStringList propsLinkToClass;
-    propsLinkToClass << DBLINKTOCLASSXML::NAME   << DBLINKTOCLASSXML::ALIAS
-                     << DBLINKTOCLASSXML::REFCLASS
+    propsLinkToClass << DBLINKTOCLASSXML::NAME   << DBLINKTOCLASSXML::REFCLASS
                      << DBLINKTOCLASSXML::PARENT << DBLINKTOCLASSXML::ID;
     m_model->addDisplayedAttr(DBLINKTOCLASSXML::LINKTOCLASS,
                               propsLinkToClass, QIcon(":/linktoclass"));
 
     QStringList propsLinkToFilter;
-    propsLinkToFilter << DBLINKTOFILTERXML::NAME   << DBLINKTOFILTERXML::ALIAS
-                      << DBLINKTOFILTERXML::REFFILTER
+    propsLinkToFilter << DBLINKTOFILTERXML::NAME   << DBLINKTOFILTERXML::REFFILTER
                       << DBLINKTOFILTERXML::PARENT << DBLINKTOFILTERXML::ID;
     m_model->addDisplayedAttr(DBLINKTOFILTERXML::LINKTOFILTER,
                               propsLinkToFilter, QIcon(":/linktofilter"));

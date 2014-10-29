@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>261</width>
-    <height>153</height>
+    <width>286</width>
+    <height>175</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -109,29 +109,29 @@
       <string/>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelRefGroupDesc">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelRefGroupName">
         <property name="text">
-         <string>Описание группы справочника:</string>
+         <string>Имя группы:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1" colspan="2">
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lineEditRefGroupName"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelRefGroupDesc">
+        <property name="text">
+         <string>Описание группы:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
        <widget class="QLineEdit" name="lineEditRefGroupDesc">
         <property name="maxLength">
          <number>256</number>
         </property>
        </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="labelRefGroupName">
-        <property name="text">
-         <string>Имя группы справочника:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1" colspan="2">
-       <widget class="QLineEdit" name="lineEditRefGroupName"/>
       </item>
      </layout>
     </widget>

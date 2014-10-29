@@ -34,7 +34,7 @@ void RefWidget::setModel(TreeXmlHashModel *model)
                                                     DBREFXML::NAME));
     m_mapper->addMapping(lineEditDesc,
                          model->columnDisplayedAttr(DBREFXML::REF,
-                                                    DBREFXML::ALIAS));
+                                                    DBREFXML::DESCRIPTION));
 }
 
 bool RefWidget::isRemove(const QModelIndex &srcIndex)
