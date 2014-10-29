@@ -45,7 +45,10 @@ HEADERS += modelerideplug.h \
     proplov.h \
     lovvaluewidget.h \
     lovdelegate.h \
-    proprefgroup.h
+    proprefgroup.h \
+    propref.h \
+    refwidget.h \
+    refitemwidget.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -71,7 +74,10 @@ SOURCES += modelerideplug.cpp \
     proplov.cpp \
     lovvaluewidget.cpp \
     lovdelegate.cpp \
-    proprefgroup.cpp
+    proprefgroup.cpp \
+    propref.cpp \
+    refwidget.cpp \
+    refitemwidget.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
@@ -92,4 +98,7 @@ FORMS += \
     lovwidget.ui \
     proplov.ui \
     lovvaluewidget.ui \
-    proprefgroup.ui
+    proprefgroup.ui \
+    propref.ui \
+    refwidget.ui \
+    refitemwidget.ui
