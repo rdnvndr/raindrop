@@ -84,9 +84,6 @@ private:
     //! Модель дерева классов
     TreeXmlHashModel* m_model;
 
-    //! Прокси модель дерева классов. Отвечает за сортировку и фильтрацию дерева классов
-    TreeFilterProxyModel* classFilterModel;
-
     //! Дерево классов
     ClassTreeView* treeClassView;
 
@@ -107,31 +104,6 @@ private:
 
     //! Команда закрытия структуры классов
     QAction* actionCloseModel;
-
-    //! Команда добавления класса
-    QAction* actionAddClass;
-
-    //! Команда удаления класса
-    QAction* actionRemoveClass;
-
-    //! Команда отображения атрибутов в дереве классов
-    QAction* actionShowAttr;
-
-    //! Команда отображения состава в дереве классов
-    QAction* actionShowComp;
-
-    //! Команда отображения фильтров в дереве классов
-    QAction* actionShowFilter;
-
-    //! Команда отображения ЕИ в дереве классов
-    QAction* actionShowUnit;
-
-
-    //! Команда разделитель
-    QAction* actionSeparator;
-
-    //! Контекстное меню дерева классов
-    QMenu*   contextMenu;
 
 public slots:
     //! Слот обработки двойного щелчка по дереву классов
@@ -190,22 +162,6 @@ public slots:
 
     //! Удаление элемента модели класса
     void remove();
-
-    //! Слот вызова отображения контекстного меню дерева классов
-    void showContextMenu(const QPoint &point);
-
-
-    //! Установка отображения атрибутов в дереве классов
-    void setShowAttr(bool shown);
-
-    //! Установка отображения состава в дереве классов
-    void setShowComp(bool shown);
-
-    //! Установка отображения фильтров в дереве классов
-    void setShowFilter(bool shown);
-
-    //! Установка отображения ЕИ в дереве классов
-    void setShowUnit(bool shown);
 
     //! Устанавливает активность QAction "Сохранить модель"
     void actionSaveEnable();
