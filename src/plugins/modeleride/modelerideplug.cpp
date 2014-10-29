@@ -19,6 +19,7 @@
 #include "propentitygroup.h"
 #include "lovwidget.h"
 #include "proplov.h"
+#include "proprefgroup.h"
 
 ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     QObject(parent), IPlugin("ITreeDockWidget IMainWindow")
@@ -701,7 +702,7 @@ void ModelerIDEPlug::add()
         if (lastInsertRow.isValid()){
             QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
             treeClassView->treeView->setCurrentIndex(index);
-            showPropEntityGroup(lastInsertRow);
+            showPropRefGroup(lastInsertRow);
         }
     } else if (indexSource.data(TreeXmlModel::TagRole)==DBREFGROUPXML::REFGROUP) {
         QModelIndex lastInsertRow =
@@ -709,7 +710,7 @@ void ModelerIDEPlug::add()
         if (lastInsertRow.isValid()){
             QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
             treeClassView->treeView->setCurrentIndex(index);
-            showPropEntity(lastInsertRow);
+            showPropRef(lastInsertRow);
         }
     }
 }
@@ -759,6 +760,13 @@ QString ModelerIDEPlug::dataName(const QModelIndex& index)
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBLOVXML::LOV,
                                  DBLOVXML::NAME
+                                 )).data().toString();
+    }
+
+    if (index.data(TreeXmlModel::TagRole) == DBREFGROUPXML::REFGROUP) {
+        return index.sibling(index.row(),m_model->columnDisplayedAttr(
+                                 DBREFGROUPXML::REFGROUP,
+                                 DBREFGROUPXML::NAME
                                  )).data().toString();
     }
 
@@ -814,6 +822,13 @@ QString ModelerIDEPlug::dataId(const QModelIndex &index)
                                  )).data().toString();
     }
 
+    if (index.data(TreeXmlModel::TagRole) == DBREFGROUPXML::REFGROUP) {
+        return index.sibling(index.row(),m_model->columnDisplayedAttr(
+                                 DBREFGROUPXML::REFGROUP,
+                                 DBREFGROUPXML::ID
+                                 )).data().toString();
+    }
+
     return "";
 }
 
@@ -842,6 +857,8 @@ void ModelerIDEPlug::dblClickTree(const QModelIndex &index)
     if (indexSource.data(TreeXmlModel::TagRole)==DBLOVXML::LOV)
         showPropLov(indexSource);
 
+    if (indexSource.data(TreeXmlModel::TagRole)==DBREFGROUPXML::REFGROUP)
+        showPropRefGroup(indexSource);
 }
 
 bool ModelerIDEPlug::isRemove(const QModelIndex &srcIndex)
@@ -1049,6 +1066,35 @@ void ModelerIDEPlug::showPropLov(const QModelIndex &indexSource)
         PropLov* propLov = qobject_cast<PropLov*>(subWindow->widget());
         propLov->setCurrentLov(indexSource);
     }
+}
+
+void ModelerIDEPlug::showPropRefGroup(const QModelIndex &indexSource)
+{
+    if (!indexSource.isValid())
+        return;
+
+    PluginManager* pluginManager = PluginManager::instance();
+    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
+                pluginManager->interfaceObject("IMainWindow"));
+
+    QString subWindowName = "PropRefGroup::" + this->dataId(indexSource);
+    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
+
+    if (!subWindow) {
+        PropRefGroup* propRefGroup = new PropRefGroup();
+        subWindow =  mainWindow->addSubWindow(propRefGroup);
+        propRefGroup->setObjectName(subWindowName);
+        propRefGroup->setModel(m_model);
+        propRefGroup->setCurrentRefGroup(indexSource);
+    } else {
+        PropRefGroup* propRefGroup = qobject_cast<PropRefGroup*>(subWindow->widget());
+        propRefGroup->setCurrentRefGroup(indexSource);
+    }
+}
+
+void ModelerIDEPlug::showPropRef(const QModelIndex &indexSource)
+{
+
 }
 
 void ModelerIDEPlug::closePropWindow(const QModelIndex &index)

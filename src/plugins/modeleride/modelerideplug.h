@@ -156,6 +156,12 @@ public slots:
     //! Слот вызова окна редактирования списка значений
     void showPropLov(const QModelIndex &indexSource);
 
+    //! Слот вызова окна редактирования группы справочника
+    void showPropRefGroup(const QModelIndex &indexSource);
+
+    //! Слот вызова окна редактирования справочника
+    void showPropRef(const QModelIndex &indexSource);
+
 
     //! Закрытие окна по индексу
     void closePropWindow(const QModelIndex& index);

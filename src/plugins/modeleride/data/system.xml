@@ -598,4 +598,5 @@
 </RTPEntityGroup>
 </RTPEntityList>
 <RTPLOVList name="List of Value" alias="Список значений"/>
+<RTPRefList name="References" alias="Справочники"/>
 </RTPModel>
