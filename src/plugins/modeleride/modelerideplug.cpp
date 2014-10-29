@@ -31,48 +31,8 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     ITreeDockWidget* dockWidget = qobject_cast<ITreeDockWidget*>(
                 pluginManager->interfaceObject("ITreeDockWidget"));
     treeClassView = new ClassTreeView();
-
-    connect(treeClassView->treeView,SIGNAL(doubleClicked(QModelIndex)),
+    connect(treeClassView,SIGNAL(doubleClicked(QModelIndex)),
             this,SLOT(dblClickTree(QModelIndex)));
-
-    // Создание контекстного меню
-    contextMenu = new QMenu();
-
-    actionAddClass = new QAction(tr("Добавить"),this);
-    contextMenu->addAction(actionAddClass);
-    connect(actionAddClass,SIGNAL(triggered()),this,SLOT(add()));
-
-    actionRemoveClass = new QAction(tr("Удалить"),this);
-    contextMenu->addAction(actionRemoveClass);
-    connect(actionRemoveClass,SIGNAL(triggered()),this,SLOT(remove()));
-
-    actionSeparator = new QAction(tr("Разделитель"),this);
-    actionSeparator->setSeparator(true);
-    contextMenu->addAction(actionSeparator);
-
-    actionShowAttr = new QAction(tr("Показать атрибуты"),this);
-    actionShowAttr->setCheckable(true);
-    contextMenu->addAction(actionShowAttr);
-    connect(actionShowAttr,SIGNAL(triggered(bool)),this,SLOT(setShowAttr(bool)));
-
-    actionShowComp = new QAction(tr("Показать состав"),this);
-    actionShowComp->setCheckable(true);
-    contextMenu->addAction(actionShowComp);
-    connect(actionShowComp,SIGNAL(triggered(bool)),this,SLOT(setShowComp(bool)));
-
-    actionShowFilter = new QAction(tr("Показать фильтры"),this);
-    actionShowFilter->setCheckable(true);
-    contextMenu->addAction(actionShowFilter);
-    connect(actionShowFilter,SIGNAL(triggered(bool)),this,SLOT(setShowFilter(bool)));
-
-    actionShowUnit = new QAction(tr("Показать ЕИ"),this);
-    actionShowUnit->setCheckable(true);
-    contextMenu->addAction(actionShowUnit);
-    connect(actionShowUnit,SIGNAL(triggered(bool)),this,SLOT(setShowUnit(bool)));
-
-    treeClassView->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(treeClassView->treeView,SIGNAL(customContextMenuRequested(const QPoint&)),
-            this,SLOT(showContextMenu(const QPoint&)));
 
     // Создание пунктов строки меню и кнопок панели исрументов
     IMainWindow* iMainWindow = qobject_cast<IMainWindow*>(
@@ -125,97 +85,6 @@ ModelerIDEPlug::~ModelerIDEPlug()
     delete actionOpenModel;
     delete actionPublishModel;
     delete actionCloseModel;
-    delete actionAddClass;
-    delete actionRemoveClass;
-    delete actionShowAttr;
-    delete actionShowComp;
-    delete actionShowFilter;
-    delete actionSeparator;
-    delete actionShowUnit;
-    delete contextMenu;
-}
-
-void ModelerIDEPlug::showContextMenu(const QPoint& point)
-{
-    if (m_model){
-        QModelIndex indexSource = classFilterModel->mapToSource(treeClassView->treeView->currentIndex());
-        if (!indexSource.isValid())
-            return;
-
-        if (indexSource.data(TreeXmlModel::TagRole)==DBCLASSLISTXML::CLASSLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBENTITYLISTXML::ENTITYLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBENTITYGROUPXML::ENTITYGROUP
-            || indexSource.data(TreeXmlModel::TagRole)==DBLOVLISTXML::LOVLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS
-            || indexSource.data(TreeXmlModel::TagRole)==DBREFLISTXML::REFLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBREFGROUPXML::REFGROUP)
-        {
-            contextMenu->actions().at(0)->setVisible(true);
-        } else {
-            contextMenu->actions().at(0)->setVisible(false);
-        }
-
-        if (indexSource.data(TreeXmlModel::TagRole)==DBCLASSLISTXML::CLASSLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBENTITYLISTXML::ENTITYLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBLOVLISTXML::LOVLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBREFLISTXML::REFLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBMODELXML::MODEL)
-        {
-            contextMenu->actions().at(1)->setVisible(false);
-        } else {
-            contextMenu->actions().at(1)->setVisible(true);
-        }
-        contextMenu->exec(treeClassView->treeView->mapToGlobal(point));
-    }
-    return;
-}
-
-void ModelerIDEPlug::setShowAttr(bool shown)
-{
-    if (shown)
-        classFilterModel->addVisibleTag(DBATTRXML::ATTR);
-    else
-        classFilterModel->removeVisibleTag(DBATTRXML::ATTR);
-
-    QRegExp regex = classFilterModel->filterRegExp();
-    classFilterModel->setFilterRegExp(regex);
-    actionShowAttr->setChecked(shown);
-}
-
-void ModelerIDEPlug::setShowComp(bool shown)
-{
-    if (shown)
-        classFilterModel->addVisibleTag(DBCOMPXML::COMP);
-    else
-        classFilterModel->removeVisibleTag(DBCOMPXML::COMP);
-
-    QRegExp regex = classFilterModel->filterRegExp();
-    classFilterModel->setFilterRegExp(regex);
-    actionShowComp->setChecked(shown);
-}
-
-void ModelerIDEPlug::setShowFilter(bool shown)
-{
-    if (shown)
-        classFilterModel->addVisibleTag(DBFILTERXML::FILTER);
-    else
-        classFilterModel->removeVisibleTag(DBFILTERXML::FILTER);
-
-    QRegExp regex = classFilterModel->filterRegExp();
-    classFilterModel->setFilterRegExp(regex);
-    actionShowFilter->setChecked(shown);
-}
-
-void ModelerIDEPlug::setShowUnit(bool shown)
-{
-    if (shown)
-        classFilterModel->addVisibleTag(DBUNITXML::UNIT);
-    else
-        classFilterModel->removeVisibleTag(DBUNITXML::UNIT);
-
-    QRegExp regex = classFilterModel->filterRegExp();
-    classFilterModel->setFilterRegExp(regex);
-    actionShowUnit->setChecked(shown);
 }
 
 void ModelerIDEPlug::actionSaveEnable()
@@ -608,41 +477,13 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     m_model->refreshHashing();
 
-    classFilterModel = new TreeFilterProxyModel();
-    classFilterModel->setSourceModel(m_model);
-    classFilterModel->setDynamicSortFilter(true);
-    classFilterModel->sort(0);
-
-    classFilterModel->addVisibleTag(DBCLASSXML::CLASS);
-    classFilterModel->addVisibleTag(DBCLASSLISTXML::CLASSLIST);
-    classFilterModel->addVisibleTag(DBENTITYGROUPXML::ENTITYGROUP);
-    classFilterModel->addVisibleTag(DBENTITYXML::ENTITY);
-    classFilterModel->addVisibleTag(DBENTITYLISTXML::ENTITYLIST);
-    classFilterModel->addVisibleTag(DBLOVLISTXML::LOVLIST);
-    classFilterModel->addVisibleTag(DBLOVXML::LOV);
-    classFilterModel->addVisibleTag(DBREFLISTXML::REFLIST);
-    classFilterModel->addVisibleTag(DBREFGROUPXML::REFGROUP);
-    classFilterModel->addVisibleTag(DBREFXML::REF);
-    classFilterModel->addVisibleTag(DBMODELXML::MODEL);
-    classFilterModel->addVisibleTag(DBROOTXML::ROOT);
-
-    QRegExp regex = classFilterModel->filterRegExp();
-    classFilterModel->setFilterRegExp(regex);
-
     connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)),
             this,SLOT(actionSaveEnable()));
     connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
             this,SLOT(actionSaveEnable()));
 
-    connect(treeClassView->lineEditFiler,SIGNAL(textChanged(QString)),
-            classFilterModel,SLOT(setFilterRegExp(QString)));
+    treeClassView->setModel(m_model);
 
-    connect(treeClassView->lineEditFiler,SIGNAL(textChanged(QString)),
-            treeClassView->treeView,SLOT(expandAll()));
-
-    treeClassView->treeView->setModel(classFilterModel);
-    for (int i=1;i<m_model->columnCount();i++)
-        treeClassView->treeView->hideColumn(i);
 
     actionPublishModel->setEnabled(true);
     actionSaveModel->setEnabled(true);
@@ -652,7 +493,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
 void ModelerIDEPlug::add()
 {
-    QModelIndex indexSource = classFilterModel->mapToSource(treeClassView->treeView->currentIndex());
+    QModelIndex indexSource = treeClassView->currentIndex();
     if (!indexSource.isValid())
         return;
 
@@ -662,53 +503,47 @@ void ModelerIDEPlug::add()
         QModelIndex lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBCLASSXML::CLASS);
         if (lastInsertRow.isValid()){
-            QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
             int column = m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                       DBCLASSXML::TYPE);
             m_model->setData(lastInsertRow.sibling(lastInsertRow.row(),column),
                              DBCLASSTYPEXML::STANDART);
 
-            treeClassView->treeView->setCurrentIndex(index);
+            treeClassView->setCurrentIndex(lastInsertRow);
             showPropClass(lastInsertRow);
         }
     } else if (indexSource.data(TreeXmlModel::TagRole)==DBENTITYLISTXML::ENTITYLIST) {
         QModelIndex lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBENTITYGROUPXML::ENTITYGROUP);
         if (lastInsertRow.isValid()){
-            QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
-            treeClassView->treeView->setCurrentIndex(index);
+            treeClassView->setCurrentIndex(lastInsertRow);
             showPropEntityGroup(lastInsertRow);
         }
     } else if (indexSource.data(TreeXmlModel::TagRole)==DBENTITYGROUPXML::ENTITYGROUP) {
         QModelIndex lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBENTITYXML::ENTITY);
         if (lastInsertRow.isValid()){
-            QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
-            treeClassView->treeView->setCurrentIndex(index);
+            treeClassView->setCurrentIndex(lastInsertRow);
             showPropEntity(lastInsertRow);
         }
     } else if (indexSource.data(TreeXmlModel::TagRole)==DBLOVLISTXML::LOVLIST) {
         QModelIndex lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBLOVXML::LOV);
         if (lastInsertRow.isValid()){
-            QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
-            treeClassView->treeView->setCurrentIndex(index);
+            treeClassView->setCurrentIndex(lastInsertRow);
             showPropLov(lastInsertRow);
         }
     } else if (indexSource.data(TreeXmlModel::TagRole)==DBREFLISTXML::REFLIST) {
         QModelIndex lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBREFGROUPXML::REFGROUP);
         if (lastInsertRow.isValid()){
-            QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
-            treeClassView->treeView->setCurrentIndex(index);
+            treeClassView->setCurrentIndex(lastInsertRow);
             showPropRefGroup(lastInsertRow);
         }
     } else if (indexSource.data(TreeXmlModel::TagRole)==DBREFGROUPXML::REFGROUP) {
         QModelIndex lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBREFXML::REF);
         if (lastInsertRow.isValid()){
-            QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
-            treeClassView->treeView->setCurrentIndex(index);
+            treeClassView->setCurrentIndex(lastInsertRow);
             showPropRef(lastInsertRow);
         }
     }
@@ -848,7 +683,7 @@ QString ModelerIDEPlug::dataId(const QModelIndex &index)
 
 void ModelerIDEPlug::dblClickTree(const QModelIndex &index)
 {
-    QModelIndex indexSource = classFilterModel->mapToSource(index);
+    QModelIndex indexSource = index;
 
     if (!indexSource.isValid())
         return;
@@ -914,8 +749,7 @@ bool ModelerIDEPlug::isRemove(const QModelIndex &srcIndex)
 
 void ModelerIDEPlug::remove()
 {
-    QModelIndex currentIndex = classFilterModel->mapToSource(
-                treeClassView->treeView->currentIndex());
+    QModelIndex currentIndex = treeClassView->currentIndex();
 
     if (currentIndex.isValid()){
 
@@ -1185,11 +1019,10 @@ void ModelerIDEPlug::newClassModel()
     createClassModel(document);
 
 
-    QModelIndex indexSource = classFilterModel->mapToSource(treeClassView->treeView->currentIndex());
+    QModelIndex indexSource = treeClassView->currentIndex();
     QModelIndex lastIndex = m_model->insertLastRows(0,1,indexSource,DBMODELXML::MODEL);
     if (lastIndex.isValid()){
-        QModelIndex index = classFilterModel->mapFromSource(lastIndex);
-        treeClassView->treeView->setCurrentIndex(index);
+        treeClassView->setCurrentIndex(lastIndex);
 
         int column = m_model->columnDisplayedAttr(DBMODELXML::MODEL,
                                                   DBMODELXML::NAME);
@@ -1202,8 +1035,7 @@ void ModelerIDEPlug::newClassModel()
         indexSource = lastIndex;        
         QModelIndex lastIndex = m_model->insertLastRows(0,1,indexSource,DBCLASSLISTXML::CLASSLIST);
         if (lastIndex.isValid()){
-            QModelIndex index = classFilterModel->mapFromSource(lastIndex);
-            treeClassView->treeView->setCurrentIndex(index);
+            treeClassView->setCurrentIndex(lastIndex);
 
             int column = m_model->columnDisplayedAttr(DBCLASSLISTXML::CLASSLIST,
                                                       DBCLASSLISTXML::NAME);
@@ -1216,8 +1048,7 @@ void ModelerIDEPlug::newClassModel()
 
         lastIndex = m_model->insertLastRows(0,1,indexSource,DBENTITYLISTXML::ENTITYLIST);
         if (lastIndex.isValid()){
-            QModelIndex index = classFilterModel->mapFromSource(lastIndex);
-            treeClassView->treeView->setCurrentIndex(index);
+            treeClassView->setCurrentIndex(lastIndex);
 
             int column = m_model->columnDisplayedAttr(DBENTITYLISTXML::ENTITYLIST,
                                                       DBENTITYLISTXML::NAME);
@@ -1230,8 +1061,7 @@ void ModelerIDEPlug::newClassModel()
 
         lastIndex = m_model->insertLastRows(0,1,indexSource, DBLOVLISTXML::LOVLIST);
         if (lastIndex.isValid()){
-            QModelIndex index = classFilterModel->mapFromSource(lastIndex);
-            treeClassView->treeView->setCurrentIndex(index);
+            treeClassView->setCurrentIndex(lastIndex);
 
             int column = m_model->columnDisplayedAttr(DBLOVLISTXML::LOVLIST,
                                                       DBLOVLISTXML::NAME);
@@ -1244,8 +1074,7 @@ void ModelerIDEPlug::newClassModel()
 
         lastIndex = m_model->insertLastRows(0,1,indexSource, DBREFLISTXML::REFLIST);
         if (lastIndex.isValid()){
-            QModelIndex index = classFilterModel->mapFromSource(lastIndex);
-            treeClassView->treeView->setCurrentIndex(index);
+            treeClassView->setCurrentIndex(lastIndex);
 
             int column = m_model->columnDisplayedAttr(DBREFLISTXML::REFLIST,
                                                       DBREFLISTXML::NAME);
@@ -1353,19 +1182,12 @@ void ModelerIDEPlug::closeClassModel()
         }
 
     if (m_model){
-        delete classFilterModel;
-        classFilterModel = NULL;
         delete m_model;
         m_model = NULL;
         actionCloseModel->setDisabled(true);
         actionSaveModel->setDisabled(true);
         actionSaveAsModel->setDisabled(true);
         actionPublishModel->setDisabled(true);
-
-        actionShowAttr->setChecked(false);
-        actionShowComp->setChecked(false);
-        actionShowFilter->setChecked(false);
-        actionShowUnit->setChecked(false);
     }
 }
 #if QT_VERSION < 0x050000
