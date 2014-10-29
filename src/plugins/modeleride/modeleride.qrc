@@ -27,5 +27,8 @@
         <file alias="editclean">icons/reditclean.svg</file>
         <file alias="down">icons/go-down.svg</file>
         <file alias="up">icons/go-up.svg</file>
+        <file alias="reflist">icons/reflist.svg</file>
+        <file alias="reference">icons/reference.svg</file>
+        <file alias="refgroup">icons/refgroup.svg</file>
     </qresource>
 </RCC>

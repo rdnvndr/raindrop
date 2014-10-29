@@ -144,7 +144,9 @@ void ModelerIDEPlug::showContextMenu(const QPoint& point)
             || indexSource.data(TreeXmlModel::TagRole)==DBENTITYLISTXML::ENTITYLIST
             || indexSource.data(TreeXmlModel::TagRole)==DBENTITYGROUPXML::ENTITYGROUP
             || indexSource.data(TreeXmlModel::TagRole)==DBLOVLISTXML::LOVLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS)
+            || indexSource.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS
+            || indexSource.data(TreeXmlModel::TagRole)==DBREFLISTXML::REFLIST
+            || indexSource.data(TreeXmlModel::TagRole)==DBREFGROUPXML::REFGROUP)
         {
             contextMenu->actions().at(0)->setVisible(true);
         } else {
@@ -154,6 +156,7 @@ void ModelerIDEPlug::showContextMenu(const QPoint& point)
         if (indexSource.data(TreeXmlModel::TagRole)==DBCLASSLISTXML::CLASSLIST
             || indexSource.data(TreeXmlModel::TagRole)==DBENTITYLISTXML::ENTITYLIST
             || indexSource.data(TreeXmlModel::TagRole)==DBLOVLISTXML::LOVLIST
+            || indexSource.data(TreeXmlModel::TagRole)==DBREFLISTXML::REFLIST
             || indexSource.data(TreeXmlModel::TagRole)==DBMODELXML::MODEL)
         {
             contextMenu->actions().at(1)->setVisible(false);
@@ -364,7 +367,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     QStringList propsRef;
     propsRef << DBREFXML::NAME   << DBREFXML::ALIAS
              << DBREFXML::PARENT << DBREFXML::ID;
-    m_model->addDisplayedAttr(DBREFXML::REF, propsRef, QIcon(":/ref"));
+    m_model->addDisplayedAttr(DBREFXML::REF, propsRef, QIcon(":/reference"));
 
     QStringList propsLinkToClass;
     propsLinkToClass << DBLINKTOCLASSXML::NAME   << DBLINKTOCLASSXML::ALIAS
@@ -617,6 +620,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     classFilterModel->addVisibleTag(DBENTITYLISTXML::ENTITYLIST);
     classFilterModel->addVisibleTag(DBLOVLISTXML::LOVLIST);
     classFilterModel->addVisibleTag(DBLOVXML::LOV);
+    classFilterModel->addVisibleTag(DBREFLISTXML::REFLIST);
+    classFilterModel->addVisibleTag(DBREFGROUPXML::REFGROUP);
+    classFilterModel->addVisibleTag(DBREFXML::REF);
     classFilterModel->addVisibleTag(DBMODELXML::MODEL);
     classFilterModel->addVisibleTag(DBROOTXML::ROOT);
 
@@ -688,6 +694,22 @@ void ModelerIDEPlug::add()
             QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
             treeClassView->treeView->setCurrentIndex(index);
             showPropLov(lastInsertRow);
+        }
+    } else if (indexSource.data(TreeXmlModel::TagRole)==DBREFLISTXML::REFLIST) {
+        QModelIndex lastInsertRow =
+                m_model->insertLastRows(0,1,indexSource,DBREFGROUPXML::REFGROUP);
+        if (lastInsertRow.isValid()){
+            QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
+            treeClassView->treeView->setCurrentIndex(index);
+            showPropEntityGroup(lastInsertRow);
+        }
+    } else if (indexSource.data(TreeXmlModel::TagRole)==DBREFGROUPXML::REFGROUP) {
+        QModelIndex lastInsertRow =
+                m_model->insertLastRows(0,1,indexSource,DBREFXML::REF);
+        if (lastInsertRow.isValid()){
+            QModelIndex index = classFilterModel->mapFromSource(lastInsertRow);
+            treeClassView->treeView->setCurrentIndex(index);
+            showPropEntity(lastInsertRow);
         }
     }
 }
@@ -1125,6 +1147,20 @@ void ModelerIDEPlug::newClassModel()
             column = m_model->columnDisplayedAttr(DBLOVLISTXML::LOVLIST,
                                                   DBLOVLISTXML::ALIAS);
             m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("Список значений"));
+        }
+
+        lastIndex = m_model->insertLastRows(0,1,indexSource, DBREFLISTXML::REFLIST);
+        if (lastIndex.isValid()){
+            QModelIndex index = classFilterModel->mapFromSource(lastIndex);
+            treeClassView->treeView->setCurrentIndex(index);
+
+            int column = m_model->columnDisplayedAttr(DBREFLISTXML::REFLIST,
+                                                      DBREFLISTXML::NAME);
+            m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("References"));
+
+            column = m_model->columnDisplayedAttr(DBREFLISTXML::REFLIST,
+                                                  DBREFLISTXML::ALIAS);
+            m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("Справочники"));
         }
     }
 }
