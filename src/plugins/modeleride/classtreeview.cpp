@@ -53,6 +53,8 @@ ClassTreeView::ClassTreeView(QWidget *parent) :
     treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(treeView,SIGNAL(customContextMenuRequested(const QPoint&)),
             this,SLOT(showContextMenu(const QPoint&)));
+
+    classFilterModel = NULL;
 }
 
 ClassTreeView::~ClassTreeView()
