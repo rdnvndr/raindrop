@@ -30,9 +30,14 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     PluginManager* pluginManager = PluginManager::instance();
     ITreeDockWidget* dockWidget = qobject_cast<ITreeDockWidget*>(
                 pluginManager->interfaceObject("ITreeDockWidget"));
+
     treeClassView = new ClassTreeView();
     connect(treeClassView,SIGNAL(doubleClicked(QModelIndex)),
             this,SLOT(dblClickTree(QModelIndex)));
+    connect(treeClassView,SIGNAL(actionInserted()),
+            this,SLOT(add()));
+    connect(treeClassView,SIGNAL(actionRemoved()),
+            this,SLOT(remove()));
 
     // Создание пунктов строки меню и кнопок панели исрументов
     IMainWindow* iMainWindow = qobject_cast<IMainWindow*>(
