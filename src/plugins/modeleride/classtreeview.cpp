@@ -20,11 +20,11 @@ ClassTreeView::ClassTreeView(QWidget *parent) :
 
     actionAddClass = new QAction(tr("Добавить"),this);
     contextMenu->addAction(actionAddClass);
-    connect(actionAddClass,SIGNAL(triggered()),this,SLOT(add()));
+    connect(actionAddClass,SIGNAL(triggered()),this,SLOT(actionInsert()));
 
     actionRemoveClass = new QAction(tr("Удалить"),this);
     contextMenu->addAction(actionRemoveClass);
-    connect(actionRemoveClass,SIGNAL(triggered()),this,SLOT(remove()));
+    connect(actionRemoveClass,SIGNAL(triggered()),this,SLOT(actionRemove()));
 
     actionSeparator = new QAction(tr("Разделитель"),this);
     actionSeparator->setSeparator(true);
@@ -179,6 +179,16 @@ void ClassTreeView::destroyModel()
         delete classFilterModel;
         classFilterModel = NULL;
     }
+}
+
+void ClassTreeView::actionInsert()
+{
+    emit actionInserted();
+}
+
+void ClassTreeView::actionRemove()
+{
+    emit actionRemoved();
 }
 
 void ClassTreeView::setCurrentIndex(const QModelIndex &index)

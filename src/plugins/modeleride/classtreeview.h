@@ -56,10 +56,22 @@ private slots:
     //! Удаление модели данных для дерева класса
     void destroyModel();
 
+    //! Вызов команды вставки строки
+    void actionInsert();
+
+    //! Вызов команды удаления строки
+    void actionRemove();
+
 signals:
 
     //! Сигнал о двойном щелчке в дереве классов
     void doubleClicked(const QModelIndex &index);
+
+    //! Сигнал вызова команды вставки строки
+    void actionInserted();
+
+    //! Сигнал вызова команды удаления строки
+    void actionRemoved();
 
 private:
     //! Прокси модель дерева классов. Отвечает за сортировку и фильтрацию дерева классов
