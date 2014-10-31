@@ -81,7 +81,7 @@ private:
     QDataWidgetMapper* m_mapper;
 
     //! Хранит индекс предыдущей активной справочника
-    int  m_oldIndex;
+    QPersistentModelIndex  m_oldIndex;
 };
 
 #endif // REFWIDGET_H

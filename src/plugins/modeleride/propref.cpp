@@ -16,8 +16,6 @@ PropRef::PropRef(QWidget *parent) :
             this,SLOT(setTabName(QModelIndex)));
     connect(refWidget,SIGNAL(dataRemoved(QModelIndex)),
             this,SLOT(closeTab(QModelIndex)));
-    connect(refItemWidget,SIGNAL(proxyIndexChanged(QModelIndex)),
-            refWidget, SLOT(setUnitRootIndex(QModelIndex)));
 
     connect(refWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));
     connect(refWidget, SIGNAL(edited(bool)), refItemWidget, SLOT(edit(bool)));
