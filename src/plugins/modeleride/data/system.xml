@@ -598,5 +598,16 @@
 </RTPEntityGroup>
 </RTPEntityList>
 <RTPLOVList name="List of Value" alias="Список значений"/>
-<RTPRefList name="References" alias="Справочники"/>
+<RTPRefList alias="Справочники" name="References">
+<RTPRefGroup name="Производство" guid="{0a25425f-0ce1-4b4e-8ac2-d1d6119740c4}" description="Производство"/>
+<RTPRefGroup name="Оснастка" guid="{b963a904-134a-47c3-ac21-8cbeef11a991}" description="Оснастка">
+<RTPRef name="Режущий инструмент" guid="{63631537-0b2c-4a68-8193-275f60e200a3}" description="Режущий инструмент"/>
+</RTPRefGroup>
+<RTPRefGroup name="Служебные" guid="{fe38d429-9b43-4914-8c9c-f4303963ee32}" description="Служебные"/>
+<RTPRefGroup name="Режимы обработки" guid="{8c1f002f-8145-4e37-a7e4-4e54dd20e3a7}" description="Режимы обработки"/>
+<RTPRefGroup name="Материалы" guid="{53a7aa5b-bd1c-4be8-8c60-53c4f8881c05}" description="Материалы">
+<RTPRef name="Основной материал" guid="{f5523b3d-06bf-4180-bb96-6a038bab21a1}" description="Основной материал"/>
+</RTPRefGroup>
+<RTPRefGroup name="Операции и переходы" guid="{d0fe9889-b713-4240-8a80-3eb852bcf839}" description="Операции и переходы"/>
+</RTPRefList>
 </RTPModel>
