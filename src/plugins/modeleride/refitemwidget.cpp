@@ -1,5 +1,4 @@
 #include "refitemwidget.h"
-#include "unitdelegate.h"
 #include "dbxmlstruct.h"
 
 #include <QMessageBox>
@@ -13,13 +12,12 @@ RefItemWidget::RefItemWidget(QWidget *parent) :
     m_refModel->setHiddenRow(true);
 
     connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));
+    connect(toolButtonAddIn,SIGNAL(clicked()),this,SLOT(addChild()));
     connect(toolButtonDelete,SIGNAL(clicked()),this,SLOT(remove()));
-    tableView->setItemDelegate(new UnitDelegate());
 }
 
 RefItemWidget::~RefItemWidget()
 {
-    delete tableView->itemDelegate();
     delete m_refModel;
 }
 
@@ -32,10 +30,10 @@ void RefItemWidget::setModel(TreeXmlHashModel *model)
     m_refModel->setHeaderData(1,  Qt::Horizontal, tr("Класс/Фильтр"));
     m_refModel->setHeaderData(2,  Qt::Horizontal, tr("Родитель"));
     m_refModel->setHeaderData(3,  Qt::Horizontal, tr("Идентификатор"));
-    tableView->setModel(m_refModel);
+    treeView->setModel(m_refModel);
 
     for (int column = 2; column < 16; column++)
-        tableView->setColumnHidden(column,true);
+        treeView->setColumnHidden(column,true);
 }
 
 ModifyProxyModel *RefItemWidget::proxyModel()
@@ -136,30 +134,56 @@ bool RefItemWidget::isRemove(const QModelIndex &srcIndex)
 
 void RefItemWidget::add()
 {
-    QModelIndex srcIndex = tableView->rootIndex();
+    QModelIndex srcIndex = treeView->currentIndex().parent();
+    if (!srcIndex.isValid())
+        srcIndex = treeView->rootIndex();
+
     QModelIndex index = m_refModel->insertLastRows(0,1,srcIndex);
     if (index.isValid()) {
-        m_refModel->setData(index, DBLINKTOCLASSXML::LINKTOCLASS, TreeXmlModel::TagRole);
-        m_refModel->setData(index, QIcon(":/modeleride"), Qt::DecorationRole);
-        tableView->setCurrentIndex(index);
+        if (srcIndex.data(TreeXmlModel::TagRole)==DBLINKTOCLASSXML::LINKTOCLASS) {
+            m_refModel->setData(index, DBLINKTOFILTERXML::LINKTOFILTER, TreeXmlModel::TagRole);
+            m_refModel->setData(index, QIcon(":/filter"), Qt::DecorationRole);
+        } else {
+            m_refModel->setData(index, DBLINKTOCLASSXML::LINKTOCLASS, TreeXmlModel::TagRole);
+            m_refModel->setData(index, QIcon(":/modeleride"), Qt::DecorationRole);
+        }
+        treeView->setCurrentIndex(index);
+        edit(true);
+    }
+}
+
+void RefItemWidget::addChild()
+{
+    QModelIndex srcIndex = treeView->currentIndex();
+    if (!srcIndex.isValid())
+        srcIndex = treeView->rootIndex();
+    QModelIndex index = m_refModel->insertLastRows(0,1,srcIndex);
+    if (index.isValid()) {
+        if (srcIndex.data(TreeXmlModel::TagRole)==DBLINKTOCLASSXML::LINKTOCLASS) {
+            m_refModel->setData(index, DBLINKTOFILTERXML::LINKTOFILTER, TreeXmlModel::TagRole);
+            m_refModel->setData(index, QIcon(":/filter"), Qt::DecorationRole);
+        } else {
+            m_refModel->setData(index, DBLINKTOCLASSXML::LINKTOCLASS, TreeXmlModel::TagRole);
+            m_refModel->setData(index, QIcon(":/modeleride"), Qt::DecorationRole);
+        }
+        treeView->setCurrentIndex(index);
         edit(true);
     }
 }
 
 void RefItemWidget::remove()
 {
-
-    QModelIndex srcIndex = tableView->rootIndex();
-    QModelIndex curIndex = tableView->currentIndex();
+    QModelIndex curIndex = treeView->currentIndex();
+    QModelIndex srcIndex = curIndex.parent();
     if (srcIndex.isValid() && curIndex.isValid()){
         if (!isRemove(curIndex))
             return;
-        tableView->setCurrentIndex(tableView->rootIndex());
+        treeView->setCurrentIndex(QModelIndex());
         m_refModel->removeRow(curIndex.row(),srcIndex);
-        tableView->setModel(m_refModel);
+        treeView->setModel(m_refModel);
     } else
         QMessageBox::warning(NULL,tr("Предупреждение"),
-                             tr("Невозможно удалить ЕИ, поскольку нет выбраных ЕИ."));
+                             tr("Невозможно удалить элемент справочника, поскольку он не выбран."));
 }
 
 void RefItemWidget::submit()
@@ -170,10 +194,11 @@ void RefItemWidget::submit()
 
 void RefItemWidget::edit(bool flag)
 {
-    if (flag == false)
-        tableView->setCurrentIndex(tableView->rootIndex());
+
+    treeView->setCurrentIndex(QModelIndex());
 
     toolButtonAdd->setEnabled(flag);
+    toolButtonAddIn->setEnabled(flag);
     toolButtonDelete->setEnabled(flag);
     m_refModel->setEditable(flag);
 }
@@ -186,11 +211,12 @@ void RefItemWidget::revert()
 
 void RefItemWidget::setRootIndex(const QModelIndex &index)
 {
-    QModelIndex rootIndex = m_refModel->mapToSource(tableView->rootIndex());
+    QModelIndex rootIndex = m_refModel->mapToSource(treeView->rootIndex());
     if (rootIndex == index)
         return;
 
-    tableView->setRootIndex(m_refModel->mapFromSource(index));
-    emit proxyIndexChanged(tableView->rootIndex());
+    treeView->setRootIndex(m_refModel->mapFromSource(index));
+
+    emit proxyIndexChanged(treeView->rootIndex());
 }
 

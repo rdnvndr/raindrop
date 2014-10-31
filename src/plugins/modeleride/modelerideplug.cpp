@@ -330,13 +330,16 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addInsertTags(DBREFGROUPXML::REFGROUP,insertTags);
 
     insertTags.clear();
-    insertTags << DBLINKTOCLASSXML::LINKTOCLASS;
+    insertTags << DBLINKTOCLASSXML::LINKTOCLASS << DBLINKTOFILTERXML::LINKTOFILTER;
     m_model->addInsertTags(DBREFXML::REF,insertTags);
 
     insertTags.clear();
     insertTags << DBLINKTOFILTERXML::LINKTOFILTER;
-    m_model->addInsertTags(DBREFXML::REF,insertTags);
+    m_model->addInsertTags(DBLINKTOCLASSXML::LINKTOCLASS,insertTags);
 
+    insertTags.clear();
+    insertTags << DBLINKTOCLASSXML::LINKTOCLASS;
+    m_model->addInsertTags(DBLINKTOFILTERXML::LINKTOFILTER,insertTags);
 
     m_model->addHashAttr(DBCLASSXML::CLASS,
                                 DBCLASSXML::NAME,
