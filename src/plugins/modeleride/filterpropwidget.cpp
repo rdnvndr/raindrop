@@ -44,6 +44,7 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     lineEditSrcClass->setReadOnly(true);
 
     connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));
+    connect(toolButtonDel,SIGNAL(clicked()),this,SLOT(revert()));
     connect(toolButtonDel,SIGNAL(clicked()),this,SLOT(remove()));
     connect(pushButtonPropSave,SIGNAL(clicked()),this,SLOT(submit()));
     connect(pushButtonPropCancel,SIGNAL(clicked()),this,SLOT(revert()));

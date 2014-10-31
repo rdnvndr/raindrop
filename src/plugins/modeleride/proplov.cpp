@@ -21,6 +21,7 @@ PropLov::PropLov(QWidget *parent) :
     connect(lovWidget, SIGNAL(edited(bool)), lovValueWidget, SLOT(edit(bool)));
 
     connect(toolButtonAddLov,  SIGNAL(clicked()), lovWidget, SLOT(add()));
+    connect(toolButtonDelLov,  SIGNAL(clicked()), lovValueWidget, SLOT(revert()));
     connect(toolButtonDelLov,  SIGNAL(clicked()), lovWidget, SLOT(remove()));
     connect(toolButtonEditLov, SIGNAL(clicked()), lovWidget, SLOT(edit()));
 
