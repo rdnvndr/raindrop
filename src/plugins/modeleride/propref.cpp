@@ -19,8 +19,8 @@ PropRef::PropRef(QWidget *parent) :
 
     connect(refWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));
     connect(refWidget, SIGNAL(edited(bool)), refItemWidget, SLOT(edit(bool)));
-
     connect(toolButtonAdd,  SIGNAL(clicked()), refWidget, SLOT(add()));
+    connect(toolButtonDel,  SIGNAL(clicked()), refItemWidget, SLOT(revert()));
     connect(toolButtonDel,  SIGNAL(clicked()), refWidget, SLOT(remove()));
     connect(toolButtonEdit, SIGNAL(clicked()), refWidget, SLOT(edit()));
 
@@ -28,7 +28,6 @@ PropRef::PropRef(QWidget *parent) :
     connect(pushButtonPropCancel, SIGNAL(clicked()), refWidget, SLOT(revert()));
     connect(pushButtonPropSave,   SIGNAL(clicked()), refItemWidget, SLOT(submit()));
     connect(pushButtonPropSave,   SIGNAL(clicked()), refWidget, SLOT(submit()));
-
 }
 
 PropRef::~PropRef()
