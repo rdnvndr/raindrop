@@ -58,7 +58,7 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     connect(toolButtonCondAdd,SIGNAL(clicked()),toolButtonCondAdd,SLOT(showMenu()));
     connect(toolButtonCondDel,SIGNAL(clicked()),this,SLOT(removeCondition()));
 
-    m_oldIndex = -1;
+    m_oldIndex = QModelIndex();
 }
 
 FilterPropWidget::~FilterPropWidget()
@@ -130,9 +130,8 @@ void FilterPropWidget::setModel(TreeXmlHashModel *model)
 
 void FilterPropWidget::add()
 {
-    m_oldIndex = m_mapper->currentIndex();
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),
-                                          0,m_mapper->rootIndex()).parent();
+    m_oldIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+    QModelIndex srcIndex = m_oldIndex.parent();
 
     QModelIndex srcCurrentIndex =
             m_model->insertLastRows(0,1,srcIndex, DBFILTERXML::FILTER);
@@ -297,16 +296,9 @@ void FilterPropWidget::revert()
 
 void FilterPropWidget::rowsRemoved(const QModelIndex &index, int start, int end)
 {
-    if (index == m_mapper->rootIndex()){
-        if (m_oldIndex > end)
-            m_oldIndex = m_oldIndex - end-start-1;
-        else if (m_oldIndex >= start && m_oldIndex <= end){
-            m_oldIndex = -1;
-        }
-    }
-
-    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1
-            && m_oldIndex <0)
+    Q_UNUSED (start)
+    Q_UNUSED (end)
+    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1)
         emit dataRemoved(QModelIndex());
 }
 
@@ -331,7 +323,6 @@ void FilterPropWidget::validateFilterName(QValidator::State state) const
         QToolTip::hideText();
 }
 
-
 QVariant FilterPropWidget::modelData(const QString &tag, const QString &attr,
                                      const QModelIndex &index)
 {
@@ -342,11 +333,12 @@ QVariant FilterPropWidget::modelData(const QString &tag, const QString &attr,
 void FilterPropWidget::removeEmpty()
 {
     if (lineEditName->text().isEmpty()){
-        if (m_oldIndex>=0){
-            m_model->removeRow(m_mapper->currentIndex(),
-                               m_mapper->rootIndex());
-            setCurrent(m_mapper->rootIndex().child(m_oldIndex,0));
-            m_oldIndex = -1;
+        if (m_oldIndex.isValid()){
+            QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+            m_mapper->revert();
+            setCurrent(m_oldIndex);
+            m_model->removeRow(srcIndex.row(),srcIndex.parent());
+            m_oldIndex = QModelIndex();
         }else {
             remove();
             return;

@@ -36,7 +36,7 @@ LovWidget::LovWidget(QWidget *parent) :
                                        << DBTYPEXML::TIMESHTAMP
                                        );
     m_typeAttrModel->setStringList(attrTypeList);
-    m_oldIndex = -1;
+    m_oldIndex = QModelIndex();
 }
 
 LovWidget::~LovWidget()
@@ -77,9 +77,8 @@ bool LovWidget::isEmpty()
 
 void LovWidget::add()
 {
-    m_oldIndex = m_mapper->currentIndex();
-    QModelIndex srcIndex =  m_model->index(m_mapper->currentIndex(),
-                                           0,m_mapper->rootIndex()).parent();
+    m_oldIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+    QModelIndex srcIndex = m_oldIndex.parent();
     QModelIndex srcCurrentIndex =
             m_model->insertLastRows(0,1,srcIndex,DBLOVXML::LOV);
     if (srcCurrentIndex.isValid()) {
@@ -105,11 +104,12 @@ void LovWidget::remove()
 void LovWidget::removeEmpty()
 {
     if (lineEditLovName->text().isEmpty()){
-        if (m_oldIndex>=0){
-            m_model->removeRow(m_mapper->currentIndex(),
-                               m_mapper->rootIndex());
-            setCurrent(m_mapper->rootIndex().child(m_oldIndex,0));
-            m_oldIndex = -1;
+        if (m_oldIndex.isValid()){
+            QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+            m_mapper->revert();
+            setCurrent(m_oldIndex);
+            m_model->removeRow(srcIndex.row(),srcIndex.parent());
+            m_oldIndex = QModelIndex();
         }else {
             remove();
             return;
@@ -192,15 +192,9 @@ void LovWidget::revert()
 
 void LovWidget::rowsRemoved(const QModelIndex &index, int start, int end)
 {
-    if (index == m_mapper->rootIndex()){
-        if (m_oldIndex > end)
-            m_oldIndex = m_oldIndex - end-start-1;
-        else if (m_oldIndex >= start && m_oldIndex <= end){
-            m_oldIndex = -1;
-        }
-    }
-
-    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1 && m_oldIndex <0)
+    Q_UNUSED (start)
+    Q_UNUSED (end)
+    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1)
         emit dataRemoved(QModelIndex());
 }
 

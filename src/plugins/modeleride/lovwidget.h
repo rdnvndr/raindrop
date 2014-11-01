@@ -83,7 +83,7 @@ private:
     QDataWidgetMapper* m_mapper;
 
     //! Хранит индекс предыдущего активного списка значений
-    int  m_oldIndex;
+    QPersistentModelIndex  m_oldIndex;
 
     //! Список типов значений
     QStringListModel *m_typeAttrModel;

@@ -75,7 +75,7 @@ private:
     QDataWidgetMapper* m_mapper;
 
     //! Хранит индекс предыдущего активного состава
-    int  m_oldIndex;
+    QPersistentModelIndex  m_oldIndex;
 };
 
 #endif // COMPOSITIONPROPWIDGET_H
