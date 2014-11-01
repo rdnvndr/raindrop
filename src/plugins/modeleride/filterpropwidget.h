@@ -95,7 +95,7 @@ private:
     QDataWidgetMapper* m_mapper;
 
     //! Хранит индекс предыдущего активного фильтра
-    int  m_oldIndex;
+    QPersistentModelIndex  m_oldIndex;
 
     //! Модель редактора условий
     ConditionProxyModel *m_conditionModel;
