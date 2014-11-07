@@ -1,6 +1,6 @@
 #include "refitemwidget.h"
 #include "dbxmlstruct.h"
-
+#include "refitemdelegate.h"
 #include <QMessageBox>
 
 RefItemWidget::RefItemWidget(QWidget *parent) :
@@ -14,6 +14,8 @@ RefItemWidget::RefItemWidget(QWidget *parent) :
     connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));
     connect(toolButtonAddIn,SIGNAL(clicked()),this,SLOT(addChild()));
     connect(toolButtonDelete,SIGNAL(clicked()),this,SLOT(remove()));
+
+    treeView->setItemDelegate(new RefItemDelegate());
 }
 
 RefItemWidget::~RefItemWidget()
