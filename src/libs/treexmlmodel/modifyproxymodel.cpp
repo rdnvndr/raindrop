@@ -377,7 +377,9 @@ QModelIndex ModifyProxyModel::mapToSource(const QModelIndex &index) const
 
 QVariant ModifyProxyModel::data(const QModelIndex &proxyIndex, int role) const
 {
-    QPersistentModelIndex dataIndex(proxyIndex);
+    QPersistentModelIndex dataIndex((role == TreeXmlModel::TagRole)
+                                    ? proxyIndex.sibling(proxyIndex.row(),0)
+                                      :proxyIndex);
 
     // Получение измененных данных
     if (m_updatedRow.contains(dataIndex))  {
@@ -408,7 +410,9 @@ QVariant ModifyProxyModel::data(const QModelIndex &proxyIndex, int role) const
 
 bool ModifyProxyModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    QPersistentModelIndex dataIndex(index);
+    QPersistentModelIndex dataIndex((role == TreeXmlModel::TagRole)
+                                    ? index.sibling(index.row(),0)
+                                      :index);
     int updateRole = (role==Qt::DisplayRole) ? Qt::EditRole : role;
     m_updatedRow[dataIndex][updateRole] = value;
     emit dataChanged(index,index);
