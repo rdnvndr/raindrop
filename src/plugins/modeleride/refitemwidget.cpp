@@ -149,8 +149,8 @@ void RefItemWidget::add()
             m_refModel->setData(index, DBLINKTOCLASSXML::LINKTOCLASS, TreeXmlModel::TagRole);
             m_refModel->setData(index, QIcon(":/modeleride"), Qt::DecorationRole);
         }
-        treeView->setCurrentIndex(index);
         edit(true);
+        treeView->setCurrentIndex(index);
     }
 }
 
@@ -168,8 +168,8 @@ void RefItemWidget::addChild()
             m_refModel->setData(index, DBLINKTOCLASSXML::LINKTOCLASS, TreeXmlModel::TagRole);
             m_refModel->setData(index, QIcon(":/modeleride"), Qt::DecorationRole);
         }
-        treeView->setCurrentIndex(index);
         edit(true);
+        treeView->setCurrentIndex(index);
     }
 }
 
