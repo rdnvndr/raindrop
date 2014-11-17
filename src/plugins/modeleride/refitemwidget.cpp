@@ -28,13 +28,13 @@ void RefItemWidget::setModel(TreeXmlHashModel *model)
     m_model = model;
 
     m_refModel->setSourceModel(m_model);
-    m_refModel->setHeaderData(0,  Qt::Horizontal, tr("Наименование"));
+    m_refModel->setHeaderData(0,  Qt::Horizontal, tr("Псевдоним"));
     m_refModel->setHeaderData(1,  Qt::Horizontal, tr("Класс/Фильтр"));
     m_refModel->setHeaderData(2,  Qt::Horizontal, tr("Родитель"));
     m_refModel->setHeaderData(3,  Qt::Horizontal, tr("Идентификатор"));
     treeView->setModel(m_refModel);
 
-    for (int column = 2; column < 16; column++)
+    for (int column = 2; column < m_refModel->columnCount(); column++)
         treeView->setColumnHidden(column,true);
 }
 
