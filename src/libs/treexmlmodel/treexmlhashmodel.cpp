@@ -141,7 +141,7 @@ QList<TreeXmlHashModel::TagWithAttr> TreeXmlHashModel::fromRelation(const QStrin
 }
 
 TreeXmlHashModel::TagWithAttr TreeXmlHashModel::toRelation(const QString &tag,
-                                                             const QString &attr)
+                                                             const QString &attr) const
 {
     TreeXmlHashModel::TagWithAttr tagWithAttr;
     foreach (const QString &linkTag,m_linkAttr[tag][attr].keys()) {
@@ -152,24 +152,30 @@ TreeXmlHashModel::TagWithAttr TreeXmlHashModel::toRelation(const QString &tag,
     return tagWithAttr;
 }
 
-QModelIndex TreeXmlHashModel::indexLink(const QModelIndex &index) const
+QModelIndex TreeXmlHashModel::indexLink(const QString &tag, const QString &attr, QVariant &value) const
 {
-    TagXmlItem *item = toItem(index);
-    QString tag = item->nodeName();
-    QString attrName = displayedAttr(tag,index.column());
-
-    if (m_linkAttr[tag].contains(attrName)) {
-        foreach (const QString &linkTag,m_linkAttr[tag][attrName].keys()){
-            QString linkAttr = m_linkAttr[tag][attrName][linkTag];
+    if (m_linkAttr[tag].contains(attr)) {
+        foreach (const QString &linkTag,m_linkAttr[tag][attr].keys()){
+            QString linkAttr = m_linkAttr[tag][attr][linkTag];
             QString attr = uuidAttr(linkTag);
             if (!attr.isEmpty()) {
-                QModelIndex linkIndex = indexHashAttr(linkTag, attr, item->value(attrName));
+                QModelIndex linkIndex = indexHashAttr(linkTag, attr, value);
                 int column = columnDisplayedAttr(linkTag,linkAttr);
                 return linkIndex.sibling(linkIndex.row(),column);
             }
         }
     }
     return QModelIndex();
+}
+
+QModelIndex TreeXmlHashModel::indexLink(const QModelIndex &index) const
+{
+    TagXmlItem *item = toItem(index);
+    QString tag = item->nodeName();
+    QString attrName = displayedAttr(tag,index.column());
+    QVariant value = item->value(attrName);
+
+    return indexLink(tag, attrName, value);
 }
 
 QVariant TreeXmlHashModel::data(const QModelIndex &index, int role) const
