@@ -246,13 +246,13 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addDisplayedAttr(DBREFXML::REF, propsRef, QIcon(":/reference"));
 
     QStringList propsLinkToClass;
-    propsLinkToClass << DBLINKTOCLASSXML::NAME   << DBLINKTOCLASSXML::REFCLASS
+    propsLinkToClass << DBLINKTOCLASSXML::ALIAS   << DBLINKTOCLASSXML::REFCLASS
                      << DBLINKTOCLASSXML::PARENT << DBLINKTOCLASSXML::ID;
     m_model->addDisplayedAttr(DBLINKTOCLASSXML::LINKTOCLASS,
                               propsLinkToClass, QIcon(":/linktoclass"));
 
     QStringList propsLinkToFilter;
-    propsLinkToFilter << DBLINKTOFILTERXML::NAME   << DBLINKTOFILTERXML::REFFILTER
+    propsLinkToFilter << DBLINKTOFILTERXML::ALIAS   << DBLINKTOFILTERXML::REFFILTER
                       << DBLINKTOFILTERXML::PARENT << DBLINKTOFILTERXML::ID;
     m_model->addDisplayedAttr(DBLINKTOFILTERXML::LINKTOFILTER,
                               propsLinkToFilter, QIcon(":/linktofilter"));
@@ -473,14 +473,16 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                DBREFGROUPXML::REFGROUP, DBREFGROUPXML::NAME);
 
     m_model->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::PARENT,
-                               DBREFXML::REF, DBREFXML::NAME);
+                               DBREFGROUPXML::REFGROUP, DBREFGROUPXML::NAME);
+    m_model->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::PARENT,
+                               DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::ALIAS);
     m_model->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::REFCLASS,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
 
     m_model->addRelation(DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::PARENT,
-                               DBREFXML::REF, DBREFXML::NAME);
+                               DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::ALIAS);
     m_model->addRelation(DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::REFFILTER,
-                               DBCLASSXML::CLASS, DBCLASSXML::NAME);
+                               DBFILTERXML::FILTER, DBFILTERXML::NAME);
 
 
     m_model->refreshHashing();
