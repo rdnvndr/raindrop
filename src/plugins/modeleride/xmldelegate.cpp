@@ -98,7 +98,7 @@ void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, co
     TreeComboBox* treeComboBox = dynamic_cast<TreeComboBox*>(editor);
     if (treeComboBox) {
         if (treeComboBox->currentModelIndex().isValid())
-            model->setData(index,treeComboBox->currentModelIndex().data(),Qt::EditRole);
+            model->setData(index,treeComboBox->currentModelIndex().data(Qt::EditRole),Qt::EditRole);
         return;
     }
     // Если QComboBox присваиваем текущий текст, а не индекс
@@ -183,8 +183,25 @@ void XmlDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
         // Рисуем фон
         QApplication::style()->drawControl(QStyle::CE_ItemViewItem, &opt, painter);
         QApplication::style()->drawControl(QStyle::CE_CheckBox, &checkBoxOption, painter);
-    } else
-        QStyledItemDelegate::paint(painter, option, index);
+        return;
+    }
+
+    // Вывод ссылок
+    const ModifyProxyModel *modifyModel = dynamic_cast<const ModifyProxyModel *>(index.model());
+    const TreeXmlHashModel* hashModel = (modifyModel)?
+                dynamic_cast<const TreeXmlHashModel*>(modifyModel->sourceModel())
+              : dynamic_cast<const TreeXmlHashModel*>(index.model());
+    if (hashModel) {
+        QString tag  = index.data(TreeXmlModel::TagRole).toString();
+        QString attr = hashModel->displayedAttr(tag, index.column());
+        QModelIndex linkIndex  = hashModel->indexLink(tag, attr, index.data());
+        if (linkIndex.isValid()) {
+            QStyledItemDelegate::paint(painter, option, linkIndex);
+            return;
+        }
+    }
+
+    QStyledItemDelegate::paint(painter, option, index);
 }
 
 TreeXmlHashModel *XmlDelegate::sourceModel(QAbstractItemModel *model) const
