@@ -233,7 +233,7 @@ namespace DBREFXML {
 //! Ключевые слова XML файла для описания ссылок на класс
 namespace DBLINKTOCLASSXML{
     const QString LINKTOCLASS = "RTPLinkToClass";
-    const QString NAME = "name";
+    const QString ALIAS = "alias";
     const QString REFCLASS = "refClass";
     const QString PARENT = "parent";
     const QString ID = "guid";
@@ -242,7 +242,7 @@ namespace DBLINKTOCLASSXML{
 //! Ключевые слова XML файла для описания ссылок на фильтр
 namespace DBLINKTOFILTERXML{
     const QString LINKTOFILTER = "RTPLinkToFilter";
-    const QString NAME = "name";
+    const QString ALIAS = "alias";
     const QString REFFILTER = "refFilter";
     const QString PARENT = "parent";
     const QString ID = "guid";
