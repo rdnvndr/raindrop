@@ -8,7 +8,7 @@ RefItemWidget::RefItemWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    m_refModel = new ModifyProxyModel();
+    m_refModel = new RefProxyModel();
     m_refModel->setHiddenRow(true);
 
     connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));

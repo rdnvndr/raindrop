@@ -384,8 +384,20 @@ QVariant ModifyProxyModel::data(const QModelIndex &proxyIndex, int role) const
     // Получение измененных данных
     if (m_updatedRow.contains(dataIndex))  {
         int updateRole = (role==Qt::DisplayRole) ? Qt::EditRole : role;
-        if (m_updatedRow[dataIndex].contains(updateRole))
-            return m_updatedRow[dataIndex][updateRole];
+        QVariant linkData = (m_updatedRow[dataIndex].contains(updateRole)) ?
+                    m_updatedRow[dataIndex][updateRole] : QVariant();
+        if (linkData.isValid()) {
+            if (role == Qt::DisplayRole) {
+                TreeXmlHashModel *hashModel = qobject_cast<TreeXmlHashModel *>(sourceModel());
+                if (hashModel && proxyIndex.isValid()) {
+                    QString tag  = proxyIndex.data(TreeXmlModel::TagRole).toString();
+                    QString attr = hashModel->displayedAttr(tag, proxyIndex.column());
+                    QModelIndex linkIndex  = hashModel->indexLink(tag, attr, linkData);
+                    return (linkIndex.isValid()) ? linkIndex.data() : linkData;
+                }
+            }
+            return linkData;
+        }
     }
 
     // Пустое значение для вставленных строк

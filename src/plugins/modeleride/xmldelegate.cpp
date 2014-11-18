@@ -186,21 +186,6 @@ void XmlDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
         return;
     }
 
-    // Вывод ссылок
-    const ModifyProxyModel *modifyModel = dynamic_cast<const ModifyProxyModel *>(index.model());
-    const TreeXmlHashModel* hashModel = (modifyModel)?
-                dynamic_cast<const TreeXmlHashModel*>(modifyModel->sourceModel())
-              : dynamic_cast<const TreeXmlHashModel*>(index.model());
-    if (hashModel) {
-        QString tag  = index.data(TreeXmlModel::TagRole).toString();
-        QString attr = hashModel->displayedAttr(tag, index.column());
-        QModelIndex linkIndex  = hashModel->indexLink(tag, attr, index.data());
-        if (linkIndex.isValid()) {
-            QStyledItemDelegate::paint(painter, option, linkIndex);
-            return;
-        }
-    }
-
     QStyledItemDelegate::paint(painter, option, index);
 }
 
