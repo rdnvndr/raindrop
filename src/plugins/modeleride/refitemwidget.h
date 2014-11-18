@@ -9,6 +9,8 @@
 #include <treexmlmodel/modifyproxymodel.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 
+#include "refproxymodel.h"
+
 //! Диалог редактирования элементов справочника
 /*! Диалог предназначен для редактирования элементов справочника
 */
@@ -62,7 +64,7 @@ public slots:
 private:
 
     //! Прокси модель для  элементов справочника
-    ModifyProxyModel* m_refModel;
+    RefProxyModel *m_refModel;
 
     //! Модель структуры классов
     TreeXmlHashModel* m_model;
