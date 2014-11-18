@@ -249,13 +249,13 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     propsLinkToClass << DBLINKTOCLASSXML::ALIAS   << DBLINKTOCLASSXML::REFCLASS
                      << DBLINKTOCLASSXML::PARENT << DBLINKTOCLASSXML::ID;
     m_model->addDisplayedAttr(DBLINKTOCLASSXML::LINKTOCLASS,
-                              propsLinkToClass, QIcon(":/linktoclass"));
+                              propsLinkToClass, QIcon(":/modeleride"));
 
     QStringList propsLinkToFilter;
     propsLinkToFilter << DBLINKTOFILTERXML::ALIAS   << DBLINKTOFILTERXML::REFFILTER
                       << DBLINKTOFILTERXML::PARENT << DBLINKTOFILTERXML::ID;
     m_model->addDisplayedAttr(DBLINKTOFILTERXML::LINKTOFILTER,
-                              propsLinkToFilter, QIcon(":/linktofilter"));
+                              propsLinkToFilter, QIcon(":/filter"));
 
     m_model->setHeaderData(0,  Qt::Horizontal, tr("Имя атрибута"));
     m_model->setHeaderData(1,  Qt::Horizontal, tr("Псевдоним"));
