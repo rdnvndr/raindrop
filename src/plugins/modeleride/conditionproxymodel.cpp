@@ -28,10 +28,9 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
 {
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
         TreeXmlHashModel *xmlModel = qobject_cast<TreeXmlHashModel *>(sourceModel());
+        QString tagRole = data(proxyIndex,TreeXmlModel::TagRole).toString();
 
-        if (data(proxyIndex,TreeXmlModel::TagRole)
-                == DBFILTERBLOCKXML::BLOCK) {
-
+        if (tagRole == DBFILTERBLOCKXML::BLOCK) {
             switch (proxyIndex.column()) {
             case 0:
                 return QString("{Блок}");
@@ -50,9 +49,7 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
             }
         }
 
-        if (data(proxyIndex,TreeXmlModel::TagRole)
-                == DBCONDITIONXML::COND) {
-
+        if (tagRole == DBCONDITIONXML::COND) {
             switch (proxyIndex.column()) {
             case 0: {
                 QVariant value = ModifyProxyModel::data(
@@ -62,12 +59,9 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
                                     DBCONDITIONXML::COND,
                                     DBCONDITIONXML::FIRSTATTR)),
                             role);
-                QModelIndex index = xmlModel->indexHashAttr(DBATTRXML::ATTR, DBATTRXML::ID, value);
+                QModelIndex index = xmlModel->indexLink(DBATTRXML::ATTR, DBATTRXML::ID, value);
                 if (index.isValid() &&  role == Qt::DisplayRole)
-                    return index.sibling(
-                                index.row(),
-                                xmlModel->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::NAME)
-                                ).data();
+                    return index.data();
                 else
                     return value;
             }
@@ -87,12 +81,9 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
                                     DBCONDITIONXML::COND,
                                     DBCONDITIONXML::SECONDATTR)),
                             role);
-                QModelIndex index = xmlModel->indexHashAttr(DBATTRXML::ATTR, DBATTRXML::ID, value);
+                QModelIndex index = xmlModel->indexLink(DBATTRXML::ATTR, DBATTRXML::ID, value);
                 if (index.isValid() && role == Qt::DisplayRole)
-                    return index.sibling(
-                                index.row(),
-                                xmlModel->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::NAME)
-                                ).data();
+                    return index.data();
                 else
                     return value;
             }
