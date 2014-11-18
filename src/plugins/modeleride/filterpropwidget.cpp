@@ -125,7 +125,11 @@ void FilterPropWidget::setModel(TreeXmlHashModel *model)
     m_conditionModel->setHeaderData(1,Qt::Horizontal,tr("Оператор"));
     m_conditionModel->setHeaderData(2,Qt::Horizontal,tr("Значение"));
     m_conditionModel->setHeaderData(3,Qt::Horizontal,tr("Коннектор"));
-    treeViewCondition->setModel(m_conditionModel);
+    treeViewCondition->setModel(m_conditionModel); 
+    treeViewCondition->setColumnWidth(0, (treeViewCondition->size().width() - 200)/2);
+    treeViewCondition->setColumnWidth(1, 75);
+    treeViewCondition->setColumnWidth(2, (treeViewCondition->size().width() - 200)/2);
+    treeViewCondition->setColumnWidth(3, 75);
 }
 
 void FilterPropWidget::add()
