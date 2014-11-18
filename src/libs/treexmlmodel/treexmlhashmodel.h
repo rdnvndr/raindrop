@@ -84,7 +84,7 @@ public:
     TagWithAttr toRelation(const QString &tag, const QString &attr) const;
 
     //! Возращает ссылку на индекс
-    QModelIndex indexLink(const QString &tag, const QString &attr, QVariant &value) const;
+    QModelIndex indexLink(const QString &tag, const QString &attr, const QVariant &value) const;
 
     //! Возращает ссылку на индекс
     QModelIndex indexLink(const QModelIndex &index) const;

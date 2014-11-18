@@ -23,8 +23,8 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
 
     if (hashModel) {
         QString attr = hashModel->displayedAttr(tag, index.column());
-        if ((tag == DBLINKTOFILTERXML::LINKTOFILTER)
-                && attr == DBLINKTOFILTERXML::REFFILTER
+        if ((tag == DBLINKTOFILTERXML::LINKTOFILTER
+                && attr == DBLINKTOFILTERXML::REFFILTER)
                 || (tag == DBLINKTOCLASSXML::LINKTOCLASS
                     && attr == DBLINKTOCLASSXML::REFCLASS))
         {

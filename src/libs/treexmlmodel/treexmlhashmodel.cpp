@@ -152,7 +152,7 @@ TreeXmlHashModel::TagWithAttr TreeXmlHashModel::toRelation(const QString &tag,
     return tagWithAttr;
 }
 
-QModelIndex TreeXmlHashModel::indexLink(const QString &tag, const QString &attr, QVariant &value) const
+QModelIndex TreeXmlHashModel::indexLink(const QString &tag, const QString &attr, const QVariant &value) const
 {
     if (m_linkAttr[tag].contains(attr)) {
         foreach (const QString &linkTag,m_linkAttr[tag][attr].keys()){
