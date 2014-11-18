@@ -144,10 +144,10 @@ void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, co
     return;
 }
 
-void XmlDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &/* index */) const
-{
-    editor->setGeometry(option.rect);
-}
+//void XmlDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &/* index */) const
+//{
+//    editor->setGeometry(option.rect);
+//}
 
 QRect  XmlDelegate::getCenteredComboBoxRect(const QStyleOptionViewItem &option) const
 {
