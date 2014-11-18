@@ -36,6 +36,7 @@ void RefItemWidget::setModel(TreeXmlHashModel *model)
 
     for (int column = 2; column < m_refModel->columnCount(); column++)
         treeView->setColumnHidden(column,true);
+    treeView->setColumnWidth(0,treeView->size().width()/3);
 }
 
 ModifyProxyModel *RefItemWidget::proxyModel()

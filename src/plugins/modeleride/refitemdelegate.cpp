@@ -29,6 +29,7 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
                     && attr == DBLINKTOCLASSXML::REFCLASS))
         {
             TreeComboBox *comboBoxDestClass = new TreeComboBox(parent);
+            comboBoxDestClass->setItemDelegate(new XmlDelegate());
             QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(parent);
             classFilterModel->setFilterKeyColumn(0);
             classFilterModel->setFilterRole(TreeXmlModel::TagRole);
@@ -79,6 +80,12 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
     }
 
     return QStyledItemDelegate::createEditor(parent, option, index);
+}
+
+void RefItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+{
+
+    QStyledItemDelegate::setEditorData(editor,index);
 }
 
 QModelIndex RefItemDelegate::rootClass(QModelIndex index) const
