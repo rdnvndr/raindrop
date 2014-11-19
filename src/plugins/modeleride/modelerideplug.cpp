@@ -1187,6 +1187,8 @@ void ModelerIDEPlug::closeClassModel()
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropEntityGroup::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropEntity::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropLov::"))  != -1
+         || subWindow->widget()->objectName().indexOf(QRegExp("^PropRefGroup::"))  != -1
+         || subWindow->widget()->objectName().indexOf(QRegExp("^PropRef::"))  != -1
         ) {
             subWindow->close();
         }
