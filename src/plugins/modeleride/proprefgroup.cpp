@@ -69,7 +69,7 @@ bool PropRefGroup::isRemove(const QModelIndex &srcIndex)
 
     QStringList tags;
     tags << DBREFXML::REF;
-    if (model->rowCount(srcIndex,tags)) {
+    if (model->hasChildren(srcIndex,tags)) {
         msg += tr("Необходимо удалить справочник.\n\n");
         success = false;
     }

@@ -181,6 +181,9 @@ public:
     //! Возращает True если можно вставить строку
     bool isInsert(int row, const QModelIndex &index, QString tag) const;
 
+    //! Возращает True если имеются потомки указанных тэгов
+    bool hasChildren(const QModelIndex &parent, const QStringList &tags) const;
+
     //! Возращает True если имеются потомки
     bool hasChildren(const QModelIndex &parent) const;
 

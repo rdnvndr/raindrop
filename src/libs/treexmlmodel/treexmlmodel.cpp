@@ -128,6 +128,12 @@ bool TreeXmlModel::isInsert(int row, const QModelIndex &index, QString tag) cons
     return false;
 }
 
+bool TreeXmlModel::hasChildren(const QModelIndex &parent, const QStringList &tags) const
+{
+    TagXmlItem *parentItem = toItem(parent);
+    return parentItem->hasChildren(tags, m_attrTags);
+}
+
 bool TreeXmlModel::hasChildren(const QModelIndex &parent) const
 {
     TagXmlItem *parentItem = toItem(parent);

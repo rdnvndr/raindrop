@@ -78,29 +78,32 @@ bool TreeFilterProxyModel::hasAcceptedChildren(int source_row,
 
 bool TreeFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    if (right.data(TreeXmlModel::TagRole)!=DBCLASSXML::CLASS) {
-        if (left.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS)
+    QVariant rightData = right.data(TreeXmlModel::TagRole);
+    QVariant leftData  = left.data(TreeXmlModel::TagRole);
+
+    if (rightData != DBCLASSXML::CLASS) {
+        if (leftData == DBCLASSXML::CLASS)
             return true;
     } else {
-        if (left.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS)
+        if (leftData == DBCLASSXML::CLASS)
             return QSortFilterProxyModel::lessThan(left,right);
         return false;
     }
 
-    if (right.data(TreeXmlModel::TagRole)!=DBCOMPXML::COMP) {
-        if (left.data(TreeXmlModel::TagRole)==DBCOMPXML::COMP)
+    if (rightData != DBCOMPXML::COMP) {
+        if (leftData == DBCOMPXML::COMP)
             return true;
     } else {
-        if (left.data(TreeXmlModel::TagRole)==DBCOMPXML::COMP)
+        if (leftData == DBCOMPXML::COMP)
             return QSortFilterProxyModel::lessThan(left,right);
         return false;
     }
 
-    if (right.data(TreeXmlModel::TagRole)!=DBFILTERXML::FILTER) {
-        if (left.data(TreeXmlModel::TagRole)==DBFILTERXML::FILTER )
+    if (rightData != DBFILTERXML::FILTER) {
+        if (leftData == DBFILTERXML::FILTER )
             return true;
     } else {
-        if (left.data(TreeXmlModel::TagRole)==DBFILTERXML::FILTER )
+        if (leftData == DBFILTERXML::FILTER )
             return QSortFilterProxyModel::lessThan(left,right);
         return false;
     }

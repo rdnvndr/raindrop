@@ -62,7 +62,7 @@ bool MsrEntityWidget::isRemove(const QModelIndex &srcIndex)
 
     QStringList tags;
     tags << DBUNITXML::UNIT;
-    if (model->rowCount(srcIndex,tags)) {
+    if (model->hasChildren(srcIndex,tags)) {
         msg += tr("Необходимо удалить ЕИ.\n\n");
         success = false;
     }
