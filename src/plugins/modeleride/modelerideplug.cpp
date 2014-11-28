@@ -128,11 +128,11 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addTagFilter(DBLINKTOFILTERXML::LINKTOFILTER);
 
     QStringList propsClass;
-    propsClass << DBCLASSXML::NAME     << DBCLASSXML::ISABSTARCT  <<
-                  DBCLASSXML::TYPE     << DBCLASSXML::ALIAS <<
-                  DBCLASSXML::PARENT   << DBCLASSXML::ISACTIVE    <<
-                  DBCLASSXML::TEMPLATE << DBCLASSXML::ID          <<
-                  DBCLASSXML::ICON;
+    propsClass << DBCLASSXML::NAME     << DBCLASSXML::ISABSTARCT
+               << DBCLASSXML::TYPE     << DBCLASSXML::ALIAS
+               << DBCLASSXML::PARENT   << DBCLASSXML::ISACTIVE
+               << DBCLASSXML::TEMPLATE << DBCLASSXML::ID
+               << DBCLASSXML::ICON;
     m_model->addDisplayedAttr(DBCLASSXML::CLASS,propsClass,QIcon(":/modeleride"));
 
     QStringList propsAttr;
@@ -180,9 +180,9 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addAttrTag(DBCONDITIONXML::COND);
 
     QStringList propsEntity;
-    propsEntity << DBENTITYXML::NAME      << DBENTITYXML::DESCRIPTION
-                << DBENTITYXML::DIMENSIONSYMBOL
-                << DBENTITYXML::BASICUNIT << DBENTITYXML::ID;
+    propsEntity << DBENTITYXML::NAME            << DBENTITYXML::DESCRIPTION
+                << DBENTITYXML::DIMENSIONSYMBOL << DBENTITYXML::BASICUNIT
+                << DBENTITYXML::ID;
     m_model->addDisplayedAttr(DBENTITYXML::ENTITY,propsEntity, QIcon(":/entity"));
 
     QStringList propsUnit;
@@ -195,7 +195,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     QStringList propsGroup;
     propsGroup << DBENTITYGROUPXML::NAME   << DBENTITYGROUPXML::DESCRIPTION
-                   << DBENTITYGROUPXML::PARENT << DBENTITYGROUPXML::ID;
+               << DBENTITYGROUPXML::PARENT << DBENTITYGROUPXML::ID;
     m_model->addDisplayedAttr(DBENTITYGROUPXML::ENTITYGROUP,propsGroup, QIcon(":/entitygroup"));
 
     QStringList propsClassList;
@@ -225,13 +225,13 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     QStringList propsLov;
     propsLov << DBLOVXML::NAME   << DBLOVXML::ALIAS
-                   << DBLOVXML::PARENT << DBLOVXML::ID
-                   << DBLOVXML::TYPE;
+             << DBLOVXML::PARENT << DBLOVXML::ID
+             << DBLOVXML::TYPE;
     m_model->addDisplayedAttr(DBLOVXML::LOV, propsLov, QIcon(":/lov"));
 
     QStringList propsLovValue;
     propsLovValue << DBLOVVALUEXML::NAME   << DBLOVVALUEXML::VALUE
-                     << DBLOVVALUEXML::PARENT << DBLOVVALUEXML::ID;
+                  << DBLOVVALUEXML::PARENT << DBLOVVALUEXML::ID;
     m_model->addDisplayedAttr(DBLOVVALUEXML::LOVVALUE, propsLov, QIcon(":/lovvalue"));
 
     QStringList propsRefGroup;
@@ -246,7 +246,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addDisplayedAttr(DBREFXML::REF, propsRef, QIcon(":/reference"));
 
     QStringList propsLinkToClass;
-    propsLinkToClass << DBLINKTOCLASSXML::ALIAS   << DBLINKTOCLASSXML::REFCLASS
+    propsLinkToClass << DBLINKTOCLASSXML::ALIAS  << DBLINKTOCLASSXML::REFCLASS
                      << DBLINKTOCLASSXML::PARENT << DBLINKTOCLASSXML::ID;
     m_model->addDisplayedAttr(DBLINKTOCLASSXML::LINKTOCLASS,
                               propsLinkToClass, QIcon(":/modeleride"));
@@ -306,7 +306,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     insertTags.clear();
     insertTags << DBCLASSLISTXML::CLASSLIST << DBENTITYLISTXML::ENTITYLIST
-               << DBLOVLISTXML::LOVLIST << DBREFLISTXML::REFLIST;
+               << DBLOVLISTXML::LOVLIST     << DBREFLISTXML::REFLIST;
     m_model->addInsertTags(DBMODELXML::MODEL,insertTags);
 
     insertTags.clear();
@@ -343,7 +343,10 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     m_model->addHashAttr(DBCLASSXML::CLASS,
                                 DBCLASSXML::NAME,
-                                TreeXmlHashModel::UniqueRename);
+                                TreeXmlHashModel::UniqueUpperRename);
+    m_model->addHashAttr(DBATTRXML::ATTR,
+                                DBATTRXML::NAME,
+                                TreeXmlHashModel::UniqueParentUpperRename);
     m_model->addHashAttr(DBATTRXML::ATTR,
                                 DBATTRXML::REFCLASS,
                                 TreeXmlHashModel::NoUnique);
@@ -361,25 +364,25 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                 TreeXmlHashModel::NoUnique);
     m_model->addHashAttr(DBENTITYXML::ENTITY,
                                 DBENTITYXML::NAME,
-                                TreeXmlHashModel::UniqueRename);
+                                TreeXmlHashModel::UniqueUpperRename);
     m_model->addHashAttr(DBUNITXML::UNIT,
                                 DBUNITXML::NAME,
-                                TreeXmlHashModel::UniqueRename);
+                                TreeXmlHashModel::UniqueUpperRename);
     m_model->addHashAttr(DBENTITYGROUPXML::ENTITYGROUP,
                                 DBENTITYGROUPXML::NAME,
-                                TreeXmlHashModel::UniqueRename);
+                                TreeXmlHashModel::UniqueUpperRename);
     m_model->addHashAttr(DBLOVXML::LOV,
                                 DBLOVXML::NAME,
-                                TreeXmlHashModel::UniqueRename);
+                                TreeXmlHashModel::UniqueUpperRename);
     m_model->addHashAttr(DBLOVVALUEXML::LOVVALUE,
                                 DBLOVVALUEXML::NAME,
-                                TreeXmlHashModel::UniqueRename);
+                                TreeXmlHashModel::UniqueUpperRename);
     m_model->addHashAttr(DBREFGROUPXML::REFGROUP,
                                 DBREFGROUPXML::NAME,
-                                TreeXmlHashModel::UniqueRename);
+                                TreeXmlHashModel::UniqueUpperRename);
     m_model->addHashAttr(DBREFXML::REF,
                                 DBREFXML::NAME,
-                                TreeXmlHashModel::UniqueRename);
+                                TreeXmlHashModel::UniqueUpperRename);
 
 
     m_model->addHashAttr(DBCLASSXML::CLASS,

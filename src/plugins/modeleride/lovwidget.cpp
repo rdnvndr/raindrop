@@ -11,7 +11,7 @@ LovWidget::LovWidget(QWidget *parent) :
     setupUi(this);
 
     RegExpValidator *validator =
-            new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{0,26}|^[A-Za-z]{0}"));
+            new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9_]{0,26}|^[A-Za-z]{0}"));
     lineEditLovName->setValidator(validator);
     connect(validator,SIGNAL(stateChanged(QValidator::State)),
             this,SLOT(validateLovName(QValidator::State)));
