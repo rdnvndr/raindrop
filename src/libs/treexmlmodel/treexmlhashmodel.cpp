@@ -330,7 +330,7 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex, const QModelIndex 
         if (existIndex.isValid())
             refreshHashingOne(existIndex,true);
 
-        setData(index.sibling(index.row(),column),value);
+        TreeXmlModel::setData(index.sibling(index.row(),column),value);
         i++;
     }
 
