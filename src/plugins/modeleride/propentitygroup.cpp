@@ -69,7 +69,7 @@ bool PropEntityGroup::isRemove(const QModelIndex &srcIndex)
 
     QStringList tags;
     tags << DBENTITYXML::ENTITY;
-    if (model->rowCount(srcIndex,tags)) {
+    if (model->hasChildren(srcIndex,tags)) {
         msg += tr("Необходимо удалить сущности ЕИ.\n\n");
         success = false;
     }

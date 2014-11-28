@@ -48,7 +48,7 @@ bool RefWidget::isRemove(const QModelIndex &srcIndex)
 
     QStringList tags;
     tags << DBLINKTOCLASSXML::LINKTOCLASS << DBLINKTOFILTERXML::LINKTOFILTER;
-    if (model->rowCount(srcIndex,tags)) {
+    if (model->hasChildren(srcIndex,tags)) {
         msg += tr("Необходимо удалить элементы справочника.\n\n");
         success = false;
     }

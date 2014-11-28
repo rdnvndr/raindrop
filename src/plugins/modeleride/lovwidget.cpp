@@ -55,7 +55,7 @@ bool LovWidget::isRemove(const QModelIndex &srcIndex)
 
     QStringList tags;
     tags << DBLOVVALUEXML::LOVVALUE;
-    if (model->rowCount(srcIndex,tags)) {
+    if (model->hasChildren(srcIndex,tags)) {
         msg += tr("Необходимо удалить значение списка.\n\n");
         success = false;
     }
