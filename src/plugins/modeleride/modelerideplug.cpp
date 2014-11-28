@@ -357,11 +357,17 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                 DBATTRXML::REFLOV,
                                 TreeXmlHashModel::NoUnique);
     m_model->addHashAttr(DBCOMPXML::COMP,
+                                DBCOMPXML::NAME,
+                                TreeXmlHashModel::UniqueParentUpperRename);
+    m_model->addHashAttr(DBCOMPXML::COMP,
                                 DBCOMPXML::CLASS,
                                 TreeXmlHashModel::NoUnique);
     m_model->addHashAttr(DBFILTERXML::FILTER,
                                 DBFILTERXML::CLASS,
                                 TreeXmlHashModel::NoUnique);
+    m_model->addHashAttr(DBFILTERXML::FILTER,
+                                DBFILTERXML::NAME,
+                                TreeXmlHashModel::UniqueParentUpperRename);
     m_model->addHashAttr(DBENTITYXML::ENTITY,
                                 DBENTITYXML::NAME,
                                 TreeXmlHashModel::UniqueUpperRename);

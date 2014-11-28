@@ -164,8 +164,8 @@ void CompositionPropWidget::submit()
     while (childIndex.isValid())
     {
         if (childIndex.data(TreeXmlModel::TagRole) == DBCOMPXML::COMP)
-            if (lineEditName->text() == childIndex.data() &&
-                    srcIndex != childIndex.sibling(row,0)) {
+            if (lineEditName->text().toUpper() == childIndex.data().toString().toUpper()
+                    && srcIndex != childIndex.sibling(row,0)) {
                 QMessageBox::warning(this,tr("Предуреждение"),
                                      tr("Состав с таким имененм уже существует"));
                 return;
