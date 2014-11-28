@@ -94,7 +94,7 @@ void FilterPropWidget::setModel(TreeXmlHashModel *model)
     comboBoxDestClass->setModel(classFilterModel);
     comboBoxDestClass->setRootModelIndex(classFilterModel->index(0,0).child(0,0));
     comboBoxDestClass->setIndexColumn(m_model->columnDisplayedAttr(
-                                          DBCLASSXML::CLASS, DBATTRXML::ID));
+                                          DBCLASSXML::CLASS, DBCLASSXML::ID));
     comboBoxDestClass->setCurrentModelIndex(
                 classFilterModel->index(0,0).child(0,0).child(0,0));
 

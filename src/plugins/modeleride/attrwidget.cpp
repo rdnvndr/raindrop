@@ -136,7 +136,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     comboBoxLinkAttr->setModel(classFilterModel);
     comboBoxLinkAttr->setRootModelIndex(classFilterModel->index(0,0).child(0,0));
     comboBoxLinkAttr->setIndexColumn(m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                                 DBATTRXML::ID));
+                                                                  DBCLASSXML::ID));
 
     QSortFilterProxyModel* unitFilterModel = new QSortFilterProxyModel(this);
     unitFilterModel->setFilterKeyColumn(0);
