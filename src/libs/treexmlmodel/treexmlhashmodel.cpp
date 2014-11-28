@@ -319,19 +319,14 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex, const QModelIndex 
     if (!index.isValid())
         return false;
 
-    int i = 0;
-    while (!displayedAttr(tag, i).isEmpty()) {
+    for (int i = 0; i<this->columnCount(srcIndex); i++) {
+        QVariant value = srcIndex.sibling(srcIndex.row(), i).data(Qt::EditRole);
         QString nameAttr = displayedAttr(tag, i);
-
-        int column = columnDisplayedAttr(tag,nameAttr);
-        QVariant value = srcIndex.sibling(srcIndex.row(),column).data(Qt::EditRole);
-
         QModelIndex existIndex = indexHashAttr(tag,nameAttr,value);
         if (existIndex.isValid())
             refreshHashingOne(existIndex,true);
 
-        TreeXmlModel::setData(index.sibling(index.row(),column),value);
-        i++;
+        TreeXmlModel::setData(index.sibling(index.row(), i), value);
     }
 
     bool success = true;

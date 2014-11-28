@@ -76,14 +76,9 @@ bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex, const QModelIndex &des
     if (!index.isValid())
         return false;
 
-    int i = 0;
-    while (!displayedAttr(tag, i).isEmpty()) {
-        QString nameAttr = displayedAttr(tag, i);
-
-        int column = columnDisplayedAttr(tag,nameAttr);
-        QVariant value = srcIndex.sibling(srcIndex.row(),column).data(Qt::EditRole);
-        setData(index.sibling(index.row(),column),value);
-        i++;
+    for (int i = 0; i<this->columnCount(srcIndex); i++) {
+        QVariant value = srcIndex.sibling(srcIndex.row(), i).data(Qt::EditRole);
+        setData(index.sibling(index.row(), i), value);
     }
 
     bool success = true;
@@ -261,6 +256,7 @@ bool TreeXmlModel::setData(const QModelIndex &index, const QVariant &value,
             idx = parent.child(++i,0);
         }
         updateModifyRow(emptyRowAttr,parent, index.column());
+        qDebug() << "test";
     }
     emit dataChanged(index,index);
     return true;

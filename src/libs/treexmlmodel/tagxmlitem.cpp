@@ -36,7 +36,7 @@ bool TagXmlItem::isInherited()
 int TagXmlItem::count(QStringList tags,QStringList parenttags){
     int count = 0;
     // Поиск количества потомков
-    if (tags.count()>0)
+    if (!tags.empty())
         for (QDomNode childNode = domNode.firstChild();!childNode.isNull();childNode = childNode.nextSibling())
         {
             QString nodeName = childNode.nodeName();
@@ -47,7 +47,7 @@ int TagXmlItem::count(QStringList tags,QStringList parenttags){
         count = domNode.childNodes().count();
 
     // Поиск количества наследуемых потомков
-    if (parenttags.count()>0){
+    if (!parenttags.empty()){
         // У наследуемых узлов потомков не отображать
         QString nodeName = domNode.nodeName();
         if (parenttags.contains(nodeName))
@@ -68,7 +68,7 @@ int TagXmlItem::count(QStringList tags,QStringList parenttags){
 int TagXmlItem::hasChildren(QStringList tags, QStringList parenttags)
 {
     // Поиск количества потомков
-    if (tags.count()>0)
+    if (!tags.empty())
         for (QDomNode childNode = domNode.firstChild();!childNode.isNull();childNode = childNode.nextSibling())
         {
             QString nodeName = childNode.nodeName();
@@ -79,7 +79,7 @@ int TagXmlItem::hasChildren(QStringList tags, QStringList parenttags)
         return true;
 
     // Поиск количества наследуемых потомков
-    if (parenttags.count()>0){
+    if (!parenttags.empty()){
         // У наследуемых узлов потомков не отображать
         QString nodeName = domNode.nodeName();
         if (parenttags.contains(nodeName))
@@ -105,7 +105,7 @@ TagXmlItem *TagXmlItem::child(int i,QStringList tags, QStringList parenttags){
 
     int number=0;
     foreach (TagXmlItem *childItem, childItems){
-        if (tags.count()>0){
+        if (!tags.empty()){
             QString nodeName =  childItem->domNode.nodeName();
             if (tags.contains(nodeName)) {
                 if (i==number)
@@ -123,7 +123,7 @@ TagXmlItem *TagXmlItem::child(int i,QStringList tags, QStringList parenttags){
     // Поиск узла потомка
     number=0;
     for (QDomNode childNode = domNode.firstChild();!childNode.isNull();childNode = childNode.nextSibling())
-        if (tags.count()>0){
+        if (!tags.empty()){
             QString nodeName = childNode.nodeName();
             if (tags.contains(nodeName)){
                 if (i==number){
@@ -143,7 +143,7 @@ TagXmlItem *TagXmlItem::child(int i,QStringList tags, QStringList parenttags){
         }
 
     // Поиск наследуемого узла потомка
-    if (parenttags.count()>0){
+    if (!parenttags.empty()){
         // У наследуемых узлов потомков не отображаем
         QString nodeName = domNode.nodeName();
         if (parenttags.contains(nodeName))
@@ -169,7 +169,7 @@ int TagXmlItem::childNumber(TagXmlItem *child,QStringList tags, QStringList pare
 
     for (QDomNode childNode = domNode.firstChild();!childNode.isNull();childNode = childNode.nextSibling())
     {
-        if (tags.count()>0){
+        if (!tags.empty()){
             QString nodeName = childNode.nodeName();
             if (tags.contains(nodeName)){
                 if (child->domNode == childNode)
@@ -184,7 +184,7 @@ int TagXmlItem::childNumber(TagXmlItem *child,QStringList tags, QStringList pare
     }
 
     // Поиск количества наследуемых потомков
-    if (parenttags.count()>0){
+    if (!parenttags.empty()){
         // У наследуемых узлов потомков не отображать
         QString nodeName = domNode.nodeName();
         if (parenttags.contains(nodeName))
