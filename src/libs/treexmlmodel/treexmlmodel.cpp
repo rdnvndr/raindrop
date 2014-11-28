@@ -256,7 +256,6 @@ bool TreeXmlModel::setData(const QModelIndex &index, const QVariant &value,
             idx = parent.child(++i,0);
         }
         updateModifyRow(emptyRowAttr,parent, index.column());
-        qDebug() << "test";
     }
     emit dataChanged(index,index);
     return true;
