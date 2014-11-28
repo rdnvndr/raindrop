@@ -273,8 +273,8 @@ void FilterPropWidget::submit()
     while (childIndex.isValid())
     {
         if (childIndex.data(TreeXmlModel::TagRole) == DBFILTERXML::FILTER)
-            if (lineEditName->text() == childIndex.data() &&
-                    srcIndex != childIndex.sibling(row,0)) {
+            if (lineEditName->text().toUpper() == childIndex.data().toString().toUpper()
+                    && srcIndex != childIndex.sibling(row,0)) {
                 QMessageBox::warning(this,tr("Предуреждение"),
                                      tr("Фильтр с таким именем уже существует"));
                 return;
