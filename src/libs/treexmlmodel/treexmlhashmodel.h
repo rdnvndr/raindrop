@@ -27,14 +27,21 @@ public:
 
     //! Перечисления типов уникальности поля
     enum UniqueAttr {
-        NoUnique = 0,         //!< Поле не уникальное
-        UniqueRename = 1,     //!< Контроль уникальности путем переименования
-        Unique = 2,           //!< Поле уникальное
-        Uuid = 3              //!< Поле UUID
+        NoUnique                = 0, //!< Поле не уникальное
+        UniqueRename            = 1, //!< Контроль уникальности путем переименования
+        Unique                  = 2, //!< Поле уникальное
+        UniqueUpperRename       = 3, //!< Контроль уникальности без учета регистра путем переименования
+        UniqueUpper             = 4, //!< Поле уникальное без учета регистра
+        UniqueParentRename      = 5, //!< Контроль уникальности путем переименования
+        UniqueParent            = 6, //!< Поле уникальное
+        UniqueParentUpperRename = 7, //!< Контроль уникальности без учета регистра путем переименования
+        UniqueParentUpper       = 8, //!< Поле уникальное без учета регистра
+        Uuid                    = 9  //!< Поле UUID
     };
 
      //! Конструктор модели
     TreeXmlHashModel(QDomNode document, QObject *parent = 0);
+
     //! Деструктор модели
     virtual ~TreeXmlHashModel();
 
@@ -93,6 +100,9 @@ public:
     QString uuidAttr(const QString &tag) const;
 
 private:
+
+    //! Преобразование в верхний регистр если не имеет значение регистр значения при контроле уникальности
+    QString upperValue(const QString &tag, const QString &attr, const QString &value) const;
 
     //! Создание хэша для указанного индекса
     void makeHashing(TagXmlItem *item, bool remove = false);

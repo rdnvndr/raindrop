@@ -25,10 +25,11 @@ void TreeXmlHashModel::makeHashingOne(TagXmlItem *item, bool remove)
 {
     QString tag = item->nodeName();
     foreach (const QString& attr, m_hashAttr[tag].keys()){
+        QString value = upperValue(tag, attr, item->value(attr).toString());
         if (remove)
-            m_hashValue[tag][attr].remove(item->value(attr).toString(),item);
+            m_hashValue[tag][attr].remove(value,item);
         else
-            m_hashValue[tag][attr].insert(item->value(attr).toString(),item);
+            m_hashValue[tag][attr].insert(value,item);
     }
 }
 
@@ -38,16 +39,47 @@ bool TreeXmlHashModel::makeHashingData(const QModelIndex &index, QString &dataVa
     if (!isInherited(index)) {
         QString tag  = index.data(TreeXmlModel::TagRole).toString();
         QString attr = displayedAttr(tag,index.column());
-        if (m_hashAttr[tag].contains(attr)){
+        if (m_hashAttr[tag][attr] == TreeXmlHashModel::UniqueParentRename
+                || m_hashAttr[tag][attr] == TreeXmlHashModel::UniqueParentUpperRename
+                || m_hashAttr[tag][attr] == TreeXmlHashModel::UniqueParent
+                || m_hashAttr[tag][attr] == TreeXmlHashModel::UniqueParentUpper) {
+            int row = 0;
+            QModelIndex rootIndex = index.parent();
+            QModelIndex childIndex = this->index(row, index.column(), rootIndex);
+            while (childIndex.isValid())
+            {
+                if (tag  == childIndex.data(TreeXmlModel::TagRole).toString()
+                        && childIndex != index)
+                    if (upperValue(tag, attr, dataValue)
+                            == upperValue(tag, attr, childIndex.data().toString())) {
+                        if (m_hashAttr[tag][attr] == TreeXmlHashModel::UniqueParentRename
+                                || m_hashAttr[tag][attr] == TreeXmlHashModel::UniqueParentUpperRename){
+                            int position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
+                            int number = 1;
+                            if (position != -1)
+                                number = dataValue.mid(position+1).toInt()+1;
+                            dataValue = dataValue.left(position)+QString("_%1").arg(number);
+                            row = 0;
+                            continue;
+                        } else if (m_hashAttr[tag][attr] == TreeXmlHashModel::UniqueParent
+                                   || m_hashAttr[tag][attr] == TreeXmlHashModel::UniqueParentUpper) {
+                            return false;
+                        }
+                    }
+                childIndex = this->index(++row, index.column(), rootIndex);
+            }
+        } else if (m_hashAttr[tag].contains(attr)){
             QModelIndex existIndex = indexHashAttr(tag,attr,dataValue);
             while (existIndex.isValid() && existIndex!=index) {
-                if (m_hashAttr[tag][attr] == TreeXmlHashModel::UniqueRename){
+                if (m_hashAttr[tag][attr] == TreeXmlHashModel::UniqueRename
+                        || m_hashAttr[tag][attr] == TreeXmlHashModel::UniqueUpperRename){
                     int position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
                     int number = 1;
                     if (position != -1)
                         number = dataValue.mid(position+1).toInt()+1;
                     dataValue = dataValue.left(position)+QString("_%1").arg(number);
-                } else if (m_hashAttr[tag][attr] == TreeXmlHashModel::Unique) {
+                } else if (m_hashAttr[tag][attr] == TreeXmlHashModel::Unique
+                           || m_hashAttr[tag][attr] == TreeXmlHashModel::UniqueUpper) {
                     return false;
                 } else if (m_hashAttr[tag][attr] == TreeXmlHashModel::Uuid) {
                     dataValue = QUuid::createUuid().toString();
@@ -57,9 +89,11 @@ bool TreeXmlHashModel::makeHashingData(const QModelIndex &index, QString &dataVa
             }
             TagXmlItem *item = toItem(index);
 
-            m_hashValue[tag][attr].remove(
-                        item->node().toElement().attribute(attr),item);
-            m_hashValue[tag][attr].insert(dataValue,item);
+            m_hashValue[tag][attr].remove(upperValue(tag, attr,
+                                                     // Возможно надо заменить на
+                                                     //   item->value(attr)
+                                                     item->node().toElement().attribute(attr)),item);
+            m_hashValue[tag][attr].insert(upperValue(tag, attr, dataValue),item);
         }
     }
     return true;
@@ -72,7 +106,7 @@ void TreeXmlHashModel::insertUuid(const QModelIndex &index, QString tag)
         TagXmlItem *item = toItem(index);
         QString value = QUuid::createUuid().toString();
         item->setValue(attr,value);
-        m_hashValue[tag][attr].insert(value,item);
+        m_hashValue[tag][attr].insert(upperValue(tag, attr, value),item);
     }
 }
 
@@ -88,11 +122,13 @@ void TreeXmlHashModel::makeHashing(TagXmlItem *item, bool remove)
 QModelIndex TreeXmlHashModel::indexHashAttr(const QString &tag, const QString &attr,
                                          const QVariant &value, int number) const
 {
+    QString dataValue = upperValue(tag, attr, value.toString());
+
     int column = columnDisplayedAttr(tag,attr);
-    if (number <  m_hashValue[tag][attr].values(value.toString()).count()) {
+    if (number <  m_hashValue[tag][attr].values(dataValue).count()) {
         QModelIndex index = fromItem(
                     m_hashValue[tag][attr].values(
-                        value.toString()).at(number)
+                        dataValue).at(number)
                     );
         return index.sibling(index.row(),column);
     }
@@ -109,10 +145,11 @@ void TreeXmlHashModel::refreshHashingOne(const QModelIndex &index, bool remove)
     QString tag = index.data(TreeXmlModel::TagRole).toString();
     QString attr = displayedAttr(tag,index.column());
     if (m_hashAttr[tag].contains(attr)){
-        if (remove )
-            m_hashValue[tag][attr].remove(index.data().toString(),toItem(index));
+        QString value = upperValue(tag, attr, index.data().toString());
+        if (remove)
+            m_hashValue[tag][attr].remove(value, toItem(index));
         else
-            m_hashValue[tag][attr].insert(index.data().toString(),toItem(index));
+            m_hashValue[tag][attr].insert(value, toItem(index));
     }
 }
 
@@ -318,4 +355,17 @@ QString TreeXmlHashModel::uuidAttr(const QString &tag) const
         if (m_hashAttr[tag][attr]==TreeXmlHashModel::Uuid)
             return attr;
     return QString();
+}
+
+QString TreeXmlHashModel::upperValue(const QString &tag, const QString &attr,
+                                     const QString &value) const
+{
+    TreeXmlHashModel::UniqueAttr typeAttr = m_hashAttr[tag][attr];
+    if (typeAttr == TreeXmlHashModel::UniqueUpperRename
+            || typeAttr == TreeXmlHashModel::UniqueUpper
+            || typeAttr == TreeXmlHashModel::UniqueParentUpperRename
+            || typeAttr == TreeXmlHashModel::UniqueParentUpper) {
+        return value.toUpper();
+    }
+    return value;
 }
