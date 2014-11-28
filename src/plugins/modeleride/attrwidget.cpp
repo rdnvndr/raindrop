@@ -14,7 +14,7 @@ AttrWidget::AttrWidget(QWidget *parent) :
     setupUi(this);
 
     RegExpValidator *validator =
-            new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9]{0,26}|^[A-Za-z]{0}"));
+            new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9_]{0,26}|^[A-Za-z]{0}"));
     lineEditAttrName->setValidator(validator);
     connect(validator,SIGNAL(stateChanged(QValidator::State)),
             this,SLOT(validateAttrName(QValidator::State)));
@@ -292,7 +292,7 @@ void AttrWidget::submit()
     QModelIndex childIndex = m_attrModel->index(row, nameColumn, rootIndex);
     while (childIndex.isValid())
     {
-        if (lineEditAttrName->text() == childIndex.data()
+        if (lineEditAttrName->text().toUpper() == childIndex.data().toString().toUpper()
                 && childIndex.sibling(row,0)!=srcIndex) {
             QMessageBox::warning(this,tr("Предуреждение"),
                                  tr("Атрибут с таким имененм уже существует"));
