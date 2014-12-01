@@ -114,12 +114,18 @@ void TreeXmlHashModel::insertUuid(const QModelIndex &index, QString tag)
 void TreeXmlHashModel::makeHashing(TagXmlItem *item, bool remove)
 {    
     makeHashingOne(item, remove);
+
     int row = 0;
-    TagXmlItem *childItem = item->child(++row,tagsFilter());
-    while (childItem) {
-        childItem = item->child(++row,tagsFilter());
+    while (TagXmlItem *childItem = item->child(row,tagsFilter())) {
+        makeHashing(childItem, remove);
+        row++;
+    }
+    /*
+    for (int row=0; row < item->count(tagsFilter()); row++) {
+        TagXmlItem *childItem = item->child(row,tagsFilter());
         makeHashing(childItem, remove);
     }
+    */
 }
 
 QModelIndex TreeXmlHashModel::indexHashAttr(const QString &tag, const QString &attr,
