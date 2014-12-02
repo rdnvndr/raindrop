@@ -120,7 +120,7 @@ public:
     void clearTagsFilter();
 
     //! Добавляет тэг, который будет являться атрибутом
-    void addAttrTag(const QString &tag);
+    void addAttrTag(const QString &classTag, const QString &attrTag);
 
     //! Очищает список тэгов, которые являются атрибутами
     void clearAttrTags();
@@ -226,7 +226,7 @@ private:
     QStringList m_filterTags;
 
     //! Список тэгов которые являются атрибутами
-    QStringList m_attrTags;
+    QHash<QString, QStringList> m_attrTags;
 
     //! Список атрибутов тэга для отображения
     QHash<QString, QStringList> m_displayedAttr;

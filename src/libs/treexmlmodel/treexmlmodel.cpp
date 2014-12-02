@@ -38,9 +38,9 @@ void TreeXmlModel::clearTagsFilter()
     m_filterTags.clear();
 }
 
-void TreeXmlModel::addAttrTag(const QString &tag)
+void TreeXmlModel::addAttrTag(const QString &classTag, const QString &attrTag)
 {
-    m_attrTags << tag;
+    m_attrTags[classTag] << attrTag;
 }
 
 void TreeXmlModel::clearAttrTags(){
@@ -99,7 +99,8 @@ bool TreeXmlModel::isAttr(const QModelIndex &index) const
 {
     TagXmlItem *item = toItem(index);
     QString nodeName = item->nodeName();
-    if (m_attrTags.contains(nodeName))
+    QString tag = item->parent()->nodeName();
+    if (m_attrTags[tag].contains(nodeName))
         return true;
 
     return false;
@@ -131,13 +132,13 @@ bool TreeXmlModel::isInsert(int row, const QModelIndex &index, QString tag) cons
 bool TreeXmlModel::hasChildren(const QModelIndex &parent, const QStringList &tags) const
 {
     TagXmlItem *parentItem = toItem(parent);
-    return parentItem->hasChildren(tags, m_attrTags);
+    return parentItem->hasChildren(tags, m_attrTags[parent.data(TreeXmlModel::TagRole).toString()]);
 }
 
 bool TreeXmlModel::hasChildren(const QModelIndex &parent) const
 {
     TagXmlItem *parentItem = toItem(parent);
-    return parentItem->hasChildren(m_filterTags,m_attrTags);
+    return parentItem->hasChildren(m_filterTags,m_attrTags[parent.data(TreeXmlModel::TagRole).toString()]);
 }
 
 void TreeXmlModel::addDisplayedAttr(const QString &tag, const QStringList &value, QIcon icon)
@@ -312,7 +313,7 @@ const
         return QModelIndex();
 
     TagXmlItem *parentItem = toItem(parent);
-    TagXmlItem *childItem = parentItem->child(row,m_filterTags,m_attrTags);
+    TagXmlItem *childItem = parentItem->child(row,m_filterTags,m_attrTags[parent.data(TreeXmlModel::TagRole).toString()]);
 
     if (childItem){
         return createIndex(row, column, childItem);
@@ -342,13 +343,13 @@ QModelIndex TreeXmlModel::parent(const QModelIndex &child) const
 
 int TreeXmlModel::rowCount(const QModelIndex &parent) const
 {
-    return this->rowCount(parent, m_filterTags, m_attrTags);
+    return this->rowCount(parent, m_filterTags, m_attrTags[parent.data(TreeXmlModel::TagRole).toString()]);
 }
 
 int TreeXmlModel::rowCount(const QModelIndex &parent,
                            const QStringList &tags) const
 {
-    return this->rowCount(parent, tags, m_attrTags);
+    return this->rowCount(parent, tags, m_attrTags[parent.data(TreeXmlModel::TagRole).toString()]);
 }
 
 int TreeXmlModel::rowCount(const QModelIndex &parent, const QStringList &tags,
@@ -388,7 +389,7 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
     bool success = true;
     int revertCount;
     for (int i = 0; i < count; i++) {
-        success = parentItem->insertChild(tag, row, m_filterTags, m_attrTags);
+        success = parentItem->insertChild(tag, row, m_filterTags, m_attrTags[parent.data(TreeXmlModel::TagRole).toString()]);
         if (!success) {
             revertCount = i;
             break;
@@ -535,8 +536,9 @@ QModelIndex TreeXmlModel::fromItem(TagXmlItem *item) const
 {
     if (!item || item == m_rootItem)
         return QModelIndex();
-
-    int row = item->parent()->childNumber(item,m_filterTags,m_attrTags);
+    TagXmlItem *parentItem  = item->parent();
+    QString tag = parentItem->nodeName();
+    int row = parentItem->childNumber(item,m_filterTags,m_attrTags[tag]);
 
     return createIndex(row , 0, item);
 }

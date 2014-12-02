@@ -145,7 +145,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
               << DBATTRXML::ISNULLALLOWED  << DBATTRXML::ISUNIQUE
               << DBATTRXML::ISCANDIDATEKEY << DBATTRXML::ID;
     m_model->addDisplayedAttr(DBATTRXML::ATTR,propsAttr, QIcon(":/attribute"));
-    m_model->addAttrTag(DBATTRXML::ATTR);
+    m_model->addAttrTag(DBCLASSXML::CLASS, DBATTRXML::ATTR);
 
     QStringList propsComposition;
     propsComposition << DBCOMPXML::NAME              << DBCOMPXML::ALIAS
@@ -154,7 +154,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                      << DBCOMPXML::DIRECTDESCRIPTION << DBCOMPXML::INVERSEDESCRIPTION
                      << DBCOMPXML::ID;
     m_model->addDisplayedAttr(DBCOMPXML::COMP,propsComposition, QIcon(":/composition"));
-    m_model->addAttrTag(DBCOMPXML::COMP);
+    m_model->addAttrTag(DBCLASSXML::CLASS, DBCOMPXML::COMP);
 
     QStringList propsFilter;
     propsFilter << DBFILTERXML::NAME              << DBFILTERXML::ALIAS
@@ -162,14 +162,14 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                 << DBFILTERXML::DIRECTDESCRIPTION << DBFILTERXML::INVERSEDESCRIPTION
                 << DBFILTERXML::ID;
     m_model->addDisplayedAttr(DBFILTERXML::FILTER,propsFilter, QIcon(":/filter"));
-    m_model->addAttrTag(DBFILTERXML::FILTER);
+    m_model->addAttrTag(DBCLASSXML::CLASS, DBFILTERXML::FILTER);
 
     QStringList propsFilterBlock;
     propsFilterBlock << DBFILTERBLOCKXML::LINKOF << DBFILTERBLOCKXML::PARENT
                      << DBFILTERBLOCKXML::ID;
     m_model->addDisplayedAttr(DBFILTERBLOCKXML::BLOCK, propsFilterBlock,
                               QIcon(":/block"));
-    m_model->addAttrTag(DBFILTERBLOCKXML::BLOCK);
+//    m_model->addAttrTag(DBFILTERBLOCKXML::BLOCK);
 
     QStringList propsCondition;
     propsCondition   << DBCONDITIONXML::FIRSTATTR   << DBCONDITIONXML::OPERATOR
@@ -177,7 +177,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                      << DBCONDITIONXML::PARENT      << DBCONDITIONXML::ID;
     m_model->addDisplayedAttr(DBCONDITIONXML::COND, propsCondition,
                               QIcon(":/expression"));
-    m_model->addAttrTag(DBCONDITIONXML::COND);
+//    m_model->addAttrTag(DBCONDITIONXML::COND);
 
     QStringList propsEntity;
     propsEntity << DBENTITYXML::NAME            << DBENTITYXML::DESCRIPTION
@@ -786,7 +786,7 @@ void ModelerIDEPlug::showPropClass(const QModelIndex &indexSource)
     if (!indexSource.isValid())
         return;
 
-    if (m_model->isAttr(indexSource))
+    if (indexSource.data(TreeXmlModel::TagRole)!=DBCLASSXML::CLASS)
         return;
 
     PluginManager* pluginManager = PluginManager::instance();
