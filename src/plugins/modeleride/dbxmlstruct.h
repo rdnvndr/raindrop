@@ -47,7 +47,7 @@ namespace DBATTRXML{
 //! Ключевые слова XML файла для описания состава
 namespace DBCOMPXML{
     const QString COMP = "RTPComposition";
-    const QString NAME = "name";
+    const QString LINKCLASS = "linkClass";
     const QString ALIAS = "alias";
     const QString PARENT = "parent";
     const QString CLASS = "Class";
@@ -56,6 +56,7 @@ namespace DBCOMPXML{
     const QString INVERSEDESCRIPTION = "inverseDescription";
     const QString ISCOMP = "isComp";
     const QString ID = "guid";
+    const QString NAME = "name"; // Для удаления
 }
 
 //! Типы атрибутов

@@ -20,8 +20,6 @@ PropClass::PropClass(QWidget *parent) :
             this,SLOT(setTabName(QModelIndex)));
     connect(classWidget,SIGNAL(dataRemoved(QModelIndex)),
             this,SLOT(closeTab(QModelIndex)));
-    connect(compWidget,SIGNAL(dataEdited(QModelIndex)),
-            this,SLOT(onEditComposition(QModelIndex)));
     connect(filterWidget,SIGNAL(dataEdited(QModelIndex)),
             this,SLOT(onEditFilter(QModelIndex)));
 }

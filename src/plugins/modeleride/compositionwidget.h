@@ -32,8 +32,17 @@ public slots:
     //! Удаление состава класса
     void remove();
 
-    //! Вызов редактирования состава класса
-    void edit();
+    //! Установка текущего состава класса
+    void setCurrent(const QModelIndex &index);
+
+    //! Применение изменений состава класса
+    void submit();
+
+    //! Проверка находится ли в режиме редактирования
+    bool isEdit();
+
+    //! Перевод в режим редактирования состава класса
+    void edit(bool flag = true);
 
     //! Перемещение состава выше
     void up();
@@ -41,18 +50,16 @@ public slots:
     //! Перемещение состава ниже
     void down();
 
+    //! Отмена изменений состава класса
+    void revert();
+
     //! Установка отображения родительских составов класса
     void showParent(bool flag);
 
     //! Установка родителя состава
     void setRootIndex(QModelIndex index);
 
-signals:
-    //! Сигнал об добавлении данных
-    void dataAdded(const QModelIndex &index);
-
-    //! Сигнал об вызове редактирования данных
-    void dataEdited(const QModelIndex &index);
+signals:  
 
     //! Сигнал об изменении данных
     void dataChanged(const QModelIndex &index);
@@ -72,6 +79,9 @@ private:
 
     //! Модель структуры классов
     TreeXmlHashModel* m_model;
+
+    //! Mapper для свойств атрибутов
+    QDataWidgetMapper* m_mapperComp;
 };
 
 #endif // COMPOSITIONWIDGET_H

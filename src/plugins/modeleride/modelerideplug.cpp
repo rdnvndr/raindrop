@@ -148,7 +148,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addAttrTag(DBCLASSXML::CLASS, DBATTRXML::ATTR);
 
     QStringList propsComposition;
-    propsComposition << DBCOMPXML::NAME              << DBCOMPXML::ALIAS
+    propsComposition << DBCOMPXML::LINKCLASS         << DBCOMPXML::ALIAS
                      << DBCOMPXML::PARENT            << DBCOMPXML::CLASS
                      << DBCOMPXML::ISVIEW            << DBCOMPXML::ISCOMP
                      << DBCOMPXML::DIRECTDESCRIPTION << DBCOMPXML::INVERSEDESCRIPTION
@@ -357,11 +357,14 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
                                 DBATTRXML::REFLOV,
                                 TreeXmlHashModel::NoUnique);
     m_model->addHashAttr(DBCOMPXML::COMP,
-                                DBCOMPXML::NAME,
-                                TreeXmlHashModel::UniqueParentUpperRename);
+                                DBCOMPXML::LINKCLASS,
+                                TreeXmlHashModel::UniqueParent);
     m_model->addHashAttr(DBCOMPXML::COMP,
                                 DBCOMPXML::CLASS,
                                 TreeXmlHashModel::NoUnique);
+    m_model->addHashAttr(DBCOMPXML::COMP,
+                                DBCOMPXML::LINKCLASS,
+                                TreeXmlHashModel::UniqueParent);
     m_model->addHashAttr(DBFILTERXML::FILTER,
                                 DBFILTERXML::CLASS,
                                 TreeXmlHashModel::NoUnique);
@@ -455,6 +458,8 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->addRelation(DBCOMPXML::COMP, DBCOMPXML::PARENT,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
     m_model->addRelation(DBCOMPXML::COMP, DBCOMPXML::CLASS,
+                               DBCLASSXML::CLASS, DBCLASSXML::NAME);
+    m_model->addRelation(DBCOMPXML::COMP, DBCOMPXML::LINKCLASS,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
 
     m_model->addRelation(DBFILTERXML::FILTER, DBFILTERXML::PARENT,
@@ -709,9 +714,6 @@ void ModelerIDEPlug::dblClickTree(const QModelIndex &index)
 
     if (indexSource.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS)
         showPropClass(indexSource);
-
-    if (indexSource.data(TreeXmlModel::TagRole)==DBCOMPXML::COMP)
-        showPropComposition(indexSource);
 
     if (indexSource.data(TreeXmlModel::TagRole)==DBFILTERXML::FILTER)
         showPropFilter(indexSource);
