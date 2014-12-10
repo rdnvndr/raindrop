@@ -122,8 +122,14 @@ public:
     //! Добавляет тэг, который будет являться атрибутом
     void addAttrTag(const QString &classTag, const QString &attrTag);
 
+    //! Получение списка тэгов атрибутов для родителя
+    QStringList attrTags(const QModelIndex &parent) const;
+
     //! Очищает список тэгов, которые являются атрибутами
     void clearAttrTags();
+
+    //! Возращает True если тэг является атрибутом для родителя
+    bool isAttr(const QModelIndex &parent, QString tag) const;
 
     //! Возращает True если строка является атрибутом
     bool isAttr(const QModelIndex &index) const;
