@@ -3,6 +3,7 @@
 
 #include <QMdiSubWindow>
 #include <QMainWindow>
+#include <QDockWidget>
 #include <mdiextarea/mdiextarea.h>
 
 //! Класс главного окна
@@ -24,7 +25,7 @@ public:
     //! Добавление стыковго компонента
     /*! Предназначено для добавления стыкового компонента
     */
-    virtual void ​addDockWidget(Qt::DockWidgetArea area, QDockWidget * dockwidget) = 0;
+    virtual void addDockWidget(Qt::DockWidgetArea area, QDockWidget *dockwidget) = 0;
 
 public slots:
 
