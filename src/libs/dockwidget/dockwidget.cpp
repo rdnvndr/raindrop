@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QMouseEvent>
 #include <QStyle>
+#include <QDebug>
 
 DockWidget::DockWidget(QWidget * parent)
     : QDockWidget(parent)
@@ -14,6 +15,7 @@ DockWidget::DockWidget(QWidget * parent)
 
     connect(&m_timer, &QTimer::timeout, this, &DockWidget::handleMouseTimeout);
     connect(this, &QDockWidget::topLevelChanged, this, &DockWidget::handleToplevelChanged);
+
     setMinimumWidth(0);
 }
 
@@ -22,21 +24,26 @@ DockWidget::~DockWidget()
     delete m_emptyTitleBar;
 }
 
-bool DockWidget::eventFilter(QObject *, QEvent *event)
+bool DockWidget::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::MouseMove && !isFloating() && isAutoHide()) {
         QMouseEvent *me = static_cast<QMouseEvent *>(event);
-        int y = me->pos().y();
-        int x = me->pos().x();
-        int h = style()->pixelMetric(QStyle::PM_TitleBarHeight);
+        QWidget *widget = qobject_cast<QWidget *>(obj);
+        if (widget) {
+            QPoint globalPos = widget->mapToGlobal(me->pos());
+            QPoint localPos  = mapFromGlobal(globalPos);
+            int y = localPos.y();
+            int x = localPos.x();
+            int h = style()->pixelMetric(QStyle::PM_TitleBarHeight);
 
-        if (0 <= x && x < width() && 0 <= y && y <= h) {
-            if (!isTitleBarVisible()) {
-                m_timer.start();
-                m_startPos = mapToGlobal(me->pos());
+            if (0 <= x && x < width() && 0 <= y && y <= h) {
+                if (!isTitleBarVisible()) {
+                    m_timer.start();
+                    m_startPos = globalPos;
+                }
+            } else if (isTitleBarVisible()) {
+                setTitleBarVisible(false);
             }
-        } else if (isTitleBarVisible()) {
-            setTitleBarVisible(false);
         }
     }
 

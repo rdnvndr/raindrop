@@ -79,7 +79,7 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     dockWidget->setObjectName("MetamodelDockWidget");
     dockWidget->setWidget(treeClassView);
     dockWidget->setWindowTitle(tr("Модель метаданных"));
-    iMainWindow->​addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
+    iMainWindow->addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
 }
 
 ModelerIDEPlug::~ModelerIDEPlug()

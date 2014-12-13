@@ -21,7 +21,7 @@ public:
 
 
     //! Событие с фильтрацией
-    bool eventFilter(QObject *, QEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event);
 
     //! Событие ввода
     void enterEvent(QEvent *event);

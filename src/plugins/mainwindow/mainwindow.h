@@ -100,7 +100,7 @@ public:
     //! Добавление стыковго компонента
     /*! Предназначено для добавления стыкового компонента
     */
-    void ​addDockWidget(Qt::DockWidgetArea area, QDockWidget * dockwidget);
+    void addDockWidget(Qt::DockWidgetArea area, QDockWidget *dockwidget);
 
     //! Возращает всплывающее
     /*! Предназначено для отображения всплывающего меню с списком панелей
