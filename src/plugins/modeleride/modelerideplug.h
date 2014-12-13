@@ -4,6 +4,7 @@
 #include <QObject>
 #include <plugin/iplugin.h>
 #include <treexmlmodel/treexmlhashmodel.h>
+#include <dockwidget/dockwidget.h>
 #include "classtreeview.h"
 #include "treefilterproxymodel.h"
 
@@ -104,6 +105,9 @@ private:
 
     //! Команда закрытия структуры классов
     QAction* actionCloseModel;
+
+    //! Стыковый компонент для модели метаданных
+    DockWidget *dockWidget;
 
 public slots:
     //! Слот обработки двойного щелчка по дереву классов

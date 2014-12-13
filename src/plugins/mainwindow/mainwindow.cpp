@@ -445,6 +445,11 @@ QList<QMdiSubWindow *> MainWindow::subWindowList() const
     return mdiArea->subWindowList();
 }
 
+void MainWindow::​addDockWidget(Qt::DockWidgetArea area, QDockWidget *dockwidget)
+{
+    QMainWindow::addDockWidget(area, dockwidget);
+}
+
 QMenu *MainWindow::createPopupMenu()
 {
     QMenu *menu = QMainWindow::createPopupMenu();

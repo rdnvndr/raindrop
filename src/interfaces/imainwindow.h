@@ -21,6 +21,11 @@ public:
     */
     virtual QList<QMdiSubWindow *> subWindowList() const = 0;
 
+    //! Добавление стыковго компонента
+    /*! Предназначено для добавления стыкового компонента
+    */
+    virtual void ​addDockWidget(Qt::DockWidgetArea area, QDockWidget * dockwidget) = 0;
+
 public slots:
 
     //! Добавления QAction для использования в главном окне

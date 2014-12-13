@@ -18,9 +18,9 @@
     Пример:
     \code
         PluginManager* pluginManager = PluginManager::instance();
-        IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
-                  pluginManager->getPlugin("IMainWindow")->instance());
-        mainwindow->addSubWindow(new QTextEdit(NULL));
+        IMainWindow* iMainWindow = qobject_cast<IMainWindow*>(
+                pluginManager->interfaceObject("IMainWindow"));
+        iMainWindow->addSubWindow(new QTextEdit(NULL));
     \endcode
 */
 
@@ -96,6 +96,11 @@ public:
     /*! Предназначено для получения списка подокон
     */
     QList<QMdiSubWindow *> subWindowList() const;
+
+    //! Добавление стыковго компонента
+    /*! Предназначено для добавления стыкового компонента
+    */
+    void ​addDockWidget(Qt::DockWidgetArea area, QDockWidget * dockwidget);
 
     //! Возращает всплывающее
     /*! Предназначено для отображения всплывающего меню с списком панелей
