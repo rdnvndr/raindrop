@@ -15,7 +15,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 QT += xml
 
-LIBS += -lplugin -lmdiextarea -ltreexmlmodel -ltreecombobox -lpushbuttonimage
+LIBS += -lplugin -lmdiextarea -ltreexmlmodel -ltreecombobox -lpushbuttonimage -ldockwidget
 include(../plugins.pri)
 
 # Input

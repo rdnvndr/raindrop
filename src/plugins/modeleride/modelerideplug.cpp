@@ -28,8 +28,6 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     m_model = NULL;
 
     PluginManager* pluginManager = PluginManager::instance();
-    ITreeDockWidget* dockWidget = qobject_cast<ITreeDockWidget*>(
-                pluginManager->interfaceObject("ITreeDockWidget"));
 
     treeClassView = new ClassTreeView();
     connect(treeClassView,SIGNAL(doubleClicked(QModelIndex)),
@@ -77,12 +75,17 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     actionCloseModel->setObjectName("actionCloseModel");
     iMainWindow->addAction(tr("Редактор модели"),actionCloseModel);
 
-    dockWidget->insertWidget(QIcon(":/modeleride"),tr("Редактор модели данных"),treeClassView);
+    dockWidget = new DockWidget();
+    dockWidget->setObjectName("MetamodelDockWidget");
+    dockWidget->setWidget(treeClassView);
+    dockWidget->setWindowTitle(tr("Модель метаданных"));
+    iMainWindow->​addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
 }
 
 ModelerIDEPlug::~ModelerIDEPlug()
 {
     delete treeClassView;
+    delete dockWidget;
     closeClassModel();
     delete actionSaveModel;
     delete actionSaveAsModel;
