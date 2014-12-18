@@ -143,6 +143,9 @@ public:
     //! Указывает xml атрибуты тэга для отображения
     void addDisplayedAttr(const QString &tag,const QStringList &value,QIcon icon = QIcon());
 
+    //! Возращает иконку для тэга
+    QIcon tagIcon(const QString &tag);
+
     //! Указывает тэги разрешенные для вставки
     void addInsertTags(const QString &tag, const QStringList &value);
 
