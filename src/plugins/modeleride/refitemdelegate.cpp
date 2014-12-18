@@ -101,7 +101,7 @@ QModelIndex RefItemDelegate::rootClass(QModelIndex index) const
                                                            DBLINKTOFILTERXML::REFFILTER));
                 QModelIndex filterIndex = hashModel->indexHashAttr(DBFILTERXML::FILTER,
                                                                    DBFILTERXML::ID,
-                                                                   linkIndex.data());
+                                                                   linkIndex.data(Qt::EditRole));
                 linkIndex = filterIndex.sibling(filterIndex.row(),
                                                 hashModel->columnDisplayedAttr(
                                                     DBFILTERXML::FILTER,
