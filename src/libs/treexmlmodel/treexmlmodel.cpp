@@ -164,6 +164,11 @@ void TreeXmlModel::addDisplayedAttr(const QString &tag, const QStringList &value
         m_displayedIcon[tag] = icon;
 }
 
+QIcon TreeXmlModel::tagIcon(const QString &tag)
+{
+    return m_displayedIcon[tag];
+}
+
 void TreeXmlModel::addInsertTags(const QString &tag, const QStringList &value)
 {
     m_insertTags.insert(tag,value);

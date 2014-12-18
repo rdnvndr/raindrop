@@ -145,10 +145,8 @@ void RefItemWidget::add()
     if (index.isValid()) {
         if (srcIndex.data(TreeXmlModel::TagRole)==DBLINKTOCLASSXML::LINKTOCLASS) {
             m_refModel->setData(index, DBLINKTOFILTERXML::LINKTOFILTER, TreeXmlModel::TagRole);
-            m_refModel->setData(index, QIcon(":/filter"), Qt::DecorationRole);
         } else {
             m_refModel->setData(index, DBLINKTOCLASSXML::LINKTOCLASS, TreeXmlModel::TagRole);
-            m_refModel->setData(index, QIcon(":/modeleride"), Qt::DecorationRole);
         }
         edit(true);
         treeView->setCurrentIndex(index);
@@ -164,10 +162,8 @@ void RefItemWidget::addChild()
     if (index.isValid()) {
         if (srcIndex.data(TreeXmlModel::TagRole)==DBLINKTOCLASSXML::LINKTOCLASS) {
             m_refModel->setData(index, DBLINKTOFILTERXML::LINKTOFILTER, TreeXmlModel::TagRole);
-            m_refModel->setData(index, QIcon(":/filter"), Qt::DecorationRole);
         } else {
             m_refModel->setData(index, DBLINKTOCLASSXML::LINKTOCLASS, TreeXmlModel::TagRole);
-            m_refModel->setData(index, QIcon(":/modeleride"), Qt::DecorationRole);
         }
         edit(true);
         treeView->setCurrentIndex(index);

@@ -381,6 +381,14 @@ QVariant ModifyProxyModel::data(const QModelIndex &proxyIndex, int role) const
                                     ? proxyIndex.sibling(proxyIndex.row(),0)
                                       :proxyIndex);
 
+    if (role == Qt::DecorationRole) {
+         TreeXmlModel *xmlModel = qobject_cast<TreeXmlModel *>(sourceModel());
+         if (xmlModel) {
+             QIcon icon = xmlModel->tagIcon(proxyIndex.data(TreeXmlModel::TagRole).toString());
+             if (!icon.isNull() && proxyIndex.column()==0) return icon;
+         }
+    }
+
     // Получение измененных данных
     if (m_updatedRow.contains(dataIndex))  {
         int updateRole = (role==Qt::DisplayRole) ? Qt::EditRole : role;
