@@ -57,10 +57,11 @@ QWidget *UnitDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
         if (tag == DBUNITXML::UNIT) {
             if (attr == DBUNITXML::CODE)
                 lineEdit->setValidator(new QIntValidator(0, 9999, lineEdit));
-            else if (attr == DBUNITXML::COEFF)
-                lineEdit->setValidator(new QDoubleValidator(lineEdit));
-            else if (attr == DBUNITXML::DELTA)
-                lineEdit->setValidator(new QDoubleValidator(lineEdit));
+            else if (attr == DBUNITXML::COEFF || attr == DBUNITXML::DELTA) {
+                QDoubleValidator *validator = new QDoubleValidator(lineEdit);
+                validator->setLocale(QLocale::C);
+                lineEdit->setValidator(validator);
+            }
         }
     }
     return lineEdit;
