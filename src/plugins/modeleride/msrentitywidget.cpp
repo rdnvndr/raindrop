@@ -237,9 +237,9 @@ void MsrEntityWidget::changeUnit(int current)
 
     for (int row = 0; row < count; row++) {
         index = parent.child(row, columnCoeff);
-        model->setData(index,index.data().toFloat()/coeff);
+        model->setData(index,QString("%1").arg(index.data().toFloat()/coeff));
         index = parent.child(row, columnDelta);
-        model->setData(index,index.data().toFloat()-delta);
+        model->setData(index,QString("%1").arg(index.data().toFloat()-delta));
     }
 }
 
