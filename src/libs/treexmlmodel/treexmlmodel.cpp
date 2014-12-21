@@ -263,7 +263,7 @@ bool TreeXmlModel::setData(const QModelIndex &index, const QVariant &value,
     if (attrName.isEmpty())
         return false;
 
-    QString dataValue = value.toString();
+    QVariant dataValue = value.toString();
     if (attrName == QString("parent"))
         dataValue = data(index,Qt::EditRole).toString();
 
