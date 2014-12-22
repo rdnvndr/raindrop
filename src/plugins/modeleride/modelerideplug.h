@@ -117,9 +117,6 @@ public slots:
     //! Слот вызова окна редактирования класса
     void showPropClass(const QModelIndex &indexSource);
 
-    //! Слот вызова окна редактирования состава
-    void showPropComposition(const QModelIndex &indexSource);
-
     //! Слот вызова окна редактирования фильтра
     void showPropFilter(const QModelIndex &indexSource);
 
