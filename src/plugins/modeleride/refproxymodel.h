@@ -4,10 +4,15 @@
 #include <treexmlmodel/modifyproxymodel.h>
 #include <treexmlmodel/treexmlmodel.h>
 
+//! Прокси модель справочника
+/*! Прокси модель предназначена для редактирования справочника
+ */
+
 class RefProxyModel : public ModifyProxyModel
 {
     Q_OBJECT
 public:
+    //! Конструктор класса
     explicit RefProxyModel(QObject *parent = 0);
 
     //! Получение данных модели

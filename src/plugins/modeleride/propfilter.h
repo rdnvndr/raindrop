@@ -12,7 +12,10 @@ class PropFilter : public QWidget, private Ui::PropFilter
     Q_OBJECT
     
 public:
+    //! Конструктор класса
     explicit PropFilter(QWidget *parent = 0);
+
+    //! Деструктор класса
     virtual ~PropFilter();
 
     //! Установка модели структуры классов

@@ -1,5 +1,4 @@
 #include "treefilterproxymodel.h"
-#include <QDebug>
 #include "dbxmlstruct.h"
 #include <QMimeData>
 #include <treexmlmodel/treexmlhashmodel.h>

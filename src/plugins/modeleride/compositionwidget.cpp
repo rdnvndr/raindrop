@@ -3,7 +3,6 @@
 #include "xmldelegate.h"
 #include <QHeaderView>
 #include <QMessageBox>
-#include <QDebug>
 
 CompositionWidget::CompositionWidget(QWidget *parent) :
     QWidget(parent)
