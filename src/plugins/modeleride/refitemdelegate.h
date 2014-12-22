@@ -24,7 +24,7 @@ public:
     void setEditorData(QWidget *editor, const QModelIndex &index) const;
 
 private:
-    const TreeXmlHashModel *getHashModel(const QAbstractItemModel *model) const;
+    const TreeXmlHashModel *hashModel(const QAbstractItemModel *model) const;
     QModelIndex rootClass(QModelIndex index) const;
 
 };

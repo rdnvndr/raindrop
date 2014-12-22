@@ -5,7 +5,6 @@
 #include <QMessageBox>
 #include "treefilterproxymodel.h"
 #include "unitdelegate.h"
-#include <QDebug>
 
 MsrUnitWidget::MsrUnitWidget(QWidget *parent) :
     QWidget(parent)

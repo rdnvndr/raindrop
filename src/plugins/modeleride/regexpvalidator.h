@@ -11,10 +11,10 @@ class RegExpValidator : public QRegExpValidator
     Q_OBJECT
 public:
     //! Конструктор класса
-    RegExpValidator(QObject * parent = 0);
+    explicit RegExpValidator(QObject * parent = 0);
 
     //! Конструктор класса
-    RegExpValidator(const QRegExp & rx, QObject * parent = 0);
+    explicit RegExpValidator(const QRegExp & rx, QObject * parent = 0);
 
 public slots:
     //! Проверка значения

@@ -2,7 +2,6 @@
 #include "dbxmlstruct.h"
 #include "xmldelegate.h"
 #include <QStringListModel>
-#include <QDebug>
 
 MsrEntityWidget::MsrEntityWidget(QWidget *parent) :
     QWidget(parent)

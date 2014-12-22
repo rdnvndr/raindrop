@@ -19,7 +19,7 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
 {
     QString tag  = index.data(TreeXmlModel::TagRole).toString();
 
-    const TreeXmlHashModel* hashModel = getHashModel(index.model());
+    const TreeXmlHashModel* hashModel = this->hashModel(index.model());
 
     if (hashModel) {
         QString attr = hashModel->displayedAttr(tag, index.column());
@@ -91,7 +91,7 @@ void RefItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) c
 QModelIndex RefItemDelegate::rootClass(QModelIndex index) const
 {
     if (index.isValid()) {
-        const TreeXmlHashModel* hashModel = getHashModel(index.model());
+        const TreeXmlHashModel* hashModel = this->hashModel(index.model());
         if (hashModel) {
             QModelIndex parentIndex = index.parent();
             if (parentIndex.data(TreeXmlModel::TagRole) == DBLINKTOFILTERXML::LINKTOFILTER) {
@@ -123,7 +123,7 @@ QModelIndex RefItemDelegate::rootClass(QModelIndex index) const
     return QModelIndex();
 }
 
-const TreeXmlHashModel *RefItemDelegate::getHashModel(const QAbstractItemModel *model) const
+const TreeXmlHashModel *RefItemDelegate::hashModel(const QAbstractItemModel *model) const
 {
     const ModifyProxyModel *modifyModel = dynamic_cast<const ModifyProxyModel *>(model);
     const TreeXmlHashModel* hashModel = (modifyModel)?

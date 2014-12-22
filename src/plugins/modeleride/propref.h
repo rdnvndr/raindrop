@@ -16,7 +16,7 @@ class PropRef : public QWidget, private Ui::PropRef
     Q_OBJECT
 
 public:
-     //! Деструктор диалога редактирования справочника
+     //! Конструктор диалога редактирования справочника
     explicit PropRef(QWidget *parent = 0);
 
     //! Деструктор диалога редактирования справочника

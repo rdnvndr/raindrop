@@ -17,6 +17,7 @@ class RefWidget : public QWidget, private Ui::RefWidget
     Q_OBJECT
 
 public:
+    //! Конструктор редактора справочника
     explicit RefWidget(QWidget *parent = 0);
 
     //! Деструктор редактора справочника

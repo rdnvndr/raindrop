@@ -6,7 +6,6 @@
 #include <QToolTip>
 #include "treefilterproxymodel.h"
 #include "regexpvalidator.h"
-#include <QDebug>
 
 AttrWidget::AttrWidget(QWidget *parent) :
     QWidget(parent)

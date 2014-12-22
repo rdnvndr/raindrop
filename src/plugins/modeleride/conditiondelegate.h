@@ -13,7 +13,10 @@ class ConditionDelegate : public XmlDelegate
 {
     Q_OBJECT
 public:
+    //! Конструктор класса
     explicit ConditionDelegate(QObject *parent = 0);
+
+    //! Деструктор класса
     virtual ~ConditionDelegate();
 
     //! Предоставление редактора
