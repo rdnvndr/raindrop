@@ -67,7 +67,7 @@ public:
     };
 
      //! Конструктор модели
-    TreeXmlModel(QDomNode document, QObject *parent = 0);
+    TreeXmlModel(QDomNode document  = QDomNode(), QObject *parent = 0);
 
     //! Деструктор модели
     virtual ~TreeXmlModel();
