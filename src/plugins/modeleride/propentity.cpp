@@ -23,7 +23,6 @@ PropEntity::PropEntity(QWidget *parent) :
     connect(msrEntityWidget, SIGNAL(edited(bool)), msrUnitWidget, SLOT(edit(bool)));
 
     connect(toolButtonAddEntity,  SIGNAL(clicked()), msrEntityWidget, SLOT(add()));
-    connect(toolButtonDelEntity,  SIGNAL(clicked()), msrUnitWidget, SLOT(revert()));
     connect(toolButtonDelEntity,  SIGNAL(clicked()), msrEntityWidget, SLOT(remove()));
     connect(toolButtonEditEntity, SIGNAL(clicked()), msrEntityWidget, SLOT(edit()));
 
