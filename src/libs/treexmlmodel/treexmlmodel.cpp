@@ -8,7 +8,17 @@
 TreeXmlModel::TreeXmlModel(QDomNode document, QObject *parent)
     : QAbstractItemModel(parent)
 {
-    m_rootItem = new TagXmlItem(document, NULL);
+
+    bool isNewModel = document.isNull();
+
+    if (isNewModel) {
+        QDomDocument doc;
+        QDomNode node = doc.createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
+        document.insertBefore(node, doc.firstChild());
+        m_rootItem = new TagXmlItem(doc, NULL);
+    } else
+        m_rootItem = new TagXmlItem(document, NULL);
+
     m_column = 1;
 }
 
@@ -112,7 +122,8 @@ bool TreeXmlModel::isAttr(const QModelIndex &index) const
 {
     TagXmlItem *item = toItem(index);
     QString nodeName = item->nodeName();
-    QString tag = item->parent()->nodeName();
+    TagXmlItem *parentItem = item->parent();
+    QString tag = (parentItem)? parentItem->nodeName():"";
     if (m_attrTags[tag].contains(nodeName))
         return true;
 

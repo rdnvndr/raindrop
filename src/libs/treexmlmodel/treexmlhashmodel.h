@@ -40,7 +40,7 @@ public:
     };
 
      //! Конструктор модели
-    TreeXmlHashModel(QDomNode document, QObject *parent = 0);
+    TreeXmlHashModel(QDomNode document = QDomNode(), QObject *parent = 0);
 
     //! Деструктор модели
     virtual ~TreeXmlHashModel();
