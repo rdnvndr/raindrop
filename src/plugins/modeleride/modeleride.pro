@@ -48,7 +48,8 @@ HEADERS += modelerideplug.h \
     refwidget.h \
     refitemwidget.h \
     refitemdelegate.h \
-    refproxymodel.h
+    refproxymodel.h \
+    classmodel.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -77,7 +78,8 @@ SOURCES += modelerideplug.cpp \
     refwidget.cpp \
     refitemwidget.cpp \
     refitemdelegate.cpp \
-    refproxymodel.cpp
+    refproxymodel.cpp \
+    classmodel.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \

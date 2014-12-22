@@ -7,6 +7,7 @@
 #include <dockwidget/dockwidget.h>
 #include "classtreeview.h"
 #include "treefilterproxymodel.h"
+#include "classmodel.h"
 
 //! Плагин среды разработки структуры классов
 /*! Плагин предназначен для разработки структуры классов
@@ -83,7 +84,7 @@ private:
     QString m_fileName;
 
     //! Модель дерева классов
-    TreeXmlHashModel* m_model;
+    ClassModel* m_model;
 
     //! Дерево классов
     ClassTreeView* treeClassView;
