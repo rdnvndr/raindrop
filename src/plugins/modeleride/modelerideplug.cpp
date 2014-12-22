@@ -12,7 +12,6 @@
 
 #include "modelerideplug.h"
 #include "propclass.h"
-#include "propcomposition.h"
 #include "propfilter.h"
 #include "propentity.h"
 #include "dbxmlstruct.h"
@@ -807,42 +806,11 @@ void ModelerIDEPlug::showPropClass(const QModelIndex &indexSource)
         propClass->setObjectName(subWindowName);
         propClass->setModel(m_model);
         propClass->setCurrentClass(indexSource);
-        connect(propClass,SIGNAL(editComposition(QModelIndex)),
-                this,SLOT(showPropComposition(QModelIndex)));
         connect(propClass,SIGNAL(editFilter(QModelIndex)),
                 this,SLOT(showPropFilter(QModelIndex)));
     } else {
         PropClass* propClass = qobject_cast<PropClass*>(subWindow->widget());
         propClass->setCurrentClass(indexSource);
-    }
-}
-
-void ModelerIDEPlug::showPropComposition(const QModelIndex &indexSource)
-{
-    if (!indexSource.isValid())
-        return;
-
-    if (indexSource.data(TreeXmlModel::TagRole)!=DBCOMPXML::COMP)
-        return;
-
-    PluginManager* pluginManager = PluginManager::instance();
-    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
-
-    QString classId = this->dataId(indexSource);
-
-    QString subWindowName = "PropComposition::" + classId;
-    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
-
-    if (!subWindow) {
-        PropComposition* propComposition = new PropComposition();
-        subWindow =  mainWindow->addSubWindow(propComposition);
-        propComposition->setObjectName(subWindowName);
-        propComposition->setModel(m_model);
-        propComposition->setCurrentClass(indexSource);
-    } else {
-        PropComposition* propComposition = qobject_cast<PropComposition*>(subWindow->widget());
-        propComposition->setCurrentClass(indexSource);
     }
 }
 
@@ -1196,7 +1164,6 @@ void ModelerIDEPlug::closeClassModel()
                 pluginManager->interfaceObject("IMainWindow"));
     foreach (QMdiSubWindow* subWindow, mainWindow->subWindowList())
         if (subWindow->widget()->objectName().indexOf(QRegExp("^PropClass::"))  != -1
-         || subWindow->widget()->objectName().indexOf(QRegExp("^PropComposition::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropFilter::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropEntityGroup::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropEntity::"))  != -1
