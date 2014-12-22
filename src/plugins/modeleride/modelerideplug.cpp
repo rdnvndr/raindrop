@@ -626,78 +626,7 @@ void ModelerIDEPlug::closePropWindow(const QModelIndex &index)
 void ModelerIDEPlug::newClassModel()
 {
     closeClassModel();
-    QDomDocument document;
-    QDomNode node = document.createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
-    document.insertBefore(node, document.firstChild());
-    createClassModel(document);
-
-
-    QModelIndex indexSource = treeClassView->currentIndex();
-    QModelIndex lastIndex = m_model->insertLastRows(0,1,indexSource,DBMODELXML::MODEL);
-    if (lastIndex.isValid()){
-        treeClassView->setCurrentIndex(lastIndex);
-
-        int column = m_model->columnDisplayedAttr(DBMODELXML::MODEL,
-                                                  DBMODELXML::NAME);
-        m_model->setData(lastIndex.sibling(lastIndex.row(),column),tr("Model"));
-
-        column = m_model->columnDisplayedAttr(DBMODELXML::MODEL,
-                                              DBMODELXML::ALIAS);
-        m_model->setData(lastIndex.sibling(lastIndex.row(),column),tr("Модель"));
-
-        indexSource = lastIndex;        
-        QModelIndex lastIndex = m_model->insertLastRows(0,1,indexSource,DBCLASSLISTXML::CLASSLIST);
-        if (lastIndex.isValid()){
-            treeClassView->setCurrentIndex(lastIndex);
-
-            int column = m_model->columnDisplayedAttr(DBCLASSLISTXML::CLASSLIST,
-                                                      DBCLASSLISTXML::NAME);
-            m_model->setData(lastIndex.sibling(lastIndex.row(),column),tr("Classes"));
-
-            column = m_model->columnDisplayedAttr(DBCLASSLISTXML::CLASSLIST,
-                                                  DBCLASSLISTXML::ALIAS);
-            m_model->setData(lastIndex.sibling(lastIndex.row(),column),tr("Классы"));
-        }
-
-        lastIndex = m_model->insertLastRows(0,1,indexSource,DBENTITYLISTXML::ENTITYLIST);
-        if (lastIndex.isValid()){
-            treeClassView->setCurrentIndex(lastIndex);
-
-            int column = m_model->columnDisplayedAttr(DBENTITYLISTXML::ENTITYLIST,
-                                                      DBENTITYLISTXML::NAME);
-            m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("Units"));
-
-            column = m_model->columnDisplayedAttr(DBENTITYLISTXML::ENTITYLIST,
-                                                  DBENTITYLISTXML::ALIAS);
-            m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("Единицы измерения"));
-        }
-
-        lastIndex = m_model->insertLastRows(0,1,indexSource, DBLOVLISTXML::LOVLIST);
-        if (lastIndex.isValid()){
-            treeClassView->setCurrentIndex(lastIndex);
-
-            int column = m_model->columnDisplayedAttr(DBLOVLISTXML::LOVLIST,
-                                                      DBLOVLISTXML::NAME);
-            m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("List of Value"));
-
-            column = m_model->columnDisplayedAttr(DBLOVLISTXML::LOVLIST,
-                                                  DBLOVLISTXML::ALIAS);
-            m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("Список значений"));
-        }
-
-        lastIndex = m_model->insertLastRows(0,1,indexSource, DBREFLISTXML::REFLIST);
-        if (lastIndex.isValid()){
-            treeClassView->setCurrentIndex(lastIndex);
-
-            int column = m_model->columnDisplayedAttr(DBREFLISTXML::REFLIST,
-                                                      DBREFLISTXML::NAME);
-            m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("References"));
-
-            column = m_model->columnDisplayedAttr(DBREFLISTXML::REFLIST,
-                                                  DBREFLISTXML::ALIAS);
-            m_model->setData(lastIndex.sibling(lastIndex.row(),column), tr("Справочники"));
-        }
-    }
+    createClassModel();
 }
 
 void ModelerIDEPlug::openClassModel()

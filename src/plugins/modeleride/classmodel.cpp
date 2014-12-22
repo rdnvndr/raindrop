@@ -1,5 +1,6 @@
 #include "classmodel.h"
 #include "dbxmlstruct.h"
+#include <treexmlmodel/tagxmlitem.h>
 
 ClassModel::ClassModel(QDomNode document, QObject *parent)
     : TreeXmlHashModel(document, parent)
@@ -11,6 +12,8 @@ ClassModel::ClassModel(QDomNode document, QObject *parent)
     initRelations();
 
     this->refreshHashing();
+
+    if (document.isNull()) initModel();
 }
 
 ClassModel::~ClassModel()
@@ -402,6 +405,62 @@ void ClassModel::initRelations()
     this->addRelation(DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::PARENT,
                                DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::ALIAS);
     this->addRelation(DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::REFFILTER,
-                               DBFILTERXML::FILTER, DBFILTERXML::NAME);
+                      DBFILTERXML::FILTER, DBFILTERXML::NAME);
+}
+
+void ClassModel::initModel()
+{
+    QModelIndex indexSource = this->index(-1,-1);
+    QModelIndex lastIndex = this->insertLastRows(0,1,indexSource,DBMODELXML::MODEL);
+    if (lastIndex.isValid()){
+        int column = this->columnDisplayedAttr(DBMODELXML::MODEL,
+                                                  DBMODELXML::NAME);
+        this->setData(lastIndex.sibling(lastIndex.row(),column),tr("Model"));
+        column = this->columnDisplayedAttr(DBMODELXML::MODEL,
+                                              DBMODELXML::ALIAS);
+        this->setData(lastIndex.sibling(lastIndex.row(),column),tr("Модель"));
+
+        indexSource = lastIndex;
+        QModelIndex lastIndex = this->insertLastRows(0,1,indexSource,DBCLASSLISTXML::CLASSLIST);
+        if (lastIndex.isValid()){
+            int column = this->columnDisplayedAttr(DBCLASSLISTXML::CLASSLIST,
+                                                      DBCLASSLISTXML::NAME);
+            this->setData(lastIndex.sibling(lastIndex.row(),column),tr("Classes"));
+            column = this->columnDisplayedAttr(DBCLASSLISTXML::CLASSLIST,
+                                                  DBCLASSLISTXML::ALIAS);
+            this->setData(lastIndex.sibling(lastIndex.row(),column),tr("Классы"));
+        }
+
+        lastIndex = this->insertLastRows(0,1,indexSource,DBENTITYLISTXML::ENTITYLIST);
+        if (lastIndex.isValid()){
+            int column = this->columnDisplayedAttr(DBENTITYLISTXML::ENTITYLIST,
+                                                      DBENTITYLISTXML::NAME);
+            this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Units"));
+            column = this->columnDisplayedAttr(DBENTITYLISTXML::ENTITYLIST,
+                                                  DBENTITYLISTXML::ALIAS);
+            this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Единицы измерения"));
+        }
+
+        lastIndex = this->insertLastRows(0,1,indexSource, DBLOVLISTXML::LOVLIST);
+        if (lastIndex.isValid()){
+            int column = this->columnDisplayedAttr(DBLOVLISTXML::LOVLIST,
+                                                      DBLOVLISTXML::NAME);
+            this->setData(lastIndex.sibling(lastIndex.row(),column), tr("List of Value"));
+            column = this->columnDisplayedAttr(DBLOVLISTXML::LOVLIST,
+                                                  DBLOVLISTXML::ALIAS);
+            this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Список значений"));
+        }
+
+        lastIndex = this->insertLastRows(0,1,indexSource, DBREFLISTXML::REFLIST);
+        if (lastIndex.isValid()){
+            int column = this->columnDisplayedAttr(DBREFLISTXML::REFLIST,
+                                                      DBREFLISTXML::NAME);
+            this->setData(lastIndex.sibling(lastIndex.row(),column), tr("References"));
+
+            column = this->columnDisplayedAttr(DBREFLISTXML::REFLIST,
+                                                  DBREFLISTXML::ALIAS);
+            this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Справочники"));
+        }
+    }
 }
 

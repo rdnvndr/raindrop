@@ -68,7 +68,7 @@ public:
     TreeXmlHashModel* model();
 
     //! Создание класса
-    void createClassModel(QDomDocument document);
+    void createClassModel(QDomDocument document = QDomDocument());
 
     //! Получение имени по индексу
     QString dataName(const QModelIndex &index);
