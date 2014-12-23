@@ -4,6 +4,7 @@
 #include <QLineEdit>
 
 #include <treexmlmodel/modifyproxymodel.h>
+#include <treexmlmodel/tablexmlproxymodel.h>
 #include <treecombobox/treecombobox.h>
 
 #include "dbxmlstruct.h"
@@ -18,54 +19,87 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
                                        &option, const QModelIndex &index) const
 {
     QString tag  = index.data(TreeXmlModel::TagRole).toString();
-
     const TreeXmlHashModel* hashModel = this->hashModel(index.model());
 
     if (hashModel) {
         QString attr = hashModel->displayedAttr(tag, index.column());
-        if ((tag == DBLINKTOFILTERXML::LINKTOFILTER
+
+        if (tag == DBLINKTOFILTERXML::LINKTOFILTER
                 && attr == DBLINKTOFILTERXML::REFFILTER)
-                || (tag == DBLINKTOCLASSXML::LINKTOCLASS
-                    && attr == DBLINKTOCLASSXML::REFCLASS))
         {
             TreeComboBox *comboBoxDestClass = new TreeComboBox(parent);
             comboBoxDestClass->setItemDelegate(new XmlDelegate());
-            QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(parent);
-            classFilterModel->setFilterKeyColumn(0);
-            classFilterModel->setFilterRole(TreeXmlModel::TagRole);
-            classFilterModel->setSourceModel(
-                        const_cast<QAbstractItemModel *>(
-                            dynamic_cast<const QAbstractItemModel*>(hashModel)));
-            if (tag == DBLINKTOFILTERXML::LINKTOFILTER) {
-                classFilterModel->setFilterRegExp(
-                            DBFILTERXML::FILTER + "|" +
-                            DBCLASSXML::CLASS + "|" +
-                            DBMODELXML::MODEL + "|" +
-                            DBCLASSLISTXML::CLASSLIST);
-            }  else {
-                classFilterModel->setFilterRegExp(
-                            DBCLASSXML::CLASS + "|" +
-                            DBMODELXML::MODEL + "|" +
-                            DBCLASSLISTXML::CLASSLIST);
-            }
+            TableXMLProxyModel* classFilterModel = new TableXMLProxyModel(parent);
+            QStringList tags;
+            tags << DBFILTERXML::FILTER;
+            classFilterModel->setAttributeTags(tags);
+            classFilterModel->setSourceModel(const_cast<QAbstractItemModel *>(
+                                                 dynamic_cast<const QAbstractItemModel*>(hashModel)));
+
+            QModelIndex srcParentIndex = rootClass(index);
+            classFilterModel->setFilterIndex(srcParentIndex);
+
             classFilterModel->setDynamicSortFilter(true);
             classFilterModel->sort(0);
 
             comboBoxDestClass->setModel(classFilterModel);
 
-            QModelIndex srcParentIndex = rootClass(index);
-            if (tag == DBLINKTOFILTERXML::LINKTOFILTER)
-                comboBoxDestClass->setIndexColumn(
-                            hashModel->columnDisplayedAttr(DBFILTERXML::FILTER,
-                                                           DBFILTERXML::ID));
-            else
-                comboBoxDestClass->setIndexColumn(
-                            hashModel->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                           DBATTRXML::ID));
+
+            comboBoxDestClass->setIndexColumn(
+                        hashModel->columnDisplayedAttr(DBFILTERXML::FILTER,
+                                                       DBFILTERXML::ID));
 
             if (srcParentIndex.isValid()) {
                 QModelIndex parentIndex = classFilterModel->mapFromSource(srcParentIndex);
                 comboBoxDestClass->setRootModelIndex(parentIndex);
+                comboBoxDestClass->setCurrentModelIndex(QModelIndex());
+            } else {
+                comboBoxDestClass->setRootModelIndex(
+                            classFilterModel->index(0,0).child(0,0));
+
+                comboBoxDestClass->setCurrentModelIndex(
+                            classFilterModel->index(0,0).child(0,0).child(0,0));
+            }
+            return comboBoxDestClass;
+        } else if (tag == DBLINKTOCLASSXML::LINKTOCLASS
+                    && attr == DBLINKTOCLASSXML::REFCLASS) {
+            TreeComboBox *comboBoxDestClass = new TreeComboBox(parent);
+            comboBoxDestClass->setItemDelegate(new XmlDelegate());
+
+            QSortFilterProxyModel *classFilterModel;
+            QModelIndex srcParentIndex = rootClass(index);
+            // если класс сцществует
+            if (srcParentIndex.isValid()) {
+                TableXMLProxyModel* tableFilterModel = new TableXMLProxyModel(parent);
+                QStringList tags;
+                tags << DBCLASSXML::CLASS;
+                tableFilterModel->setAttributeTags(tags);
+                tableFilterModel->setSourceModel(const_cast<QAbstractItemModel *>(
+                                                     dynamic_cast<const QAbstractItemModel*>(hashModel)));
+                tableFilterModel->setFilterIndex(srcParentIndex);
+                tableFilterModel->setDynamicSortFilter(true);
+                tableFilterModel->sort(0);
+                classFilterModel = tableFilterModel;
+            } else {
+                classFilterModel = new QSortFilterProxyModel(parent);
+                classFilterModel->setFilterKeyColumn(0);
+                classFilterModel->setFilterRole(TreeXmlModel::TagRole);
+                classFilterModel->setFilterRegExp(DBCLASSXML::CLASS + "|" +
+                                                  DBMODELXML::MODEL + "|" +
+                                                  DBCLASSLISTXML::CLASSLIST);
+                classFilterModel->setSourceModel(const_cast<QAbstractItemModel *>(
+                                                     dynamic_cast<const QAbstractItemModel*>(hashModel)));
+                classFilterModel->setDynamicSortFilter(true);
+                classFilterModel->sort(0);
+            }
+            comboBoxDestClass->setModel(classFilterModel);
+            comboBoxDestClass->setIndexColumn(
+                        hashModel->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                       DBATTRXML::ID));
+
+            if (srcParentIndex.isValid()) {
+                QModelIndex parentIndex = classFilterModel->mapFromSource(srcParentIndex);
+                comboBoxDestClass->setRootModelIndex(parentIndex.parent());
                 comboBoxDestClass->setCurrentModelIndex(QModelIndex());
             } else {
                 comboBoxDestClass->setRootModelIndex(
