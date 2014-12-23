@@ -52,7 +52,7 @@ bool TreeXmlHashModel::makeHashingData(const QModelIndex &index, QString &dataVa
                 if (tag  == childIndex.data(TreeXmlModel::TagRole).toString()
                         && childIndex != index)
                     if (upperValue(tag, attr, dataValue)
-                            == upperValue(tag, attr, childIndex.data().toString())) {
+                            == upperValue(tag, attr, childIndex.data(Qt::EditRole).toString())) {
                         if  (unique  == TreeXmlHashModel::UniqueParentRename
                                 ||  unique  == TreeXmlHashModel::UniqueParentUpperRename){
                             int position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
@@ -120,12 +120,6 @@ void TreeXmlHashModel::makeHashing(TagXmlItem *item, bool remove)
         makeHashing(childItem, remove);
         row++;
     }
-    /*
-    for (int row=0; row < item->count(tagsFilter()); row++) {
-        TagXmlItem *childItem = item->child(row,tagsFilter());
-        makeHashing(childItem, remove);
-    }
-    */
 }
 
 QModelIndex TreeXmlHashModel::indexHashAttr(const QString &tag, const QString &attr,
@@ -154,7 +148,7 @@ void TreeXmlHashModel::refreshHashingOne(const QModelIndex &index, bool remove)
     QString tag = index.data(TreeXmlModel::TagRole).toString();
     QString attr = displayedAttr(tag,index.column());
     if (m_hashAttr[tag].contains(attr)){
-        QString value = upperValue(tag, attr, index.data().toString());
+        QString value = upperValue(tag, attr, index.data(Qt::EditRole).toString());
         if (remove)
             m_hashValue[tag][attr].remove(value, toItem(index));
         else
