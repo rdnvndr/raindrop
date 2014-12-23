@@ -15,6 +15,10 @@ bool TableXMLProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) co
     if (!source_index.isValid())
         return true;
 
+    if (source_index.internalPointer() != m_index.internalPointer()
+            && parent == m_index.parent())
+        return false;
+
     if (parent.internalPointer() ==  m_index.internalPointer()){
         QString tag = sourceModel()->data(source_index, TreeXmlModel::TagRole).toString();
         foreach (const QString& tagName,this->m_tags)
