@@ -49,6 +49,12 @@ public:
     bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value,
                        int role = Qt::EditRole);
 
+    //! Установить фильтр для всех строк
+    void setFilterAllRows(bool enabled);
+
+    //! Проверка установлен ли фильтр для всех строк
+    bool isFilterAllRows() const;
+
     //! Возращает название заголовка
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
@@ -64,6 +70,9 @@ private:
 
     //! Список названий заголовков
     QMap<int, QString> m_header;
+
+    //! Флаг фильтра для всех строк
+    bool m_filterAllRows;
 };
 
 #endif // TABLEXMLPROXYMODEL_H

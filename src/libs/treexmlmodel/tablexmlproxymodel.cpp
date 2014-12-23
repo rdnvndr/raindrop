@@ -6,6 +6,7 @@
 TableXMLProxyModel::TableXMLProxyModel(QObject *parent): QSortFilterProxyModel(parent)
 {
     setDynamicSortFilter(true);
+    setFilterAllRows(false);
     m_columnCount = 0;
 }
 
@@ -33,6 +34,8 @@ bool TableXMLProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) co
             }
         return false;
     }
+
+    if (isFilterAllRows()) return QSortFilterProxyModel::filterAcceptsRow(row,parent);
 
     return true;
 }
@@ -94,4 +97,14 @@ bool TableXMLProxyModel::setHeaderData(int section, Qt::Orientation orientation,
 
     return true;
 
+}
+
+void TableXMLProxyModel::setFilterAllRows(bool enabled)
+{
+    m_filterAllRows = enabled;
+}
+
+bool TableXMLProxyModel::isFilterAllRows() const
+{
+    return m_filterAllRows;
 }
