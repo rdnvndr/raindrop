@@ -274,16 +274,14 @@ void ClassWidget::submit()
     }
 
     m_mapper->submit();
-    removeEmpty();
     edit(false);
     emit dataChanged(srcIndex);
+    removeEmpty();
 }
 
 void ClassWidget::revert()
 {
     m_mapper->revert();
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
-    setCurrent(srcIndex);
     removeEmpty();
     edit(false);
 }
@@ -323,9 +321,12 @@ void ClassWidget::removeEmpty()
 {
     if (lineEditClassName->text().isEmpty()){
         if (m_oldIndex>=0){
-            m_model->removeRow(m_mapper->currentIndex(),
-                               m_mapper->rootIndex());
-            setCurrent(m_mapper->rootIndex().child(m_oldIndex,0));
+            QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,
+                                                  m_mapper->rootIndex());
+            QModelIndex parent = srcIndex.parent();
+            setCurrent(parent);
+            m_model->removeRow(srcIndex.row(),srcIndex.parent());
+            setCurrent(parent.child(m_oldIndex,0));
             m_oldIndex = -1;
         }else {
             remove();
