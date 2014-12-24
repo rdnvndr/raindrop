@@ -93,21 +93,26 @@ bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex, const QModelIndex &des
 
     for (int i = 0; i<this->columnCount(srcIndex); i++) {
         QVariant value = srcIndex.sibling(srcIndex.row(), i).data(Qt::EditRole);
-        setData(index.sibling(index.row(), i), value);
+        if (!setData(index.sibling(index.row(), i), value)) {
+            removeRow(index.row(),destIndex);
+            return false;
+        }
     }
 
-    bool success = true;
     if (recursively && !isInherited(srcIndex)) {
         int row = 0;
         QModelIndex childIndex = srcIndex.child(row,0);
         while (childIndex.isValid())
         {
-            success = copyIndex(childIndex, index, row, recursively) && success;
+            if (!copyIndex(childIndex, index, row, recursively)) {
+                removeRow(index.row(),destIndex);
+                return false;
+            }
             childIndex = srcIndex.child(++row,0);
         }
     }
 
-    return success;
+    return true;
 }
 
 bool TreeXmlModel::isAttr(const QModelIndex &parent, QString tag) const
