@@ -264,9 +264,6 @@ void ClassModel::initHashAttrs()
                                 DBATTRXML::REFLOV,
                                 TreeXmlHashModel::NoUnique);
     this->addHashAttr(DBCOMPXML::COMP,
-                                DBCOMPXML::LINKCLASS,
-                                TreeXmlHashModel::UniqueParent);
-    this->addHashAttr(DBCOMPXML::COMP,
                                 DBCOMPXML::CLASS,
                                 TreeXmlHashModel::NoUnique);
     this->addHashAttr(DBCOMPXML::COMP,
