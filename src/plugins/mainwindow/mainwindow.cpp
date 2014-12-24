@@ -8,6 +8,7 @@
 #include "menubar.h"
 #include "menu.h"
 #include "toolbar.h"
+#include "mdisubwindow.h"
 
 MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
 {
@@ -423,10 +424,11 @@ QMdiSubWindow* MainWindow::addSubWindow(QWidget* widget)
         return NULL;
     }
 
-    QMdiSubWindow *subWindow = new QMdiSubWindow;
+    QMdiSubWindow *subWindow = new MdiSubWindow;
     subWindow->setWidget(widget);
-    mdiArea->addSubWindow(subWindow);
     widget->setParent(subWindow);
+    mdiArea->addSubWindow(subWindow);
+
     return subWindow;
 }
 
@@ -490,27 +492,26 @@ void MainWindow::showOptionsDialog()
     settings()->beginGroup("IMainWindow");
     settings()->setValue("state", saveState());
     settings()->endGroup();
-    if (!m_optionsDialog) {
-        m_optionsDialog = new MainWindowOptions(this);
-        m_optionsDialog->createActionsModel(&m_actions);
-        m_optionsDialog->createToolBarModel(this);
 
-        QMdiSubWindow *subWindow = addSubWindow(m_optionsDialog);
-        connect(subWindow,SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)),
-                this,SLOT(optionsDialogStateChanged(Qt::WindowStates,Qt::WindowStates)));
-        setEditedAllMenu(true);
+    m_optionsDialog = new MainWindowOptions(this);
+    m_optionsDialog->createActionsModel(&m_actions);
+    m_optionsDialog->createToolBarModel(this);
 
-        connect(m_optionsDialog,SIGNAL(accepted()),
-                this,SLOT(saveOptionsDialog()));
-        connect(m_optionsDialog,SIGNAL(rejected()),
-                this,SLOT(cancelOptionsDialog()));
+    QMdiSubWindow *subWindow = addSubWindow(m_optionsDialog);
+    connect(subWindow,SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)),
+            this,SLOT(optionsDialogStateChanged(Qt::WindowStates,Qt::WindowStates)));
+    setEditedAllMenu(true);
 
-        connect(m_optionsDialog->pushButtonCancel,SIGNAL(clicked()),
-                subWindow,SLOT(close()));
-        connect(m_optionsDialog->pushButtonSave,SIGNAL(clicked()),
-                subWindow,SLOT(close()));
-    } else
-        addSubWindow(m_optionsDialog);
+    connect(m_optionsDialog,SIGNAL(accepted()),
+            this,SLOT(saveOptionsDialog()));
+    connect(m_optionsDialog,SIGNAL(rejected()),
+            this,SLOT(cancelOptionsDialog()));
+
+    connect(m_optionsDialog->pushButtonCancel,SIGNAL(clicked()),
+            subWindow,SLOT(close()));
+    connect(m_optionsDialog->pushButtonSave,SIGNAL(clicked()),
+            subWindow,SLOT(close()));
+    addSubWindow(m_optionsDialog);
 
     m_optionsDialog->setIconSize(this->iconSize());
     m_optionsDialog->setIconStyle(this->toolButtonStyle());
