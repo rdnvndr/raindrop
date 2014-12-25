@@ -3,25 +3,25 @@
 
 TagXmlItem::TagXmlItem(QDomNode &node,TagXmlItem *parent): QObject(parent)
 {
-    domNode = node;
-    parentItem = parent;
+    m_domNode = node;
+    m_parentItem = parent;
 }
 
 TagXmlItem::~TagXmlItem()
 {
     emit destroyedItem(this);
-    qDeleteAll(childItems);
-    qDeleteAll(m_inherted);
+    qDeleteAll(m_childItems);
+    qDeleteAll(m_inherited);
 }
 
 QDomNode TagXmlItem::node() const
 {
-    return domNode;
+    return m_domNode;
 }
 
 QString TagXmlItem::nodeName() const
 {
-    return domNode.nodeName();
+    return m_domNode.nodeName();
 }
 
 bool TagXmlItem::isInherited()
@@ -37,34 +37,34 @@ bool TagXmlItem::isInherited()
 
 void TagXmlItem::removeInheritedItem(TagXmlItem *parent)
 {
-    m_inherted.remove(parent);
+    m_inherited.remove(parent);
 }
 
-int TagXmlItem::count(QStringList tags,QStringList parenttags){
+int TagXmlItem::count(QStringList tags, QStringList parentTags){
     int count = 0;
     // Поиск количества потомков
     if (!tags.empty())
-        for (QDomNode childNode = domNode.firstChild();!childNode.isNull();childNode = childNode.nextSibling())
+        for (QDomNode childNode = m_domNode.firstChild();!childNode.isNull();childNode = childNode.nextSibling())
         {
             QString nodeName = childNode.nodeName();
             if (tags.contains(nodeName))
                     count++;
         }
     else
-        count = domNode.childNodes().count();
+        count = m_domNode.childNodes().count();
 
     // Поиск количества наследуемых потомков
-    if (!parenttags.empty()){
+    if (!parentTags.empty()){
         // У наследуемых узлов потомков не отображать
-        QString nodeName = domNode.nodeName();
-        if (parenttags.contains(nodeName))
+        QString nodeName = m_domNode.nodeName();
+        if (parentTags.contains(nodeName))
                 return count;
 
         // Считаем количество унаследованных узлов
-        if (parentItem != NULL)
-            foreach (const QString &tag,parenttags)
+        if (m_parentItem != NULL)
+            foreach (const QString &tag,parentTags)
                 if (tags.contains(tag)){
-                    count += parent()->count(parenttags,parenttags);
+                    count += parent()->count(parentTags,parentTags);
                     break;
                 }
     }
@@ -72,31 +72,31 @@ int TagXmlItem::count(QStringList tags,QStringList parenttags){
     return count;
 }
 
-int TagXmlItem::hasChildren(QStringList tags, QStringList parenttags)
+int TagXmlItem::hasChildren(QStringList tags, QStringList parentTags)
 {
     // Поиск количества потомков
     if (!tags.empty())
-        for (QDomNode childNode = domNode.firstChild();!childNode.isNull();childNode = childNode.nextSibling())
+        for (QDomNode childNode = m_domNode.firstChild();!childNode.isNull();childNode = childNode.nextSibling())
         {
             QString nodeName = childNode.nodeName();
             if (tags.contains(nodeName))
                     return true;
         }
-    else if (!domNode.childNodes().isEmpty())
+    else if (!m_domNode.childNodes().isEmpty())
         return true;
 
     // Поиск количества наследуемых потомков
-    if (!parenttags.empty()){
+    if (!parentTags.empty()){
         // У наследуемых узлов потомков не отображать
-        QString nodeName = domNode.nodeName();
-        if (parenttags.contains(nodeName))
+        QString nodeName = m_domNode.nodeName();
+        if (parentTags.contains(nodeName))
                 return false;
 
         // Считаем количество унаследованных узлов
-        if (parentItem != NULL)
-            foreach (const QString &tag,parenttags)
+        if (m_parentItem != NULL)
+            foreach (const QString &tag,parentTags)
                 if (tags.contains(tag)){
-                    return parent()->hasChildren(parenttags,parenttags);
+                    return parent()->hasChildren(parentTags,parentTags);
                 }
     }
 
@@ -105,15 +105,15 @@ int TagXmlItem::hasChildren(QStringList tags, QStringList parenttags)
 
 TagXmlItem *TagXmlItem::parent()
 {
-    return parentItem;
+    return m_parentItem;
 }
 
-TagXmlItem *TagXmlItem::child(int i,QStringList tags, QStringList parenttags){
+TagXmlItem *TagXmlItem::child(int i, QStringList tags, QStringList parentTags){
 
     int number=0;
-    foreach (TagXmlItem *childItem, childItems){
+    foreach (TagXmlItem *childItem, m_childItems){
         if (!tags.empty()){
-            QString nodeName =  childItem->domNode.nodeName();
+            QString nodeName =  childItem->m_domNode.nodeName();
             if (tags.contains(nodeName)) {
                 if (i==number)
                     return childItem;
@@ -129,13 +129,13 @@ TagXmlItem *TagXmlItem::child(int i,QStringList tags, QStringList parenttags){
 
     // Поиск узла потомка
     number=0;
-    for (QDomNode childNode = domNode.firstChild();!childNode.isNull();childNode = childNode.nextSibling())
+    for (QDomNode childNode = m_domNode.firstChild();!childNode.isNull();childNode = childNode.nextSibling())
         if (!tags.empty()){
             QString nodeName = childNode.nodeName();
             if (tags.contains(nodeName)){
                 if (i==number){
                     TagXmlItem *childItem = new TagXmlItem(childNode, this);
-                    childItems.insert(i,childItem);
+                    m_childItems.insert(i,childItem);
                     return childItem;
                 }
                 number++;
@@ -143,32 +143,32 @@ TagXmlItem *TagXmlItem::child(int i,QStringList tags, QStringList parenttags){
         } else {
             if (i==number){
                 TagXmlItem *childItem = new TagXmlItem(childNode, this);
-                childItems.insert(i,childItem);
+                m_childItems.insert(i,childItem);
                 return childItem;
             }
             number++;
         }
 
     // Поиск наследуемого узла потомка
-    if (!parenttags.empty()){
+    if (!parentTags.empty()){
         // У наследуемых узлов потомков не отображаем
-        QString nodeName = domNode.nodeName();
-        if (parenttags.contains(nodeName))
+        QString nodeName = m_domNode.nodeName();
+        if (parentTags.contains(nodeName))
                 return 0;
 
         // Поиск наследуемого узла
-        if ((i-number)>=0 && parentItem!=NULL){
-            TagXmlItem *child = parentItem->child(i-number,parenttags,parenttags);
+        if ((i-number)>=0 && m_parentItem!=NULL){
+            TagXmlItem *child = m_parentItem->child(i-number,parentTags,parentTags);
             if (child) {
                 TagXmlItem *childItem;
-                if (!child->m_inherted.contains(this)) {
-                    childItem = new TagXmlItem(child->domNode, this);
-                    child->m_inherted.insert(this, childItem);
+                if (!child->m_inherited.contains(this)) {
+                    childItem = new TagXmlItem(child->m_domNode, this);
+                    child->m_inherited.insert(this, childItem);
                     connect(this, SIGNAL(destroyedItem(TagXmlItem*)),
                             child, SLOT(removeInheritedItem(TagXmlItem*)));
 
                 } else
-                    childItem = child->m_inherted.value(this);
+                    childItem = child->m_inherited.value(this);
 
                 return childItem;
             }
@@ -179,37 +179,37 @@ TagXmlItem *TagXmlItem::child(int i,QStringList tags, QStringList parenttags){
     return 0;
 }
 
-int TagXmlItem::childNumber(TagXmlItem *child,QStringList tags, QStringList parenttags)
+int TagXmlItem::childNumber(TagXmlItem *child, QStringList tags, QStringList parentTags)
 {
     int count = 0;
     // Поиск количества потомков
 
-    for (QDomNode childNode = domNode.firstChild();!childNode.isNull();childNode = childNode.nextSibling())
+    for (QDomNode childNode = m_domNode.firstChild();!childNode.isNull();childNode = childNode.nextSibling())
     {
         if (!tags.empty()){
             QString nodeName = childNode.nodeName();
             if (tags.contains(nodeName)){
-                if (child->domNode == childNode)
+                if (child->m_domNode == childNode)
                     return count;
                 count++;
             }
         }else{
-            if (child->domNode == childNode)
+            if (child->m_domNode == childNode)
                 return count;
             count++;
         }
     }
 
     // Поиск количества наследуемых потомков
-    if (!parenttags.empty()){
+    if (!parentTags.empty()){
         // У наследуемых узлов потомков не отображать
-        QString nodeName = domNode.nodeName();
-        if (parenttags.contains(nodeName))
+        QString nodeName = m_domNode.nodeName();
+        if (parentTags.contains(nodeName))
             return -1;
 
         // Считаем количество унаследованных узлов
-        if (parentItem != NULL){
-            int number = parent()->childNumber(child,parenttags,parenttags);
+        if (m_parentItem != NULL){
+            int number = parent()->childNumber(child,parentTags,parentTags);
             if (number!=-1)
                 return count + number;
         }
@@ -218,22 +218,22 @@ int TagXmlItem::childNumber(TagXmlItem *child,QStringList tags, QStringList pare
     return -1;
 }
 
-bool TagXmlItem::insertChild(const QString &tagname)
+bool TagXmlItem::insertChild(const QString &tagName)
 {
-    QDomElement node = domNode.ownerDocument().createElement(tagname);
+    QDomElement node = m_domNode.ownerDocument().createElement(tagName);
 
     if  (node.isNull())
         return false;
 
-    domNode.appendChild(node);
+    m_domNode.appendChild(node);
     TagXmlItem *childItem = new TagXmlItem(node, this);
-    childItems.append(childItem);
+    m_childItems.append(childItem);
     return true;
 }
 
 QVariant TagXmlItem::value(const QString& attr)
 {
-    QDomNamedNodeMap attributeMap = domNode.attributes();
+    QDomNamedNodeMap attributeMap = m_domNode.attributes();
     QString value = attributeMap.namedItem(attr).nodeValue();
 
     if (value == QString("true"))
@@ -247,43 +247,43 @@ QVariant TagXmlItem::value(const QString& attr)
 
 void TagXmlItem::setValue(const QString& attr, const QVariant &val)
 {
-    domNode.toElement().setAttribute(attr,val.toString());
+    m_domNode.toElement().setAttribute(attr,val.toString());
 }
 
-bool TagXmlItem::insertChild(const QString& tagname, int i, QStringList tags, QStringList parenttags)
+bool TagXmlItem::insertChild(const QString& tagName, int i, QStringList tags, QStringList parentTags)
 {
-    TagXmlItem *afterItem = child(i, tags, parenttags);
-    if (!afterItem) return insertChild(tagname);
+    TagXmlItem *afterItem = child(i, tags, parentTags);
+    if (!afterItem) return insertChild(tagName);
 
     TagXmlItem *parentItem = afterItem->parent();
     if (!parentItem) return false;
 
     if (this->node() != afterItem->node().parentNode())
-        return insertChild(tagname);
+        return insertChild(tagName);
 
-    QDomElement node = domNode.ownerDocument().createElement(tagname);
+    QDomElement node = m_domNode.ownerDocument().createElement(tagName);
 
     if  (node.isNull())
         return false;
 
-    domNode.insertBefore(node, afterItem->node());
+    m_domNode.insertBefore(node, afterItem->node());
     TagXmlItem *childItem = new TagXmlItem(node, this);
-    childItems.insert(parentItem->childItems.indexOf(afterItem), childItem);
+    m_childItems.insert(parentItem->m_childItems.indexOf(afterItem), childItem);
     return true;
 }
 
 bool TagXmlItem::removeChild(const int &row)
 { 
     TagXmlItem *childItem = child(row);
-    domNode.removeChild(childItem->node());
-    delete childItems.takeAt(row);
+    m_domNode.removeChild(childItem->node());
+    delete m_childItems.takeAt(row);
 
     return true;
 }
 
 bool TagXmlItem::checkRemoveChild(const int &row){
 
-    if (childItems.count() > row)
+    if (m_childItems.count() > row)
             return true;
 
     return false;
