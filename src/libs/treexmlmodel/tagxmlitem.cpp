@@ -9,7 +9,9 @@ TagXmlItem::TagXmlItem(QDomNode &node,TagXmlItem *parent)
 
 TagXmlItem::~TagXmlItem()
 {
+    emit destroyedItem(this);
     qDeleteAll(childItems);
+    qDeleteAll(m_inherted);
 }
 
 QDomNode TagXmlItem::node() const
@@ -31,6 +33,11 @@ bool TagXmlItem::isInherited()
         return true;
 
     return false;
+}
+
+void TagXmlItem::removeInheritedItem(TagXmlItem *parent)
+{
+    m_inherted.remove(parent);
 }
 
 int TagXmlItem::count(QStringList tags,QStringList parenttags){
@@ -153,9 +160,20 @@ TagXmlItem *TagXmlItem::child(int i,QStringList tags, QStringList parenttags){
         if ((i-number)>=0 && parentItem!=NULL){
             TagXmlItem *child = parentItem->child(i-number,parenttags,parenttags);
             if (child) {
-                TagXmlItem *childItem = new TagXmlItem(child->domNode, this);
+                TagXmlItem *childItem;
+                if (!child->m_inherted.contains(this)) {
+                    childItem = new TagXmlItem(child->domNode, this);
+                    child->m_inherted.insert(this, childItem);
+                    connect(this, SIGNAL(destroyedItem(TagXmlItem*)),
+                            child, SLOT(removeInheritedItem(TagXmlItem*)));
+
+                } else {
+                    childItem = child->m_inherted.value(this);
+                    childItem->domNode = child->node();
+                }
                 return childItem;
             }
+
         }
     }
 
