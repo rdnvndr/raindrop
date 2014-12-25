@@ -1,7 +1,7 @@
 #include <QtXml>
 #include "tagxmlitem.h"
 
-TagXmlItem::TagXmlItem(QDomNode &node,TagXmlItem *parent)
+TagXmlItem::TagXmlItem(QDomNode &node,TagXmlItem *parent): QObject(parent)
 {
     domNode = node;
     parentItem = parent;
