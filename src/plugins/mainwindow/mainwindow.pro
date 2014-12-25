@@ -30,7 +30,8 @@ HEADERS += \
     hotkeylineedit.h \
     hotkeydelegate.h \
     iconsizespinbox.h \
-    actiongrouptreeview.h
+    actiongrouptreeview.h \
+    mdisubwindow.h
 SOURCES += \
            mainwindow.cpp \
     menubar.cpp \
@@ -45,7 +46,8 @@ SOURCES += \
     hotkeylineedit.cpp \
     hotkeydelegate.cpp \
     iconsizespinbox.cpp \
-    actiongrouptreeview.cpp
+    actiongrouptreeview.cpp \
+    mdisubwindow.cpp
 
 FORMS += \
            mainwindow.ui \
