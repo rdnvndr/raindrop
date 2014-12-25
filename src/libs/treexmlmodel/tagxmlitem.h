@@ -3,11 +3,15 @@
 
 #include <QDomNode>
 #include <QHash>
+#include <QMap>
 #include "treexmlmodelglobal.h"
+#include <QObject>
+#include <QStringList>
 
 //! Класс узла дерева TreeXMLModel
-class XMLMODELLIB TagXmlItem
+class XMLMODELLIB TagXmlItem: public QObject
 {
+    Q_OBJECT
 public:
     //! Конструктор узла дерева
     TagXmlItem(QDomNode &node, TagXmlItem *parent = 0);
@@ -56,6 +60,15 @@ public:
 
     //! Возращает True если унаследован
     bool isInherited();
+
+signals:
+    //! Сигнал об уничтожении объекта
+    void destroyedItem(TagXmlItem* item);
+
+public slots:
+    //! Удаление наследуемого узла из списка
+    void removeInheritedItem(TagXmlItem* parent);
+
 private:
     //! Тэг
     QDomNode domNode;
@@ -65,6 +78,9 @@ private:
 
     //! Список потомков
     QList<TagXmlItem*> childItems;
+
+    //! Список наследников
+    QMap<TagXmlItem*, TagXmlItem*> m_inherted;
 };
 
 #endif
