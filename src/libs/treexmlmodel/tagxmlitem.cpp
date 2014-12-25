@@ -167,10 +167,9 @@ TagXmlItem *TagXmlItem::child(int i,QStringList tags, QStringList parenttags){
                     connect(this, SIGNAL(destroyedItem(TagXmlItem*)),
                             child, SLOT(removeInheritedItem(TagXmlItem*)));
 
-                } else {
+                } else
                     childItem = child->m_inherted.value(this);
-                    childItem->domNode = child->node();
-                }
+
                 return childItem;
             }
 
