@@ -9,6 +9,7 @@ DEFINES += \
 
 # Save Version
 win32 {
+   QMAKE_CXXFLAGS += -wd4566
    HEADERS += version.h
    version.commands = $$replace(PWD,"/","\\")\\scripts\\version.bat
 }
