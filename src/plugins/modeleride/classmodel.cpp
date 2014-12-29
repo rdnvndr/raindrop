@@ -43,6 +43,7 @@ void ClassModel::initTagFilters()
     this->addTagFilter(DBREFXML::REF);
     this->addTagFilter(DBLINKTOCLASSXML::LINKTOCLASS);
     this->addTagFilter(DBLINKTOFILTERXML::LINKTOFILTER);
+    this->addTagFilter(DBLINKTOCOMPXML::LINKTOCOMP);
 }
 
 void ClassModel::initDisplayedAttrs()
@@ -174,6 +175,12 @@ void ClassModel::initDisplayedAttrs()
                       << DBLINKTOFILTERXML::PARENT << DBLINKTOFILTERXML::ID;
     this->addDisplayedAttr(DBLINKTOFILTERXML::LINKTOFILTER,
                               propsLinkToFilter, QIcon(":/filter"));
+
+    QStringList propsLinkToComp;
+    propsLinkToComp << DBLINKTOCOMPXML::ALIAS  << DBLINKTOCOMPXML::REFCOMP
+                    << DBLINKTOCOMPXML::PARENT << DBLINKTOCOMPXML::ID;
+    this->addDisplayedAttr(DBLINKTOCOMPXML::LINKTOCOMP,
+                           propsLinkToComp, QIcon(":/composition"));
 }
 
 void ClassModel::initInsertTags()
@@ -238,12 +245,16 @@ void ClassModel::initInsertTags()
     this->addInsertTags(DBREFXML::REF,insertTags);
 
     insertTags.clear();
-    insertTags << DBLINKTOFILTERXML::LINKTOFILTER;
+    insertTags << DBLINKTOFILTERXML::LINKTOFILTER << DBLINKTOCOMPXML::LINKTOCOMP;
     this->addInsertTags(DBLINKTOCLASSXML::LINKTOCLASS,insertTags);
 
     insertTags.clear();
     insertTags << DBLINKTOCLASSXML::LINKTOCLASS;
     this->addInsertTags(DBLINKTOFILTERXML::LINKTOFILTER,insertTags);
+
+    insertTags.clear();
+    insertTags << DBLINKTOCLASSXML::LINKTOCLASS;
+    this->addInsertTags(DBLINKTOCOMPXML::LINKTOCOMP,insertTags);
 }
 
 void ClassModel::initHashAttrs()
@@ -343,6 +354,9 @@ void ClassModel::initHashAttrs()
     this->addHashAttr(DBLINKTOFILTERXML::LINKTOFILTER,
                                 DBLINKTOFILTERXML::ID,
                          TreeXmlHashModel::Uuid);
+    this->addHashAttr(DBLINKTOCOMPXML::LINKTOCOMP,
+                                DBLINKTOCOMPXML::ID,
+                         TreeXmlHashModel::Uuid);
 }
 
 void ClassModel::initRelations()
@@ -396,6 +410,8 @@ void ClassModel::initRelations()
                                DBREFGROUPXML::REFGROUP, DBREFGROUPXML::NAME);
     this->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::PARENT,
                                DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::ALIAS);
+    this->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::PARENT,
+                               DBLINKTOCOMPXML::LINKTOCOMP, DBLINKTOCOMPXML::ALIAS);
     this->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::REFCLASS,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
 
@@ -403,6 +419,11 @@ void ClassModel::initRelations()
                                DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::ALIAS);
     this->addRelation(DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::REFFILTER,
                       DBFILTERXML::FILTER, DBFILTERXML::NAME);
+
+    this->addRelation(DBLINKTOCOMPXML::LINKTOCOMP, DBLINKTOCOMPXML::PARENT,
+                               DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::ALIAS);
+    this->addRelation(DBLINKTOCOMPXML::LINKTOCOMP, DBLINKTOCOMPXML::REFCOMP,
+                      DBCOMPXML::COMP, DBCOMPXML::LINKCLASS);
 }
 
 void ClassModel::initModel()

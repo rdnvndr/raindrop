@@ -31,6 +31,9 @@ public:
     //! Возращает имя узла
     QString nodeName() const;
 
+    //! Устанавливает имя узла
+    void setNodeName(const QString& tagName);
+
     //! Возращает значение атрибута тэга
     QVariant value(const QString& attr);
 

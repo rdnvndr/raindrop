@@ -24,6 +24,11 @@ QString TagXmlItem::nodeName() const
     return m_domNode.nodeName();
 }
 
+void TagXmlItem::setNodeName(const QString &tagName)
+{
+    m_domNode.toElement().setTagName(tagName);
+}
+
 bool TagXmlItem::isInherited()
 {
     QDomNode parentNode1 = node().parentNode();
