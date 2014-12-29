@@ -260,7 +260,7 @@ QVariant TreeXmlHashModel::data(const QModelIndex &index, int role) const
 bool TreeXmlHashModel::setData(const QModelIndex &index, const QVariant &value,
                            int role)
 {
-    if (role != Qt::EditRole) return false;
+    if (role != Qt::EditRole && role != TreeXmlModel::TagRole) return false;
 
     TagXmlItem *item = toItem(index);
     QString attrName = displayedAttr(item->nodeName(),index.column());

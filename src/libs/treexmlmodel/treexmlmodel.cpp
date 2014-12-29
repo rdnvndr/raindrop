@@ -268,9 +268,14 @@ void TreeXmlModel::updateModifyRow(int emptyRowAttr, const QModelIndex &parent, 
 bool TreeXmlModel::setData(const QModelIndex &index, const QVariant &value,
                            int role)
 {
-    if (role != Qt::EditRole) return false;
+    if (role != Qt::EditRole && role != TreeXmlModel::TagRole) return false;
 
     TagXmlItem *item = toItem(index);
+
+    if (role == TreeXmlModel::TagRole) {
+        item->setNodeName(value.toString());
+        return true;
+    }
 
     if (index.column()>=m_displayedAttr[item->nodeName()].count())
         return false;
