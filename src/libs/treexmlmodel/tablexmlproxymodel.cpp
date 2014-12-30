@@ -49,7 +49,8 @@ bool TableXMLProxyModel::lessThan(const QModelIndex &left, const QModelIndex &ri
         parent = right.parent();
     else return false;
 
-    if (parent ==  m_index.sibling(m_index.row(),sortColumn()))
+    if (parent.internalPointer() ==
+            m_index.sibling(m_index.row(),sortColumn()).internalPointer())
         return QSortFilterProxyModel::lessThan(left,right);
 
     return false;
