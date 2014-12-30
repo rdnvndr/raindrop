@@ -40,6 +40,21 @@ bool TableXMLProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) co
     return true;
 }
 
+bool TableXMLProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
+{
+    QModelIndex parent;
+    if (left.isValid()){
+        parent = left.parent();
+    } else if (right.isValid())
+        parent = right.parent();
+    else return false;
+
+    if (parent ==  m_index.sibling(m_index.row(),sortColumn()))
+        return QSortFilterProxyModel::lessThan(left,right);
+
+    return false;
+}
+
 void TableXMLProxyModel::setFilterIndex(const QModelIndex &parent)
 {
     m_index = parent;
