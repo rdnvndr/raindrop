@@ -27,6 +27,9 @@ public:
     //! Метод который определяет отображать ли указанную строку
     virtual bool filterAcceptsRow (int row, const QModelIndex &parent) const;
 
+    //! Метод который определяет сортировку
+    virtual bool lessThan(const QModelIndex & left, const QModelIndex & right) const;
+
     //! Устанавливает индекс модели, в которой будут отображаться только атрибуты
     void setFilterIndex(const QModelIndex &parent);
 
