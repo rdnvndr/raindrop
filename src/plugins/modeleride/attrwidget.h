@@ -8,6 +8,7 @@
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 
+#include "attrgroupproxymodel.h"
 
 //! Диалог редактирования атрибутов класса
 /*! Диалог предназначен для редактирования атрибутов класса
@@ -92,6 +93,9 @@ private:
 
     //! Прокси модель для атрибутов класса
     TableXMLProxyModel* m_attrModel;
+
+    //! Прокси модель для групп атрибутов класса
+    AttrGroupProxyModel *m_attrGroupModel;
 
     //! Модель структуры классов
     TreeXmlHashModel* m_model;
