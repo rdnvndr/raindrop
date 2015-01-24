@@ -27,6 +27,9 @@ AttrWidget::AttrWidget(QWidget *parent) :
     tags << DBATTRXML::ATTR;
     m_attrModel->setAttributeTags(tags);
 
+    m_attrGroupModel = new AttrGroupProxyModel;
+    m_attrGroupModel->setAttributeTags(tags);
+
     m_typeAttrModel = new QStringListModel();
     const QStringList attrTypeList = (QStringList()
                                        << DBTYPEXML::BOOLEAN
@@ -73,7 +76,8 @@ AttrWidget::~AttrWidget()
 
     delete m_typeAttrModel;
     delete m_mapperAttr;
-    delete m_attrModel;
+    delete m_attrGroupModel;
+    delete m_attrModel;    
 }
 
 void AttrWidget::setModel(TreeXmlHashModel *model)
@@ -104,6 +108,14 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     tableViewAttr->setColumnHidden(15,true);
 
     m_mapperAttr->setModel(m_attrModel);
+
+    m_attrGroupModel->setSourceModel(m_model);
+    m_attrGroupModel->setDynamicSortFilter(true);
+    int groupColumn = m_model->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::GROUP);
+    comboBoxAttrGroup->setModel(m_attrGroupModel);
+    comboBoxAttrGroup->setModelColumn(groupColumn);
+    m_attrGroupModel->sort(groupColumn);
+    m_attrGroupModel->setUniqueColumn(groupColumn);
 
     TableXMLProxyModel* lovFilterModel = new TableXMLProxyModel(this);
     QStringList tags;
@@ -146,8 +158,8 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
                                      DBENTITYGROUPXML::ENTITYGROUP + "|" +
                                      DBENTITYXML::ENTITY);
     unitFilterModel->setSourceModel(m_model);
-    unitFilterModel->setDynamicSortFilter(true);
-    unitFilterModel->sort(0);
+    unitFilterModel->setDynamicSortFilter(false);
+//    unitFilterModel->sort(0);
 
     comboBoxUnitAttr->setModel(unitFilterModel);
     comboBoxUnitAttr->setRootModelIndex(unitFilterModel->index(0,0).child(0,0));
@@ -192,7 +204,8 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
                                                          DBATTRXML::ALIAS));
     m_mapperAttr->addMapping(comboBoxAttrGroup,
                              m_model->columnDisplayedAttr(DBATTRXML::ATTR,
-                                                         DBATTRXML::GROUP));
+                                                         DBATTRXML::GROUP),
+                             "currentText");
     m_mapperAttr->addMapping(comboBoxUnitAttr,
                              m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::REFUNIT));
@@ -209,23 +222,11 @@ void AttrWidget::setRootIndex(const QModelIndex &index)
     if (rootIndex == index)
         return;
 
+    m_attrGroupModel->setFilterIndex(index);
+    comboBoxAttrGroup->setRootModelIndex(m_attrGroupModel->mapFromSource(index));
+
     m_attrModel->setFilterIndex(index);
-    for (int row=0;row<comboBoxAttrGroup->count();row++)
-        comboBoxAttrGroup->removeItem(row);
-
-    QModelIndex srcIndex = m_attrModel->mapFromSource(index);
-    int groupColumn = m_model->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::GROUP);
-    int row = 0;
-    QModelIndex srcChildIndex = srcIndex.child(row, groupColumn);
-    while (srcChildIndex.isValid())
-    {
-        QString insText = srcChildIndex.data().toString();
-        if (comboBoxAttrGroup->findText(insText)==-1)
-            comboBoxAttrGroup->addItem(insText);
-        srcChildIndex = srcIndex.child(++row, groupColumn);
-    }
-
-    m_attrModel->setSourceModel(m_model);
+//    m_attrModel->setSourceModel(m_model);
     tableViewAttr->setRootIndex(m_attrModel->mapFromSource(index));
     tableViewAttr->setCurrentIndex(tableViewAttr->rootIndex().child(0,0));
     m_mapperAttr->setRootIndex(m_attrModel->mapFromSource(index));
@@ -494,7 +495,5 @@ void AttrWidget::setCurrent(const QModelIndex &index)
 
     m_mapperAttr->setCurrentModelIndex(index);
 
-    comboBoxAttrGroup->setEditText(modelData(DBATTRXML::ATTR,DBATTRXML::GROUP,
-                                                     index).toString());
     emit currentIndexChanged(index);
 }
