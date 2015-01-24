@@ -28,7 +28,7 @@ DialogConnect::DialogConnect(QWidget* pwgt) : QDialog(pwgt) {
     drivers.removeAll("QODBC3");
     //drivers.removeAll("QODBC");
     //drivers.removeAll("QPSQL");
-    drivers.removeAll("QIBASE");
+    //drivers.removeAll("QIBASE");
 
     comboDriver->addItems(drivers);
 
