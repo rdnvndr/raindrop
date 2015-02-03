@@ -27,8 +27,7 @@ AttrWidget::AttrWidget(QWidget *parent) :
     tags << DBATTRXML::ATTR;
     m_attrModel->setAttributeTags(tags);
 
-    m_attrGroupModel = new AttrGroupProxyModel;
-//    m_attrGroupModel->setAttributeTags(tags);
+    m_attrGroupModel = new AttrGroupProxyModel();
 
     m_typeAttrModel = new QStringListModel();
     const QStringList attrTypeList = (QStringList()
@@ -109,7 +108,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
 
     m_mapperAttr->setModel(m_attrModel);
 
-    m_attrGroupModel->setSourceModel(m_model);
+    m_attrGroupModel->setModel(m_attrModel);
     comboBoxAttrGroup->setModel(m_attrGroupModel);
 
     TableXMLProxyModel* lovFilterModel = new TableXMLProxyModel(this);
@@ -199,8 +198,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
                                                          DBATTRXML::ALIAS));
     m_mapperAttr->addMapping(comboBoxAttrGroup,
                              m_model->columnDisplayedAttr(DBATTRXML::ATTR,
-                                                         DBATTRXML::GROUP),
-                             "currentText");
+                                                         DBATTRXML::GROUP));
     m_mapperAttr->addMapping(comboBoxUnitAttr,
                              m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::REFUNIT));
@@ -217,16 +215,16 @@ void AttrWidget::setRootIndex(const QModelIndex &index)
     if (rootIndex == index)
         return;
 
-    m_attrGroupModel->setRootModelIndex(index);
-
     m_attrModel->setFilterIndex(index);
+    QModelIndex attrIndex = m_attrModel->mapFromSource(index);
     int groupColumn = m_model->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::GROUP);
     m_attrGroupModel->setUniqueColumn(groupColumn);
-
+    m_attrGroupModel->setRootModelIndex(attrIndex);
     m_attrGroupModel->reset();
-    tableViewAttr->setRootIndex(m_attrModel->mapFromSource(index));
+
+    tableViewAttr->setRootIndex(attrIndex);
     tableViewAttr->setCurrentIndex(tableViewAttr->rootIndex().child(0,0));
-    m_mapperAttr->setRootIndex(m_attrModel->mapFromSource(index));
+    m_mapperAttr->setRootIndex(attrIndex);
 
     this->setCurrent(tableViewAttr->rootIndex().child(0,0));
 }

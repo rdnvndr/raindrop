@@ -1,8 +1,7 @@
 #ifndef ATTRGROUPPROXYMODEL_H
 #define ATTRGROUPPROXYMODEL_H
 
-#include <treexmlmodel/tablexmlproxymodel.h>
-#include <QStringListModel>
+#include <QAbstractListModel>
 
 class AttrGroupProxyModel : public QAbstractListModel
 {
@@ -22,13 +21,10 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
     //! Установка модели источника
-    void setSourceModel(QAbstractItemModel *srcModel);
+    void setModel(QAbstractItemModel *srcModel);
 
     //! Получение модели источника
     QAbstractItemModel *sourceModel() const;
-
-    //! Инициализация модели
-    void reset();
 
     //! Установка корневого индекса
     void setRootModelIndex(const QModelIndex &index);
@@ -41,6 +37,10 @@ public:
 
     //! Возращает столбец с уникальными значениями
     int uniqueColumn() const;
+
+public slots:
+    //! Инициализация модели
+    void reset();
 
 private:
     int m_uniqueColumn;
