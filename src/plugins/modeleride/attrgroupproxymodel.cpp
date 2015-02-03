@@ -22,14 +22,18 @@ int AttrGroupProxyModel::rowCount(const QModelIndex &parent) const
 
 QVariant AttrGroupProxyModel::data(const QModelIndex &index, int role) const
 {
-    if (index.isValid() && role == Qt::DisplayRole)
+    if (index.isValid() && (role == Qt::DisplayRole || role == Qt::EditRole))
         return m_list.at(index.row());
     return QVariant();
 }
 
-void AttrGroupProxyModel::setSourceModel(QAbstractItemModel *srcModel)
+void AttrGroupProxyModel::setModel(QAbstractItemModel *srcModel)
 {
     m_model = srcModel;
+    connect(srcModel, SIGNAL(rowsRemoved(QModelIndex,int,int)),
+            this, SLOT(reset()));
+    connect(srcModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+            this, SLOT(reset()));
 }
 
 QAbstractItemModel *AttrGroupProxyModel::sourceModel() const
@@ -49,14 +53,25 @@ QModelIndex AttrGroupProxyModel::rootModelIndex()
 
 void AttrGroupProxyModel::reset()
 {
-    m_list.clear();
     int row = 0;
+    int count = m_list.count();
+
+    beginRemoveRows(QModelIndex(), 0, count-1);
+    m_list.clear();
+    endRemoveRows();
+
     QModelIndex childIndex = m_model->index(row, m_uniqueColumn, m_rootIndex);
+    QSet<QString> hash;
     while (childIndex.isValid())
     {
-        m_list << childIndex.data().toString();
+        QString nameGroup = childIndex.data().toString();
+        if (!nameGroup.isEmpty()) hash.insert(nameGroup);
         childIndex = m_model->index(++row, m_uniqueColumn, m_rootIndex);
     }
+
+    beginInsertRows(QModelIndex(), 0, m_list.count()-1);
+    m_list = hash.toList();
+    endInsertRows();
 }
 
 void AttrGroupProxyModel::setUniqueColumn(int column)
