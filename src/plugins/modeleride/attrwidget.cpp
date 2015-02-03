@@ -28,7 +28,7 @@ AttrWidget::AttrWidget(QWidget *parent) :
     m_attrModel->setAttributeTags(tags);
 
     m_attrGroupModel = new AttrGroupProxyModel;
-    m_attrGroupModel->setAttributeTags(tags);
+//    m_attrGroupModel->setAttributeTags(tags);
 
     m_typeAttrModel = new QStringListModel();
     const QStringList attrTypeList = (QStringList()
@@ -110,12 +110,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     m_mapperAttr->setModel(m_attrModel);
 
     m_attrGroupModel->setSourceModel(m_model);
-    m_attrGroupModel->setDynamicSortFilter(true);
-    int groupColumn = m_model->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::GROUP);
     comboBoxAttrGroup->setModel(m_attrGroupModel);
-    comboBoxAttrGroup->setModelColumn(groupColumn);
-    m_attrGroupModel->sort(groupColumn);
-    m_attrGroupModel->setUniqueColumn(groupColumn);
 
     TableXMLProxyModel* lovFilterModel = new TableXMLProxyModel(this);
     QStringList tags;
@@ -222,11 +217,13 @@ void AttrWidget::setRootIndex(const QModelIndex &index)
     if (rootIndex == index)
         return;
 
-    m_attrGroupModel->setFilterIndex(index);
-    comboBoxAttrGroup->setRootModelIndex(m_attrGroupModel->mapFromSource(index));
+    m_attrGroupModel->setRootModelIndex(index);
 
     m_attrModel->setFilterIndex(index);
-//    m_attrModel->setSourceModel(m_model);
+    int groupColumn = m_model->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::GROUP);
+    m_attrGroupModel->setUniqueColumn(groupColumn);
+
+    m_attrGroupModel->reset();
     tableViewAttr->setRootIndex(m_attrModel->mapFromSource(index));
     tableViewAttr->setCurrentIndex(tableViewAttr->rootIndex().child(0,0));
     m_mapperAttr->setRootIndex(m_attrModel->mapFromSource(index));
