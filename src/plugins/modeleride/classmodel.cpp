@@ -357,10 +357,15 @@ void ClassModel::initHashAttrs()
     this->addHashAttr(DBLINKTOCOMPXML::LINKTOCOMP,
                                 DBLINKTOCOMPXML::ID,
                          TreeXmlHashModel::Uuid);
+    this->addHashAttr(DBCLASSLISTXML::CLASSLIST,
+                                DBCLASSLISTXML::ID,
+                                TreeXmlHashModel::Uuid);
 }
 
 void ClassModel::initRelations()
 {
+    this->addRelation(DBATTRXML::ATTR,DBATTRXML::PARENT,
+                               DBCLASSLISTXML::CLASSLIST, DBCLASSLISTXML::NAME);
     this->addRelation(DBATTRXML::ATTR,DBATTRXML::REFCLASS,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
     this->addRelation(DBATTRXML::ATTR,DBATTRXML::PARENT,
@@ -373,7 +378,9 @@ void ClassModel::initRelations()
                                DBLOVXML::LOV, DBLOVXML::NAME);
 
     this->addRelation(DBCLASSXML::CLASS, DBCLASSXML::PARENT,
-                               DBCLASSXML::CLASS, DBCLASSXML::NAME);
+                      DBCLASSXML::CLASS, DBCLASSXML::NAME);
+    this->addRelation(DBCLASSXML::CLASS, DBCLASSXML::PARENT,
+                      DBCLASSLISTXML::CLASSLIST, DBCLASSLISTXML::NAME);
 
     this->addRelation(DBCOMPXML::COMP, DBCOMPXML::PARENT,
                                DBCLASSXML::CLASS, DBCLASSXML::NAME);
@@ -447,6 +454,33 @@ void ClassModel::initModel()
             column = this->columnDisplayedAttr(DBCLASSLISTXML::CLASSLIST,
                                                   DBCLASSLISTXML::ALIAS);
             this->setData(lastIndex.sibling(lastIndex.row(),column),tr("Классы"));
+
+            QStringList insertTags;
+            insertTags << DBATTRXML::ATTR  << DBCLASSXML::CLASS;
+            this->addInsertTags(DBCLASSLISTXML::CLASSLIST,insertTags);
+            lastIndex = this->insertLastRows(0,1,lastIndex,DBATTRXML::ATTR);
+             if (lastIndex.isValid()){
+                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                    DBATTRXML::NAME);
+                 this->setData(lastIndex.sibling(lastIndex.row(),column),tr("guid"));
+                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                    DBATTRXML::ALIAS);
+                 this->setData(lastIndex.sibling(lastIndex.row(),column),tr("Идентификатор"));
+                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                    DBATTRXML::TYPE);
+                 this->setData(lastIndex.sibling(lastIndex.row(),column),DBTYPEXML::STRING);
+                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                    DBATTRXML::MAXSTRLEN);
+                 this->setData(lastIndex.sibling(lastIndex.row(),column),36);
+                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                    DBATTRXML::ISCANDIDATEKEY);
+                 this->setData(lastIndex.sibling(lastIndex.row(),column),true);
+                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                    DBATTRXML::ISUNIQUE);
+                 this->setData(lastIndex.sibling(lastIndex.row(),column),true);
+             }
+             insertTags << DBCLASSXML::CLASS;
+             this->addInsertTags(DBCLASSLISTXML::CLASSLIST,insertTags);
         }
 
         lastIndex = this->insertLastRows(0,1,indexSource,DBENTITYLISTXML::ENTITYLIST);
