@@ -100,12 +100,12 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
     //! Возращает количество строк указанных тэгов в индексе родителя
-    int rowCount(const QModelIndex &parent, const QStringList &tags) const;
+    virtual int rowCount(const QModelIndex &parent, const QStringList &tags) const;
 
     //! Возращает количество строк указанных тэгов в индексе родителя c
     //! учетом наследумых тэгов
-    int rowCount(const QModelIndex &parent, const QStringList &tags,
-                 const QStringList &attrTags) const;
+    virtual int rowCount(const QModelIndex &parent, const QStringList &tags,
+                         const QStringList &attrTags) const;
 
     //! Возращает количество столбцов в индексе родителя
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -135,10 +135,10 @@ public:
     bool isAttr(const QModelIndex &index) const;
 
     //! Получает класс связку TagXMLItem по индексу модели
-    TagXmlItem *toItem(const QModelIndex &index) const;
+    virtual TagXmlItem *toItem(const QModelIndex &index) const;
 
     //! Получает  индекс модели по классу связке TagXMLItem
-    QModelIndex fromItem(TagXmlItem *item) const;
+    virtual QModelIndex fromItem(TagXmlItem *item) const;
 
     //! Указывает xml атрибуты тэга для отображения
     void addDisplayedAttr(const QString &tag,const QStringList &value,QIcon icon = QIcon());
@@ -159,14 +159,14 @@ public:
     void removeDisplayedAttr(const QString &tag);
 
     //! Получение корневой узла дерева
-    TagXmlItem* rootItem();
+    virtual TagXmlItem* rootItem();
 
     //! Вставка строки
     bool insertRows (int row, int count, const QModelIndex & parent);
 
     //! Вставка строки
-    QModelIndex insertLastRows (int row, int count,
-                                const QModelIndex & parent, QString tag = "element");
+    virtual QModelIndex insertLastRows (int row, int count,
+                                        const QModelIndex & parent, QString tag = "element");
 
     //! Удаление строки
     bool removeRows (int row, int count, const QModelIndex & parent);
@@ -188,16 +188,16 @@ public:
     Qt::DropActions supportedDragActions() const;
 
     //! Возращает True если можно вставить строку
-    bool isInsert(int row, const QModelIndex &index, QString tag) const;
+    virtual bool isInsert(int row, const QModelIndex &index, QString tag) const;
 
     //! Возращает True если имеются потомки указанных тэгов
-    bool hasChildren(const QModelIndex &parent, const QStringList &tags) const;
+    virtual bool hasChildren(const QModelIndex &parent, const QStringList &tags) const;
 
     //! Возращает True если имеются потомки
     bool hasChildren(const QModelIndex &parent) const;
 
     //! Возращает True если унаследован
-    bool isInherited(const QModelIndex &index) const;
+    virtual bool isInherited(const QModelIndex &index) const;
 
     //! Перемещение элемента
     virtual bool moveIndex(const QModelIndex &srcIndex, const QModelIndex &destIndex,
@@ -209,21 +209,22 @@ public:
 
     //! Проверка наличия подчиненного элемента у родителя
     bool hasIndex(int row, int column, const QModelIndex &parent) const;
+
 private:
 
     //! Обновление отредактированных унаследованных строк
-    void updateModifyRow(int emptyRowAttr, const QModelIndex &parent, int column);
+    virtual void updateModifyRow(int emptyRowAttr, const QModelIndex &parent, int column);
 
     //! Обновление вставленных унаследованных строк
-    void updateInsertRows(int row, int count,
-                          const QModelIndex &parent, QString tag);
+    virtual void updateInsertRows(int row, int count,
+                                  const QModelIndex &parent, QString tag);
 
     //! Удаление вставленных унаследованных строк
-    void revertInsertRows(int row, int count,
-                          const QModelIndex &parent, QString tag);
+    virtual void revertInsertRows(int row, int count,
+                                  const QModelIndex &parent, QString tag);
 
     //! Обновление удаленных унаследованных строк
-    void updateRemoveRows(int emptyRowAttr, int count, const QModelIndex &parent);
+    virtual void updateRemoveRows(int emptyRowAttr, int count, const QModelIndex &parent);
 
     //! Корневой узел
     TagXmlItem *m_rootItem;
