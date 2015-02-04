@@ -76,6 +76,11 @@ void ClassWidget::setModel(TreeXmlHashModel *model)
     m_mapper->addMapping(checkBoxActiveClass,
                          model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                    DBCLASSXML::ISACTIVE));
+
+    m_mapper->addMapping(checkBoxContextClass,
+                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                   DBCLASSXML::ISCONTEXT));
+
     m_mapper->addMapping(plainTextEditShowAttr,
                          model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                    DBCLASSXML::TEMPLATE));

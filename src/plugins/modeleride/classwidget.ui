@@ -124,33 +124,6 @@
       <string/>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="7" column="0">
-       <widget class="QLabel" name="labelIcon">
-        <property name="text">
-         <string>Изображение:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QCheckBox" name="checkBoxActiveClass">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="labelAbsClass">
-        <property name="text">
-         <string>Абстрактный:</string>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="0">
        <widget class="QLabel" name="labelClassParent">
         <property name="text">
@@ -158,10 +131,13 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelClassAlias">
+      <item row="2" column="1" colspan="2">
+       <widget class="QComboBox" name="comboBoxClassType"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelClassName">
         <property name="text">
-         <string>Псевдоним:</string>
+         <string>Имя класса:</string>
         </property>
        </widget>
       </item>
@@ -172,28 +148,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="labelClassName">
-        <property name="text">
-         <string>Имя класса:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QCheckBox" name="checkBoxAbsClass">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="labelActiveClass">
-        <property name="text">
-         <string>Активный:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
+      <item row="7" column="0">
        <widget class="QLabel" name="labelShowAttr">
         <property name="text">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Отображаемый &lt;br/&gt;атрибут:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -206,59 +161,24 @@
         </property>
        </widget>
       </item>
-      <item row="7" column="2">
-       <spacer name="horizontalSpacerRightIcon">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+      <item row="5" column="0">
+       <widget class="QLabel" name="labelActiveClass">
+        <property name="text">
+         <string>Активный:</string>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
+       </widget>
       </item>
-      <item row="6" column="1" colspan="2">
-       <widget class="QPlainTextEdit" name="plainTextEditShowAttr">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>100</height>
-         </size>
+      <item row="4" column="1">
+       <widget class="QCheckBox" name="checkBoxAbsClass">
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </item>
       <item row="3" column="1" colspan="2">
        <widget class="QLineEdit" name="lineEditClassParent"/>
       </item>
-      <item row="2" column="1" colspan="2">
-       <widget class="QComboBox" name="comboBoxClassType"/>
-      </item>
-      <item row="1" column="1" colspan="2">
-       <widget class="QLineEdit" name="lineEditClassAlias">
-        <property name="maxLength">
-         <number>256</number>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1" colspan="2">
-       <widget class="QLineEdit" name="lineEditClassName"/>
-      </item>
-      <item row="8" column="0" colspan="3">
-       <spacer name="verticalSpacerProp">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="7" column="1">
+      <item row="8" column="1">
        <widget class="QFrame" name="frameIcon">
         <property name="frameShape">
          <enum>QFrame::Panel</enum>
@@ -305,6 +225,100 @@
           </widget>
          </item>
         </layout>
+       </widget>
+      </item>
+      <item row="8" column="2">
+       <spacer name="horizontalSpacerRightIcon">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="1" colspan="2">
+       <widget class="QLineEdit" name="lineEditClassName"/>
+      </item>
+      <item row="7" column="1" colspan="2">
+       <widget class="QPlainTextEdit" name="plainTextEditShowAttr">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>100</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="2">
+       <widget class="QLineEdit" name="lineEditClassAlias">
+        <property name="maxLength">
+         <number>256</number>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="labelIcon">
+        <property name="text">
+         <string>Изображение:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QCheckBox" name="checkBoxActiveClass">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelClassAlias">
+        <property name="text">
+         <string>Псевдоним:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="0" colspan="3">
+       <spacer name="verticalSpacerProp">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelAbsClass">
+        <property name="text">
+         <string>Абстрактный:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="labelContextClass">
+        <property name="text">
+         <string>Контекст:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QCheckBox" name="checkBoxContextClass">
+        <property name="text">
+         <string/>
+        </property>
        </widget>
       </item>
      </layout>
