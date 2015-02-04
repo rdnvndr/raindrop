@@ -4,8 +4,8 @@
 #include <treexmlmodel/treexmlhashmodel.h>
 
 //! Класс модели дерева классов
-/*! Данный класс предназначен для создания дерева метаданных
-    на основе. Позволяет отображать указанные наследуемые тэги.
+/*! Данный класс предназначен для создания дерева метаданных в XML формате
+    на основе TreeXmlHashModel. Позволяет отображать указанные наследуемые тэги.
 */
 
 class ClassModel : public TreeXmlHashModel
@@ -35,6 +35,13 @@ public:
 
     //! Инициализация модели классов
     void initModel();
+
+    //! Вставка строки
+    QModelIndex insertLastRows (int row, int count,
+                                const QModelIndex & parent, QString tag = "element");
+
+    //! Удаление строки
+    bool removeRows (int row, int count, const QModelIndex & parent);
 };
 
 #endif // CLASSMODEL_H

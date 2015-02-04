@@ -54,7 +54,7 @@ void ClassModel::initDisplayedAttrs()
                << DBCLASSXML::PARENT    << DBCLASSXML::ISACTIVE
                << DBCLASSXML::ISCONTEXT << DBCLASSXML::TEMPLATE
                << DBCLASSXML::ID        << DBCLASSXML::ICON;
-    this->addDisplayedAttr(DBCLASSXML::CLASS,propsClass,QIcon(":/modeleride"));
+    this->addDisplayedAttr(DBCLASSXML::CLASS, propsClass,QIcon(":/modeleride"));
 
     QStringList propsAttr;
     propsAttr << DBATTRXML::NAME           << DBATTRXML::ALIAS
@@ -66,7 +66,8 @@ void ClassModel::initDisplayedAttrs()
               << DBATTRXML::ISNULLALLOWED  << DBATTRXML::ISUNIQUE
               << DBATTRXML::ISCANDIDATEKEY << DBATTRXML::ID;
     this->addDisplayedAttr(DBATTRXML::ATTR,propsAttr, QIcon(":/attribute"));
-    this->addAttrTag(DBCLASSXML::CLASS, DBATTRXML::ATTR);
+    this->addAttrTag(DBCLASSXML::CLASS,         DBATTRXML::ATTR);
+    this->addAttrTag(DBCLASSLISTXML::CLASSLIST, DBATTRXML::ATTR);
 
     QStringList propsComposition;
     propsComposition << DBCOMPXML::LINKCLASS         << DBCOMPXML::ALIAS
@@ -74,7 +75,7 @@ void ClassModel::initDisplayedAttrs()
                      << DBCOMPXML::ISVIEW            << DBCOMPXML::ISCOMP
                      << DBCOMPXML::DIRECTDESCRIPTION << DBCOMPXML::INVERSEDESCRIPTION
                      << DBCOMPXML::ID;
-    this->addDisplayedAttr(DBCOMPXML::COMP,propsComposition, QIcon(":/composition"));
+    this->addDisplayedAttr(DBCOMPXML::COMP, propsComposition, QIcon(":/composition"));
     this->addAttrTag(DBCLASSXML::CLASS, DBCOMPXML::COMP);
 
     QStringList propsFilter;
@@ -82,27 +83,25 @@ void ClassModel::initDisplayedAttrs()
                 << DBFILTERXML::PARENT            << DBFILTERXML::CLASS
                 << DBFILTERXML::DIRECTDESCRIPTION << DBFILTERXML::INVERSEDESCRIPTION
                 << DBFILTERXML::ID;
-    this->addDisplayedAttr(DBFILTERXML::FILTER,propsFilter, QIcon(":/filter"));
+    this->addDisplayedAttr(DBFILTERXML::FILTER, propsFilter, QIcon(":/filter"));
     this->addAttrTag(DBCLASSXML::CLASS, DBFILTERXML::FILTER);
 
     QStringList propsFilterBlock;
     propsFilterBlock << DBFILTERBLOCKXML::LINKOF << DBFILTERBLOCKXML::PARENT
                      << DBFILTERBLOCKXML::ID;
-    this->addDisplayedAttr(DBFILTERBLOCKXML::BLOCK, propsFilterBlock,
-                              QIcon(":/block"));
+    this->addDisplayedAttr(DBFILTERBLOCKXML::BLOCK, propsFilterBlock, QIcon(":/block"));
 
     QStringList propsCondition;
     propsCondition   << DBCONDITIONXML::FIRSTATTR   << DBCONDITIONXML::OPERATOR
                      << DBCONDITIONXML::SECONDATTR  << DBCONDITIONXML::LINKOF
                      << DBCONDITIONXML::PARENT      << DBCONDITIONXML::ID;
-    this->addDisplayedAttr(DBCONDITIONXML::COND, propsCondition,
-                              QIcon(":/expression"));
+    this->addDisplayedAttr(DBCONDITIONXML::COND, propsCondition, QIcon(":/expression"));
 
     QStringList propsEntity;
     propsEntity << DBENTITYXML::NAME            << DBENTITYXML::DESCRIPTION
                 << DBENTITYXML::DIMENSIONSYMBOL << DBENTITYXML::BASICUNIT
                 << DBENTITYXML::ID;
-    this->addDisplayedAttr(DBENTITYXML::ENTITY,propsEntity, QIcon(":/entity"));
+    this->addDisplayedAttr(DBENTITYXML::ENTITY, propsEntity, QIcon(":/entity"));
 
     QStringList propsUnit;
     propsUnit << DBUNITXML::NAME           << DBUNITXML::CODE
@@ -110,17 +109,17 @@ void ClassModel::initDisplayedAttrs()
               << DBUNITXML::DESIGNATION    << DBUNITXML::SYMBOL
               << DBUNITXML::INTDESIGNATION << DBUNITXML::INTSYMBOL
               << DBUNITXML::PARENT         << DBUNITXML::ID;
-    this->addDisplayedAttr(DBUNITXML::UNIT,propsUnit, QIcon(":/unit"));
+    this->addDisplayedAttr(DBUNITXML::UNIT, propsUnit, QIcon(":/unit"));
 
     QStringList propsGroup;
     propsGroup << DBENTITYGROUPXML::NAME   << DBENTITYGROUPXML::DESCRIPTION
                << DBENTITYGROUPXML::PARENT << DBENTITYGROUPXML::ID;
-    this->addDisplayedAttr(DBENTITYGROUPXML::ENTITYGROUP,propsGroup, QIcon(":/entitygroup"));
+    this->addDisplayedAttr(DBENTITYGROUPXML::ENTITYGROUP, propsGroup, QIcon(":/entitygroup"));
 
     QStringList propsClassList;
     propsClassList << DBCLASSLISTXML::NAME   << DBCLASSLISTXML::ALIAS
                    << DBCLASSLISTXML::PARENT << DBCLASSLISTXML::ID;
-    this->addDisplayedAttr(DBCLASSLISTXML::CLASSLIST,propsClassList, QIcon(":/classes"));
+    this->addDisplayedAttr(DBCLASSLISTXML::CLASSLIST, propsClassList, QIcon(":/classes"));
 
     QStringList propsEntityList;
     propsEntityList << DBENTITYLISTXML::NAME   << DBENTITYLISTXML::ALIAS
@@ -156,8 +155,7 @@ void ClassModel::initDisplayedAttrs()
     QStringList propsRefGroup;
     propsRefGroup << DBREFGROUPXML::NAME   << DBREFGROUPXML::DESCRIPTION
                   << DBREFGROUPXML::PARENT << DBREFGROUPXML::ID;
-    this->addDisplayedAttr(DBREFGROUPXML::REFGROUP,
-                              propsRefGroup, QIcon(":/refgroup"));
+    this->addDisplayedAttr(DBREFGROUPXML::REFGROUP, propsRefGroup, QIcon(":/refgroup"));
 
     QStringList propsRef;
     propsRef << DBREFXML::NAME   << DBREFXML::DESCRIPTION
@@ -167,20 +165,17 @@ void ClassModel::initDisplayedAttrs()
     QStringList propsLinkToClass;
     propsLinkToClass << DBLINKTOCLASSXML::ALIAS  << DBLINKTOCLASSXML::REFCLASS
                      << DBLINKTOCLASSXML::PARENT << DBLINKTOCLASSXML::ID;
-    this->addDisplayedAttr(DBLINKTOCLASSXML::LINKTOCLASS,
-                              propsLinkToClass, QIcon(":/modeleride"));
+    this->addDisplayedAttr(DBLINKTOCLASSXML::LINKTOCLASS, propsLinkToClass, QIcon(":/modeleride"));
 
     QStringList propsLinkToFilter;
     propsLinkToFilter << DBLINKTOFILTERXML::ALIAS   << DBLINKTOFILTERXML::REFFILTER
                       << DBLINKTOFILTERXML::PARENT << DBLINKTOFILTERXML::ID;
-    this->addDisplayedAttr(DBLINKTOFILTERXML::LINKTOFILTER,
-                              propsLinkToFilter, QIcon(":/filter"));
+    this->addDisplayedAttr(DBLINKTOFILTERXML::LINKTOFILTER, propsLinkToFilter, QIcon(":/filter"));
 
     QStringList propsLinkToComp;
     propsLinkToComp << DBLINKTOCOMPXML::ALIAS  << DBLINKTOCOMPXML::REFCOMP
                     << DBLINKTOCOMPXML::PARENT << DBLINKTOCOMPXML::ID;
-    this->addDisplayedAttr(DBLINKTOCOMPXML::LINKTOCOMP,
-                           propsLinkToComp, QIcon(":/composition"));
+    this->addDisplayedAttr(DBLINKTOCOMPXML::LINKTOCOMP, propsLinkToComp, QIcon(":/composition"));
 }
 
 void ClassModel::initInsertTags()
@@ -204,7 +199,7 @@ void ClassModel::initInsertTags()
     this->addInsertTags(DBFILTERBLOCKXML::BLOCK,insertTags);
 
     insertTags.clear();
-    insertTags << DBCLASSXML::CLASS;
+    insertTags << DBATTRXML::ATTR  << DBCLASSXML::CLASS;
     this->addInsertTags(DBCLASSLISTXML::CLASSLIST,insertTags);
 
     insertTags.clear();
@@ -260,122 +255,122 @@ void ClassModel::initInsertTags()
 void ClassModel::initHashAttrs()
 {
     this->addHashAttr(DBCLASSXML::CLASS,
-                                DBCLASSXML::NAME,
-                                TreeXmlHashModel::UniqueUpperRename);
+                      DBCLASSXML::NAME,
+                      TreeXmlHashModel::UniqueUpperRename);
     this->addHashAttr(DBATTRXML::ATTR,
-                                DBATTRXML::NAME,
-                                TreeXmlHashModel::UniqueParentUpperRename);
+                      DBATTRXML::NAME,
+                      TreeXmlHashModel::UniqueParentUpperRename);
     this->addHashAttr(DBATTRXML::ATTR,
-                                DBATTRXML::REFCLASS,
-                                TreeXmlHashModel::NoUnique);
+                      DBATTRXML::REFCLASS,
+                      TreeXmlHashModel::NoUnique);
     this->addHashAttr(DBATTRXML::ATTR,
-                                DBATTRXML::REFUNIT,
-                                TreeXmlHashModel::NoUnique);
+                      DBATTRXML::REFUNIT,
+                      TreeXmlHashModel::NoUnique);
     this->addHashAttr(DBATTRXML::ATTR,
-                                DBATTRXML::REFLOV,
-                                TreeXmlHashModel::NoUnique);
+                      DBATTRXML::REFLOV,
+                      TreeXmlHashModel::NoUnique);
     this->addHashAttr(DBCOMPXML::COMP,
-                                DBCOMPXML::CLASS,
-                                TreeXmlHashModel::NoUnique);
+                      DBCOMPXML::CLASS,
+                      TreeXmlHashModel::NoUnique);
     this->addHashAttr(DBCOMPXML::COMP,
-                                DBCOMPXML::LINKCLASS,
-                                TreeXmlHashModel::UniqueParent);
+                      DBCOMPXML::LINKCLASS,
+                      TreeXmlHashModel::UniqueParent);
     this->addHashAttr(DBFILTERXML::FILTER,
-                                DBFILTERXML::CLASS,
-                                TreeXmlHashModel::NoUnique);
+                      DBFILTERXML::CLASS,
+                      TreeXmlHashModel::NoUnique);
     this->addHashAttr(DBFILTERXML::FILTER,
-                                DBFILTERXML::NAME,
-                                TreeXmlHashModel::UniqueParentUpperRename);
+                      DBFILTERXML::NAME,
+                      TreeXmlHashModel::UniqueParentUpperRename);
     this->addHashAttr(DBENTITYXML::ENTITY,
-                                DBENTITYXML::NAME,
-                                TreeXmlHashModel::UniqueUpperRename);
+                      DBENTITYXML::NAME,
+                      TreeXmlHashModel::UniqueUpperRename);
     this->addHashAttr(DBUNITXML::UNIT,
-                                DBUNITXML::NAME,
-                                TreeXmlHashModel::UniqueUpperRename);
+                      DBUNITXML::NAME,
+                      TreeXmlHashModel::UniqueUpperRename);
     this->addHashAttr(DBENTITYGROUPXML::ENTITYGROUP,
-                                DBENTITYGROUPXML::NAME,
-                                TreeXmlHashModel::UniqueUpperRename);
+                      DBENTITYGROUPXML::NAME,
+                      TreeXmlHashModel::UniqueUpperRename);
     this->addHashAttr(DBLOVXML::LOV,
-                                DBLOVXML::NAME,
-                                TreeXmlHashModel::UniqueUpperRename);
+                      DBLOVXML::NAME,
+                      TreeXmlHashModel::UniqueUpperRename);
     this->addHashAttr(DBLOVVALUEXML::LOVVALUE,
-                                DBLOVVALUEXML::NAME,
-                                TreeXmlHashModel::UniqueUpperRename);
+                      DBLOVVALUEXML::NAME,
+                      TreeXmlHashModel::UniqueUpperRename);
     this->addHashAttr(DBREFGROUPXML::REFGROUP,
-                                DBREFGROUPXML::NAME,
-                                TreeXmlHashModel::UniqueUpperRename);
+                      DBREFGROUPXML::NAME,
+                      TreeXmlHashModel::UniqueUpperRename);
     this->addHashAttr(DBREFXML::REF,
-                                DBREFXML::NAME,
-                                TreeXmlHashModel::UniqueUpperRename);
+                      DBREFXML::NAME,
+                      TreeXmlHashModel::UniqueUpperRename);
 
 
     this->addHashAttr(DBCLASSXML::CLASS,
-                                DBCLASSXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBCLASSXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBATTRXML::ATTR,
-                                DBATTRXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBATTRXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBCOMPXML::COMP,
-                                DBCOMPXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBCOMPXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBFILTERXML::FILTER,
-                                DBFILTERXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBFILTERXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBFILTERBLOCKXML::BLOCK,
-                                DBFILTERBLOCKXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBFILTERBLOCKXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBCONDITIONXML::COND,
-                                DBCONDITIONXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBCONDITIONXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBENTITYXML::ENTITY,
-                                DBENTITYXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBENTITYXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBUNITXML::UNIT,
-                                DBUNITXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBUNITXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBENTITYGROUPXML::ENTITYGROUP,
-                                DBENTITYGROUPXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBENTITYGROUPXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBLOVXML::LOV,
-                                DBLOVXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBLOVXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBLOVVALUEXML::LOVVALUE,
-                                DBLOVVALUEXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBLOVVALUEXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBREFGROUPXML::REFGROUP,
-                                DBREFGROUPXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBREFGROUPXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBREFXML::REF,
-                                DBREFXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBREFXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBLINKTOCLASSXML::LINKTOCLASS,
-                                DBLINKTOCLASSXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBLINKTOCLASSXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBLINKTOFILTERXML::LINKTOFILTER,
-                                DBLINKTOFILTERXML::ID,
-                         TreeXmlHashModel::Uuid);
+                      DBLINKTOFILTERXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBLINKTOCOMPXML::LINKTOCOMP,
-                                DBLINKTOCOMPXML::ID,
-                         TreeXmlHashModel::Uuid);
+                      DBLINKTOCOMPXML::ID,
+                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBCLASSLISTXML::CLASSLIST,
-                                DBCLASSLISTXML::ID,
-                                TreeXmlHashModel::Uuid);
+                      DBCLASSLISTXML::ID,
+                      TreeXmlHashModel::Uuid);
 }
 
 void ClassModel::initRelations()
 {
     this->addRelation(DBATTRXML::ATTR,DBATTRXML::PARENT,
-                               DBCLASSLISTXML::CLASSLIST, DBCLASSLISTXML::NAME);
+                      DBCLASSLISTXML::CLASSLIST, DBCLASSLISTXML::NAME);
     this->addRelation(DBATTRXML::ATTR,DBATTRXML::REFCLASS,
-                               DBCLASSXML::CLASS, DBCLASSXML::NAME);
+                      DBCLASSXML::CLASS, DBCLASSXML::NAME);
     this->addRelation(DBATTRXML::ATTR,DBATTRXML::PARENT,
-                               DBCLASSXML::CLASS, DBCLASSXML::NAME);
+                      DBCLASSXML::CLASS, DBCLASSXML::NAME);
     this->addRelation(DBATTRXML::ATTR,DBATTRXML::PARENT,
-                               DBCOMPXML::COMP, DBCOMPXML::NAME);
+                      DBCOMPXML::COMP, DBCOMPXML::NAME);
     this->addRelation(DBATTRXML::ATTR,DBATTRXML::REFUNIT,
-                               DBUNITXML::UNIT, DBUNITXML::NAME);
+                      DBUNITXML::UNIT, DBUNITXML::NAME);
     this->addRelation(DBATTRXML::ATTR,DBATTRXML::REFLOV,
-                               DBLOVXML::LOV, DBLOVXML::NAME);
+                      DBLOVXML::LOV, DBLOVXML::NAME);
 
     this->addRelation(DBCLASSXML::CLASS, DBCLASSXML::PARENT,
                       DBCLASSXML::CLASS, DBCLASSXML::NAME);
@@ -383,52 +378,52 @@ void ClassModel::initRelations()
                       DBCLASSLISTXML::CLASSLIST, DBCLASSLISTXML::NAME);
 
     this->addRelation(DBCOMPXML::COMP, DBCOMPXML::PARENT,
-                               DBCLASSXML::CLASS, DBCLASSXML::NAME);
+                      DBCLASSXML::CLASS, DBCLASSXML::NAME);
     this->addRelation(DBCOMPXML::COMP, DBCOMPXML::CLASS,
-                               DBCLASSXML::CLASS, DBCLASSXML::NAME);
+                      DBCLASSXML::CLASS, DBCLASSXML::NAME);
     this->addRelation(DBCOMPXML::COMP, DBCOMPXML::LINKCLASS,
-                               DBCLASSXML::CLASS, DBCLASSXML::NAME);
+                      DBCLASSXML::CLASS, DBCLASSXML::NAME);
 
     this->addRelation(DBFILTERXML::FILTER, DBFILTERXML::PARENT,
-                               DBCLASSXML::CLASS, DBCLASSXML::NAME);
+                      DBCLASSXML::CLASS, DBCLASSXML::NAME);
     this->addRelation(DBFILTERXML::FILTER, DBFILTERXML::CLASS,
-                               DBCLASSXML::CLASS, DBCLASSXML::NAME);
+                      DBCLASSXML::CLASS, DBCLASSXML::NAME);
 
     this->addRelation(DBCONDITIONXML::COND, DBCONDITIONXML::FIRSTATTR,
-                               DBATTRXML::ATTR, DBATTRXML::NAME);
+                      DBATTRXML::ATTR, DBATTRXML::NAME);
     this->addRelation(DBCONDITIONXML::COND, DBCONDITIONXML::SECONDATTR,
-                               DBATTRXML::ATTR, DBATTRXML::NAME);
+                      DBATTRXML::ATTR, DBATTRXML::NAME);
 
     this->addRelation(DBENTITYXML::ENTITY, DBENTITYXML::BASICUNIT,
-                               DBUNITXML::UNIT, DBUNITXML::NAME);
+                      DBUNITXML::UNIT, DBUNITXML::NAME);
     this->addRelation(DBENTITYXML::ENTITY, DBENTITYXML::PARENT,
-                               DBENTITYGROUPXML::ENTITYGROUP, DBENTITYGROUPXML::NAME);
+                      DBENTITYGROUPXML::ENTITYGROUP, DBENTITYGROUPXML::NAME);
 
     this->addRelation(DBUNITXML::UNIT, DBUNITXML::PARENT,
-                               DBENTITYXML::ENTITY, DBENTITYXML::NAME);
+                      DBENTITYXML::ENTITY, DBENTITYXML::NAME);
 
     this->addRelation(DBLOVVALUEXML::LOVVALUE, DBLOVVALUEXML::PARENT,
-                               DBLOVXML::LOV, DBLOVXML::NAME);
+                      DBLOVXML::LOV, DBLOVXML::NAME);
 
     this->addRelation(DBREFXML::REF, DBREFXML::PARENT,
-                               DBREFGROUPXML::REFGROUP, DBREFGROUPXML::NAME);
+                      DBREFGROUPXML::REFGROUP, DBREFGROUPXML::NAME);
 
     this->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::PARENT,
-                               DBREFGROUPXML::REFGROUP, DBREFGROUPXML::NAME);
+                      DBREFGROUPXML::REFGROUP, DBREFGROUPXML::NAME);
     this->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::PARENT,
-                               DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::ALIAS);
+                      DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::ALIAS);
     this->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::PARENT,
-                               DBLINKTOCOMPXML::LINKTOCOMP, DBLINKTOCOMPXML::ALIAS);
+                      DBLINKTOCOMPXML::LINKTOCOMP, DBLINKTOCOMPXML::ALIAS);
     this->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::REFCLASS,
-                               DBCLASSXML::CLASS, DBCLASSXML::NAME);
+                      DBCLASSXML::CLASS, DBCLASSXML::NAME);
 
     this->addRelation(DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::PARENT,
-                               DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::ALIAS);
+                      DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::ALIAS);
     this->addRelation(DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::REFFILTER,
                       DBFILTERXML::FILTER, DBFILTERXML::NAME);
 
     this->addRelation(DBLINKTOCOMPXML::LINKTOCOMP, DBLINKTOCOMPXML::PARENT,
-                               DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::ALIAS);
+                      DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::ALIAS);
     this->addRelation(DBLINKTOCOMPXML::LINKTOCOMP, DBLINKTOCOMPXML::REFCOMP,
                       DBCOMPXML::COMP, DBCOMPXML::LINKCLASS);
 }
@@ -446,7 +441,7 @@ void ClassModel::initModel()
         this->setData(lastIndex.sibling(lastIndex.row(),column),tr("Модель"));
 
         indexSource = lastIndex;
-        QModelIndex lastIndex = this->insertLastRows(0,1,indexSource,DBCLASSLISTXML::CLASSLIST);
+        QModelIndex lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource,DBCLASSLISTXML::CLASSLIST);
         if (lastIndex.isValid()){
             int column = this->columnDisplayedAttr(DBCLASSLISTXML::CLASSLIST,
                                                       DBCLASSLISTXML::NAME);
@@ -455,35 +450,29 @@ void ClassModel::initModel()
                                                   DBCLASSLISTXML::ALIAS);
             this->setData(lastIndex.sibling(lastIndex.row(),column),tr("Классы"));
 
-            QStringList insertTags;
-            insertTags << DBATTRXML::ATTR  << DBCLASSXML::CLASS;
-            this->addInsertTags(DBCLASSLISTXML::CLASSLIST,insertTags);
-            lastIndex = this->insertLastRows(0,1,lastIndex,DBATTRXML::ATTR);
-             if (lastIndex.isValid()){
-                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
-                                                    DBATTRXML::NAME);
-                 this->setData(lastIndex.sibling(lastIndex.row(),column),tr("guid"));
-                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
-                                                    DBATTRXML::ALIAS);
-                 this->setData(lastIndex.sibling(lastIndex.row(),column),tr("Идентификатор"));
-                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
-                                                    DBATTRXML::TYPE);
-                 this->setData(lastIndex.sibling(lastIndex.row(),column),DBTYPEXML::STRING);
-                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
-                                                    DBATTRXML::MAXSTRLEN);
-                 this->setData(lastIndex.sibling(lastIndex.row(),column),36);
-                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
-                                                    DBATTRXML::ISCANDIDATEKEY);
-                 this->setData(lastIndex.sibling(lastIndex.row(),column),true);
-                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
-                                                    DBATTRXML::ISUNIQUE);
-                 this->setData(lastIndex.sibling(lastIndex.row(),column),true);
-             }
-             insertTags << DBCLASSXML::CLASS;
-             this->addInsertTags(DBCLASSLISTXML::CLASSLIST,insertTags);
+            if (lastIndex.isValid()){
+                column = this->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                   DBATTRXML::NAME);
+                this->setData(lastIndex.sibling(lastIndex.row(),column),tr("guid"));
+                column = this->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                   DBATTRXML::ALIAS);
+                this->setData(lastIndex.sibling(lastIndex.row(),column),tr("Идентификатор"));
+                column = this->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                   DBATTRXML::TYPE);
+                this->setData(lastIndex.sibling(lastIndex.row(),column),DBTYPEXML::STRING);
+                column = this->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                   DBATTRXML::MAXSTRLEN);
+                this->setData(lastIndex.sibling(lastIndex.row(),column),36);
+                column = this->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                   DBATTRXML::ISCANDIDATEKEY);
+                this->setData(lastIndex.sibling(lastIndex.row(),column),true);
+                column = this->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                   DBATTRXML::ISUNIQUE);
+                this->setData(lastIndex.sibling(lastIndex.row(),column),true);
+            }
         }
 
-        lastIndex = this->insertLastRows(0,1,indexSource,DBENTITYLISTXML::ENTITYLIST);
+        lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource,DBENTITYLISTXML::ENTITYLIST);
         if (lastIndex.isValid()){
             int column = this->columnDisplayedAttr(DBENTITYLISTXML::ENTITYLIST,
                                                       DBENTITYLISTXML::NAME);
@@ -493,7 +482,7 @@ void ClassModel::initModel()
             this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Единицы измерения"));
         }
 
-        lastIndex = this->insertLastRows(0,1,indexSource, DBLOVLISTXML::LOVLIST);
+        lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource, DBLOVLISTXML::LOVLIST);
         if (lastIndex.isValid()){
             int column = this->columnDisplayedAttr(DBLOVLISTXML::LOVLIST,
                                                       DBLOVLISTXML::NAME);
@@ -503,7 +492,7 @@ void ClassModel::initModel()
             this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Список значений"));
         }
 
-        lastIndex = this->insertLastRows(0,1,indexSource, DBREFLISTXML::REFLIST);
+        lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource, DBREFLISTXML::REFLIST);
         if (lastIndex.isValid()){
             int column = this->columnDisplayedAttr(DBREFLISTXML::REFLIST,
                                                       DBREFLISTXML::NAME);
@@ -514,5 +503,54 @@ void ClassModel::initModel()
             this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Справочники"));
         }
     }
+}
+
+QModelIndex ClassModel::insertLastRows(int row, int count, const QModelIndex &parent, QString tag)
+{
+    if (parent.isValid()) {
+        QString parentTag = parent.data(TreeXmlModel::TagRole).toString();
+        if ((parentTag == DBCLASSLISTXML::CLASSLIST && tag == DBATTRXML::ATTR)
+                || (parentTag == DBMODELXML::MODEL
+                    && (tag == DBCLASSLISTXML::CLASSLIST
+                        || tag == DBENTITYLISTXML::ENTITYLIST
+                        || tag == DBLOVLISTXML::LOVLIST
+                        || tag == DBREFLISTXML::REFLIST
+                       )
+                    )
+           )
+            return index(-1,-1);
+    }
+
+    return TreeXmlHashModel::insertLastRows(row, count, parent, tag);
+}
+
+bool ClassModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    if (parent.isValid()) {
+        QString parentTag = parent.data(TreeXmlModel::TagRole).toString();
+        if (parentTag == DBCLASSLISTXML::CLASSLIST) {
+            int i = 0;
+            QModelIndex childIndex = parent.child(i,0);
+            while (childIndex.isValid()) {
+                if (childIndex.data(TreeXmlModel::TagRole) == DBATTRXML::ATTR)
+                    return false;
+                childIndex = parent.child(++i,0);
+            }
+        } else if (parentTag == DBMODELXML::MODEL) {
+            int i = 0;
+            QModelIndex childIndex = parent.child(i,0);
+            while (childIndex.isValid()) {
+                QString tag = childIndex.data(TreeXmlModel::TagRole).toString();
+                if (tag == DBCLASSLISTXML::CLASSLIST
+                        || tag == DBENTITYLISTXML::ENTITYLIST
+                        || tag == DBLOVLISTXML::LOVLIST
+                        || tag == DBREFLISTXML::REFLIST
+                ) return false;
+                childIndex = parent.child(++i,0);
+            }
+        }
+}
+
+    return TreeXmlHashModel::removeRows(row, count, parent);
 }
 
