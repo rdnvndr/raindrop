@@ -16,6 +16,7 @@ namespace DBCLASSXML{
     const QString TYPE = "type";
     const QString ISABSTARCT = "isAbstract";
     const QString ISACTIVE = "isActive";
+    const QString ISCONTEXT = "isContext";
     const QString ALIAS = "alias";
     const QString PARENT = "parent";
     const QString TEMPLATE = "displayTemplate";

@@ -49,11 +49,11 @@ void ClassModel::initTagFilters()
 void ClassModel::initDisplayedAttrs()
 {
     QStringList propsClass;
-    propsClass << DBCLASSXML::NAME     << DBCLASSXML::ISABSTARCT
-               << DBCLASSXML::TYPE     << DBCLASSXML::ALIAS
-               << DBCLASSXML::PARENT   << DBCLASSXML::ISACTIVE
-               << DBCLASSXML::TEMPLATE << DBCLASSXML::ID
-               << DBCLASSXML::ICON;
+    propsClass << DBCLASSXML::NAME      << DBCLASSXML::ISABSTARCT
+               << DBCLASSXML::TYPE      << DBCLASSXML::ALIAS
+               << DBCLASSXML::PARENT    << DBCLASSXML::ISACTIVE
+               << DBCLASSXML::ISCONTEXT << DBCLASSXML::TEMPLATE
+               << DBCLASSXML::ID        << DBCLASSXML::ICON;
     this->addDisplayedAttr(DBCLASSXML::CLASS,propsClass,QIcon(":/modeleride"));
 
     QStringList propsAttr;
