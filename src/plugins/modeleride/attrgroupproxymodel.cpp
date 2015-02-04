@@ -56,10 +56,11 @@ void AttrGroupProxyModel::reset()
     int row = 0;
     int count = m_list.count();
 
-    beginRemoveRows(QModelIndex(), 0, count-1);
-    m_list.clear();
-    endRemoveRows();
-
+    if (!m_list.isEmpty()) {
+        beginRemoveRows(QModelIndex(), 0, count-1);
+        endRemoveRows();
+        m_list.clear();
+    }
     QModelIndex childIndex = m_model->index(row, m_uniqueColumn, m_rootIndex);
     QSet<QString> hash;
     while (childIndex.isValid())
@@ -68,10 +69,10 @@ void AttrGroupProxyModel::reset()
         if (!nameGroup.isEmpty()) hash.insert(nameGroup);
         childIndex = m_model->index(++row, m_uniqueColumn, m_rootIndex);
     }
-
-    beginInsertRows(QModelIndex(), 0, m_list.count()-1);
     m_list = hash.toList();
+    beginInsertRows(QModelIndex(), 0, m_list.count()-1);
     endInsertRows();
+
 }
 
 void AttrGroupProxyModel::setUniqueColumn(int column)

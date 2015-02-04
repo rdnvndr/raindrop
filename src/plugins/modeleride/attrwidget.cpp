@@ -4,6 +4,7 @@
 #include <QStringListModel>
 #include <QMessageBox>
 #include <QToolTip>
+#include <QCompleter>
 #include "treefilterproxymodel.h"
 #include "regexpvalidator.h"
 
@@ -28,6 +29,9 @@ AttrWidget::AttrWidget(QWidget *parent) :
     m_attrModel->setAttributeTags(tags);
 
     m_attrGroupModel = new AttrGroupProxyModel();
+    QCompleter *groupCompleter = new QCompleter(lineEditAttrGroup);
+    groupCompleter->setModel(m_attrGroupModel);
+    lineEditAttrGroup->setCompleter(groupCompleter);
 
     m_typeAttrModel = new QStringListModel();
     const QStringList attrTypeList = (QStringList()
@@ -109,7 +113,6 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     m_mapperAttr->setModel(m_attrModel);
 
     m_attrGroupModel->setModel(m_attrModel);
-    comboBoxAttrGroup->setModel(m_attrGroupModel);
 
     TableXMLProxyModel* lovFilterModel = new TableXMLProxyModel(this);
     QStringList tags;
@@ -153,7 +156,6 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
                                      DBENTITYXML::ENTITY);
     unitFilterModel->setSourceModel(m_model);
     unitFilterModel->setDynamicSortFilter(false);
-//    unitFilterModel->sort(0);
 
     comboBoxUnitAttr->setModel(unitFilterModel);
     comboBoxUnitAttr->setRootModelIndex(unitFilterModel->index(0,0).child(0,0));
@@ -196,7 +198,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     m_mapperAttr->addMapping(lineEditAttrAlias,
                              m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::ALIAS));
-    m_mapperAttr->addMapping(comboBoxAttrGroup,
+    m_mapperAttr->addMapping(lineEditAttrGroup,
                              m_model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                          DBATTRXML::GROUP));
     m_mapperAttr->addMapping(comboBoxUnitAttr,
