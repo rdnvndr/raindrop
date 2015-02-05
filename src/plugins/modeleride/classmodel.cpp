@@ -507,50 +507,43 @@ void ClassModel::initModel()
 
 QModelIndex ClassModel::insertLastRows(int row, int count, const QModelIndex &parent, QString tag)
 {
-//    if (parent.isValid()) {
-//        QString parentTag = parent.data(TreeXmlModel::TagRole).toString();
-//        if ((parentTag == DBCLASSLISTXML::CLASSLIST && tag == DBATTRXML::ATTR)
-//                || (parentTag == DBMODELXML::MODEL
-//                    && (tag == DBCLASSLISTXML::CLASSLIST
-//                        || tag == DBENTITYLISTXML::ENTITYLIST
-//                        || tag == DBLOVLISTXML::LOVLIST
-//                        || tag == DBREFLISTXML::REFLIST
-//                       )
-//                    )
-//           )
-//            return index(-1,-1);
-//    }
+    if (parent.isValid()) {
+        QString parentTag = parent.data(TreeXmlModel::TagRole).toString();
+        if ((parentTag == DBCLASSLISTXML::CLASSLIST && tag == DBATTRXML::ATTR)
+                || (parentTag == DBMODELXML::MODEL
+                    && (tag == DBCLASSLISTXML::CLASSLIST
+                        || tag == DBENTITYLISTXML::ENTITYLIST
+                        || tag == DBLOVLISTXML::LOVLIST
+                        || tag == DBREFLISTXML::REFLIST
+                        )
+                    )
+                )
+            return index(-1,-1);
+    }
 
     return TreeXmlHashModel::insertLastRows(row, count, parent, tag);
 }
 
 bool ClassModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-//    if (parent.isValid()) {
-//        QString parentTag = parent.data(TreeXmlModel::TagRole).toString();
-//        if (parentTag == DBCLASSLISTXML::CLASSLIST) {
-//            int i = 0;
-//            QModelIndex childIndex = parent.child(i,0);
-//            while (childIndex.isValid()) {
-//                if (childIndex.data(TreeXmlModel::TagRole) == DBATTRXML::ATTR)
-//                    return false;
-//                childIndex = parent.child(++i,0);
-//            }
-//        } else if (parentTag == DBMODELXML::MODEL) {
-//            int i = 0;
-//            QModelIndex childIndex = parent.child(i,0);
-//            while (childIndex.isValid()) {
-//                QString tag = childIndex.data(TreeXmlModel::TagRole).toString();
-//                if (tag == DBCLASSLISTXML::CLASSLIST
-//                        || tag == DBENTITYLISTXML::ENTITYLIST
-//                        || tag == DBLOVLISTXML::LOVLIST
-//                        || tag == DBREFLISTXML::REFLIST
-//                ) return false;
-//                childIndex = parent.child(++i,0);
-//            }
-//        }
-//}
+    if (parent.isValid()) {
+        QString parentTag = parent.data(TreeXmlModel::TagRole).toString();
+        for (int i = row; i < row+count; i++) {
+            QModelIndex childIndex = parent.child(i,0);
+            QString tag = childIndex.data(TreeXmlModel::TagRole).toString();
+            if (childIndex.isValid()) {
+                if (tag == DBATTRXML::ATTR
+                        && parentTag == DBCLASSLISTXML::CLASSLIST)
+                    return false;
+                if (parentTag == DBMODELXML::MODEL
+                        && (tag == DBCLASSLISTXML::CLASSLIST
+                            || tag == DBENTITYLISTXML::ENTITYLIST
+                            || tag == DBLOVLISTXML::LOVLIST
+                            || tag == DBREFLISTXML::REFLIST)
+                  ) return false;
+            }
+        }
+    }
 
     return TreeXmlHashModel::removeRows(row, count, parent);
 }
-

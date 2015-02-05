@@ -26,7 +26,6 @@ public:
     bool removeRows (int row, int count, const QModelIndex & parent);
 
 private:
-
     //! Добавления дегов для работы
     void initTagFilters();
 
