@@ -101,7 +101,7 @@ void LovWidget::remove()
     emit dataRemoved(srcIndex);
 }
 
-void LovWidget::removeEmpty()
+bool LovWidget::removeEmpty()
 {
     if (lineEditLovName->text().isEmpty()){
         if (m_oldIndex.isValid()){
@@ -112,9 +112,10 @@ void LovWidget::removeEmpty()
             m_oldIndex = QModelIndex();
         }else {
             remove();
-            return;
         }
+        return true;
     }
+    return false;
 }
 
 void LovWidget::setModel(TreeXmlHashModel *model)
@@ -176,9 +177,9 @@ void LovWidget::submit()
     }
 
     m_mapper->submit();
-    removeEmpty();
     edit(false);
-    emit dataChanged(srcIndex);
+    if (!removeEmpty())
+        emit dataChanged(srcIndex);
 }
 
 void LovWidget::revert()
@@ -186,8 +187,9 @@ void LovWidget::revert()
     m_mapper->revert();
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
     setCurrent(srcIndex);
-    removeEmpty();
     edit(false);
+    removeEmpty();
+
 }
 
 void LovWidget::rowsRemoved(const QModelIndex &index, int start, int end)

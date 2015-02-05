@@ -38,7 +38,7 @@ public slots:
     void remove();
 
     //! Удаление пустого списка значений
-    void removeEmpty();
+    bool removeEmpty();
 
     //! Установка текущего списка значений
     void setCurrent(const QModelIndex &index);

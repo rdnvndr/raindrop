@@ -37,7 +37,7 @@ public slots:
     void remove();
 
     //! Удаление пустого класса
-    void removeEmpty();
+    bool removeEmpty();
 
     //! Установка текущего класса
     void setCurrent(const QModelIndex &index);

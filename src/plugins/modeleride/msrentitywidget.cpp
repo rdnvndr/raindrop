@@ -108,7 +108,7 @@ void MsrEntityWidget::remove()
     emit dataRemoved(srcIndex);
 }
 
-void MsrEntityWidget::removeEmpty()
+bool MsrEntityWidget::removeEmpty()
 {
     if (lineEditEntityName->text().isEmpty()){
         if (m_oldIndex>=0){
@@ -116,7 +116,7 @@ void MsrEntityWidget::removeEmpty()
             QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
 
             if (!isRemove(srcIndex))
-                return;
+                return false;
 
             QModelIndex parent = srcIndex.parent();
             setCurrent(parent);
@@ -125,9 +125,11 @@ void MsrEntityWidget::removeEmpty()
             m_oldIndex = -1;
         }else {
             remove();
-            return;
+
         }
+        return true;
     }
+    return false;
 }
 
 void MsrEntityWidget::setCurrent(const QModelIndex &index)
@@ -164,8 +166,9 @@ void MsrEntityWidget::submit()
 
     m_mapper->submit();
     edit(false);
-    emit dataChanged(srcIndex);
-    removeEmpty();
+
+    if (!removeEmpty())
+        emit dataChanged(srcIndex);
 }
 
 void MsrEntityWidget::revert()

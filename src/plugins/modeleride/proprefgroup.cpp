@@ -116,7 +116,7 @@ void PropRefGroup::remove()
     emit dataRemoved(srcIndex);
 }
 
-void PropRefGroup::removeEmpty()
+bool PropRefGroup::removeEmpty()
 {
     if (isEmpty()){
         if (m_oldIndex>=0){
@@ -125,10 +125,11 @@ void PropRefGroup::removeEmpty()
             setCurrentRefGroup(m_mapper->rootIndex().child(m_oldIndex,0));
             m_oldIndex = -1;
         }else {
-            remove();
-            return;
+            remove();    
         }
+        return true;
     }
+    return false;
 }
 
 void PropRefGroup::setCurrentRefGroup(const QModelIndex &index)
@@ -200,9 +201,9 @@ void PropRefGroup::submit()
     }
 
     m_mapper->submit();
-    removeEmpty();
     edit(false);
-    emit dataChanged(srcIndex);
+    if (!removeEmpty())
+        emit dataChanged(srcIndex);
 }
 
 void PropRefGroup::revert()
@@ -210,8 +211,8 @@ void PropRefGroup::revert()
     m_mapper->revert();
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
     setCurrentRefGroup(srcIndex);
-    removeEmpty();
     edit(false);
+    removeEmpty();
 }
 
 void PropRefGroup::rowsRemoved(const QModelIndex &index, int start, int end)

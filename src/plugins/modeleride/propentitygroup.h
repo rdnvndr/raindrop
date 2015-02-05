@@ -41,7 +41,7 @@ public slots:
     void remove();
 
     //! Удаление пустой сущности группы сущности ЕИ
-    void removeEmpty();
+    bool removeEmpty();
 
 signals:
     //! Сигнал об изменении данных

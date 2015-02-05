@@ -222,7 +222,10 @@ void ClassWidget::remove()
         return;
 
     m_mapper->revert();
-    setCurrent(srcIndex.parent());
+
+    QModelIndex index = srcIndex.parent();
+    m_mapper->setRootIndex(index.parent());
+    m_mapper->setCurrentModelIndex(index);
 
     m_model->removeRow(srcIndex.row(),srcIndex.parent());
     emit dataRemoved(srcIndex);
@@ -232,6 +235,7 @@ void ClassWidget::remove()
 void ClassWidget::setCurrent(const QModelIndex &index)
 {
     m_mapper->setRootIndex(index.parent());
+
     m_mapper->setCurrentModelIndex(index);
     edit(false);
     int indexType = comboBoxClassType->findText(modelData(DBCLASSXML::CLASS,
@@ -280,15 +284,15 @@ void ClassWidget::submit()
 
     m_mapper->submit();
     edit(false);
-    emit dataChanged(srcIndex);
-    removeEmpty();
+    if (!removeEmpty())
+        emit dataChanged(srcIndex);
 }
 
 void ClassWidget::revert()
 {
     m_mapper->revert();
-    removeEmpty();
     edit(false);
+    removeEmpty();
 }
 
 void ClassWidget::rowsRemoved(const QModelIndex &index, int start, int end)
@@ -322,7 +326,7 @@ QVariant ClassWidget::modelData(const QString &tag, const QString &attr, const Q
                              tag,attr)).data();
 }
 
-void ClassWidget::removeEmpty()
+bool ClassWidget::removeEmpty()
 {
     if (lineEditClassName->text().isEmpty()){
         if (m_oldIndex>=0){
@@ -335,7 +339,8 @@ void ClassWidget::removeEmpty()
             m_oldIndex = -1;
         }else {
             remove();
-            return;
         }
+        return true;
     }
+    return false;
 }
