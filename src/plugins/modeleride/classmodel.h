@@ -18,6 +18,15 @@ public:
     //! Деструктор класса
     virtual ~ClassModel();
 
+    //! Вставка строки
+    QModelIndex insertLastRows (int row, int count,
+                                const QModelIndex & parent, QString tag = "element");
+
+    //! Удаление строки
+    bool removeRows (int row, int count, const QModelIndex & parent);
+
+private:
+
     //! Добавления дегов для работы
     void initTagFilters();
 
@@ -35,13 +44,6 @@ public:
 
     //! Инициализация модели классов
     void initModel();
-
-    //! Вставка строки
-    QModelIndex insertLastRows (int row, int count,
-                                const QModelIndex & parent, QString tag = "element");
-
-    //! Удаление строки
-    bool removeRows (int row, int count, const QModelIndex & parent);
 };
 
 #endif // CLASSMODEL_H
