@@ -449,7 +449,7 @@ void ClassModel::initModel()
             column = this->columnDisplayedAttr(DBCLASSLISTXML::CLASSLIST,
                                                   DBCLASSLISTXML::ALIAS);
             this->setData(lastIndex.sibling(lastIndex.row(),column),tr("Классы"));
-
+            lastIndex = TreeXmlHashModel::insertLastRows(0,1,lastIndex,DBATTRXML::ATTR);
             if (lastIndex.isValid()){
                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
                                                    DBATTRXML::NAME);
