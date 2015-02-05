@@ -39,7 +39,7 @@ public slots:
     void remove();
 
     //! Удаление пустой сущности ЕИ
-    void removeEmpty();
+    bool removeEmpty();
 
     //! Установка текущей сущности ЕИ
     void setCurrent(const QModelIndex &index);

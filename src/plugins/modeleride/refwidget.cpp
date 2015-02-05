@@ -96,7 +96,7 @@ void RefWidget::remove()
     emit dataRemoved(srcIndex);
 }
 
-void RefWidget::removeEmpty()
+bool RefWidget::removeEmpty()
 {
     if (lineEditName->text().isEmpty()){
         if (m_oldIndex.isValid()){
@@ -107,9 +107,10 @@ void RefWidget::removeEmpty()
             m_oldIndex = QModelIndex();
         }else {
             remove();
-            return;
         }
+        return true;
     }
+    return false;
 }
 
 void RefWidget::setCurrent(const QModelIndex &index)
@@ -145,9 +146,9 @@ void RefWidget::submit()
     }
 
     m_mapper->submit();
-    removeEmpty();
     edit(false);
-    emit dataChanged(srcIndex);
+    if (!removeEmpty())
+        emit dataChanged(srcIndex);
 }
 
 void RefWidget::revert()
@@ -155,8 +156,8 @@ void RefWidget::revert()
     m_mapper->revert();
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
     setCurrent(srcIndex);
-    removeEmpty();
     edit(false);
+    removeEmpty();
 }
 
 void RefWidget::rowsRemoved(const QModelIndex &index, int start, int end)

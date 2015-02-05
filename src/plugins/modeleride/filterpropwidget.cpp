@@ -152,8 +152,8 @@ void FilterPropWidget::remove()
     m_mapper->revert();
     setCurrent(QModelIndex());
 
-    emit dataRemoved(srcIndex);
     m_model->removeRow(srcIndex.row(),srcIndex.parent());
+    emit dataRemoved(srcIndex);
 }
 
 void FilterPropWidget::addSubCondition()
@@ -284,18 +284,19 @@ void FilterPropWidget::submit()
 
     m_mapper->submit();
     m_conditionModel->submitAll();
-    removeEmpty();
-    edit(false);
 
-    emit dataChanged(srcIndex);
+    edit(false);
+    if (!removeEmpty())
+        emit dataChanged(srcIndex);
 }
 
 void FilterPropWidget::revert()
 {
     m_mapper->revert();
     m_conditionModel->revertAll();
-    removeEmpty();
     edit(false);
+    removeEmpty();
+
 }
 
 void FilterPropWidget::rowsRemoved(const QModelIndex &index, int start, int end)
@@ -334,7 +335,7 @@ QVariant FilterPropWidget::modelData(const QString &tag, const QString &attr,
                              tag,attr)).data();
 }
 
-void FilterPropWidget::removeEmpty()
+bool FilterPropWidget::removeEmpty()
 {
     if (lineEditName->text().isEmpty()){
         if (m_oldIndex.isValid()){
@@ -345,7 +346,8 @@ void FilterPropWidget::removeEmpty()
             m_oldIndex = QModelIndex();
         }else {
             remove();
-            return;
         }
+        return true;
     }
+    return false;
 }

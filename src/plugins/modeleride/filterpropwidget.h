@@ -48,7 +48,7 @@ public slots:
     void addSubBlock();
 
     //! Удаление пустого фильтра
-    void removeEmpty();
+    bool removeEmpty();
 
     //! Установка текущего фильра
     void setCurrent(const QModelIndex &index);

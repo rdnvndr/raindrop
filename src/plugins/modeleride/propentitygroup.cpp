@@ -116,7 +116,7 @@ void PropEntityGroup::remove()
     emit dataRemoved(srcIndex);
 }
 
-void PropEntityGroup::removeEmpty()
+bool PropEntityGroup::removeEmpty()
 {
     if (isEmpty()){
         if (m_oldIndex>=0){
@@ -125,10 +125,11 @@ void PropEntityGroup::removeEmpty()
             setCurrentEntityGroup(m_mapper->rootIndex().child(m_oldIndex,0));
             m_oldIndex = -1;
         }else {
-            remove();
-            return;
+            remove();        
         }
+        return true;
     }
+    return false;
 }
 
 void PropEntityGroup::setCurrentEntityGroup(const QModelIndex &index)
@@ -200,9 +201,9 @@ void PropEntityGroup::submit()
     }
 
     m_mapper->submit();
-    removeEmpty();
     edit(false);
-    emit dataChanged(srcIndex);
+    if (!removeEmpty())
+        emit dataChanged(srcIndex);
 }
 
 void PropEntityGroup::revert()
@@ -210,8 +211,8 @@ void PropEntityGroup::revert()
     m_mapper->revert();
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
     setCurrentEntityGroup(srcIndex);
-    removeEmpty();
     edit(false);
+    removeEmpty();
 }
 
 void PropEntityGroup::rowsRemoved(const QModelIndex &index, int start, int end)

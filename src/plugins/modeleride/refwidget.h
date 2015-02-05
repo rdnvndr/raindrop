@@ -40,7 +40,7 @@ public slots:
     void remove();
 
     //! Удаление пустой справочника
-    void removeEmpty();
+    bool removeEmpty();
 
     //! Установка текущей справочника
     void setCurrent(const QModelIndex &index);

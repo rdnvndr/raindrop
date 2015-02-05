@@ -43,7 +43,7 @@ public slots:
     void remove();
 
     //! Удаление пустой сущности группы справочника
-    void removeEmpty();
+    bool removeEmpty();
 
 signals:
     //! Сигнал об изменении данных
