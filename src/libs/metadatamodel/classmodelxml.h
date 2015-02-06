@@ -1,6 +1,7 @@
-#ifndef CLASSMODEL_H
-#define CLASSMODEL_H
+#ifndef CLASSMODELXML_H
+#define CLASSMODELXML_H
 
+#include "metadatamodelglobal.h"
 #include <treexmlmodel/treexmlhashmodel.h>
 
 //! Класс модели дерева классов
@@ -8,7 +9,7 @@
     на основе TreeXmlHashModel. Позволяет отображать указанные наследуемые тэги.
 */
 
-class ClassModel : public TreeXmlHashModel
+class METADATAMODELLIB ClassModel : public TreeXmlHashModel
 {
 
 public:
