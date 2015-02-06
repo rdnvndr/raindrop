@@ -234,8 +234,6 @@ void ClassTreeView::showContextMenu(const QPoint &point)
         if (indexSource.data(TreeXmlModel::TagRole)==DBATTRXML::ATTR
             && indexParentSource.data(TreeXmlModel::TagRole)==DBCLASSLISTXML::CLASSLIST)
             contextMenu->actions().at(1)->setVisible(false);
-        else
-            contextMenu->actions().at(1)->setVisible(true);
 
         contextMenu->exec(treeView->mapToGlobal(point));
     }
