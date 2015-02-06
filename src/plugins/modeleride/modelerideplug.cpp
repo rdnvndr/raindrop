@@ -396,10 +396,8 @@ void ModelerIDEPlug::remove()
     QModelIndex currentIndex = treeClassView->currentIndex();
 
     if (currentIndex.isValid()){
-
         if (!isRemove(currentIndex))
             return;
-        closePropWindow(currentIndex);
         m_model->removeRow(currentIndex.row(),currentIndex.parent());
     } else
         QMessageBox::warning(NULL,tr("Предупреждение"),
