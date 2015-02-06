@@ -2,7 +2,6 @@
 #include <QFileDialog>
 #include <QMenu>
 
-#include <itreedockwidget.h>
 #include <imainwindow.h>
 
 #include <mdiextarea/mdiextarea.h>
@@ -22,7 +21,7 @@
 #include "propref.h"
 
 ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
-    QObject(parent), IPlugin("ITreeDockWidget IMainWindow")
+    QObject(parent), IPlugin("IMainWindow")
 {
     m_model = NULL;
 
