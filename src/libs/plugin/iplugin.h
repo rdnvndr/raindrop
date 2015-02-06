@@ -113,7 +113,7 @@ class PLUGINLIB IPlugin
 public:
 
     //! Получение экземпляра
-    virtual QObject *instance() = 0;
+    virtual QObject *instance() {return dynamic_cast<QObject *>(this);};
 
     //! Получение определенных интерфейсов
     virtual QStringList interfaces() = 0;

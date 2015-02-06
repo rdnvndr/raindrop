@@ -58,9 +58,6 @@ public:
 
 // IPlugin
 
-    //! Получение экземпляра
-    QObject *instance() { return this; }
-
     //! Получение имени плагина
     QString name() {return APP_NAME;};
 

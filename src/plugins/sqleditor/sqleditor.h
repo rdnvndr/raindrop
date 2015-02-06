@@ -29,11 +29,8 @@ public:
     //! Деструктор плагина
     virtual ~SqlEditor();
     
-    // IPlugin
-    
-    //! Получение экземпляра
-    QObject *instance() { return this; }
-    
+// IPlugin
+
     //! Получение имени плагина
     QString name() {return APP_NAME;};
     

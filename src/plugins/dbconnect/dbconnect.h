@@ -30,11 +30,7 @@ public:
     //! Деструктор плагина
     virtual ~DbConnect();
 
-    // IPlugin
-    
-    //! Получение экземпляра
-    QObject *instance() { return this; }
-    
+// IPlugin
     //! Получение имени плагина
     QString name() {return APP_NAME;};
     
