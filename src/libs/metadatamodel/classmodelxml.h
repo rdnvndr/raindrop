@@ -9,15 +9,15 @@
     на основе TreeXmlHashModel. Позволяет отображать указанные наследуемые тэги.
 */
 
-class METADATAMODELLIB ClassModel : public TreeXmlHashModel
+class METADATAMODELLIB ClassModelXml : public TreeXmlHashModel
 {
 
 public:
     //! Конструктор класса
-    explicit ClassModel(QDomNode document = QDomNode(), QObject *parent = 0);
+    explicit ClassModelXml(QDomNode document = QDomNode(), QObject *parent = 0);
 
     //! Деструктор класса
-    virtual ~ClassModel();
+    virtual ~ClassModelXml();
 
     //! Вставка строки
     QModelIndex insertLastRows (int row, int count,

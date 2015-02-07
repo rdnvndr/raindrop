@@ -3,7 +3,7 @@
 #include <QStringList>
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <QAbstractItemView>
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 #include "conditionproxymodel.h"
 
 ConditionDelegate::ConditionDelegate(QObject *parent) :

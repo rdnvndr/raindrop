@@ -2,7 +2,7 @@
 #include "dbxmlstruct.h"
 #include <treexmlmodel/tagxmlitem.h>
 
-ClassModel::ClassModel(QDomNode document, QObject *parent)
+ClassModelXml::ClassModelXml(QDomNode document, QObject *parent)
     : TreeXmlHashModel(document, parent)
 {
     initTagFilters();
@@ -16,12 +16,12 @@ ClassModel::ClassModel(QDomNode document, QObject *parent)
     if (document.isNull()) initModel();
 }
 
-ClassModel::~ClassModel()
+ClassModelXml::~ClassModelXml()
 {
 
 }
 
-void ClassModel::initTagFilters()
+void ClassModelXml::initTagFilters()
 {
     this->addTagFilter(DBCLASSXML::CLASS);
     this->addTagFilter(DBATTRXML::ATTR);
@@ -46,7 +46,7 @@ void ClassModel::initTagFilters()
     this->addTagFilter(DBLINKTOCOMPXML::LINKTOCOMP);
 }
 
-void ClassModel::initDisplayedAttrs()
+void ClassModelXml::initDisplayedAttrs()
 {
     QStringList propsClass;
     propsClass << DBCLASSXML::NAME      << DBCLASSXML::ISABSTARCT
@@ -178,7 +178,7 @@ void ClassModel::initDisplayedAttrs()
     this->addDisplayedAttr(DBLINKTOCOMPXML::LINKTOCOMP, propsLinkToComp, QIcon(":/composition"));
 }
 
-void ClassModel::initInsertTags()
+void ClassModelXml::initInsertTags()
 {
     QStringList insertTags;
 
@@ -252,7 +252,7 @@ void ClassModel::initInsertTags()
     this->addInsertTags(DBLINKTOCOMPXML::LINKTOCOMP,insertTags);
 }
 
-void ClassModel::initHashAttrs()
+void ClassModelXml::initHashAttrs()
 {
     this->addHashAttr(DBCLASSXML::CLASS,
                       DBCLASSXML::NAME,
@@ -357,7 +357,7 @@ void ClassModel::initHashAttrs()
                       TreeXmlHashModel::Uuid);
 }
 
-void ClassModel::initRelations()
+void ClassModelXml::initRelations()
 {
     this->addRelation(DBATTRXML::ATTR,DBATTRXML::PARENT,
                       DBCLASSLISTXML::CLASSLIST, DBCLASSLISTXML::NAME);
@@ -428,7 +428,7 @@ void ClassModel::initRelations()
                       DBCOMPXML::COMP, DBCOMPXML::LINKCLASS);
 }
 
-void ClassModel::initModel()
+void ClassModelXml::initModel()
 {
     QModelIndex indexSource = this->index(-1,-1);
     QModelIndex lastIndex = this->insertLastRows(0,1,indexSource,DBMODELXML::MODEL);
@@ -505,7 +505,7 @@ void ClassModel::initModel()
     }
 }
 
-QModelIndex ClassModel::insertLastRows(int row, int count, const QModelIndex &parent, QString tag)
+QModelIndex ClassModelXml::insertLastRows(int row, int count, const QModelIndex &parent, QString tag)
 {
     if (parent.isValid()) {
         QString parentTag = parent.data(TreeXmlModel::TagRole).toString();
@@ -524,7 +524,7 @@ QModelIndex ClassModel::insertLastRows(int row, int count, const QModelIndex &pa
     return TreeXmlHashModel::insertLastRows(row, count, parent, tag);
 }
 
-bool ClassModel::removeRows(int row, int count, const QModelIndex &parent)
+bool ClassModelXml::removeRows(int row, int count, const QModelIndex &parent)
 {
     if (parent.isValid()) {
         QString parentTag = parent.data(TreeXmlModel::TagRole).toString();

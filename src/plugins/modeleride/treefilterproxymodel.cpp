@@ -1,8 +1,8 @@
 #include "treefilterproxymodel.h"
-#include "dbxmlstruct.h"
-#include <QMimeData>
+#include <metadatamodel/dbxmlstruct.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/mimedataindex.h>
+#include <QMimeData>
 
 TreeFilterProxyModel::TreeFilterProxyModel()
 {

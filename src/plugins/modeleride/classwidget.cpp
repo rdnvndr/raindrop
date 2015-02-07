@@ -1,5 +1,5 @@
 #include "classwidget.h"
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 #include <QStringListModel>
 #include <QToolTip>

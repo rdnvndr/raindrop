@@ -1,5 +1,5 @@
 #include "msrunitwidget.h"
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 #include <QStringListModel>
 #include <QTreeView>
 #include <QMessageBox>

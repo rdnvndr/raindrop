@@ -1,6 +1,6 @@
 #include <QMdiSubWindow>
+#include <metadatamodel/dbxmlstruct.h>
 #include "propclass.h"
-#include "dbxmlstruct.h"
 #include "xmldelegate.h"
 
 PropClass::PropClass(QWidget *parent) :

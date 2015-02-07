@@ -1,5 +1,5 @@
 #include "compositionwidget.h"
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 #include <QHeaderView>
 #include <QMessageBox>

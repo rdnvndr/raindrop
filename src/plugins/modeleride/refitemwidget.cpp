@@ -1,5 +1,5 @@
 #include "refitemwidget.h"
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 #include "refitemdelegate.h"
 #include <QMessageBox>
 

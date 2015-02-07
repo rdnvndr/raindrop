@@ -1,7 +1,7 @@
 #include "unitdelegate.h"
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/modifyproxymodel.h>
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 #include <QLineEdit>
 
 

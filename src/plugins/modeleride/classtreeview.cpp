@@ -1,5 +1,5 @@
 #include "classtreeview.h"
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 #include <treexmlmodel/treexmlmodel.h>
 
 ClassTreeView::ClassTreeView(QWidget *parent) :
