@@ -14,7 +14,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 DEPENDPATH += .
 INCLUDEPATH += .
-LIBS += -lplugin -lmdiextarea -lmainwindow
+LIBS += -lplugin -lmdiextarea
 DEFINES += EXAMPLE_LIBRARY
 # Input
 HEADERS += exampleplug.h \
