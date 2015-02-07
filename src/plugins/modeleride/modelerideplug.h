@@ -4,10 +4,10 @@
 #include <QObject>
 #include <plugin/iplugin.h>
 #include <treexmlmodel/treexmlhashmodel.h>
+#include <metadatamodel/classmodelxml.h>
 #include <dockwidget/dockwidget.h>
 #include "classtreeview.h"
 #include "treefilterproxymodel.h"
-#include "classmodel.h"
 
 //! Плагин среды разработки структуры классов
 /*! Плагин предназначен для разработки структуры классов
@@ -81,7 +81,7 @@ private:
     QString m_fileName;
 
     //! Модель дерева классов
-    ClassModel* m_model;
+    ClassModelXml* m_model;
 
     //! Дерево классов
     ClassTreeView* treeClassView;

@@ -1,6 +1,6 @@
 #include "proplov.h"
 #include <QMdiSubWindow>
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 
 PropLov::PropLov(QWidget *parent) :

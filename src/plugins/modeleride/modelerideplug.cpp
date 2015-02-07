@@ -8,12 +8,13 @@
 #include <treexmlmodel/tagxmlitem.h>
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <plugin/pluginmanager.h>
+#include <metadatamodel/dbxmlstruct.h>
+
 
 #include "modelerideplug.h"
 #include "propclass.h"
 #include "propfilter.h"
 #include "propentity.h"
-#include "dbxmlstruct.h"
 #include "propentitygroup.h"
 #include "lovwidget.h"
 #include "proplov.h"
@@ -105,7 +106,7 @@ TreeXmlHashModel *ModelerIDEPlug::model()
 
 void ModelerIDEPlug::createClassModel(QDomDocument document)
 {
-    m_model = new ClassModel(document, this);
+    m_model = new ClassModelXml(document, this);
 
     m_model->setHeaderData(0,  Qt::Horizontal, tr("Имя атрибута"));
     m_model->setHeaderData(1,  Qt::Horizontal, tr("Псевдоним"));

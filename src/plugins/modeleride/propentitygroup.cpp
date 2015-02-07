@@ -2,7 +2,7 @@
 
 #include <QMdiSubWindow>
 #include <QMessageBox>
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 
 PropEntityGroup::PropEntityGroup(QWidget *parent) :

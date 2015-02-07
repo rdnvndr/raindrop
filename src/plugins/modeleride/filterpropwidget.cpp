@@ -5,7 +5,7 @@
 #include <QToolTip>
 #include "conditiondelegate.h"
 #include "xmldelegate.h"
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 #include "regexpvalidator.h"
 
 

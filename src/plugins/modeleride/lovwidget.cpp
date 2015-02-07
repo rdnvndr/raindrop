@@ -1,6 +1,6 @@
 #include "lovwidget.h"
 #include "xmldelegate.h"
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 #include <QMessageBox>
 #include <QToolTip>
 #include "regexpvalidator.h"

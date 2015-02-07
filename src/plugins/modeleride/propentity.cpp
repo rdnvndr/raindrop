@@ -1,6 +1,6 @@
 #include "propentity.h"
 #include <QMdiSubWindow>
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 
 PropEntity::PropEntity(QWidget *parent) :

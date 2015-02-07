@@ -1,6 +1,6 @@
 #include "conditionproxymodel.h"
 #include <treexmlmodel/treexmlhashmodel.h>
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 
 struct PrivateModelIndex
 {

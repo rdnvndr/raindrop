@@ -1,6 +1,6 @@
 #include <QMdiSubWindow>
 #include "propfilter.h"
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 
 PropFilter::PropFilter(QWidget *parent) :
     QWidget(parent)

@@ -1,6 +1,6 @@
 #include "refwidget.h"
 #include <QMdiSubWindow>
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 
 RefWidget::RefWidget(QWidget *parent) :

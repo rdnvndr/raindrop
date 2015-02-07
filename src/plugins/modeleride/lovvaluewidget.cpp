@@ -1,5 +1,5 @@
 #include "lovvaluewidget.h"
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 #include "lovdelegate.h"
 #include <QMessageBox>
 

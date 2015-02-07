@@ -7,7 +7,7 @@
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <treecombobox/treecombobox.h>
 
-#include "dbxmlstruct.h"
+#include <metadatamodel/dbxmlstruct.h>
 
 RefItemDelegate::RefItemDelegate(QObject *parent) :
     XmlDelegate(parent)

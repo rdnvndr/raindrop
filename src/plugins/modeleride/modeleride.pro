@@ -15,13 +15,12 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 QT += xml
 
-LIBS += -lplugin -lmdiextarea -ltreexmlmodel -ltreecombobox -lpushbuttonimage -ldockwidget
+LIBS += -lplugin -lmdiextarea -ltreexmlmodel -ltreecombobox -lpushbuttonimage -ldockwidget -lmetadatamodel
 include(../plugins.pri)
 
 # Input
 HEADERS += modelerideplug.h \
     propclass.h \
-    dbxmlstruct.h \
     classtreeview.h \
     treefilterproxymodel.h \
     attrwidget.h \
@@ -49,7 +48,6 @@ HEADERS += modelerideplug.h \
     refitemwidget.h \
     refitemdelegate.h \
     refproxymodel.h \
-    classmodel.h \
     attrgroupproxymodel.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
@@ -80,7 +78,6 @@ SOURCES += modelerideplug.cpp \
     refitemwidget.cpp \
     refitemdelegate.cpp \
     refproxymodel.cpp \
-    classmodel.cpp \
     attrgroupproxymodel.cpp
 RESOURCES += modeleride.qrc
 
