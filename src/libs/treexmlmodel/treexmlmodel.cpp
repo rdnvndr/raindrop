@@ -276,11 +276,11 @@ bool TreeXmlModel::setData(const QModelIndex &index, const QVariant &value,
         item->setNodeName(value.toString());
         return true;
     }
-
-    if (index.column()>=m_displayedAttr[item->nodeName()].count())
+    QString nodeName = item->nodeName();
+    if (index.column()>=m_displayedAttr[nodeName].count())
         return false;
 
-    QString attrName = displayedAttr(item->nodeName(),index.column());
+    QString attrName = displayedAttr(nodeName,index.column());
 
     if (attrName.isEmpty())
         return false;
