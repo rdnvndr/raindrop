@@ -268,8 +268,9 @@ bool TreeXmlHashModel::setData(const QModelIndex &index, const QVariant &value,
     if (attrName == QString("parent"))
         dataValue = data(index,Qt::EditRole).toString();
 
-    if (!makeHashingData(index, dataValue))
-        return false;
+    if (role != TreeXmlModel::TagRole)
+        if (!makeHashingData(index, dataValue))
+            return false;
 
     return TreeXmlModel::setData(index,dataValue,role);
 }
