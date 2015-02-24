@@ -19,7 +19,7 @@
     \endcode
 */
 
-class XMLMODELLIB ModifyProxyModel : public QAbstractItemModel
+class XMLMODELLIB ModifyProxyModel : public QAbstractProxyModel
 {
     Q_OBJECT
 
@@ -104,6 +104,10 @@ public:
 
     //! Проверка установлен ли режим скрытия удаленных строк
     bool isHiddenRow();
+
+    QModelIndex buddy(const QModelIndex &index) const;
+
+    bool canFetchMore(const QModelIndex &parent) const;
 
 public slots:
 

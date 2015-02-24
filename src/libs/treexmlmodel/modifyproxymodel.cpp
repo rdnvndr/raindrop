@@ -9,8 +9,8 @@ struct PrivateModelIndex
     const QAbstractItemModel *m;
 };
 
-ModifyProxyModel::ModifyProxyModel(QObject* parent) :
-    QAbstractItemModel (parent)
+ModifyProxyModel::ModifyProxyModel(QObject* parent)
+    :QAbstractProxyModel (parent)
 {
     m_hiddenRow = true;
     m_editable  = false;
@@ -620,4 +620,14 @@ void ModifyProxyModel::setHiddenRow(bool enabled)
 bool ModifyProxyModel::isHiddenRow()
 {
     return m_hiddenRow;
+}
+
+QModelIndex ModifyProxyModel::buddy(const QModelIndex &index) const
+{
+    return QAbstractItemModel::buddy(index);
+}
+
+bool ModifyProxyModel::canFetchMore(const QModelIndex &parent) const
+{
+    return QAbstractItemModel::canFetchMore(parent);
 }
