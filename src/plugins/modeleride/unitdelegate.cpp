@@ -1,8 +1,8 @@
 #include "unitdelegate.h"
 #include <treexmlmodel/treexmlhashmodel.h>
-#include <treexmlmodel/modifyproxymodel.h>
 #include <metadatamodel/dbxmlstruct.h>
 #include <QLineEdit>
+#include <QAbstractProxyModel>
 
 
 UnitDelegate::UnitDelegate(QObject *parent) :
@@ -15,9 +15,9 @@ void UnitDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, cons
 
     QLineEdit* lineEdit = dynamic_cast<QLineEdit*>(editor);
     if (lineEdit) {
-        ModifyProxyModel* modifyModel = dynamic_cast<ModifyProxyModel*>(model);
-        TreeXmlHashModel* hashModel = (modifyModel)?
-                    dynamic_cast<TreeXmlHashModel*>(modifyModel->sourceModel())
+        QAbstractProxyModel* proxyModel = dynamic_cast<QAbstractProxyModel*>(model);
+        TreeXmlHashModel* hashModel = (proxyModel)?
+                    dynamic_cast<TreeXmlHashModel*>(proxyModel->sourceModel())
                   : dynamic_cast<TreeXmlHashModel*>(model);
 
         if (hashModel) {
@@ -46,9 +46,9 @@ QWidget *UnitDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
 
     QLineEdit* lineEdit = new QLineEdit(parent);
 
-    const ModifyProxyModel *modifyModel = dynamic_cast<const ModifyProxyModel *>(index.model());
-    const TreeXmlHashModel* hashModel = (modifyModel)?
-                dynamic_cast<const TreeXmlHashModel*>(modifyModel->sourceModel())
+    const QAbstractProxyModel *proxyModel = dynamic_cast<const QAbstractProxyModel *>(index.model());
+    const TreeXmlHashModel* hashModel = (proxyModel)?
+                dynamic_cast<const TreeXmlHashModel*>(proxyModel->sourceModel())
               : dynamic_cast<const TreeXmlHashModel*>(index.model());
 
     if (hashModel) {

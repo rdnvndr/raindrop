@@ -26,7 +26,7 @@ public:
     void setModel(TreeXmlHashModel *model);
 
     //! Возращает прокси модель ЕИ
-    ModifyProxyModel* proxyModel();
+    QAbstractProxyModel *proxyModel();
 
     //! Проверка на возможность удаления ЕИ
     static bool isRemove(const QModelIndex &srcIndex);

@@ -30,7 +30,7 @@ public:
     void setModel(TreeXmlHashModel *model);
 
     //! Возращает прокси модель  элементов справочника
-    ModifyProxyModel* proxyModel();
+    QAbstractProxyModel* proxyModel();
 
     //! Проверка на возможность удаления  элементов справочника
     static bool isRemove(const QModelIndex &srcIndex);

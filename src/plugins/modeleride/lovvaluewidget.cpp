@@ -38,16 +38,16 @@ void LovValueWidget::setModel(TreeXmlHashModel *model)
         tableViewLovValue->setColumnHidden(column,true);
 }
 
-ModifyProxyModel *LovValueWidget::proxyModel()
+QAbstractProxyModel *LovValueWidget::proxyModel()
 {
     return m_lovValueModel;
 }
 
 bool LovValueWidget::isRemove(const QModelIndex &srcIndex)
 {
-    const ModifyProxyModel* modifyModel = dynamic_cast<const ModifyProxyModel*>(srcIndex.model());
-    const TreeXmlHashModel *model = (modifyModel)?
-                dynamic_cast<const TreeXmlHashModel*>(modifyModel->sourceModel())
+    const QAbstractProxyModel* proxyModel = dynamic_cast<const QAbstractProxyModel*>(srcIndex.model());
+    const TreeXmlHashModel *model = (proxyModel)?
+                dynamic_cast<const TreeXmlHashModel*>(proxyModel->sourceModel())
               : dynamic_cast<const TreeXmlHashModel*>(srcIndex.model());
 
     if (!model)

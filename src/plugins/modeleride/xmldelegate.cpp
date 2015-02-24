@@ -7,9 +7,9 @@
 #include <QApplication>
 #include <QSize>
 #include <QPainter>
+#include <QAbstractProxyModel>
 #include <treecombobox/treecombobox.h>
 #include <treexmlmodel/treexmlhashmodel.h>
-#include <treexmlmodel/modifyproxymodel.h>
 
 XmlDelegate::XmlDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -191,11 +191,6 @@ void XmlDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
 
 TreeXmlHashModel *XmlDelegate::sourceModel(QAbstractItemModel *model) const
 {
-    ModifyProxyModel* modifyModel = dynamic_cast<ModifyProxyModel*>(model);
-
-    if (modifyModel)
-        return dynamic_cast<TreeXmlHashModel*>(modifyModel->sourceModel());
-
     QAbstractProxyModel *proxyModel = dynamic_cast<QAbstractProxyModel*>(model);
     if (proxyModel)
         return dynamic_cast<TreeXmlHashModel*>(proxyModel->sourceModel());
@@ -207,10 +202,6 @@ QModelIndex XmlDelegate::mapToSource(QModelIndex index) const
 {
     QAbstractItemModel *model = const_cast<QAbstractItemModel *>(index.model());
 
-    ModifyProxyModel* modifyModel = dynamic_cast<ModifyProxyModel*>(model);
-    if (modifyModel)
-        return modifyModel->mapToSource(index);
-
     QAbstractProxyModel *proxyModel = dynamic_cast<QAbstractProxyModel*>(model);
     if (proxyModel)
         return proxyModel->mapToSource(index);
@@ -220,10 +211,6 @@ QModelIndex XmlDelegate::mapToSource(QModelIndex index) const
 
 QModelIndex XmlDelegate::mapFromSource(QAbstractItemModel *toModel, QModelIndex index) const
 {
-    ModifyProxyModel    *modifyModel = dynamic_cast<ModifyProxyModel*>(toModel);
-    if (modifyModel)
-        return modifyModel->mapFromSource(index);
-
     QAbstractProxyModel *proxyModel  = dynamic_cast<QAbstractProxyModel*>(toModel);
     if (proxyModel)
         return proxyModel->mapFromSource(index);

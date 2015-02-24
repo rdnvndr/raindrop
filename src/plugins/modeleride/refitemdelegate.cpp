@@ -3,10 +3,8 @@
 #include <QSortFilterProxyModel>
 #include <QLineEdit>
 
-#include <treexmlmodel/modifyproxymodel.h>
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <treecombobox/treecombobox.h>
-
 #include <metadatamodel/dbxmlstruct.h>
 
 RefItemDelegate::RefItemDelegate(QObject *parent) :
@@ -200,9 +198,9 @@ QModelIndex RefItemDelegate::rootClass(QModelIndex index) const
 
 const TreeXmlHashModel *RefItemDelegate::hashModel(const QAbstractItemModel *model) const
 {
-    const ModifyProxyModel *modifyModel = dynamic_cast<const ModifyProxyModel *>(model);
-    const TreeXmlHashModel* hashModel = (modifyModel)?
-                dynamic_cast<const TreeXmlHashModel*>(modifyModel->sourceModel())
+    const QAbstractProxyModel *proxyModel = dynamic_cast<const QAbstractProxyModel *>(model);
+    const TreeXmlHashModel* hashModel = (proxyModel)?
+                dynamic_cast<const TreeXmlHashModel*>(proxyModel->sourceModel())
               : dynamic_cast<const TreeXmlHashModel*>(model);
     return hashModel;
 }

@@ -46,16 +46,17 @@ void MsrUnitWidget::setModel(TreeXmlHashModel *model)
         tableViewUnit->setColumnHidden(column,true);
 }
 
-ModifyProxyModel *MsrUnitWidget::proxyModel()
+QAbstractProxyModel *MsrUnitWidget::proxyModel()
 {
     return m_unitModel;
 }
 
 bool MsrUnitWidget::isRemove(const QModelIndex &srcIndex)
 {
-    const ModifyProxyModel* modifyModel = dynamic_cast<const ModifyProxyModel*>(srcIndex.model());
-    const TreeXmlHashModel *model = (modifyModel)?
-                dynamic_cast<const TreeXmlHashModel*>(modifyModel->sourceModel())
+    const QAbstractProxyModel* proxyModel
+            = dynamic_cast<const QAbstractProxyModel*>(srcIndex.model());
+    const TreeXmlHashModel *model = (proxyModel)?
+                dynamic_cast<const TreeXmlHashModel*>(proxyModel->sourceModel())
               : dynamic_cast<const TreeXmlHashModel*>(srcIndex.model());
 
     if (!model)

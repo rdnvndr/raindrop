@@ -62,10 +62,6 @@ public:
     //! Установка модели источника
     void setSourceModel(QAbstractItemModel *srcModel);
 
-    //! Получение модели источника
-    QAbstractItemModel *sourceModel() const;
-
-
     //! Возвращает флаг записи
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
@@ -134,9 +130,6 @@ private:
     //! Вставка строк в исходную модель
     bool insertSourceRows(const QPersistentModelIndex &parent,
                           const QPersistentModelIndex &sourceParent = QModelIndex());
-
-    //! Модель-источник
-    QAbstractItemModel *m_sourceModel;
 
     //! Список измененных значений
     QHash <QPersistentModelIndex, QHash<int, QVariant> > m_updatedRow;
