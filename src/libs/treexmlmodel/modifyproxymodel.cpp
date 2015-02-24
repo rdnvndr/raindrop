@@ -448,7 +448,7 @@ bool ModifyProxyModel::hasChildren(const QModelIndex &parent) const
 
 void ModifyProxyModel::setSourceModel(QAbstractItemModel *srcModel)
 {
-    m_sourceModel = srcModel;
+    QAbstractProxyModel::setSourceModel(srcModel);
 
     connect(srcModel, SIGNAL(rowsRemoved(const QModelIndex &, int, int)),
             this, SLOT(sourceRowsRemoved(const QModelIndex &, int, int)));
@@ -458,11 +458,6 @@ void ModifyProxyModel::setSourceModel(QAbstractItemModel *srcModel)
             this, SLOT(sourceRowsInserted(const QModelIndex &, int, int)));
     connect(srcModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
             this, SLOT(sourceDataChanged(QModelIndex,QModelIndex)));
-}
-
-QAbstractItemModel *ModifyProxyModel::sourceModel() const
-{
-    return m_sourceModel;
 }
 
 Qt::ItemFlags ModifyProxyModel::flags(const QModelIndex &index) const

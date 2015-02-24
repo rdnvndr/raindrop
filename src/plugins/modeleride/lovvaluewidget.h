@@ -24,7 +24,7 @@ public:
     void setModel(TreeXmlHashModel *model);
 
     //! Возращает прокси модель значений списка
-    ModifyProxyModel* proxyModel();
+    QAbstractProxyModel* proxyModel();
 
     //! Проверка на возможность удаления значений списка
     static bool isRemove(const QModelIndex &srcIndex);

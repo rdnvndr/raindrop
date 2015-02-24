@@ -39,16 +39,16 @@ void RefItemWidget::setModel(TreeXmlHashModel *model)
     treeView->setColumnWidth(0,treeView->size().width()/3);
 }
 
-ModifyProxyModel *RefItemWidget::proxyModel()
+QAbstractProxyModel *RefItemWidget::proxyModel()
 {
     return m_refModel;
 }
 
 bool RefItemWidget::isRemove(const QModelIndex &srcIndex)
 {
-    const ModifyProxyModel* modifyModel = dynamic_cast<const ModifyProxyModel*>(srcIndex.model());
-    const TreeXmlHashModel *model = (modifyModel)?
-                dynamic_cast<const TreeXmlHashModel*>(modifyModel->sourceModel())
+    const QAbstractProxyModel* proxyModel = dynamic_cast<const QAbstractProxyModel*>(srcIndex.model());
+    const TreeXmlHashModel *model = (proxyModel)?
+                dynamic_cast<const TreeXmlHashModel*>(proxyModel->sourceModel())
               : dynamic_cast<const TreeXmlHashModel*>(srcIndex.model());
 
     if (!model)
