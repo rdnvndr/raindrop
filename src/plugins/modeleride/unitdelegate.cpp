@@ -59,7 +59,7 @@ QWidget *UnitDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
                 lineEdit->setValidator(new QIntValidator(0, 9999, lineEdit));
             else if (attr == DBUNITXML::COEFF || attr == DBUNITXML::DELTA) {
                 QRegExpValidator *validator = new QRegExpValidator(lineEdit);
-                validator->setRegExp(QRegExp("^[0-9]*[.]{1}[0-9]*$"));
+                validator->setRegExp(QRegExp("^[0-9]*[.]?[0-9]*$"));
                 lineEdit->setValidator(validator);
             }
         }
