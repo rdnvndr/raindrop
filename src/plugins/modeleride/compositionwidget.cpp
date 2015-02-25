@@ -228,8 +228,8 @@ void CompositionWidget::up()
             index = tableViewComp->currentIndex().sibling(index.row()-2,0);
         else
             index = index.sibling(0,0);
-        m_model->removeRow(srcIndex.row(),srcIndex.parent());
-        setCurrent(index);
+        if (m_model->removeRow(srcIndex.row(),srcIndex.parent()))
+            setCurrent(index);
     }
 }
 
@@ -245,8 +245,8 @@ void CompositionWidget::down()
                                                        QStringList());
     if (m_model->moveIndex(srcIndex,srcParent,row)) {
         index = tableViewComp->currentIndex().sibling(index.row()+2,0);
-        m_model->removeRow(srcIndex.row(),srcIndex.parent());
-        setCurrent(index);
+        if (m_model->removeRow(srcIndex.row(),srcIndex.parent()))
+            setCurrent(index);
     }
 }
 
