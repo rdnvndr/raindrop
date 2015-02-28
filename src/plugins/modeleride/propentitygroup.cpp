@@ -153,7 +153,8 @@ void PropEntityGroup::setTabName(const QModelIndex &index)
                            index).toString();
 
     this->setObjectName("PropEntityGroup::" + id);
-    subWindow->setWindowTitle(tr("Группа ЕИ: ")+entityGroupName);
+    subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));
+    subWindow->setWindowTitle(entityGroupName);
 }
 
 void PropEntityGroup::closeTab(const QModelIndex &index)
