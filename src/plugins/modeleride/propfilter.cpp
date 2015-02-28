@@ -45,8 +45,10 @@ void PropFilter::setTabName(const QModelIndex &index)
     QString id = modelData(DBFILTERXML::FILTER, DBFILTERXML::ID,index).toString();
 
     this->setObjectName("PropFilter::" + id);
-    if (subWindow)
-        subWindow->setWindowTitle(tr("Фильтр: ")+className);
+    if (subWindow) {
+        subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));
+        subWindow->setWindowTitle(className);
+    }
 }
 
 void PropFilter::closeTab(const QModelIndex &index)
