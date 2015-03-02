@@ -2,6 +2,8 @@
 #include <imainwindow.h>
 #include "querysqlwidget.h"
 
+using namespace RTPTechGroup::Plugin;
+
 SqlEditor::SqlEditor(QObject *parent):
     QObject(parent), IPlugin("IMainWindow")
 {

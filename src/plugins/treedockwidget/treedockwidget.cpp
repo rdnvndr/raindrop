@@ -1,6 +1,8 @@
 #include "treedockwidget.h"
 #include <QMainWindow>
 
+using namespace RTPTechGroup::Plugin;
+
 TreeDockWidget::TreeDockWidget(QWidget *parent) :
     QDockWidget(parent), IPlugin("IMainWindow")
 {
