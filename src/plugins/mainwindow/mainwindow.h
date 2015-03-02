@@ -10,6 +10,9 @@
 #include <QMainWindow>
 #include <QMenu>
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! Плагин главного окна
 /*! Плагин предназначен для создания главного окна
     Весь графический интерфейс приложения должен строится
@@ -266,5 +269,8 @@ private:
     //! Cписок горячих клавиш команд
     QHash <QString, QKeySequence> m_hotkey;
 };
+
+}
+}
 
 #endif
