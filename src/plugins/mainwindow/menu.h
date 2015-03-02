@@ -3,6 +3,9 @@
 
 #include <QMenu>
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! Класс Menu предназначен для создания меню
 /*! Класс Menu представляет собой widget для изпользования в строке меню,
  *  контекстном меню и других выпадающих меню. Отличается от QMenu возможносnm
@@ -78,5 +81,8 @@ private:
     //! Иконка в исходном формате
     QByteArray m_icon;
 };
+
+}
+}
 
 #endif // MENU_H

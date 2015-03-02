@@ -3,6 +3,9 @@
 
 #include <QTreeView>
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! Дерево команд
 //! Дерево команд отличается от стандартного дерева поддержкой Drag and Drop
 //!
@@ -17,5 +20,8 @@ public:
     void startDrag(Qt::DropActions supportedActions);
 
 };
+
+}
+}
 
 #endif // ACTIONGROUPTREEVIEW_H

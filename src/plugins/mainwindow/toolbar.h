@@ -4,6 +4,9 @@
 #include <QToolBar>
 #include <QMenu>
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! Класс ToolBar представляет собой панель инструментов
 /*! Панель инструментов состоит из списочных или выпадающих пунктов меню
  *  Отличается от QToolBar возможностью добавления QAction при помощи
@@ -65,5 +68,8 @@ private:
     //! Определяет является ли меню редактируемым
     bool m_edited;
 };
+
+}
+}
 
 #endif // TOOLBAR_H

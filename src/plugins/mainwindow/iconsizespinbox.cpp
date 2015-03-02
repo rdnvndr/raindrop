@@ -1,5 +1,8 @@
 #include "iconsizespinbox.h"
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 IconSizeSpinBox::IconSizeSpinBox(QWidget *parent) :
     QSpinBox(parent)
 {
@@ -20,4 +23,7 @@ int IconSizeSpinBox::valueFromText(const QString &text) const
 QString IconSizeSpinBox::textFromValue(int val) const
 {
     return tr("%1 x %1").arg(val);
+}
+
+}
 }

@@ -4,6 +4,9 @@
 #include <QMimeData>
 #include <QAction>
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! MimeDataObject контейнер для записи информации с mime типом
 /*! MimeDataObject расширенный контейнер QMimeData. В нем можно
  *  передавай экземпляры классов типа QObject
@@ -33,5 +36,8 @@ private:
     QObject *m_object;
     
 };
+
+}
+}
 
 #endif // MIMEDATAOBJECT_H

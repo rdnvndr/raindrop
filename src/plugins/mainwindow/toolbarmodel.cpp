@@ -1,5 +1,8 @@
 #include "toolbarmodel.h"
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 ToolBarModel::ToolBarModel(QMainWindow *mainWindow, QObject *parent) :
     QAbstractItemModel(parent)
 {
@@ -140,4 +143,7 @@ bool ToolBarModel::removeRows(int row, int count, const QModelIndex &parent)
     }
     endRemoveRows();
     return true;
+}
+
+}
 }

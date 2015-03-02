@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>RTPTechGroup::MainWindow::MainWindow</class>
+ <widget class="QMainWindow" name="RTPTechGroup::MainWindow::MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -83,7 +83,7 @@
   <connection>
    <sender>actionExit</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>RTPTechGroup::MainWindow::MainWindow</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

@@ -1,5 +1,8 @@
 #include "mimedataobject.h"
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 MimeDataObject::MimeDataObject(): QMimeData ()
 {
     m_object = NULL;
@@ -25,4 +28,7 @@ QStringList MimeDataObject::formats() const
     QStringList format = QMimeData::formats();
     if (hasObject()) format << "application/x-qobject";
     return format;
+}
+
+}
 }

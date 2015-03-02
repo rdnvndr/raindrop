@@ -6,6 +6,9 @@
 #include <QSignalMapper>
 #include "toolbar.h"
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! Модель отображения панелей инструментов в главном окне
 
 class ToolBarModel : public QAbstractItemModel
@@ -65,5 +68,8 @@ private:
     QMainWindow *m_mainWindow;
     
 };
+
+}
+}
 
 #endif // TOOLBARMODEL_H
