@@ -10,6 +10,8 @@
 #include "toolbar.h"
 #include "mdisubwindow.h"
 
+using namespace RTPTechGroup::Plugin;
+
 namespace RTPTechGroup {
 namespace MainWindow {
 

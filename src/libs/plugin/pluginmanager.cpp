@@ -1,6 +1,9 @@
 #include "pluginmanager.h"
 #include <typeinfo>
 
+namespace RTPTechGroup {
+namespace Plugin {
+
 PluginManager::PluginManager(QObject *parent) :
     QObject(parent)
 {
@@ -148,3 +151,5 @@ void PluginManager::removePlugin(QObject *obj)
     emit removedPlugin(obj);
     qDebug() << "Remove plugin:" << obj->objectName();
 }
+
+}}

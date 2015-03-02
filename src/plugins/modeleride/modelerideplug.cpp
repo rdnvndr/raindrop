@@ -10,7 +10,6 @@
 #include <plugin/pluginmanager.h>
 #include <metadatamodel/dbxmlstruct.h>
 
-
 #include "modelerideplug.h"
 #include "propclass.h"
 #include "propfilter.h"
@@ -20,6 +19,8 @@
 #include "proplov.h"
 #include "proprefgroup.h"
 #include "propref.h"
+
+using namespace RTPTechGroup::Plugin;
 
 ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     QObject(parent), IPlugin("IMainWindow")

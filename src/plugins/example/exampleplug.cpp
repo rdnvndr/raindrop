@@ -2,6 +2,8 @@
 #include <mdiextarea/mdiextarea.h>
 #include <QTextEdit>
 
+using namespace RTPTechGroup::Plugin;
+
 ExamplePlug::ExamplePlug(QObject *parent):
     QObject(parent), IPlugin("IMainWindow ITreeDockWidget")
 {

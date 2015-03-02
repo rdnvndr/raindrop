@@ -3,6 +3,8 @@
 #include <imainwindow.h>
 #include "dialogconnect.h"
 
+using namespace RTPTechGroup::Plugin;
+
 DbConnect::DbConnect(QObject *parent):
     QObject(parent), IPlugin("IMainWindow")
 {
