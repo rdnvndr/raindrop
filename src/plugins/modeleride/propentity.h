@@ -7,6 +7,9 @@
 #include <QDataWidgetMapper>
 #include <QStringListModel>
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования сущности единицы измерения
 /*! Диалог предназначен для редактирования сущности единицы измерения
 */
@@ -48,5 +51,7 @@ private:
     //! Модель структуры классов
     TreeXmlHashModel* m_model;
 };
+
+}}
 
 #endif // PROPENTITY_H

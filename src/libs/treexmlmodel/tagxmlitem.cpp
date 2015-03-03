@@ -1,6 +1,9 @@
 #include <QtXml>
 #include "tagxmlitem.h"
 
+namespace RTPTechGroup {
+namespace XmlModel {
+
 TagXmlItem::TagXmlItem(QDomNode &node,TagXmlItem *parent): QObject(parent)
 {
     m_domNode = node;
@@ -293,3 +296,5 @@ bool TagXmlItem::checkRemoveChild(const int &row){
 
     return false;
 }
+
+}}

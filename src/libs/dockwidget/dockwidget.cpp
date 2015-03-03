@@ -3,7 +3,9 @@
 #include <QApplication>
 #include <QMouseEvent>
 #include <QStyle>
-#include <QDebug>
+
+namespace RTPTechGroup {
+namespace Widgets {
 
 DockWidget::DockWidget(QWidget * parent)
     : QDockWidget(parent)
@@ -113,3 +115,4 @@ bool DockWidget::isAutoHide()
     return m_autoHide;
 }
 
+}}

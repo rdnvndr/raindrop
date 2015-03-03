@@ -8,6 +8,11 @@
 #include <QMessageBox>
 #include <QStringListModel>
 
+using namespace RTPTechGroup::XmlModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования класса
 /*! Диалог предназначен для редактирования класса
  */
@@ -87,5 +92,7 @@ private:
     //! Хранит индекс предыдущего активного класса
     int  m_oldIndex;
 };
+
+}}
 
 #endif // CLASSWIDGET_H

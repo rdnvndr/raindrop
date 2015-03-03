@@ -3,6 +3,11 @@
 #include "refitemdelegate.h"
 #include <QMessageBox>
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 RefItemWidget::RefItemWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -219,3 +224,4 @@ void RefItemWidget::setRootIndex(const QModelIndex &index)
     emit proxyIndexChanged(treeView->rootIndex());
 }
 
+}}

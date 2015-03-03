@@ -5,6 +5,9 @@
 #include <QStringList>
 #include "treexmlmodelglobal.h"
 
+namespace RTPTechGroup {
+namespace XmlModel {
+
 //! Класс прокси модель  для XML данных класса TreeXMLModel
 /*! Данный класс предназначен для табличного отображения атрибутов
     класса TreeXMLModel.Позволяет отображать наследуемые тэги, сортировать
@@ -77,5 +80,7 @@ private:
     //! Флаг фильтра для всех строк
     bool m_filterAllRows;
 };
+
+}}
 
 #endif // TABLEXMLPROXYMODEL_H

@@ -11,6 +11,9 @@
 #include "mimedataobject.h"
 #include "actionprop.h"
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 ToolBar::ToolBar(QWidget *parent) :
     QToolBar(parent)
 {
@@ -203,4 +206,7 @@ void ToolBar::setEdited(bool edited)
 bool ToolBar::isEdited()
 {
     return m_edited;
+}
+
+}
 }

@@ -4,6 +4,9 @@
 #include <QComboBox>
 #include <QTreeView>
 
+namespace RTPTechGroup {
+namespace Widgets {
+
 //! ComboxBox с выпадающим списком в виде QTreeView
 /*! Класс предназначен для выбора значения ComboBox
     из древовидной модели.
@@ -95,5 +98,7 @@ private:
     //! Корневой индекс
     QModelIndex m_rootIndex;
 };
+
+}}
 
 #endif // TREECOMBOBOX_H

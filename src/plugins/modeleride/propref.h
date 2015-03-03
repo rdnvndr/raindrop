@@ -7,6 +7,9 @@
 #include <QDataWidgetMapper>
 #include <QStringListModel>
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования справочника
 /*! Диалог предназначен для редактирования справочника
 */
@@ -48,5 +51,7 @@ private:
     //! Модель структуры классов
     TreeXmlHashModel* m_model;
 };
+
+}}
 
 #endif // PROPREF_H

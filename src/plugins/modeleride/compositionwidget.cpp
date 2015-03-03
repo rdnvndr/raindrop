@@ -4,6 +4,11 @@
 #include <QHeaderView>
 #include <QMessageBox>
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 CompositionWidget::CompositionWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -301,3 +306,5 @@ void CompositionWidget::setRootIndex(QModelIndex index)
 
     this->setCurrent(tableViewComp->rootIndex().child(0,0));
 }
+
+}}

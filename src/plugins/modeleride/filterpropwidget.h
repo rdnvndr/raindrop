@@ -8,6 +8,9 @@
 #include <QAction>
 #include <treexmlmodel/treexmlhashmodel.h>
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования фильтра
 /*! Диалог предназначен для редактирования фильтра
 */
@@ -115,5 +118,7 @@ private:
     //! Действие добавить подвыражение
     QAction *actionAddSubCondition;
 };
+
+}}
 
 #endif // FILTERPROPWIDGET_H

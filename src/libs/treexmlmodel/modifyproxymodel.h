@@ -5,6 +5,9 @@
 #include <QSet>
 #include "treexmlmodelglobal.h"
 
+namespace RTPTechGroup {
+namespace XmlModel {
+
 //! Класс прокси модель  для кэшеирования измений в модели источника
 /*! Данный класс предназначен для кэшеирования изменений в модели-источнике
     с последующим их примением при вызове функции submitAll(). \n
@@ -155,6 +158,8 @@ private:
 
     //! Флаг разрешения на редактирование
     bool m_editable;
-} ;
+};
+
+}}
 
 #endif

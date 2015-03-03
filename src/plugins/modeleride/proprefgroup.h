@@ -7,6 +7,11 @@
 
 #include "ui_proprefgroup.h"
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
+using namespace RTPTechGroup::XmlModel;
+
 //! Диалог редактирования группы справочника
 /*! Диалог предназначен для редактирования группы справочника
 */
@@ -93,5 +98,7 @@ private:
     //! Хранит индекс предыдущей активной группы сущности ЕИ
     int  m_oldIndex;
 };
+
+}}
 
 #endif // PROPREFGROUP_H

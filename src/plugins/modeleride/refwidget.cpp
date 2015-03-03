@@ -3,6 +3,11 @@
 #include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 RefWidget::RefWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -175,3 +180,4 @@ QVariant RefWidget::modelData(const QString &tag, const QString &attr, const QMo
                              tag,attr)).data(role);
 }
 
+}}

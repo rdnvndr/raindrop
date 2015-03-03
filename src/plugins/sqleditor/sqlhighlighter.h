@@ -6,6 +6,9 @@
 
 class QTextDocument;
 
+namespace RTPTechGroup {
+namespace SqlEditor {
+
 //! Класс подсветки синтаксиса в SQL запросе
 
 class SqlHighlighter : public QSyntaxHighlighter
@@ -13,7 +16,8 @@ class SqlHighlighter : public QSyntaxHighlighter
     Q_OBJECT
 public:
     //! Конструктор
-    explicit SqlHighlighter(QTextDocument *parent = 0);
+    SqlHighlighter(QTextDocument *parent);
+
 
 protected:
     //! Правила подсветки текстового блока
@@ -22,5 +26,7 @@ protected:
 private:
 
 };
+
+}}
 
 #endif // SQLHIGHLIGHTER_H

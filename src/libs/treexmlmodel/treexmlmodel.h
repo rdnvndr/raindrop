@@ -9,6 +9,9 @@
 #include <QIcon>
 #include "treexmlmodelglobal.h"
 
+namespace RTPTechGroup {
+namespace XmlModel {
+
 class TagXmlItem;
 
 //! Класс модель дерева для XML данных
@@ -250,5 +253,7 @@ private:
     //! Список тэгов в которые нельзя вставлять строки
     QHash<QString, QStringList> m_insertTags;
 };
+
+}}
 
 #endif

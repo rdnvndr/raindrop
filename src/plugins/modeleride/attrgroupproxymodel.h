@@ -3,6 +3,9 @@
 
 #include <QAbstractListModel>
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 class AttrGroupProxyModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -48,5 +51,7 @@ private:
     QAbstractItemModel *m_model;
     QPersistentModelIndex m_rootIndex;
 };
+
+}}
 
 #endif // ATTRGROUPPROXYMODEL_H
