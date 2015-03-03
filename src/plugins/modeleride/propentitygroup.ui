@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PropEntityGroup</class>
- <widget class="QWidget" name="PropEntityGroup">
+ <class>RTPTechGroup::ModelerIde::PropEntityGroup</class>
+ <widget class="QWidget" name="RTPTechGroup::ModelerIde::PropEntityGroup">
   <property name="geometry">
    <rect>
     <x>0</x>

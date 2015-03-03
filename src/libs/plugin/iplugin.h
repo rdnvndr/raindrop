@@ -16,7 +16,6 @@ QT_BEGIN_NAMESPACE
 class QWidget;
 class QString;
 class QStringList;
-class PluginManager;
 class QObject;
 QT_END_NAMESPACE
 

@@ -5,6 +5,9 @@
 #include "sqlhighlighter.h"
 #include <QtSql>
 
+namespace RTPTechGroup {
+namespace SqlEditor {
+
 //! Редактор SQL запросов
 
 class QuerySqlWidget : public QWidget, private Ui::QuerySqlWidget
@@ -23,5 +26,7 @@ private:
     QSqlQueryModel* m_model;
     SqlHighlighter *m_sqlHighlighter;
 };
+
+}}
 
 #endif // QUERYSQLWIDGET_H

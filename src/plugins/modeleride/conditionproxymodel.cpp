@@ -2,6 +2,11 @@
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <metadatamodel/dbxmlstruct.h>
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 struct PrivateModelIndex
 {
     int r, c;
@@ -237,3 +242,5 @@ QModelIndex ConditionProxyModel::insertLastRows(int row, int count, const QModel
 
     return ModifyProxyModel::insertLastRows(row, count, parent);
 }
+
+}}

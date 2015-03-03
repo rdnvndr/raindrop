@@ -4,6 +4,11 @@
 #include <treexmlmodel/modifyproxymodel.h>
 #include <treexmlmodel/treexmlmodel.h>
 
+using namespace RTPTechGroup::XmlModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Прокси модель справочника
 /*! Прокси модель предназначена для редактирования справочника
  */
@@ -18,5 +23,7 @@ public:
     //! Получение данных модели
     QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const;
 };
+
+}}
 
 #endif // REFPROXYMODEL_H

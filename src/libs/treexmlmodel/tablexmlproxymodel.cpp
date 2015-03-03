@@ -1,7 +1,9 @@
 #include "tablexmlproxymodel.h"
 #include "treexmlmodel.h"
 #include <QtCore>
-#include <QDebug>
+
+namespace RTPTechGroup {
+namespace XmlModel {
 
 TableXMLProxyModel::TableXMLProxyModel(QObject *parent): QSortFilterProxyModel(parent)
 {
@@ -124,3 +126,5 @@ bool TableXMLProxyModel::isFilterAllRows() const
 {
     return m_filterAllRows;
 }
+
+}}

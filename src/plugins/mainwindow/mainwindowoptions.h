@@ -8,6 +8,9 @@
 #include "actiongroupmodel.h"
 #include "toolbarmodel.h"
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! Класс настройки панели инструментов и главного меню
 /*! Класс настройки панели инструментов и главного меню предназначен
  *  для настройки панели инструментов и главного меню при помощи
@@ -76,5 +79,8 @@ private:
     //! Хранит модель панелей инструментов
     ToolBarModel *m_toolBarModel;
 };
+
+}
+}
 
 #endif // MAINWINDOWOPTIONS_H

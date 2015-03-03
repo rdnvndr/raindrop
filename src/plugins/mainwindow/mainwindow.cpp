@@ -10,6 +10,11 @@
 #include "toolbar.h"
 #include "mdisubwindow.h"
 
+using namespace RTPTechGroup::Plugin;
+
+namespace RTPTechGroup {
+namespace MainWindow {
+
 MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
 {
     setupUi(this);
@@ -737,6 +742,9 @@ void MainWindow::readBarSettings()
     settings()->endArray();
 
     settings()->endGroup();
+}
+
+}
 }
 
 #if QT_VERSION < 0x050000

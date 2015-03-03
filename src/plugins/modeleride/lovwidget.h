@@ -6,6 +6,11 @@
 #include <QDataWidgetMapper>
 #include <QStringListModel>
 
+using namespace RTPTechGroup::XmlModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования списка значений
 /*! Диалог предназначен для редактирования списка значений
 */
@@ -88,5 +93,7 @@ private:
     //! Список типов значений
     QStringListModel *m_typeAttrModel;
 };
+
+}}
 
 #endif // LOVWIDGET_H

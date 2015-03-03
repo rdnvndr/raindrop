@@ -9,6 +9,9 @@
 #include <itreedockwidget.h>
 #include <plugin/iplugin.h>
 
+namespace RTPTechGroup {
+namespace TreeDockWidget {
+
 //! Класс отображения деревьев с панелей инструментов
 /*! Класс отображения деревьев с панелей инструментов
     предназначен для отображения дерева команд для каждого
@@ -106,5 +109,7 @@ private:
     //! Панель инструмента модулей
     QToolBar* toolbar;
 };
+
+}}
 
 #endif // DOCKCOMMANDSWIDGET_H

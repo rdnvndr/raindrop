@@ -7,6 +7,9 @@
 
 class IPlugin;
 
+namespace RTPTechGroup {
+namespace Plugin {
+
 //! Класс для управления плагинами
 /*! Данный класс предназначен для загрузки плагинов,
     получения объектов плагина, сохранение настроек плагина.\n
@@ -66,6 +69,9 @@ public:
     //! Загрузка указанного плагина
     bool loadPlugin(QString fileName);
 
+    //! Загрузка следующего плагина
+    bool nextLoadPlugin();
+
     //! Устанавливает ссылку на объект для сохранения настроек
     void setSettings(QSettings *s);
 
@@ -88,8 +94,6 @@ private slots:
     void removePlugin(QObject* obj);
 
 private:
-    //! Загрузка следующего плагина
-    bool nextLoadPlugin();
 
     //! Экземпляр менеджера плагинов
     static PluginManager *m_instance;
@@ -112,5 +116,7 @@ private:
     //! Список файлов в каталоге плагина
     QStringList m_listFiles;
 };
+
+}}
 
 #endif // PLUGINMANAGER_H

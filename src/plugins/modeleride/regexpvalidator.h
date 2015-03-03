@@ -3,6 +3,9 @@
 
 #include <QRegExpValidator>
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Класс для проверки значения при помощи регулярного выражения
 /*! Класс предназначен для проверки значения при помощи регулярного выражения
 */
@@ -25,5 +28,7 @@ signals:
     void stateChanged(QValidator::State state) const;
 
 };
+
+}}
 
 #endif // REGEXPVALIDATOR_H

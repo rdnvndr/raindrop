@@ -8,6 +8,11 @@
 #include <treexmlmodel/modifyproxymodel.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 
+using namespace RTPTechGroup::XmlModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования ЕИ
 /*! Диалог предназначен для редактирования ЕИ
 */
@@ -62,5 +67,7 @@ private:
     //! Модель структуры классов
     TreeXmlHashModel* m_model;
 };
+
+}}
 
 #endif // MSRUNITWIDGET_H

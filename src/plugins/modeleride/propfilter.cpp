@@ -2,6 +2,11 @@
 #include "propfilter.h"
 #include <metadatamodel/dbxmlstruct.h>
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 PropFilter::PropFilter(QWidget *parent) :
     QWidget(parent)
 {
@@ -65,3 +70,5 @@ QVariant PropFilter::modelData(const QString &tag, const QString &attr, const QM
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
                       tag,attr)).data();
 }
+
+}}

@@ -18,6 +18,9 @@
     \endcode
 */
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 class ActionGroupModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -71,5 +74,6 @@ private:
     QMultiHash <QString, QAction *> *m_actions;
     
 };
-
+}
+}
 #endif // ACTIONGROUPMODEL_H

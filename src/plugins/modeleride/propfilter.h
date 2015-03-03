@@ -3,6 +3,9 @@
 
 #include "ui_propfilter.h"
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования фильтра
 /*! Диалог предназначен для редактирования фильтра
 */
@@ -41,5 +44,7 @@ private:
     //! Модель структуры классов
     TreeXmlHashModel* m_model;
 };
+
+}}
 
 #endif // PROPFILTER_H
