@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ActionProp</class>
- <widget class="QDialog" name="ActionProp">
+ <class>RTPTechGroup::MainWindow::ActionProp</class>
+ <widget class="QDialog" name="RTPTechGroup::MainWindow::ActionProp">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -61,11 +61,20 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="margin">
+         <property name="leftMargin">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>2</number>
+         </property>
+         <property name="bottomMargin">
           <number>2</number>
          </property>
          <item>
-          <widget class="PushButtonImage" name="pushButtonIcon">
+          <widget class="RTPTechGroup::Widgets::PushButtonImage" name="pushButtonIcon">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>48</horstretch>
@@ -131,7 +140,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>PushButtonImage</class>
+   <class>RTPTechGroup::Widgets::PushButtonImage</class>
    <extends>QPushButton</extends>
    <header>pushbuttonimage.h</header>
   </customwidget>
@@ -141,7 +150,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>ActionProp</receiver>
+   <receiver>RTPTechGroup::MainWindow::ActionProp</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -157,7 +166,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>ActionProp</receiver>
+   <receiver>RTPTechGroup::MainWindow::ActionProp</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

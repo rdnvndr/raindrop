@@ -3,6 +3,9 @@
 
 #include <QStyledItemDelegate>
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Делегат редактирования списка значений
 /*! Данный делегат предназначен для редактирования списка значений
  */
@@ -20,5 +23,7 @@ signals:
 public slots:
 
 };
+
+}}
 
 #endif // LOVDELEGATE_H

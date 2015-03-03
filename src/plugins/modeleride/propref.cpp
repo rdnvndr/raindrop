@@ -3,6 +3,11 @@
 #include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 PropRef::PropRef(QWidget *parent) :
     QWidget(parent)
 {
@@ -61,7 +66,8 @@ void PropRef::setTabName(const QModelIndex &index)
     QString id = modelData(DBREFXML::REF, DBREFXML::ID,index).toString();
 
     this->setObjectName("PropRef::" + id);
-    subWindow->setWindowTitle(tr("Справочник: ")+refItemName);
+    subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));
+    subWindow->setWindowTitle(refItemName);
 }
 
 void PropRef::closeTab(const QModelIndex &index)
@@ -90,3 +96,5 @@ void PropRef::edit(bool flag)
     pushButtonPropCancel->setEnabled(flag);
     toolButtonEdit->setDisabled(flag);
 }
+
+}}

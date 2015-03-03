@@ -8,6 +8,9 @@
 #include "mimedataobject.h"
 #include "actionprop.h"
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 MenuBar::MenuBar(QWidget *parent) :
     QMenuBar(parent)
 {
@@ -168,4 +171,7 @@ void MenuBar::setEdited(bool edited)
 bool MenuBar::isEdited()
 {
     return m_edited;
+}
+
+}
 }

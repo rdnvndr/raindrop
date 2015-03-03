@@ -11,6 +11,9 @@
 
 #include "refproxymodel.h"
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования элементов справочника
 /*! Диалог предназначен для редактирования элементов справочника
 */
@@ -70,5 +73,6 @@ private:
     TreeXmlHashModel* m_model;
 };
 
+}}
 
 #endif // REFITEMWIDGET_H

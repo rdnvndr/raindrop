@@ -3,6 +3,9 @@
 
 #include <QLineEdit>
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! Класс ввода горячих клавиш
 /*!  Класс ввода горячих клавиш предназначен для ввода клавиатурных сокращений
      с клавиатуры
@@ -49,5 +52,8 @@ private:
     //! Горячая клавиша по умолчанию
     QKeySequence m_oldKeySequence;
 };
+
+}
+}
 
 #endif // HOTKEYLINEEDIT_H

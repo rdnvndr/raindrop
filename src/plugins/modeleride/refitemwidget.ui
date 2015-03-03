@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RefItemWidget</class>
- <widget class="QWidget" name="RefItemWidget">
+ <class>RTPTechGroup::ModelerIde::RefItemWidget</class>
+ <widget class="QWidget" name="RTPTechGroup::ModelerIde::RefItemWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

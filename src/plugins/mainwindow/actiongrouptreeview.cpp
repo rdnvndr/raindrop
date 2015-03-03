@@ -1,6 +1,9 @@
 #include "actiongrouptreeview.h"
 #include <QDrag>
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 ActionGroupTreeView::ActionGroupTreeView(QWidget *parent) :
     QTreeView(parent)
 {
@@ -44,4 +47,7 @@ void ActionGroupTreeView::startDrag(Qt::DropActions supportedActions)
             }
         }
     }
+}
+
+}
 }

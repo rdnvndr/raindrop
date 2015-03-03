@@ -3,6 +3,11 @@
 #include <imainwindow.h>
 #include "dialogconnect.h"
 
+using namespace RTPTechGroup::Plugin;
+
+namespace RTPTechGroup {
+namespace DbConnect {
+
 DbConnect::DbConnect(QObject *parent):
     QObject(parent), IPlugin("IMainWindow")
 {
@@ -106,6 +111,8 @@ void DbConnect::dbConnect()
     settings()->endGroup();
     return;
 }
+
+}}
 
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(dbconnect, DbConnect)

@@ -4,6 +4,9 @@
 #include "xmldelegate.h"
 #include <treexmlmodel/tablexmlproxymodel.h>
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Делегат редактирования условий фильтра
 /*! Делегат предназначен для редактирования условий фильтра
 
@@ -52,5 +55,7 @@ private:
     //! Модель атрибутов
     TableXMLProxyModel *m_attrModel;
 };
+
+}}
 
 #endif // CONDITIONDELEGATE_H

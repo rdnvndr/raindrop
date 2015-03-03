@@ -1,5 +1,8 @@
 #include "toolbarprop.h"
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 ToolBarProp::ToolBarProp(QWidget *parent) :
     QDialog(parent)
 {
@@ -15,4 +18,7 @@ QString ToolBarProp::text()
 void ToolBarProp::setText(QString text)
 {
     lineEditName->setText(text);
+}
+
+}
 }

@@ -4,6 +4,11 @@
 #include <QHeaderView>
 #include <QMessageBox>
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 FilterWidget::FilterWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -121,3 +126,5 @@ QVariant FilterWidget::modelData(const QString &tag, const QString &attr, const 
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
                              tag,attr)).data();
 }
+
+}}

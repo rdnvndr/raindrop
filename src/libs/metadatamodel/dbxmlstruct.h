@@ -4,6 +4,10 @@
 #include <QString>
 #include <QStringList>
 
+namespace  RTPTechGroup {
+namespace  MetaDataModel {
+
+
 //! Ключевые слова XML файла для описания Root класса
 namespace DBROOTXML{
     const QString ROOT = "#document";
@@ -259,6 +263,6 @@ namespace DBLINKTOCOMPXML{
     const QString ID = "guid";
 }
 
-
+}}
 
 #endif // DBXMLSTRUCT_H

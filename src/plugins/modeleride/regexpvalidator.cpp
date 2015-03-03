@@ -1,5 +1,8 @@
 #include "regexpvalidator.h"
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 RegExpValidator::RegExpValidator(QObject *parent)
     :QRegExpValidator(parent)
 {
@@ -19,3 +22,5 @@ QValidator::State RegExpValidator::validate(QString &input, int &pos) const
 
     return state;
 }
+
+}}

@@ -1,5 +1,8 @@
 #include "mimedataindex.h"
 
+namespace RTPTechGroup {
+namespace XmlModel {
+
 MimeDataIndex::MimeDataIndex(): QMimeData ()
 {
 
@@ -28,3 +31,5 @@ QStringList MimeDataIndex::formats() const
     if (hasIndexes()) format << "application/classxmlmodel";
     return format;
 }
+
+}}

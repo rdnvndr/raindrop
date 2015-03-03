@@ -5,6 +5,11 @@
 #include <QToolTip>
 #include "regexpvalidator.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 LovWidget::LovWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -215,3 +220,5 @@ QVariant LovWidget::modelData(const QString &tag, const QString &attr, const QMo
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
                              tag,attr)).data(role);
 }
+
+}}

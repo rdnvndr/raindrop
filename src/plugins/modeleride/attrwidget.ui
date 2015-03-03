@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AttrWidget</class>
- <widget class="QWidget" name="AttrWidget">
+ <class>RTPTechGroup::ModelerIde::AttrWidget</class>
+ <widget class="QWidget" name="RTPTechGroup::ModelerIde::AttrWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -314,7 +314,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="2" column="1">
-       <widget class="TreeComboBox" name="comboBoxLinkAttr"/>
+       <widget class="RTPTechGroup::Widgets::TreeComboBox" name="comboBoxLinkAttr"/>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="labelStringLen">
@@ -411,7 +411,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="modeleride.qrc">
+           <iconset resource="../treedockwidget/treedockwidget.qrc">
             <normaloff>:/editclean</normaloff>:/editclean</iconset>
           </property>
           <property name="autoRaise">
@@ -427,7 +427,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="TreeComboBox" name="comboBoxUnitAttr"/>
+         <widget class="RTPTechGroup::Widgets::TreeComboBox" name="comboBoxUnitAttr"/>
         </item>
         <item>
          <widget class="QToolButton" name="toolButtonUnitAttrClean">
@@ -435,7 +435,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="modeleride.qrc">
+           <iconset resource="../treedockwidget/treedockwidget.qrc">
             <normaloff>:/editclean</normaloff>:/editclean</iconset>
           </property>
           <property name="autoRaise">
@@ -513,12 +513,13 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TreeComboBox</class>
+   <class>RTPTechGroup::Widgets::TreeComboBox</class>
    <extends>QComboBox</extends>
    <header>treecombobox/treecombobox.h</header>
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../treedockwidget/treedockwidget.qrc"/>
   <include location="modeleride.qrc"/>
  </resources>
  <connections/>

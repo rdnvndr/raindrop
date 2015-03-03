@@ -4,6 +4,9 @@
 #include "tagxmlitem.h"
 #include "treexmlhashmodel.h"
 
+namespace RTPTechGroup {
+namespace XmlModel {
+
 TreeXmlHashModel::TreeXmlHashModel(QDomNode document, QObject *parent)
     : TreeXmlModel(document, parent)
 {
@@ -369,3 +372,5 @@ QString TreeXmlHashModel::upperValue(const QString &tag, const QString &attr,
     }
     return value;
 }
+
+}}

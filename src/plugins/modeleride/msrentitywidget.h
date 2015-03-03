@@ -8,6 +8,11 @@
 #include <QMessageBox>
 #include <QStringListModel>
 
+using namespace RTPTechGroup::XmlModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования сущности ЕИ
 /*! Диалог предназначен для редактирования сущности ЕИ
  */
@@ -99,5 +104,7 @@ private:
     //! Хранит индекс предыдущей активной сущности ЕИ
     int  m_oldIndex;
 };
+
+}}
 
 #endif // MSRENTITYWIDGET_H

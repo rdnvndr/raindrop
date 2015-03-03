@@ -6,6 +6,9 @@
 #include <QAbstractItemModel>
 #include <QMenu>
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Класс для отображения дерева классов
 /*! Визуальный компонент предназначен для отображения дерева классов. Включает в
  * себя фильтрацию и сортировку элементов дерева класса.
@@ -101,5 +104,7 @@ private:
     //! Команда разделитель
     QAction* actionSeparator;
 };
+
+}}
 
 #endif // CLASSTREEVIEW_H

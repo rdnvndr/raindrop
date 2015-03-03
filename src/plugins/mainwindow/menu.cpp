@@ -10,6 +10,9 @@
 #include "actionprop.h"
 #include "mimedataobject.h"
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 Menu::Menu(QWidget *parent) :
     QMenu(parent)
 {
@@ -223,4 +226,7 @@ void Menu::mousePressEvent(QMouseEvent *event)
     }
 
     QMenu::mousePressEvent(event);
+}
+
+}
 }

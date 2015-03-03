@@ -1,5 +1,8 @@
 #include "sqlhighlighter.h"
-#include <QDebug>
+#include <QTextDocument>
+
+namespace RTPTechGroup {
+namespace SqlEditor {
 
 SqlHighlighter::SqlHighlighter(QTextDocument *parent) :
     QSyntaxHighlighter(parent)
@@ -56,3 +59,5 @@ void SqlHighlighter::highlightBlock(const QString &text)
     }
 
 }
+
+}}

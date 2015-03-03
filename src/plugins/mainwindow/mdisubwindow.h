@@ -3,6 +3,9 @@
 
 #include <QMdiSubWindow>
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! Класс подокна области MdiAreaExt
 /*! Предназначен для создания подокна в области  MdiAreaExt и обхода
  *  ошибки позднего удаления widget() при закрытии окна методом close().\n
@@ -25,5 +28,8 @@ protected:
     //! Событие закрытия окна
     void closeEvent(QCloseEvent *event);
 };
+
+}
+}
 
 #endif // MDISUBWINDOW_H

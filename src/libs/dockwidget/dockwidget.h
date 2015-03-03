@@ -6,6 +6,10 @@
 #include <QTimer>
 #include "dockwidgetglobal.h"
 
+namespace RTPTechGroup {
+namespace Widgets {
+
+
 //! Компонент, который который может быть пристыкован
 //! к главному окну QMainWindow. По сравнению с QDockWidget
 //! обладает свойством скрытия заголовка и автоскрытием заголовка
@@ -67,5 +71,7 @@ private:
     //! Флаг автоскрытия заголовка
     bool m_autoHide;
 };
+
+}}
 
 #endif // DOCKWIDGET_H

@@ -4,6 +4,11 @@
 #include <QStyledItemDelegate>
 #include <treexmlmodel/treexmlhashmodel.h>
 
+using namespace RTPTechGroup::XmlModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Делегат XML модели
 /*! Данный делегат предназначен для ввода данных в XML модель
     TreeXMLModel
@@ -11,6 +16,8 @@
 
 class XmlDelegate : public QStyledItemDelegate
 {
+
+
     Q_OBJECT
 public:
     //! Конструктор модели
@@ -39,5 +46,7 @@ private:
     //! Получение индекса хэш модели
     QModelIndex mapFromSource(QAbstractItemModel *toModel, QModelIndex index) const;
 };
+
+}}
 
 #endif // XMLDELEGATE_H

@@ -5,6 +5,9 @@
 #include <treexmlmodel/treexmlhashmodel.h>
 #include "xmldelegate.h"
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Делегат для модели элементов справочника
 /*! Данный делегат предназначен для ввода данных элементов справочника
  * в XML модель
@@ -30,5 +33,7 @@ private:
     QModelIndex rootClass(QModelIndex index) const;
 
 };
+
+}}
 
 #endif // REFITEMDELEGATE_H

@@ -6,6 +6,9 @@
 #include <plugin/iplugin.h>
 #include "sqleditorglobal.h"
 
+namespace RTPTechGroup {
+namespace SqlEditor {
+
 //! Плагин выполнения SQL запросов
 /*! Плагин предназначен для создания в редакторе SQL запросов к БД и
  *  их выполнения.
@@ -63,6 +66,8 @@ private:
     //! Команда вызова SQL редактора
     QAction *actionSqlEditor;
 };
+
+}}
 
 #endif
 

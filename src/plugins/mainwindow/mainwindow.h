@@ -10,6 +10,11 @@
 #include <QMainWindow>
 #include <QMenu>
 
+using namespace RTPTechGroup::Widgets;
+
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! Плагин главного окна
 /*! Плагин предназначен для создания главного окна
     Весь графический интерфейс приложения должен строится
@@ -157,7 +162,7 @@ public slots:
     QMdiSubWindow *setActiveSubWindow(QString objName);
 
     //! Получение области подокон
-    MdiExtArea* getMdiArea();
+   MdiExtArea *getMdiArea();
 
     //! Вызов окна "О Qt..."
     void aboutQt();
@@ -266,5 +271,8 @@ private:
     //! Cписок горячих клавиш команд
     QHash <QString, QKeySequence> m_hotkey;
 };
+
+}
+}
 
 #endif

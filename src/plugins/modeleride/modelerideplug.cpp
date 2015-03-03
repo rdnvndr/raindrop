@@ -10,7 +10,6 @@
 #include <plugin/pluginmanager.h>
 #include <metadatamodel/dbxmlstruct.h>
 
-
 #include "modelerideplug.h"
 #include "propclass.h"
 #include "propfilter.h"
@@ -20,6 +19,11 @@
 #include "proplov.h"
 #include "proprefgroup.h"
 #include "propref.h"
+
+using namespace RTPTechGroup::Plugin;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
 
 ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     QObject(parent), IPlugin("IMainWindow")
@@ -731,6 +735,9 @@ void ModelerIDEPlug::closeClassModel()
         actionPublishModel->setDisabled(true);
     }
 }
+
+}}
+
 #if QT_VERSION < 0x050000
     Q_EXPORT_PLUGIN2(modeleride, ModelerIDEPlug)
 #endif
