@@ -90,7 +90,7 @@ private:
     QStringListModel *m_typeClassModel;
 
     //! Хранит индекс предыдущего активного класса
-    int  m_oldIndex;
+    QPersistentModelIndex  m_oldIndex;
 };
 
 }}
