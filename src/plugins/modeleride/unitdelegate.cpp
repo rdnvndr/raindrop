@@ -4,6 +4,7 @@
 #include <QLineEdit>
 #include <QAbstractProxyModel>
 
+using namespace RTPTechGroup::XmlModel;
 
 UnitDelegate::UnitDelegate(QObject *parent) :
     QStyledItemDelegate(parent)

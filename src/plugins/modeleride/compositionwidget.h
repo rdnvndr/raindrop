@@ -11,6 +11,8 @@
     класса
 */
 
+using namespace RTPTechGroup::XmlModel;
+
 class CompositionWidget : public QWidget, private Ui::CompositionWidget
 {
     Q_OBJECT

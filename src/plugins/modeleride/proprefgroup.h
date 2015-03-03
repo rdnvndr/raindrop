@@ -7,6 +7,8 @@
 
 #include "ui_proprefgroup.h"
 
+using namespace RTPTechGroup::XmlModel;
+
 //! Диалог редактирования группы справочника
 /*! Диалог предназначен для редактирования группы справочника
 */

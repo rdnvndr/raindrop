@@ -5,6 +5,8 @@
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/modifyproxymodel.h>
 
+using namespace RTPTechGroup::XmlModel;
+
 //! Диалог редактирования значений списка
 /*! Диалог предназначен для редактирования значений списка
 */

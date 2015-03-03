@@ -8,6 +8,8 @@
 #include <QMessageBox>
 #include <QStringListModel>
 
+using namespace RTPTechGroup::XmlModel;
+
 //! Диалог редактирования сущности ЕИ
 /*! Диалог предназначен для редактирования сущности ЕИ
  */

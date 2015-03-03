@@ -6,10 +6,11 @@
 #include <QDataWidgetMapper>
 #include "ui_propentitygroup.h"
 
+using namespace RTPTechGroup::XmlModel;
+
 //! Диалог редактирования группы сущности ЕИ
 /*! Диалог предназначен для редактирования группы сущности ЕИ
 */
-
 class PropEntityGroup : public QWidget, private Ui::PropEntityGroup
 {
     Q_OBJECT

@@ -2,6 +2,9 @@
 #include "treexmlhashmodel.h"
 #include <QFont>
 
+namespace RTPTechGroup {
+namespace XmlModel {
+
 struct PrivateModelIndex
 {
     int r, c;
@@ -626,3 +629,5 @@ bool ModifyProxyModel::canFetchMore(const QModelIndex &parent) const
 {
     return QAbstractItemModel::canFetchMore(parent);
 }
+
+}}
