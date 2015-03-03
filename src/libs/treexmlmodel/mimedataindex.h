@@ -8,6 +8,9 @@
 #include <QList>
 #include <QStringList>
 
+namespace RTPTechGroup {
+namespace XmlModel {
+
 //! MimeDataXml контейнер для записи информации с mime типом
 /*! MimeDataXml расширенный контейнер QMimeData. В нем можно
  *  передавать экземпляры классов типа QModelIndex
@@ -39,5 +42,7 @@ private:
     PersistentIndexes m_indexes;
     
 };
+
+}}
 
 #endif

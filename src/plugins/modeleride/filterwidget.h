@@ -6,6 +6,8 @@
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <QDataWidgetMapper>
 
+using namespace RTPTechGroup::XmlModel;
+
 //! Диалог редактирования фильтров класса
 /*! Диалог предназначен для редактирования списка фильтров
     класса

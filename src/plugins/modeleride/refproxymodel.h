@@ -4,6 +4,8 @@
 #include <treexmlmodel/modifyproxymodel.h>
 #include <treexmlmodel/treexmlmodel.h>
 
+using namespace RTPTechGroup::XmlModel;
+
 //! Прокси модель справочника
 /*! Прокси модель предназначена для редактирования справочника
  */

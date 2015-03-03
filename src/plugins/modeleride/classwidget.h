@@ -8,6 +8,8 @@
 #include <QMessageBox>
 #include <QStringListModel>
 
+using namespace RTPTechGroup::XmlModel;
+
 //! Диалог редактирования класса
 /*! Диалог предназначен для редактирования класса
  */

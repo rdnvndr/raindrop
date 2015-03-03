@@ -4,6 +4,8 @@
 #include <QStyledItemDelegate>
 #include <treexmlmodel/treexmlhashmodel.h>
 
+using namespace RTPTechGroup::XmlModel;
+
 //! Делегат XML модели
 /*! Данный делегат предназначен для ввода данных в XML модель
     TreeXMLModel

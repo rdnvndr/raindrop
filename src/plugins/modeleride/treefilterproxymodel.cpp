@@ -4,6 +4,8 @@
 #include <treexmlmodel/mimedataindex.h>
 #include <QMimeData>
 
+using namespace RTPTechGroup::XmlModel;
+
 TreeFilterProxyModel::TreeFilterProxyModel()
 {
 

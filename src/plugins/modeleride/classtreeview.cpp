@@ -2,6 +2,8 @@
 #include <metadatamodel/dbxmlstruct.h>
 #include <treexmlmodel/treexmlmodel.h>
 
+using namespace RTPTechGroup::XmlModel;
+
 ClassTreeView::ClassTreeView(QWidget *parent) :
     QWidget(parent)
 {

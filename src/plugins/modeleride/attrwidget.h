@@ -10,6 +10,8 @@
 
 #include "attrgroupproxymodel.h"
 
+using namespace RTPTechGroup::XmlModel;
+
 //! Диалог редактирования атрибутов класса
 /*! Диалог предназначен для редактирования атрибутов класса
     и состава

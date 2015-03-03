@@ -4,6 +4,8 @@
 #include <QAbstractProxyModel>
 #include <treexmlmodel/modifyproxymodel.h>
 
+using namespace RTPTechGroup::XmlModel;
+
 //! Прокси модель условий фильтра
 /*! Прокси модель предназначена для редактирования условий фильтра
  */

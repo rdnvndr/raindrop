@@ -8,6 +8,8 @@
 #include <treexmlmodel/modifyproxymodel.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 
+using namespace RTPTechGroup::XmlModel;
+
 //! Диалог редактирования ЕИ
 /*! Диалог предназначен для редактирования ЕИ
 */

@@ -6,6 +6,8 @@
 #include <QDataWidgetMapper>
 #include <QStringListModel>
 
+using namespace RTPTechGroup::XmlModel;
+
 //! Диалог редактирования списка значений
 /*! Диалог предназначен для редактирования списка значений
 */

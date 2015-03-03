@@ -8,6 +8,9 @@
 
 #include "treexmlmodelglobal.h"
 
+namespace RTPTechGroup {
+namespace XmlModel {
+
 //! Класс узла дерева TreeXMLModel
 /*! Класс предназначен для построения дерева xml модели
  */
@@ -93,5 +96,7 @@ private:
     //! Список наследников
     QMap<TagXmlItem*, TagXmlItem*> m_inherited;
 };
+
+}}
 
 #endif
