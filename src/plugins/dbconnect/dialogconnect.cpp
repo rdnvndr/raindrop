@@ -1,5 +1,8 @@
 #include "dialogconnect.h"
 
+namespace RTPTechGroup {
+namespace DbConnect {
+
 DialogConnect::DialogConnect(QWidget* pwgt) : QDialog(pwgt) {
     setupUi(this);
 
@@ -62,3 +65,5 @@ void DialogConnect::onClickButtonProp(){
     }
     this->adjustSize();
 }
+
+}}

@@ -7,6 +7,9 @@
 #include <plugin/iplugin.h>
 #include "dbconnectglobal.h"
 
+namespace RTPTechGroup {
+namespace DbConnect {
+
 //! Плагин соединения с базой данных
 /*! Плагин предназначен для создания соединения с БД.
 */
@@ -63,6 +66,8 @@ private:
     //! Команда отображения окна соединения
     QAction *actionDbConnect;
 };
+
+}}
 
 #endif
 

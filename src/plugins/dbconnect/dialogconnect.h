@@ -3,6 +3,9 @@
 #include "ui_dialogconnect.h"
 #include <QtSql>
 
+namespace RTPTechGroup {
+namespace DbConnect {
+
 //! Диалоговое окно подключения к БД
 class DialogConnect: public QDialog, public Ui::DialogConnect{
 
@@ -14,5 +17,7 @@ class DialogConnect: public QDialog, public Ui::DialogConnect{
         //! Слот для отображения дополнительных параметров подключения к БД
         void onClickButtonProp();
 };
+
+}}
 
 #endif
