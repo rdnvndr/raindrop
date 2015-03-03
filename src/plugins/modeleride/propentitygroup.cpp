@@ -5,6 +5,11 @@
 #include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 PropEntityGroup::PropEntityGroup(QWidget *parent) :
     QWidget(parent)
 {
@@ -235,3 +240,5 @@ QVariant PropEntityGroup::modelData(const QString &tag, const QString &attr, con
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
                       tag,attr)).data();
 }
+
+}}

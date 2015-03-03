@@ -5,6 +5,10 @@
 #include <QAbstractProxyModel>
 
 using namespace RTPTechGroup::XmlModel;
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
 
 UnitDelegate::UnitDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -72,3 +76,5 @@ void UnitDelegate::setEditorData(QWidget *editor, const QModelIndex &index) cons
 { 
     QStyledItemDelegate::setEditorData(editor, index);
 }
+
+}}

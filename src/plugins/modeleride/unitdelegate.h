@@ -3,6 +3,9 @@
 
 #include <QStyledItemDelegate>
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Делегат для модели ЕИ
 /*! Данный делегат предназначен для ввода данных ЕИ в XML модель
  */
@@ -27,5 +30,7 @@ signals:
 public slots:
 
 };
+
+}}
 
 #endif // UNITDELEGATE_H

@@ -6,6 +6,11 @@
 #include <metadatamodel/dbxmlstruct.h>
 #include "conditionproxymodel.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 ConditionDelegate::ConditionDelegate(QObject *parent) :
     XmlDelegate(parent)
 {
@@ -171,3 +176,5 @@ QModelIndex ConditionDelegate::secondIndex() const
 {
     return m_secondIndex;
 }
+
+}}

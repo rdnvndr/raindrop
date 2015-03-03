@@ -1,7 +1,7 @@
 #include "mdiextarea.h"
 
 namespace RTPTechGroup {
-namespace MdiExtArea {
+namespace Widgets {
 
 MdiExtArea::MdiExtArea(QWidget *parent) :
     QMdiArea(parent)

@@ -6,7 +6,7 @@
 #include <QDockWidget>
 #include <mdiextarea/mdiextarea.h>
 
-using namespace RTPTechGroup::MdiExtArea;
+using namespace RTPTechGroup::Widgets;
 
 //! Класс главного окна
 class IMainWindow

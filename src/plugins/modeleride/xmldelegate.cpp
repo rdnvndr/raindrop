@@ -11,8 +11,10 @@
 #include <treecombobox/treecombobox.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 
-using namespace RTPTechGroup::TreeComboBox;
-using namespace RTPTechGroup::PushButtonImage;
+using namespace RTPTechGroup::Widgets;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
 
 XmlDelegate::XmlDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -220,3 +222,5 @@ QModelIndex XmlDelegate::mapFromSource(QAbstractItemModel *toModel, QModelIndex 
 
     return index;
 }
+
+}}

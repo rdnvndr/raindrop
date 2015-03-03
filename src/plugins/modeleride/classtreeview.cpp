@@ -3,6 +3,10 @@
 #include <treexmlmodel/treexmlmodel.h>
 
 using namespace RTPTechGroup::XmlModel;
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
 
 ClassTreeView::ClassTreeView(QWidget *parent) :
     QWidget(parent)
@@ -241,3 +245,5 @@ void ClassTreeView::showContextMenu(const QPoint &point)
     }
     return;
 }
+
+}}

@@ -10,7 +10,7 @@
 #include <QMainWindow>
 #include <QMenu>
 
-
+using namespace RTPTechGroup::Widgets;
 
 namespace RTPTechGroup {
 namespace MainWindow {
@@ -162,7 +162,7 @@ public slots:
     QMdiSubWindow *setActiveSubWindow(QString objName);
 
     //! Получение области подокон
-    RTPTechGroup::MdiExtArea::MdiExtArea *getMdiArea();
+   MdiExtArea *getMdiArea();
 
     //! Вызов окна "О Qt..."
     void aboutQt();

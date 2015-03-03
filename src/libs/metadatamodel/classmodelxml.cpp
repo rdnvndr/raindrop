@@ -2,6 +2,10 @@
 #include "dbxmlstruct.h"
 #include <treexmlmodel/tagxmlitem.h>
 
+namespace  RTPTechGroup {
+namespace  MetaDataModel {
+
+
 ClassModelXml::ClassModelXml(QDomNode document, QObject *parent)
     : TreeXmlHashModel(document, parent)
 {
@@ -547,3 +551,5 @@ bool ClassModelXml::removeRows(int row, int count, const QModelIndex &parent)
 
     return TreeXmlHashModel::removeRows(row, count, parent);
 }
+
+}}

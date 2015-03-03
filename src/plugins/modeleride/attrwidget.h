@@ -12,6 +12,9 @@
 
 using namespace RTPTechGroup::XmlModel;
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования атрибутов класса
 /*! Диалог предназначен для редактирования атрибутов класса
     и состава
@@ -108,5 +111,7 @@ private:
     //! Список типов атрибута
     QStringListModel *m_typeAttrModel;
 };
+
+}}
 
 #endif // ATTRWIDGET_H

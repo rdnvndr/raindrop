@@ -5,6 +5,11 @@
 #include <QToolTip>
 #include "regexpvalidator.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 ClassWidget::ClassWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -344,3 +349,5 @@ bool ClassWidget::removeEmpty()
     }
     return false;
 }
+
+}}

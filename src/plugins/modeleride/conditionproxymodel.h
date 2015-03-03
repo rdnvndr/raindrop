@@ -6,6 +6,9 @@
 
 using namespace RTPTechGroup::XmlModel;
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Прокси модель условий фильтра
 /*! Прокси модель предназначена для редактирования условий фильтра
  */
@@ -33,5 +36,7 @@ public:
     //! Вставка строки
     QModelIndex insertLastRows(int row, int count, const QModelIndex &parent);
 };
+
+}}
 
 #endif // CONDITIONPROXYMODEL_H

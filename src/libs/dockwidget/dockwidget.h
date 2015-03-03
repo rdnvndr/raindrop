@@ -7,7 +7,7 @@
 #include "dockwidgetglobal.h"
 
 namespace RTPTechGroup {
-namespace DockWidget {
+namespace Widgets {
 
 
 //! Компонент, который который может быть пристыкован

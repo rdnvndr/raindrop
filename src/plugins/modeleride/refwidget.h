@@ -10,6 +10,9 @@
 
 using namespace RTPTechGroup::XmlModel;
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования справочника
 /*! Диалог предназначен для редактирования справочника
  */
@@ -86,5 +89,7 @@ private:
     //! Хранит индекс предыдущей активной справочника
     QPersistentModelIndex  m_oldIndex;
 };
+
+}}
 
 #endif // REFWIDGET_H

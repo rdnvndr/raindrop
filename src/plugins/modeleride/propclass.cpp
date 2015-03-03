@@ -3,6 +3,11 @@
 #include "propclass.h"
 #include "xmldelegate.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 PropClass::PropClass(QWidget *parent) :
     QWidget(parent)
 {
@@ -86,3 +91,5 @@ void PropClass::onEditFilter(const QModelIndex &index)
 {
     emit editFilter(index);
 }
+
+}}

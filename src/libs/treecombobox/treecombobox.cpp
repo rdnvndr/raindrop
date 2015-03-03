@@ -5,7 +5,7 @@
 #include <QStylePainter>
 
 namespace RTPTechGroup {
-namespace TreeComboBox {
+namespace Widgets {
 
 TreeComboBox::TreeComboBox(QWidget *parent):QComboBox(parent),skipNextHide(false)
 {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ClassWidget</class>
- <widget class="QWidget" name="ClassWidget">
+ <class>RTPTechGroup::ModelerIde::ClassWidget</class>
+ <widget class="QWidget" name="RTPTechGroup::ModelerIde::ClassWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -200,7 +200,7 @@
           <number>2</number>
          </property>
          <item>
-          <widget class="RTPTechGroup::PushButtonImage::PushButtonImage" name="pushButtonIcon">
+          <widget class="RTPTechGroup::Widgets::PushButtonImage" name="pushButtonIcon">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>64</horstretch>
@@ -372,7 +372,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>RTPTechGroup::PushButtonImage::PushButtonImage</class>
+   <class>RTPTechGroup::Widgets::PushButtonImage</class>
    <extends>QPushButton</extends>
    <header>pushbuttonimage.h</header>
   </customwidget>

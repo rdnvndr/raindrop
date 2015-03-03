@@ -9,7 +9,11 @@
 #include "classtreeview.h"
 #include "treefilterproxymodel.h"
 
-using namespace RTPTechGroup::DockWidget;
+using namespace RTPTechGroup::Widgets;
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
 
 //! Плагин среды разработки структуры классов
 /*! Плагин предназначен для разработки структуры классов
@@ -168,5 +172,7 @@ public slots:
     void actionSaveEnable();
 
 };
+
+}}
 
 #endif
