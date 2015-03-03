@@ -2,6 +2,11 @@
 #include "propfilter.h"
 #include <metadatamodel/dbxmlstruct.h>
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 PropFilter::PropFilter(QWidget *parent) :
     QWidget(parent)
 {
@@ -45,8 +50,10 @@ void PropFilter::setTabName(const QModelIndex &index)
     QString id = modelData(DBFILTERXML::FILTER, DBFILTERXML::ID,index).toString();
 
     this->setObjectName("PropFilter::" + id);
-    if (subWindow)
-        subWindow->setWindowTitle(tr("Фильтр: ")+className);
+    if (subWindow) {
+        subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));
+        subWindow->setWindowTitle(className);
+    }
 }
 
 void PropFilter::closeTab(const QModelIndex &index)
@@ -63,3 +70,5 @@ QVariant PropFilter::modelData(const QString &tag, const QString &attr, const QM
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
                       tag,attr)).data();
 }
+
+}}

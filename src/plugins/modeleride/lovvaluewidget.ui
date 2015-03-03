@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LovValueWidget</class>
- <widget class="QWidget" name="LovValueWidget">
+ <class>RTPTechGroup::ModelerIde::LovValueWidget</class>
+ <widget class="QWidget" name="RTPTechGroup::ModelerIde::LovValueWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

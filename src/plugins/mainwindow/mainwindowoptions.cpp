@@ -3,6 +3,9 @@
 #include "hotkeydelegate.h"
 #include <QDebug>
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 MainWindowOptions::MainWindowOptions(QWidget *parent) :
     QDialog(parent)
 {
@@ -175,4 +178,7 @@ void MainWindowOptions::deleteHotKey()
 void MainWindowOptions::selectOtherSize(bool check)
 {
     spinBoxIconSize->setEnabled(check);
+}
+
+}
 }

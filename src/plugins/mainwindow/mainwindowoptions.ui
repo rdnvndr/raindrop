@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindowOptions</class>
- <widget class="QDialog" name="MainWindowOptions">
+ <class>RTPTechGroup::MainWindow::MainWindowOptions</class>
+ <widget class="QDialog" name="RTPTechGroup::MainWindow::MainWindowOptions">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,16 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -478,7 +487,7 @@
   <connection>
    <sender>pushButtonSave</sender>
    <signal>clicked()</signal>
-   <receiver>MainWindowOptions</receiver>
+   <receiver>RTPTechGroup::MainWindow::MainWindowOptions</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -494,7 +503,7 @@
   <connection>
    <sender>pushButtonCancel</sender>
    <signal>clicked()</signal>
-   <receiver>MainWindowOptions</receiver>
+   <receiver>RTPTechGroup::MainWindow::MainWindowOptions</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

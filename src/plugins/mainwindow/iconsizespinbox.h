@@ -3,6 +3,9 @@
 
 #include <QSpinBox>
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! Виджет ввода размера иконки
 
 class IconSizeSpinBox : public QSpinBox
@@ -17,5 +20,8 @@ public:
     //! Получение текста по значению
     QString textFromValue(int val) const;
 };
+
+}
+}
 
 #endif // ICONSIZESPINBOX_H

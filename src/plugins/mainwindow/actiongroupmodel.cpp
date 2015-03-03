@@ -1,7 +1,8 @@
 #include "actiongroupmodel.h"
 #include "mimedataobject.h"
 
-#include <QDebug>
+namespace RTPTechGroup {
+namespace MainWindow {
 
 ActionGroupModel::ActionGroupModel(QMultiHash<QString, QAction *> *actions)
 {
@@ -167,4 +168,7 @@ Qt::DropActions ActionGroupModel::supportedDragActions() const
 Qt::DropActions ActionGroupModel::supportedDropActions() const
 {
     return Qt::MoveAction;
+}
+
+}
 }

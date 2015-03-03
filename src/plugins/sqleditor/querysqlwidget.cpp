@@ -1,6 +1,9 @@
 #include "querysqlwidget.h"
 #include <QtGui>
 
+namespace RTPTechGroup {
+namespace SqlEditor {
+
 QuerySqlWidget::QuerySqlWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -33,3 +36,5 @@ void QuerySqlWidget::runQuery() {
             plainLogEdit->setPlainText(m_model->lastError().text());
     }
 }
+
+}}

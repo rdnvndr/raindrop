@@ -3,6 +3,11 @@
 #include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 PropLov::PropLov(QWidget *parent) :
     QWidget(parent)
 {
@@ -62,7 +67,8 @@ void PropLov::setTabName(const QModelIndex &index)
     QString id = modelData(DBLOVXML::LOV, DBLOVXML::ID,index).toString();
 
     this->setObjectName("PropLov::" + id);
-    subWindow->setWindowTitle(tr("Список значений: ")+lovName);
+    subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));
+    subWindow->setWindowTitle(lovName);
 }
 
 void PropLov::closeTab(const QModelIndex &index)
@@ -91,3 +97,5 @@ void PropLov::edit(bool flag)
     pushButtonPropCancel->setEnabled(flag);
     toolButtonEditLov->setDisabled(flag);
 }
+
+}}

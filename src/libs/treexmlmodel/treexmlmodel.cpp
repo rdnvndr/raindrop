@@ -5,6 +5,9 @@
 #include "tagxmlitem.h"
 #include "treexmlmodel.h"
 
+namespace RTPTechGroup {
+namespace XmlModel {
+
 TreeXmlModel::TreeXmlModel(QDomNode document, QObject *parent)
     : QAbstractItemModel(parent)
 {
@@ -620,3 +623,5 @@ QMimeData *TreeXmlModel::mimeData(const QModelIndexList &indexes) const
     mimeData->setIndexes(persistentIndex);
     return mimeData;
 }
+
+}}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MsrUnitWidget</class>
- <widget class="QWidget" name="MsrUnitWidget">
+ <class>RTPTechGroup::ModelerIde::MsrUnitWidget</class>
+ <widget class="QWidget" name="RTPTechGroup::ModelerIde::MsrUnitWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

@@ -5,6 +5,11 @@
 #include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 PropRefGroup::PropRefGroup(QWidget *parent) :
     QWidget(parent)
 {
@@ -153,7 +158,8 @@ void PropRefGroup::setTabName(const QModelIndex &index)
                            index).toString();
 
     this->setObjectName("PropRefGroup::" + id);
-    subWindow->setWindowTitle(tr("Группа справочника: ")+refGroupName);
+    subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));
+    subWindow->setWindowTitle(refGroupName);
 }
 
 void PropRefGroup::closeTab(const QModelIndex &index)
@@ -234,3 +240,5 @@ QVariant PropRefGroup::modelData(const QString &tag, const QString &attr, const 
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
                       tag,attr)).data();
 }
+
+}}

@@ -8,6 +8,9 @@
     названия команды и изменения иконки.
 */
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 class ActionProp : public QDialog, public Ui::ActionProp
 {
     Q_OBJECT
@@ -17,5 +20,8 @@ public:
     explicit ActionProp(QWidget *parent = 0);
 
 };
+
+}
+}
 
 #endif // ACTIONPROP_H

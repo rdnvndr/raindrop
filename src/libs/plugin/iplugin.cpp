@@ -1,5 +1,7 @@
 #include "iplugin.h"
 
+using namespace RTPTechGroup::Plugin;
+
 IPlugin::IPlugin(QString depInterfaces)
 {
     depModulList = depInterfaces.split(" ");

@@ -1,6 +1,9 @@
 #include "attrgroupproxymodel.h"
 #include <QDebug>
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 AttrGroupProxyModel::AttrGroupProxyModel(QObject *parent)
 :QAbstractListModel(parent)
 {
@@ -86,3 +89,5 @@ int AttrGroupProxyModel::uniqueColumn() const
 {
     return m_uniqueColumn;
 }
+
+}}

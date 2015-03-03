@@ -4,6 +4,9 @@
 #include "ui_proplov.h"
 #include <treexmlmodel/treexmlhashmodel.h>
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования списка значений
 /*! Диалог предназначен для редактирования списка значений
 */
@@ -45,5 +48,7 @@ private:
     //! Модель структуры классов
     TreeXmlHashModel* m_model;
 };
+
+}}
 
 #endif // PROPLOV_H

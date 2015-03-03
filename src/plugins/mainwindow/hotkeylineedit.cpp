@@ -2,6 +2,9 @@
 #include <QDebug>
 #include "hotkeylineedit.h"
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 HotKeyLineEdit::HotKeyLineEdit(QWidget *parent) :
     QLineEdit(parent)
 {
@@ -66,4 +69,7 @@ void HotKeyLineEdit::onTextChanged(const QString &)
     if( text() != m_keySequence.toString() ) {
         setText(m_keySequence.toString());
     }
+}
+
+}
 }

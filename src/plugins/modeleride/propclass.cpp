@@ -3,6 +3,11 @@
 #include "propclass.h"
 #include "xmldelegate.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 PropClass::PropClass(QWidget *parent) :
     QWidget(parent)
 {
@@ -52,7 +57,8 @@ void PropClass::setTabName(const QModelIndex &index){
     QString id = modelData(DBCLASSXML::CLASS, DBCLASSXML::ID,index).toString();
 
     this->setObjectName("PropClass::" + id);
-    subWindow->setWindowTitle(tr("Класс: ")+className);
+    subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));
+    subWindow->setWindowTitle(className);
 }
 
 void PropClass::closeTab(const QModelIndex &index)
@@ -85,3 +91,5 @@ void PropClass::onEditFilter(const QModelIndex &index)
 {
     emit editFilter(index);
 }
+
+}}

@@ -3,6 +3,9 @@
 
 #include <QMenuBar>
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! Класс MenuBar представляет собой строку меню
 /*! Строка меню состоит из списочных или выпадающих пунктов меню
  *  Отличается от QMenuBar возможносnm добавления QAction при помощи
@@ -63,5 +66,8 @@ private:
     //! Определяет является ли меню редактируемым
     bool m_edited;
 };
+
+}
+}
 
 #endif // MENUBAR_H

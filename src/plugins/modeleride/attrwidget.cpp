@@ -8,6 +8,11 @@
 #include "treefilterproxymodel.h"
 #include "regexpvalidator.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 AttrWidget::AttrWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -350,13 +355,14 @@ void AttrWidget::up()
     QPersistentModelIndex srcIndex  = m_attrModel->mapToSource(index);
     QPersistentModelIndex srcParent = srcIndex.parent();
     int row = m_attrModel->mapToSource(index.sibling(index.row()-1,0)).row();
+
     if (m_model->moveIndex(srcIndex,srcParent,row)) {
         if (row >= 0)
             index = tableViewAttr->currentIndex().sibling(index.row()-2,0);
         else
             index = index.sibling(0,0);
-        m_model->removeRow(srcIndex.row(),srcIndex.parent());
-        setCurrent(index);
+        if (m_model->removeRow(srcIndex.row(),srcIndex.parent()))
+            setCurrent(index);
     }
 }
 
@@ -372,8 +378,8 @@ void AttrWidget::down()
                                                        QStringList());
     if (m_model->moveIndex(srcIndex,srcParent,row)) {
         index = tableViewAttr->currentIndex().sibling(index.row()+2,0);
-        m_model->removeRow(srcIndex.row(),srcIndex.parent());
-        setCurrent(index);
+        if (m_model->removeRow(srcIndex.row(),srcIndex.parent()))
+            setCurrent(index);
     }
 }
 
@@ -494,3 +500,5 @@ void AttrWidget::setCurrent(const QModelIndex &index)
 
     emit currentIndexChanged(index);
 }
+
+}}

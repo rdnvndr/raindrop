@@ -6,10 +6,14 @@
 #include <QDataWidgetMapper>
 #include "ui_propentitygroup.h"
 
+using namespace RTPTechGroup::XmlModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования группы сущности ЕИ
 /*! Диалог предназначен для редактирования группы сущности ЕИ
 */
-
 class PropEntityGroup : public QWidget, private Ui::PropEntityGroup
 {
     Q_OBJECT
@@ -91,5 +95,7 @@ private:
     //! Хранит индекс предыдущей активной группы сущности ЕИ
     int  m_oldIndex;
 };
+
+}}
 
 #endif // PROPENTITYGROUP_H

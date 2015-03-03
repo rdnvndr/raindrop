@@ -3,6 +3,11 @@
 #include "lovdelegate.h"
 #include <QMessageBox>
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 LovValueWidget::LovValueWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -215,3 +220,5 @@ void LovValueWidget::setRootIndex(const QModelIndex &index)
     tableViewLovValue->setRootIndex(m_lovValueModel->mapFromSource(index));
     emit proxyIndexChanged(tableViewLovValue->rootIndex());
 }
+
+}}

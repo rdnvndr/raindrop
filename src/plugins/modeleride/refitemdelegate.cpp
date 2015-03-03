@@ -7,6 +7,12 @@
 #include <treecombobox/treecombobox.h>
 #include <metadatamodel/dbxmlstruct.h>
 
+using namespace RTPTechGroup::Widgets;
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 RefItemDelegate::RefItemDelegate(QObject *parent) :
     XmlDelegate(parent)
 {
@@ -204,3 +210,5 @@ const TreeXmlHashModel *RefItemDelegate::hashModel(const QAbstractItemModel *mod
               : dynamic_cast<const TreeXmlHashModel*>(model);
     return hashModel;
 }
+
+}}

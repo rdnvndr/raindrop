@@ -10,6 +10,9 @@
 #include "treexmlmodelglobal.h"
 #include "treexmlmodel.h"
 
+namespace RTPTechGroup {
+namespace XmlModel {
+
 class TagXmlItem;
 
 //! Класс модель дерева c хэшем для XML данных
@@ -125,5 +128,7 @@ private:
     //! Список зависимых полей [тэг][атрибут][ссылочныйТэг] = ссылочныйАтрибут
     QHash<QString, QHash<QString, QMap<QString, QString> > > m_linkAttr;
 };
+
+}}
 
 #endif

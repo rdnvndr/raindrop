@@ -3,6 +3,9 @@
 
 #include <QItemDelegate>
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! Делегат отображения горячих клавиш команд
 /*! Делегат отображения горячих клавиш команд предназначен для выделения
     групп команд жирным шрифтом.
@@ -18,5 +21,8 @@ public:
 
     
 };
+
+}
+}
 
 #endif // HOTKEYDELEGATE_H

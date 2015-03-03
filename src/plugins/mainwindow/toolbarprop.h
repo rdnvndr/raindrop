@@ -3,6 +3,9 @@
 
 #include "ui_toolbarprop.h"
 
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! Диалоговое окно свойств панели инструментов
 /*! Диалоговое окно свойств панели инструментов предназначено для редактирования
     названия панели инструментов.
@@ -21,5 +24,8 @@ public:
     //! Установить название панели инструментов
     void setText(QString text);
 };
+
+}
+}
 
 #endif // TOOLBARPROP_H

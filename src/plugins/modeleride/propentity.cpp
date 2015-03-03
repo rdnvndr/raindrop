@@ -3,6 +3,11 @@
 #include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 PropEntity::PropEntity(QWidget *parent) :
     QWidget(parent)
 {
@@ -71,7 +76,8 @@ void PropEntity::setTabName(const QModelIndex &index)
     QString id = modelData(DBENTITYXML::ENTITY, DBENTITYXML::ID,index).toString();
 
     this->setObjectName("PropEntity::" + id);
-    subWindow->setWindowTitle(tr("Сущность ЕИ: ")+entityName);
+    subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));
+    subWindow->setWindowTitle(entityName);
 }
 
 void PropEntity::closeTab(const QModelIndex &index)
@@ -100,3 +106,5 @@ void PropEntity::edit(bool flag)
     pushButtonPropCancel->setEnabled(flag);
     toolButtonEditEntity->setDisabled(flag);
 }
+
+}}

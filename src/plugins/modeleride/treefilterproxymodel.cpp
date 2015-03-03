@@ -4,6 +4,12 @@
 #include <treexmlmodel/mimedataindex.h>
 #include <QMimeData>
 
+using namespace RTPTechGroup::XmlModel;
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 TreeFilterProxyModel::TreeFilterProxyModel()
 {
 
@@ -137,3 +143,5 @@ bool TreeFilterProxyModel::dropMimeData(const QMimeData *data, Qt::DropAction ac
     this->setFilterKeyColumn(this->filterKeyColumn());
     return success;
 }
+
+}}

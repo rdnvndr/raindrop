@@ -6,6 +6,11 @@
 #include "treefilterproxymodel.h"
 #include "unitdelegate.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 MsrUnitWidget::MsrUnitWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -225,3 +230,4 @@ void MsrUnitWidget::setRootIndex(const QModelIndex &index)
     emit proxyIndexChanged(tableViewUnit->rootIndex());
 }
 
+}}
