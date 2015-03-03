@@ -7,6 +7,8 @@
 #include <treecombobox/treecombobox.h>
 #include <metadatamodel/dbxmlstruct.h>
 
+using namespace RTPTechGroup::TreeComboBox;
+
 RefItemDelegate::RefItemDelegate(QObject *parent) :
     XmlDelegate(parent)
 {

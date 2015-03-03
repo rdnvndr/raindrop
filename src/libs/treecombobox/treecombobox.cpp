@@ -4,6 +4,9 @@
 #include <QHeaderView>
 #include <QStylePainter>
 
+namespace RTPTechGroup {
+namespace TreeComboBox {
+
 TreeComboBox::TreeComboBox(QWidget *parent):QComboBox(parent),skipNextHide(false)
 {
     m_rootIndex = QModelIndex();
@@ -134,3 +137,5 @@ QModelIndex TreeComboBox::rootModelIndex()
 {
     return m_rootIndex;
 }
+
+}}
