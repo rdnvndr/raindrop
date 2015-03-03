@@ -7,6 +7,9 @@
 #include <QDataWidgetMapper>
 #include <QStringListModel>
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования класса
 /*! Диалог предназначен для редактирования класса. Включает в себя диалоги
     редактирования свойств класса, списка атрибутов и списка составов
@@ -59,5 +62,7 @@ private:
     //! Модель структуры классов
     TreeXmlHashModel* m_model;
 };
+
+}}
 
 #endif // PROPCLASS_H

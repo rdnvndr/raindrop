@@ -7,6 +7,9 @@
 
 using namespace RTPTechGroup::XmlModel;
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования значений списка
 /*! Диалог предназначен для редактирования значений списка
 */
@@ -62,5 +65,7 @@ private:
     //! Модель структуры классов
     TreeXmlHashModel* m_model;
 };
+
+}}
 
 #endif // LOVVALUEWIDGET_H

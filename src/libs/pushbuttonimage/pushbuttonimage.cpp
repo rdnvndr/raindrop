@@ -3,7 +3,7 @@
 #include <QFileDialog>
 
 namespace RTPTechGroup {
-namespace PushButtonImage {
+namespace Widgets {
 
 PushButtonImage::PushButtonImage(QWidget *parent) :
     QPushButton(parent)

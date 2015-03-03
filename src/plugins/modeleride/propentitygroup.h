@@ -8,6 +8,9 @@
 
 using namespace RTPTechGroup::XmlModel;
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования группы сущности ЕИ
 /*! Диалог предназначен для редактирования группы сущности ЕИ
 */
@@ -92,5 +95,7 @@ private:
     //! Хранит индекс предыдущей активной группы сущности ЕИ
     int  m_oldIndex;
 };
+
+}}
 
 #endif // PROPENTITYGROUP_H

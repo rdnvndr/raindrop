@@ -5,7 +5,7 @@
 #include <QDrag>
 
 namespace RTPTechGroup {
-namespace FilterTreeWidget {
+namespace Widgets {
 
 FilterTreeWidget::FilterTreeWidget(QWidget *parent) :
     QTreeWidget(parent)

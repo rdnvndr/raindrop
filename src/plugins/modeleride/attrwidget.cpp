@@ -8,6 +8,11 @@
 #include "treefilterproxymodel.h"
 #include "regexpvalidator.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 AttrWidget::AttrWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -495,3 +500,5 @@ void AttrWidget::setCurrent(const QModelIndex &index)
 
     emit currentIndexChanged(index);
 }
+
+}}

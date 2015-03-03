@@ -8,6 +8,9 @@
 
 using namespace RTPTechGroup::XmlModel;
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Диалог редактирования фильтров класса
 /*! Диалог предназначен для редактирования списка фильтров
     класса
@@ -70,5 +73,7 @@ private:
     TreeXmlHashModel* m_model;
 
 };
+
+}}
 
 #endif // FILTERWIDGET_H

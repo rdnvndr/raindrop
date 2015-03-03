@@ -5,6 +5,9 @@
 #include <QStringList>
 #include <QSet>
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 //! Фильрующая древовидная прокси модель
 /*! Прокси модель дерева. предназначена для сортировки и фильтрации
  */
@@ -54,5 +57,7 @@ private:
     //! Список тэгов для фильтрации
     QSet<QString> m_filterTags;
 };
+
+}}
 
 #endif // TREEFILTERPROXYMODEL_H

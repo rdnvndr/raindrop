@@ -7,7 +7,7 @@
 #include "mdiextareaglobal.h"
 
 namespace RTPTechGroup {
-namespace MdiExtArea {
+namespace Widgets {
 
 //! Класс области подокон
 /*! Класс области подокон предназначен для создания

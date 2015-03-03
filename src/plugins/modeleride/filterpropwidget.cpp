@@ -8,6 +8,10 @@
 #include <metadatamodel/dbxmlstruct.h>
 #include "regexpvalidator.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
 
 FilterPropWidget::FilterPropWidget(QWidget *parent) :
     QWidget(parent)
@@ -351,3 +355,5 @@ bool FilterPropWidget::removeEmpty()
     }
     return false;
 }
+
+}}

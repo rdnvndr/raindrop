@@ -3,6 +3,11 @@
 #include "xmldelegate.h"
 #include <QStringListModel>
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 MsrEntityWidget::MsrEntityWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -257,5 +262,4 @@ QVariant MsrEntityWidget::modelData(const QString &tag, const QString &attr,
                              tag,attr)).data(role);
 }
 
-
-
+}}

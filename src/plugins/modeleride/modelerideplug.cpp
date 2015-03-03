@@ -22,6 +22,9 @@
 
 using namespace RTPTechGroup::Plugin;
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     QObject(parent), IPlugin("IMainWindow")
 {
@@ -732,6 +735,9 @@ void ModelerIDEPlug::closeClassModel()
         actionPublishModel->setDisabled(true);
     }
 }
+
+}}
+
 #if QT_VERSION < 0x050000
     Q_EXPORT_PLUGIN2(modeleride, ModelerIDEPlug)
 #endif

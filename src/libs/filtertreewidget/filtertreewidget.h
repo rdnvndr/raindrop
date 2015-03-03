@@ -5,7 +5,7 @@
 #include <QTreeWidget>
 
 namespace RTPTechGroup {
-namespace FilterTreeWidget {
+namespace Widgets {
 
 //! Класс дерева с фильтром
 /*! Класс дерева с контекстной фильтрацией узлов

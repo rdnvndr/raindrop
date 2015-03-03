@@ -5,7 +5,7 @@
 #include <QTreeView>
 
 namespace RTPTechGroup {
-namespace TreeComboBox {
+namespace Widgets {
 
 //! ComboxBox с выпадающим списком в виде QTreeView
 /*! Класс предназначен для выбора значения ComboBox

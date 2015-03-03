@@ -5,7 +5,7 @@
 #include <QPushButton>
 
 namespace RTPTechGroup {
-namespace PushButtonImage {
+namespace Widgets {
 
 //! Класс PushButtonImage является кнопкой-изображением
 /*! Данный класс предназначен для отображение рисунка в

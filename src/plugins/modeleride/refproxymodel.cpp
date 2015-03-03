@@ -1,6 +1,9 @@
 #include "refproxymodel.h"
 #include <treexmlmodel/treexmlhashmodel.h>
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 RefProxyModel::RefProxyModel(QObject *parent) :
     ModifyProxyModel(parent)
 {
@@ -13,3 +16,5 @@ QVariant RefProxyModel::data(const QModelIndex &proxyIndex, int role) const
 
     return ModifyProxyModel::data(proxyIndex, role);
 }
+
+}}

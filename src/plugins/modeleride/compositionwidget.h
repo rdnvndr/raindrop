@@ -13,6 +13,9 @@
 
 using namespace RTPTechGroup::XmlModel;
 
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 class CompositionWidget : public QWidget, private Ui::CompositionWidget
 {
     Q_OBJECT
@@ -85,5 +88,7 @@ private:
     //! Mapper для свойств атрибутов
     QDataWidgetMapper* m_mapperComp;
 };
+
+}}
 
 #endif // COMPOSITIONWIDGET_H

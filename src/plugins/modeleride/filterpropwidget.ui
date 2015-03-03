@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FilterPropWidget</class>
- <widget class="QWidget" name="FilterPropWidget">
+ <class>RTPTechGroup::ModelerIde::FilterPropWidget</class>
+ <widget class="QWidget" name="RTPTechGroup::ModelerIde::FilterPropWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -184,7 +184,7 @@
        </widget>
       </item>
       <item row="5" column="1">
-       <widget class="RTPTechGroup::TreeComboBox::TreeComboBox" name="comboBoxDestClass"/>
+       <widget class="RTPTechGroup::Widgets::TreeComboBox" name="comboBoxDestClass"/>
       </item>
       <item row="0" column="1">
        <widget class="QLineEdit" name="lineEditName"/>
@@ -320,7 +320,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>RTPTechGroup::TreeComboBox::TreeComboBox</class>
+   <class>RTPTechGroup::Widgets::TreeComboBox</class>
    <extends>QComboBox</extends>
    <header>treecombobox/treecombobox.h</header>
   </customwidget>

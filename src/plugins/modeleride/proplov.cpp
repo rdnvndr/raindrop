@@ -3,6 +3,11 @@
 #include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 
+using namespace RTPTechGroup::MetaDataModel;
+
+namespace RTPTechGroup {
+namespace ModelerIde {
+
 PropLov::PropLov(QWidget *parent) :
     QWidget(parent)
 {
@@ -92,3 +97,5 @@ void PropLov::edit(bool flag)
     pushButtonPropCancel->setEnabled(flag);
     toolButtonEditLov->setDisabled(flag);
 }
+
+}}

@@ -465,7 +465,7 @@ QMenu *MainWindow::createPopupMenu()
     return menu;
 }
 
-RTPTechGroup::MdiExtArea::MdiExtArea *MainWindow::getMdiArea()
+MdiExtArea *MainWindow::getMdiArea()
 {
     return mdiArea;
 }

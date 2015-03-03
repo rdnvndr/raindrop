@@ -5,7 +5,7 @@
 #include <QStyle>
 
 namespace RTPTechGroup {
-namespace DockWidget {
+namespace Widgets {
 
 DockWidget::DockWidget(QWidget * parent)
     : QDockWidget(parent)
