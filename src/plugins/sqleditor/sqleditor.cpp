@@ -3,6 +3,9 @@
 #include "querysqlwidget.h"
 
 using namespace RTPTechGroup::Plugin;
+namespace RTPTechGroup {
+namespace SqlEditor {
+
 
 SqlEditor::SqlEditor(QObject *parent):
     QObject(parent), IPlugin("IMainWindow")
@@ -39,6 +42,8 @@ void SqlEditor::showSqlEditor()
         subWindow->setWindowTitle(tr("SQL редактор"));
     }
 }
+
+}}
 
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(sqleditor, SqlEditor)
