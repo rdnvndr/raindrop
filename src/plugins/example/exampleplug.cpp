@@ -4,6 +4,9 @@
 
 using namespace RTPTechGroup::Plugin;
 
+namespace RTPTechGroup {
+namespace Example {
+
 ExamplePlug::ExamplePlug(QObject *parent):
     QObject(parent), IPlugin("IMainWindow ITreeDockWidget")
 {
@@ -58,6 +61,8 @@ void ExamplePlug::createTab(){
 void ExamplePlug::createDlgWindow(){
     QMessageBox::warning(NULL,tr("Инициализация"),tr("Инициализация плагина Example"));
 }
+
+}}
 
 #if QT_VERSION < 0x050000
     Q_EXPORT_PLUGIN2(example, ExamplePlug)
