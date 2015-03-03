@@ -4,6 +4,9 @@
 #include "filtertreewidgetglobal.h"
 #include <QTreeWidget>
 
+namespace RTPTechGroup {
+namespace FilterTreeWidget {
+
 //! Класс дерева с фильтром
 /*! Класс дерева с контекстной фильтрацией узлов
     предназначен для фильтрации отображаемых узлов
@@ -57,5 +60,7 @@ protected:
     void contextMenuEvent(QContextMenuEvent *event);
 
 };
+
+}}
 
 #endif

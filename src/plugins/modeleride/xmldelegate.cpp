@@ -12,6 +12,7 @@
 #include <treexmlmodel/treexmlhashmodel.h>
 
 using namespace RTPTechGroup::TreeComboBox;
+using namespace RTPTechGroup::PushButtonImage;
 
 XmlDelegate::XmlDelegate(QObject *parent) :
     QStyledItemDelegate(parent)

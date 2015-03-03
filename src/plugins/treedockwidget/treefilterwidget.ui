@@ -80,7 +80,7 @@
     </widget>
    </item>
    <item>
-    <widget class="FilterTreeWidget" name="treeWidget">
+    <widget class="RTPTechGroup::FilterTreeWidget::FilterTreeWidget" name="treeWidget">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -104,7 +104,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>FilterTreeWidget</class>
+   <class>RTPTechGroup::FilterTreeWidget::FilterTreeWidget</class>
    <extends>QTreeWidget</extends>
    <header location="global">filtertreewidget/filtertreewidget.h</header>
   </customwidget>

@@ -4,6 +4,9 @@
 #include <QMimeData>
 #include <QDrag>
 
+namespace RTPTechGroup {
+namespace FilterTreeWidget {
+
 FilterTreeWidget::FilterTreeWidget(QWidget *parent) :
     QTreeWidget(parent)
 {
@@ -109,3 +112,4 @@ void FilterTreeWidget::contextMenuEvent(QContextMenuEvent *event)
     emit contextMenuSignal(event);
 }
 
+}}

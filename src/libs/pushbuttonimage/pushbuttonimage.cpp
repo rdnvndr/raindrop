@@ -2,6 +2,9 @@
 #include <QFile>
 #include <QFileDialog>
 
+namespace RTPTechGroup {
+namespace PushButtonImage {
+
 PushButtonImage::PushButtonImage(QWidget *parent) :
     QPushButton(parent)
 {
@@ -68,3 +71,5 @@ void PushButtonImage::cleanImage()
     m_data.clear();
     setIcon(QIcon());
 }
+
+}}

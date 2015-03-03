@@ -74,7 +74,7 @@
           <number>2</number>
          </property>
          <item>
-          <widget class="PushButtonImage" name="pushButtonIcon">
+          <widget class="RTPTechGroup::PushButtonImage::PushButtonImage" name="pushButtonIcon">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>48</horstretch>
@@ -140,7 +140,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>PushButtonImage</class>
+   <class>RTPTechGroup::PushButtonImage::PushButtonImage</class>
    <extends>QPushButton</extends>
    <header>pushbuttonimage.h</header>
   </customwidget>

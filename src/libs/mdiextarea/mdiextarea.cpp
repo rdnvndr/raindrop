@@ -1,5 +1,8 @@
 #include "mdiextarea.h"
 
+namespace RTPTechGroup {
+namespace MdiExtArea {
+
 MdiExtArea::MdiExtArea(QWidget *parent) :
     QMdiArea(parent)
 {
@@ -84,3 +87,5 @@ void MdiExtArea::tileSubWindows(){
     else
         QMdiArea::tileSubWindows();
 }
+
+}}
