@@ -314,7 +314,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="2" column="1">
-       <widget class="TreeComboBox" name="comboBoxLinkAttr"/>
+       <widget class="RTPTechGroup::TreeComboBox::TreeComboBox" name="comboBoxLinkAttr"/>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="labelStringLen">
@@ -427,7 +427,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="TreeComboBox" name="comboBoxUnitAttr"/>
+         <widget class="RTPTechGroup::TreeComboBox::TreeComboBox" name="comboBoxUnitAttr"/>
         </item>
         <item>
          <widget class="QToolButton" name="toolButtonUnitAttrClean">
@@ -513,7 +513,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TreeComboBox</class>
+   <class>RTPTechGroup::TreeComboBox::TreeComboBox</class>
    <extends>QComboBox</extends>
    <header>treecombobox/treecombobox.h</header>
   </customwidget>
