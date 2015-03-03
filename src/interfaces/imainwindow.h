@@ -6,6 +6,8 @@
 #include <QDockWidget>
 #include <mdiextarea/mdiextarea.h>
 
+using namespace RTPTechGroup::MdiExtArea;
+
 //! Класс главного окна
 class IMainWindow
 {
@@ -75,7 +77,7 @@ public slots:
     virtual QMdiSubWindow *setActiveSubWindow(QString objName) = 0;
 
     //! Получение области подокон
-    virtual MdiExtArea* getMdiArea() = 0;
+    virtual MdiExtArea *getMdiArea() = 0;
 };
 
 Q_DECLARE_INTERFACE(IMainWindow,"com.RTPTechGroup.Raindrop.IMainWindow/1.0")

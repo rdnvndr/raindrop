@@ -6,6 +6,9 @@
 #include <QMdiSubWindow>
 #include "mdiextareaglobal.h"
 
+namespace RTPTechGroup {
+namespace MdiExtArea {
+
 //! Класс области подокон
 /*! Класс области подокон предназначен для создания
     подокон и для работы с ними
@@ -75,5 +78,7 @@ public slots:
     //! Слот для расположения подокон плиткой
     void tileSubWindows();
 };
+
+}}
 
 #endif // MDIEXTAREA_H

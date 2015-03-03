@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Главное окно</string>
   </property>
-  <widget class="MdiExtArea" name="mdiArea"/>
+  <widget class="RTPTechGroup::MdiExtArea::MdiExtArea" name="mdiArea"/>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionExit">
    <property name="icon">
@@ -70,7 +70,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MdiExtArea</class>
+   <class>RTPTechGroup::MdiExtArea::MdiExtArea</class>
    <extends>QWidget</extends>
    <header location="global">mdiextarea/mdiextarea.h</header>
    <container>1</container>

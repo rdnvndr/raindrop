@@ -4,6 +4,9 @@
 #include "pushbuttonimageglobal.h"
 #include <QPushButton>
 
+namespace RTPTechGroup {
+namespace PushButtonImage {
+
 //! Класс PushButtonImage является кнопкой-изображением
 /*! Данный класс предназначен для отображение рисунка в
  *  виде кнопки, загрузки с диска, сохранения на диск
@@ -38,6 +41,8 @@ private:
     //! Переменная для хранения рисунка
     QByteArray m_data;
 };
+
+}}
 
 #endif
 

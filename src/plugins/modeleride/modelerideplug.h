@@ -9,6 +9,8 @@
 #include "classtreeview.h"
 #include "treefilterproxymodel.h"
 
+using namespace RTPTechGroup::DockWidget;
+
 //! Плагин среды разработки структуры классов
 /*! Плагин предназначен для разработки структуры классов
     с сохранением ее XML. Имеется возможность разработанную
