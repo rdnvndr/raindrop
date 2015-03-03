@@ -6,6 +6,9 @@
 #include <itreedockwidget.h>
 #include "exampleglobal.h"
 
+namespace RTPTechGroup {
+namespace Example {
+
 class EXAMPLELIB ExamplePlug:
         public QObject,
         public IPlugin
@@ -56,5 +59,7 @@ public slots:
     void createDlgWindow();
 
 };
+
+}}
 
 #endif

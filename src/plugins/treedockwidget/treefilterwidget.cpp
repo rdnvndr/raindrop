@@ -1,4 +1,8 @@
 #include "treefilterwidget.h"
+
+namespace RTPTechGroup {
+namespace TreeDockWidget {
+
 TreeFilterWidget::TreeFilterWidget(QWidget* pwgt) : QWidget(pwgt) {
     setupUi(this);
 
@@ -12,3 +16,5 @@ TreeFilterWidget::TreeFilterWidget(QWidget* pwgt) : QWidget(pwgt) {
     connect(lineEditFilter, SIGNAL(textChanged(QString)), treeWidget, SLOT(searchShowAllItem(QString)));
 
 }
+
+}}
