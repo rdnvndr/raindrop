@@ -165,10 +165,8 @@ void ModifyProxyModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent,
 
 void ModifyProxyModel::sourceRowsInserted(const QModelIndex &parent, int start, int end)
 {
-    if (!mapFromSource(parent).child(start,0).isValid()) {
-        beginInsertRows(mapFromSource(parent), start, end);
-        endInsertRows();
-    }
+    beginInsertRows(mapFromSource(parent), start, end);
+    endInsertRows();
 }
 
 bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
@@ -200,8 +198,6 @@ bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
                                                      m_updatedRow[indexProxy][TreeXmlModel::TagRole].toString());
                     isInserted = lastIndexRow.isValid();
                     lastRow = lastIndexRow.row();
-                    beginInsertRows(mapFromSource(srcParent), lastRow, lastRow);
-                    endInsertRows();
                 }
         } else
             isInserted = sourceModel()->insertRow(lastRow, srcParent);
