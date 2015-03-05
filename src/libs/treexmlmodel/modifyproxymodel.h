@@ -158,6 +158,9 @@ private:
 
     //! Флаг разрешения на редактирование
     bool m_editable;
+
+    //! Список строк для удаления в текущей модели
+    QHash  <QModelIndex,QSet<int> > m_srcRemovedRow;
 };
 
 }}

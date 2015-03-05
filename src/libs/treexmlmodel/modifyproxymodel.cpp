@@ -130,39 +130,43 @@ void ModifyProxyModel::sourceDataChanged(const QModelIndex &left,
 void ModifyProxyModel::sourceRowsRemoved(const QModelIndex &parent,
                                          int start, int end)
 {
-    Q_UNUSED(parent)
-    Q_UNUSED(start)
-    Q_UNUSED(end)
+    if (parent.isValid())
+        for (int i = start; i < end+1; i++)
+            if (m_srcRemovedRow.contains(parent))
+                if (m_srcRemovedRow[parent].contains(i)) {
+                    beginRemoveRows(mapFromSource(parent),i,i);
+                    endRemoveRows();
+                    m_srcRemovedRow[parent].remove(i);
+                    if (m_srcRemovedRow[parent].isEmpty())
+                        m_srcRemovedRow.remove(parent);
+                }
 }
 
 void ModifyProxyModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent,
                                                   int start, int end)
 {
-    for (int i = start; i < end+1; i++) {
-        QPersistentModelIndex index = sourceModel()->index(i,0,parent);
-        for (int j = 0; j < sourceModel()->columnCount(parent);j++) {
-            QPersistentModelIndex removeIndex(mapFromSource(index.sibling(i,j)));
-            if (m_updatedRow.contains(removeIndex)) {
-                m_updatedRow.remove(removeIndex);
+    if (parent.isValid())
+        for (int i = start; i < end+1; i++) {
+            QPersistentModelIndex index = sourceModel()->index(i,0,parent);
+            for (int j = 0; j < sourceModel()->columnCount(parent);j++) {
+                QPersistentModelIndex removeIndex(mapFromSource(index.sibling(i,j)));
+                if (m_updatedRow.contains(removeIndex)) {
+                    m_updatedRow.remove(removeIndex);
+                }
             }
+            if (m_removedRow.contains(QPersistentModelIndex(index.parent())))
+                if (m_removedRow[index.parent()].contains(index)) {
+                    m_removedRow[index.parent()].removeOne(index);
+                    continue;
+                }
+            m_srcRemovedRow[parent].insert(i);
         }
-        if (m_removedRow.contains(QPersistentModelIndex(index.parent())))
-            if (m_removedRow[index.parent()].contains(index)) {
-                m_removedRow[index.parent()].removeOne(index);
-                continue;
-            }
-
-        beginRemoveRows(mapFromSource(parent),i,i);
-        endRemoveRows();
-    }
 }
 
 void ModifyProxyModel::sourceRowsInserted(const QModelIndex &parent, int start, int end)
 {
-    if (!mapFromSource(parent).child(start,0).isValid()) {
-        beginInsertRows(mapFromSource(parent), start, end);
-        endInsertRows();
-    }
+    beginInsertRows(mapFromSource(parent), start, end);
+    endInsertRows();
 }
 
 bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
@@ -194,8 +198,6 @@ bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
                                                      m_updatedRow[indexProxy][TreeXmlModel::TagRole].toString());
                     isInserted = lastIndexRow.isValid();
                     lastRow = lastIndexRow.row();
-                    beginInsertRows(mapFromSource(srcParent), lastRow, lastRow);
-                    endInsertRows();
                 }
         } else
             isInserted = sourceModel()->insertRow(lastRow, srcParent);
