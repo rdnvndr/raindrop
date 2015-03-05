@@ -40,8 +40,7 @@ ClassWidget::ClassWidget(QWidget *parent) :
     connect(pushButtonPropSave,SIGNAL(clicked()),this,SLOT(submit()));
     connect(pushButtonPropCancel,SIGNAL(clicked()),this,SLOT(revert()));
     connect(toolButtonEditClass,SIGNAL(clicked()),this,SLOT(edit()));
-    m_oldIndex = -1;
-
+    m_oldIndex = QModelIndex();
 }
 
 ClassWidget::~ClassWidget()
@@ -96,9 +95,9 @@ void ClassWidget::setModel(TreeXmlHashModel *model)
 
 void ClassWidget::add()
 {
-    m_oldIndex = m_mapper->currentIndex();
-    QModelIndex srcIndex =  m_model->index(m_mapper->currentIndex(),
-                                           0,m_mapper->rootIndex()).parent();
+    m_oldIndex = m_model->index(m_mapper->currentIndex(),
+                                0,m_mapper->rootIndex());
+    QModelIndex srcIndex =  m_oldIndex.parent();
     QModelIndex srcCurrentIndex =
             m_model->insertLastRows(0,1,srcIndex,DBCLASSXML::CLASS);
     if (srcCurrentIndex.isValid()){
@@ -240,14 +239,14 @@ void ClassWidget::remove()
 void ClassWidget::setCurrent(const QModelIndex &index)
 {
     m_mapper->setRootIndex(index.parent());
-
+    emit currentIndexChanged(index);
     m_mapper->setCurrentModelIndex(index);
-    edit(false);
+
     int indexType = comboBoxClassType->findText(modelData(DBCLASSXML::CLASS,
                                                           DBCLASSXML::TYPE,
                                                           index).toString());
     comboBoxClassType->setCurrentIndex(indexType);
-    emit currentIndexChanged(index);
+    edit(false);
 }
 
 bool ClassWidget::isEdit()
@@ -302,15 +301,9 @@ void ClassWidget::revert()
 
 void ClassWidget::rowsRemoved(const QModelIndex &index, int start, int end)
 {
-    if (index == m_mapper->rootIndex()){
-        if (m_oldIndex > end)
-            m_oldIndex = m_oldIndex - end-start-1;
-        else if (m_oldIndex >= start && m_oldIndex <= end){
-            m_oldIndex = -1;
-        }
-    }
-
-    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1 && m_oldIndex <0)
+    Q_UNUSED (start)
+    Q_UNUSED (end)
+    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1)
         emit dataRemoved(QModelIndex());
 }
 
@@ -334,14 +327,12 @@ QVariant ClassWidget::modelData(const QString &tag, const QString &attr, const Q
 bool ClassWidget::removeEmpty()
 {
     if (lineEditClassName->text().isEmpty()){
-        if (m_oldIndex>=0){
-            QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,
-                                                  m_mapper->rootIndex());
-            QModelIndex parent = srcIndex.parent();
-            setCurrent(parent);
+        if (m_oldIndex.isValid()){
+            QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+            m_mapper->revert();
+            setCurrent(m_oldIndex);
             m_model->removeRow(srcIndex.row(),srcIndex.parent());
-            setCurrent(parent.child(m_oldIndex,0));
-            m_oldIndex = -1;
+            m_oldIndex = QModelIndex();
         }else {
             remove();
         }
