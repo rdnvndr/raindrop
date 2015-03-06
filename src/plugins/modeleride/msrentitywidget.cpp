@@ -20,7 +20,7 @@ MsrEntityWidget::MsrEntityWidget(QWidget *parent) :
     connect(comboBoxBasicUnit, SIGNAL(activated(int)),
             this, SLOT(changeUnit(int)));
 
-    m_oldIndex = -1;
+    m_oldIndex = QModelIndex();
 }
 
 MsrEntityWidget::~MsrEntityWidget()
@@ -88,9 +88,9 @@ bool MsrEntityWidget::isEmpty()
 
 void MsrEntityWidget::add()
 {
-    m_oldIndex = m_mapper->currentIndex();
-    QModelIndex srcIndex =  m_model->index(m_mapper->currentIndex(),
-                                           0,m_mapper->rootIndex()).parent();
+    m_oldIndex = m_model->index(m_mapper->currentIndex(),
+                                            0,m_mapper->rootIndex());
+    QModelIndex srcIndex =  m_oldIndex.parent();
     QModelIndex srcCurrentIndex =
             m_model->insertLastRows(0,1,srcIndex,DBENTITYXML::ENTITY);
     if (srcCurrentIndex.isValid()) {
@@ -116,21 +116,14 @@ void MsrEntityWidget::remove()
 bool MsrEntityWidget::removeEmpty()
 {
     if (lineEditEntityName->text().isEmpty()){
-        if (m_oldIndex>=0){
-
+        if (m_oldIndex.isValid()){
             QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
-
-            if (!isRemove(srcIndex))
-                return false;
-
-            QModelIndex parent = srcIndex.parent();
-            setCurrent(parent);
+            m_mapper->revert();
+            setCurrent(m_oldIndex);
             m_model->removeRow(srcIndex.row(),srcIndex.parent());
-            setCurrent(parent.child(m_oldIndex,0));
-            m_oldIndex = -1;
-        }else {
+            m_oldIndex = QModelIndex();
+        } else {
             remove();
-
         }
         return true;
     }
@@ -185,15 +178,9 @@ void MsrEntityWidget::revert()
 
 void MsrEntityWidget::rowsRemoved(const QModelIndex &index, int start, int end)
 {
-    if (index == m_mapper->rootIndex()){
-        if (m_oldIndex > end)
-            m_oldIndex = m_oldIndex - end-start-1;
-        else if (m_oldIndex >= start && m_oldIndex <= end){
-            m_oldIndex = -1;
-        }
-    }
-
-    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1 && m_oldIndex <0)
+    Q_UNUSED (start)
+    Q_UNUSED (end)
+    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1)
         emit dataRemoved(QModelIndex());
 }
 

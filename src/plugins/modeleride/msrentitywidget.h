@@ -102,7 +102,7 @@ private:
     QDataWidgetMapper* m_mapper;
 
     //! Хранит индекс предыдущей активной сущности ЕИ
-    int  m_oldIndex;
+    QPersistentModelIndex  m_oldIndex;
 };
 
 }}

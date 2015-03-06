@@ -508,10 +508,10 @@ void ModelerIDEPlug::showPropEntityGroup(const QModelIndex &indexSource)
         subWindow =  mainWindow->addSubWindow(propEntityGroup);
         propEntityGroup->setObjectName(subWindowName);
         propEntityGroup->setModel(m_model);
-        propEntityGroup->setCurrentEntityGroup(indexSource);
+        propEntityGroup->setCurrent(indexSource);
     } else {
         PropEntityGroup* propEntityGroup = qobject_cast<PropEntityGroup*>(subWindow->widget());
-        propEntityGroup->setCurrentEntityGroup(indexSource);
+        propEntityGroup->setCurrent(indexSource);
     }
 }
 
@@ -556,10 +556,10 @@ void ModelerIDEPlug::showPropRefGroup(const QModelIndex &indexSource)
         subWindow =  mainWindow->addSubWindow(propRefGroup);
         propRefGroup->setObjectName(subWindowName);
         propRefGroup->setModel(m_model);
-        propRefGroup->setCurrentRefGroup(indexSource);
+        propRefGroup->setCurrent(indexSource);
     } else {
         PropRefGroup* propRefGroup = qobject_cast<PropRefGroup*>(subWindow->widget());
-        propRefGroup->setCurrentRefGroup(indexSource);
+        propRefGroup->setCurrent(indexSource);
     }
 }
 
