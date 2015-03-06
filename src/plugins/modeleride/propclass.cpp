@@ -44,7 +44,7 @@ void PropClass::setModel(TreeXmlHashModel *model)
     m_model = model;
 }
 
-void PropClass::setCurrentClass(const QModelIndex &index)
+void PropClass::setCurrent(const QModelIndex &index)
 {
     classWidget->setCurrent(index);
 }

@@ -30,7 +30,7 @@ public:
 
 public slots:
     //! Установка текущего списка значений
-    void setCurrentLov(const QModelIndex &index);
+    void setCurrent(const QModelIndex &index);
 
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);

@@ -63,7 +63,7 @@ TreeXmlHashModel *PropEntity::model()
     return m_model;
 }
 
-void PropEntity::setCurrentEntity(const QModelIndex &index)
+void PropEntity::setCurrent(const QModelIndex &index)
 {
     msrEntityWidget->setCurrent(index);
 }

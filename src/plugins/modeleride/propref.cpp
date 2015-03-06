@@ -53,7 +53,7 @@ TreeXmlHashModel *PropRef::model()
     return m_model;
 }
 
-void PropRef::setCurrentRef(const QModelIndex &index)
+void PropRef::setCurrent(const QModelIndex &index)
 {
     refWidget->setCurrent(index);
 }

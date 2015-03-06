@@ -29,7 +29,7 @@ public:
 
 public slots:
     //! Установка текущего класса
-    void setCurrentClass(const QModelIndex &index);
+    void setCurrent(const QModelIndex &index);
 
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);

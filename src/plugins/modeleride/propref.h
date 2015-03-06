@@ -33,7 +33,7 @@ public:
 
 public slots:
     //! Установка текущего справочника
-    void setCurrentRef(const QModelIndex &index);
+    void setCurrent(const QModelIndex &index);
 
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);
