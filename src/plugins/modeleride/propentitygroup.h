@@ -62,7 +62,7 @@ signals:
 
 public slots:
     //! Установка текущей группы сущности ЕИ
-    void setCurrentEntityGroup(const QModelIndex &index);
+    void setCurrent(const QModelIndex &index);
 
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);
@@ -93,7 +93,7 @@ private:
     QDataWidgetMapper* m_mapper;
 
     //! Хранит индекс предыдущей активной группы сущности ЕИ
-    int  m_oldIndex;
+    QPersistentModelIndex  m_oldIndex;
 };
 
 }}
