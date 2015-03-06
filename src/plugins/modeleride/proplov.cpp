@@ -54,7 +54,7 @@ TreeXmlHashModel *PropLov::model()
     return m_model;
 }
 
-void PropLov::setCurrentLov(const QModelIndex &index)
+void PropLov::setCurrent(const QModelIndex &index)
 {
     lovWidget->setCurrent(index);
 }

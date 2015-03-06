@@ -428,12 +428,12 @@ void ModelerIDEPlug::showPropClass(const QModelIndex &indexSource)
         subWindow =  mainWindow->addSubWindow(propClass);
         propClass->setObjectName(subWindowName);
         propClass->setModel(m_model);
-        propClass->setCurrentClass(indexSource);
+        propClass->setCurrent(indexSource);
         connect(propClass,SIGNAL(editFilter(QModelIndex)),
                 this,SLOT(showPropFilter(QModelIndex)));
     } else {
         PropClass* propClass = qobject_cast<PropClass*>(subWindow->widget());
-        propClass->setCurrentClass(indexSource);
+        propClass->setCurrent(indexSource);
     }
 }
 
@@ -460,10 +460,10 @@ void ModelerIDEPlug::showPropFilter(const QModelIndex &indexSource)
         subWindow =  mainWindow->addSubWindow(propFilter);
         propFilter->setObjectName(subWindowName);
         propFilter->setModel(m_model);
-        propFilter->setCurrentClass(indexSource);
+        propFilter->setCurrent(indexSource);
     } else {
         PropFilter* propFilter = qobject_cast<PropFilter*>(subWindow->widget());
-        propFilter->setCurrentClass(indexSource);
+        propFilter->setCurrent(indexSource);
     }
 }
 
@@ -484,10 +484,10 @@ void ModelerIDEPlug::showPropEntity(const QModelIndex &indexSource)
         subWindow =  mainWindow->addSubWindow(propEntity);
         propEntity->setObjectName(subWindowName);
         propEntity->setModel(m_model);
-        propEntity->setCurrentEntity(indexSource);
+        propEntity->setCurrent(indexSource);
     } else {
         PropEntity* propEntity = qobject_cast<PropEntity*>(subWindow->widget());
-        propEntity->setCurrentEntity(indexSource);
+        propEntity->setCurrent(indexSource);
     }
 }
 
@@ -532,10 +532,10 @@ void ModelerIDEPlug::showPropLov(const QModelIndex &indexSource)
         subWindow =  mainWindow->addSubWindow(propLov);
         propLov->setObjectName(subWindowName);
         propLov->setModel(m_model);
-        propLov->setCurrentLov(indexSource);
+        propLov->setCurrent(indexSource);
     } else {
         PropLov* propLov = qobject_cast<PropLov*>(subWindow->widget());
-        propLov->setCurrentLov(indexSource);
+        propLov->setCurrent(indexSource);
     }
 }
 
@@ -580,10 +580,10 @@ void ModelerIDEPlug::showPropRef(const QModelIndex &indexSource)
         subWindow =  mainWindow->addSubWindow(propRef);
         propRef->setObjectName(subWindowName);
         propRef->setModel(m_model);
-        propRef->setCurrentRef(indexSource);
+        propRef->setCurrent(indexSource);
     } else {
         PropRef* propRef = qobject_cast<PropRef*>(subWindow->widget());
-        propRef->setCurrentRef(indexSource);
+        propRef->setCurrent(indexSource);
     }
 }
 

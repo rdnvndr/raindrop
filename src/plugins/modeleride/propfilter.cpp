@@ -37,7 +37,7 @@ TreeXmlHashModel *PropFilter::model()
     return m_model;
 }
 
-void PropFilter::setCurrentClass(const QModelIndex &index)
+void PropFilter::setCurrent(const QModelIndex &index)
 {
     propWidget->setCurrent(index);
 }

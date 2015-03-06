@@ -33,7 +33,7 @@ public:
 
 public slots:
     //! Установка текущей сущности единицы измерения
-    void setCurrentEntity(const QModelIndex &index);
+    void setCurrent(const QModelIndex &index);
 
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);
