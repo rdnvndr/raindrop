@@ -1,11 +1,14 @@
 #ifndef PROPCLASS_H
 #define PROPCLASS_H
 
-#include "ui_propclass.h"
-#include <treexmlmodel/treexmlhashmodel.h>
-#include <treexmlmodel/tablexmlproxymodel.h>
 #include <QDataWidgetMapper>
 #include <QStringListModel>
+
+#include <treexmlmodel/treexmlhashmodel.h>
+#include <treexmlmodel/tablexmlproxymodel.h>
+
+#include "ui_propclass.h"
+#include "abstractpropeditor.h"
 
 namespace RTPTechGroup {
 namespace ModelerIde {
@@ -15,7 +18,7 @@ namespace ModelerIde {
     редактирования свойств класса, списка атрибутов и списка составов
  */
 
-class PropClass : public QWidget, public Ui::PropClass
+class PropClass : public AbstractPropEditor, public Ui::PropClass
 {
     Q_OBJECT
     
@@ -28,9 +31,6 @@ public:
 
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
-
-    //! Получение модели структуры классов
-    TreeXmlHashModel* model();
 
 signals:
     //! Сигнал вызова редактирования состава
@@ -46,21 +46,14 @@ public slots:
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);
 
-    //! Закрытие вкладки/подокна
-    void closeTab(const QModelIndex &index);
+    //! Перевод в режим редактирования
+    virtual void edit(bool flag  = true);
 
     //! Вызов редактирования состава
     void onEditComposition(const QModelIndex &index);
 
     //! Вызов редактирования фильтра
     void onEditFilter(const QModelIndex &index);
-
-private:
-    //! Получение данных модели
-    QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
-
-    //! Модель структуры классов
-    TreeXmlHashModel* m_model;
 };
 
 }}

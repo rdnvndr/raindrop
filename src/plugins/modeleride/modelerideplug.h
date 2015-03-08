@@ -2,10 +2,12 @@
 #define MODELERIDE_H
 
 #include <QObject>
+
 #include <plugin/iplugin.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <metadatamodel/classmodelxml.h>
 #include <dockwidget/dockwidget.h>
+
 #include "classtreeview.h"
 #include "treefilterproxymodel.h"
 
@@ -114,35 +116,11 @@ private:
     DockWidget *dockWidget;
 
 public slots:
-    //! Слот обработки двойного щелчка по дереву классов
-    void dblClickTree(const QModelIndex &index);
-
-
-    //! Слот вызова окна редактирования класса
-    void showPropClass(const QModelIndex &indexSource);
-
-    //! Слот вызова окна редактирования фильтра
-    void showPropFilter(const QModelIndex &indexSource);
-
-    //! Слот вызова окна редактирования сущности единицы измерения
-    void showPropEntity(const QModelIndex &indexSource);
-
-    //! Слот вызова окна редактирования группы сущности единицы измерения
-    void showPropEntityGroup(const QModelIndex &indexSource);
-
-    //! Слот вызова окна редактирования списка значений
-    void showPropLov(const QModelIndex &indexSource);
-
-    //! Слот вызова окна редактирования группы справочника
-    void showPropRefGroup(const QModelIndex &indexSource);
-
-    //! Слот вызова окна редактирования справочника
-    void showPropRef(const QModelIndex &indexSource);
-
+    //! Слот вызова окна редактирования
+    void showPropEditor(const QModelIndex &indexSource);
 
     //! Закрытие окна по индексу
-    void closePropWindow(const QModelIndex& index);
-
+    void closePropEditor(const QModelIndex& index);
 
     //! Создание новой структуры классов
     void newClassModel();
@@ -170,7 +148,6 @@ public slots:
 
     //! Устанавливает активность QAction "Сохранить модель"
     void actionSaveEnable();
-
 };
 
 }}

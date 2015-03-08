@@ -11,7 +11,7 @@ namespace RTPTechGroup {
 namespace ModelerIde {
 
 PropRefGroup::PropRefGroup(QWidget *parent) :
-    QWidget(parent)
+    AbstractPropEditor(parent)
 {
     setupUi(this);
 
@@ -44,11 +44,11 @@ PropRefGroup::~PropRefGroup()
 
 void PropRefGroup::setModel(TreeXmlHashModel *model)
 {
-    m_model = model;
+    AbstractPropEditor::setModel(model);
 
-    connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
+    connect(model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
             this,SLOT(rowsRemoved(QModelIndex,int,int)));
-    m_mapper->setModel(m_model);
+    m_mapper->setModel(model);
 
     m_mapper->addMapping(lineEditRefGroupName,
                          model->columnDisplayedAttr(DBREFGROUPXML::REFGROUP,
@@ -56,11 +56,6 @@ void PropRefGroup::setModel(TreeXmlHashModel *model)
     m_mapper->addMapping(lineEditRefGroupDesc,
                          model->columnDisplayedAttr(DBREFGROUPXML::REFGROUP,
                                                     DBREFGROUPXML::DESCRIPTION));
-}
-
-TreeXmlHashModel *PropRefGroup::model()
-{
-    return m_model;
 }
 
 bool PropRefGroup::isRemove(const QModelIndex &srcIndex)
@@ -96,11 +91,11 @@ bool PropRefGroup::isEmpty()
 
 void PropRefGroup::add()
 {
-    m_oldIndex =  m_model->index(m_mapper->currentIndex(),
+    m_oldIndex =  model()->index(m_mapper->currentIndex(),
                                  0,m_mapper->rootIndex());
     QModelIndex srcIndex = m_oldIndex.parent();
     QModelIndex srcCurrentIndex =
-            m_model->insertLastRows(0,1,srcIndex,DBREFGROUPXML::REFGROUP);
+            model()->insertLastRows(0,1,srcIndex,DBREFGROUPXML::REFGROUP);
     if (srcCurrentIndex.isValid()) {
         setCurrent(srcCurrentIndex);
         edit(true);
@@ -109,7 +104,7 @@ void PropRefGroup::add()
 
 void PropRefGroup::remove()
 {
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+    QModelIndex srcIndex = model()->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
 
     if (!isRemove(srcIndex))
         return;
@@ -117,7 +112,7 @@ void PropRefGroup::remove()
     m_mapper->revert();
     setCurrent(srcIndex.parent());
 
-    m_model->removeRow(srcIndex.row(),srcIndex.parent());
+    model()->removeRow(srcIndex.row(),srcIndex.parent());
     emit dataRemoved(srcIndex);
 }
 
@@ -125,10 +120,10 @@ bool PropRefGroup::removeEmpty()
 {
     if (isEmpty()){
         if (m_oldIndex.isValid()){
-            QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+            QModelIndex srcIndex = model()->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
             m_mapper->revert();
             setCurrent(m_oldIndex);
-            m_model->removeRow(srcIndex.row(),srcIndex.parent());
+            model()->removeRow(srcIndex.row(),srcIndex.parent());
             m_oldIndex = QModelIndex();
         }else {
             remove();    
@@ -163,14 +158,6 @@ void PropRefGroup::setTabName(const QModelIndex &index)
     subWindow->setWindowTitle(refGroupName);
 }
 
-void PropRefGroup::closeTab(const QModelIndex &index)
-{
-    Q_UNUSED(index);
-
-    QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
-    subWindow->close();
-}
-
 void PropRefGroup::edit(bool flag)
 {
 
@@ -193,11 +180,11 @@ void PropRefGroup::edit(bool flag)
 
 void PropRefGroup::submit()
 {
-    QModelIndex existIndex = m_model->indexHashAttr(
+    QModelIndex existIndex = model()->indexHashAttr(
                 DBREFGROUPXML::REFGROUP,
                 DBREFGROUPXML::NAME,
                 lineEditRefGroupName->text());
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+    QModelIndex srcIndex = model()->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
 
     if (existIndex.isValid()){
         if (existIndex.sibling(existIndex.row(),0)!=srcIndex){
@@ -216,7 +203,7 @@ void PropRefGroup::submit()
 void PropRefGroup::revert()
 {
     m_mapper->revert();
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+    QModelIndex srcIndex = model()->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
     setCurrent(srcIndex);
     edit(false);
     removeEmpty();
@@ -228,12 +215,6 @@ void PropRefGroup::rowsRemoved(const QModelIndex &index, int start, int end)
     Q_UNUSED (end)
     if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1)
         emit dataRemoved(QModelIndex());
-}
-
-QVariant PropRefGroup::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
-{
-    return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                      tag,attr)).data();
 }
 
 }}

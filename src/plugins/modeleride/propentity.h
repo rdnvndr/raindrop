@@ -1,11 +1,14 @@
 #ifndef PROPENTITY_H
 #define PROPENTITY_H
 
-#include "ui_propentity.h"
-#include <treexmlmodel/treexmlhashmodel.h>
-#include <treexmlmodel/tablexmlproxymodel.h>
 #include <QDataWidgetMapper>
 #include <QStringListModel>
+
+#include <treexmlmodel/treexmlhashmodel.h>
+#include <treexmlmodel/tablexmlproxymodel.h>
+
+#include "ui_propentity.h"
+#include "abstractpropeditor.h"
 
 namespace RTPTechGroup {
 namespace ModelerIde {
@@ -14,7 +17,7 @@ namespace ModelerIde {
 /*! Диалог предназначен для редактирования сущности единицы измерения
 */
 
-class PropEntity : public QWidget, private Ui::PropEntity
+class PropEntity : public AbstractPropEditor, private Ui::PropEntity
 {
     Q_OBJECT
 
@@ -28,9 +31,6 @@ public:
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
 
-    //! Получение модели структуры классов
-    TreeXmlHashModel* model();
-
 public slots:
     //! Установка текущей сущности единицы измерения
     void setCurrent(const QModelIndex &index);
@@ -38,18 +38,8 @@ public slots:
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);
 
-    //! Закрытие вкладки/подокна
-    void closeTab(const QModelIndex &index);
-
     //! Перевод сущности ЕИ в режим редактирования
     void edit(bool flag);
-
-private:
-    //! Получение данных модели
-    QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
-
-    //! Модель структуры классов
-    TreeXmlHashModel* m_model;
 };
 
 }}
