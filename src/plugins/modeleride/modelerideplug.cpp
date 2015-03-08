@@ -411,9 +411,10 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource)
             propEditor = qobject_cast<AbstractPropEditor*>(new PropRef());
         } else return;
 
-        propEditor->setTabName(indexSource);
+
         propEditor->setModel(m_model);
         subWindow =  mainWindow->addSubWindow(propEditor);
+        propEditor->setTabName(indexSource);
     } else
         propEditor = qobject_cast<AbstractPropEditor*>(subWindow->widget());
 
