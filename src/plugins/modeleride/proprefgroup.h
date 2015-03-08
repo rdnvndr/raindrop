@@ -1,11 +1,13 @@
 #ifndef PROPREFGROUP_H
 #define PROPREFGROUP_H
 
-#include <treexmlmodel/treexmlhashmodel.h>
-#include <treexmlmodel/tablexmlproxymodel.h>
 #include <QDataWidgetMapper>
 
+#include <treexmlmodel/treexmlhashmodel.h>
+#include <treexmlmodel/tablexmlproxymodel.h>
+
 #include "ui_proprefgroup.h"
+#include "abstractpropeditor.h"
 
 namespace RTPTechGroup {
 namespace ModelerIde {
@@ -16,7 +18,7 @@ using namespace RTPTechGroup::XmlModel;
 /*! Диалог предназначен для редактирования группы справочника
 */
 
-class PropRefGroup : public QWidget, private Ui::PropRefGroup
+class PropRefGroup : public AbstractPropEditor, private Ui::PropRefGroup
 {
     Q_OBJECT
 
@@ -27,12 +29,8 @@ public:
     //! Деструктор диалога редактирования группы справочника
     virtual ~PropRefGroup();
 
-
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
-
-    //! Получение модели структуры классов
-    TreeXmlHashModel* model();
 
     //! Проверка на возможность удаления группы справочника
     static bool isRemove(const QModelIndex &srcIndex);
@@ -70,9 +68,6 @@ public slots:
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);
 
-    //! Закрытие вкладки/подокна
-    void closeTab(const QModelIndex &index);
-
     //! Перевод группы справочника в режим редактирования
     void edit(bool flag = true);
 
@@ -86,12 +81,6 @@ public slots:
     void rowsRemoved(const QModelIndex &index,int start,int end);
 
 private:
-    //! Получение данных модели
-    QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
-
-    //! Модель структуры классов
-    TreeXmlHashModel* m_model;
-
     //! Mapper для свойств группы справочника
     QDataWidgetMapper* m_mapper;
 

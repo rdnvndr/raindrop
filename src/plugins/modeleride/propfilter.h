@@ -2,6 +2,7 @@
 #define PROPFILTER_H
 
 #include "ui_propfilter.h"
+#include "abstractpropeditor.h"
 
 namespace RTPTechGroup {
 namespace ModelerIde {
@@ -10,7 +11,7 @@ namespace ModelerIde {
 /*! Диалог предназначен для редактирования фильтра
 */
 
-class PropFilter : public QWidget, private Ui::PropFilter
+class PropFilter : public AbstractPropEditor, private Ui::PropFilter
 {
     Q_OBJECT
     
@@ -24,9 +25,6 @@ public:
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
 
-    //! Получение модели структуры классов
-    TreeXmlHashModel* model();
-
 public slots:
     //! Установка текущего класса
     void setCurrent(const QModelIndex &index);
@@ -34,15 +32,8 @@ public slots:
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);
 
-    //! Закрытие вкладки/подокна
-    void closeTab(const QModelIndex &index = QModelIndex());
-
-private:
-    //! Получение данных модели
-    QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
-
-    //! Модель структуры классов
-    TreeXmlHashModel* m_model;
+    //! Перевод в режим редактирования
+    void edit(bool flag  = true);
 };
 
 }}

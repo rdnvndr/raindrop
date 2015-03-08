@@ -1,10 +1,13 @@
 #ifndef PROPENTITYGROUP_H
 #define PROPENTITYGROUP_H
 
+#include <QDataWidgetMapper>
+
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/tablexmlproxymodel.h>
-#include <QDataWidgetMapper>
+
 #include "ui_propentitygroup.h"
+#include "abstractpropeditor.h"
 
 using namespace RTPTechGroup::XmlModel;
 
@@ -14,7 +17,7 @@ namespace ModelerIde {
 //! Диалог редактирования группы сущности ЕИ
 /*! Диалог предназначен для редактирования группы сущности ЕИ
 */
-class PropEntityGroup : public QWidget, private Ui::PropEntityGroup
+class PropEntityGroup : public AbstractPropEditor, private Ui::PropEntityGroup
 {
     Q_OBJECT
 
@@ -27,9 +30,6 @@ public:
 
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
-
-    //! Получение модели структуры классов
-    TreeXmlHashModel* model();
 
     //! Проверка на возможность удаления группы сущности ЕИ
     static bool isRemove(const QModelIndex &srcIndex);
@@ -67,9 +67,6 @@ public slots:
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);
 
-    //! Закрытие вкладки/подокна
-    void closeTab(const QModelIndex &index);
-
     //! Перевод группы сущности ЕИ в режим редактирования
     void edit(bool flag = true);
 
@@ -83,11 +80,6 @@ public slots:
     void rowsRemoved(const QModelIndex &index,int start,int end);
 
 private:
-    //! Получение данных модели
-    QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
-
-    //! Модель структуры классов
-    TreeXmlHashModel* m_model;
 
     //! Mapper для свойств группы сущности ЕИ
     QDataWidgetMapper* m_mapper;

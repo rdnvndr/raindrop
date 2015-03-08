@@ -48,7 +48,9 @@ HEADERS += modelerideplug.h \
     refitemwidget.h \
     refitemdelegate.h \
     refproxymodel.h \
-    attrgroupproxymodel.h
+    attrgroupproxymodel.h \
+    abstractpropeditor.h \
+    abstracteditorwidget.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -78,7 +80,9 @@ SOURCES += modelerideplug.cpp \
     refitemwidget.cpp \
     refitemdelegate.cpp \
     refproxymodel.cpp \
-    attrgroupproxymodel.cpp
+    attrgroupproxymodel.cpp \
+    abstractpropeditor.cpp \
+    abstracteditorwidget.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
