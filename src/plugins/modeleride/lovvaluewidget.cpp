@@ -146,28 +146,6 @@ void LovValueWidget::add()
     if (index.isValid()) {
         m_lovValueModel->setData(index, DBLOVVALUEXML::LOVVALUE, TreeXmlModel::TagRole);
         m_lovValueModel->setData(index, QIcon(":/lovvalue"), Qt::DecorationRole);
-//        m_lovValueModel->setData(index.sibling(
-//                                 index.row(),
-//                                 m_model->columnDisplayedAttr(
-//                                     DBUNITXML::UNIT,
-//                                     DBUNITXML::COEFF)
-//                                 ),
-//                             1);
-//        m_lovValueModel->setData(index.sibling(
-//                                 index.row(),
-//                                 m_model->columnDisplayedAttr(
-//                                     DBUNITXML::UNIT,
-//                                     DBUNITXML::DELTA)
-//                                 ),
-//                             0);
-//        m_lovValueModel->setData(index.sibling(
-//                                 index.row(),
-//                                 m_model->columnDisplayedAttr(
-//                                     DBUNITXML::UNIT,
-//                                     DBUNITXML::CODE)
-//                                 ),
-//                             0);
-
         tableViewLovValue->setCurrentIndex(index);
         edit(true);
     }
