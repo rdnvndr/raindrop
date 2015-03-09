@@ -37,7 +37,6 @@ class ModelerIDEPlug:
 public:
 
 // IPlugin
-
     //! Получение имени плагина
     QString name() {return tr(APP_NAME);};
 
@@ -84,37 +83,6 @@ public:
     //! Получение индетификатора по индексу
     QString dataId(const QModelIndex &index);
 
-private:
-    //! Имя файла структуры
-    QString m_fileName;
-
-    //! Модель дерева классов
-    ClassModelXml* m_model;
-
-    //! Дерево классов
-    ClassTreeView* treeClassView;
-
-    //! Команда создания структуры классов
-    QAction* actionNewModel;
-
-    //! Команда сохранения структуры классов
-    QAction* actionSaveModel;
-
-    //! Команда сохранения структуры классов как...
-    QAction* actionSaveAsModel;
-
-    //! Команда открытия структуры классов
-    QAction* actionOpenModel;
-
-    //! Команда публикации структуры классов в БД
-    QAction* actionPublishModel;
-
-    //! Команда закрытия структуры классов
-    QAction* actionCloseModel;
-
-    //! Стыковый компонент для модели метаданных
-    DockWidget *dockWidget;
-
 public slots:
     //! Слот вызова окна редактирования
     void showPropEditor(const QModelIndex &indexSource);
@@ -148,6 +116,37 @@ public slots:
 
     //! Устанавливает активность QAction "Сохранить модель"
     void actionSaveEnable();
+
+private:
+    //! Имя файла структуры
+    QString m_fileName;
+
+    //! Модель дерева классов
+    ClassModelXml* m_model;
+
+    //! Дерево классов
+    ClassTreeView* m_treeClassView;
+
+    //! Команда создания структуры классов
+    QAction* m_actionNewModel;
+
+    //! Команда сохранения структуры классов
+    QAction* m_actionSaveModel;
+
+    //! Команда сохранения структуры классов как...
+    QAction* m_actionSaveAsModel;
+
+    //! Команда открытия структуры классов
+    QAction* m_actionOpenModel;
+
+    //! Команда публикации структуры классов в БД
+    QAction* m_actionPublishModel;
+
+    //! Команда закрытия структуры классов
+    QAction* m_actionCloseModel;
+
+    //! Стыковый компонент для модели метаданных
+    DockWidget *m_dockWidget;
 };
 
 }}
