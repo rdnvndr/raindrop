@@ -9,6 +9,8 @@ using namespace RTPTechGroup::XmlModel;
 namespace RTPTechGroup {
 namespace ModelerIde {
 
+//! Общее описание диалога редактирования объекта дерева класса
+
 class AbstractPropEditor: public QWidget
 {
     Q_OBJECT
