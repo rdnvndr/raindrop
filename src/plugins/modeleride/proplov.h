@@ -1,8 +1,10 @@
 #ifndef PROPLOV_H
 #define PROPLOV_H
 
-#include "ui_proplov.h"
 #include <treexmlmodel/treexmlhashmodel.h>
+
+#include "ui_proplov.h"
+#include "abstractpropeditor.h"
 
 namespace RTPTechGroup {
 namespace ModelerIde {
@@ -11,7 +13,7 @@ namespace ModelerIde {
 /*! Диалог предназначен для редактирования списка значений
 */
 
-class PropLov : public QWidget, private Ui::PropLov
+class PropLov : public AbstractPropEditor, private Ui::PropLov
 {
     Q_OBJECT
 
@@ -25,28 +27,15 @@ public:
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
 
-    //! Получение модели структуры классов
-    TreeXmlHashModel* model();
-
 public slots:
     //! Установка текущего списка значений
-    void setCurrentLov(const QModelIndex &index);
+    void setCurrent(const QModelIndex &index);
 
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);
 
-    //! Закрытие вкладки/подокна
-    void closeTab(const QModelIndex &index);
-
     //! Перевод списка значений в режим редактирования
     void edit(bool flag);
-
-private:
-    //! Получение данных модели
-    QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
-
-    //! Модель структуры классов
-    TreeXmlHashModel* m_model;
 };
 
 }}

@@ -16,8 +16,6 @@ namespace ModelerIde {
 
 class XmlDelegate : public QStyledItemDelegate
 {
-
-
     Q_OBJECT
 public:
     //! Конструктор модели

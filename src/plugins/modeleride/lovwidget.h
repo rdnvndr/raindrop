@@ -2,9 +2,13 @@
 #define LOVWIDGET_H
 
 #include "ui_lovwidget.h"
-#include "treexmlmodel/treexmlhashmodel.h"
+
 #include <QDataWidgetMapper>
 #include <QStringListModel>
+
+#include "treexmlmodel/treexmlhashmodel.h"
+
+#include "abstracteditorwidget.h"
 
 using namespace RTPTechGroup::XmlModel;
 
@@ -15,7 +19,7 @@ namespace ModelerIde {
 /*! Диалог предназначен для редактирования списка значений
 */
 
-class LovWidget : public QWidget, private Ui::LovWidget
+class LovWidget : public AbstractEditorWidget, private Ui::LovWidget
 {
     Q_OBJECT
 
@@ -30,7 +34,7 @@ public:
     void setModel(TreeXmlHashModel *model);
 
     //! Проверка на возможность удаления списка значений
-    static bool isRemove(const QModelIndex &srcIndex);
+    bool isRemove(const QModelIndex &srcIndex);
 
     //! Проверка запонено ли имя списка значений
     bool isEmpty();
@@ -38,12 +42,6 @@ public:
 public slots:
     //! Добавление списка значений
     void add();
-
-    //! Удаление списка значений
-    void remove();
-
-    //! Удаление пустого списка значений
-    bool removeEmpty();
 
     //! Установка текущего списка значений
     void setCurrent(const QModelIndex &index);
@@ -54,42 +52,14 @@ public slots:
     //! Применение изменений списка значений
     void submit();
 
-    //! Отмена изменений списка значений
-    void revert();
-
-    //! Удаление списка значений
-    void rowsRemoved(const QModelIndex &index,int start,int end);
-
     //! Сообщение о неверном имени списка значений
     void validateLovName(QValidator::State state) const;
 
 signals:
-    //! Сигнал об изменении данных
-    void dataChanged(const QModelIndex &index);
-
-    //! Сигнал об удалении данных
-    void dataRemoved(const QModelIndex &index);
-
-    //! Сигнал об изменении текущего списка значений
-    void currentIndexChanged(const QModelIndex &index);
-
     //! Сигнал о редактировании списка значений
     void edited(bool flag);
 
 private:
-    //! Получение данных модели
-    QVariant modelData(const QString &tag, const QString &attr,
-                       const QModelIndex &index, int role = Qt::DisplayRole);
-
-    //! Модель структуры классов
-    TreeXmlHashModel* m_model;
-
-    //! Mapper для свойств списка значений
-    QDataWidgetMapper* m_mapper;
-
-    //! Хранит индекс предыдущего активного списка значений
-    QPersistentModelIndex  m_oldIndex;
-
     //! Список типов значений
     QStringListModel *m_typeAttrModel;
 };

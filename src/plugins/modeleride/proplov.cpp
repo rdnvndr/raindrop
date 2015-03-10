@@ -9,7 +9,7 @@ namespace RTPTechGroup {
 namespace ModelerIde {
 
 PropLov::PropLov(QWidget *parent) :
-    QWidget(parent)
+    AbstractPropEditor(parent)
 {
     setupUi(this);
 
@@ -46,15 +46,10 @@ void PropLov::setModel(TreeXmlHashModel *model)
     lovWidget->setModel(model);
     lovValueWidget->setModel(model);
 
-    m_model = model;
+    AbstractPropEditor::setModel(model);
 }
 
-TreeXmlHashModel *PropLov::model()
-{
-    return m_model;
-}
-
-void PropLov::setCurrentLov(const QModelIndex &index)
+void PropLov::setCurrent(const QModelIndex &index)
 {
     lovWidget->setCurrent(index);
 }
@@ -69,20 +64,6 @@ void PropLov::setTabName(const QModelIndex &index)
     this->setObjectName("PropLov::" + id);
     subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));
     subWindow->setWindowTitle(lovName);
-}
-
-void PropLov::closeTab(const QModelIndex &index)
-{
-    Q_UNUSED(index);
-
-    QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
-    subWindow->close();
-}
-
-QVariant PropLov::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
-{
-    return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                      tag,attr)).data();
 }
 
 void PropLov::edit(bool flag)
