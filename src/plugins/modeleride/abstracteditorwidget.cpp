@@ -44,8 +44,8 @@ bool AbstractEditorWidget::add(const QString &tag)
                                 0,m_mapper->rootIndex());
     QModelIndex srcIndex =  m_oldIndex.parent();
 
-    QModelIndex srcCurrentIndex = m_model->insertLastRows(0, 1, srcIndex,
-                                                          tag);
+    QModelIndex srcCurrentIndex
+            = m_model->insertLastRows(0, 1, srcIndex, tag);
     if (srcCurrentIndex.isValid()) {
         setCurrent(srcCurrentIndex);
         edit(true);
