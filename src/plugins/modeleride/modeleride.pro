@@ -32,8 +32,6 @@ HEADERS += modelerideplug.h \
     filterpropwidget.h \
     conditionproxymodel.h \
     conditiondelegate.h \
-    msrunitwidget.h \
-    msrentitywidget.h \
     propentity.h \
     regexpvalidator.h \
     propentitygroup.h \
@@ -51,7 +49,9 @@ HEADERS += modelerideplug.h \
     attrgroupproxymodel.h \
     abstractpropeditor.h \
     abstracteditorwidget.h \
-    refgroupwidget.h
+    refgroupwidget.h \
+    entitywidget.h \
+    unitwidget.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -65,8 +65,6 @@ SOURCES += modelerideplug.cpp \
     filterpropwidget.cpp \
     conditionproxymodel.cpp \
     conditiondelegate.cpp \
-    msrunitwidget.cpp \
-    msrentitywidget.cpp \
     propentity.cpp \
     regexpvalidator.cpp \
     propentitygroup.cpp \
@@ -84,7 +82,9 @@ SOURCES += modelerideplug.cpp \
     attrgroupproxymodel.cpp \
     abstractpropeditor.cpp \
     abstracteditorwidget.cpp \
-    refgroupwidget.cpp
+    refgroupwidget.cpp \
+    entitywidget.cpp \
+    unitwidget.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
@@ -96,8 +96,6 @@ FORMS += \
     filterwidget.ui \
     propfilter.ui \
     filterpropwidget.ui \
-    msrunitwidget.ui \
-    msrentitywidget.ui \
     propentity.ui \
     propentitygroup.ui \
     lovwidget.ui \
@@ -107,4 +105,6 @@ FORMS += \
     propref.ui \
     refwidget.ui \
     refitemwidget.ui \
-    refgroupwidget.ui
+    refgroupwidget.ui \
+    entitywidget.ui \
+    unitwidget.ui
