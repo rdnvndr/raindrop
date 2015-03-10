@@ -38,7 +38,7 @@ QDataWidgetMapper *AbstractEditorWidget::dataMapper()
     return m_mapper;
 }
 
-void AbstractEditorWidget::add(const QString &tag)
+bool AbstractEditorWidget::add(const QString &tag)
 {
     m_oldIndex = m_model->index(m_mapper->currentIndex(),
                                 0,m_mapper->rootIndex());
@@ -49,7 +49,11 @@ void AbstractEditorWidget::add(const QString &tag)
     if (srcCurrentIndex.isValid()) {
         setCurrent(srcCurrentIndex);
         edit(true);
+
+        return true;
     }
+
+    return false;
 }
 
 void AbstractEditorWidget::remove()

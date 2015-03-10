@@ -42,7 +42,7 @@ public:
 
 public slots:
     //! Добавление строки
-    virtual void add(const QString &tag);
+    virtual bool add(const QString &tag);
 
     //! Удаление строки
     virtual void remove();

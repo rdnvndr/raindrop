@@ -1,8 +1,9 @@
 #include "classwidget.h"
+
+#include <QToolTip>
+
 #include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
-#include <QStringListModel>
-#include <QToolTip>
 #include "regexpvalidator.h"
 
 using namespace RTPTechGroup::MetaDataModel;
@@ -11,7 +12,7 @@ namespace RTPTechGroup {
 namespace ModelerIde {
 
 ClassWidget::ClassWidget(QWidget *parent) :
-    QWidget(parent)
+    AbstractEditorWidget(parent)
 {
     setupUi(this);
 
@@ -20,10 +21,6 @@ ClassWidget::ClassWidget(QWidget *parent) :
     lineEditClassName->setValidator(validator);
     connect(validator,SIGNAL(stateChanged(QValidator::State)),
             this,SLOT(validateClassName(QValidator::State)));
-
-    m_mapper = new QDataWidgetMapper();
-    m_mapper->setItemDelegate(new XmlDelegate(this));
-    m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
     m_typeClassModel = new QStringListModel();
     const QStringList classType = (QStringList()
@@ -40,75 +37,62 @@ ClassWidget::ClassWidget(QWidget *parent) :
     connect(pushButtonPropSave,SIGNAL(clicked()),this,SLOT(submit()));
     connect(pushButtonPropCancel,SIGNAL(clicked()),this,SLOT(revert()));
     connect(toolButtonEditClass,SIGNAL(clicked()),this,SLOT(edit()));
-    m_oldIndex = QModelIndex();
 }
 
 ClassWidget::~ClassWidget()
 {
     delete lineEditClassName->validator();
     delete m_typeClassModel;
-    delete m_mapper;
 }
 
 void ClassWidget::setModel(TreeXmlHashModel *model)
 {
-    m_model = model;
-    connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
-            this,SLOT(rowsRemoved(QModelIndex,int,int)));
-    m_mapper->setModel(m_model);
+    AbstractEditorWidget::setModel(model);
 
     comboBoxClassType->setModel(m_typeClassModel);
 
-    m_mapper->addMapping(lineEditClassName,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::NAME));
-    m_mapper->addMapping(lineEditClassAlias,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::ALIAS));
+    dataMapper()->addMapping(lineEditClassName,
+                             model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                        DBCLASSXML::NAME));
+    dataMapper()->addMapping(lineEditClassAlias,
+                             model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                        DBCLASSXML::ALIAS));
 
-    m_mapper->addMapping(comboBoxClassType,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::TYPE));
+    dataMapper()->addMapping(comboBoxClassType,
+                             model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                        DBCLASSXML::TYPE));
 
-    m_mapper->addMapping(lineEditClassParent,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::PARENT));
+    dataMapper()->addMapping(lineEditClassParent,
+                             model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                        DBCLASSXML::PARENT));
 
-    m_mapper->addMapping(checkBoxAbsClass,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::ISABSTARCT));
-    m_mapper->addMapping(checkBoxActiveClass,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::ISACTIVE));
+    dataMapper()->addMapping(checkBoxAbsClass,
+                             model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                        DBCLASSXML::ISABSTARCT));
+    dataMapper()->addMapping(checkBoxActiveClass,
+                             model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                        DBCLASSXML::ISACTIVE));
 
-    m_mapper->addMapping(checkBoxContextClass,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::ISCONTEXT));
+    dataMapper()->addMapping(checkBoxContextClass,
+                             model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                        DBCLASSXML::ISCONTEXT));
 
-    m_mapper->addMapping(plainTextEditShowAttr,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                   DBCLASSXML::TEMPLATE));
-    m_mapper->addMapping(pushButtonIcon,
-                         model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                    DBCLASSXML::ICON));
+    dataMapper()->addMapping(plainTextEditShowAttr,
+                             model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                        DBCLASSXML::TEMPLATE));
+    dataMapper()->addMapping(pushButtonIcon,
+                             model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                        DBCLASSXML::ICON));
 }
 
 void ClassWidget::add()
 {
-    m_oldIndex = m_model->index(m_mapper->currentIndex(),
-                                0,m_mapper->rootIndex());
-    QModelIndex srcIndex =  m_oldIndex.parent();
-    QModelIndex srcCurrentIndex =
-            m_model->insertLastRows(0,1,srcIndex,DBCLASSXML::CLASS);
-    if (srcCurrentIndex.isValid()){
-        setCurrent(srcCurrentIndex);
+    if (AbstractEditorWidget::add(DBCLASSXML::CLASS))
         comboBoxClassType->setCurrentIndex(0);
-        edit(true);
-    }
 }
 
 // Метод совпадает с bool ModelerIDEPlug::isRemoveClass(const QModelIndex &srcIndex)
-bool ClassWidget::isRemove(QModelIndex srcIndex)
+bool ClassWidget::isRemove(const QModelIndex &srcIndex)
 {
     const TreeXmlHashModel *model = dynamic_cast<const TreeXmlHashModel *>(srcIndex.model());
     if (!model)
@@ -218,35 +202,13 @@ bool ClassWidget::isRemove(QModelIndex srcIndex)
     return success;
 }
 
-void ClassWidget::remove()
-{
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
-
-    if (!isRemove(srcIndex))
-        return;
-
-    m_mapper->revert();
-
-    QModelIndex index = srcIndex.parent();
-    m_mapper->setRootIndex(index.parent());
-    m_mapper->setCurrentModelIndex(index);
-
-    m_model->removeRow(srcIndex.row(),srcIndex.parent());
-    emit dataRemoved(srcIndex);
-}
-
-
 void ClassWidget::setCurrent(const QModelIndex &index)
 {
-    m_mapper->setRootIndex(index.parent());
-    emit currentIndexChanged(index);
-    m_mapper->setCurrentModelIndex(index);
-
+    AbstractEditorWidget::setCurrent(index);
     int indexType = comboBoxClassType->findText(modelData(DBCLASSXML::CLASS,
                                                           DBCLASSXML::TYPE,
                                                           index).toString());
     comboBoxClassType->setCurrentIndex(indexType);
-    edit(false);
 }
 
 bool ClassWidget::isEdit()
@@ -271,12 +233,18 @@ void ClassWidget::edit(bool flag)
     toolButtonEditClass->setDisabled(flag);
 }
 
+bool ClassWidget::isEmpty()
+{
+    return lineEditClassName->text().isEmpty();
+}
+
 void ClassWidget::submit()
 {
-    QModelIndex existIndex = m_model->indexHashAttr(DBCLASSXML::CLASS,
+    QModelIndex existIndex = model()->indexHashAttr(DBCLASSXML::CLASS,
                                                      DBCLASSXML::NAME,
                                                      lineEditClassName->text());
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+    QModelIndex srcIndex = model()->index(dataMapper()->currentIndex(),0,
+                                          dataMapper()->rootIndex());
 
     if (existIndex.isValid()){
         if (existIndex.sibling(existIndex.row(),0)!=srcIndex){
@@ -286,25 +254,7 @@ void ClassWidget::submit()
         }
     }
 
-    m_mapper->submit();
-    edit(false);
-    if (!removeEmpty())
-        emit dataChanged(srcIndex);
-}
-
-void ClassWidget::revert()
-{
-    m_mapper->revert();
-    edit(false);
-    removeEmpty();
-}
-
-void ClassWidget::rowsRemoved(const QModelIndex &index, int start, int end)
-{
-    Q_UNUSED (start)
-    Q_UNUSED (end)
-    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1)
-        emit dataRemoved(QModelIndex());
+    AbstractEditorWidget::submit();
 }
 
 void ClassWidget::validateClassName(QValidator::State state) const
@@ -316,29 +266,6 @@ void ClassWidget::validateClassName(QValidator::State state) const
                               "символы и цифры длиной не более 27 символов"));
     else
         QToolTip::hideText();
-}
-
-QVariant ClassWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
-{
-    return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                             tag,attr)).data();
-}
-
-bool ClassWidget::removeEmpty()
-{
-    if (lineEditClassName->text().isEmpty()){
-        if (m_oldIndex.isValid()){
-            QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
-            m_mapper->revert();
-            setCurrent(m_oldIndex);
-            m_model->removeRow(srcIndex.row(),srcIndex.parent());
-            m_oldIndex = QModelIndex();
-        }else {
-            remove();
-        }
-        return true;
-    }
-    return false;
 }
 
 }}
