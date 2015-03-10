@@ -1,5 +1,7 @@
 #include "abstracteditorwidget.h"
 
+#include "xmldelegate.h"
+
 namespace RTPTechGroup {
 namespace ModelerIde {
 
@@ -7,6 +9,7 @@ AbstractEditorWidget::AbstractEditorWidget(QWidget *parent)
     :QWidget(parent)
 {
     m_mapper = new QDataWidgetMapper();
+    m_mapper->setItemDelegate(new XmlDelegate(this));
     m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
     m_oldIndex = QModelIndex();
@@ -106,6 +109,15 @@ void AbstractEditorWidget::revert()
     setCurrent(srcIndex);
     edit(false);
     removeEmpty();
+}
+
+void AbstractEditorWidget::rowsRemoved(const QModelIndex &index, int start, int end)
+{
+    Q_UNUSED(start)
+    Q_UNUSED(end)
+
+    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1 && !m_oldIndex.isValid())
+        emit dataRemoved(QModelIndex());
 }
 
 QVariant AbstractEditorWidget::modelData(const QString &tag, const QString &attr,
