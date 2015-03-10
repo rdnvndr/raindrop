@@ -9,49 +9,38 @@ namespace RTPTechGroup {
 namespace ModelerIde {
 
 MsrEntityWidget::MsrEntityWidget(QWidget *parent) :
-    QWidget(parent)
+    AbstractEditorWidget(parent)
 {
     setupUi(this);
 
-    m_mapper = new QDataWidgetMapper();
-    m_mapper->setItemDelegate(new XmlDelegate(this));
-    m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-
     connect(comboBoxBasicUnit, SIGNAL(activated(int)),
             this, SLOT(changeUnit(int)));
-
-    m_oldIndex = QModelIndex();
 }
 
 MsrEntityWidget::~MsrEntityWidget()
 {
-    delete m_mapper;
+
 }
 
 void MsrEntityWidget::setModel(TreeXmlHashModel *model)
 {
-    m_model = model;
+    AbstractEditorWidget::setModel(model);
 
-    connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
-            this,SLOT(rowsRemoved(QModelIndex,int,int)));
-
-    connect(m_model,SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
+    connect(model,SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
             this,SLOT(rowsAboutToBeRemoved(QModelIndex,int,int)));
 
-    m_mapper->setModel(m_model);
-
-    m_mapper->addMapping(lineEditEntityName,
-                         model->columnDisplayedAttr(DBENTITYXML::ENTITY,
-                                                   DBENTITYXML::NAME));
-    m_mapper->addMapping(lineEditEntityDesc,
-                         model->columnDisplayedAttr(DBENTITYXML::ENTITY,
-                                                   DBENTITYXML::DESCRIPTION));
-    m_mapper->addMapping(lineEditDimensionSymbol,
-                         model->columnDisplayedAttr(DBENTITYXML::ENTITY,
-                                                    DBENTITYXML::DIMENSIONSYMBOL));
-    m_mapper->addMapping(comboBoxBasicUnit,
-                         model->columnDisplayedAttr(DBENTITYXML::ENTITY,
-                                                    DBENTITYXML::BASICUNIT));
+    dataMapper()->addMapping(lineEditEntityName,
+                             model->columnDisplayedAttr(DBENTITYXML::ENTITY,
+                                                        DBENTITYXML::NAME));
+    dataMapper()->addMapping(lineEditEntityDesc,
+                             model->columnDisplayedAttr(DBENTITYXML::ENTITY,
+                                                        DBENTITYXML::DESCRIPTION));
+    dataMapper()->addMapping(lineEditDimensionSymbol,
+                             model->columnDisplayedAttr(DBENTITYXML::ENTITY,
+                                                        DBENTITYXML::DIMENSIONSYMBOL));
+    dataMapper()->addMapping(comboBoxBasicUnit,
+                             model->columnDisplayedAttr(DBENTITYXML::ENTITY,
+                                                        DBENTITYXML::BASICUNIT));
 
 }
 
@@ -88,55 +77,7 @@ bool MsrEntityWidget::isEmpty()
 
 void MsrEntityWidget::add()
 {
-    m_oldIndex = m_model->index(m_mapper->currentIndex(),
-                                            0,m_mapper->rootIndex());
-    QModelIndex srcIndex =  m_oldIndex.parent();
-    QModelIndex srcCurrentIndex =
-            m_model->insertLastRows(0,1,srcIndex,DBENTITYXML::ENTITY);
-    if (srcCurrentIndex.isValid()) {
-        setCurrent(srcCurrentIndex);
-        edit(true);
-    }
-}
-
-void MsrEntityWidget::remove()
-{
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
-
-    if (!isRemove(srcIndex))
-        return;
-
-    m_mapper->revert();
-    setCurrent(srcIndex.parent());
-
-    m_model->removeRow(srcIndex.row(),srcIndex.parent());
-    emit dataRemoved(srcIndex);
-}
-
-bool MsrEntityWidget::removeEmpty()
-{
-    if (lineEditEntityName->text().isEmpty()){
-        if (m_oldIndex.isValid()){
-            QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
-            m_mapper->revert();
-            setCurrent(m_oldIndex);
-            m_model->removeRow(srcIndex.row(),srcIndex.parent());
-            m_oldIndex = QModelIndex();
-        } else {
-            remove();
-        }
-        return true;
-    }
-    return false;
-}
-
-void MsrEntityWidget::setCurrent(const QModelIndex &index)
-{
-    m_mapper->setRootIndex(index.parent());
-    emit currentIndexChanged(index);
-    m_mapper->setCurrentModelIndex(index);
-
-    edit(false);
+    AbstractEditorWidget::add(DBENTITYXML::ENTITY);
 }
 
 void MsrEntityWidget::edit(bool flag)
@@ -149,10 +90,11 @@ void MsrEntityWidget::edit(bool flag)
 
 void MsrEntityWidget::submit()
 {
-    QModelIndex existIndex = m_model->indexHashAttr(DBENTITYXML::ENTITY,
+    QModelIndex existIndex = model()->indexHashAttr(DBENTITYXML::ENTITY,
                                                      DBENTITYXML::NAME,
                                                      lineEditEntityName->text());
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+    QModelIndex srcIndex = model()->index(dataMapper()->currentIndex(),0,
+                                          dataMapper()->rootIndex());
 
     if (existIndex.isValid()){
         if (existIndex.sibling(existIndex.row(),0)!=srcIndex){
@@ -162,26 +104,7 @@ void MsrEntityWidget::submit()
         }
     }
 
-    m_mapper->submit();
-    edit(false);
-
-    if (!removeEmpty())
-        emit dataChanged(srcIndex);
-}
-
-void MsrEntityWidget::revert()
-{
-    m_mapper->revert();
-    edit(false);
-    removeEmpty();   
-}
-
-void MsrEntityWidget::rowsRemoved(const QModelIndex &index, int start, int end)
-{
-    Q_UNUSED (start)
-    Q_UNUSED (end)
-    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1)
-        emit dataRemoved(QModelIndex());
+    AbstractEditorWidget::submit();
 }
 
 void MsrEntityWidget::rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end)
@@ -223,10 +146,10 @@ void MsrEntityWidget::changeUnit(int current)
     QAbstractItemModel *model = comboBoxBasicUnit->model();
 
     int count  = parent.model()->rowCount(parent);
-    int columnCoeff = m_model->columnDisplayedAttr(
+    int columnCoeff = this->model()->columnDisplayedAttr(
                 DBUNITXML::UNIT,
                 DBUNITXML::COEFF);
-    int columnDelta = m_model->columnDisplayedAttr(
+    int columnDelta = this->model()->columnDisplayedAttr(
                 DBUNITXML::UNIT,
                 DBUNITXML::DELTA);
 
@@ -240,13 +163,6 @@ void MsrEntityWidget::changeUnit(int current)
         index = parent.child(row, columnDelta);
         model->setData(index,QString("%1").arg(index.data().toFloat()-delta));
     }
-}
-
-QVariant MsrEntityWidget::modelData(const QString &tag, const QString &attr,
-                                    const QModelIndex &index, int role)
-{
-    return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                             tag,attr)).data(role);
 }
 
 }}

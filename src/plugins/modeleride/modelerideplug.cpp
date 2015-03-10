@@ -326,8 +326,10 @@ bool ModelerIDEPlug::isRemove(const QModelIndex &srcIndex)
     if (srcIndex.data(TreeXmlModel::TagRole) == DBENTITYGROUPXML::ENTITYGROUP)
         return PropEntityGroup::isRemove(srcIndex);
 
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBENTITYXML::ENTITY)
-        return MsrEntityWidget::isRemove(srcIndex);
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBENTITYXML::ENTITY) {
+        MsrEntityWidget entityWidget;
+        return entityWidget.isRemove(srcIndex);
+    }
 
     if (srcIndex.data(TreeXmlModel::TagRole) == DBUNITXML::UNIT)
         return MsrUnitWidget::isRemove(srcIndex);
