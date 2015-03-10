@@ -1,7 +1,7 @@
-#ifndef MSRENTITYWIDGET_H
-#define MSRENTITYWIDGET_H
+#ifndef ENTITYWIDGET_H
+#define ENTITYWIDGET_H
 
-#include "ui_msrentitywidget.h"
+#include "ui_entitywidget.h"
 
 #include <QDataWidgetMapper>
 #include <QMessageBox>
@@ -20,16 +20,16 @@ namespace ModelerIde {
 //! Диалог редактирования сущности ЕИ
 /*! Диалог предназначен для редактирования сущности ЕИ
  */
-class MsrEntityWidget : public AbstractEditorWidget, private Ui::MsrEntityWidget
+class EntityWidget : public AbstractEditorWidget, private Ui::EntityWidget
 {
     Q_OBJECT
 
 public:
     //! Конструктор редактора сущности ЕИ
-    explicit MsrEntityWidget(QWidget *parent = 0);
+    explicit EntityWidget(QWidget *parent = 0);
 
     //! Деструктор редактора сущности ЕИ
-    virtual ~MsrEntityWidget();
+    virtual ~EntityWidget();
 
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
@@ -74,4 +74,4 @@ signals:
 
 }}
 
-#endif // MSRENTITYWIDGET_H
+#endif // ENTITYWIDGET_H

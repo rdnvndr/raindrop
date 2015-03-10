@@ -1,4 +1,4 @@
-#include "msrunitwidget.h"
+#include "unitwidget.h"
 #include <metadatamodel/dbxmlstruct.h>
 #include <QStringListModel>
 #include <QTreeView>
@@ -11,7 +11,7 @@ using namespace RTPTechGroup::MetaDataModel;
 namespace RTPTechGroup {
 namespace ModelerIde {
 
-MsrUnitWidget::MsrUnitWidget(QWidget *parent) :
+UnitWidget::UnitWidget(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
@@ -24,13 +24,13 @@ MsrUnitWidget::MsrUnitWidget(QWidget *parent) :
     tableViewUnit->setItemDelegate(new UnitDelegate());
 }
 
-MsrUnitWidget::~MsrUnitWidget()
+UnitWidget::~UnitWidget()
 {
     delete tableViewUnit->itemDelegate();
     delete m_unitModel;
 }
 
-void MsrUnitWidget::setModel(TreeXmlHashModel *model)
+void UnitWidget::setModel(TreeXmlHashModel *model)
 {
     m_model = model;
 
@@ -51,12 +51,12 @@ void MsrUnitWidget::setModel(TreeXmlHashModel *model)
         tableViewUnit->setColumnHidden(column,true);
 }
 
-QAbstractProxyModel *MsrUnitWidget::proxyModel()
+QAbstractProxyModel *UnitWidget::proxyModel()
 {
     return m_unitModel;
 }
 
-bool MsrUnitWidget::isRemove(const QModelIndex &srcIndex)
+bool UnitWidget::isRemove(const QModelIndex &srcIndex)
 {
     const QAbstractProxyModel* proxyModel
             = dynamic_cast<const QAbstractProxyModel*>(srcIndex.model());
@@ -148,7 +148,7 @@ bool MsrUnitWidget::isRemove(const QModelIndex &srcIndex)
     return success;
 }
 
-void MsrUnitWidget::add()
+void UnitWidget::add()
 {
     QModelIndex srcIndex = tableViewUnit->rootIndex();
     QModelIndex index = m_unitModel->insertLastRows(0,1,srcIndex);
@@ -182,7 +182,7 @@ void MsrUnitWidget::add()
     }
 }
 
-void MsrUnitWidget::remove()
+void UnitWidget::remove()
 {    
 
     QModelIndex srcIndex = tableViewUnit->rootIndex();
@@ -198,13 +198,13 @@ void MsrUnitWidget::remove()
                              tr("Невозможно удалить ЕИ, поскольку нет выбраных ЕИ."));
 }
 
-void MsrUnitWidget::submit()
+void UnitWidget::submit()
 {
     edit(false);
     m_unitModel->submitAll();
 }
 
-void MsrUnitWidget::edit(bool flag)
+void UnitWidget::edit(bool flag)
 {
     if (flag == false)
         tableViewUnit->setCurrentIndex(tableViewUnit->rootIndex());
@@ -214,13 +214,13 @@ void MsrUnitWidget::edit(bool flag)
     m_unitModel->setEditable(flag);
 }
 
-void MsrUnitWidget::revert()
+void UnitWidget::revert()
 {
     m_unitModel->revertAll();
     edit(false);
 }
 
-void MsrUnitWidget::setRootIndex(const QModelIndex &index)
+void UnitWidget::setRootIndex(const QModelIndex &index)
 {
     QModelIndex rootIndex = m_unitModel->mapToSource(tableViewUnit->rootIndex());
     if (rootIndex == index)

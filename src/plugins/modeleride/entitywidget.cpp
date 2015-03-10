@@ -1,4 +1,4 @@
-#include "msrentitywidget.h"
+#include "entitywidget.h"
 #include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 #include <QStringListModel>
@@ -8,7 +8,7 @@ using namespace RTPTechGroup::MetaDataModel;
 namespace RTPTechGroup {
 namespace ModelerIde {
 
-MsrEntityWidget::MsrEntityWidget(QWidget *parent) :
+EntityWidget::EntityWidget(QWidget *parent) :
     AbstractEditorWidget(parent)
 {
     setupUi(this);
@@ -17,12 +17,12 @@ MsrEntityWidget::MsrEntityWidget(QWidget *parent) :
             this, SLOT(changeUnit(int)));
 }
 
-MsrEntityWidget::~MsrEntityWidget()
+EntityWidget::~EntityWidget()
 {
 
 }
 
-void MsrEntityWidget::setModel(TreeXmlHashModel *model)
+void EntityWidget::setModel(TreeXmlHashModel *model)
 {
     AbstractEditorWidget::setModel(model);
 
@@ -44,7 +44,7 @@ void MsrEntityWidget::setModel(TreeXmlHashModel *model)
 
 }
 
-bool MsrEntityWidget::isRemove(const QModelIndex &srcIndex)
+bool EntityWidget::isRemove(const QModelIndex &srcIndex)
 {
     const TreeXmlHashModel *model = dynamic_cast<const TreeXmlHashModel *>(srcIndex.model());
     if (!model)
@@ -70,17 +70,17 @@ bool MsrEntityWidget::isRemove(const QModelIndex &srcIndex)
     return success;
 }
 
-bool MsrEntityWidget::isEmpty()
+bool EntityWidget::isEmpty()
 {
     return lineEditEntityName->text().isEmpty();
 }
 
-void MsrEntityWidget::add()
+void EntityWidget::add()
 {
     AbstractEditorWidget::add(DBENTITYXML::ENTITY);
 }
 
-void MsrEntityWidget::edit(bool flag)
+void EntityWidget::edit(bool flag)
 {
     if (isEmpty()) flag = true;
     groupBoxEntity->setEnabled(flag);
@@ -88,7 +88,7 @@ void MsrEntityWidget::edit(bool flag)
     emit edited(flag);
 }
 
-void MsrEntityWidget::submit()
+void EntityWidget::submit()
 {
     QModelIndex existIndex = model()->indexHashAttr(DBENTITYXML::ENTITY,
                                                      DBENTITYXML::NAME,
@@ -107,7 +107,7 @@ void MsrEntityWidget::submit()
     AbstractEditorWidget::submit();
 }
 
-void MsrEntityWidget::rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end)
+void EntityWidget::rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end)
 {
     Q_UNUSED(parent)
 
@@ -119,22 +119,22 @@ void MsrEntityWidget::rowsAboutToBeRemoved(const QModelIndex &parent, int start,
     }
 }
 
-void MsrEntityWidget::setUnitModel(QAbstractItemModel *model)
+void EntityWidget::setUnitModel(QAbstractItemModel *model)
 {
     comboBoxBasicUnit->setModel(model);
 }
 
-void MsrEntityWidget::setUnitRootIndex(const QModelIndex &index)
+void EntityWidget::setUnitRootIndex(const QModelIndex &index)
 {
     comboBoxBasicUnit->setRootModelIndex(index);
 }
 
-void MsrEntityWidget::setUnitColumn(int column)
+void EntityWidget::setUnitColumn(int column)
 {
     comboBoxBasicUnit->setModelColumn(column);
 }
 
-void MsrEntityWidget::changeUnit(int current)
+void EntityWidget::changeUnit(int current)
 {
     Q_UNUSED(current)
 

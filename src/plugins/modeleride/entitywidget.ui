@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RTPTechGroup::ModelerIde::MsrEntityWidget</class>
- <widget class="QWidget" name="RTPTechGroup::ModelerIde::MsrEntityWidget">
+ <class>RTPTechGroup::ModelerIde::EntityWidget</class>
+ <widget class="QWidget" name="RTPTechGroup::ModelerIde::EntityWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>212</width>
-    <height>120</height>
+    <width>218</width>
+    <height>147</height>
    </rect>
   </property>
   <property name="windowTitle">

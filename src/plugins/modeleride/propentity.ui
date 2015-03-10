@@ -104,10 +104,10 @@
     </layout>
    </item>
    <item>
-    <widget class="MsrEntityWidget" name="msrEntityWidget" native="true"/>
+    <widget class="EntityWidget" name="entityWidget" native="true"/>
    </item>
    <item>
-    <widget class="MsrUnitWidget" name="msrUnitWidget" native="true"/>
+    <widget class="UnitWidget" name="unitWidget" native="true"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutPropSave">
@@ -157,15 +157,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MsrEntityWidget</class>
+   <class>EntityWidget</class>
    <extends>QWidget</extends>
-   <header>msrentitywidget.h</header>
+   <header>entitywidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>MsrUnitWidget</class>
+   <class>UnitWidget</class>
    <extends>QWidget</extends>
-   <header>msrunitwidget.h</header>
+   <header>unitwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

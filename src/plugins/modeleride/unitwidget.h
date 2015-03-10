@@ -1,10 +1,10 @@
-#ifndef MSRUNITWIDGET_H
-#define MSRUNITWIDGET_H
+#ifndef UNITWIDGET_H
+#define UNITWIDGET_H
 
 #include <QStringListModel>
 #include <QDataWidgetMapper>
 
-#include "ui_msrunitwidget.h"
+#include "ui_unitwidget.h"
 #include <treexmlmodel/modifyproxymodel.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 
@@ -16,16 +16,16 @@ namespace ModelerIde {
 //! Диалог редактирования ЕИ
 /*! Диалог предназначен для редактирования ЕИ
 */
-class MsrUnitWidget : public QWidget, private Ui::MsrUnitWidget
+class UnitWidget : public QWidget, private Ui::UnitWidget
 {
     Q_OBJECT
 
 public:
     //! Конструктор класса
-    explicit MsrUnitWidget(QWidget *parent = 0);
+    explicit UnitWidget(QWidget *parent = 0);
 
     //! Деструктор класса
-    virtual ~MsrUnitWidget();
+    virtual ~UnitWidget();
 
     //! Установка модели для редактирования ЕИ
     void setModel(TreeXmlHashModel *model);
@@ -70,4 +70,4 @@ private:
 
 }}
 
-#endif // MSRUNITWIDGET_H
+#endif // UNITWIDGET_H
