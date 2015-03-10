@@ -341,8 +341,10 @@ bool ModelerIDEPlug::isRemove(const QModelIndex &srcIndex)
     if (srcIndex.data(TreeXmlModel::TagRole) == DBREFGROUPXML::REFGROUP)
         return PropRefGroup::isRemove(srcIndex);
 
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBREFXML::REF)
-        return RefWidget::isRemove(srcIndex);
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBREFXML::REF) {
+        RefWidget refWidget;
+        return refWidget.isRemove(srcIndex);
+    }
 
     return true;
 }

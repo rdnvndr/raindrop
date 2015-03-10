@@ -62,6 +62,9 @@ public slots:
     //! Отмена изменений
     virtual void revert();
 
+    //! Удаление строки
+        void rowsRemoved(const QModelIndex &index,int start,int end);
+
     //! Получение данных модели
     QVariant modelData(const QString &tag, const QString &attr,
                        const QModelIndex &index, int role = Qt::DisplayRole);
