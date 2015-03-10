@@ -8,7 +8,7 @@ namespace RTPTechGroup {
 namespace ModelerIde {
 
 PropFilter::PropFilter(QWidget *parent) :
-    QWidget(parent)
+    AbstractPropEditor(parent)
 {
     setupUi(this);
 
@@ -28,16 +28,10 @@ PropFilter::~PropFilter()
 void PropFilter::setModel(TreeXmlHashModel *model)
 {
     propWidget->setModel(model);
-    m_model = model;
-
+    AbstractPropEditor::setModel(model);
 }
 
-TreeXmlHashModel *PropFilter::model()
-{
-    return m_model;
-}
-
-void PropFilter::setCurrentClass(const QModelIndex &index)
+void PropFilter::setCurrent(const QModelIndex &index)
 {
     propWidget->setCurrent(index);
 }
@@ -56,19 +50,9 @@ void PropFilter::setTabName(const QModelIndex &index)
     }
 }
 
-void PropFilter::closeTab(const QModelIndex &index)
+void PropFilter::edit(bool flag)
 {
-    Q_UNUSED(index);
-
-    QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
-    if (subWindow)
-        subWindow->close();
-}
-
-QVariant PropFilter::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
-{
-    return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                      tag,attr)).data();
+    Q_UNUSED(flag)
 }
 
 }}

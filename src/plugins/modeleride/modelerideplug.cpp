@@ -16,9 +16,12 @@
 #include "propentity.h"
 #include "propentitygroup.h"
 #include "lovwidget.h"
+#include "refgroupwidget.h"
+#include "entitygroupwidget.h"
 #include "proplov.h"
 #include "proprefgroup.h"
 #include "propref.h"
+#include "abstractpropeditor.h"
 
 using namespace RTPTechGroup::Plugin;
 
@@ -32,75 +35,75 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
 
     PluginManager* pluginManager = PluginManager::instance();
 
-    treeClassView = new ClassTreeView();
-    connect(treeClassView,SIGNAL(doubleClicked(QModelIndex)),
-            this,SLOT(dblClickTree(QModelIndex)));
-    connect(treeClassView,SIGNAL(actionInserted()),
+    m_treeClassView = new ClassTreeView();
+    connect(m_treeClassView,SIGNAL(doubleClicked(QModelIndex)),
+            this,SLOT(showPropEditor(QModelIndex)));
+    connect(m_treeClassView,SIGNAL(actionInserted()),
             this,SLOT(add()));
-    connect(treeClassView,SIGNAL(actionRemoved()),
+    connect(m_treeClassView,SIGNAL(actionRemoved()),
             this,SLOT(remove()));
 
     // Создание пунктов строки меню и кнопок панели исрументов
     IMainWindow* iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    actionNewModel = new QAction(QIcon(":newmodel"), tr("Новая модель"), this);
-    connect(actionNewModel, SIGNAL(triggered()), this, SLOT(newClassModel()));
-    actionNewModel->setObjectName("actionNewModel");
-    iMainWindow->addAction(tr("Редактор модели"),actionNewModel);
+    m_actionNewModel = new QAction(QIcon(":newmodel"), tr("Новая модель"), this);
+    connect(m_actionNewModel, SIGNAL(triggered()), this, SLOT(newClassModel()));
+    m_actionNewModel->setObjectName("actionNewModel");
+    iMainWindow->addAction(tr("Редактор модели"),m_actionNewModel);
 
-    actionOpenModel = new QAction(QIcon(":openmodel"), tr("Открыть модель..."), this);
-    connect(actionOpenModel, SIGNAL(triggered()), this, SLOT(openClassModel()));
-    actionOpenModel->setObjectName("actionOpenModel");
-    iMainWindow->addAction(tr("Редактор модели"),actionOpenModel);
+    m_actionOpenModel = new QAction(QIcon(":openmodel"), tr("Открыть модель..."), this);
+    connect(m_actionOpenModel, SIGNAL(triggered()), this, SLOT(openClassModel()));
+    m_actionOpenModel->setObjectName("actionOpenModel");
+    iMainWindow->addAction(tr("Редактор модели"),m_actionOpenModel);
 
-    actionSaveModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель"), this);
-    connect(actionSaveModel, SIGNAL(triggered()), this, SLOT(saveClassModel()));
-    actionSaveModel->setDisabled(true);
-    actionSaveModel->setObjectName("actionSaveModel");
-    iMainWindow->addAction(tr("Редактор модели"),actionSaveModel);
+    m_actionSaveModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель"), this);
+    connect(m_actionSaveModel, SIGNAL(triggered()), this, SLOT(saveClassModel()));
+    m_actionSaveModel->setDisabled(true);
+    m_actionSaveModel->setObjectName("actionSaveModel");
+    iMainWindow->addAction(tr("Редактор модели"),m_actionSaveModel);
 
-    actionSaveAsModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель как..."), this);
-    connect(actionSaveAsModel, SIGNAL(triggered()), this, SLOT(saveAsClassModel()));
-    actionSaveAsModel->setDisabled(true);
-    actionSaveAsModel->setObjectName("actionSaveAsModel");
-    iMainWindow->addAction(tr("Редактор модели"),actionSaveAsModel);
+    m_actionSaveAsModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель как..."), this);
+    connect(m_actionSaveAsModel, SIGNAL(triggered()), this, SLOT(saveAsClassModel()));
+    m_actionSaveAsModel->setDisabled(true);
+    m_actionSaveAsModel->setObjectName("actionSaveAsModel");
+    iMainWindow->addAction(tr("Редактор модели"),m_actionSaveAsModel);
 
-    actionPublishModel = new QAction(QIcon(":publish"), tr("Опубликовать модель..."), this);
-    connect(actionPublishModel, SIGNAL(triggered()), this, SLOT(publishClassModel()));
-    actionPublishModel->setDisabled(true);
-    actionPublishModel->setObjectName("actionPublishModel");
-    iMainWindow->addAction(tr("Редактор модели"),actionPublishModel);
+    m_actionPublishModel = new QAction(QIcon(":publish"), tr("Опубликовать модель..."), this);
+    connect(m_actionPublishModel, SIGNAL(triggered()), this, SLOT(publishClassModel()));
+    m_actionPublishModel->setDisabled(true);
+    m_actionPublishModel->setObjectName("actionPublishModel");
+    iMainWindow->addAction(tr("Редактор модели"),m_actionPublishModel);
 
-    actionCloseModel = new QAction(QIcon(":closemodel"), tr("Закрыть модель"), this);
-    connect(actionCloseModel, SIGNAL(triggered()), this, SLOT(closeClassModel()));
-    actionCloseModel->setDisabled(true);
-    actionCloseModel->setObjectName("actionCloseModel");
-    iMainWindow->addAction(tr("Редактор модели"),actionCloseModel);
+    m_actionCloseModel = new QAction(QIcon(":closemodel"), tr("Закрыть модель"), this);
+    connect(m_actionCloseModel, SIGNAL(triggered()), this, SLOT(closeClassModel()));
+    m_actionCloseModel->setDisabled(true);
+    m_actionCloseModel->setObjectName("actionCloseModel");
+    iMainWindow->addAction(tr("Редактор модели"),m_actionCloseModel);
 
-    dockWidget = new DockWidget();
-    dockWidget->setObjectName("MetamodelDockWidget");
-    dockWidget->setWidget(treeClassView);
-    dockWidget->setWindowTitle(tr("Модель метаданных"));
-    iMainWindow->addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
+    m_dockWidget = new DockWidget();
+    m_dockWidget->setObjectName("MetamodelDockWidget");
+    m_dockWidget->setWidget(m_treeClassView);
+    m_dockWidget->setWindowTitle(tr("Модель метаданных"));
+    iMainWindow->addDockWidget(Qt::LeftDockWidgetArea, m_dockWidget);
 }
 
 ModelerIDEPlug::~ModelerIDEPlug()
 {
-    delete treeClassView;
-    delete dockWidget;
+    delete m_treeClassView;
+    delete m_dockWidget;
     closeClassModel();
-    delete actionSaveModel;
-    delete actionSaveAsModel;
-    delete actionNewModel;
-    delete actionOpenModel;
-    delete actionPublishModel;
-    delete actionCloseModel;
+    delete m_actionSaveModel;
+    delete m_actionSaveAsModel;
+    delete m_actionNewModel;
+    delete m_actionOpenModel;
+    delete m_actionPublishModel;
+    delete m_actionCloseModel;
 }
 
 void ModelerIDEPlug::actionSaveEnable()
 {
-    actionSaveModel->setEnabled(true);
+    m_actionSaveModel->setEnabled(true);
 }
 
 TreeXmlHashModel *ModelerIDEPlug::model()
@@ -134,70 +137,50 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
             this,SLOT(actionSaveEnable()));
 
-    treeClassView->setModel(m_model);
+    m_treeClassView->setModel(m_model);
 
-    actionPublishModel->setEnabled(true);
-    actionSaveModel->setEnabled(true);
-    actionSaveAsModel->setEnabled(true);
-    actionCloseModel->setEnabled(true);
+    m_actionPublishModel->setEnabled(true);
+    m_actionSaveModel->setEnabled(true);
+    m_actionSaveAsModel->setEnabled(true);
+    m_actionCloseModel->setEnabled(true);
 }
 
 void ModelerIDEPlug::add()
 {
-    QModelIndex indexSource = treeClassView->currentIndex();
+    QModelIndex indexSource = m_treeClassView->currentIndex();
     if (!indexSource.isValid())
         return;
+
+    QModelIndex lastInsertRow;
 
     if (indexSource.data(TreeXmlModel::TagRole)==DBCLASSLISTXML::CLASSLIST
             || indexSource.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS)
     {
-        QModelIndex lastInsertRow =
+        lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBCLASSXML::CLASS);
         if (lastInsertRow.isValid()){
             int column = m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                       DBCLASSXML::TYPE);
             m_model->setData(lastInsertRow.sibling(lastInsertRow.row(),column),
                              DBCLASSTYPEXML::STANDART);
-
-            treeClassView->setCurrentIndex(lastInsertRow);
-            showPropClass(lastInsertRow);
         }
     } else if (indexSource.data(TreeXmlModel::TagRole)==DBENTITYLISTXML::ENTITYLIST) {
-        QModelIndex lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBENTITYGROUPXML::ENTITYGROUP);
-        if (lastInsertRow.isValid()){
-            treeClassView->setCurrentIndex(lastInsertRow);
-            showPropEntityGroup(lastInsertRow);
-        }
+        lastInsertRow = m_model->insertLastRows(0,1,indexSource,DBENTITYGROUPXML::ENTITYGROUP);
     } else if (indexSource.data(TreeXmlModel::TagRole)==DBENTITYGROUPXML::ENTITYGROUP) {
-        QModelIndex lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBENTITYXML::ENTITY);
-        if (lastInsertRow.isValid()){
-            treeClassView->setCurrentIndex(lastInsertRow);
-            showPropEntity(lastInsertRow);
-        }
+        lastInsertRow = m_model->insertLastRows(0,1,indexSource,DBENTITYXML::ENTITY);
     } else if (indexSource.data(TreeXmlModel::TagRole)==DBLOVLISTXML::LOVLIST) {
-        QModelIndex lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBLOVXML::LOV);
-        if (lastInsertRow.isValid()){
-            treeClassView->setCurrentIndex(lastInsertRow);
-            showPropLov(lastInsertRow);
-        }
+        lastInsertRow = m_model->insertLastRows(0,1,indexSource,DBLOVXML::LOV);
     } else if (indexSource.data(TreeXmlModel::TagRole)==DBREFLISTXML::REFLIST) {
-        QModelIndex lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBREFGROUPXML::REFGROUP);
-        if (lastInsertRow.isValid()){
-            treeClassView->setCurrentIndex(lastInsertRow);
-            showPropRefGroup(lastInsertRow);
-        }
+        lastInsertRow = m_model->insertLastRows(0,1,indexSource,DBREFGROUPXML::REFGROUP);
     } else if (indexSource.data(TreeXmlModel::TagRole)==DBREFGROUPXML::REFGROUP) {
-        QModelIndex lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBREFXML::REF);
-        if (lastInsertRow.isValid()){
-            treeClassView->setCurrentIndex(lastInsertRow);
-            showPropRef(lastInsertRow);
-        }
+        lastInsertRow = m_model->insertLastRows(0,1,indexSource,DBREFXML::REF);
+    } else return;
+
+    if (lastInsertRow.isValid()){
+        m_treeClassView->setCurrentIndex(lastInsertRow);
+        showPropEditor(lastInsertRow);
     }
+
 }
 
 QString ModelerIDEPlug::dataName(const QModelIndex& index)
@@ -332,35 +315,6 @@ QString ModelerIDEPlug::dataId(const QModelIndex &index)
     return "";
 }
 
-void ModelerIDEPlug::dblClickTree(const QModelIndex &index)
-{
-    QModelIndex indexSource = index;
-
-    if (!indexSource.isValid())
-        return;
-
-    if (indexSource.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS)
-        showPropClass(indexSource);
-
-    if (indexSource.data(TreeXmlModel::TagRole)==DBFILTERXML::FILTER)
-        showPropFilter(indexSource);
-
-    if (indexSource.data(TreeXmlModel::TagRole)==DBENTITYXML::ENTITY)
-        showPropEntity(indexSource);
-
-    if (indexSource.data(TreeXmlModel::TagRole)==DBENTITYGROUPXML::ENTITYGROUP)
-        showPropEntityGroup(indexSource);
-
-    if (indexSource.data(TreeXmlModel::TagRole)==DBLOVXML::LOV)
-        showPropLov(indexSource);
-
-    if (indexSource.data(TreeXmlModel::TagRole)==DBREFGROUPXML::REFGROUP)
-        showPropRefGroup(indexSource);
-
-    if (indexSource.data(TreeXmlModel::TagRole)==DBREFXML::REF)
-        showPropRef(indexSource);
-}
-
 bool ModelerIDEPlug::isRemove(const QModelIndex &srcIndex)
 {
     if (srcIndex.data(TreeXmlModel::TagRole) == DBMODELXML::MODEL
@@ -371,33 +325,45 @@ bool ModelerIDEPlug::isRemove(const QModelIndex &srcIndex)
         return false;
     }
 
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBENTITYGROUPXML::ENTITYGROUP)
-        return PropEntityGroup::isRemove(srcIndex);
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBENTITYGROUPXML::ENTITYGROUP) {
+        EntityGroupWidget entityGroupWidget;
+        return entityGroupWidget.isRemove(srcIndex);
+    }
 
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBENTITYXML::ENTITY)
-        return MsrEntityWidget::isRemove(srcIndex);
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBENTITYXML::ENTITY) {
+        EntityWidget entityWidget;
+        return entityWidget.isRemove(srcIndex);
+    }
 
     if (srcIndex.data(TreeXmlModel::TagRole) == DBUNITXML::UNIT)
-        return MsrUnitWidget::isRemove(srcIndex);
+        return UnitWidget::isRemove(srcIndex);
 
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBCLASSXML::CLASS)
-        return ClassWidget::isRemove(srcIndex);
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBCLASSXML::CLASS) {
+        ClassWidget classWidget;
+        return classWidget.isRemove(srcIndex);
+    }
 
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBLOVXML::LOV)
-        return LovWidget::isRemove(srcIndex);
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBLOVXML::LOV) {
+        LovWidget lovWidget;
+        return lovWidget.isRemove(srcIndex);
+    }
 
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBREFGROUPXML::REFGROUP)
-        return PropRefGroup::isRemove(srcIndex);
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBREFGROUPXML::REFGROUP) {
+        RefGroupWidget refGroupWidget;
+        return refGroupWidget.isRemove(srcIndex);
+    }
 
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBREFXML::REF)
-        return RefWidget::isRemove(srcIndex);
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBREFXML::REF) {
+        RefWidget refWidget;
+        return refWidget.isRemove(srcIndex);
+    }
 
     return true;
 }
 
 void ModelerIDEPlug::remove()
 {
-    QModelIndex currentIndex = treeClassView->currentIndex();
+    QModelIndex currentIndex = m_treeClassView->currentIndex();
 
     if (currentIndex.isValid()){
         if (!isRemove(currentIndex))
@@ -408,66 +374,7 @@ void ModelerIDEPlug::remove()
                              tr("Невозможно удалить узел, поскольку он не выбран."));
 }
 
-void ModelerIDEPlug::showPropClass(const QModelIndex &indexSource)
-{
-    if (!indexSource.isValid())
-        return;
-
-    if (indexSource.data(TreeXmlModel::TagRole)!=DBCLASSXML::CLASS)
-        return;
-
-    PluginManager* pluginManager = PluginManager::instance();
-    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
-
-    QString subWindowName = "PropClass::" + this->dataId(indexSource);
-    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
-
-    if (!subWindow) {
-        PropClass* propClass = new PropClass();
-        subWindow =  mainWindow->addSubWindow(propClass);
-        propClass->setObjectName(subWindowName);
-        propClass->setModel(m_model);
-        propClass->setCurrentClass(indexSource);
-        connect(propClass,SIGNAL(editFilter(QModelIndex)),
-                this,SLOT(showPropFilter(QModelIndex)));
-    } else {
-        PropClass* propClass = qobject_cast<PropClass*>(subWindow->widget());
-        propClass->setCurrentClass(indexSource);
-    }
-}
-
-void ModelerIDEPlug::showPropFilter(const QModelIndex &indexSource)
-{
-
-    if (!indexSource.isValid())
-        return;
-
-    if (indexSource.data(TreeXmlModel::TagRole)!=DBFILTERXML::FILTER)
-        return;
-
-    PluginManager* pluginManager = PluginManager::instance();
-    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
-
-    QString classId = this->dataId(indexSource);
-
-    QString subWindowName = "PropFilter::" + classId;
-    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
-
-    if (!subWindow) {
-        PropFilter* propFilter = new PropFilter();
-        subWindow =  mainWindow->addSubWindow(propFilter);
-        propFilter->setObjectName(subWindowName);
-        propFilter->setModel(m_model);
-        propFilter->setCurrentClass(indexSource);
-    } else {
-        PropFilter* propFilter = qobject_cast<PropFilter*>(subWindow->widget());
-        propFilter->setCurrentClass(indexSource);
-    }
-}
-
-void ModelerIDEPlug::showPropEntity(const QModelIndex &indexSource)
+void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource)
 {
     if (!indexSource.isValid())
         return;
@@ -476,118 +383,59 @@ void ModelerIDEPlug::showPropEntity(const QModelIndex &indexSource)
     IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    QString subWindowName = "PropEntity::" + this->dataId(indexSource);
-    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
+    QString tagRole = indexSource.data(TreeXmlModel::TagRole).toString();
+    QString subWindowName;
 
-    if (!subWindow) {
-        PropEntity* propEntity = new PropEntity();
-        subWindow =  mainWindow->addSubWindow(propEntity);
-        propEntity->setObjectName(subWindowName);
-        propEntity->setModel(m_model);
-        propEntity->setCurrentEntity(indexSource);
-    } else {
-        PropEntity* propEntity = qobject_cast<PropEntity*>(subWindow->widget());
-        propEntity->setCurrentEntity(indexSource);
-    }
-}
-
-void ModelerIDEPlug::showPropEntityGroup(const QModelIndex &indexSource)
-{
-    if (!indexSource.isValid())
+    if (tagRole == DBCLASSXML::CLASS)
+        subWindowName = "PropClass::" + this->dataId(indexSource);
+    else if (tagRole == DBFILTERXML::FILTER)
+        subWindowName = "PropFilter::" + this->dataId(indexSource);
+    else if (tagRole == DBENTITYXML::ENTITY)
+        subWindowName = "PropEntity::" + this->dataId(indexSource);
+    else if (tagRole == DBENTITYGROUPXML::ENTITYGROUP)
+        subWindowName = "PropEntityGroup::" + this->dataId(indexSource);
+    else if (tagRole == DBLOVXML::LOV)
+        subWindowName = "PropLov::" + this->dataId(indexSource);
+    else if (tagRole == DBREFGROUPXML::REFGROUP)
+        subWindowName = "PropRefGroup::" + this->dataId(indexSource);
+    else if (tagRole == DBREFXML::REF)
+        subWindowName = "PropRef::" + this->dataId(indexSource);
+    else
         return;
 
-    PluginManager* pluginManager = PluginManager::instance();
-    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
-
-    QString subWindowName = "PropEntityGroup::" + this->dataId(indexSource);
     QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
-
+    AbstractPropEditor* propEditor;
     if (!subWindow) {
-        PropEntityGroup* propEntityGroup = new PropEntityGroup();
-        subWindow =  mainWindow->addSubWindow(propEntityGroup);
-        propEntityGroup->setObjectName(subWindowName);
-        propEntityGroup->setModel(m_model);
-        propEntityGroup->setCurrentEntityGroup(indexSource);
-    } else {
-        PropEntityGroup* propEntityGroup = qobject_cast<PropEntityGroup*>(subWindow->widget());
-        propEntityGroup->setCurrentEntityGroup(indexSource);
-    }
+        if (tagRole == DBCLASSXML::CLASS) {
+            PropClass* propClass = new PropClass();
+            connect(propClass,SIGNAL(editFilter(QModelIndex)),
+                    this,SLOT(showPropEditor(QModelIndex)));
+            propEditor = qobject_cast<AbstractPropEditor*>(propClass);
+        } else if (tagRole == DBFILTERXML::FILTER) {
+            propEditor = qobject_cast<AbstractPropEditor*>(new PropFilter());
+        } else if (tagRole == DBENTITYXML::ENTITY) {
+            propEditor = qobject_cast<AbstractPropEditor*>(new PropEntity());
+        } else if (tagRole == DBENTITYGROUPXML::ENTITYGROUP) {
+            propEditor = qobject_cast<AbstractPropEditor*>(new PropEntityGroup());
+        } else if (tagRole == DBLOVXML::LOV) {
+            propEditor = qobject_cast<AbstractPropEditor*>(new PropLov());
+        } else if (tagRole == DBREFGROUPXML::REFGROUP) {
+            propEditor = qobject_cast<AbstractPropEditor*>(new PropRefGroup());
+        } else if (tagRole == DBREFXML::REF) {
+            propEditor = qobject_cast<AbstractPropEditor*>(new PropRef());
+        } else return;
+
+
+        propEditor->setModel(m_model);
+        subWindow =  mainWindow->addSubWindow(propEditor);
+        propEditor->setTabName(indexSource);
+    } else
+        propEditor = qobject_cast<AbstractPropEditor*>(subWindow->widget());
+
+    propEditor->setCurrent(indexSource);
 }
 
-void ModelerIDEPlug::showPropLov(const QModelIndex &indexSource)
-{
-    if (!indexSource.isValid())
-        return;
-
-    PluginManager* pluginManager = PluginManager::instance();
-    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
-
-    QString subWindowName = "PropLov::" + this->dataId(indexSource);
-    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
-
-    if (!subWindow) {
-        PropLov* propLov = new PropLov();
-        subWindow =  mainWindow->addSubWindow(propLov);
-        propLov->setObjectName(subWindowName);
-        propLov->setModel(m_model);
-        propLov->setCurrentLov(indexSource);
-    } else {
-        PropLov* propLov = qobject_cast<PropLov*>(subWindow->widget());
-        propLov->setCurrentLov(indexSource);
-    }
-}
-
-void ModelerIDEPlug::showPropRefGroup(const QModelIndex &indexSource)
-{
-    if (!indexSource.isValid())
-        return;
-
-    PluginManager* pluginManager = PluginManager::instance();
-    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
-
-    QString subWindowName = "PropRefGroup::" + this->dataId(indexSource);
-    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
-
-    if (!subWindow) {
-        PropRefGroup* propRefGroup = new PropRefGroup();
-        subWindow =  mainWindow->addSubWindow(propRefGroup);
-        propRefGroup->setObjectName(subWindowName);
-        propRefGroup->setModel(m_model);
-        propRefGroup->setCurrentRefGroup(indexSource);
-    } else {
-        PropRefGroup* propRefGroup = qobject_cast<PropRefGroup*>(subWindow->widget());
-        propRefGroup->setCurrentRefGroup(indexSource);
-    }
-}
-
-void ModelerIDEPlug::showPropRef(const QModelIndex &indexSource)
-{
-    if (!indexSource.isValid())
-        return;
-
-    PluginManager* pluginManager = PluginManager::instance();
-    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
-
-    QString subWindowName = "PropRef::" + this->dataId(indexSource);
-    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
-
-    if (!subWindow) {
-        PropRef* propRef = new PropRef();
-        subWindow =  mainWindow->addSubWindow(propRef);
-        propRef->setObjectName(subWindowName);
-        propRef->setModel(m_model);
-        propRef->setCurrentRef(indexSource);
-    } else {
-        PropRef* propRef = qobject_cast<PropRef*>(subWindow->widget());
-        propRef->setCurrentRef(indexSource);
-    }
-}
-
-void ModelerIDEPlug::closePropWindow(const QModelIndex &index)
+void ModelerIDEPlug::closePropEditor(const QModelIndex &index)
 {
     PluginManager* pluginManager = PluginManager::instance();
     IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
@@ -646,7 +494,7 @@ void ModelerIDEPlug::openClassModel()
         }
         file.close();
     }
-    actionSaveModel->setDisabled(true);
+    m_actionSaveModel->setDisabled(true);
 }
 
 void ModelerIDEPlug::saveClassModel()
@@ -664,7 +512,7 @@ void ModelerIDEPlug::saveClassModel()
         doc.save(TextStream, 0);
         File.close();
     }
-    actionSaveModel->setDisabled(true);
+    m_actionSaveModel->setDisabled(true);
 }
 
 void ModelerIDEPlug::saveAsClassModel()
@@ -679,7 +527,7 @@ void ModelerIDEPlug::saveAsClassModel()
         doc.save(TextStream, 0);
         File.close();
     }
-    actionSaveModel->setDisabled(true);
+    m_actionSaveModel->setDisabled(true);
 }
 
 void ModelerIDEPlug::publishClassModel(const QModelIndex &index)
@@ -729,10 +577,10 @@ void ModelerIDEPlug::closeClassModel()
     if (m_model){
         delete m_model;
         m_model = NULL;
-        actionCloseModel->setDisabled(true);
-        actionSaveModel->setDisabled(true);
-        actionSaveAsModel->setDisabled(true);
-        actionPublishModel->setDisabled(true);
+        m_actionCloseModel->setDisabled(true);
+        m_actionSaveModel->setDisabled(true);
+        m_actionSaveAsModel->setDisabled(true);
+        m_actionPublishModel->setDisabled(true);
     }
 }
 

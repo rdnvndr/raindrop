@@ -2,10 +2,12 @@
 #define MODELERIDE_H
 
 #include <QObject>
+
 #include <plugin/iplugin.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <metadatamodel/classmodelxml.h>
 #include <dockwidget/dockwidget.h>
+
 #include "classtreeview.h"
 #include "treefilterproxymodel.h"
 
@@ -35,7 +37,6 @@ class ModelerIDEPlug:
 public:
 
 // IPlugin
-
     //! Получение имени плагина
     QString name() {return tr(APP_NAME);};
 
@@ -82,67 +83,12 @@ public:
     //! Получение индетификатора по индексу
     QString dataId(const QModelIndex &index);
 
-private:
-    //! Имя файла структуры
-    QString m_fileName;
-
-    //! Модель дерева классов
-    ClassModelXml* m_model;
-
-    //! Дерево классов
-    ClassTreeView* treeClassView;
-
-    //! Команда создания структуры классов
-    QAction* actionNewModel;
-
-    //! Команда сохранения структуры классов
-    QAction* actionSaveModel;
-
-    //! Команда сохранения структуры классов как...
-    QAction* actionSaveAsModel;
-
-    //! Команда открытия структуры классов
-    QAction* actionOpenModel;
-
-    //! Команда публикации структуры классов в БД
-    QAction* actionPublishModel;
-
-    //! Команда закрытия структуры классов
-    QAction* actionCloseModel;
-
-    //! Стыковый компонент для модели метаданных
-    DockWidget *dockWidget;
-
 public slots:
-    //! Слот обработки двойного щелчка по дереву классов
-    void dblClickTree(const QModelIndex &index);
-
-
-    //! Слот вызова окна редактирования класса
-    void showPropClass(const QModelIndex &indexSource);
-
-    //! Слот вызова окна редактирования фильтра
-    void showPropFilter(const QModelIndex &indexSource);
-
-    //! Слот вызова окна редактирования сущности единицы измерения
-    void showPropEntity(const QModelIndex &indexSource);
-
-    //! Слот вызова окна редактирования группы сущности единицы измерения
-    void showPropEntityGroup(const QModelIndex &indexSource);
-
-    //! Слот вызова окна редактирования списка значений
-    void showPropLov(const QModelIndex &indexSource);
-
-    //! Слот вызова окна редактирования группы справочника
-    void showPropRefGroup(const QModelIndex &indexSource);
-
-    //! Слот вызова окна редактирования справочника
-    void showPropRef(const QModelIndex &indexSource);
-
+    //! Слот вызова окна редактирования
+    void showPropEditor(const QModelIndex &indexSource);
 
     //! Закрытие окна по индексу
-    void closePropWindow(const QModelIndex& index);
-
+    void closePropEditor(const QModelIndex& index);
 
     //! Создание новой структуры классов
     void newClassModel();
@@ -171,6 +117,36 @@ public slots:
     //! Устанавливает активность QAction "Сохранить модель"
     void actionSaveEnable();
 
+private:
+    //! Имя файла структуры
+    QString m_fileName;
+
+    //! Модель дерева классов
+    ClassModelXml* m_model;
+
+    //! Дерево классов
+    ClassTreeView* m_treeClassView;
+
+    //! Команда создания структуры классов
+    QAction* m_actionNewModel;
+
+    //! Команда сохранения структуры классов
+    QAction* m_actionSaveModel;
+
+    //! Команда сохранения структуры классов как...
+    QAction* m_actionSaveAsModel;
+
+    //! Команда открытия структуры классов
+    QAction* m_actionOpenModel;
+
+    //! Команда публикации структуры классов в БД
+    QAction* m_actionPublishModel;
+
+    //! Команда закрытия структуры классов
+    QAction* m_actionCloseModel;
+
+    //! Стыковый компонент для модели метаданных
+    DockWidget *m_dockWidget;
 };
 
 }}

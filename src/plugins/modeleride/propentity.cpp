@@ -9,32 +9,32 @@ namespace RTPTechGroup {
 namespace ModelerIde {
 
 PropEntity::PropEntity(QWidget *parent) :
-    QWidget(parent)
+    AbstractPropEditor(parent)
 {
     setupUi(this);
 
-    connect(msrEntityWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            msrUnitWidget,SLOT(setRootIndex(QModelIndex)));
-    connect(msrEntityWidget,SIGNAL(currentIndexChanged(QModelIndex)),
+    connect(entityWidget,SIGNAL(currentIndexChanged(QModelIndex)),
+            unitWidget,SLOT(setRootIndex(QModelIndex)));
+    connect(entityWidget,SIGNAL(currentIndexChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
-    connect(msrEntityWidget,SIGNAL(dataChanged(QModelIndex)),
+    connect(entityWidget,SIGNAL(dataChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
-    connect(msrEntityWidget,SIGNAL(dataRemoved(QModelIndex)),
+    connect(entityWidget,SIGNAL(dataRemoved(QModelIndex)),
             this,SLOT(closeTab(QModelIndex)));
-    connect(msrUnitWidget,SIGNAL(proxyIndexChanged(QModelIndex)),
-            msrEntityWidget, SLOT(setUnitRootIndex(QModelIndex)));
+    connect(unitWidget,SIGNAL(proxyIndexChanged(QModelIndex)),
+            entityWidget, SLOT(setUnitRootIndex(QModelIndex)));
 
-    connect(msrEntityWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));
-    connect(msrEntityWidget, SIGNAL(edited(bool)), msrUnitWidget, SLOT(edit(bool)));
+    connect(entityWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));
+    connect(entityWidget, SIGNAL(edited(bool)), unitWidget, SLOT(edit(bool)));
 
-    connect(toolButtonAddEntity,  SIGNAL(clicked()), msrEntityWidget, SLOT(add()));
-    connect(toolButtonDelEntity,  SIGNAL(clicked()), msrEntityWidget, SLOT(remove()));
-    connect(toolButtonEditEntity, SIGNAL(clicked()), msrEntityWidget, SLOT(edit()));
+    connect(toolButtonAddEntity,  SIGNAL(clicked()), entityWidget, SLOT(add()));
+    connect(toolButtonDelEntity,  SIGNAL(clicked()), entityWidget, SLOT(remove()));
+    connect(toolButtonEditEntity, SIGNAL(clicked()), entityWidget, SLOT(edit()));
 
-    connect(pushButtonPropCancel, SIGNAL(clicked()), msrUnitWidget, SLOT(revert()));
-    connect(pushButtonPropCancel, SIGNAL(clicked()), msrEntityWidget, SLOT(revert()));
-    connect(pushButtonPropSave,   SIGNAL(clicked()), msrUnitWidget, SLOT(submit()));
-    connect(pushButtonPropSave,   SIGNAL(clicked()), msrEntityWidget, SLOT(submit()));
+    connect(pushButtonPropCancel, SIGNAL(clicked()), unitWidget, SLOT(revert()));
+    connect(pushButtonPropCancel, SIGNAL(clicked()), entityWidget, SLOT(revert()));
+    connect(pushButtonPropSave,   SIGNAL(clicked()), unitWidget, SLOT(submit()));
+    connect(pushButtonPropSave,   SIGNAL(clicked()), entityWidget, SLOT(submit()));
 
 }
 
@@ -45,27 +45,22 @@ PropEntity::~PropEntity()
 
 void PropEntity::setModel(TreeXmlHashModel *model)
 {
-    msrEntityWidget->setModel(model);
-    msrUnitWidget->setModel(model);
+    entityWidget->setModel(model);
+    unitWidget->setModel(model);
 
-    msrEntityWidget->setUnitModel(msrUnitWidget->proxyModel());
-    msrEntityWidget->setUnitColumn(
+    entityWidget->setUnitModel(unitWidget->proxyModel());
+    entityWidget->setUnitColumn(
                 model->columnDisplayedAttr(
                     DBUNITXML::UNIT,
                     DBUNITXML::NAME
                     )
                 );
-    m_model = model;
+    AbstractPropEditor::setModel(model);
 }
 
-TreeXmlHashModel *PropEntity::model()
+void PropEntity::setCurrent(const QModelIndex &index)
 {
-    return m_model;
-}
-
-void PropEntity::setCurrentEntity(const QModelIndex &index)
-{
-    msrEntityWidget->setCurrent(index);
+    entityWidget->setCurrent(index);
 }
 
 void PropEntity::setTabName(const QModelIndex &index)
@@ -80,23 +75,9 @@ void PropEntity::setTabName(const QModelIndex &index)
     subWindow->setWindowTitle(entityName);
 }
 
-void PropEntity::closeTab(const QModelIndex &index)
-{
-    Q_UNUSED(index);
-
-    QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
-    subWindow->close();
-}
-
-QVariant PropEntity::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
-{
-    return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                      tag,attr)).data();
-}
-
 void PropEntity::edit(bool flag)
 {
-    if (msrEntityWidget->isEmpty()){
+    if (entityWidget->isEmpty()){
         toolButtonAddEntity->setDisabled(true);
         flag = true;
     } else

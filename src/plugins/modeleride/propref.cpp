@@ -9,7 +9,7 @@ namespace RTPTechGroup {
 namespace ModelerIde {
 
 PropRef::PropRef(QWidget *parent) :
-    QWidget(parent)
+    AbstractPropEditor(parent)
 {
     setupUi(this);
 
@@ -45,15 +45,10 @@ void PropRef::setModel(TreeXmlHashModel *model)
     refWidget->setModel(model);
     refItemWidget->setModel(model);
 
-    m_model = model;
+    AbstractPropEditor::setModel(model);
 }
 
-TreeXmlHashModel *PropRef::model()
-{
-    return m_model;
-}
-
-void PropRef::setCurrentRef(const QModelIndex &index)
+void PropRef::setCurrent(const QModelIndex &index)
 {
     refWidget->setCurrent(index);
 }
@@ -68,20 +63,6 @@ void PropRef::setTabName(const QModelIndex &index)
     this->setObjectName("PropRef::" + id);
     subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));
     subWindow->setWindowTitle(refItemName);
-}
-
-void PropRef::closeTab(const QModelIndex &index)
-{
-    Q_UNUSED(index);
-
-    QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
-    subWindow->close();
-}
-
-QVariant PropRef::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
-{
-    return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                      tag,attr)).data();
 }
 
 void PropRef::edit(bool flag)

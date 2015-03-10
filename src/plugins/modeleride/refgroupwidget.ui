@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RTPTechGroup::ModelerIde::PropEntity</class>
- <widget class="QWidget" name="RTPTechGroup::ModelerIde::PropEntity">
+ <class>RTPTechGroup::ModelerIde::RefGroupWidget</class>
+ <widget class="QWidget" name="RTPTechGroup::ModelerIde::RefGroupWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>261</width>
-    <height>105</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutPropTool">
      <property name="spacing">
       <number>0</number>
      </property>
      <item>
-      <widget class="QToolButton" name="toolButtonAddEntity">
+      <widget class="QToolButton" name="toolButtonAdd">
        <property name="text">
         <string>Добавить</string>
        </property>
@@ -43,7 +43,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="toolButtonEditEntity">
+      <widget class="QToolButton" name="toolButtonEdit">
        <property name="text">
         <string>Изменить</string>
        </property>
@@ -66,7 +66,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="toolButtonDelEntity">
+      <widget class="QToolButton" name="toolButtonDel">
        <property name="text">
         <string>Удалить</string>
        </property>
@@ -104,10 +104,50 @@
     </layout>
    </item>
    <item>
-    <widget class="EntityWidget" name="entityWidget" native="true"/>
+    <widget class="QGroupBox" name="groupBoxRefGroup">
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelRefGroupName">
+        <property name="text">
+         <string>Имя группы:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lineEditRefGroupName"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelRefGroupDesc">
+        <property name="text">
+         <string>Описание группы:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lineEditRefGroupDesc">
+        <property name="maxLength">
+         <number>256</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
-    <widget class="UnitWidget" name="unitWidget" native="true"/>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>144</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutPropSave">
@@ -155,20 +195,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>EntityWidget</class>
-   <extends>QWidget</extends>
-   <header>entitywidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>UnitWidget</class>
-   <extends>QWidget</extends>
-   <header>unitwidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="modeleride.qrc"/>
  </resources>

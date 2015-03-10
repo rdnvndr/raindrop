@@ -38,9 +38,11 @@ void XmlDelegate::setEditorData(QWidget * editor, const QModelIndex & index) con
     if (index.isValid()) {
         // Логическое
         if (index.data(Qt::EditRole).type() == QVariant::Bool) {
-            QCheckBox *pRes = static_cast<QCheckBox*>(editor);
-            pRes->setChecked(index.model()->data(index, Qt::EditRole).toBool());
-            return;
+            QCheckBox *checkBox = dynamic_cast<QCheckBox*>(editor);
+            if (checkBox) {
+                checkBox->setChecked(index.model()->data(index, Qt::EditRole).toBool());
+                return;
+            }
         }
 
         TreeComboBox* treeComboBox = dynamic_cast<TreeComboBox*>(editor);
