@@ -332,8 +332,10 @@ bool ModelerIDEPlug::isRemove(const QModelIndex &srcIndex)
     if (srcIndex.data(TreeXmlModel::TagRole) == DBUNITXML::UNIT)
         return MsrUnitWidget::isRemove(srcIndex);
 
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBCLASSXML::CLASS)
-        return ClassWidget::isRemove(srcIndex);
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBCLASSXML::CLASS) {
+        ClassWidget classWidget;
+        return classWidget.isRemove(srcIndex);
+    }
 
     if (srcIndex.data(TreeXmlModel::TagRole) == DBLOVXML::LOV)
         return LovWidget::isRemove(srcIndex);
