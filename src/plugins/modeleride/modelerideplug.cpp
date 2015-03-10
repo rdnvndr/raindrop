@@ -16,6 +16,7 @@
 #include "propentity.h"
 #include "propentitygroup.h"
 #include "lovwidget.h"
+#include "refgroupwidget.h"
 #include "proplov.h"
 #include "proprefgroup.h"
 #include "propref.h"
@@ -344,8 +345,10 @@ bool ModelerIDEPlug::isRemove(const QModelIndex &srcIndex)
         return lovWidget.isRemove(srcIndex);
     }
 
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBREFGROUPXML::REFGROUP)
-        return PropRefGroup::isRemove(srcIndex);
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBREFGROUPXML::REFGROUP) {
+        RefGroupWidget refGroupWidget;
+        return refGroupWidget.isRemove(srcIndex);
+    }
 
     if (srcIndex.data(TreeXmlModel::TagRole) == DBREFXML::REF) {
         RefWidget refWidget;

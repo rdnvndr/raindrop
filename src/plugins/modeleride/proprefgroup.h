@@ -32,35 +32,6 @@ public:
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
 
-    //! Проверка на возможность удаления группы справочника
-    static bool isRemove(const QModelIndex &srcIndex);
-
-    //! Проверка запонена ли имя сущности группы справочника
-    bool isEmpty();
-
-public slots:
-    //! Добавление сущности группы справочника
-    void add();
-
-    //! Удаление сущности группы справочника
-    void remove();
-
-    //! Удаление пустой сущности группы справочника
-    bool removeEmpty();
-
-signals:
-    //! Сигнал об изменении данных
-    void dataChanged(const QModelIndex &index);
-
-    //! Сигнал об удалении данных
-    void dataRemoved(const QModelIndex &index);
-
-    //! Сигнал об изменении текущей группы справочника
-    void currentIndexChanged(const QModelIndex &index);
-
-    //! Сигнал о редактировании группы справочника
-    void edited(bool flag);
-
 public slots:
     //! Установка текущей группы справочника
     void setCurrent(const QModelIndex &index);
@@ -70,22 +41,6 @@ public slots:
 
     //! Перевод группы справочника в режим редактирования
     void edit(bool flag = true);
-
-    //! Применение изменений группы справочника
-    void submit();
-
-    //! Отмена изменений группы справочника
-    void revert();
-
-    //! Удаление группы справочника
-    void rowsRemoved(const QModelIndex &index,int start,int end);
-
-private:
-    //! Mapper для свойств группы справочника
-    QDataWidgetMapper* m_mapper;
-
-    //! Хранит индекс предыдущей активной группы сущности ЕИ
-    QPersistentModelIndex  m_oldIndex;
 };
 
 }}
