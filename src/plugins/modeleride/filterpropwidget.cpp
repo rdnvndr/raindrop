@@ -14,7 +14,7 @@ namespace RTPTechGroup {
 namespace ModelerIde {
 
 FilterPropWidget::FilterPropWidget(QWidget *parent) :
-    QWidget(parent)
+    AbstractEditorWidget(parent)
 {
     setupUi(this);
 
@@ -34,10 +34,6 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     actionAddSubBlock = menuAddCondition->addAction(QIcon(":/block"),tr("Подблок"));
 
     toolButtonCondAdd->setMenu(menuAddCondition);
-
-    m_mapper = new QDataWidgetMapper();
-    m_mapper->setItemDelegate(new XmlDelegate(this));
-    m_mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
     m_conditionModel = new ConditionProxyModel();
     treeViewCondition->setItemDelegate(new ConditionDelegate(this));
@@ -62,14 +58,12 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     connect(toolButtonCondAdd,SIGNAL(clicked()),toolButtonCondAdd,SLOT(showMenu()));
     connect(toolButtonCondDel,SIGNAL(clicked()),this,SLOT(removeCondition()));
 
-    m_oldIndex = QModelIndex();
 }
 
 FilterPropWidget::~FilterPropWidget()
 {
     delete lineEditName->validator();
     delete m_conditionModel;
-    delete m_mapper;
     delete actionAddBlock;
     delete actionAddCondition;
     delete actionAddSubBlock;
@@ -79,17 +73,12 @@ FilterPropWidget::~FilterPropWidget()
 
 void FilterPropWidget::setModel(TreeXmlHashModel *model)
 {
-    m_model = model;
-    connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
-            this,SLOT(rowsRemoved(QModelIndex,int,int)));
-
-    m_mapper->setModel(m_model);
-
+    AbstractEditorWidget::setModel(model);
 
     QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
     classFilterModel->setFilterKeyColumn(0);
     classFilterModel->setFilterRole(TreeXmlModel::TagRole);
-    classFilterModel->setSourceModel(m_model);
+    classFilterModel->setSourceModel(model);
     classFilterModel->setFilterRegExp(DBCLASSXML::CLASS + "|" +
                                       DBMODELXML::MODEL + "|" +
                                       DBCLASSLISTXML::CLASSLIST);
@@ -97,30 +86,30 @@ void FilterPropWidget::setModel(TreeXmlHashModel *model)
     classFilterModel->sort(0);
     comboBoxDestClass->setModel(classFilterModel);
     comboBoxDestClass->setRootModelIndex(classFilterModel->index(0,0).child(0,0));
-    comboBoxDestClass->setIndexColumn(m_model->columnDisplayedAttr(
+    comboBoxDestClass->setIndexColumn(model->columnDisplayedAttr(
                                           DBCLASSXML::CLASS, DBCLASSXML::ID));
     comboBoxDestClass->setCurrentModelIndex(
                 classFilterModel->index(0,0).child(0,0).child(0,0));
 
-    m_mapper->addMapping(lineEditName,
+    dataMapper()->addMapping(lineEditName,
                          model->columnDisplayedAttr(DBFILTERXML::FILTER,
                                                    DBFILTERXML::NAME));
-    m_mapper->addMapping(lineEditAlias,
+    dataMapper()->addMapping(lineEditAlias,
                          model->columnDisplayedAttr(DBFILTERXML::FILTER,
                                                    DBFILTERXML::ALIAS));
 
-    m_mapper->addMapping(lineEditDirectDesc,
+    dataMapper()->addMapping(lineEditDirectDesc,
                          model->columnDisplayedAttr(DBFILTERXML::FILTER,
                                                    DBFILTERXML::DIRECTDESCRIPTION));
 
-    m_mapper->addMapping(lineEditInverseDesc,
+    dataMapper()->addMapping(lineEditInverseDesc,
                          model->columnDisplayedAttr(DBFILTERXML::FILTER,
                                                    DBFILTERXML::INVERSEDESCRIPTION));
-    m_mapper->addMapping(lineEditSrcClass,
+    dataMapper()->addMapping(lineEditSrcClass,
                          model->columnDisplayedAttr(DBFILTERXML::FILTER,
                                                    DBFILTERXML::PARENT));
 
-    m_mapper->addMapping(comboBoxDestClass,
+    dataMapper()->addMapping(comboBoxDestClass,
                          model->columnDisplayedAttr(DBFILTERXML::FILTER,
                                                    DBFILTERXML::CLASS));
 
@@ -136,28 +125,14 @@ void FilterPropWidget::setModel(TreeXmlHashModel *model)
     treeViewCondition->setColumnWidth(3, 75);
 }
 
-void FilterPropWidget::add()
+bool FilterPropWidget::isEmpty()
 {
-    m_oldIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
-    QModelIndex srcIndex = m_oldIndex.parent();
-
-    QModelIndex srcCurrentIndex =
-            m_model->insertLastRows(0,1,srcIndex, DBFILTERXML::FILTER);
-    if (srcCurrentIndex.isValid()){
-        setCurrent(srcCurrentIndex);
-        edit(true);
-    }
+    return lineEditName->text().isEmpty();
 }
 
-void FilterPropWidget::remove()
+void FilterPropWidget::add()
 {
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(), 0,
-                                          m_mapper->rootIndex());
-    m_mapper->revert();
-    setCurrent(QModelIndex());
-
-    m_model->removeRow(srcIndex.row(),srcIndex.parent());
-    emit dataRemoved(srcIndex);
+    AbstractEditorWidget::add(DBFILTERXML::FILTER);
 }
 
 void FilterPropWidget::addSubCondition()
@@ -215,29 +190,21 @@ void FilterPropWidget::addBlock()
             parent = treeViewCondition->currentIndex().parent();
 
     QModelIndex index = m_conditionModel->insertLastRows(0,1,parent);
-    m_conditionModel->setData(index, DBFILTERBLOCKXML::BLOCK, TreeXmlModel::TagRole);
+    m_conditionModel->setData(index, DBFILTERBLOCKXML::BLOCK,
+                              TreeXmlModel::TagRole);
     m_conditionModel->setData(index.sibling(index.row(),3),tr("И"));
 }
 
 void FilterPropWidget::setCurrent(const QModelIndex &index)
 {
-    if (m_mapper->rootIndex() == index.parent() &&
-            index.row() == m_mapper->currentIndex())
-        return;
-
-    m_mapper->setRootIndex(index.parent());
-    m_mapper->setCurrentModelIndex(index);
-
-    edit(false);
-
     ConditionDelegate *conditionDelegate =
             qobject_cast<ConditionDelegate *>(treeViewCondition->itemDelegate());
     conditionDelegate->setFirstIndex(index.parent());
 
     treeViewCondition->setRootIndex(m_conditionModel->mapFromSource(index));
-
-    emit currentIndexChanged(index);
     changeDestClass(comboBoxDestClass->displayText());
+
+    AbstractEditorWidget::setCurrent(index);
 }
 
 bool FilterPropWidget::isEdit()
@@ -250,7 +217,7 @@ void FilterPropWidget::edit(bool flag)
     if (isEdit()==flag)
         return;
 
-    if (lineEditName->text().isEmpty()){
+    if (isEmpty()){
         toolButtonAdd->setDisabled(true);
         flag = true;
     }else
@@ -267,13 +234,13 @@ void FilterPropWidget::edit(bool flag)
 
 void FilterPropWidget::submit()
 {
-    QModelIndex rootIndex = m_mapper->rootIndex();
-    QModelIndex srcIndex = m_model->index(
-                m_mapper->currentIndex(),0,m_mapper->rootIndex());
+    QModelIndex rootIndex = dataMapper()->rootIndex();
+    QModelIndex srcIndex = model()->index(
+                dataMapper()->currentIndex(),0,dataMapper()->rootIndex());
     int filterNameColumn =
-            m_model->columnDisplayedAttr(DBFILTERXML::FILTER, DBFILTERXML::NAME);
+            model()->columnDisplayedAttr(DBFILTERXML::FILTER, DBFILTERXML::NAME);
     int row=0;
-    QModelIndex childIndex = m_model->index(row, filterNameColumn, rootIndex);
+    QModelIndex childIndex = model()->index(row, filterNameColumn, rootIndex);
     while (childIndex.isValid())
     {
         if (childIndex.data(TreeXmlModel::TagRole) == DBFILTERXML::FILTER)
@@ -283,37 +250,16 @@ void FilterPropWidget::submit()
                                      tr("Фильтр с таким именем уже существует"));
                 return;
             }
-         childIndex = m_model->index(++row, filterNameColumn, rootIndex);
+         childIndex = model()->index(++row, filterNameColumn, rootIndex);
     }
 
-    m_mapper->submit();
+    AbstractEditorWidget::submit();
     m_conditionModel->submitAll();
-
-    edit(false);
-    if (!removeEmpty())
-        emit dataChanged(srcIndex);
-}
-
-void FilterPropWidget::revert()
-{
-    m_mapper->revert();
-    m_conditionModel->revertAll();
-    edit(false);
-    removeEmpty();
-
-}
-
-void FilterPropWidget::rowsRemoved(const QModelIndex &index, int start, int end)
-{
-    Q_UNUSED (start)
-    Q_UNUSED (end)
-    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1)
-        emit dataRemoved(QModelIndex());
 }
 
 void FilterPropWidget::changeDestClass(const QString &nameClass)
 {
-    QModelIndex index = m_model->indexHashAttr(
+    QModelIndex index = model()->indexHashAttr(
                 DBCLASSXML::CLASS, DBCLASSXML::NAME, nameClass);
 
     ConditionDelegate *conditionDelegate =
@@ -330,30 +276,6 @@ void FilterPropWidget::validateFilterName(QValidator::State state) const
                               "символы и цифры длиной не более 27 символов"));
     else
         QToolTip::hideText();
-}
-
-QVariant FilterPropWidget::modelData(const QString &tag, const QString &attr,
-                                     const QModelIndex &index)
-{
-    return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                             tag,attr)).data();
-}
-
-bool FilterPropWidget::removeEmpty()
-{
-    if (lineEditName->text().isEmpty()){
-        if (m_oldIndex.isValid()){
-            QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
-            m_mapper->revert();
-            setCurrent(m_oldIndex);
-            m_model->removeRow(srcIndex.row(),srcIndex.parent());
-            m_oldIndex = QModelIndex();
-        }else {
-            remove();
-        }
-        return true;
-    }
-    return false;
 }
 
 }}
