@@ -315,58 +315,12 @@ QString ModelerIDEPlug::dataId(const QModelIndex &index)
     return "";
 }
 
-bool ModelerIDEPlug::isRemove(const QModelIndex &srcIndex)
-{
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBMODELXML::MODEL
-            || srcIndex.data(TreeXmlModel::TagRole) == DBCLASSLISTXML::CLASSLIST
-            || srcIndex.data(TreeXmlModel::TagRole) == DBENTITYLISTXML::ENTITYLIST
-            || srcIndex.data(TreeXmlModel::TagRole) == DBLOVLISTXML::LOVLIST)
-    {
-        return false;
-    }
-
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBENTITYGROUPXML::ENTITYGROUP) {
-        EntityGroupWidget entityGroupWidget;
-        return entityGroupWidget.isRemove(srcIndex);
-    }
-
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBENTITYXML::ENTITY) {
-        EntityWidget entityWidget;
-        return entityWidget.isRemove(srcIndex);
-    }
-
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBUNITXML::UNIT)
-        return UnitWidget::isRemove(srcIndex);
-
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBCLASSXML::CLASS) {
-        ClassWidget classWidget;
-        return classWidget.isRemove(srcIndex);
-    }
-
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBLOVXML::LOV) {
-        LovWidget lovWidget;
-        return lovWidget.isRemove(srcIndex);
-    }
-
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBREFGROUPXML::REFGROUP) {
-        RefGroupWidget refGroupWidget;
-        return refGroupWidget.isRemove(srcIndex);
-    }
-
-    if (srcIndex.data(TreeXmlModel::TagRole) == DBREFXML::REF) {
-        RefWidget refWidget;
-        return refWidget.isRemove(srcIndex);
-    }
-
-    return true;
-}
-
 void ModelerIDEPlug::remove()
 {
     QModelIndex currentIndex = m_treeClassView->currentIndex();
 
     if (currentIndex.isValid()){
-        if (!isRemove(currentIndex))
+        if (!m_model->isRemove(currentIndex))
             return;
         m_model->removeRow(currentIndex.row(),currentIndex.parent());
     } else

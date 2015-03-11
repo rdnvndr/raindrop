@@ -3,6 +3,8 @@
 #include <QToolTip>
 
 #include <metadatamodel/dbxmlstruct.h>
+#include <metadatamodel/classmodelxml.h>
+
 #include "xmldelegate.h"
 #include "regexpvalidator.h"
 
@@ -89,117 +91,6 @@ void ClassWidget::add()
 {
     if (AbstractEditorWidget::add(DBCLASSXML::CLASS))
         comboBoxClassType->setCurrentIndex(0);
-}
-
-// Метод совпадает с bool ModelerIDEPlug::isRemoveClass(const QModelIndex &srcIndex)
-bool ClassWidget::isRemove(const QModelIndex &srcIndex)
-{
-    const TreeXmlHashModel *model = dynamic_cast<const TreeXmlHashModel *>(srcIndex.model());
-    if (!model)
-        return false;
-
-    bool success = true;
-    QString msg;
-
-    QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
-    QStringList tags;
-    tags << tag;
-    if (model->rowCount(srcIndex,tags)) {
-        msg += tr("Необходимо удалить классы-потомки.\n\n");
-        if (success)
-            success = false;
-    }
-
-    QString fieldId = model->uuidAttr(tag);
-    if (fieldId.isEmpty())
-        return true;
-
-    QString guid =  srcIndex.sibling(srcIndex.row(),
-                                     model->columnDisplayedAttr(
-                                         tag,fieldId))
-            .data().toString();
-
-    foreach (TreeXmlHashModel::TagWithAttr tagWithAttr,
-             model->fromRelation(tag))
-    {
-        int number = 0;
-
-        QModelIndex linkIndex = model->indexHashAttr(
-                    tagWithAttr.tag,
-                    tagWithAttr.attr,
-                    guid,
-                    number
-                    );
-
-        while (linkIndex.isValid()) {
-            QModelIndex linkParent = linkIndex.parent();
-            if (linkParent.sibling(linkIndex.parent().row(),0)!= srcIndex){
-                QString parentName;
-                QString name;
-                if (linkIndex.data(TreeXmlModel::TagRole) == DBCLASSXML::CLASS) {
-                    name = tr("класс ")
-                            + linkIndex.sibling(linkIndex.row(),
-                                                model->columnDisplayedAttr(
-                                                    DBCLASSXML::CLASS,
-                                                    DBCLASSXML::NAME)
-                                                ).data().toString();
-                } else {
-                    if (linkParent.data(TreeXmlModel::TagRole) == DBCOMPXML::COMP)
-                        parentName = tr(" принадлежащий составу ")
-                                + linkParent.sibling(
-                                    linkParent.row(),
-                                    model->columnDisplayedAttr(
-                                        DBCOMPXML::COMP,
-                                        DBCOMPXML::NAME)
-                                    ).data().toString();
-                    else
-                        parentName = tr(" принадлежащий классу ")
-                                + linkParent.sibling(
-                                    linkParent.row(),
-                                    model->columnDisplayedAttr(
-                                        DBCLASSXML::CLASS,
-                                        DBCLASSXML::NAME)
-                                    ).data().toString();
-
-                    if  (linkIndex.data(TreeXmlModel::TagRole) == DBCOMPXML::COMP)
-                        name = tr("состав ")
-                                + linkIndex.sibling(linkIndex.row(),
-                                                    model->columnDisplayedAttr(
-                                                        DBCOMPXML::COMP,
-                                                        DBCOMPXML::NAME)
-                                                    ).data().toString();
-                    else
-                        name = tr("атрибут ")
-                                + linkIndex.sibling(linkIndex.row(),
-                                                    model->columnDisplayedAttr(
-                                                        DBATTRXML::ATTR,
-                                                        DBATTRXML::NAME)
-                                                    ).data().toString();
-
-                }
-                msg += QString(tr("Необходимо удалить %1%2.\n\n")).
-                        arg(name).arg(parentName);
-                if (success)
-                    success = false;
-            }
-            number++;
-            linkIndex = model->indexHashAttr(
-                        tagWithAttr.tag,
-                        tagWithAttr.attr,
-                        guid,
-                        number
-                        );
-        }
-    }
-    if (!success) {
-        QMessageBox msgBox;
-        msgBox.setText(tr("Удаление данного объекта не воможно."));
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setDetailedText(msg);
-        msgBox.setWindowTitle(tr("Предупреждение"));
-        msgBox.exec();
-    }
-    return success;
 }
 
 void ClassWidget::setCurrent(const QModelIndex &index)

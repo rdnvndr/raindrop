@@ -1,6 +1,9 @@
 #include "abstracteditorwidget.h"
 
+#include <metadatamodel/classmodelxml.h>
 #include "xmldelegate.h"
+
+using namespace RTPTechGroup::MetaDataModel;
 
 namespace RTPTechGroup {
 namespace ModelerIde {
@@ -36,6 +39,17 @@ TreeXmlHashModel *AbstractEditorWidget::model()
 QDataWidgetMapper *AbstractEditorWidget::dataMapper()
 {
     return m_mapper;
+}
+
+bool AbstractEditorWidget::isRemove(const QModelIndex &srcIndex)
+{
+    ClassModelXml *model = const_cast<ClassModelXml *>(
+                dynamic_cast<const ClassModelXml *>(srcIndex.model()));
+
+    if (!model)
+        return false;
+
+    return model->isRemove(srcIndex);
 }
 
 bool AbstractEditorWidget::add(const QString &tag)

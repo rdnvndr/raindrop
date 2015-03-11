@@ -33,9 +33,6 @@ public:
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
 
-    //! Проверка на возможность удаления списка значений
-    bool isRemove(const QModelIndex &srcIndex);
-
     //! Проверка запонено ли имя списка значений
     bool isEmpty();
 

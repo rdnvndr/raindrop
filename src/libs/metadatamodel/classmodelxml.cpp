@@ -1,6 +1,10 @@
 #include "classmodelxml.h"
-#include "dbxmlstruct.h"
+
+#include <QMessageBox>
+
 #include <treexmlmodel/tagxmlitem.h>
+
+#include "dbxmlstruct.h"
 
 namespace  RTPTechGroup {
 namespace  MetaDataModel {
@@ -550,6 +554,137 @@ bool ClassModelXml::removeRows(int row, int count, const QModelIndex &parent)
     }
 
     return TreeXmlHashModel::removeRows(row, count, parent);
+}
+
+bool ClassModelXml::isRemove(const QModelIndex &srcIndex)
+{
+    QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
+    if (tag == DBMODELXML::MODEL
+            || tag == DBCLASSLISTXML::CLASSLIST
+            || tag == DBENTITYLISTXML::ENTITYLIST
+            || tag == DBLOVLISTXML::LOVLIST)
+    {
+        return false;
+    }
+
+    const TreeXmlHashModel *model = dynamic_cast<const TreeXmlHashModel *>(srcIndex.model());
+    if (!model) return false;
+
+    bool success = true;
+    QString msg;
+
+    if (tag == DBENTITYGROUPXML::ENTITYGROUP) {
+        QStringList tags(QStringList() << DBENTITYXML::ENTITY);
+        if (model->hasChildren(srcIndex, tags)) {
+            msg += tr("Необходимо удалить сущности ЕИ.\n\n");
+            success = false;
+        }
+    } else if (tag == DBENTITYXML::ENTITY) {
+        QStringList tags(QStringList() << DBUNITXML::UNIT);
+        if (model->hasChildren(srcIndex, tags)) {
+            msg += tr("Необходимо удалить ЕИ.\n\n");
+            success = false;
+        }
+    } else if (tag == DBCLASSXML::CLASS) {
+        QStringList tags(QStringList() << DBCLASSXML::CLASS);
+        if (model->hasChildren(srcIndex,tags)) {
+            msg += tr("Необходимо удалить классы-потомки.\n\n");
+            if (success)
+                success = false;
+        }
+    } else if (tag == DBLOVXML::LOV) {
+       QStringList tags(QStringList() << DBCLASSXML::CLASS);
+       if (model->hasChildren(srcIndex, tags)) {
+           msg += tr("Необходимо удалить значение списка.\n\n");
+           success = false;
+       }
+    } else if (tag == DBREFGROUPXML::REFGROUP) {
+        QStringList tags(QStringList() << DBREFXML::REF);
+        if (model->hasChildren(srcIndex,tags)) {
+            msg += tr("Необходимо удалить справочник.\n\n");
+            success = false;
+        }
+    } else if (tag == DBREFXML::REF) {
+        QStringList tags(QStringList() << DBLINKTOCLASSXML::LINKTOCLASS
+                                       << DBLINKTOFILTERXML::LINKTOFILTER);
+        if (model->hasChildren(srcIndex,tags)) {
+            msg += tr("Необходимо удалить элементы справочника.\n\n");
+            success = false;
+        }
+    } else {
+        QString fieldId = model->uuidAttr(tag);
+        if (fieldId.isEmpty())
+            return true;
+
+        QString guid = srcIndex.sibling(srcIndex.row(),
+                                        model->columnDisplayedAttr(tag,fieldId)
+                                        ).data().toString();
+
+        foreach (TreeXmlHashModel::TagWithAttr tagWithAttr, model->fromRelation(tag))
+        {
+            int number = 0;
+            QModelIndex linkIndex = model->indexHashAttr(
+                        tagWithAttr.tag,
+                        tagWithAttr.attr,
+                        guid,
+                        number
+                        );
+
+            while (linkIndex.isValid() && guid!="") {
+                QModelIndex linkParent = linkIndex.parent();
+                if (linkParent.sibling(linkIndex.parent().row(),0)!= srcIndex){
+                    QString parentName;
+                    QString name;
+
+                    if (linkParent.data(TreeXmlModel::TagRole) == DBCOMPXML::COMP)
+                        parentName = tr(" принадлежащий составу ")
+                                + linkParent.sibling(
+                                    linkParent.row(),
+                                    model->columnDisplayedAttr(
+                                        DBCOMPXML::COMP,
+                                        DBCOMPXML::NAME)
+                                    ).data().toString();
+                    else
+                        parentName = tr(" принадлежащий классу ")
+                                + linkParent.sibling(
+                                    linkParent.row(),
+                                    model->columnDisplayedAttr(
+                                        DBCLASSXML::CLASS,
+                                        DBCLASSXML::NAME)
+                                    ).data().toString();
+
+                    name = tr("атрибут ")
+                            + linkIndex.sibling(linkIndex.row(),
+                                                model->columnDisplayedAttr(
+                                                    DBATTRXML::ATTR,
+                                                    DBATTRXML::NAME)
+                                                ).data().toString();
+
+                    msg += QString(tr("Необходимо удалить %1%2.\n\n")).
+                            arg(name).arg(parentName);
+                    if (success)
+                        success = false;
+                }
+                number++;
+                linkIndex = model->indexHashAttr(
+                            tagWithAttr.tag,
+                            tagWithAttr.attr,
+                            guid,
+                            number
+                            );
+            }
+        }
+    }
+
+    if (!success) {
+        QMessageBox msgBox;
+        msgBox.setText(tr("Удаление данного объекта не воможно."));
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setDetailedText(msg);
+        msgBox.setWindowTitle(tr("Предупреждение"));
+        msgBox.exec();
+    }
+    return success;
 }
 
 }}

@@ -34,9 +34,6 @@ public:
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
 
-    //! Проверка на возможность удаления группы справочника
-    bool isRemove(const QModelIndex &srcIndex);
-
     //! Проверка запонена ли имя сущности группы справочника
     bool isEmpty();
 

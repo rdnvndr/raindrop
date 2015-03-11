@@ -34,9 +34,6 @@ public:
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
 
-    //! Проверка на возможность удаления сущности ЕИ
-    bool isRemove(const QModelIndex &srcIndex);
-
     //! Проверка запонено ли имя сущности ЕИ
     bool isEmpty();
 

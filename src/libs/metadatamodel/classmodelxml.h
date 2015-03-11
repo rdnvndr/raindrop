@@ -17,7 +17,7 @@ namespace  MetaDataModel {
 
 class METADATAMODELLIB ClassModelXml : public TreeXmlHashModel
 {
-
+    Q_OBJECT
 public:
     //! Конструктор класса
     explicit ClassModelXml(QDomNode document = QDomNode(), QObject *parent = 0);
@@ -31,6 +31,9 @@ public:
 
     //! Удаление строки
     bool removeRows (int row, int count, const QModelIndex & parent);
+
+    //! Проверка на возможность удаления элементов
+    bool isRemove(const QModelIndex &srcIndex);
 
 private:
     //! Добавления дегов для работы
