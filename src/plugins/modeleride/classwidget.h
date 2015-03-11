@@ -35,9 +35,6 @@ public:
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
 
-    //! Проверка на возможность удаления класса
-    bool isRemove(const QModelIndex &srcIndex);
-
 public slots:
     //! Добавление класса
     void add();

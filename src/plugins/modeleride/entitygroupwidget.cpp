@@ -38,32 +38,6 @@ void EntityGroupWidget::setModel(TreeXmlHashModel *model)
                                                    DBENTITYGROUPXML::DESCRIPTION));
 }
 
-bool EntityGroupWidget::isRemove(const QModelIndex &srcIndex)
-{
-    const TreeXmlHashModel *model = dynamic_cast<const TreeXmlHashModel *>(srcIndex.model());
-    if (!model)
-        return false;
-
-    bool success = true;
-    QString msg;
-
-    QStringList tags;
-    tags << DBENTITYXML::ENTITY;
-    if (model->hasChildren(srcIndex,tags)) {
-        msg += tr("Необходимо удалить сущности ЕИ.\n\n");
-        success = false;
-    }
-    if (!success) {
-        QMessageBox msgBox;
-        msgBox.setText(tr("Удаление данного объекта не воможно."));
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setDetailedText(msg);
-        msgBox.setWindowTitle(tr("Предупреждение"));
-        msgBox.exec();
-    }
-    return success;
-}
-
 bool EntityGroupWidget::isEmpty()
 {
     return lineEditEntityGroupName->text().isEmpty();

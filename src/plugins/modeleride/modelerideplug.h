@@ -77,9 +77,6 @@ public:
     //! Получение имени по индексу
     QString dataName(const QModelIndex &index);
 
-    //! Проверка на возможность удаления элементов
-    bool isRemove(const QModelIndex &srcIndex);
-
     //! Получение индетификатора по индексу
     QString dataId(const QModelIndex &index);
 
