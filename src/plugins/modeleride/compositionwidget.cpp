@@ -19,9 +19,9 @@ CompositionWidget::CompositionWidget(QWidget *parent) :
 
     QStringList tags;
     tags << DBCOMPXML::COMP;
-    tableModel()->setAttributeTags(tags);
+    proxyModel()->setAttributeTags(tags);
 
-    setTableView(tableViewComp);
+    setItemView(tableViewComp);
 
     connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));
     connect(toolButtonDelete,SIGNAL(clicked()),this,SLOT(remove()));
@@ -45,20 +45,20 @@ void CompositionWidget::setModel(TreeXmlHashModel *model)
 {
     AbstractItemWidget::setModel(model);
 
-    tableModel()->setSourceModel(model);
-    tableModel()->setHeaderData(0, Qt::Horizontal, tr("Состав"));
-    tableModel()->setHeaderData(1, Qt::Horizontal, tr("Псевдоним"));
-    tableModel()->setHeaderData(2, Qt::Horizontal, tr("Исходный класс"));
-    tableModel()->setHeaderData(3, Qt::Horizontal, tr("Входящий класс"));
-    tableModel()->setHeaderData(4, Qt::Horizontal, tr("Представление"));
-    tableModel()->setHeaderData(5, Qt::Horizontal, tr("Композиция"));
-    tableModel()->setHeaderData(6, Qt::Horizontal, tr("Описание включения"));
-    tableModel()->setHeaderData(7, Qt::Horizontal, tr("Описание вхождения"));
-    tableModel()->setHeaderData(8, Qt::Horizontal, tr("Индетификатор"));
-    tableModel()->setColumnCount(9);
-    tableModel()->setDynamicSortFilter(true);
+    proxyModel()->setSourceModel(model);
+    proxyModel()->setHeaderData(0, Qt::Horizontal, tr("Состав"));
+    proxyModel()->setHeaderData(1, Qt::Horizontal, tr("Псевдоним"));
+    proxyModel()->setHeaderData(2, Qt::Horizontal, tr("Исходный класс"));
+    proxyModel()->setHeaderData(3, Qt::Horizontal, tr("Входящий класс"));
+    proxyModel()->setHeaderData(4, Qt::Horizontal, tr("Представление"));
+    proxyModel()->setHeaderData(5, Qt::Horizontal, tr("Композиция"));
+    proxyModel()->setHeaderData(6, Qt::Horizontal, tr("Описание включения"));
+    proxyModel()->setHeaderData(7, Qt::Horizontal, tr("Описание вхождения"));
+    proxyModel()->setHeaderData(8, Qt::Horizontal, tr("Индетификатор"));
+    proxyModel()->setColumnCount(9);
+    proxyModel()->setDynamicSortFilter(true);
 
-    tableViewComp->setModel(tableModel());
+    tableViewComp->setModel(proxyModel());
     tableViewComp->setColumnHidden(8,true);
 
     QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
@@ -81,7 +81,7 @@ void CompositionWidget::setModel(TreeXmlHashModel *model)
     comboBoxLinkClass->setIndexColumn(model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                                  DBCLASSXML::ID));
 
-    dataMapper()->setModel(tableModel());
+    dataMapper()->setModel(proxyModel());
     dataMapper()->addMapping(lineEditAlias,
                              model->columnDisplayedAttr(DBCOMPXML::COMP,
                                                         DBCOMPXML::ALIAS));
@@ -124,12 +124,12 @@ void CompositionWidget::edit(bool flag)
     QModelIndex currentIndex = tableViewComp->currentIndex();
 
     if (flag==false){
-        QModelIndex mapIndex = tableModel()->index(
+        QModelIndex mapIndex = proxyModel()->index(
                     dataMapper()->currentIndex(),
                     model()->columnDisplayedAttr(DBCOMPXML::COMP,DBCOMPXML::LINKCLASS),
                     dataMapper()->rootIndex());
         if (mapIndex.data().toString().isEmpty())
-            tableModel()->removeRow(dataMapper()->currentIndex(),
+            proxyModel()->removeRow(dataMapper()->currentIndex(),
                                     dataMapper()->rootIndex());
     }
 
@@ -159,7 +159,7 @@ void CompositionWidget::submit()
     int nameColumn = model()->columnDisplayedAttr(DBCOMPXML::COMP, DBCOMPXML::LINKCLASS);
 
     int row = 0;
-    QModelIndex childIndex = tableModel()->index(row, nameColumn, rootIndex);
+    QModelIndex childIndex = proxyModel()->index(row, nameColumn, rootIndex);
     while (childIndex.isValid())
     {
         if (comboBoxLinkClass->currentText() == childIndex.data()
@@ -168,7 +168,7 @@ void CompositionWidget::submit()
                                  tr("Состав с таким именем уже существует"));
             return;
         }
-        childIndex = tableModel()->index(++row, nameColumn, rootIndex);
+        childIndex = proxyModel()->index(++row, nameColumn, rootIndex);
     }
     AbstractItemWidget::submit();
 
@@ -182,9 +182,9 @@ bool CompositionWidget::isEdit()
 void CompositionWidget::up()
 {
     QPersistentModelIndex index = tableViewComp->currentIndex();
-    QPersistentModelIndex srcIndex  = tableModel()->mapToSource(index);
+    QPersistentModelIndex srcIndex  = proxyModel()->mapToSource(index);
     QPersistentModelIndex srcParent = srcIndex.parent();
-    int row = tableModel()->mapToSource(index.sibling(index.row()-1,0)).row();
+    int row = proxyModel()->mapToSource(index.sibling(index.row()-1,0)).row();
     if (model()->moveIndex(srcIndex,srcParent,row)) {
         if (row >= 0)
             index = tableViewComp->currentIndex().sibling(index.row()-2,0);
@@ -198,10 +198,10 @@ void CompositionWidget::up()
 void CompositionWidget::down()
 {
     QPersistentModelIndex index = tableViewComp->currentIndex();
-    QPersistentModelIndex srcIndex  = tableModel()->mapToSource(index);
+    QPersistentModelIndex srcIndex  = proxyModel()->mapToSource(index);
     QPersistentModelIndex srcParent = srcIndex.parent();
     QModelIndex indexNew = index.sibling(index.row()+2,0);
-    int row = (indexNew.isValid()) ? tableModel()->mapToSource(indexNew).row()
+    int row = (indexNew.isValid()) ? proxyModel()->mapToSource(indexNew).row()
                                    : model()->rowCount(srcParent,
                                                        model()->tagsFilter(),
                                                        QStringList());
@@ -214,10 +214,10 @@ void CompositionWidget::down()
 
 void CompositionWidget::showParent(bool flag)
 {
-    tableModel()->setFilterRole(Qt::EditRole);
+    proxyModel()->setFilterRole(Qt::EditRole);
 
     if (flag==true){
-        tableModel()->setFilterRegExp("");
+        proxyModel()->setFilterRegExp("");
     } else {
         QModelIndex index = tableViewComp->rootIndex();
         QString className = modelData(DBCLASSXML::CLASS,
@@ -226,11 +226,11 @@ void CompositionWidget::showParent(bool flag)
         className.replace("{","\\{");
         className.replace("}","\\}");
         if (className.isEmpty()){
-            tableModel()->setFilterRegExp("\\S*");
+            proxyModel()->setFilterRegExp("\\S*");
         }else
-            tableModel()->setFilterRegExp(className);
+            proxyModel()->setFilterRegExp(className);
     }
-    tableModel()->setFilterKeyColumn(model()->columnDisplayedAttr(DBCOMPXML::COMP,
+    proxyModel()->setFilterKeyColumn(model()->columnDisplayedAttr(DBCOMPXML::COMP,
                                                                 DBCOMPXML::PARENT));
 }
 

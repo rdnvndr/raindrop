@@ -13,6 +13,10 @@ using namespace RTPTechGroup::XmlModel;
 namespace RTPTechGroup {
 namespace ModelerIde {
 
+//! Диалог редактирования при помощи списка с возможностью отмены изменений
+/*! Диалог предназначен для редактирования при помощи списка
+ *  с возможностью отмены изменений
+ */
 
 class AbstractListEditorWidget : public QWidget
 {

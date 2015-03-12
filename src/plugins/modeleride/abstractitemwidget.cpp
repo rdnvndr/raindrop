@@ -9,7 +9,7 @@ namespace ModelerIde {
 
 AbstractItemWidget::AbstractItemWidget(QWidget *parent) : QWidget(parent)
 {
-    m_tableModel = new TableXMLProxyModel();
+    m_proxyModel = new TableXMLProxyModel();
 
     m_mapper = new QDataWidgetMapper();
     m_mapper->setItemDelegate(new XmlDelegate(this));
@@ -19,15 +19,15 @@ AbstractItemWidget::AbstractItemWidget(QWidget *parent) : QWidget(parent)
 AbstractItemWidget::~AbstractItemWidget()
 {
     delete m_mapper;
-    delete m_tableModel;
+    delete m_proxyModel;
 }
 
 void AbstractItemWidget::setModel(TreeXmlHashModel *model)
 {
     m_model = model;
-    m_tableModel->setSourceModel(m_model);
-    m_tableView->setModel(m_tableModel);
-    m_mapper->setModel(m_tableModel);
+    m_proxyModel->setSourceModel(m_model);
+    m_itemView->setModel(m_proxyModel);
+    m_mapper->setModel(m_proxyModel);
 }
 
 TreeXmlHashModel *AbstractItemWidget::model()
@@ -41,25 +41,25 @@ QVariant AbstractItemWidget::modelData(const QString &tag, const QString &attr, 
                              tag,attr)).data();
 }
 
-void AbstractItemWidget::setTableView(QTableView *tableView)
+void AbstractItemWidget::setItemView(QAbstractItemView *tableView)
 {
-    m_tableView = tableView;
+    m_itemView = tableView;
 
-    m_tableView->setItemDelegate(new XmlDelegate(this));
-    m_tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_itemView->setItemDelegate(new XmlDelegate(this));
+    m_itemView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    connect(m_tableView,SIGNAL(clicked(QModelIndex)),
+    connect(m_itemView,SIGNAL(clicked(QModelIndex)),
             this,SLOT(setCurrent(QModelIndex)));
 }
 
-QTableView *AbstractItemWidget::tableView()
+QAbstractItemView *AbstractItemWidget::itemView()
 {
-    return m_tableView;
+    return m_itemView;
 }
 
-TableXMLProxyModel *AbstractItemWidget::tableModel()
+TableXMLProxyModel *AbstractItemWidget::proxyModel()
 {
-    return m_tableModel;
+    return m_proxyModel;
 }
 
 QDataWidgetMapper *AbstractItemWidget::dataMapper()
@@ -69,11 +69,11 @@ QDataWidgetMapper *AbstractItemWidget::dataMapper()
 
 bool AbstractItemWidget::add(const QString &tag)
 {
-    QModelIndex srcIndex = m_tableModel->mapToSource(m_tableView->rootIndex());
+    QModelIndex srcIndex = m_proxyModel->mapToSource(m_itemView->rootIndex());
     QModelIndex srcCurrentIndex =
             m_model->insertLastRows(0,1,srcIndex, tag);
     if (srcCurrentIndex.isValid()){
-        this->setCurrent(m_tableModel->mapFromSource(srcCurrentIndex));
+        this->setCurrent(m_proxyModel->mapFromSource(srcCurrentIndex));
         edit(true);
         return true;
     }
@@ -84,12 +84,12 @@ bool AbstractItemWidget::add(const QString &tag)
 void AbstractItemWidget::remove()
 {
     edit(false);
-    QModelIndex srcIndex = m_tableModel->mapToSource(m_tableView->rootIndex());
-    QModelIndex curIndex = m_tableModel->mapToSource(m_tableView->currentIndex());
+    QModelIndex srcIndex = m_proxyModel->mapToSource(m_itemView->rootIndex());
+    QModelIndex curIndex = m_proxyModel->mapToSource(m_itemView->currentIndex());
     if (srcIndex.isValid() && curIndex.isValid()){
         emit dataRemoved(srcIndex);
         m_model->removeRow(curIndex.row(),srcIndex);
-        this->setCurrent(m_tableView->currentIndex());
+        this->setCurrent(m_itemView->currentIndex());
     } else
         QMessageBox::warning(NULL,tr("Предупреждение"),
                              tr("Невозможно удалить, поскольку ничего не выбрано."));
@@ -101,7 +101,7 @@ void AbstractItemWidget::setCurrent(const QModelIndex &index)
     if (!index.isValid())
         return;
 
-    m_tableView->setCurrentIndex(index);
+    m_itemView->setCurrentIndex(index);
     m_mapper->setCurrentModelIndex(index);
 
     emit currentIndexChanged(index);
@@ -120,25 +120,25 @@ void AbstractItemWidget::submit()
 void AbstractItemWidget::revert()
 {
     m_mapper->revert();
-    this->setCurrent(m_tableView->currentIndex());
+    this->setCurrent(m_itemView->currentIndex());
     edit(false);
 }
 
 void AbstractItemWidget::setRootIndex(QModelIndex index)
 {
-    QModelIndex rootIndex = m_tableModel->mapToSource(m_tableView->rootIndex());
+    QModelIndex rootIndex = m_proxyModel->mapToSource(m_itemView->rootIndex());
     if (rootIndex == index)
         return;
 
-    m_tableModel->setFilterIndex(index);
-    m_tableModel->setSourceModel(m_model);
+    m_proxyModel->setFilterIndex(index);
+    m_proxyModel->setSourceModel(m_model);
 
-    m_tableView->setRootIndex(m_tableModel->mapFromSource(index));
-    m_tableView->setCurrentIndex(m_tableView->rootIndex().child(0,0));
+    m_itemView->setRootIndex(m_proxyModel->mapFromSource(index));
+    m_itemView->setCurrentIndex(m_itemView->rootIndex().child(0,0));
 
-    m_mapper->setRootIndex(m_tableModel->mapFromSource(index));
+    m_mapper->setRootIndex(m_proxyModel->mapFromSource(index));
 
-    this->setCurrent(m_tableView->rootIndex().child(0,0));
+    this->setCurrent(m_itemView->rootIndex().child(0,0));
 }
 
 }}

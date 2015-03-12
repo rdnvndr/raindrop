@@ -35,17 +35,17 @@ public:
     virtual TreeXmlHashModel *model();
 
     //! Получение прокси модели
-    virtual TableXMLProxyModel *tableModel();
+    virtual TableXMLProxyModel *proxyModel();
 
     //! Получение данных модели
     virtual QVariant modelData(const QString &tag, const QString &attr,
                                const QModelIndex &index);
 
     //! Установка таблицы
-    virtual void setTableView(QTableView *tableView);
+    virtual void setItemView(QAbstractItemView *itemView);
 
     //! Возращает таблицу
-    virtual QTableView *tableView();
+    virtual QAbstractItemView *itemView();
 
     //! Получение маппера данных
     virtual QDataWidgetMapper *dataMapper();
@@ -87,7 +87,7 @@ signals:
 
 private:
     //! Прокси модель
-    TableXMLProxyModel* m_tableModel;
+    TableXMLProxyModel* m_proxyModel;
 
     //! Модель структуры классов
     TreeXmlHashModel* m_model;
@@ -96,7 +96,7 @@ private:
     QDataWidgetMapper* m_mapper;
 
     //! Таблица данных
-    QTableView *m_tableView;
+    QAbstractItemView *m_itemView;
 
 };
 
