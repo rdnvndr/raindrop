@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QAbstractProxyModel>
-#include <QTableView>
+#include <QAbstractItemView>
 
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/modifyproxymodel.h>
@@ -28,16 +28,16 @@ public:
     void setModel(TreeXmlHashModel *model);
 
     //! Возращает прокси модели
-    QAbstractProxyModel* proxyModel();
+    ModifyProxyModel* proxyModel();
 
     //! Проверка на возможность удаления
     static bool isRemove(const QModelIndex &proxyIndex);
 
-    //! Установка таблицы
-    virtual void setTableView(QTableView *tableView);
+    //! Установка виджета отображения данных
+    virtual void setItemView(QAbstractItemView *itemView);
 
-    //! Возращает таблицу
-    virtual QTableView *tableView();
+    //! Возращает виджет отображения данных
+    virtual QAbstractItemView *itemView();
 
 signals:
     //! Сигнал об изменении корневого индекса в прокси
@@ -70,8 +70,8 @@ private:
     //! Модель структуры классов
     TreeXmlHashModel* m_model;
 
-    //! Таблица данных
-    QTableView *m_tableView;
+    //! Виджет отображения данных
+    QAbstractItemView *m_itemView;
 };
 
 }}

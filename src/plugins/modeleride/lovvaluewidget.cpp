@@ -16,13 +16,13 @@ LovValueWidget::LovValueWidget(QWidget *parent) :
     connect(toolButtonAddLovValue,SIGNAL(clicked()),this,SLOT(add()));
     connect(toolButtonDeleteLovValue,SIGNAL(clicked()),this,SLOT(remove()));
 
-    AbstractListEditorWidget::setTableView(tableViewLovValue);
-    tableView()->setItemDelegate(new LovDelegate());
+    AbstractListEditorWidget::setItemView(tableViewLovValue);
+    itemView()->setItemDelegate(new LovDelegate());
 }
 
 LovValueWidget::~LovValueWidget()
 {
-    delete tableView()->itemDelegate();
+    delete itemView()->itemDelegate();
 }
 
 void LovValueWidget::setModel(TreeXmlHashModel *model)
@@ -35,7 +35,7 @@ void LovValueWidget::setModel(TreeXmlHashModel *model)
     proxyModel()->setHeaderData(3,  Qt::Horizontal, tr("Идентификатор"));
 
     for (int column = 2; column < 16; column++)
-        tableView()->setColumnHidden(column,true);
+        tableViewLovValue->setColumnHidden(column,true);
 }
 
 void LovValueWidget::add()
