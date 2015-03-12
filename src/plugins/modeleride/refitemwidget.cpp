@@ -9,7 +9,7 @@ namespace RTPTechGroup {
 namespace ModelerIde {
 
 RefItemWidget::RefItemWidget(QWidget *parent) :
-    AbstractListEditorWidget(parent)
+    AbstractModifyWidget(parent)
 {
     setupUi(this);
 
@@ -17,7 +17,7 @@ RefItemWidget::RefItemWidget(QWidget *parent) :
     connect(toolButtonAddIn,SIGNAL(clicked()),this,SLOT(addChild()));
     connect(toolButtonDelete,SIGNAL(clicked()),this,SLOT(remove()));
 
-    AbstractListEditorWidget::setItemView(treeView);
+    AbstractModifyWidget::setItemView(treeView);
     itemView()->setItemDelegate(new RefItemDelegate());
 }
 
@@ -28,7 +28,7 @@ RefItemWidget::~RefItemWidget()
 
 void RefItemWidget::setModel(TreeXmlHashModel *model)
 {
-    AbstractListEditorWidget::setModel(model);
+    AbstractModifyWidget::setModel(model);
 
     proxyModel()->setHeaderData(0,  Qt::Horizontal, tr("Псевдоним"));
     proxyModel()->setHeaderData(1,  Qt::Horizontal, tr("Класс/Фильтр"));

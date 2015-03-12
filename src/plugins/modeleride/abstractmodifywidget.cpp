@@ -1,4 +1,4 @@
-#include "abstractlisteditorwidget.h"
+#include "abstractmodifywidget.h"
 
 #include <QMessageBox>
 #include <metadatamodel/classmodelxml.h>
@@ -9,52 +9,52 @@ namespace RTPTechGroup {
 namespace ModelerIde {
 
 
-AbstractListEditorWidget::AbstractListEditorWidget(QWidget *parent) : QWidget(parent)
+AbstractModifyWidget::AbstractModifyWidget(QWidget *parent) : QWidget(parent)
 {
     m_proxyModel = new ModifyProxyModel();
     m_proxyModel->setHiddenRow(true);
 }
 
-AbstractListEditorWidget::~AbstractListEditorWidget()
+AbstractModifyWidget::~AbstractModifyWidget()
 {
     delete m_proxyModel;
 }
 
-void AbstractListEditorWidget::setModel(TreeXmlHashModel *model)
+void AbstractModifyWidget::setModel(TreeXmlHashModel *model)
 {
     m_model = model;
     m_proxyModel->setSourceModel(m_model);
     m_itemView->setModel(m_proxyModel);
 }
 
-TreeXmlHashModel *AbstractListEditorWidget::model()
+TreeXmlHashModel *AbstractModifyWidget::model()
 {
     return m_model;
 }
 
-ModifyProxyModel *AbstractListEditorWidget::proxyModel()
+ModifyProxyModel *AbstractModifyWidget::proxyModel()
 {
     return m_proxyModel;
 }
 
-bool AbstractListEditorWidget::isRemove(const QModelIndex &proxyIndex)
+bool AbstractModifyWidget::isRemove(const QModelIndex &proxyIndex)
 {
     Q_UNUSED(proxyIndex)
 
     return true;
 }
 
-void AbstractListEditorWidget::setItemView(QAbstractItemView *tableView)
+void AbstractModifyWidget::setItemView(QAbstractItemView *tableView)
 {
     m_itemView = tableView;
 }
 
-QAbstractItemView *AbstractListEditorWidget::itemView()
+QAbstractItemView *AbstractModifyWidget::itemView()
 {
     return m_itemView;
 }
 
-bool AbstractListEditorWidget::add(const QString& tag)
+bool AbstractModifyWidget::add(const QString& tag)
 {
     QModelIndex srcIndex = m_itemView->rootIndex();
     QModelIndex index = m_proxyModel->insertLastRows(0,1,srcIndex);
@@ -68,7 +68,7 @@ bool AbstractListEditorWidget::add(const QString& tag)
     return false;
 }
 
-void AbstractListEditorWidget::remove()
+void AbstractModifyWidget::remove()
 {    
     QModelIndex curIndex = m_itemView->currentIndex();
     QModelIndex srcIndex = curIndex.parent();
@@ -84,13 +84,13 @@ void AbstractListEditorWidget::remove()
                              tr("Невозможно удалить значение списка, поскольку нет выбраных значений."));
 }
 
-void AbstractListEditorWidget::submit()
+void AbstractModifyWidget::submit()
 {
     edit(false);
     m_proxyModel->submitAll();
 }
 
-void AbstractListEditorWidget::edit(bool flag)
+void AbstractModifyWidget::edit(bool flag)
 {
     if (flag == false)
         m_itemView->setCurrentIndex(m_itemView->rootIndex());
@@ -98,13 +98,13 @@ void AbstractListEditorWidget::edit(bool flag)
     m_proxyModel->setEditable(flag);
 }
 
-void AbstractListEditorWidget::revert()
+void AbstractModifyWidget::revert()
 {
     m_proxyModel->revertAll();
     edit(false);
 }
 
-void AbstractListEditorWidget::setRootIndex(const QModelIndex &index)
+void AbstractModifyWidget::setRootIndex(const QModelIndex &index)
 {
     QModelIndex rootIndex = m_proxyModel->mapToSource(m_itemView->rootIndex());
     if (rootIndex == index)

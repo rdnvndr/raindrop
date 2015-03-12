@@ -9,14 +9,14 @@ namespace RTPTechGroup {
 namespace ModelerIde {
 
 LovValueWidget::LovValueWidget(QWidget *parent) :
-    AbstractListEditorWidget(parent)
+    AbstractModifyWidget(parent)
 {
     setupUi(this);
 
     connect(toolButtonAddLovValue,SIGNAL(clicked()),this,SLOT(add()));
     connect(toolButtonDeleteLovValue,SIGNAL(clicked()),this,SLOT(remove()));
 
-    AbstractListEditorWidget::setItemView(tableViewLovValue);
+    AbstractModifyWidget::setItemView(tableViewLovValue);
     itemView()->setItemDelegate(new LovDelegate());
 }
 
@@ -27,7 +27,7 @@ LovValueWidget::~LovValueWidget()
 
 void LovValueWidget::setModel(TreeXmlHashModel *model)
 {
-    AbstractListEditorWidget::setModel(model);
+    AbstractModifyWidget::setModel(model);
 
     proxyModel()->setHeaderData(0,  Qt::Horizontal, tr("Наименование"));
     proxyModel()->setHeaderData(1,  Qt::Horizontal, tr("Значение"));
@@ -40,12 +40,12 @@ void LovValueWidget::setModel(TreeXmlHashModel *model)
 
 void LovValueWidget::add()
 {
-    AbstractListEditorWidget::add(DBLOVVALUEXML::LOVVALUE);
+    AbstractModifyWidget::add(DBLOVVALUEXML::LOVVALUE);
 }
 
 void LovValueWidget::edit(bool flag)
 {
-    AbstractListEditorWidget::edit(flag);
+    AbstractModifyWidget::edit(flag);
     toolButtonAddLovValue->setEnabled(flag);
     toolButtonDeleteLovValue->setEnabled(flag);
 }

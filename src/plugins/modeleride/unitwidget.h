@@ -9,7 +9,7 @@
 #include <treexmlmodel/modifyproxymodel.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 
-#include "abstractlisteditorwidget.h"
+#include "abstractmodifywidget.h"
 
 using namespace RTPTechGroup::XmlModel;
 
@@ -19,7 +19,7 @@ namespace ModelerIde {
 //! Диалог редактирования ЕИ
 /*! Диалог предназначен для редактирования ЕИ
 */
-class UnitWidget : public AbstractListEditorWidget, private Ui::UnitWidget
+class UnitWidget : public AbstractModifyWidget, private Ui::UnitWidget
 {
     Q_OBJECT
 
