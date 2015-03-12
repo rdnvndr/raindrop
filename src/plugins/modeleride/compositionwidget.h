@@ -2,9 +2,13 @@
 #define COMPOSITIONWIDGET_H
 
 #include "ui_compositionwidget.h"
+
+#include <QDataWidgetMapper>
+
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <treexmlmodel/treexmlhashmodel.h>
-#include <QDataWidgetMapper>
+
+#include "abstractitemwidget.h"
 
 //! Диалог редактирования составов класса
 /*! Диалог предназначен для редактирования списка составов
@@ -16,7 +20,7 @@ using namespace RTPTechGroup::XmlModel;
 namespace RTPTechGroup {
 namespace ModelerIde {
 
-class CompositionWidget : public QWidget, private Ui::CompositionWidget
+class CompositionWidget : public AbstractItemWidget, private Ui::CompositionWidget
 {
     Q_OBJECT
     
@@ -34,12 +38,6 @@ public slots:
     //! Добавление состава класса
     void add();
 
-    //! Удаление состава класса
-    void remove();
-
-    //! Установка текущего состава класса
-    void setCurrent(const QModelIndex &index);
-
     //! Применение изменений состава класса
     void submit();
 
@@ -55,38 +53,8 @@ public slots:
     //! Перемещение состава ниже
     void down();
 
-    //! Отмена изменений состава класса
-    void revert();
-
     //! Установка отображения родительских составов класса
     void showParent(bool flag);
-
-    //! Установка родителя состава
-    void setRootIndex(QModelIndex index);
-
-signals:  
-
-    //! Сигнал об изменении данных
-    void dataChanged(const QModelIndex &index);
-
-    //! Сигнал об удалении данных
-    void dataRemoved(const QModelIndex &index);
-
-    //! Сигнал об изменении текущего состава
-    void currentIndexChanged(const QModelIndex &index);
-
-private:
-    //! Получение данных модели
-    QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
-
-    //! Прокси модель для составов класса
-    TableXMLProxyModel* m_compositionModel;
-
-    //! Модель структуры классов
-    TreeXmlHashModel* m_model;
-
-    //! Mapper для свойств атрибутов
-    QDataWidgetMapper* m_mapperComp;
 };
 
 }}
