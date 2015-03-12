@@ -32,20 +32,9 @@ QAbstractProxyModel *AbstractListEditorWidget::proxyModel()
     return m_proxyModel;
 }
 
-bool AbstractListEditorWidget::isRemove(const QModelIndex &srcIndex)
+bool AbstractListEditorWidget::isRemove(const QModelIndex &proxyIndex)
 {
-    const QAbstractProxyModel* proxyModel
-            = dynamic_cast<const QAbstractProxyModel*>(srcIndex.model());
-
-    ClassModelXml *model = const_cast<ClassModelXml *>(
-                (proxyModel)
-                ? dynamic_cast<const ClassModelXml *>(proxyModel->sourceModel())
-                : dynamic_cast<const ClassModelXml *>(srcIndex.model()));
-
-    if (!model)
-        return false;
-
-    return model->isRemove(proxyModel->mapToSource(srcIndex));
+    return true;
 }
 
 void AbstractListEditorWidget::setTableView(QTableView *tableView)
@@ -58,16 +47,18 @@ QTableView *AbstractListEditorWidget::tableView()
     return m_tableView;
 }
 
-void AbstractListEditorWidget::add(const QString& tag)
+bool AbstractListEditorWidget::add(const QString& tag)
 {
     QModelIndex srcIndex = m_tableView->rootIndex();
     QModelIndex index = m_proxyModel->insertLastRows(0,1,srcIndex);
     if (index.isValid()) {
         m_proxyModel->setData(index,tag, TreeXmlModel::TagRole);
-        m_proxyModel->setData(index, QIcon(":/lovvalue"), Qt::DecorationRole);
         m_tableView->setCurrentIndex(index);
         edit(true);
+
+        return true;
     }
+    return false;
 }
 
 void AbstractListEditorWidget::remove()
