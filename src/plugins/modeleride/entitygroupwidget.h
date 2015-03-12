@@ -8,6 +8,7 @@
 #include <QWidget>
 
 #include <treexmlmodel/treexmlhashmodel.h>
+
 #include "abstracteditorwidget.h"
 
 using namespace RTPTechGroup::XmlModel;

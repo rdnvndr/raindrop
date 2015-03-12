@@ -1,8 +1,9 @@
 #ifndef CONDITIONDELEGATE_H
 #define CONDITIONDELEGATE_H
 
-#include "xmldelegate.h"
 #include <treexmlmodel/tablexmlproxymodel.h>
+
+#include "xmldelegate.h"
 
 namespace RTPTechGroup {
 namespace ModelerIde {

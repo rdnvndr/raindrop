@@ -6,7 +6,7 @@
 #include <QDataWidgetMapper>
 #include <QStringListModel>
 
-#include "treexmlmodel/treexmlhashmodel.h"
+#include <treexmlmodel/treexmlhashmodel.h>
 
 #include "abstracteditorwidget.h"
 

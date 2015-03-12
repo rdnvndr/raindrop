@@ -1,13 +1,14 @@
 #ifndef PROPCLASS_H
 #define PROPCLASS_H
 
+#include "ui_propclass.h"
+
 #include <QDataWidgetMapper>
 #include <QStringListModel>
 
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/tablexmlproxymodel.h>
 
-#include "ui_propclass.h"
 #include "abstractpropeditor.h"
 
 namespace RTPTechGroup {

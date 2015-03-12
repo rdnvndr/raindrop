@@ -2,6 +2,7 @@
 #define CONDITIONPROXYMODEL_H
 
 #include <QAbstractProxyModel>
+
 #include <treexmlmodel/modifyproxymodel.h>
 
 using namespace RTPTechGroup::XmlModel;

@@ -2,6 +2,7 @@
 #define XMLDELEGATE_H
 
 #include <QStyledItemDelegate>
+
 #include <treexmlmodel/treexmlhashmodel.h>
 
 using namespace RTPTechGroup::XmlModel;

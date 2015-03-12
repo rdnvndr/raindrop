@@ -1,9 +1,10 @@
 #ifndef PROPLOV_H
 #define PROPLOV_H
 
+#include "ui_proplov.h"
+
 #include <treexmlmodel/treexmlhashmodel.h>
 
-#include "ui_proplov.h"
 #include "abstractpropeditor.h"
 
 namespace RTPTechGroup {

@@ -2,9 +2,11 @@
 #define FILTERWIDGET_H
 
 #include "ui_filterwidget.h"
+
+#include <QDataWidgetMapper>
+
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <treexmlmodel/treexmlhashmodel.h>
-#include <QDataWidgetMapper>
 
 using namespace RTPTechGroup::XmlModel;
 
