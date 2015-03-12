@@ -43,7 +43,8 @@ LovWidget::LovWidget(QWidget *parent) :
 
 LovWidget::~LovWidget()
 {
-
+    delete lineEditLovName->validator();
+    delete m_typeAttrModel;
 }
 
 bool LovWidget::isEmpty()
