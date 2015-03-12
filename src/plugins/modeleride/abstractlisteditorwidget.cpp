@@ -39,6 +39,8 @@ ModifyProxyModel *AbstractListEditorWidget::proxyModel()
 
 bool AbstractListEditorWidget::isRemove(const QModelIndex &proxyIndex)
 {
+    Q_UNUSED(proxyIndex)
+
     return true;
 }
 

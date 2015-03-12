@@ -2,7 +2,9 @@
 #define REFITEMDELEGATE_H
 
 #include <QStyledItemDelegate>
+
 #include <treexmlmodel/treexmlhashmodel.h>
+
 #include "xmldelegate.h"
 
 namespace RTPTechGroup {

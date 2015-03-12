@@ -1,12 +1,13 @@
 #ifndef PROPREFGROUP_H
 #define PROPREFGROUP_H
 
+#include "ui_proprefgroup.h"
+
 #include <QDataWidgetMapper>
 
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/tablexmlproxymodel.h>
 
-#include "ui_proprefgroup.h"
 #include "abstractpropeditor.h"
 
 namespace RTPTechGroup {
