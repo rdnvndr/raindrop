@@ -6,7 +6,7 @@
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/modifyproxymodel.h>
 
-#include "abstractlisteditorwidget.h"
+#include "abstractmodifywidget.h"
 
 using namespace RTPTechGroup::XmlModel;
 
@@ -17,7 +17,7 @@ namespace ModelerIde {
 /*! Диалог предназначен для редактирования значений списка
 */
 
-class LovValueWidget : public AbstractListEditorWidget, private Ui::LovValueWidget
+class LovValueWidget : public AbstractModifyWidget, private Ui::LovValueWidget
 {
     Q_OBJECT
 

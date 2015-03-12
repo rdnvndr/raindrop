@@ -1,5 +1,5 @@
-#ifndef ABSTRACTLISTEDITORWIDGET_H
-#define ABSTRACTLISTEDITORWIDGET_H
+#ifndef ABSTRACTMODIFYWIDGET_H
+#define ABSTRACTMODIFYWIDGET_H
 
 #include <QWidget>
 #include <QAbstractProxyModel>
@@ -18,15 +18,15 @@ namespace ModelerIde {
  *  с возможностью отмены изменений
  */
 
-class AbstractListEditorWidget : public QWidget
+class AbstractModifyWidget : public QWidget
 {
     Q_OBJECT
 public:
     //! Конструктор класса
-    explicit AbstractListEditorWidget(QWidget *parent = 0);
+    explicit AbstractModifyWidget(QWidget *parent = 0);
 
     //! Деструктор класса
-    ~AbstractListEditorWidget();
+    ~AbstractModifyWidget();
 
     //! Установка модели для редактирования
     void setModel(TreeXmlHashModel *model);
@@ -83,4 +83,4 @@ private:
 
 }}
 
-#endif // ABSTRACTLISTEDITORWIDGET_H
+#endif // ABSTRACTMODIFYWIDGET_H

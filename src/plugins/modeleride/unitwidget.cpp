@@ -12,13 +12,13 @@ namespace RTPTechGroup {
 namespace ModelerIde {
 
 UnitWidget::UnitWidget(QWidget *parent) :
-    AbstractListEditorWidget(parent)
+    AbstractModifyWidget(parent)
 {
     setupUi(this);
 
     connect(toolButtonAddUnit,SIGNAL(clicked()),this,SLOT(add()));
     connect(toolButtonDeleteUnit,SIGNAL(clicked()),this,SLOT(remove()));
-    AbstractListEditorWidget::setItemView(tableViewUnit);
+    AbstractModifyWidget::setItemView(tableViewUnit);
     itemView()->setItemDelegate(new UnitDelegate());
 }
 
@@ -29,7 +29,7 @@ UnitWidget::~UnitWidget()
 
 void UnitWidget::setModel(TreeXmlHashModel *model)
 {
-    AbstractListEditorWidget::setModel(model);
+    AbstractModifyWidget::setModel(model);
 
     proxyModel()->setHeaderData(0,  Qt::Horizontal, tr("Наименование"));
     proxyModel()->setHeaderData(1,  Qt::Horizontal, tr("Код ОКЕИ"));
@@ -49,7 +49,7 @@ void UnitWidget::setModel(TreeXmlHashModel *model)
 
 void UnitWidget::add()
 {
-    if (AbstractListEditorWidget::add(DBUNITXML::UNIT)) {
+    if (AbstractModifyWidget::add(DBUNITXML::UNIT)) {
         QModelIndex index = itemView()->currentIndex();
         proxyModel()->setData(index.sibling(
                                  index.row(),
@@ -77,7 +77,7 @@ void UnitWidget::add()
 
 void UnitWidget::edit(bool flag)
 {
-    AbstractListEditorWidget::edit();
+    AbstractModifyWidget::edit();
 
     toolButtonAddUnit->setEnabled(flag);
     toolButtonDeleteUnit->setEnabled(flag);

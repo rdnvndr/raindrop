@@ -10,7 +10,7 @@
 #include <treexmlmodel/treexmlhashmodel.h>
 
 #include "refproxymodel.h"
-#include "abstractlisteditorwidget.h"
+#include "abstractmodifywidget.h"
 
 namespace RTPTechGroup {
 namespace ModelerIde {
@@ -19,7 +19,7 @@ namespace ModelerIde {
 /*! Диалог предназначен для редактирования элементов справочника
 */
 
-class RefItemWidget : public AbstractListEditorWidget, private Ui::RefItemWidget
+class RefItemWidget : public AbstractModifyWidget, private Ui::RefItemWidget
 {
     Q_OBJECT
 
