@@ -2,9 +2,11 @@
 #define CLASSTREEVIEW_H
 
 #include "ui_classtreeview.h"
-#include "treefilterproxymodel.h"
+
 #include <QAbstractItemModel>
 #include <QMenu>
+
+#include "treefilterproxymodel.h"
 
 namespace RTPTechGroup {
 namespace ModelerIde {

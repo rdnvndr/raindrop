@@ -6,7 +6,7 @@
 #include <QDataWidgetMapper>
 #include <QStringListModel>
 
-#include "treexmlmodel/treexmlhashmodel.h"
+#include <treexmlmodel/treexmlhashmodel.h>
 
 #include "abstracteditorwidget.h"
 
@@ -32,9 +32,6 @@ public:
 
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
-
-    //! Проверка на возможность удаления списка значений
-    bool isRemove(const QModelIndex &srcIndex);
 
     //! Проверка запонено ли имя списка значений
     bool isEmpty();
