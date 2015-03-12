@@ -83,6 +83,7 @@ bool AbstractItemWidget::add(const QString &tag)
 
 void AbstractItemWidget::remove()
 {
+    edit(false);
     QModelIndex srcIndex = m_tableModel->mapToSource(m_tableView->rootIndex());
     QModelIndex curIndex = m_tableModel->mapToSource(m_tableView->currentIndex());
     if (srcIndex.isValid() && curIndex.isValid()){
