@@ -124,6 +124,64 @@ void AbstractItemWidget::revert()
     edit(false);
 }
 
+void AbstractItemWidget::up()
+{
+    QPersistentModelIndex index = itemView()->currentIndex();
+    QPersistentModelIndex srcIndex  = proxyModel()->mapToSource(index);
+    QPersistentModelIndex srcParent = srcIndex.parent();
+    int row = proxyModel()->mapToSource(index.sibling(index.row()-1,0)).row();
+
+    if (model()->moveIndex(srcIndex,srcParent,row)) {
+        if (row >= 0)
+            index = itemView()->currentIndex().sibling(index.row()-2,0);
+        else
+            index = index.sibling(0,0);
+        if (model()->removeRow(srcIndex.row(),srcIndex.parent()))
+            setCurrent(index);
+    }
+}
+
+void AbstractItemWidget::down()
+{
+    QPersistentModelIndex index = itemView()->currentIndex();
+    QPersistentModelIndex srcIndex  = proxyModel()->mapToSource(index);
+    QPersistentModelIndex srcParent = srcIndex.parent();
+    QModelIndex indexNew = index.sibling(index.row()+2,0);
+    int row = (indexNew.isValid()) ? proxyModel()->mapToSource(indexNew).row()
+                                   : model()->rowCount(srcParent,
+                                                       model()->tagsFilter(),
+                                                       QStringList());
+    if (model()->moveIndex(srcIndex,srcParent,row)) {
+        index = itemView()->currentIndex().sibling(index.row()+2,0);
+        if (model()->removeRow(srcIndex.row(),srcIndex.parent()))
+            setCurrent(index);
+    }
+}
+
+void AbstractItemWidget::showParent(bool flag,
+                                    const QString& classTag, const QString& classId,
+                                    const QString& attrTag,  const QString& attrParent)
+{
+    proxyModel()->setFilterRole(Qt::EditRole);
+
+    if (flag==true){
+        proxyModel()->setFilterRegExp("");
+    } else {
+        QModelIndex index = itemView()->rootIndex();
+        QString className = modelData(classTag,
+                                      classId,
+                                      index).toString();
+        className.replace("{","\\{");
+        className.replace("}","\\}");
+        if (className.isEmpty()){
+            proxyModel()->setFilterRegExp("\\S*");
+        }else
+            proxyModel()->setFilterRegExp(className);
+    }
+    proxyModel()->setFilterKeyColumn(
+                model()->columnDisplayedAttr(attrTag, attrParent));
+}
+
 void AbstractItemWidget::setRootIndex(QModelIndex index)
 {
     QModelIndex rootIndex = m_proxyModel->mapToSource(m_itemView->rootIndex());

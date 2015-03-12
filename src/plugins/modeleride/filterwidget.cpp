@@ -71,24 +71,9 @@ bool FilterWidget::isEdit()
 
 void FilterWidget::showParent(bool flag)
 {
-    proxyModel()->setFilterRole(Qt::EditRole);
+    AbstractItemWidget::showParent(flag, DBCLASSXML::CLASS, DBCLASSXML::ID,
+                                   DBFILTERXML::FILTER, DBFILTERXML::PARENT);
 
-    if (flag==true){
-        proxyModel()->setFilterRegExp("");
-    } else {
-        QModelIndex index = tableViewFilter->rootIndex();
-        QString className = modelData(DBCLASSXML::CLASS,
-                                      DBCLASSXML::ID,
-                                      index).toString();
-        className.replace("{","\\{");
-        className.replace("}","\\}");
-        if (className.isEmpty()){
-            proxyModel()->setFilterRegExp("\\S*");
-        }else
-            proxyModel()->setFilterRegExp(className);
-    }
-    proxyModel()->setFilterKeyColumn(model()->columnDisplayedAttr(DBFILTERXML::FILTER,
-                                                                DBFILTERXML::PARENT));
 }
 
 }}
