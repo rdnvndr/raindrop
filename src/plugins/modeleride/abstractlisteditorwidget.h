@@ -31,7 +31,7 @@ public:
     QAbstractProxyModel* proxyModel();
 
     //! Проверка на возможность удаления
-    static bool isRemove(const QModelIndex &srcIndex);
+    static bool isRemove(const QModelIndex &proxyIndex);
 
     //! Установка таблицы
     virtual void setTableView(QTableView *tableView);
@@ -45,7 +45,7 @@ signals:
 
 public slots:
     //! Добавление значений списка
-    void add(const QString &tag);
+    bool add(const QString &tag);
 
     //! Удаление значений списка
     void remove();
