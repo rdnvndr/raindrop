@@ -1,13 +1,14 @@
 #ifndef PROPENTITY_H
 #define PROPENTITY_H
 
+#include "ui_propentity.h"
+
 #include <QDataWidgetMapper>
 #include <QStringListModel>
 
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/tablexmlproxymodel.h>
 
-#include "ui_propentity.h"
 #include "abstractpropeditor.h"
 
 namespace RTPTechGroup {

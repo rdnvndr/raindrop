@@ -35,7 +35,7 @@ public:
     virtual QDataWidgetMapper *dataMapper();
 
     //! Проверка на возможность удаления
-    virtual bool isRemove(const QModelIndex &srcIndex) = 0;
+    virtual bool isRemove(const QModelIndex &srcIndex);
 
     //! Проверка запонены ли данные
     virtual bool isEmpty() = 0;

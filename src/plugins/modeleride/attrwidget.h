@@ -1,14 +1,16 @@
 #ifndef ATTRWIDGET_H
 #define ATTRWIDGET_H
 
+#include "ui_attrwidget.h"
+
 #include <QStringListModel>
 #include <QDataWidgetMapper>
 
-#include "ui_attrwidget.h"
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 
 #include "attrgroupproxymodel.h"
+#include "abstractitemwidget.h"
 
 using namespace RTPTechGroup::XmlModel;
 
@@ -20,7 +22,7 @@ namespace ModelerIde {
     и состава
  */
 
-class AttrWidget : public QWidget, private Ui::AttrWidget
+class AttrWidget : public AbstractItemWidget, private Ui::AttrWidget
 {
     Q_OBJECT
     
@@ -38,9 +40,6 @@ public slots:
     //! Добавление атрибута класса
     void add();
 
-    //! Удаление атрибута класса
-    void remove();
-
     //! Установка текущего атрибута класса
     void setCurrent(const QModelIndex &index);
 
@@ -52,15 +51,6 @@ public slots:
 
     //! Перевод в режим редактирования атрибута класса
     void edit(bool flag = true);
-
-    //! Перемещение атрибута выше
-    void up();
-
-    //! Перемещение атрибута ниже
-    void down();
-
-    //! Отмена изменений атрибута класса
-    void revert();
 
     //! Установка отображения родительских атрибутов класса
     void showParentAttr(bool flag);
@@ -80,33 +70,9 @@ public slots:
     //! Очистка поля ввода списка значений
     void cleanLov();
 
-
-signals:
-    //! Сигнал об изменении данных
-    void dataChanged(const QModelIndex &index);
-
-    //! Сигнал об удалении данных
-    void dataRemoved(const QModelIndex &index);
-
-    //! Сигнал об изменении текущего атрибута
-    void currentIndexChanged(const QModelIndex &index);
-
 private:
-    //! Получение данных модели
-    QVariant modelData(const QString &tag, const QString &attr,
-                       const QModelIndex &index);
-
-    //! Прокси модель для атрибутов класса
-    TableXMLProxyModel* m_attrModel;
-
     //! Прокси модель для групп атрибутов класса
     AttrGroupProxyModel *m_attrGroupModel;
-
-    //! Модель структуры классов
-    TreeXmlHashModel* m_model;
-
-    //! Mapper для свойств атрибутов
-    QDataWidgetMapper* m_mapperAttr;
 
     //! Список типов атрибута
     QStringListModel *m_typeAttrModel;

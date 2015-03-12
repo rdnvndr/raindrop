@@ -144,7 +144,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>72</height>
+       <height>40</height>
       </size>
      </property>
     </spacer>
@@ -194,12 +194,16 @@
     </layout>
    </item>
   </layout>
-  <zorder>groupBoxEntityGroup</zorder>
-  <zorder>verticalSpacer</zorder>
-  <zorder>layoutWidget</zorder>
-  <zorder>layoutWidget_2</zorder>
-  <zorder>toolButtonEdit</zorder>
  </widget>
+ <tabstops>
+  <tabstop>lineEditEntityGroupName</tabstop>
+  <tabstop>lineEditEntityGroupDesc</tabstop>
+  <tabstop>toolButtonAdd</tabstop>
+  <tabstop>toolButtonEdit</tabstop>
+  <tabstop>toolButtonDel</tabstop>
+  <tabstop>pushButtonPropSave</tabstop>
+  <tabstop>pushButtonPropCancel</tabstop>
+ </tabstops>
  <resources>
   <include location="modeleride.qrc"/>
  </resources>

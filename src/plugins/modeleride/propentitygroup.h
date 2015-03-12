@@ -1,12 +1,13 @@
 #ifndef PROPENTITYGROUP_H
 #define PROPENTITYGROUP_H
 
+#include "ui_propentitygroup.h"
+
 #include <QDataWidgetMapper>
 
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/tablexmlproxymodel.h>
 
-#include "ui_propentitygroup.h"
 #include "abstractpropeditor.h"
 
 using namespace RTPTechGroup::XmlModel;

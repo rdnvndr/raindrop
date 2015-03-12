@@ -52,7 +52,9 @@ HEADERS += modelerideplug.h \
     refgroupwidget.h \
     entitywidget.h \
     unitwidget.h \
-    entitygroupwidget.h
+    entitygroupwidget.h \
+    abstractitemwidget.h \
+    abstractmodifywidget.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -86,7 +88,9 @@ SOURCES += modelerideplug.cpp \
     refgroupwidget.cpp \
     entitywidget.cpp \
     unitwidget.cpp \
-    entitygroupwidget.cpp
+    entitygroupwidget.cpp \
+    abstractitemwidget.cpp \
+    abstractmodifywidget.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \

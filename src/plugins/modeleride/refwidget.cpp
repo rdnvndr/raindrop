@@ -36,32 +36,6 @@ void RefWidget::setModel(TreeXmlHashModel *model)
                                                         DBREFXML::DESCRIPTION));
 }
 
-bool RefWidget::isRemove(const QModelIndex &srcIndex)
-{
-    const TreeXmlHashModel *model = dynamic_cast<const TreeXmlHashModel *>(srcIndex.model());
-    if (!model)
-        return false;
-
-    bool success = true;
-    QString msg;
-
-    QStringList tags;
-    tags << DBLINKTOCLASSXML::LINKTOCLASS << DBLINKTOFILTERXML::LINKTOFILTER;
-    if (model->hasChildren(srcIndex,tags)) {
-        msg += tr("Необходимо удалить элементы справочника.\n\n");
-        success = false;
-    }
-    if (!success) {
-        QMessageBox msgBox;
-        msgBox.setText(tr("Удаление данного объекта не воможно."));
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setDetailedText(msg);
-        msgBox.setWindowTitle(tr("Предупреждение"));
-        msgBox.exec();
-    }
-    return success;
-}
-
 bool RefWidget::isEmpty()
 {
     return lineEditName->text().isEmpty();

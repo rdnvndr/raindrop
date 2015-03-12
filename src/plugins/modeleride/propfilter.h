@@ -2,6 +2,7 @@
 #define PROPFILTER_H
 
 #include "ui_propfilter.h"
+
 #include "abstractpropeditor.h"
 
 namespace RTPTechGroup {

@@ -2,11 +2,15 @@
 #define FILTERPROPWIDGET_H
 
 #include "ui_filterpropwidget.h"
-#include "conditionproxymodel.h"
+
 #include <QDataWidgetMapper>
 #include <QMenu>
 #include <QAction>
+
 #include <treexmlmodel/treexmlhashmodel.h>
+
+#include "conditionproxymodel.h"
+#include "abstracteditorwidget.h"
 
 namespace RTPTechGroup {
 namespace ModelerIde {
@@ -14,7 +18,7 @@ namespace ModelerIde {
 //! Диалог редактирования фильтра
 /*! Диалог предназначен для редактирования фильтра
 */
-class FilterPropWidget : public QWidget, private Ui::FilterPropWidget
+class FilterPropWidget : public AbstractEditorWidget, private Ui::FilterPropWidget
 {
     Q_OBJECT
     
@@ -28,12 +32,12 @@ public:
     //! Установка модели структуры классов
     void setModel(TreeXmlHashModel *model);
 
+    //! Проверка запонены ли данные
+    virtual bool isEmpty();
+
 public slots:
     //! Добавление фильтра
     void add();
-
-    //! Удаление фильтра
-    void remove();
 
     //! Добавление выражения фильтра
     void addCondition();
@@ -50,9 +54,6 @@ public slots:
     //! Добавление подблока фильтра
     void addSubBlock();
 
-    //! Удаление пустого фильтра
-    bool removeEmpty();
-
     //! Установка текущего фильра
     void setCurrent(const QModelIndex &index);
 
@@ -65,41 +66,13 @@ public slots:
     //! Применение изменений фильтра
     void submit();
 
-    //! Отмена изменений фильтра
-    void revert();
-
-    //! Удаление фильтра
-    void rowsRemoved(const QModelIndex &index,int start,int end);
-
     //! Установка индексов для делегата ConditionDelegate
     void changeDestClass(const QString& nameClass);
 
     //! Сообщение о неверном имени фильтра
     void validateFilterName(QValidator::State state) const;
 
-signals:
-    //! Сигнал об изменении данных
-    void dataChanged(const QModelIndex &index);
-
-    //! Сигнал об удалении данных
-    void dataRemoved(const QModelIndex &index);
-
-    //! Сигнал об изменении текущего фильтра
-    void currentIndexChanged(const QModelIndex &index);
-
 private:
-    //! Получение данных модели
-    QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
-
-    //! Модель структуры классов
-    TreeXmlHashModel* m_model;
-
-    //! Mapper для свойств фильтра
-    QDataWidgetMapper* m_mapper;
-
-    //! Хранит индекс предыдущего активного фильтра
-    QPersistentModelIndex  m_oldIndex;
-
     //! Модель редактора условий
     ConditionProxyModel *m_conditionModel;
 
