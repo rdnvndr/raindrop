@@ -26,7 +26,7 @@ AttrWidget::AttrWidget(QWidget *parent) :
 
     QStringList tags;
     tags << DBATTRXML::ATTR;
-    tableModel()->setAttributeTags(tags);
+    proxyModel()->setAttributeTags(tags);
 
     m_attrGroupModel = new AttrGroupProxyModel();
     QCompleter *groupCompleter = new QCompleter(lineEditAttrGroup);
@@ -51,7 +51,7 @@ AttrWidget::AttrWidget(QWidget *parent) :
                                        );
     m_typeAttrModel->setStringList(attrTypeList);
 
-    AbstractItemWidget::setTableView(tableViewAttr);
+    AbstractItemWidget::setItemView(tableViewAttr);
     comboBoxLov->setItemDelegate(new XmlDelegate(this));
 
     connect(tableViewAttr,SIGNAL(clicked(QModelIndex)),
@@ -84,25 +84,25 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
 {
     AbstractItemWidget::setModel(model);
 
-    tableModel()->setHeaderData(0,  Qt::Horizontal, tr("Имя атрибута"));
-    tableModel()->setHeaderData(1,  Qt::Horizontal, tr("Псевдоним"));
-    tableModel()->setHeaderData(2,  Qt::Horizontal, tr("Тип"));
-    tableModel()->setHeaderData(3,  Qt::Horizontal, tr("Длина строки"));
-    tableModel()->setHeaderData(4,  Qt::Horizontal, tr("Ссылочный класс"));
-    tableModel()->setHeaderData(5,  Qt::Horizontal, tr("Класс"));
-    tableModel()->setHeaderData(6,  Qt::Horizontal, tr("ЕИ"));
-    tableModel()->setHeaderData(7,  Qt::Horizontal, tr("По умолчанию"));
-    tableModel()->setHeaderData(8,  Qt::Horizontal, tr("Нижняя граница"));
-    tableModel()->setHeaderData(9,  Qt::Horizontal, tr("Верхняя гранница"));
-    tableModel()->setHeaderData(10, Qt::Horizontal, tr("Список значений"));
-    tableModel()->setHeaderData(11, Qt::Horizontal, tr("Группа"));
-    tableModel()->setHeaderData(12, Qt::Horizontal, tr("Нулевые значения"));
-    tableModel()->setHeaderData(13, Qt::Horizontal, tr("Уникальный"));
-    tableModel()->setHeaderData(14, Qt::Horizontal, tr("Кандидат в ключ"));
-    tableModel()->setHeaderData(15, Qt::Horizontal, tr("Индетификатор"));
+    proxyModel()->setHeaderData(0,  Qt::Horizontal, tr("Имя атрибута"));
+    proxyModel()->setHeaderData(1,  Qt::Horizontal, tr("Псевдоним"));
+    proxyModel()->setHeaderData(2,  Qt::Horizontal, tr("Тип"));
+    proxyModel()->setHeaderData(3,  Qt::Horizontal, tr("Длина строки"));
+    proxyModel()->setHeaderData(4,  Qt::Horizontal, tr("Ссылочный класс"));
+    proxyModel()->setHeaderData(5,  Qt::Horizontal, tr("Класс"));
+    proxyModel()->setHeaderData(6,  Qt::Horizontal, tr("ЕИ"));
+    proxyModel()->setHeaderData(7,  Qt::Horizontal, tr("По умолчанию"));
+    proxyModel()->setHeaderData(8,  Qt::Horizontal, tr("Нижняя граница"));
+    proxyModel()->setHeaderData(9,  Qt::Horizontal, tr("Верхняя гранница"));
+    proxyModel()->setHeaderData(10, Qt::Horizontal, tr("Список значений"));
+    proxyModel()->setHeaderData(11, Qt::Horizontal, tr("Группа"));
+    proxyModel()->setHeaderData(12, Qt::Horizontal, tr("Нулевые значения"));
+    proxyModel()->setHeaderData(13, Qt::Horizontal, tr("Уникальный"));
+    proxyModel()->setHeaderData(14, Qt::Horizontal, tr("Кандидат в ключ"));
+    proxyModel()->setHeaderData(15, Qt::Horizontal, tr("Индетификатор"));
 
-    tableModel()->setDynamicSortFilter(true);
-    tableView()->setColumnHidden(15,true);
+    proxyModel()->setDynamicSortFilter(true);
+    tableViewAttr->setColumnHidden(15,true);
     m_attrGroupModel->setModel(model);
 
     TableXMLProxyModel* lovFilterModel = new TableXMLProxyModel(this);
@@ -245,7 +245,7 @@ void AttrWidget::submit()
     int nameColumn = model()->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::NAME);
 
     int row = 0;
-    QModelIndex childIndex = tableModel()->index(row, nameColumn, rootIndex);
+    QModelIndex childIndex = proxyModel()->index(row, nameColumn, rootIndex);
     while (childIndex.isValid())
     {
         if (lineEditAttrName->text().toUpper() == childIndex.data().toString().toUpper()
@@ -254,7 +254,7 @@ void AttrWidget::submit()
                                  tr("Атрибут с таким имененм уже существует"));
             return;
         }
-        childIndex = tableModel()->index(++row, nameColumn, rootIndex);
+        childIndex = proxyModel()->index(++row, nameColumn, rootIndex);
     }
 
     AbstractItemWidget::submit();
@@ -280,7 +280,7 @@ void AttrWidget::edit(bool flag)
         return;
 
     if (lineEditAttrName->text().isEmpty() && flag==false)
-        tableModel()->removeRow(dataMapper()->currentIndex(),
+        proxyModel()->removeRow(dataMapper()->currentIndex(),
                                dataMapper()->rootIndex());
 
     if (!tableViewAttr->currentIndex().isValid()){
@@ -303,9 +303,9 @@ void AttrWidget::edit(bool flag)
 void AttrWidget::up()
 {
     QPersistentModelIndex index = tableViewAttr->currentIndex();
-    QPersistentModelIndex srcIndex  = tableModel()->mapToSource(index);
+    QPersistentModelIndex srcIndex  = proxyModel()->mapToSource(index);
     QPersistentModelIndex srcParent = srcIndex.parent();
-    int row = tableModel()->mapToSource(index.sibling(index.row()-1,0)).row();
+    int row = proxyModel()->mapToSource(index.sibling(index.row()-1,0)).row();
 
     if (model()->moveIndex(srcIndex,srcParent,row)) {
         if (row >= 0)
@@ -320,10 +320,10 @@ void AttrWidget::up()
 void AttrWidget::down()
 {
     QPersistentModelIndex index = tableViewAttr->currentIndex();
-    QPersistentModelIndex srcIndex  = tableModel()->mapToSource(index);
+    QPersistentModelIndex srcIndex  = proxyModel()->mapToSource(index);
     QPersistentModelIndex srcParent = srcIndex.parent();
     QModelIndex indexNew = index.sibling(index.row()+2,0);
-    int row = (indexNew.isValid()) ? tableModel()->mapToSource(indexNew).row()
+    int row = (indexNew.isValid()) ? proxyModel()->mapToSource(indexNew).row()
                                    : model()->rowCount(srcParent,
                                                        model()->tagsFilter(),
                                                        QStringList());
@@ -336,10 +336,10 @@ void AttrWidget::down()
 
 void AttrWidget::showParentAttr(bool flag)
 {
-    tableModel()->setFilterRole(Qt::EditRole);
+    proxyModel()->setFilterRole(Qt::EditRole);
 
     if (flag==true){
-        tableModel()->setFilterRegExp("");
+        proxyModel()->setFilterRegExp("");
     } else {
         QModelIndex index = dataMapper()->rootIndex();
         QString className = modelData(DBCLASSXML::CLASS,
@@ -348,11 +348,11 @@ void AttrWidget::showParentAttr(bool flag)
         className.replace("{","\\{");
         className.replace("}","\\}");
         if (className.isEmpty()){
-            tableModel()->setFilterRegExp("\\S*");
+            proxyModel()->setFilterRegExp("\\S*");
         }else
-            tableModel()->setFilterRegExp(className);
+            proxyModel()->setFilterRegExp(className);
     }
-    tableModel()->setFilterKeyColumn(model()->columnDisplayedAttr(DBATTRXML::ATTR,
+    proxyModel()->setFilterKeyColumn(model()->columnDisplayedAttr(DBATTRXML::ATTR,
                                                                 DBATTRXML::PARENT));
 }
 
