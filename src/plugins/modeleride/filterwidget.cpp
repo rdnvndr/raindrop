@@ -10,17 +10,15 @@ namespace RTPTechGroup {
 namespace ModelerIde {
 
 FilterWidget::FilterWidget(QWidget *parent) :
-    QWidget(parent)
+    AbstractItemWidget(parent)
 {
     setupUi(this);
 
-    m_filterModel = new TableXMLProxyModel();
     QStringList tags;
     tags << DBFILTERXML::FILTER;
-    m_filterModel->setAttributeTags(tags);
+    proxyModel()->setAttributeTags(tags);
 
-    tableViewFilter->setItemDelegate(new XmlDelegate(this));
-    tableViewFilter->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    AbstractItemWidget::setItemView(tableViewFilter);
 
     connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));
     connect(toolButtonDelete,SIGNAL(clicked()),this,SLOT(remove()));
@@ -31,67 +29,52 @@ FilterWidget::FilterWidget(QWidget *parent) :
 
 FilterWidget::~FilterWidget()
 {
-    delete m_filterModel;
+
 }
 
 void FilterWidget::setModel(TreeXmlHashModel *model)
 {
-    m_model = model;
+    AbstractItemWidget::setModel(model);
 
-    m_filterModel->setSourceModel(m_model);
-    m_filterModel->setHeaderData(0, Qt::Horizontal, tr("Имя фильтра"));
-    m_filterModel->setHeaderData(1, Qt::Horizontal, tr("Псевдоним"));
-    m_filterModel->setHeaderData(2, Qt::Horizontal, tr("Первый класс"));
-    m_filterModel->setHeaderData(3, Qt::Horizontal, tr("Второй класс"));
-    m_filterModel->setHeaderData(4, Qt::Horizontal, tr("Описание прямое"));
-    m_filterModel->setHeaderData(5, Qt::Horizontal, tr("Описание обратное"));
-    m_filterModel->setHeaderData(6, Qt::Horizontal, tr("Индетификатор"));
-    m_filterModel->setColumnCount(7);
-    m_filterModel->setDynamicSortFilter(true);
+    proxyModel()->setHeaderData(0, Qt::Horizontal, tr("Имя фильтра"));
+    proxyModel()->setHeaderData(1, Qt::Horizontal, tr("Псевдоним"));
+    proxyModel()->setHeaderData(2, Qt::Horizontal, tr("Первый класс"));
+    proxyModel()->setHeaderData(3, Qt::Horizontal, tr("Второй класс"));
+    proxyModel()->setHeaderData(4, Qt::Horizontal, tr("Описание прямое"));
+    proxyModel()->setHeaderData(5, Qt::Horizontal, tr("Описание обратное"));
+    proxyModel()->setHeaderData(6, Qt::Horizontal, tr("Индетификатор"));
+    proxyModel()->setColumnCount(7);
+    proxyModel()->setDynamicSortFilter(true);
 
     tableViewFilter->setSortingEnabled(true);
-    tableViewFilter->setModel(m_filterModel);
     tableViewFilter->sortByColumn(0,Qt::AscendingOrder);
     tableViewFilter->setColumnHidden(6,true);
 }
 
 void FilterWidget::add()
 {
-    QModelIndex srcIndex = m_filterModel->mapToSource(tableViewFilter->rootIndex());
-    QModelIndex srcCurrentIndex =
-            m_model->insertLastRows(0,1,srcIndex,DBFILTERXML::FILTER);
-    if (srcCurrentIndex.isValid()){
-        tableViewFilter->setCurrentIndex(
-                    m_filterModel->mapFromSource(srcCurrentIndex));
-        emit dataEdited(srcCurrentIndex);
+    AbstractItemWidget::add(DBFILTERXML::FILTER);
+}
+
+void FilterWidget::edit(bool flag)
+{
+    if (flag) {
+        QModelIndex index = proxyModel()->mapToSource(tableViewFilter->currentIndex());
+        emit dataEdited(index);
     }
 }
 
-void FilterWidget::remove()
+bool FilterWidget::isEdit()
 {
-    QModelIndex srcIndex = m_filterModel->mapToSource(tableViewFilter->rootIndex());
-    QModelIndex curIndex = m_filterModel->mapToSource(tableViewFilter->currentIndex());
-    if (srcIndex.isValid() && curIndex.isValid()){
-        emit dataRemoved(srcIndex);
-        m_model->removeRow(curIndex.row(),srcIndex);
-    } else
-        QMessageBox::warning(NULL,tr("Предупреждение"),
-                             tr("Невозможно удалить состав, поскольку ничего не выбрано."));
-
-}
-
-void FilterWidget::edit()
-{
-    QModelIndex index = m_filterModel->mapToSource(tableViewFilter->currentIndex());
-    emit dataEdited(index);
+    return false;
 }
 
 void FilterWidget::showParent(bool flag)
 {
-    m_filterModel->setFilterRole(Qt::EditRole);
+    proxyModel()->setFilterRole(Qt::EditRole);
 
     if (flag==true){
-        m_filterModel->setFilterRegExp("");
+        proxyModel()->setFilterRegExp("");
     } else {
         QModelIndex index = tableViewFilter->rootIndex();
         QString className = modelData(DBCLASSXML::CLASS,
@@ -100,31 +83,12 @@ void FilterWidget::showParent(bool flag)
         className.replace("{","\\{");
         className.replace("}","\\}");
         if (className.isEmpty()){
-            m_filterModel->setFilterRegExp("\\S*");
+            proxyModel()->setFilterRegExp("\\S*");
         }else
-            m_filterModel->setFilterRegExp(className);
+            proxyModel()->setFilterRegExp(className);
     }
-    m_filterModel->setFilterKeyColumn(m_model->columnDisplayedAttr(DBFILTERXML::FILTER,
+    proxyModel()->setFilterKeyColumn(model()->columnDisplayedAttr(DBFILTERXML::FILTER,
                                                                 DBFILTERXML::PARENT));
-}
-
-void FilterWidget::setRootIndex(QModelIndex index)
-{
-    QModelIndex rootIndex = m_filterModel->mapToSource(tableViewFilter->rootIndex());
-    if (rootIndex == index)
-        return;
-
-    m_filterModel->setFilterIndex(index);
-    m_filterModel->setSourceModel(m_model);
-
-    tableViewFilter->setRootIndex(m_filterModel->mapFromSource(index));
-    tableViewFilter->setCurrentIndex(tableViewFilter->rootIndex().child(0,0));
-}
-
-QVariant FilterWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
-{
-    return index.sibling(index.row(), m_model->columnDisplayedAttr(
-                             tag,attr)).data();
 }
 
 }}
