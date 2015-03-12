@@ -27,6 +27,11 @@ void AbstractListEditorWidget::setModel(TreeXmlHashModel *model)
     m_itemView->setModel(m_proxyModel);
 }
 
+TreeXmlHashModel *AbstractListEditorWidget::model()
+{
+    return m_model;
+}
+
 ModifyProxyModel *AbstractListEditorWidget::proxyModel()
 {
     return m_proxyModel;

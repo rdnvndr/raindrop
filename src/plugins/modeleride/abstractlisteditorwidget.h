@@ -27,6 +27,9 @@ public:
     //! Установка модели для редактирования
     void setModel(TreeXmlHashModel *model);
 
+     //! Возращает модель
+    TreeXmlHashModel *model();
+
     //! Возращает прокси модели
     ModifyProxyModel* proxyModel();
 
