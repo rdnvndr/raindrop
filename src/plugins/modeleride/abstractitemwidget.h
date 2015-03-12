@@ -26,10 +26,16 @@ public:
     explicit AbstractItemWidget(QWidget *parent = 0);
 
     //! Деструктор класса
-    ~AbstractItemWidget();
+    virtual ~AbstractItemWidget();
 
     //! Установка модели
     virtual void setModel(TreeXmlHashModel *model);
+
+    //! Получение модели
+    virtual TreeXmlHashModel *model();
+
+    //! Получение прокси модели
+    virtual TableXMLProxyModel *tableModel();
 
     //! Получение данных модели
     virtual QVariant modelData(const QString &tag, const QString &attr,
@@ -40,6 +46,9 @@ public:
 
     //! Возращает таблицу
     virtual QTableView *tableView();
+
+    //! Получение маппера данных
+    virtual QDataWidgetMapper *dataMapper();
 
 public slots:
     //! Добавление строки

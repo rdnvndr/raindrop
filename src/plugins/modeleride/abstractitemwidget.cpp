@@ -30,6 +30,11 @@ void AbstractItemWidget::setModel(TreeXmlHashModel *model)
     m_mapper->setModel(m_tableModel);
 }
 
+TreeXmlHashModel *AbstractItemWidget::model()
+{
+    return m_model;
+}
+
 QVariant AbstractItemWidget::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
 {
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
@@ -50,6 +55,16 @@ void AbstractItemWidget::setTableView(QTableView *tableView)
 QTableView *AbstractItemWidget::tableView()
 {
     return m_tableView;
+}
+
+TableXMLProxyModel *AbstractItemWidget::tableModel()
+{
+    return m_tableModel;
+}
+
+QDataWidgetMapper *AbstractItemWidget::dataMapper()
+{
+    return m_mapper;
 }
 
 bool AbstractItemWidget::add(const QString &tag)
