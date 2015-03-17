@@ -52,6 +52,8 @@ void ClassModelXml::initTagFilters()
     this->addTagFilter(DBLINKTOCLASSXML::LINKTOCLASS);
     this->addTagFilter(DBLINKTOFILTERXML::LINKTOFILTER);
     this->addTagFilter(DBLINKTOCOMPXML::LINKTOCOMP);
+    this->addTagFilter(DBROLELISTXML::ROLELIST);
+    this->addTagFilter(DBROLEXML::ROLE);
 }
 
 void ClassModelXml::initDisplayedAttrs()
@@ -139,6 +141,11 @@ void ClassModelXml::initDisplayedAttrs()
                  << DBLOVLISTXML::PARENT << DBLOVLISTXML::ID;
     this->addDisplayedAttr(DBLOVLISTXML::LOVLIST, propsLovList, QIcon(":/lovlist"));
 
+    QStringList propsRoleList;
+    propsRoleList << DBROLELISTXML::NAME   << DBROLELISTXML::ALIAS
+                  << DBROLELISTXML::PARENT << DBROLELISTXML::ID;
+    this->addDisplayedAttr(DBROLELISTXML::ROLELIST, propsRoleList, QIcon(":/lovlist"));
+
     QStringList propsRefList;
     propsRefList << DBREFLISTXML::NAME   << DBREFLISTXML::ALIAS
                  << DBREFLISTXML::PARENT << DBREFLISTXML::ID;
@@ -184,6 +191,12 @@ void ClassModelXml::initDisplayedAttrs()
     propsLinkToComp << DBLINKTOCOMPXML::ALIAS  << DBLINKTOCOMPXML::REFCOMP
                     << DBLINKTOCOMPXML::PARENT << DBLINKTOCOMPXML::ID;
     this->addDisplayedAttr(DBLINKTOCOMPXML::LINKTOCOMP, propsLinkToComp, QIcon(":/composition"));
+
+    QStringList propsRole;
+    propsRole << DBROLEXML::NAME   << DBROLEXML::ALIAS
+              << DBROLEXML::PARENT << DBROLEXML::ID
+              << DBROLEXML::DESCRIPTION;
+    this->addDisplayedAttr(DBROLEXML::ROLE, propsRole, QIcon(":/lov"));
 }
 
 void ClassModelXml::initInsertTags()
@@ -220,7 +233,8 @@ void ClassModelXml::initInsertTags()
 
     insertTags.clear();
     insertTags << DBCLASSLISTXML::CLASSLIST << DBENTITYLISTXML::ENTITYLIST
-               << DBLOVLISTXML::LOVLIST     << DBREFLISTXML::REFLIST;
+               << DBLOVLISTXML::LOVLIST     << DBREFLISTXML::REFLIST
+               << DBROLELISTXML::ROLELIST;
     this->addInsertTags(DBMODELXML::MODEL,insertTags);
 
     insertTags.clear();
@@ -258,6 +272,10 @@ void ClassModelXml::initInsertTags()
     insertTags.clear();
     insertTags << DBLINKTOCLASSXML::LINKTOCLASS;
     this->addInsertTags(DBLINKTOCOMPXML::LINKTOCOMP,insertTags);
+
+    insertTags.clear();
+    insertTags << DBROLEXML::ROLE;
+    this->addInsertTags(DBROLELISTXML::ROLELIST,insertTags);
 }
 
 void ClassModelXml::initHashAttrs()
@@ -309,6 +327,9 @@ void ClassModelXml::initHashAttrs()
                       TreeXmlHashModel::UniqueUpperRename);
     this->addHashAttr(DBREFXML::REF,
                       DBREFXML::NAME,
+                      TreeXmlHashModel::UniqueUpperRename);
+    this->addHashAttr(DBROLEXML::ROLE,
+                      DBROLEXML::NAME,
                       TreeXmlHashModel::UniqueUpperRename);
 
 
@@ -362,6 +383,9 @@ void ClassModelXml::initHashAttrs()
                       TreeXmlHashModel::Uuid);
     this->addHashAttr(DBCLASSLISTXML::CLASSLIST,
                       DBCLASSLISTXML::ID,
+                      TreeXmlHashModel::Uuid);
+    this->addHashAttr(DBROLEXML::ROLE,
+                      DBROLEXML::ID,
                       TreeXmlHashModel::Uuid);
 }
 
@@ -510,6 +534,16 @@ void ClassModelXml::initModel()
                                                   DBREFLISTXML::ALIAS);
             this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Справочники"));
         }
+
+        lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource, DBROLELISTXML::ROLELIST);
+        if (lastIndex.isValid()){
+            int column = this->columnDisplayedAttr(DBROLELISTXML::ROLELIST,
+                                                      DBROLELISTXML::NAME);
+            this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Roles"));
+            column = this->columnDisplayedAttr(DBROLELISTXML::ROLELIST,
+                                               DBROLELISTXML::ALIAS);
+            this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Список ролей"));
+        }
     }
 }
 
@@ -523,6 +557,7 @@ QModelIndex ClassModelXml::insertLastRows(int row, int count, const QModelIndex 
                         || tag == DBENTITYLISTXML::ENTITYLIST
                         || tag == DBLOVLISTXML::LOVLIST
                         || tag == DBREFLISTXML::REFLIST
+                        || tag == DBROLELISTXML::ROLELIST
                         )
                     )
                 )
@@ -547,7 +582,8 @@ bool ClassModelXml::removeRows(int row, int count, const QModelIndex &parent)
                         && (tag == DBCLASSLISTXML::CLASSLIST
                             || tag == DBENTITYLISTXML::ENTITYLIST
                             || tag == DBLOVLISTXML::LOVLIST
-                            || tag == DBREFLISTXML::REFLIST)
+                            || tag == DBREFLISTXML::REFLIST
+                            || tag == DBROLELISTXML::ROLELIST)
                   ) return false;
             }
         }
@@ -562,7 +598,8 @@ bool ClassModelXml::isRemove(const QModelIndex &srcIndex)
     if (tag == DBMODELXML::MODEL
             || tag == DBCLASSLISTXML::CLASSLIST
             || tag == DBENTITYLISTXML::ENTITYLIST
-            || tag == DBLOVLISTXML::LOVLIST)
+            || tag == DBLOVLISTXML::LOVLIST
+            || tag == DBROLELISTXML::ROLELIST)
     {
         return false;
     }
