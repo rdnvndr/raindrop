@@ -34,7 +34,7 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
                     && attr == DBLINKTOCOMPXML::REFCOMP))
         {
             TreeComboBox *comboBoxDestClass = new TreeComboBox(parent);
-            comboBoxDestClass->setItemDelegate(new XmlDelegate());
+            comboBoxDestClass->setItemDelegate(new XmlDelegate(comboBoxDestClass));
             TableXMLProxyModel* classFilterModel = new TableXMLProxyModel(parent);
             QStringList tags;
             tags << DBFILTERXML::FILTER << DBCOMPXML::COMP;
@@ -75,7 +75,7 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
         } else if (tag == DBLINKTOCLASSXML::LINKTOCLASS
                     && attr == DBLINKTOCLASSXML::REFCLASS) {
             TreeComboBox *comboBoxDestClass = new TreeComboBox(parent);
-            comboBoxDestClass->setItemDelegate(new XmlDelegate());
+            comboBoxDestClass->setItemDelegate(new XmlDelegate(comboBoxDestClass));
 
             QModelIndex srcParentIndex = rootClass(index);
             TableXMLProxyModel* classFilterModel = new TableXMLProxyModel(parent);
