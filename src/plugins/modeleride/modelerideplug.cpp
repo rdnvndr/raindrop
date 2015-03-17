@@ -22,6 +22,7 @@
 #include "proprefgroup.h"
 #include "propref.h"
 #include "abstractpropeditor.h"
+#include "proprole.h"
 
 using namespace RTPTechGroup::Plugin;
 
@@ -152,9 +153,8 @@ void ModelerIDEPlug::add()
         return;
 
     QModelIndex lastInsertRow;
-
-    if (indexSource.data(TreeXmlModel::TagRole)==DBCLASSLISTXML::CLASSLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS)
+    QString tagRole = indexSource.data(TreeXmlModel::TagRole).toString();
+    if (tagRole == DBCLASSLISTXML::CLASSLIST || tagRole == DBCLASSXML::CLASS)
     {
         lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBCLASSXML::CLASS);
@@ -164,16 +164,24 @@ void ModelerIDEPlug::add()
             m_model->setData(lastInsertRow.sibling(lastInsertRow.row(),column),
                              DBCLASSTYPEXML::STANDART);
         }
-    } else if (indexSource.data(TreeXmlModel::TagRole)==DBENTITYLISTXML::ENTITYLIST) {
-        lastInsertRow = m_model->insertLastRows(0,1,indexSource,DBENTITYGROUPXML::ENTITYGROUP);
-    } else if (indexSource.data(TreeXmlModel::TagRole)==DBENTITYGROUPXML::ENTITYGROUP) {
-        lastInsertRow = m_model->insertLastRows(0,1,indexSource,DBENTITYXML::ENTITY);
-    } else if (indexSource.data(TreeXmlModel::TagRole)==DBLOVLISTXML::LOVLIST) {
-        lastInsertRow = m_model->insertLastRows(0,1,indexSource,DBLOVXML::LOV);
-    } else if (indexSource.data(TreeXmlModel::TagRole)==DBREFLISTXML::REFLIST) {
-        lastInsertRow = m_model->insertLastRows(0,1,indexSource,DBREFGROUPXML::REFGROUP);
-    } else if (indexSource.data(TreeXmlModel::TagRole)==DBREFGROUPXML::REFGROUP) {
-        lastInsertRow = m_model->insertLastRows(0,1,indexSource,DBREFXML::REF);
+    } else if (tagRole == DBENTITYLISTXML::ENTITYLIST) {
+        lastInsertRow =
+                m_model->insertLastRows(0,1,indexSource,DBENTITYGROUPXML::ENTITYGROUP);
+    } else if (tagRole == DBENTITYGROUPXML::ENTITYGROUP) {
+        lastInsertRow =
+                m_model->insertLastRows(0,1,indexSource,DBENTITYXML::ENTITY);
+    } else if (tagRole == DBLOVLISTXML::LOVLIST) {
+        lastInsertRow =
+                m_model->insertLastRows(0,1,indexSource,DBLOVXML::LOV);
+    } else if (tagRole == DBREFLISTXML::REFLIST) {
+        lastInsertRow =
+                m_model->insertLastRows(0,1,indexSource,DBREFGROUPXML::REFGROUP);
+    } else if (tagRole == DBREFGROUPXML::REFGROUP) {
+        lastInsertRow =
+                m_model->insertLastRows(0,1,indexSource,DBREFXML::REF);
+    } else if (tagRole == DBROLELISTXML::ROLELIST) {
+        lastInsertRow =
+                m_model->insertLastRows(0,1,indexSource,DBROLEXML::ROLE);
     } else return;
 
     if (lastInsertRow.isValid()){
@@ -354,6 +362,8 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource)
         subWindowName = "PropRefGroup::" + this->dataId(indexSource);
     else if (tagRole == DBREFXML::REF)
         subWindowName = "PropRef::" + this->dataId(indexSource);
+    else if (tagRole == DBROLEXML::ROLE)
+        subWindowName = "PropRole::" + this->dataId(indexSource);
     else
         return;
 
@@ -377,6 +387,8 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource)
             propEditor = qobject_cast<AbstractPropEditor*>(new PropRefGroup());
         } else if (tagRole == DBREFXML::REF) {
             propEditor = qobject_cast<AbstractPropEditor*>(new PropRef());
+        } else if (tagRole == DBROLEXML::ROLE) {
+            propEditor = qobject_cast<AbstractPropEditor*>(new PropRole());
         } else return;
 
 
@@ -396,31 +408,27 @@ void ModelerIDEPlug::closePropEditor(const QModelIndex &index)
                 pluginManager->interfaceObject("IMainWindow"));
 
     QString subWindowName = this->dataId(index);
+    QString tagRole = index.data(TreeXmlModel::TagRole).toString();
 
-    if (index.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS)
+    if (tagRole == DBCLASSXML::CLASS) {
         subWindowName = "PropClass::" + subWindowName;
-
-    if (index.data(TreeXmlModel::TagRole)==DBCOMPXML::COMP)
+    } else if (tagRole == DBCOMPXML::COMP) {
         subWindowName = "PropComposition::" + subWindowName;
-
-    if (index.data(TreeXmlModel::TagRole)==DBFILTERXML::FILTER)
+    } else if (tagRole == DBFILTERXML::FILTER) {
         subWindowName = "PropFilter::" + subWindowName;
-
-    if (index.data(TreeXmlModel::TagRole)==DBENTITYXML::ENTITY)
+    } else if (tagRole == DBENTITYXML::ENTITY) {
         subWindowName = "PropEntiry::" + subWindowName;
-
-    if (index.data(TreeXmlModel::TagRole)==DBENTITYGROUPXML::ENTITYGROUP)
+    } else if (tagRole == DBENTITYGROUPXML::ENTITYGROUP) {
         subWindowName = "PropEntityGroup::" + subWindowName;
-
-    if (index.data(TreeXmlModel::TagRole)==DBLOVXML::LOV)
+    } else if (tagRole==DBLOVXML::LOV) {
         subWindowName = "PropLov::" + subWindowName;
-
-    if (index.data(TreeXmlModel::TagRole)==DBREFGROUPXML::REFGROUP)
+    } else if (tagRole==DBREFGROUPXML::REFGROUP) {
         subWindowName = "PropRefGroup::" + subWindowName;
-
-    if (index.data(TreeXmlModel::TagRole)==DBREFXML::REF)
+    } else if (tagRole==DBREFXML::REF) {
         subWindowName = "PropRef::" + subWindowName;
-
+    } else if (tagRole==DBROLEXML::ROLE) {
+        subWindowName = "PropRole::" + subWindowName;
+    }
 
     QMdiSubWindow *subWindow = mainWindow->subWindow(subWindowName);
     if (subWindow)
