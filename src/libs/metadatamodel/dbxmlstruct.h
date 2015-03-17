@@ -263,6 +263,25 @@ namespace DBLINKTOCOMPXML{
     const QString ID = "guid";
 }
 
+//! Ключевые слова XML файла для описания списка ролей
+namespace DBROLELISTXML {
+    const QString ROLELIST = "RTPRoleList";
+    const QString NAME = "name";
+    const QString ALIAS = "alias";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
+//! Ключевые слова XML файла для списка значений
+namespace DBROLEXML{
+    const QString ROLE = "RTPRole";
+    const QString NAME = "name";
+    const QString ALIAS = "alias";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+    const QString DESCRIPTION = "description";
+}
+
 }}
 
 #endif // DBXMLSTRUCT_H
