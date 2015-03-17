@@ -95,6 +95,8 @@ void ClassTreeView::setModel(QAbstractItemModel *model)
     classFilterModel->addVisibleTag(DBREFLISTXML::REFLIST);
     classFilterModel->addVisibleTag(DBREFGROUPXML::REFGROUP);
     classFilterModel->addVisibleTag(DBREFXML::REF);
+    classFilterModel->addVisibleTag(DBROLELISTXML::ROLELIST);
+    classFilterModel->addVisibleTag(DBROLEXML::ROLE);
     classFilterModel->addVisibleTag(DBMODELXML::MODEL);
     classFilterModel->addVisibleTag(DBROOTXML::ROOT);
 
@@ -209,24 +211,30 @@ void ClassTreeView::showContextMenu(const QPoint &point)
         if (!indexSource.isValid())
             return;
 
-        if (indexSource.data(TreeXmlModel::TagRole)==DBCLASSLISTXML::CLASSLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBENTITYLISTXML::ENTITYLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBENTITYGROUPXML::ENTITYGROUP
-            || indexSource.data(TreeXmlModel::TagRole)==DBLOVLISTXML::LOVLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBCLASSXML::CLASS
-            || indexSource.data(TreeXmlModel::TagRole)==DBREFLISTXML::REFLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBREFGROUPXML::REFGROUP)
+        QString tagRole = indexSource.data(TreeXmlModel::TagRole).toString();
+
+        //! Команда добавить
+        if (tagRole == DBCLASSLISTXML::CLASSLIST
+            || tagRole == DBENTITYLISTXML::ENTITYLIST
+            || tagRole == DBENTITYGROUPXML::ENTITYGROUP
+            || tagRole == DBLOVLISTXML::LOVLIST
+            || tagRole == DBCLASSXML::CLASS
+            || tagRole == DBREFLISTXML::REFLIST
+            || tagRole == DBREFGROUPXML::REFGROUP
+            || tagRole == DBROLELISTXML::ROLELIST)
         {
             contextMenu->actions().at(0)->setVisible(true);
         } else {
             contextMenu->actions().at(0)->setVisible(false);
         }
 
-        if (indexSource.data(TreeXmlModel::TagRole)==DBCLASSLISTXML::CLASSLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBENTITYLISTXML::ENTITYLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBLOVLISTXML::LOVLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBREFLISTXML::REFLIST
-            || indexSource.data(TreeXmlModel::TagRole)==DBMODELXML::MODEL)
+        //! Команда удалить
+        if (tagRole == DBCLASSLISTXML::CLASSLIST
+            || tagRole == DBENTITYLISTXML::ENTITYLIST
+            || tagRole == DBLOVLISTXML::LOVLIST
+            || tagRole == DBREFLISTXML::REFLIST
+            || tagRole == DBROLELISTXML::ROLELIST
+            || tagRole == DBMODELXML::MODEL)
         {
             contextMenu->actions().at(1)->setVisible(false);
         } else {
@@ -237,7 +245,7 @@ void ClassTreeView::showContextMenu(const QPoint &point)
         if (!indexParentSource.isValid())
             return;
 
-        if (indexSource.data(TreeXmlModel::TagRole)==DBATTRXML::ATTR
+        if (tagRole == DBATTRXML::ATTR
             && indexParentSource.data(TreeXmlModel::TagRole)==DBCLASSLISTXML::CLASSLIST)
             contextMenu->actions().at(1)->setVisible(false);
 
