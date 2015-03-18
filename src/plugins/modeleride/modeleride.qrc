@@ -7,29 +7,14 @@
         <file alias="publish">icons/emblem-package.svg</file>
         <file alias="closemodel">icons/gtk-close.svg</file>
         <file alias="newmodel">icons/document-new.svg</file>
-        <file alias="attribute">icons/attr.svg</file>
         <file alias="remove">icons/list-remove.svg</file>
         <file alias="add">icons/list-add.svg</file>
         <file alias="edit">icons/gtk-edit.svg</file>
-        <file alias="composition">icons/insert-link.svg</file>
-        <file alias="filter">icons/edit-find.svg</file>
         <file alias="block">icons/block.svg</file>
         <file alias="expression">icons/formula.svg</file>
-        <file alias="model">icons/model.svg</file>
-        <file alias="entity">icons/entity.svg</file>
-        <file alias="unit">icons/unit.svg</file>
-        <file alias="units">icons/units.svg</file>
-        <file alias="classes">icons/classes.svg</file>
-        <file alias="entitygroup">icons/entitygroup.svg</file>
-        <file alias="lovlist">icons/lovlist.svg</file>
-        <file alias="lov">icons/lov.svg</file>
-        <file alias="lovvalue">icons/lovvalue.svg</file>
         <file alias="editclean">icons/reditclean.svg</file>
         <file alias="down">icons/go-down.svg</file>
         <file alias="up">icons/go-up.svg</file>
-        <file alias="reflist">icons/reflist.svg</file>
-        <file alias="reference">icons/reference.svg</file>
-        <file alias="refgroup">icons/refgroup.svg</file>
         <file alias="addchild">icons/addchild.svg</file>
     </qresource>
 </RCC>

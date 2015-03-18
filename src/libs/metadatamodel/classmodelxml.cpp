@@ -64,7 +64,7 @@ void ClassModelXml::initDisplayedAttrs()
                << DBCLASSXML::PARENT    << DBCLASSXML::ISACTIVE
                << DBCLASSXML::ISCONTEXT << DBCLASSXML::TEMPLATE
                << DBCLASSXML::ID        << DBCLASSXML::ICON;
-    this->addDisplayedAttr(DBCLASSXML::CLASS, propsClass,QIcon(":/modeleride"));
+    this->addDisplayedAttr(DBCLASSXML::CLASS, propsClass,QIcon(":/class"));
 
     QStringList propsAttr;
     propsAttr << DBATTRXML::NAME           << DBATTRXML::ALIAS
@@ -180,7 +180,7 @@ void ClassModelXml::initDisplayedAttrs()
     QStringList propsLinkToClass;
     propsLinkToClass << DBLINKTOCLASSXML::ALIAS  << DBLINKTOCLASSXML::REFCLASS
                      << DBLINKTOCLASSXML::PARENT << DBLINKTOCLASSXML::ID;
-    this->addDisplayedAttr(DBLINKTOCLASSXML::LINKTOCLASS, propsLinkToClass, QIcon(":/modeleride"));
+    this->addDisplayedAttr(DBLINKTOCLASSXML::LINKTOCLASS, propsLinkToClass, QIcon(":/class"));
 
     QStringList propsLinkToFilter;
     propsLinkToFilter << DBLINKTOFILTERXML::ALIAS   << DBLINKTOFILTERXML::REFFILTER

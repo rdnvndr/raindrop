@@ -23,7 +23,7 @@ RefItemWidget::RefItemWidget(QWidget *parent) :
 
 RefItemWidget::~RefItemWidget()
 {
-
+    delete itemView()->itemDelegate();
 }
 
 void RefItemWidget::setModel(TreeXmlHashModel *model)
