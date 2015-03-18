@@ -724,4 +724,5 @@
 </RTPRef>
 </RTPRefGroup>
 </RTPRefList>
+<RTPRoleList alias="Список ролей" name="Roles"/>
 </RTPModel>
