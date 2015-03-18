@@ -26,13 +26,13 @@ public:
     void setModel(TreeXmlHashModel *model);
 
 public slots:
-    //! Установка текущего списка значений
+    //! Установка текущей роли
     void setCurrent(const QModelIndex &index);
 
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);
 
-    //! Перевод списка значений в режим редактирования
+    //! Перевод роли в режим редактирования
     void edit(bool flag);
 };
 
