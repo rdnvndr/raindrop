@@ -272,7 +272,7 @@ namespace DBROLELISTXML {
     const QString ID = "guid";
 }
 
-//! Ключевые слова XML файла для списка значений
+//! Ключевые слова XML файла для роли
 namespace DBROLEXML{
     const QString ROLE = "RTPRole";
     const QString NAME = "name";
