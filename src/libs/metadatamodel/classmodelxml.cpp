@@ -54,6 +54,7 @@ void ClassModelXml::initTagFilters()
     this->addTagFilter(DBLINKTOCOMPXML::LINKTOCOMP);
     this->addTagFilter(DBROLELISTXML::ROLELIST);
     this->addTagFilter(DBROLEXML::ROLE);
+    this->addTagFilter(DBPERMISSIONXML::PERMISSION);
 }
 
 void ClassModelXml::initDisplayedAttrs()
@@ -197,15 +198,26 @@ void ClassModelXml::initDisplayedAttrs()
               << DBROLEXML::PARENT << DBROLEXML::ID
               << DBROLEXML::DESCRIPTION;
     this->addDisplayedAttr(DBROLEXML::ROLE, propsRole, QIcon(":/lov"));
+
+    QStringList propsPermission;
+    propsPermission << DBPERMISSIONXML::ROLE     << DBPERMISSIONXML::PARENT
+                    << DBPERMISSIONXML::ISBLOCK  << DBPERMISSIONXML::ISCREATE
+                    << DBPERMISSIONXML::ISDELETE << DBPERMISSIONXML::ISREAD
+                    << DBPERMISSIONXML::ISWRITE  << DBPERMISSIONXML::ID;
+    this->addDisplayedAttr(DBPERMISSIONXML::PERMISSION, propsPermission, QIcon(":/lov"));
 }
 
 void ClassModelXml::initInsertTags()
 {
     QStringList insertTags;
 
-    insertTags << DBATTRXML::ATTR  << DBCLASSXML::CLASS << DBCOMPXML::COMP
-               << DBFILTERXML::FILTER;
+    insertTags << DBATTRXML::ATTR     << DBCLASSXML::CLASS << DBCOMPXML::COMP
+               << DBFILTERXML::FILTER << DBPERMISSIONXML::PERMISSION;
     this->addInsertTags(DBCLASSXML::CLASS,insertTags);
+
+    insertTags.clear();
+    insertTags << DBPERMISSIONXML::PERMISSION;
+    this->addInsertTags(DBATTRXML::ATTR, insertTags);
 
     insertTags.clear();
     insertTags << DBATTRXML::ATTR;
@@ -331,6 +343,9 @@ void ClassModelXml::initHashAttrs()
     this->addHashAttr(DBROLEXML::ROLE,
                       DBROLEXML::NAME,
                       TreeXmlHashModel::UniqueUpperRename);
+    this->addHashAttr(DBPERMISSIONXML::PERMISSION,
+                      DBPERMISSIONXML::ROLE,
+                      TreeXmlHashModel::UniqueParent);
 
 
     this->addHashAttr(DBCLASSXML::CLASS,
@@ -386,6 +401,9 @@ void ClassModelXml::initHashAttrs()
                       TreeXmlHashModel::Uuid);
     this->addHashAttr(DBROLEXML::ROLE,
                       DBROLEXML::ID,
+                      TreeXmlHashModel::Uuid);
+    this->addHashAttr(DBPERMISSIONXML::PERMISSION,
+                      DBPERMISSIONXML::ID,
                       TreeXmlHashModel::Uuid);
 }
 
@@ -458,6 +476,13 @@ void ClassModelXml::initRelations()
                       DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::ALIAS);
     this->addRelation(DBLINKTOCOMPXML::LINKTOCOMP, DBLINKTOCOMPXML::REFCOMP,
                       DBCOMPXML::COMP, DBCOMPXML::LINKCLASS);
+
+    this->addRelation(DBPERMISSIONXML::PERMISSION, DBPERMISSIONXML::PARENT,
+                      DBCLASSXML::CLASS, DBCLASSXML::NAME);
+    this->addRelation(DBPERMISSIONXML::PERMISSION, DBPERMISSIONXML::PARENT,
+                      DBATTRXML::ATTR, DBATTRXML::NAME);
+    this->addRelation(DBPERMISSIONXML::PERMISSION, DBPERMISSIONXML::ROLE,
+                      DBROLEXML::ROLE, DBROLEXML::NAME);
 }
 
 void ClassModelXml::initModel()

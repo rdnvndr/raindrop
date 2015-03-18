@@ -266,20 +266,33 @@ namespace DBLINKTOCOMPXML{
 //! Ключевые слова XML файла для описания списка ролей
 namespace DBROLELISTXML {
     const QString ROLELIST = "RTPRoleList";
-    const QString NAME = "name";
-    const QString ALIAS = "alias";
-    const QString PARENT = "parent";
-    const QString ID = "guid";
+    const QString NAME     = "name";
+    const QString ALIAS    = "alias";
+    const QString PARENT   = "parent";
+    const QString ID       = "guid";
 }
 
 //! Ключевые слова XML файла для роли
 namespace DBROLEXML{
-    const QString ROLE = "RTPRole";
-    const QString NAME = "name";
-    const QString ALIAS = "alias";
-    const QString PARENT = "parent";
-    const QString ID = "guid";
+    const QString ROLE        = "RTPRole";
+    const QString NAME        = "name";
+    const QString ALIAS       = "alias";
+    const QString PARENT      = "parent";
+    const QString ID          = "guid";
     const QString DESCRIPTION = "description";
+}
+
+//! Ключевые слова XML файла для прав доступа
+namespace DBPERMISSIONXML{
+    const QString PERMISSION = "RTPPermission";
+    const QString ROLE       = "role";
+    const QString ISCREATE   = "isCreate";
+    const QString ISREAD     = "isRead";
+    const QString ISWRITE    = "isWrite";
+    const QString ISDELETE   = "isDelete";
+    const QString ISBLOCK    = "isBlock";
+    const QString PARENT     = "parent";
+    const QString ID         = "guid";
 }
 
 }}
