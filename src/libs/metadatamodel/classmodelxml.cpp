@@ -145,7 +145,7 @@ void ClassModelXml::initDisplayedAttrs()
     QStringList propsRoleList;
     propsRoleList << DBROLELISTXML::NAME   << DBROLELISTXML::ALIAS
                   << DBROLELISTXML::PARENT << DBROLELISTXML::ID;
-    this->addDisplayedAttr(DBROLELISTXML::ROLELIST, propsRoleList, QIcon(":/lovlist"));
+    this->addDisplayedAttr(DBROLELISTXML::ROLELIST, propsRoleList, QIcon(":/rolelist"));
 
     QStringList propsRefList;
     propsRefList << DBREFLISTXML::NAME   << DBREFLISTXML::ALIAS
@@ -197,14 +197,14 @@ void ClassModelXml::initDisplayedAttrs()
     propsRole << DBROLEXML::NAME   << DBROLEXML::ALIAS
               << DBROLEXML::PARENT << DBROLEXML::ID
               << DBROLEXML::DESCRIPTION;
-    this->addDisplayedAttr(DBROLEXML::ROLE, propsRole, QIcon(":/lov"));
+    this->addDisplayedAttr(DBROLEXML::ROLE, propsRole, QIcon(":/role"));
 
     QStringList propsPermission;
     propsPermission << DBPERMISSIONXML::ROLE     << DBPERMISSIONXML::ISCREATE
                     << DBPERMISSIONXML::ISREAD   << DBPERMISSIONXML::ISWRITE
                     << DBPERMISSIONXML::ISDELETE << DBPERMISSIONXML::ISBLOCK
                     << DBPERMISSIONXML::PARENT   << DBPERMISSIONXML::ID;
-    this->addDisplayedAttr(DBPERMISSIONXML::PERMISSION, propsPermission, QIcon(":/lov"));
+    this->addDisplayedAttr(DBPERMISSIONXML::PERMISSION, propsPermission, QIcon(":/role"));
 }
 
 void ClassModelXml::initInsertTags()
