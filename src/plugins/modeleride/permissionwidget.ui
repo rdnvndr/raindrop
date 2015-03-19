@@ -150,7 +150,11 @@
        </layout>
       </item>
       <item>
-       <widget class="QTreeView" name="treeViewPerm"/>
+       <widget class="QTreeView" name="treeViewPerm">
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

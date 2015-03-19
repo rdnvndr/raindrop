@@ -18,5 +18,7 @@
         <file alias="reflist">icons/reflist.svg</file>
         <file alias="reference">icons/reference.svg</file>
         <file alias="refgroup">icons/refgroup.svg</file>
+        <file alias="role">icons/role.svg</file>
+        <file alias="rolelist">icons/roles.svg</file>
     </qresource>
 </RCC>
