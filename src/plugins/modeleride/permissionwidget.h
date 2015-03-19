@@ -63,9 +63,6 @@ private:
 
     //! Модель структуры классов
     TreeXmlHashModel* m_model;
-
-    //! Виджет отображения данных
-    QAbstractItemView *m_itemView;
 };
 
 }}
