@@ -38,7 +38,7 @@ public:
     ModifyProxyModel* proxyModel();
 
     //! Проверка на возможность удаления
-    static bool isRemove(const QModelIndex &proxyIndex);
+    virtual bool isRemove(const QModelIndex &proxyIndex);
 
     //! Установка виджета отображения данных
     virtual void setItemView(QAbstractItemView *itemView);
