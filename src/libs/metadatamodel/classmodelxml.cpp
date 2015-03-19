@@ -200,10 +200,10 @@ void ClassModelXml::initDisplayedAttrs()
     this->addDisplayedAttr(DBROLEXML::ROLE, propsRole, QIcon(":/lov"));
 
     QStringList propsPermission;
-    propsPermission << DBPERMISSIONXML::ROLE     << DBPERMISSIONXML::PARENT
-                    << DBPERMISSIONXML::ISBLOCK  << DBPERMISSIONXML::ISCREATE
-                    << DBPERMISSIONXML::ISDELETE << DBPERMISSIONXML::ISREAD
-                    << DBPERMISSIONXML::ISWRITE  << DBPERMISSIONXML::ID;
+    propsPermission << DBPERMISSIONXML::ROLE     << DBPERMISSIONXML::ISCREATE
+                    << DBPERMISSIONXML::ISREAD   << DBPERMISSIONXML::ISWRITE
+                    << DBPERMISSIONXML::ISDELETE << DBPERMISSIONXML::ISBLOCK
+                    << DBPERMISSIONXML::PARENT   << DBPERMISSIONXML::ID;
     this->addDisplayedAttr(DBPERMISSIONXML::PERMISSION, propsPermission, QIcon(":/lov"));
 }
 

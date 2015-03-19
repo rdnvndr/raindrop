@@ -56,7 +56,9 @@ HEADERS += modelerideplug.h \
     abstractitemwidget.h \
     abstractmodifywidget.h \
     proprole.h \
-    rolewidget.h
+    rolewidget.h \
+    permissionwidget.h \
+    permissionproxymodel.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -94,7 +96,9 @@ SOURCES += modelerideplug.cpp \
     abstractitemwidget.cpp \
     abstractmodifywidget.cpp \
     proprole.cpp \
-    rolewidget.cpp
+    rolewidget.cpp \
+    permissionwidget.cpp \
+    permissionproxymodel.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
@@ -120,4 +124,5 @@ FORMS += \
     unitwidget.ui \
     entitygroupwidget.ui \
     proprole.ui \
-    rolewidget.ui
+    rolewidget.ui \
+    permissionwidget.ui

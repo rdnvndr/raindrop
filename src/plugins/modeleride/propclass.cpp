@@ -21,6 +21,9 @@ PropClass::PropClass(QWidget *parent) :
             filterWidget,SLOT(setRootIndex(QModelIndex)));
     connect(classWidget,SIGNAL(currentIndexChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
+    connect(classWidget,SIGNAL(currentIndexChanged(QModelIndex)),
+            permWidget,SLOT(setRootIndex(QModelIndex)));
+
     connect(classWidget,SIGNAL(dataChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
     connect(classWidget,SIGNAL(dataRemoved(QModelIndex)),
@@ -41,6 +44,7 @@ void PropClass::setModel(TreeXmlHashModel *model)
     attrWidget->setModel(model);
     compWidget->setModel(model);
     filterWidget->setModel(model);
+    permWidget->setModel(model);
     AbstractPropEditor::setModel(model);
 }
 
