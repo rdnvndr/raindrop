@@ -19,22 +19,27 @@ class XmlDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 public:
-    //! Конструктор модели
+    //! Конструктор делегата
     explicit XmlDelegate(QObject *parent = 0);
 
     //! Запись данных в модель
-    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+    void setModelData(QWidget *editor, QAbstractItemModel *model,
+                      const QModelIndex &index) const;
 
     //! Предоставление редактора
-    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
+                          const QModelIndex &index) const;
 
     //! Делегат должен предоставить функцию копирования данных модели в редактор.
     void setEditorData(QWidget *editor, const QModelIndex &index) const;
 
     //! Перерисовка делегата
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    void paint(QPainter *painter, const QStyleOptionViewItem &option,
+               const QModelIndex &index) const;
 
+    //! Получения центра для прямоугольника виджета
     QRect getCenteredComboBoxRect(const QStyleOptionViewItem &option) const;
+
 private:
     //! Получение хэш модели
     TreeXmlHashModel *sourceModel(QAbstractItemModel *model) const;

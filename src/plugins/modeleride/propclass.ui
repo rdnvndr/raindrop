@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>141</width>
+    <width>125</width>
     <height>45</height>
    </rect>
   </property>
@@ -137,6 +137,31 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tabPermission">
+      <attribute name="title">
+       <string>Безопасность</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>5</number>
+       </property>
+       <property name="leftMargin">
+        <number>5</number>
+       </property>
+       <property name="topMargin">
+        <number>5</number>
+       </property>
+       <property name="rightMargin">
+        <number>5</number>
+       </property>
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+       <item>
+        <widget class="PermissionWidget" name="permWidget" native="true"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
@@ -164,6 +189,12 @@
    <class>FilterWidget</class>
    <extends>QWidget</extends>
    <header>filterwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PermissionWidget</class>
+   <extends>QWidget</extends>
+   <header>permissionwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

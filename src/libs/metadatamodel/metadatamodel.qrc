@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="class">icons/classicon.svg</file>
+        <file alias="attribute">icons/attr.svg</file>
+        <file alias="composition">icons/insert-link.svg</file>
+        <file alias="filter">icons/edit-find.svg</file>
+        <file alias="block">icons/block.svg</file>
+        <file alias="expression">icons/formula.svg</file>
+        <file alias="model">icons/model.svg</file>
+        <file alias="entity">icons/entity.svg</file>
+        <file alias="unit">icons/unit.svg</file>
+        <file alias="units">icons/units.svg</file>
+        <file alias="classes">icons/classes.svg</file>
+        <file alias="entitygroup">icons/entitygroup.svg</file>
+        <file alias="lovlist">icons/lovlist.svg</file>
+        <file alias="lov">icons/lov.svg</file>
+        <file alias="lovvalue">icons/lovvalue.svg</file>
+        <file alias="reflist">icons/reflist.svg</file>
+        <file alias="reference">icons/reference.svg</file>
+        <file alias="refgroup">icons/refgroup.svg</file>
+        <file alias="role">icons/role.svg</file>
+        <file alias="rolelist">icons/roles.svg</file>
+    </qresource>
+</RCC>

@@ -53,6 +53,9 @@ public slots:
     //! Установка отображения ЕИ в дереве классов
     void setShowUnit(bool shown);
 
+    //! Установка отображения прав доступа в дереве классов
+    void setShowPermission(bool shown);
+
 private slots:
 
     //! Обработка двойного щелчка мыши в дереве классов
@@ -102,6 +105,10 @@ private:
 
     //! Команда отображения ЕИ в дереве классов
     QAction* actionShowUnit;
+
+    //! Команда отображения прав доступа в дереве классов
+    QAction* actionShowPermission;
+
 
     //! Команда разделитель
     QAction* actionSeparator;
