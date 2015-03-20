@@ -58,7 +58,8 @@ HEADERS += modelerideplug.h \
     proprole.h \
     rolewidget.h \
     permissionwidget.h \
-    permissionproxymodel.h
+    permissionproxymodel.h \
+    permdelegate.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -98,7 +99,8 @@ SOURCES += modelerideplug.cpp \
     proprole.cpp \
     rolewidget.cpp \
     permissionwidget.cpp \
-    permissionproxymodel.cpp
+    permissionproxymodel.cpp \
+    permdelegate.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \

@@ -4,7 +4,8 @@
 
 #include <metadatamodel/dbxmlstruct.h>
 
-#include "xmldelegate.h"
+#include "permdelegate.h"
+
 
 using namespace RTPTechGroup::MetaDataModel;
 
@@ -19,6 +20,7 @@ PermissionWidget::PermissionWidget(QWidget *parent) :
     connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));
     connect(toolButtonDelete,SIGNAL(clicked()),this,SLOT(remove()));
 
+    treeViewPerm->setItemDelegate(new PermDelegate(this));
     m_proxyModel = new PermissionProxyModel();
 }
 
@@ -70,9 +72,11 @@ void PermissionWidget::add()
     QString tag = DBPERMISSIONXML::PERMISSION;
 
     QModelIndex srcIndex = m_proxyModel->mapToSource(treeViewPerm->currentIndex());
-    QModelIndex srcCurrentIndex =
-            m_model->insertLastRows(0,1,srcIndex, tag);
+    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex, tag);
     if (srcCurrentIndex.isValid()){
+        for (int column = 1; column <= 5; column++)
+            m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(), column),
+                             false);
         edit(true);
     }
 }
