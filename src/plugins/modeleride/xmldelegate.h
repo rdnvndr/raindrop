@@ -40,8 +40,6 @@ public:
     //! Получения центра для прямоугольника виджета
     QRect getCenteredComboBoxRect(const QStyleOptionViewItem &option) const;
 
-//    void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option,
-//                              const QModelIndex &index) const;
 private:
     //! Получение хэш модели
     TreeXmlHashModel *sourceModel(QAbstractItemModel *model) const;
