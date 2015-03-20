@@ -2,6 +2,7 @@
 #define PERMISSIONPROXYMODEL_H
 
 #include <QSortFilterProxyModel>
+#include <QPersistentModelIndex>
 
 namespace RTPTechGroup {
 namespace ModelerIde {

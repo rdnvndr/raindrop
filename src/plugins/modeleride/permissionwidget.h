@@ -28,20 +28,16 @@ public:
     virtual ~PermissionWidget();
 
     //! Возращает модель
-   TreeXmlHashModel *model();
+    TreeXmlHashModel *model();
 
-   //! Возращает прокси модели
-   PermissionProxyModel* proxyModel();
+    //! Возращает прокси модели
+    PermissionProxyModel* proxyModel();
 
     //! Установка модели для редактирования прав доступа
     void setModel(TreeXmlHashModel *model);
 
     //! Проверка на возможность удаления
     bool isRemove(const QModelIndex &proxyIndex);
-
-signals:
-    //! Сигнал об изменении корневого индекса в прокси
-    void proxyIndexChanged(const QModelIndex &index);
 
 public slots:
     //! Добавление права доступв
@@ -50,13 +46,19 @@ public slots:
     //! Удаление права доступв
     void remove();
 
-    //! Перевод в режим редактирования
-    void edit(bool flag = true);
-
     //! Установка родителя значений списка
     void setRootIndex(const QModelIndex &index);
 
+    //! Установка отображения родительских атрибутов класса
+    void showParent(bool flag);
+
+private slots:
+    //! Удаление право доступа без роли
+    void removeEmptyRole(const QModelIndex &current, const QModelIndex &previous);
+
 private:
+    //! Получение данных модели
+    QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
 
     //! Прокси модель для значений списка
     PermissionProxyModel* m_proxyModel;

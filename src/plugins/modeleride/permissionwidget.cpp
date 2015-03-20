@@ -17,12 +17,13 @@ PermissionWidget::PermissionWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));
-    connect(toolButtonDelete,SIGNAL(clicked()),this,SLOT(remove()));
+    connect(toolButtonAdd,    SIGNAL(clicked()), this, SLOT(add()   ));
+    connect(toolButtonDelete, SIGNAL(clicked()), this, SLOT(remove()));
+
+    connect(checkBoxInInherited,SIGNAL(clicked(bool)),
+            this,SLOT(showParent(bool)));
 
     treeViewPerm->setItemDelegate(new PermDelegate(this));
-    connect(treeViewPerm, SIGNAL(clicked(QModelIndex)),
-            treeViewPerm, SLOT(edit(QModelIndex)));
     m_proxyModel = new PermissionProxyModel();
 }
 
@@ -74,12 +75,20 @@ void PermissionWidget::add()
     QString tag = DBPERMISSIONXML::PERMISSION;
 
     QModelIndex srcIndex = m_proxyModel->mapToSource(treeViewPerm->currentIndex());
-    QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex, tag);
-    if (srcCurrentIndex.isValid()){
-        for (int column = 1; column <= 5; column++)
-            m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(), column),
-                             false);
-        edit(true);
+    if (srcIndex.isValid()) {
+        if (srcIndex.data(TreeXmlModel::TagRole) == tag) {
+            srcIndex = srcIndex.parent();
+            if (!srcIndex.isValid()) return;
+        }
+        QModelIndex srcCurrentIndex = m_model->insertLastRows(0,1,srcIndex, tag);
+        if (srcCurrentIndex.isValid()){
+            treeViewPerm->expand(m_proxyModel->mapFromSource(srcIndex));
+            treeViewPerm->setCurrentIndex(m_proxyModel->mapFromSource(srcCurrentIndex));
+            for (int column = 1; column <= 5; column++)
+                m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(), column),
+                                 false);
+
+        }
     }
 }
 
@@ -96,29 +105,62 @@ void PermissionWidget::remove()
         treeViewPerm->setModel(m_proxyModel);
     } else
         QMessageBox::warning(NULL,tr("Предупреждение"),
-                             tr("Невозможно удалить значение списка, поскольку нет выбраных значений."));
-}
-
-void PermissionWidget::edit(bool flag)
-{
-    if (flag == false)
-        treeViewPerm->setCurrentIndex(treeViewPerm->rootIndex());
-
-    toolButtonAdd->setEnabled(flag);
-    toolButtonDelete->setEnabled(flag);
+                             tr("Невозможно удалить право доступа, поскольку нет выбраных значений."));
 }
 
 void PermissionWidget::setRootIndex(const QModelIndex &index)
 {
-    QModelIndex rootIndex = m_proxyModel->mapToSource(treeViewPerm->rootIndex());
-    if (rootIndex == index)
-        return;
-
     m_proxyModel->setRootIndex(index);
-    treeViewPerm->setRootIndex(m_proxyModel->mapFromSource(index).parent());
-    treeViewPerm->expandAll();
+    QModelIndex proxyIndex = m_proxyModel->mapFromSource(index);
+    treeViewPerm->setRootIndex(proxyIndex.parent());
 
-    emit proxyIndexChanged(treeViewPerm->rootIndex());
+    treeViewPerm->setCurrentIndex(proxyIndex);
+    treeViewPerm->expand(proxyIndex);
+
+    connect(treeViewPerm->selectionModel(),
+            SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+            this,
+            SLOT(removeEmptyRole(QModelIndex,QModelIndex)));
+}
+
+void PermissionWidget::showParent(bool flag)
+{
+    proxyModel()->setFilterRole(Qt::EditRole);
+
+    if (flag==true){
+        proxyModel()->setFilterRegExp("");
+    } else {
+        QModelIndex index = treeViewPerm->rootIndex().child(0,0);
+        QString className = modelData(DBCLASSXML::CLASS,
+                                      DBCLASSXML::ID,
+                                      index).toString();
+        className.replace("{","\\{");
+        className.replace("}","\\}");
+        if (className.isEmpty()){
+            proxyModel()->setFilterRegExp("\\S*");
+        }else
+            proxyModel()->setFilterRegExp(className);
+    }
+    proxyModel()->setFilterKeyColumn(
+                model()->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::PARENT));
+}
+
+void PermissionWidget::removeEmptyRole(const QModelIndex &current,
+                                       const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+
+    QString role = modelData(DBPERMISSIONXML::PERMISSION,
+                             DBPERMISSIONXML::ROLE, previous).toString();
+    if (role.isEmpty())
+        proxyModel()->removeRow(previous.row(), previous.parent());
+}
+
+QVariant PermissionWidget::modelData(const QString &tag, const QString &attr,
+                                     const QModelIndex &index)
+{
+    return index.sibling(index.row(), m_model->columnDisplayedAttr(
+                             tag,attr)).data();
 }
 
 }}
