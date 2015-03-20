@@ -54,7 +54,7 @@ public slots:
 
 private slots:
     //! Удаление право доступа без роли
-    void removeEmptyRole(const QModelIndex &current, const QModelIndex &previous);
+    void currentIndexChange(const QModelIndex &current, const QModelIndex &previous);
 
 private:
     //! Получение данных модели
