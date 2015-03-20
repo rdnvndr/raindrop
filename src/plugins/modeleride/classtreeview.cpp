@@ -51,10 +51,17 @@ ClassTreeView::ClassTreeView(QWidget *parent) :
     contextMenu->addAction(actionShowFilter);
     connect(actionShowFilter,SIGNAL(triggered(bool)),this,SLOT(setShowFilter(bool)));
 
+    actionShowPermission = new QAction(tr("Показать права"),this);
+    actionShowPermission->setCheckable(true);
+    contextMenu->addAction(actionShowPermission);
+    connect(actionShowPermission,SIGNAL(triggered(bool)),this,SLOT(setShowPermission(bool)));
+
+
     actionShowUnit = new QAction(tr("Показать ЕИ"),this);
     actionShowUnit->setCheckable(true);
     contextMenu->addAction(actionShowUnit);
     connect(actionShowUnit,SIGNAL(triggered(bool)),this,SLOT(setShowUnit(bool)));
+
 
     treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(treeView,SIGNAL(customContextMenuRequested(const QPoint&)),
@@ -173,6 +180,18 @@ void ClassTreeView::setShowUnit(bool shown)
     QRegExp regex = classFilterModel->filterRegExp();
     classFilterModel->setFilterRegExp(regex);
     actionShowUnit->setChecked(shown);
+}
+
+void ClassTreeView::setShowPermission(bool shown)
+{
+    if (shown)
+        classFilterModel->addVisibleTag(DBPERMISSIONXML::PERMISSION);
+    else
+        classFilterModel->removeVisibleTag(DBPERMISSIONXML::PERMISSION);
+
+    QRegExp regex = classFilterModel->filterRegExp();
+    classFilterModel->setFilterRegExp(regex);
+    actionShowPermission->setChecked(shown);
 }
 
 void ClassTreeView::treeDoubleClicked(const QModelIndex &index)
