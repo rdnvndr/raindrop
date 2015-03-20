@@ -27,6 +27,8 @@ QWidget*  XmlDelegate::createEditor (QWidget * parent, const QStyleOptionViewIte
     // Для логического типа создаем QCheckbox
     if (index.data(Qt::EditRole).type() == QVariant::Bool) {
         QCheckBox* pRes = new  QCheckBox(parent);
+        pRes->setStyleSheet(
+                    "QCheckBox::indicator {subcontrol-position: top center;}");
         return pRes;
     }
 
@@ -160,7 +162,10 @@ QRect  XmlDelegate::getCenteredComboBoxRect(const QStyleOptionViewItem &option) 
 {
     QSize size = QApplication::style()->sizeFromContents(QStyle::CT_CheckBox, &option, QSize());
 #ifdef Q_OS_WIN32
-    size.setWidth(size.width() + QApplication::style()->pixelMetric(QStyle::PM_CheckBoxLabelSpacing, &option));
+    size.setWidth(size.width()
+//                   + QApplication::style()->pixelMetric(QStyle::PM_CheckBoxLabelSpacing, &option)
+                   + QApplication::style()->pixelMetric(QStyle::PM_ExclusiveIndicatorWidth, &option)
+                 );
 #endif
 
     QPoint center = option.rect.center();
