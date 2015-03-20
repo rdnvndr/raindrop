@@ -13,7 +13,8 @@ namespace ModelerIde {
 
 PermissionProxyModel::PermissionProxyModel()
 {
-
+    setDynamicSortFilter(true);
+//    setFilterAllRows(false);
 }
 
 PermissionProxyModel::~PermissionProxyModel()
@@ -43,6 +44,19 @@ bool PermissionProxyModel::filterAcceptsRow(int source_row, const QModelIndex &s
 
     if (sourceModel()->parent(m_rootIndex) == source_parent && source_index != m_rootIndex)
         return false;
+
+//    if (source_parent.internalPointer() ==  m_rootIndex.internalPointer())
+    {
+        if (tag == DBATTRXML::ATTR){
+            if (filterRegExp() == QRegExp("\\S*")){
+                if (sourceModel()->data(source_index).toString().isEmpty())
+                    return true;
+                else
+                    return false;
+            }
+            return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
+        }
+    }
 
     return true;
 }
