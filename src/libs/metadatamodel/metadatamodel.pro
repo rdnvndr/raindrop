@@ -18,3 +18,6 @@ HEADERS += metadatamodelglobal.h \
     dbxmlstruct.h
 SOURCES += \ 
     classmodelxml.cpp
+
+RESOURCES += \
+    metadatamodel.qrc

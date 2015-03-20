@@ -21,19 +21,22 @@ XmlDelegate::XmlDelegate(QObject *parent) :
 {
 }
 
-QWidget*  XmlDelegate::createEditor (QWidget * parent, const QStyleOptionViewItem & option,
-        const QModelIndex & index ) const
+QWidget*  XmlDelegate::createEditor(QWidget *parent,
+                                    const QStyleOptionViewItem & option,
+                                    const QModelIndex & index ) const
 {
     // Для логического типа создаем QCheckbox
     if (index.data(Qt::EditRole).type() == QVariant::Bool) {
         QCheckBox* pRes = new  QCheckBox(parent);
+        pRes->setStyleSheet(
+                    "QCheckBox::indicator {subcontrol-position: top center;}");
         return pRes;
     }
 
     return QStyledItemDelegate::createEditor(parent,option,index);
 }
 
-void XmlDelegate::setEditorData(QWidget * editor, const QModelIndex & index) const
+void XmlDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
     if (index.isValid()) {
         // Логическое
@@ -93,7 +96,8 @@ void XmlDelegate::setEditorData(QWidget * editor, const QModelIndex & index) con
 
 }
 
-void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, const QModelIndex & index) const
+void XmlDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
+                               const QModelIndex& index) const
 {
     // Логическое
     if (index.data(Qt::EditRole).type() == QVariant::Bool) {
@@ -151,28 +155,23 @@ void XmlDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, co
     return;
 }
 
-//void XmlDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &/* index */) const
-//{
-//    editor->setGeometry(option.rect);
-//}
-
 QRect  XmlDelegate::getCenteredComboBoxRect(const QStyleOptionViewItem &option) const
 {
-    QSize size = QApplication::style()->sizeFromContents(QStyle::CT_CheckBox, &option, QSize());
-#ifdef Q_OS_WIN32
-    size.setWidth(size.width() + QApplication::style()->pixelMetric(QStyle::PM_CheckBoxLabelSpacing, &option));
-#endif
-
+    QSize size = QApplication::style()->sizeFromContents(QStyle::CT_CheckBox,
+                                                         &option, QSize());
+    size.setWidth(size.width() + QApplication::style()->pixelMetric(
+                      QStyle::PM_ExclusiveIndicatorWidth, &option));
     QPoint center = option.rect.center();
     QRect result;
-    result.setTop(center.y() - size.height() / 2);
-    result.setLeft(center.x() - size.width() / 2);
+    result.setTop (center.y() - size.height() / 2);
+    result.setLeft(center.x() - size.width()  / 2);
     result.setSize(size);
 
     return result;
 }
 
-void XmlDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void XmlDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
+                        const QModelIndex &index) const
 {
     // Логический
     if (index.model()->data(index, Qt::EditRole).type() == QVariant::Bool){

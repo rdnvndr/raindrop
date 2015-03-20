@@ -52,6 +52,9 @@ void ClassModelXml::initTagFilters()
     this->addTagFilter(DBLINKTOCLASSXML::LINKTOCLASS);
     this->addTagFilter(DBLINKTOFILTERXML::LINKTOFILTER);
     this->addTagFilter(DBLINKTOCOMPXML::LINKTOCOMP);
+    this->addTagFilter(DBROLELISTXML::ROLELIST);
+    this->addTagFilter(DBROLEXML::ROLE);
+    this->addTagFilter(DBPERMISSIONXML::PERMISSION);
 }
 
 void ClassModelXml::initDisplayedAttrs()
@@ -62,7 +65,7 @@ void ClassModelXml::initDisplayedAttrs()
                << DBCLASSXML::PARENT    << DBCLASSXML::ISACTIVE
                << DBCLASSXML::ISCONTEXT << DBCLASSXML::TEMPLATE
                << DBCLASSXML::ID        << DBCLASSXML::ICON;
-    this->addDisplayedAttr(DBCLASSXML::CLASS, propsClass,QIcon(":/modeleride"));
+    this->addDisplayedAttr(DBCLASSXML::CLASS, propsClass,QIcon(":/class"));
 
     QStringList propsAttr;
     propsAttr << DBATTRXML::NAME           << DBATTRXML::ALIAS
@@ -139,6 +142,11 @@ void ClassModelXml::initDisplayedAttrs()
                  << DBLOVLISTXML::PARENT << DBLOVLISTXML::ID;
     this->addDisplayedAttr(DBLOVLISTXML::LOVLIST, propsLovList, QIcon(":/lovlist"));
 
+    QStringList propsRoleList;
+    propsRoleList << DBROLELISTXML::NAME   << DBROLELISTXML::ALIAS
+                  << DBROLELISTXML::PARENT << DBROLELISTXML::ID;
+    this->addDisplayedAttr(DBROLELISTXML::ROLELIST, propsRoleList, QIcon(":/rolelist"));
+
     QStringList propsRefList;
     propsRefList << DBREFLISTXML::NAME   << DBREFLISTXML::ALIAS
                  << DBREFLISTXML::PARENT << DBREFLISTXML::ID;
@@ -173,7 +181,7 @@ void ClassModelXml::initDisplayedAttrs()
     QStringList propsLinkToClass;
     propsLinkToClass << DBLINKTOCLASSXML::ALIAS  << DBLINKTOCLASSXML::REFCLASS
                      << DBLINKTOCLASSXML::PARENT << DBLINKTOCLASSXML::ID;
-    this->addDisplayedAttr(DBLINKTOCLASSXML::LINKTOCLASS, propsLinkToClass, QIcon(":/modeleride"));
+    this->addDisplayedAttr(DBLINKTOCLASSXML::LINKTOCLASS, propsLinkToClass, QIcon(":/class"));
 
     QStringList propsLinkToFilter;
     propsLinkToFilter << DBLINKTOFILTERXML::ALIAS   << DBLINKTOFILTERXML::REFFILTER
@@ -184,15 +192,32 @@ void ClassModelXml::initDisplayedAttrs()
     propsLinkToComp << DBLINKTOCOMPXML::ALIAS  << DBLINKTOCOMPXML::REFCOMP
                     << DBLINKTOCOMPXML::PARENT << DBLINKTOCOMPXML::ID;
     this->addDisplayedAttr(DBLINKTOCOMPXML::LINKTOCOMP, propsLinkToComp, QIcon(":/composition"));
+
+    QStringList propsRole;
+    propsRole << DBROLEXML::NAME   << DBROLEXML::ALIAS
+              << DBROLEXML::PARENT << DBROLEXML::ID
+              << DBROLEXML::DESCRIPTION;
+    this->addDisplayedAttr(DBROLEXML::ROLE, propsRole, QIcon(":/role"));
+
+    QStringList propsPermission;
+    propsPermission << DBPERMISSIONXML::ROLE     << DBPERMISSIONXML::ISCREATE
+                    << DBPERMISSIONXML::ISREAD   << DBPERMISSIONXML::ISWRITE
+                    << DBPERMISSIONXML::ISDELETE << DBPERMISSIONXML::ISBLOCK
+                    << DBPERMISSIONXML::PARENT   << DBPERMISSIONXML::ID;
+    this->addDisplayedAttr(DBPERMISSIONXML::PERMISSION, propsPermission, QIcon(":/role"));
 }
 
 void ClassModelXml::initInsertTags()
 {
     QStringList insertTags;
 
-    insertTags << DBATTRXML::ATTR  << DBCLASSXML::CLASS << DBCOMPXML::COMP
-               << DBFILTERXML::FILTER;
+    insertTags << DBATTRXML::ATTR     << DBCLASSXML::CLASS << DBCOMPXML::COMP
+               << DBFILTERXML::FILTER << DBPERMISSIONXML::PERMISSION;
     this->addInsertTags(DBCLASSXML::CLASS,insertTags);
+
+    insertTags.clear();
+    insertTags << DBPERMISSIONXML::PERMISSION;
+    this->addInsertTags(DBATTRXML::ATTR, insertTags);
 
     insertTags.clear();
     insertTags << DBATTRXML::ATTR;
@@ -220,7 +245,8 @@ void ClassModelXml::initInsertTags()
 
     insertTags.clear();
     insertTags << DBCLASSLISTXML::CLASSLIST << DBENTITYLISTXML::ENTITYLIST
-               << DBLOVLISTXML::LOVLIST     << DBREFLISTXML::REFLIST;
+               << DBLOVLISTXML::LOVLIST     << DBREFLISTXML::REFLIST
+               << DBROLELISTXML::ROLELIST;
     this->addInsertTags(DBMODELXML::MODEL,insertTags);
 
     insertTags.clear();
@@ -258,6 +284,10 @@ void ClassModelXml::initInsertTags()
     insertTags.clear();
     insertTags << DBLINKTOCLASSXML::LINKTOCLASS;
     this->addInsertTags(DBLINKTOCOMPXML::LINKTOCOMP,insertTags);
+
+    insertTags.clear();
+    insertTags << DBROLEXML::ROLE;
+    this->addInsertTags(DBROLELISTXML::ROLELIST,insertTags);
 }
 
 void ClassModelXml::initHashAttrs()
@@ -310,6 +340,12 @@ void ClassModelXml::initHashAttrs()
     this->addHashAttr(DBREFXML::REF,
                       DBREFXML::NAME,
                       TreeXmlHashModel::UniqueUpperRename);
+    this->addHashAttr(DBROLEXML::ROLE,
+                      DBROLEXML::NAME,
+                      TreeXmlHashModel::UniqueUpperRename);
+    this->addHashAttr(DBPERMISSIONXML::PERMISSION,
+                      DBPERMISSIONXML::ROLE,
+                      TreeXmlHashModel::UniqueParent);
 
 
     this->addHashAttr(DBCLASSXML::CLASS,
@@ -362,6 +398,12 @@ void ClassModelXml::initHashAttrs()
                       TreeXmlHashModel::Uuid);
     this->addHashAttr(DBCLASSLISTXML::CLASSLIST,
                       DBCLASSLISTXML::ID,
+                      TreeXmlHashModel::Uuid);
+    this->addHashAttr(DBROLEXML::ROLE,
+                      DBROLEXML::ID,
+                      TreeXmlHashModel::Uuid);
+    this->addHashAttr(DBPERMISSIONXML::PERMISSION,
+                      DBPERMISSIONXML::ID,
                       TreeXmlHashModel::Uuid);
 }
 
@@ -434,6 +476,13 @@ void ClassModelXml::initRelations()
                       DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::ALIAS);
     this->addRelation(DBLINKTOCOMPXML::LINKTOCOMP, DBLINKTOCOMPXML::REFCOMP,
                       DBCOMPXML::COMP, DBCOMPXML::LINKCLASS);
+
+    this->addRelation(DBPERMISSIONXML::PERMISSION, DBPERMISSIONXML::PARENT,
+                      DBCLASSXML::CLASS, DBCLASSXML::NAME);
+    this->addRelation(DBPERMISSIONXML::PERMISSION, DBPERMISSIONXML::PARENT,
+                      DBATTRXML::ATTR, DBATTRXML::NAME);
+    this->addRelation(DBPERMISSIONXML::PERMISSION, DBPERMISSIONXML::ROLE,
+                      DBROLEXML::ROLE, DBROLEXML::NAME);
 }
 
 void ClassModelXml::initModel()
@@ -510,6 +559,16 @@ void ClassModelXml::initModel()
                                                   DBREFLISTXML::ALIAS);
             this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Справочники"));
         }
+
+        lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource, DBROLELISTXML::ROLELIST);
+        if (lastIndex.isValid()){
+            int column = this->columnDisplayedAttr(DBROLELISTXML::ROLELIST,
+                                                      DBROLELISTXML::NAME);
+            this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Roles"));
+            column = this->columnDisplayedAttr(DBROLELISTXML::ROLELIST,
+                                               DBROLELISTXML::ALIAS);
+            this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Список ролей"));
+        }
     }
 }
 
@@ -523,6 +582,7 @@ QModelIndex ClassModelXml::insertLastRows(int row, int count, const QModelIndex 
                         || tag == DBENTITYLISTXML::ENTITYLIST
                         || tag == DBLOVLISTXML::LOVLIST
                         || tag == DBREFLISTXML::REFLIST
+                        || tag == DBROLELISTXML::ROLELIST
                         )
                     )
                 )
@@ -547,7 +607,8 @@ bool ClassModelXml::removeRows(int row, int count, const QModelIndex &parent)
                         && (tag == DBCLASSLISTXML::CLASSLIST
                             || tag == DBENTITYLISTXML::ENTITYLIST
                             || tag == DBLOVLISTXML::LOVLIST
-                            || tag == DBREFLISTXML::REFLIST)
+                            || tag == DBREFLISTXML::REFLIST
+                            || tag == DBROLELISTXML::ROLELIST)
                   ) return false;
             }
         }
@@ -562,7 +623,8 @@ bool ClassModelXml::isRemove(const QModelIndex &srcIndex)
     if (tag == DBMODELXML::MODEL
             || tag == DBCLASSLISTXML::CLASSLIST
             || tag == DBENTITYLISTXML::ENTITYLIST
-            || tag == DBLOVLISTXML::LOVLIST)
+            || tag == DBLOVLISTXML::LOVLIST
+            || tag == DBROLELISTXML::ROLELIST)
     {
         return false;
     }
