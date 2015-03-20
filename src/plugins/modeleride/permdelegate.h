@@ -27,6 +27,9 @@ public:
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                           const QModelIndex &index) const;
 
+    //! Делегат должен предоставить функцию копирования данных модели в редактор.
+    void setEditorData(QWidget *editor, const QModelIndex &index) const;
+
     //! Перерисовка делегата
     void paint(QPainter *painter, const QStyleOptionViewItem &option,
                const QModelIndex &index) const;

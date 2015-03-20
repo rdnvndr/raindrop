@@ -2,6 +2,8 @@
 
 #include <QApplication>
 #include <QComboBox>
+#include <QCheckBox>
+
 #include <QAbstractProxyModel>
 
 #include <treexmlmodel/treexmlmodel.h>
@@ -44,7 +46,19 @@ QWidget *PermDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
         }
     }
 
-    return XmlDelegate::createEditor(parent, option, index);
+    QWidget *widget = XmlDelegate::createEditor(parent, option, index);
+    QCheckBox *checkBox = qobject_cast<QCheckBox *>(widget);
+    if (checkBox && index.data(Qt::EditRole).type() == QVariant::Bool) {
+        QAbstractItemModel *model = const_cast<QAbstractItemModel *>(index.model());
+        model->setData(index,true);
+    }
+
+    return widget;
+}
+
+void PermDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+{
+    XmlDelegate::setEditorData(editor,index);
 }
 
 void PermDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,

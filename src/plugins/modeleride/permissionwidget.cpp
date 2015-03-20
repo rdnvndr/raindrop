@@ -21,6 +21,8 @@ PermissionWidget::PermissionWidget(QWidget *parent) :
     connect(toolButtonDelete,SIGNAL(clicked()),this,SLOT(remove()));
 
     treeViewPerm->setItemDelegate(new PermDelegate(this));
+    connect(treeViewPerm, SIGNAL(clicked(QModelIndex)),
+            treeViewPerm, SLOT(edit(QModelIndex)));
     m_proxyModel = new PermissionProxyModel();
 }
 
