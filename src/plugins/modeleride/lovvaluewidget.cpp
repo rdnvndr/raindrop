@@ -36,6 +36,9 @@ void LovValueWidget::setModel(TreeXmlHashModel *model)
 
     for (int column = 2; column < 16; column++)
         tableViewLovValue->setColumnHidden(column,true);
+
+    tableViewLovValue->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    tableViewLovValue->horizontalHeader()->setDefaultSectionSize(200);
 }
 
 void LovValueWidget::add()
