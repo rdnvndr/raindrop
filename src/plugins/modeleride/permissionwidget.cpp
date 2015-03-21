@@ -23,6 +23,9 @@ PermissionWidget::PermissionWidget(QWidget *parent) :
     connect(checkBoxInInherited,SIGNAL(clicked(bool)),
             this,SLOT(showParent(bool)));
 
+    connect(treeViewPerm, SIGNAL(clicked(QModelIndex)),
+            treeViewPerm, SLOT(edit(QModelIndex)));
+
     treeViewPerm->setItemDelegate(new PermDelegate(this));
     m_proxyModel = new PermissionProxyModel();
 }
@@ -60,6 +63,10 @@ void PermissionWidget::setModel(TreeXmlHashModel *model)
 
     for (int column = 6; column < 16; column++)
         treeViewPerm->setColumnHidden(column,true);
+
+    treeViewPerm->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+    treeViewPerm->header()->setDefaultSectionSize(85);
+    treeViewPerm->header()->setDefaultAlignment(Qt::AlignCenter);
 }
 
 bool PermissionWidget::isRemove(const QModelIndex &proxyIndex)
@@ -114,13 +121,13 @@ void PermissionWidget::setRootIndex(const QModelIndex &index)
     QModelIndex proxyIndex = m_proxyModel->mapFromSource(index);
     treeViewPerm->setRootIndex(proxyIndex.parent());
 
-    treeViewPerm->setCurrentIndex(proxyIndex);
-    treeViewPerm->expand(proxyIndex);
-
     connect(treeViewPerm->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             this,
-            SLOT(removeEmptyRole(QModelIndex,QModelIndex)));
+            SLOT(currentIndexChange(QModelIndex,QModelIndex)));
+
+    treeViewPerm->setCurrentIndex(proxyIndex);
+    treeViewPerm->expand(proxyIndex);
 }
 
 void PermissionWidget::showParent(bool flag)
@@ -145,14 +152,18 @@ void PermissionWidget::showParent(bool flag)
                 model()->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::PARENT));
 }
 
-void PermissionWidget::removeEmptyRole(const QModelIndex &current,
+void PermissionWidget::currentIndexChange(const QModelIndex &current,
                                        const QModelIndex &previous)
 {
-    Q_UNUSED(current)
+    if (current.sibling(current.row(),0) == previous.sibling(previous.row(),0))
+        return;
 
-    QString role = modelData(DBPERMISSIONXML::PERMISSION,
+    QString currentTag = current.data(TreeXmlModel::TagRole).toString();
+    toolButtonDelete->setDisabled(currentTag != DBPERMISSIONXML::PERMISSION);
+
+    QString previousRole = modelData(DBPERMISSIONXML::PERMISSION,
                              DBPERMISSIONXML::ROLE, previous).toString();
-    if (role.isEmpty())
+    if (previousRole.isEmpty())
         proxyModel()->removeRow(previous.row(), previous.parent());
 }
 
