@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>268</width>
-    <height>117</height>
+    <width>296</width>
+    <height>134</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -144,6 +144,9 @@
         <property name="selectionBehavior">
          <enum>QAbstractItemView::SelectRows</enum>
         </property>
+        <attribute name="headerStretchLastSection">
+         <bool>false</bool>
+        </attribute>
        </widget>
       </item>
      </layout>

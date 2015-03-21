@@ -38,6 +38,9 @@ void RefItemWidget::setModel(TreeXmlHashModel *model)
     for (int column = 2; column < proxyModel()->columnCount(); column++)
         treeView->setColumnHidden(column,true);
 
+    treeView->header()->setDefaultAlignment(Qt::AlignCenter);
+    treeView->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+    treeView->header()->setDefaultSectionSize(200);
 }
 
 void RefItemWidget::add()

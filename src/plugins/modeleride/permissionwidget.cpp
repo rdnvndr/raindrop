@@ -66,6 +66,7 @@ void PermissionWidget::setModel(TreeXmlHashModel *model)
 
     treeViewPerm->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     treeViewPerm->header()->setDefaultSectionSize(85);
+    treeViewPerm->header()->setDefaultAlignment(Qt::AlignCenter);
 }
 
 bool PermissionWidget::isRemove(const QModelIndex &proxyIndex)

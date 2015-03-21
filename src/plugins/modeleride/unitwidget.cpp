@@ -45,6 +45,9 @@ void UnitWidget::setModel(TreeXmlHashModel *model)
 
     for (int column = 8; column < 16; column++)
         tableViewUnit->setColumnHidden(column,true);
+
+    tableViewUnit->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    tableViewUnit->horizontalHeader()->setDefaultSectionSize(75);
 }
 
 void UnitWidget::add()
