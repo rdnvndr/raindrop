@@ -50,7 +50,7 @@ QWidget *PermDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
     QCheckBox *checkBox = qobject_cast<QCheckBox *>(widget);
     if (checkBox && index.data(Qt::EditRole).type() == QVariant::Bool) {
         QAbstractItemModel *model = const_cast<QAbstractItemModel *>(index.model());
-        model->setData(index,true);
+        model->setData(index, index.data(Qt::EditRole)!=true);
     }
 
     return widget;

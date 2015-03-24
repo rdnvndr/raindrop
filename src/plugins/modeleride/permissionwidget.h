@@ -56,6 +56,9 @@ private slots:
     //! Удаление право доступа без роли
     void currentIndexChange(const QModelIndex &current, const QModelIndex &previous);
 
+    //! Перевод в режим редактирования ячейки дерева
+    void cellItemEdit(const QModelIndex& index);
+
 private:
     //! Получение данных модели
     QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
