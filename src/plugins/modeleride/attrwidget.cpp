@@ -40,12 +40,10 @@ AttrWidget::AttrWidget(QWidget *parent) :
                                        << DBTYPEXML::CHAR
                                        << DBTYPEXML::DATE
                                        << DBTYPEXML::DECIMAL
-                                       << DBTYPEXML::DIMENSION
                                        << DBTYPEXML::DOUBLE
                                        << DBTYPEXML::INTEGER
                                        << DBTYPEXML::STRING
                                        << DBTYPEXML::REFERENCE
-                                       << DBTYPEXML::RANGE
                                        << DBTYPEXML::TIME
                                        << DBTYPEXML::TIMESHTAMP
                                        );
@@ -349,10 +347,8 @@ void AttrWidget::changeType(const QString &typeName)
 
         // Decimal, Dimension, Double, Integer, Rage
         if( DBTYPEXML::DECIMAL   == typeName
-         || DBTYPEXML::DIMENSION == typeName
          || DBTYPEXML::DOUBLE    == typeName
-         || DBTYPEXML::INTEGER   == typeName
-         || DBTYPEXML::RANGE     == typeName )
+         || DBTYPEXML::INTEGER   == typeName )
         {
             comboBoxUnitAttr->setEnabled(true);
         } else {
