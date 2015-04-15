@@ -30,11 +30,9 @@ LovWidget::LovWidget(QWidget *parent) :
                                        << DBTYPEXML::CHAR
                                        << DBTYPEXML::DATE
                                        << DBTYPEXML::DECIMAL
-                                       << DBTYPEXML::DIMENSION
                                        << DBTYPEXML::DOUBLE
                                        << DBTYPEXML::INTEGER
                                        << DBTYPEXML::STRING
-                                       << DBTYPEXML::RANGE
                                        << DBTYPEXML::TIME
                                        << DBTYPEXML::TIMESHTAMP
                                        );
