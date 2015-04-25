@@ -464,7 +464,8 @@ void TreeXmlModel::updateInsertRows(int emptyRowAttr, int count, const QModelInd
         QModelIndex index = parent.child(i,0);
         while (index.isValid())
         {
-            if (!isAttr(index) /*&& parent.data(TreeXmlModel::TagRole) == index.data(TreeXmlModel::TagRole)*/){
+            if (!isAttr(index)
+                    && parent.data(TreeXmlModel::TagRole) == index.data(TreeXmlModel::TagRole)){
                 int row = this->rowCount(index)-emptyRowAttr;
                 beginInsertRows(index,row,row+count-1);
                 updateInsertRows(emptyRowAttr,count,index, tag);
@@ -483,7 +484,8 @@ void TreeXmlModel::revertInsertRows(int row, int count, const QModelIndex &paren
         QModelIndex index = parent.child(i,0);
         while (index.isValid())
         {
-            if (!isAttr(index) /*&& parent.data(TreeXmlModel::TagRole) == index.data(TreeXmlModel::TagRole)*/)
+            if (!isAttr(index)
+                    && parent.data(TreeXmlModel::TagRole) == index.data(TreeXmlModel::TagRole))
                 revertInsertRows(this->rowCount(index),count,index, tag);
             index = parent.child(++i,0);
         }
@@ -500,7 +502,8 @@ void TreeXmlModel::updateRemoveRows(int emptyRowAttr,int count, const QModelInde
     QModelIndex index = parent.child(i,0);
     while (index.isValid())
     {
-        if (!isAttr(index)){
+        if (!isAttr(index)
+                && parent.data(TreeXmlModel::TagRole) == index.data(TreeXmlModel::TagRole)){
             updateRemoveRows(emptyRowAttr,count,index);
             int row = this->rowCount(index)-emptyRowAttr;
             beginRemoveRows(index,row,row+count-1);

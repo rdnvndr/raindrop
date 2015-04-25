@@ -24,7 +24,7 @@ PermissionWidget::PermissionWidget(QWidget *parent) :
             this,SLOT(showParent(bool)));
 
     connect(treeViewPerm, SIGNAL(clicked(QModelIndex)),
-            treeViewPerm, SLOT(edit(QModelIndex)));
+            this, SLOT(cellItemEdit(QModelIndex)));
 
     treeViewPerm->setItemDelegate(new PermDelegate(this));
     m_proxyModel = new PermissionProxyModel();
@@ -52,11 +52,11 @@ void PermissionWidget::setModel(TreeXmlHashModel *model)
     treeViewPerm->setModel(m_proxyModel);
 
     proxyModel()->setHeaderData(0,  Qt::Horizontal, tr("Наименование/Роль"));
-    proxyModel()->setHeaderData(1,  Qt::Horizontal, tr("Создание"));
-    proxyModel()->setHeaderData(2,  Qt::Horizontal, tr("Чтение"));
-    proxyModel()->setHeaderData(3,  Qt::Horizontal, tr("Запись"));
-    proxyModel()->setHeaderData(4,  Qt::Horizontal, tr("Удаление"));
-    proxyModel()->setHeaderData(5,  Qt::Horizontal, tr("Блокировка"));
+    proxyModel()->setHeaderData(1,  Qt::Horizontal, tr("Созд."));
+    proxyModel()->setHeaderData(2,  Qt::Horizontal, tr("Чтен."));
+    proxyModel()->setHeaderData(3,  Qt::Horizontal, tr("Зап."));
+    proxyModel()->setHeaderData(4,  Qt::Horizontal, tr("Удал."));
+    proxyModel()->setHeaderData(5,  Qt::Horizontal, tr("Блок."));
     proxyModel()->setHeaderData(6,  Qt::Horizontal, tr("Объект"));
     proxyModel()->setHeaderData(7,  Qt::Horizontal, tr("Идентификатор"));
     treeViewPerm->setModel(proxyModel());
@@ -65,7 +65,7 @@ void PermissionWidget::setModel(TreeXmlHashModel *model)
         treeViewPerm->setColumnHidden(column,true);
 
     treeViewPerm->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-    treeViewPerm->header()->setDefaultSectionSize(85);
+    treeViewPerm->header()->setDefaultSectionSize(50);
     treeViewPerm->header()->setDefaultAlignment(Qt::AlignCenter);
 }
 
@@ -101,15 +101,17 @@ void PermissionWidget::add()
 
 void PermissionWidget::remove()
 {
-    QModelIndex curIndex = treeViewPerm->currentIndex();
+    QPersistentModelIndex curIndex = treeViewPerm->currentIndex();
     QModelIndex srcIndex = curIndex.parent();
 
     if (srcIndex.isValid() && curIndex.isValid()){
         if (!isRemove(curIndex))
             return;
         treeViewPerm->setCurrentIndex(treeViewPerm->rootIndex());
-        m_proxyModel->removeRow(curIndex.row(),srcIndex);
-        treeViewPerm->setModel(m_proxyModel);
+        if (curIndex.isValid()) {
+            m_proxyModel->removeRow(curIndex.row(),srcIndex);
+            treeViewPerm->setModel(m_proxyModel);
+        }
     } else
         QMessageBox::warning(NULL,tr("Предупреждение"),
                              tr("Невозможно удалить право доступа, поскольку нет выбраных значений."));
@@ -165,6 +167,12 @@ void PermissionWidget::currentIndexChange(const QModelIndex &current,
                              DBPERMISSIONXML::ROLE, previous).toString();
     if (previousRole.isEmpty())
         proxyModel()->removeRow(previous.row(), previous.parent());
+}
+
+void PermissionWidget::cellItemEdit(const QModelIndex &index)
+{
+    if (index.column() != 0)
+        treeViewPerm->edit(index);
 }
 
 QVariant PermissionWidget::modelData(const QString &tag, const QString &attr,
