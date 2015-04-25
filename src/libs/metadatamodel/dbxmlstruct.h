@@ -21,6 +21,7 @@ namespace DBCLASSXML{
     const QString ISABSTARCT = "isAbstract";
     const QString ISACTIVE = "isActive";
     const QString ISCONTEXT = "isContext";
+    const QString ISEMBEDDED = "isEmbedded";
     const QString ALIAS = "alias";
     const QString PARENT = "parent";
     const QString TEMPLATE = "displayTemplate";
@@ -71,12 +72,10 @@ namespace DBTYPEXML{
     const QString CHAR = "Char";
     const QString DATE = "Date";
     const QString DECIMAL = "Decimal";
-    const QString DIMENSION = "Dimension";
     const QString DOUBLE = "Double";
     const QString INTEGER = "Integer";
     const QString STRING = "String";
     const QString REFERENCE = "Reference";
-    const QString RANGE = "Range";
     const QString TIME = "Time";
     const QString TIMESHTAMP = "Timeshtamp";
 }
