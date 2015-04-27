@@ -18,7 +18,8 @@ HEADERS += \
     modifyproxymodel.h \
     treexmlhashmodel.h \
     treexmlmodel.h \
-    mimedataindex.h
+    mimedataindex.h \
+    setdatacommand.h
 
 SOURCES += \ 
     tagxmlitem.cpp \
@@ -26,5 +27,6 @@ SOURCES += \
     modifyproxymodel.cpp \
     treexmlhashmodel.cpp \
     treexmlmodel.cpp \
-    mimedataindex.cpp
+    mimedataindex.cpp \
+    setdatacommand.cpp
 
