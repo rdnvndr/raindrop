@@ -1,7 +1,8 @@
 TEMPLATE = subdirs
 CONFIG += ordered
-SUBDIRS +=  mainwindow \
-    sqleditor
+SUBDIRS +=  mainwindow 
+SUBDIRS +=  sqleditor
+SUBDIRS +=  undostack
 SUBDIRS +=  dbconnect
 SUBDIRS +=  treedockwidget
 SUBDIRS +=  modeleride
