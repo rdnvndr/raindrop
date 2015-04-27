@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wizard version="1" kind="project" class="qt4project" firstpage="10"
+<wizard version="1" kind="project" class="qmakeproject" firstpage="10"
 id="A.RTPTechGroupAutotest" category="B.RTPTechGroupProjects">
     <icon>autotest.png</icon>
-    <description>Creates autotest UniversalPlatform.</description>
-    <displayname>Autotest UniversalPlatform</displayname>
+    <description>Creates autotest Raindrop.</description>
+    <displayname>Autotest Raindrop</displayname>
     <displaycategory>RTPTechGroup Projects</displaycategory>
     <files>
         <file source="autotest.cpp"  target="tst_%TestName:l%.%CppSourceSuffix%" openeditor="true"/>
