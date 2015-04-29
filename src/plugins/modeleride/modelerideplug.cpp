@@ -30,7 +30,7 @@ namespace RTPTechGroup {
 namespace ModelerIde {
 
 ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
-    QObject(parent), IPlugin("IMainWindow")
+    QObject(parent), IPlugin("IMainWindow IUndoGroup")
 {
     m_model = NULL;
 

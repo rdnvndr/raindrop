@@ -4,11 +4,11 @@
 
 using namespace RTPTechGroup::Plugin;
 namespace RTPTechGroup {
-namespace Widgets {
+namespace UndoStack {
 
 
 UndoStack::UndoStack(QObject *parent):
-    QObject(parent), IPlugin("IMainWindow")
+    IUndoGroup(parent), IPlugin("IMainWindow")
 {
     PluginManager* pluginManager = PluginManager::instance();
 
@@ -16,13 +16,15 @@ UndoStack::UndoStack(QObject *parent):
     IMainWindow* iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    actionUndo = new QAction(QIcon(":undo"), tr("Отменить"), this);
-    // connect(actionUndo, SIGNAL(triggered()), this, SLOT(undo()));
-    actionUndo->setObjectName("actionUndo");
+    actionUndo = this->createUndoAction(this);
+    actionUndo->setIcon(QIcon(":undo"));
+    actionUndo->setText(tr("Отменить"));
+    actionUndo->setObjectName("actionUndo");    
     iMainWindow->addAction(tr("Редактирование"),actionUndo);
 
-    actionRedo = new QAction(QIcon(":redo"), tr("Повторить"), this);
-    // connect(actionRedo, SIGNAL(triggered()), this, SLOT(redo()));
+    actionRedo = this->createRedoAction(this);
+    actionRedo->setIcon(QIcon(":redo"));
+    actionRedo->setText(tr("Повторить"));
     actionRedo->setObjectName("actionRedo");
     iMainWindow->addAction(tr("Редактирование"),actionRedo);
 }

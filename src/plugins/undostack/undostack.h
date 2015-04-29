@@ -3,11 +3,13 @@
 
 #include <QObject>
 #include <QAction>
+#include <QUndoGroup>
 #include <plugin/iplugin.h>
+#include <iundogroup.h>
 #include "undostackglobal.h"
 
 namespace RTPTechGroup {
-namespace Widgets {
+namespace UndoStack {
 
 //! Плагин стека отмена/повтора команд
 /*! Плагин предназначен для организации стека отмена или повтора
@@ -15,11 +17,11 @@ namespace Widgets {
 */
 
 class  UNDOSTACKLIB UndoStack:
-        public QObject,
+        public IUndoGroup,
         public IPlugin
 {
     Q_OBJECT
-    Q_INTERFACES(IPlugin)
+    Q_INTERFACES(IPlugin IUndoGroup)
 
 #if QT_VERSION >= 0x050000
     Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.UndoStack" FILE "undostack.json")
