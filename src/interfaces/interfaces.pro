@@ -4,4 +4,5 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 HEADERS += \
     imainwindow.h \
-    itreedockwidget.h
+    itreedockwidget.h \
+    iundogroup.h
