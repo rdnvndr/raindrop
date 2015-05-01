@@ -540,7 +540,7 @@ void MainWindow::cancelOptionsDialog()
 void MainWindow::optionsDialogStateChanged(Qt::WindowStates oldState,
                                            Qt::WindowStates newState)
 {
-    bool edited;
+    bool edited = false;
     if (newState.testFlag(Qt::WindowActive)) {
         if (!oldState.testFlag(Qt::WindowActive)) {
             edited = true;

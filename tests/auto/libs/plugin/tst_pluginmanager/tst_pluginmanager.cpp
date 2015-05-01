@@ -40,6 +40,7 @@ private:
 tst_PluginManager::tst_PluginManager(QObject *parent)
 {
     Q_UNUSED(parent)
+    m_pluginLoadLog = NULL;
 }
 
 tst_PluginManager::~tst_PluginManager()
