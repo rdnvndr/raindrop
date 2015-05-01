@@ -8,6 +8,8 @@ PluginManager::PluginManager(QObject *parent) :
     QObject(parent)
 {
     m_instance = this;
+    m_settings = NULL;
+    m_currentFile = 0;
 }
 
 PluginManager *PluginManager::m_instance = 0;
@@ -48,7 +50,7 @@ QList<IPlugin *> PluginManager::dependPlugins(IPlugin *plugin)
     QHash<QString, IPlugin *> pluginList;
 
     if (plugin)
-        foreach (QString depInterfaceName,plugin->depModulList)
+        foreach (QString depInterfaceName,plugin->depModulList())
             foreach (QObject* objInterfacePlugin,interfaceObjects(depInterfaceName)) {
                 IPlugin *interfacePlugin = qobject_cast<IPlugin *>(objInterfacePlugin);
                 if (interfacePlugin)

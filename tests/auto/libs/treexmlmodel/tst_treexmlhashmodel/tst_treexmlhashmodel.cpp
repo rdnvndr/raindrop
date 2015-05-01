@@ -28,6 +28,7 @@ private:
 tst_TreeXmlHashModel::tst_TreeXmlHashModel(QObject *parent) :
     QObject(parent)
 {
+    m_model = NULL;
 }
 
 tst_TreeXmlHashModel::~tst_TreeXmlHashModel()

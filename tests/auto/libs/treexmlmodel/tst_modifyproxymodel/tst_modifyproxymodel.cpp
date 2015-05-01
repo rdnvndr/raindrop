@@ -31,6 +31,7 @@ tst_ModifyProxyModel::tst_ModifyProxyModel(QObject *parent) :
     m_model(0)
 {
     Q_UNUSED(parent)
+    m_proxy = NULL;
 }
 
 tst_ModifyProxyModel::~tst_ModifyProxyModel()
