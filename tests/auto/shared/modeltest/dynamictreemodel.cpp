@@ -51,6 +51,9 @@ DynamicTreeModel::DynamicTreeModel(QObject *parent)
   : QAbstractItemModel(parent),
     nextId(1)
 {
+    m_nextRow = -1;
+    m_depth = 0;
+    maxDepth = 0;
 }
 
 QModelIndex DynamicTreeModel::index(int row, int column, const QModelIndex &parent) const
@@ -233,7 +236,7 @@ void ModelInsertCommand::doCommand()
 ModelMoveCommand::ModelMoveCommand(DynamicTreeModel *model, QObject *parent)
   : ModelChangeCommand(model, parent)
 {
-
+    m_destRow = -1;
 }
 bool ModelMoveCommand::emitPreSignal(const QModelIndex &srcParent, int srcStart, int srcEnd, const QModelIndex &destParent, int destRow)
 {

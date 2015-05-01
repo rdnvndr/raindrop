@@ -75,7 +75,7 @@ QVariant ToolBarModel::headerData(int section, Qt::Orientation orientation, int 
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
         if (section == 0)
             return  tr("Видимость");
-        else if (section == 0)
+        else
             return  tr("Наименование");
     }
     return QVariant();

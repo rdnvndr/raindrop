@@ -8,7 +8,7 @@ namespace ModelerIde {
 AbstractPropEditor::AbstractPropEditor(QWidget *parent)
     : QWidget(parent)
 {
-
+    m_model = NULL;
 }
 
 AbstractPropEditor::~AbstractPropEditor()

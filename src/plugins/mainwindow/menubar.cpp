@@ -17,6 +17,7 @@ MenuBar::MenuBar(QWidget *parent) :
     setAcceptDrops(true);
     m_dragPos = QPoint(-1,-1);
     m_edited = false;
+    m_contextAction = NULL;
 }
 
 MenuBar::~MenuBar()

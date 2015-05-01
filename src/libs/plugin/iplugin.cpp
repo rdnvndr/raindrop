@@ -2,11 +2,11 @@
 
 using namespace RTPTechGroup::Plugin;
 
-IPlugin::IPlugin(QString depInterfaces)
+IPlugin::IPlugin(const QString& depInterfaces)
 {
-    depModulList = depInterfaces.split(" ");
     PluginManager *pluginManager = PluginManager::instance();
-    foreach (QString depPlugin, depModulList) {
+    m_depModulList = depInterfaces.split(" ");
+    foreach (const QString &depPlugin, depModulList()) {
         bool existPlugin = true;
         do {   
             if (pluginManager->interfaceObject(depPlugin) || depPlugin.isEmpty())
@@ -41,4 +41,9 @@ void IPlugin::setSettings(QSettings *s){
 QSettings* IPlugin::settings()
 {
     return m_settings;
+}
+
+const QStringList &IPlugin::depModulList() const
+{
+    return m_depModulList;
 }

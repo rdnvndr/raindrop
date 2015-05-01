@@ -34,8 +34,7 @@ QByteArray PushButtonImage::data() const
 
 bool PushButtonImage::openImage()
 {
-    QString fileName = "";
-    fileName = QFileDialog::getOpenFileName(this, tr("Открытие"), ".",
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Открытие"), ".",
                                             tr("Рисунок (*.jpg *.jpeg *.png *.svg)"));
     if (fileName != "") {
         QFile file(fileName);
