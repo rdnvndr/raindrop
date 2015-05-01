@@ -40,6 +40,9 @@ public:
     //! Обработка событий работы с QAction
     void actionEvent(QActionEvent *event);
 
+    //! Вызов контекстного меню
+    void contextMenuEvent(QContextMenuEvent *event);
+
     //! Перевод меню в режим редактирования
     void setEdited(bool edited);
 
