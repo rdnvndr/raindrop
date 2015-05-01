@@ -24,6 +24,7 @@ ToolBar::ToolBar(QWidget *parent) :
     setContextMenuPolicy(Qt::NoContextMenu);
 
     m_edited = false;
+    m_contextAction = NULL;
 }
 
 ToolBar::~ToolBar()

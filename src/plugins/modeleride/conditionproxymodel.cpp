@@ -7,14 +7,6 @@ using namespace RTPTechGroup::MetaDataModel;
 namespace RTPTechGroup {
 namespace ModelerIde {
 
-struct PrivateModelIndex
-{
-    int r, c;
-    void *p;
-    const QAbstractItemModel *m;
-};
-
-
 ConditionProxyModel::ConditionProxyModel(QObject *parent) :
     ModifyProxyModel(parent)
 {

@@ -364,16 +364,14 @@ QModelIndex ModifyProxyModel::mapToSource(const QModelIndex &index) const
     if (!sourceIndex.isValid())
         return QModelIndex();
 
-    int removeRowCount = 0;
     if (m_removedRow.contains(QPersistentModelIndex(sourceIndex.parent())) && m_hiddenRow)
         foreach (const QPersistentModelIndex &removedIndex,
                  m_removedRow[QPersistentModelIndex(sourceIndex.parent())])
         {
             if (mapFromSource(removedIndex).row() <= index.row())
-                removeRowCount++;
+                hack->r++;
 
         }
-    hack->r = sourceIndex.row() + removeRowCount;
 
     if (!sourceIndex.isValid())
         return QModelIndex();

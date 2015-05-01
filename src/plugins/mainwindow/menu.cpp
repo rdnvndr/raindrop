@@ -20,6 +20,7 @@ Menu::Menu(QWidget *parent) :
     m_dragPos = QPoint(-1,-1);
     setContextMenuPolicy(Qt::NoContextMenu);
     m_edited = false;
+    m_contextAction = NULL;
 }
 
 Menu::Menu(const QString &title, QWidget *parent):
@@ -29,6 +30,7 @@ Menu::Menu(const QString &title, QWidget *parent):
     m_dragPos = QPoint(-1,-1);
     setContextMenuPolicy(Qt::NoContextMenu);
     m_edited = false;
+    m_contextAction = NULL;
 }
 
 Menu::~Menu() {

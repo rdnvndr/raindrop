@@ -13,6 +13,8 @@ AbstractModifyWidget::AbstractModifyWidget(QWidget *parent) : QWidget(parent)
 {
     m_proxyModel = new ModifyProxyModel();
     m_proxyModel->setHiddenRow(true);
+    m_model = NULL;
+    m_itemView = NULL;
 }
 
 AbstractModifyWidget::~AbstractModifyWidget()

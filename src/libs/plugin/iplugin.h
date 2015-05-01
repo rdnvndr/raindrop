@@ -109,7 +109,12 @@ QT_END_NAMESPACE
 class PLUGINLIB IPlugin
 {
 
-public:
+public:    
+    //! Конструктор плагина
+    explicit IPlugin(const QString &depInterfaces);
+
+    //! Деструктор плагина
+    virtual ~IPlugin();
 
     //! Получение экземпляра
     virtual QObject *instance() {return dynamic_cast<QObject *>(this);};
@@ -120,13 +125,7 @@ public:
     //! Список зависимостей плагина
     /*! Список плагинов от которых зависит текущий плагин
     */
-    QStringList depModulList;
-
-    //! Конструктор плагина
-    explicit IPlugin(QString depInterfaces);
-
-    //! Деструктор плагина
-    virtual ~IPlugin();
+    const QStringList& depModulList() const;
 
     //! Устанавливает ссылку на объект для сохранения настроек
     virtual void setSettings(QSettings *settings);
@@ -171,9 +170,11 @@ public:
     virtual QString copyright() = 0;
 
 private:
-
     //! Настройки
     QSettings* m_settings;
+
+    //! Список зависимостей плагина
+    QStringList m_depModulList;
 };
 
 QT_BEGIN_NAMESPACE
