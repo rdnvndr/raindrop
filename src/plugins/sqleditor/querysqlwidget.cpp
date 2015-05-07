@@ -1,19 +1,58 @@
 #include "querysqlwidget.h"
+
 #include <QtGui>
+#include <plugin/iplugin.h>
+
+using namespace RTPTechGroup::Plugin;
 
 namespace RTPTechGroup {
 namespace SqlEditor {
+
+class UndoTextDocument : public QUndoCommand
+{
+public:
+    UndoTextDocument(QTextDocument *document)
+        : QUndoCommand()
+    {
+        m_document = document;
+        setText(QObject::tr("Изменение запроса"));
+    }
+    virtual void undo() { m_document->undo();}
+    virtual void redo() { m_document->redo();}
+
+private:
+    QTextDocument *m_document;
+};
 
 QuerySqlWidget::QuerySqlWidget(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
+
+
+    m_undoStack = new QUndoStack(this);
+    PluginManager* pluginManager = PluginManager::instance();
+    m_undoGroup = qobject_cast<QUndoGroup*>(
+                pluginManager->interfaceObject("IUndoGroup"));
+    m_undoGroup->addStack(m_undoStack);
+    setActiveUndoStack();
+    connect(plainQueryEdit->document(), SIGNAL(undoCommandAdded()),
+            this, SLOT(undoCommandAdd()));
+
     m_model = new QSqlQueryModel();
 
     tableView->setModel(m_model);
     m_sqlHighlighter = new SqlHighlighter(plainQueryEdit->document());
 
     connect(toolButtonRun,SIGNAL(clicked()),this,SLOT(runQuery()));
+
+}
+
+QuerySqlWidget::~QuerySqlWidget()
+{
+    delete m_sqlHighlighter;
+    delete m_model;
+    delete m_undoStack;
 }
 
 void QuerySqlWidget::runQuery() {
@@ -35,6 +74,19 @@ void QuerySqlWidget::runQuery() {
         else
             plainLogEdit->setPlainText(m_model->lastError().text());
     }
+}
+
+void QuerySqlWidget::setActiveUndoStack()
+{
+    m_undoGroup->setActiveStack(m_undoStack);
+    qDebug() << "TEST ACTIVE";
+}
+
+void QuerySqlWidget::undoCommandAdd()
+{
+    UndoTextDocument *undoTextDocument
+            = new UndoTextDocument(plainQueryEdit->document());
+    m_undoStack->push(undoTextDocument);
 }
 
 }}

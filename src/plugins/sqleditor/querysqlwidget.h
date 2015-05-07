@@ -3,7 +3,10 @@
 
 #include "ui_querysqlwidget.h"
 #include "sqlhighlighter.h"
+
 #include <QtSql>
+#include <QUndoStack>
+#include <QUndoGroup>
 
 namespace RTPTechGroup {
 namespace SqlEditor {
@@ -18,13 +21,25 @@ public:
     //! Конструктор
     explicit QuerySqlWidget(QWidget *parent = 0);
 
+    //! Деструктор
+    ~QuerySqlWidget();
+
 public slots:
     //! Слот для вызова выполнения SQL запроса
     void runQuery();
 
+    //! Установка активного стека отмены
+    void setActiveUndoStack();
+
+private slots:
+    void undoCommandAdd();
+
+
 private:
     QSqlQueryModel* m_model;
-    SqlHighlighter *m_sqlHighlighter;
+    SqlHighlighter* m_sqlHighlighter;
+    QUndoStack*     m_undoStack;
+    QUndoGroup*     m_undoGroup;
 };
 
 }}
