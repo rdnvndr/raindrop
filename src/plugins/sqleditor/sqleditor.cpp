@@ -39,6 +39,8 @@ void SqlEditor::showSqlEditor()
         QuerySqlWidget *queryWidget = new QuerySqlWidget(NULL);
         subWindow = iMainWindow->addSubWindow(queryWidget);
         queryWidget->setObjectName(subWindowName);
+        connect(subWindow, SIGNAL(aboutToActivate()),
+                queryWidget, SLOT(setActiveUndoStack()));
         subWindow->setWindowTitle(tr("SQL редактор"));
     }
 }
