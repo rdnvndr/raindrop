@@ -29,7 +29,7 @@ class MDIEXTAREALIB MdiExtArea : public QMdiArea
     Q_OBJECT
 public:
     //! Конструктор класса области подокон
-    MdiExtArea(QWidget *parent = 0);
+    explicit MdiExtArea(QWidget *parent = 0);
 
     //! Добавление подокна
     /*! Предназначено для добавления подокна с выбранным

@@ -22,7 +22,7 @@ class EXAMPLELIB ExamplePlug:
 
 public:
 
-    ExamplePlug(QObject *parent = 0);
+    explicit ExamplePlug(QObject *parent = 0);
 
 // IPlugin
 

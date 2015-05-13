@@ -23,7 +23,7 @@ class TREECOMBOBOXLIB TreeComboBox : public QComboBox
 {
 public:
     //! Конструктор класса
-    TreeComboBox(QWidget* parent=0);
+    explicit TreeComboBox(QWidget* parent=0);
 
     //! Деструктор класса
     virtual ~TreeComboBox();
