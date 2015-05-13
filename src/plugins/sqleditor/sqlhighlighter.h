@@ -16,7 +16,7 @@ class SqlHighlighter : public QSyntaxHighlighter
     Q_OBJECT
 public:
     //! Конструктор
-    SqlHighlighter(QTextDocument *parent);
+    explicit SqlHighlighter(QTextDocument *parent);
 
 
 protected:

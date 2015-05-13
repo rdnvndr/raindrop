@@ -8,21 +8,23 @@ namespace UndoStack {
 
 
 UndoStack::UndoStack(QObject *parent):
-    IUndoGroup(parent), IPlugin("IMainWindow")
+    QObject(parent), IPlugin("IMainWindow")
 {
+    m_undoGroup = new QUndoGroup(this);
+
     PluginManager* pluginManager = PluginManager::instance();
 
     // Создание пунктов строки меню и кнопок панели иструментов
     IMainWindow* iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    actionUndo = this->createUndoAction(this);
+    actionUndo = m_undoGroup->createUndoAction(this);
     actionUndo->setIcon(QIcon(":undo"));
     actionUndo->setText(tr("Отменить"));
     actionUndo->setObjectName("actionUndo");    
     iMainWindow->addAction(tr("Редактирование"),actionUndo);
 
-    actionRedo = this->createRedoAction(this);
+    actionRedo = m_undoGroup->createRedoAction(this);
     actionRedo->setIcon(QIcon(":redo"));
     actionRedo->setText(tr("Повторить"));
     actionRedo->setObjectName("actionRedo");
@@ -32,37 +34,51 @@ UndoStack::UndoStack(QObject *parent):
             this, SLOT(focusChanged(QWidget*,QWidget*)));
 }
 
+UndoStack::~UndoStack()
+{
+    m_undoStackList.clear();
+    delete m_undoGroup;
+}
+
+void UndoStack::addStack(QUndoStack *stack)
+{
+    m_undoGroup->addStack(stack);
+}
+
 void UndoStack::removeStack(QUndoStack *stack)
 {
-    qDebug() << "test";
-    foreach(QWidget *widget, m_undoStackList.keys(stack)) {
-        m_undoStackList.remove(widget);
-        qDebug() << widget;
-    }
-    QUndoGroup::removeStack(stack);
+    m_undoStackList.remove(stack);
+    m_undoGroup->removeStack(stack);
 }
 
 void UndoStack::addWidgetForStack(QUndoStack *stack, QWidget *widget)
 {
-    m_undoStackList[widget] = stack;
+    m_undoStackList.insert(stack, widget);
 }
 
 void UndoStack::removeWidgetForStack(QWidget *widget)
 {
-    m_undoStackList.remove(widget);
+    foreach (QUndoStack *undoStack, m_undoStackList.keys(widget))
+        m_undoStackList.remove(undoStack, widget);
 }
 
 void UndoStack::focusChanged(QWidget *old, QWidget *now)
 {
     Q_UNUSED(old)
 
-    if (now != 0)
-        foreach (QWidget *widget, m_undoStackList.keys())
-            if (widget->isAncestorOf(now)) {
-                setActiveStack(m_undoStackList.value(widget));
-                return;
-            }
-    setActiveStack(NULL);
+    if (now == 0)
+        return;
+
+    QMutableMapIterator<QUndoStack *, QWidget *> i(m_undoStackList);
+    i.toBack();
+    while (i.hasPrevious()) {
+        i.previous();
+        if (i.value()->isAncestorOf(now)) {
+            m_undoGroup->setActiveStack(i.key());
+            return;
+        }
+    }
+    m_undoGroup->setActiveStack(NULL);
 }
 
 }}

@@ -11,7 +11,7 @@ namespace SqlEditor {
 class UndoTextDocument : public QUndoCommand
 {
 public:
-    UndoTextDocument(QTextDocument *document)
+    explicit UndoTextDocument(QTextDocument *document)
         : QUndoCommand()
     {
         m_document = document;
