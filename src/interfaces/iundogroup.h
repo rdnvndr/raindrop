@@ -1,20 +1,26 @@
 #ifndef IUNDOGROUP_H
 #define IUNDOGROUP_H
 
-#include <QUndoGroup>
+#include <QUndoStack>
+#include <QWidget>
+
+
 
 //! Класс стека отмена/повтора команд
 /*! Класс стека отмена/повтора команд предназначен для ведения истории
  *  выполнения команд с возможностью их отмены или повторения.
 */
-class IUndoGroup: public QUndoGroup
+class IUndoGroup
 {
 
 public:
-    //! Конструктор
-    explicit IUndoGroup(QObject* parent) : QUndoGroup(parent){};
 
-public slots:
+    //! Добавление стека отмены
+    virtual void addStack(QUndoStack * stack) = 0;
+
+    //! Удаление стека отмены
+    virtual void removeStack(QUndoStack * stack) = 0;
+
     //! Добавление QWidget для QUndoStack
     virtual void addWidgetForStack(QUndoStack *stack, QWidget *widget) = 0;
 

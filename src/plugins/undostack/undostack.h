@@ -17,6 +17,7 @@ namespace UndoStack {
 */
 
 class  UNDOSTACKLIB UndoStack:
+        public QObject,
         public IUndoGroup,
         public IPlugin
 {
@@ -31,6 +32,9 @@ public:
 
     //! Конструктор плагина
     explicit UndoStack(QObject *parent = 0);
+
+    //! Деструктор плагина
+    virtual ~UndoStack();
 
 // IPlugin
     //! Получение имени плагина
@@ -58,16 +62,17 @@ public:
     QString vendor() {return tr(APP_COMPANY);};
 
 // IUndoGroup
-    //! Удаление стека отмены из группы
-    void removeStack(QUndoStack * stack);
+    //! Добавление стека отмены
+    virtual void addStack(QUndoStack * stack);
 
-public slots:
+    //! Удаление стека отмены
+    virtual void removeStack(QUndoStack * stack);
 
     //! Добавление QWidget для QUndoStack
-    void addWidgetForStack(QUndoStack *stack, QWidget *widget);
+    virtual void addWidgetForStack(QUndoStack *stack, QWidget *widget);
 
     //! Удаление QWidget для QUndoStack
-    void removeWidgetForStack(QWidget *widget);
+    virtual void removeWidgetForStack(QWidget *widget);
 
 private slots:
     //! Обработка смены фокуса визуального элемента
@@ -81,7 +86,9 @@ private:
     QAction *actionRedo;
 
     //! Список соотвествия QWidget и QUndoStack
-    QHash<QWidget *, QUndoStack *> m_undoStackList;
+    QMultiMap<QUndoStack *, QWidget *> m_undoStackList;
+
+    QUndoGroup *m_undoGroup;
 };
 
 }}
