@@ -19,7 +19,7 @@ class ConditionProxyModel : public ModifyProxyModel
     Q_OBJECT
 public:
     //! Конструктор
-    ConditionProxyModel(QObject *parent = 0);
+    explicit ConditionProxyModel(QObject *parent = 0);
 
     //! Получение количества колонок
     int columnCount (const QModelIndex& parent = QModelIndex()) const ;
