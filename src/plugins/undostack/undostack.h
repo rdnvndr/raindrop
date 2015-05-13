@@ -33,7 +33,6 @@ public:
     explicit UndoStack(QObject *parent = 0);
 
 // IPlugin
-
     //! Получение имени плагина
     QString name() {return APP_NAME;};
 
@@ -58,12 +57,31 @@ public:
     //! Производитель плагина
     QString vendor() {return tr(APP_COMPANY);};
 
+// IUndoGroup
+    //! Удаление стека отмены из группы
+    void removeStack(QUndoStack * stack);
+
+public slots:
+
+    //! Добавление QWidget для QUndoStack
+    void addWidgetForStack(QUndoStack *stack, QWidget *widget);
+
+    //! Удаление QWidget для QUndoStack
+    void removeWidgetForStack(QWidget *widget);
+
+private slots:
+    //! Обработка смены фокуса визуального элемента
+    void focusChanged(QWidget *old, QWidget *now);
+
 private:
     //! Команда "Отменить"
     QAction *actionUndo;
 
     //! Команда "Повторить"
     QAction *actionRedo;
+
+    //! Список соотвествия QWidget и QUndoStack
+    QHash<QWidget *, QUndoStack *> m_undoStackList;
 };
 
 }}

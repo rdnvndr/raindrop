@@ -29,13 +29,15 @@ QuerySqlWidget::QuerySqlWidget(QWidget *parent) :
 {
     setupUi(this);
 
-
     m_undoStack = new QUndoStack(this);
     PluginManager* pluginManager = PluginManager::instance();
-    m_undoGroup = qobject_cast<QUndoGroup*>(
+    m_undoGroup = qobject_cast<IUndoGroup*>(
                 pluginManager->interfaceObject("IUndoGroup"));
     m_undoGroup->addStack(m_undoStack);
-    setActiveUndoStack();
+    m_undoGroup->addWidgetForStack(m_undoStack, this->toolButtonRun);
+    m_undoGroup->addWidgetForStack(m_undoStack, this);
+
+
     connect(plainQueryEdit->document(), SIGNAL(undoCommandAdded()),
             this, SLOT(undoCommandAdd()));
 
@@ -52,6 +54,7 @@ QuerySqlWidget::~QuerySqlWidget()
 {
     delete m_sqlHighlighter;
     delete m_model;
+    m_undoGroup->removeStack(m_undoStack);
     delete m_undoStack;
 }
 
@@ -74,12 +77,6 @@ void QuerySqlWidget::runQuery() {
         else
             plainLogEdit->setPlainText(m_model->lastError().text());
     }
-}
-
-void QuerySqlWidget::setActiveUndoStack()
-{
-    m_undoGroup->setActiveStack(m_undoStack);
-    qDebug() << "TEST ACTIVE";
 }
 
 void QuerySqlWidget::undoCommandAdd()

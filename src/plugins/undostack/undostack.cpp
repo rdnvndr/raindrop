@@ -27,6 +27,42 @@ UndoStack::UndoStack(QObject *parent):
     actionRedo->setText(tr("Повторить"));
     actionRedo->setObjectName("actionRedo");
     iMainWindow->addAction(tr("Редактирование"),actionRedo);
+
+    connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)),
+            this, SLOT(focusChanged(QWidget*,QWidget*)));
+}
+
+void UndoStack::removeStack(QUndoStack *stack)
+{
+    qDebug() << "test";
+    foreach(QWidget *widget, m_undoStackList.keys(stack)) {
+        m_undoStackList.remove(widget);
+        qDebug() << widget;
+    }
+    QUndoGroup::removeStack(stack);
+}
+
+void UndoStack::addWidgetForStack(QUndoStack *stack, QWidget *widget)
+{
+    m_undoStackList[widget] = stack;
+}
+
+void UndoStack::removeWidgetForStack(QWidget *widget)
+{
+    m_undoStackList.remove(widget);
+}
+
+void UndoStack::focusChanged(QWidget *old, QWidget *now)
+{
+    Q_UNUSED(old)
+
+    if (now != 0)
+        foreach (QWidget *widget, m_undoStackList.keys())
+            if (widget->isAncestorOf(now)) {
+                setActiveStack(m_undoStackList.value(widget));
+                return;
+            }
+    setActiveStack(NULL);
 }
 
 }}

@@ -11,7 +11,15 @@ class IUndoGroup: public QUndoGroup
 {
 
 public:
+    //! Конструктор
     explicit IUndoGroup(QObject* parent) : QUndoGroup(parent){};
+
+public slots:
+    //! Добавление QWidget для QUndoStack
+    virtual void addWidgetForStack(QUndoStack *stack, QWidget *widget) = 0;
+
+    //! Удаление QWidget для QUndoStack
+    virtual void removeWidgetForStack(QWidget *widget) = 0;
 
 };
 
