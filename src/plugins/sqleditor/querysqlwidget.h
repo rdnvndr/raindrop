@@ -25,6 +25,9 @@ public:
     //! Деструктор
     ~QuerySqlWidget();
 
+    //! Перехват события
+    bool eventFilter(QObject *target, QEvent *event);
+
 public slots:
     //! Слот для вызова выполнения SQL запроса
     void runQuery();

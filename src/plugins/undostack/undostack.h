@@ -78,6 +78,9 @@ private slots:
     //! Обработка смены фокуса визуального элемента
     void focusChanged(QWidget *old, QWidget *now);
 
+    //! Удаление стека отмены
+    virtual void removeStack(QObject * obj);
+
 private:
     //! Команда "Отменить"
     QAction *actionUndo;

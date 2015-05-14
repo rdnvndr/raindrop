@@ -36,8 +36,7 @@ QuerySqlWidget::QuerySqlWidget(QWidget *parent) :
     m_undoGroup->addStack(m_undoStack);
     m_undoGroup->addWidgetForStack(m_undoStack, this->toolButtonRun);
     m_undoGroup->addWidgetForStack(m_undoStack, this);
-
-
+    plainQueryEdit->installEventFilter(this);
     connect(plainQueryEdit->document(), SIGNAL(undoCommandAdded()),
             this, SLOT(undoCommandAdd()));
 
@@ -47,15 +46,30 @@ QuerySqlWidget::QuerySqlWidget(QWidget *parent) :
     m_sqlHighlighter = new SqlHighlighter(plainQueryEdit->document());
 
     connect(toolButtonRun,SIGNAL(clicked()),this,SLOT(runQuery()));
-
 }
 
 QuerySqlWidget::~QuerySqlWidget()
 {
     delete m_sqlHighlighter;
     delete m_model;
-    m_undoGroup->removeStack(m_undoStack);
     delete m_undoStack;
+}
+
+bool QuerySqlWidget::eventFilter(QObject *target, QEvent *event)
+{
+    if (target == plainQueryEdit) {
+        if (event->type() == QEvent::KeyPress) {
+            QKeyEvent *keyEvent = (QKeyEvent *)event;
+            if (keyEvent->modifiers() == Qt::ControlModifier
+                    && (keyEvent->key() == Qt::Key_Z
+                        || keyEvent->key() == Qt::Key_Y))
+            {
+                QApplication::sendEvent(this, event);
+                return true;
+            }
+        }
+    }
+    return QWidget::eventFilter(target, event);
 }
 
 void QuerySqlWidget::runQuery() {

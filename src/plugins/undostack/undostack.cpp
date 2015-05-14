@@ -43,6 +43,7 @@ UndoStack::~UndoStack()
 void UndoStack::addStack(QUndoStack *stack)
 {
     m_undoGroup->addStack(stack);
+    connect(stack, SIGNAL(destroyed(QObject*)), this, SLOT(removeStack(QObject*)));
 }
 
 void UndoStack::removeStack(QUndoStack *stack)
@@ -79,6 +80,12 @@ void UndoStack::focusChanged(QWidget *old, QWidget *now)
         }
     }
     m_undoGroup->setActiveStack(NULL);
+}
+
+void UndoStack::removeStack(QObject *obj)
+{
+    QUndoStack *stack = static_cast<QUndoStack *>(obj);
+    removeStack(stack);
 }
 
 }}
