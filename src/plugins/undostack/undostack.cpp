@@ -20,15 +20,13 @@ UndoStack::UndoStack(QObject *parent):
 
     actionUndo = m_undoGroup->createUndoAction(this);
     actionUndo->setIcon(QIcon(":undo"));
-    actionUndo->setText(tr("Отменить"));
     actionUndo->setObjectName("actionUndo");    
-    iMainWindow->addAction(tr("Редактирование"),actionUndo);
+    iMainWindow->addAction(tr("Редактирование"), actionUndo);
 
     actionRedo = m_undoGroup->createRedoAction(this);
     actionRedo->setIcon(QIcon(":redo"));
-    actionRedo->setText(tr("Повторить"));
     actionRedo->setObjectName("actionRedo");
-    iMainWindow->addAction(tr("Редактирование"),actionRedo);
+    iMainWindow->addAction(tr("Редактирование"), actionRedo);
 
     connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)),
             this, SLOT(focusChanged(QWidget*,QWidget*)));
