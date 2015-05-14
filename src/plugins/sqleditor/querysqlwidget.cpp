@@ -60,9 +60,9 @@ bool QuerySqlWidget::eventFilter(QObject *target, QEvent *event)
     if (target == plainQueryEdit) {
         if (event->type() == QEvent::KeyPress) {
             QKeyEvent *keyEvent = (QKeyEvent *)event;
-            if (keyEvent->modifiers() == Qt::ControlModifier
-                    && (keyEvent->key() == Qt::Key_Z
-                        || keyEvent->key() == Qt::Key_Y))
+            if ((keyEvent->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier)
+                    || keyEvent->modifiers() == Qt::ControlModifier)
+                    && keyEvent->key() == Qt::Key_Z)
             {
                 QApplication::sendEvent(this, event);
                 return true;
