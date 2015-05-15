@@ -1,13 +1,13 @@
-#include "undostack.h"
+#include "stackediting.h"
 
 #include <imainwindow.h>
 
 using namespace RTPTechGroup::Plugin;
 namespace RTPTechGroup {
-namespace UndoStack {
+namespace StackEditing {
 
 
-UndoStack::UndoStack(QObject *parent):
+StackEditing::StackEditing(QObject *parent):
     QObject(parent), IPlugin("IMainWindow")
 {
     m_undoGroup = new QUndoGroup(this);
@@ -32,36 +32,36 @@ UndoStack::UndoStack(QObject *parent):
             this, SLOT(focusChanged(QWidget*,QWidget*)));
 }
 
-UndoStack::~UndoStack()
+StackEditing::~StackEditing()
 {
     m_undoStackList.clear();
     delete m_undoGroup;
 }
 
-void UndoStack::addStack(QUndoStack *stack)
+void StackEditing::addStack(QUndoStack *stack)
 {
     m_undoGroup->addStack(stack);
     connect(stack, SIGNAL(destroyed(QObject*)), this, SLOT(removeStack(QObject*)));
 }
 
-void UndoStack::removeStack(QUndoStack *stack)
+void StackEditing::removeStack(QUndoStack *stack)
 {
     m_undoStackList.remove(stack);
     m_undoGroup->removeStack(stack);
 }
 
-void UndoStack::addWidgetForStack(QUndoStack *stack, QWidget *widget)
+void StackEditing::addWidgetForStack(QUndoStack *stack, QWidget *widget)
 {
     m_undoStackList.insert(stack, widget);
 }
 
-void UndoStack::removeWidgetForStack(QWidget *widget)
+void StackEditing::removeWidgetForStack(QWidget *widget)
 {
     foreach (QUndoStack *undoStack, m_undoStackList.keys(widget))
         m_undoStackList.remove(undoStack, widget);
 }
 
-void UndoStack::focusChanged(QWidget *old, QWidget *now)
+void StackEditing::focusChanged(QWidget *old, QWidget *now)
 {
     Q_UNUSED(old)
 
@@ -80,7 +80,7 @@ void UndoStack::focusChanged(QWidget *old, QWidget *now)
     m_undoGroup->setActiveStack(NULL);
 }
 
-void UndoStack::removeStack(QObject *obj)
+void StackEditing::removeStack(QObject *obj)
 {
     QUndoStack *stack = static_cast<QUndoStack *>(obj);
     removeStack(stack);
