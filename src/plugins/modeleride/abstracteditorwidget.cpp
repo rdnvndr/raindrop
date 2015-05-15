@@ -72,15 +72,17 @@ bool AbstractEditorWidget::add(const QString &tag)
 
 void AbstractEditorWidget::remove()
 {
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
+    int row = m_mapper->currentIndex();
+    QModelIndex srcParent = m_mapper->rootIndex();
+    QModelIndex srcIndex  = m_model->index(row, 0, srcParent);
 
     if (!isRemove(srcIndex))
         return;
 
     m_mapper->revert();
-    setCurrent(srcIndex.parent());
+    setCurrent(srcParent);
 
-    m_model->removeRow(srcIndex.row(),srcIndex.parent());
+    m_model->removeRow(row, srcParent);
     emit dataRemoved(srcIndex);
 }
 
