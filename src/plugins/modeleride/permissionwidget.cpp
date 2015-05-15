@@ -163,9 +163,10 @@ void PermissionWidget::currentIndexChange(const QModelIndex &current,
     QString currentTag = current.data(TreeXmlModel::TagRole).toString();
     toolButtonDelete->setDisabled(currentTag != DBPERMISSIONXML::PERMISSION);
 
+    QString previousTag = previous.data(TreeXmlModel::TagRole).toString();
     QString previousRole = modelData(DBPERMISSIONXML::PERMISSION,
                              DBPERMISSIONXML::ROLE, previous).toString();
-    if (previousRole.isEmpty())
+    if (previousRole.isEmpty() && previousTag == DBPERMISSIONXML::PERMISSION)
         proxyModel()->removeRow(previous.row(), previous.parent());
 }
 
