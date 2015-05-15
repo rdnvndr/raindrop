@@ -1,7 +1,11 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="UndoStack">icons/undostack.svg</file>
+        <file alias="undostack">icons/undostack.svg</file>
         <file alias="redo">icons/edit-redo.svg</file>
         <file alias="undo">icons/edit-undo.svg</file>
+        <file alias="copy">icons/edit-copy.svg</file>
+        <file alias="cut">icons/edit-cut.svg</file>
+        <file alias="paste">icons/edit-paste.svg</file>
+        <file alias="selectall">icons/edit-select-all.svg</file>
     </qresource>
 </RCC>

@@ -30,6 +30,26 @@ StackEditing::StackEditing(QObject *parent):
 
     connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)),
             this, SLOT(focusChanged(QWidget*,QWidget*)));
+
+    actionCut = new QAction(QIcon(":cut"), tr("Вырезать"), this);
+    actionCut->setObjectName("actionCut");
+//    connect(actionCut, SIGNAL(triggered()), this, SLOT(closeActiveSubWindow()));
+    iMainWindow->addAction(tr("Редактирование"), actionCut);
+
+    actionCopy = new QAction(QIcon(":copy"), tr("Копировать"), this);
+    actionCopy->setObjectName("actionCopy");
+//    connect(actionCopy, SIGNAL(triggered()), this, SLOT(closeActiveSubWindow()));
+    iMainWindow->addAction(tr("Редактирование"), actionCopy);
+
+    actionPaste = new QAction(QIcon(":paste"), tr("Вставить"), this);
+    actionPaste->setObjectName("actionPaste");
+//    connect(actionPaste, SIGNAL(triggered()), this, SLOT(closeActiveSubWindow()));
+    iMainWindow->addAction(tr("Редактирование"), actionPaste);
+
+    actionSelectAll = new QAction(QIcon(":selectall"), tr("Выделить всё"), this);
+    actionSelectAll->setObjectName("actionSelectAll");
+//    connect(actionSelectAll, SIGNAL(triggered()), this, SLOT(closeActiveSubWindow()));
+    iMainWindow->addAction(tr("Редактирование"), actionSelectAll);
 }
 
 StackEditing::~StackEditing()

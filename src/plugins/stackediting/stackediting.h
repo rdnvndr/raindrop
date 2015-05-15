@@ -88,6 +88,18 @@ private:
     //! Команда "Повторить"
     QAction *actionRedo;
 
+    //! Команда "Вырезать"
+    QAction *actionCut;
+
+    //! Команда "Копировать"
+    QAction *actionCopy;
+
+    //! Команда "Вставить"
+    QAction *actionPaste;
+
+    //! Команда "Выделить все"
+    QAction *actionSelectAll;
+
     //! Список соотвествия QWidget и QUndoStack
     QMultiMap<QUndoStack *, QWidget *> m_undoStackList;
 
