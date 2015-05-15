@@ -1,22 +1,22 @@
-#ifndef UNDOSTACK_H
-#define UNDOSTACK_H
+#ifndef STACKEDITING_H
+#define STACKEDITING_H
 
 #include <QObject>
 #include <QAction>
 #include <QUndoGroup>
 #include <plugin/iplugin.h>
 #include <iundogroup.h>
-#include "undostackglobal.h"
+#include "stackeditingglobal.h"
 
 namespace RTPTechGroup {
-namespace UndoStack {
+namespace StackEditing {
 
 //! Плагин стека отмена/повтора команд
 /*! Плагин предназначен для организации стека отмена или повтора
  *  команд
 */
 
-class  UNDOSTACKLIB UndoStack:
+class  STACKEDITINGLIB StackEditing:
         public QObject,
         public IUndoGroup,
         public IPlugin
@@ -25,16 +25,16 @@ class  UNDOSTACKLIB UndoStack:
     Q_INTERFACES(IPlugin IUndoGroup)
 
 #if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.UndoStack" FILE "undostack.json")
+    Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.StackEditing" FILE "stackediting.json")
 #endif
 
 public:
 
     //! Конструктор плагина
-    explicit UndoStack(QObject *parent = 0);
+    explicit StackEditing(QObject *parent = 0);
 
     //! Деструктор плагина
-    virtual ~UndoStack();
+    virtual ~StackEditing();
 
 // IPlugin
     //! Получение имени плагина
