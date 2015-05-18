@@ -77,11 +77,11 @@ public:
 
 signals:
     //! Сигнал об уничтожении объекта
-    void destroyedItem(TagXmlItem* item);
+    void destroyedItem(TagXmlItem *item);
 
 private slots:
     //! Удаление наследуемого узла из списка
-    void removeInheritedItem(TagXmlItem* parent);
+    void removeInheritedItem(TagXmlItem *parent);
 
 private:
     //! Тэг

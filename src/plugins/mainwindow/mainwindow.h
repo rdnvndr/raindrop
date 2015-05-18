@@ -22,8 +22,8 @@ namespace MainWindow {
     интерфейс.\n
     Пример:
     \code
-        PluginManager* pluginManager = PluginManager::instance();
-        IMainWindow* iMainWindow = qobject_cast<IMainWindow*>(
+        PluginManager *pluginManager = PluginManager::instance();
+        IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
         iMainWindow->addSubWindow(new QTextEdit(NULL));
     \endcode
@@ -56,7 +56,7 @@ public:
     typedef QMultiHash <QString, MenuItem *> MenuItemHash;
 
     //! Конструктор плагина главного окна
-    explicit MainWindow(QMainWindow* pwgt = 0);
+    explicit MainWindow(QMainWindow *pwgt = 0);
 
     //! Деструктор плагина главного окна
     virtual ~MainWindow();
@@ -153,7 +153,7 @@ public slots:
     /*! Слот предназаначен для добавления подчиненного окна(закладки)
         в главное окно. Возращает добавленное подокно QMdiSubWindow
     */
-    QMdiSubWindow* addSubWindow(QWidget* widget);
+    QMdiSubWindow *addSubWindow(QWidget *widget);
 
     //! Слот установки активного окна по имени
     /*! Слот предназначен для установки активного подокна в главном окне

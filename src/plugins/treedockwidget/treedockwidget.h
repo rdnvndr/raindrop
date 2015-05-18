@@ -67,7 +67,7 @@ public:
         \param icon Иконка дерева
         \param name Имя дерева
     */
-    QTreeWidget* insertTreeWidget(QIcon icon,QString name);
+    QTreeWidget *insertTreeWidget(QIcon icon,QString name);
 
     //! Установка метода обработки щелчка по узлу узла
     /*! Предназначено для обработки щелчка мыши по узлу
@@ -75,7 +75,7 @@ public:
         \param obj Объект которому принадлежит метод обработки
         \param funcname Имя функции без параметров и скобок
     */
-    void setFuncTreeItem(QTreeWidgetItem* item, QObject* obj, const char* funcname);
+    void setFuncTreeItem(QTreeWidgetItem *item, QObject *obj, const char *funcname);
 
     //! Вставка визуального компонета
     /*! Предназначено для создания визуального компонента с указанной иконкой и имененм
@@ -91,7 +91,7 @@ public slots:
     void setActionTreeWidget();
 
     //! Слот вызова функции узла дерева
-    void callFuncTreeWidget(QTreeWidgetItem* item, int column);
+    void callFuncTreeWidget(QTreeWidgetItem *item, int column);
     
 private:
     //! Связь между кнопкой модуля панели инструментов и деревом
@@ -104,10 +104,10 @@ private:
     QHash<QTreeWidgetItem*, QObject*> objTreeItem;
 
     //! Контейнер деревьев
-    QStackedWidget* stackedWidget;
+    QStackedWidget *stackedWidget;
 
     //! Панель инструмента модулей
-    QToolBar* toolbar;
+    QToolBar *toolbar;
 };
 
 }}

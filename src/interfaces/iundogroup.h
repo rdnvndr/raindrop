@@ -14,10 +14,10 @@ class IUndoGroup
 public:
 
     //! Добавление стека отмены
-    virtual void addStack(QUndoStack * stack) = 0;
+    virtual void addStack(QUndoStack *stack) = 0;
 
     //! Удаление стека отмены
-    virtual void removeStack(QUndoStack * stack) = 0;
+    virtual void removeStack(QUndoStack *stack) = 0;
 
     //! Добавление QWidget для QUndoStack
     virtual void addWidgetForStack(QUndoStack *stack, QWidget *widget) = 0;

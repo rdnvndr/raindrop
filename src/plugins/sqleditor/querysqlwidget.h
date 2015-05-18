@@ -37,10 +37,10 @@ private slots:
 
 
 private:
-    QSqlQueryModel* m_model;
-    SqlHighlighter* m_sqlHighlighter;
-    QUndoStack*     m_undoStack;
-    IUndoGroup*     m_undoGroup;
+    QSqlQueryModel *m_model;
+    SqlHighlighter *m_sqlHighlighter;
+    QUndoStack     *m_undoStack;
+    IUndoGroup     *m_undoGroup;
 };
 
 }}

@@ -11,10 +11,10 @@ namespace DbConnect {
 DbConnect::DbConnect(QObject *parent):
     QObject(parent), IPlugin("IMainWindow")
 {
-    PluginManager* pluginManager = PluginManager::instance();
+    PluginManager *pluginManager = PluginManager::instance();
 
     // Создание пунктов строки меню и кнопок панели иструментов
-    IMainWindow* iMainWindow = qobject_cast<IMainWindow*>(
+    IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
     actionDbConnect = new QAction(QIcon(":connect"), tr("Соединение с  БД"), this);
@@ -34,11 +34,11 @@ DbConnect::~DbConnect()
 
 void DbConnect::dbConnect()
 {
-    PluginManager* pluginManager = PluginManager::instance();
-    IPlugin* iMainWindow = qobject_cast<IPlugin*>(
+    PluginManager *pluginManager = PluginManager::instance();
+    IPlugin *iMainWindow = qobject_cast<IPlugin*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    DialogConnect* windowConnect = new DialogConnect(
+    DialogConnect *windowConnect = new DialogConnect(
                 qobject_cast<QWidget *>(iMainWindow->instance()));
     settings()->beginGroup("DbConnect");
     windowConnect->comboDriver->setCurrentIndex(

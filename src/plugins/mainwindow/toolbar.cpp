@@ -74,7 +74,7 @@ void ToolBar::dropEvent(QDropEvent *event)
                 aAction = menu->menuAction();
             }
 
-        QAction* eAction = this->actionAt(event->pos());
+        QAction *eAction = this->actionAt(event->pos());
         QRect rect = actionGeometry(eAction);
         if (this->orientation() == Qt::Horizontal)
             eAction = this->actionAt(QPoint(event->pos().x()+rect.width()/2,
@@ -113,7 +113,7 @@ void ToolBar::dragMoveEvent(QDragMoveEvent *event)
     const MimeDataObject *mimeData
             = qobject_cast<const MimeDataObject *>(event->mimeData());
 
-    QAction* eAction = this->actionAt(event->pos());
+    QAction *eAction = this->actionAt(event->pos());
     if (mimeData->hasFormat("application/x-qobject") && isEdited())
         if (mimeData->object() != eAction && eAction)
             if (eAction->menu() && !eAction->menu()->isVisible()) {

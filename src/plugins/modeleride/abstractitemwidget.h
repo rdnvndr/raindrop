@@ -98,13 +98,13 @@ signals:
 
 private:
     //! Прокси модель
-    TableXMLProxyModel* m_proxyModel;
+    TableXMLProxyModel *m_proxyModel;
 
     //! Модель структуры классов
-    TreeXmlHashModel* m_model;
+    TreeXmlHashModel *m_model;
 
     //! Mapper для свойств
-    QDataWidgetMapper* m_mapper;
+    QDataWidgetMapper *m_mapper;
 
     //! Таблица данных
     QAbstractItemView *m_itemView;

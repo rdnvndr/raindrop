@@ -25,7 +25,7 @@ public:
         \param icon Иконка дерева
         \param name Имя дерева
     */
-    virtual QTreeWidget* insertTreeWidget(QIcon icon,QString name)  = 0;
+    virtual QTreeWidget *insertTreeWidget(QIcon icon,QString name)  = 0;
 
     //! Установка метода обработки щелчка по узлу узла
     /*! Предназначено для обработки щелчка мыши по узлу
@@ -33,7 +33,7 @@ public:
         \param obj Объект которому принадлежит метод обработки
         \param funcname Имя функции без параметров и скобок
     */
-    virtual void setFuncTreeItem(QTreeWidgetItem* item, QObject* obj, const char* funcname)  = 0;
+    virtual void setFuncTreeItem(QTreeWidgetItem *item, QObject *obj, const char *funcname)  = 0;
 
     //! Вставка визуального компонета
     /*! Предназначено для создания визуального компонента с указанной иконкой и имененм
@@ -48,7 +48,7 @@ public slots:
     virtual void setActionTreeWidget()  = 0;
 
     //! Слот вызова функции узла дерева
-    virtual void callFuncTreeWidget(QTreeWidgetItem* item, int column)  = 0;
+    virtual void callFuncTreeWidget(QTreeWidgetItem *item, int column)  = 0;
 };
 
 Q_DECLARE_INTERFACE(ITreeDockWidget,"com.RTPTechGroup.Raindrop.ITreeDockWidget/1.0")

@@ -11,17 +11,17 @@ ExamplePlug::ExamplePlug(QObject *parent):
     QObject(parent), IPlugin("IMainWindow ITreeDockWidget")
 {
     // Получение интерфейса ITreeDockWidget
-    PluginManager* pluginManager = PluginManager::instance();
-    ITreeDockWidget* dockWidget = qobject_cast<ITreeDockWidget*>(
+    PluginManager *pluginManager = PluginManager::instance();
+    ITreeDockWidget *dockWidget = qobject_cast<ITreeDockWidget*>(
                 pluginManager->interfaceObject("ITreeDockWidget"));
 
-    QTreeWidget* tree = dockWidget->insertTreeWidget(
+    QTreeWidget *tree = dockWidget->insertTreeWidget(
                 QIcon(tr(":/example")),tr("Проверка"));
 
     QList<QTreeWidgetItem*> items;
 
     // Создаем узел - раздел в дереве
-    QTreeWidgetItem* item = new QTreeWidgetItem();
+    QTreeWidgetItem *item = new QTreeWidgetItem();
 
     // Создаем шрифт
     QFont font = item->font(0);
@@ -35,7 +35,7 @@ ExamplePlug::ExamplePlug(QObject *parent):
     items.append(item);
 
     // Создаем узел для создания закладки
-    QTreeWidgetItem* itemnode = new QTreeWidgetItem(item);
+    QTreeWidgetItem *itemnode = new QTreeWidgetItem(item);
     itemnode->setIcon(0, QIcon(tr(":/example")));
     itemnode->setText(0, tr("Создание закладки"));
     dockWidget->setFuncTreeItem(itemnode, this,"createTab");
@@ -51,8 +51,8 @@ ExamplePlug::ExamplePlug(QObject *parent):
 void ExamplePlug::createTab(){
 
     // Получение интерфейса IMainWindow
-    PluginManager* pluginManager = PluginManager::instance();
-    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
+    PluginManager *pluginManager = PluginManager::instance();
+    IMainWindow *mainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
     mainWindow->addSubWindow(new QTextEdit(NULL));

@@ -65,10 +65,10 @@ public:
 
 // IUndoGroup
     //! Добавление стека отмены
-    virtual void addStack(QUndoStack * stack);
+    virtual void addStack(QUndoStack *stack);
 
     //! Удаление стека отмены
-    virtual void removeStack(QUndoStack * stack);
+    virtual void removeStack(QUndoStack *stack);
 
     //! Добавление QWidget для QUndoStack
     virtual void addWidgetForStack(QUndoStack *stack, QWidget *widget);
@@ -81,7 +81,7 @@ private slots:
     void focusChanged(QWidget *old, QWidget *now);
 
     //! Удаление стека отмены
-    virtual void removeStack(QObject * obj);
+    virtual void removeStack(QObject *obj);
 
 private:
     //! Команда "Отменить"

@@ -83,35 +83,35 @@ signals:
 
 private:
     //! Прокси модель дерева классов. Отвечает за сортировку и фильтрацию дерева классов
-    TreeFilterProxyModel* classFilterModel;
+    TreeFilterProxyModel *classFilterModel;
 
     //! Контекстное меню дерева классов
-    QMenu*   contextMenu;
+    QMenu *contextMenu;
 
     //! Команда добавления класса
-    QAction* actionAddClass;
+    QAction *actionAddClass;
 
     //! Команда удаления класса
-    QAction* actionRemoveClass;
+    QAction *actionRemoveClass;
 
     //! Команда отображения атрибутов в дереве классов
-    QAction* actionShowAttr;
+    QAction *actionShowAttr;
 
     //! Команда отображения состава в дереве классов
-    QAction* actionShowComp;
+    QAction *actionShowComp;
 
     //! Команда отображения фильтров в дереве классов
-    QAction* actionShowFilter;
+    QAction *actionShowFilter;
 
     //! Команда отображения ЕИ в дереве классов
-    QAction* actionShowUnit;
+    QAction *actionShowUnit;
 
     //! Команда отображения прав доступа в дереве классов
-    QAction* actionShowPermission;
+    QAction *actionShowPermission;
 
 
     //! Команда разделитель
-    QAction* actionSeparator;
+    QAction *actionSeparator;
 };
 
 }}

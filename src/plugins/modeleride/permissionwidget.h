@@ -31,7 +31,7 @@ public:
     TreeXmlHashModel *model();
 
     //! Возращает прокси модели
-    PermissionProxyModel* proxyModel();
+    PermissionProxyModel *proxyModel();
 
     //! Установка модели для редактирования прав доступа
     void setModel(TreeXmlHashModel *model);
@@ -64,10 +64,10 @@ private:
     QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);
 
     //! Прокси модель для значений списка
-    PermissionProxyModel* m_proxyModel;
+    PermissionProxyModel *m_proxyModel;
 
     //! Модель структуры классов
-    TreeXmlHashModel* m_model;
+    TreeXmlHashModel *m_model;
 };
 
 }}

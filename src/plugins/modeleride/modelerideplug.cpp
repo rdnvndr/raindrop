@@ -34,7 +34,7 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
 {
     m_model = NULL;
 
-    PluginManager* pluginManager = PluginManager::instance();
+    PluginManager *pluginManager = PluginManager::instance();
 
     m_treeClassView = new ClassTreeView();
     connect(m_treeClassView,SIGNAL(doubleClicked(QModelIndex)),
@@ -45,7 +45,7 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
             this,SLOT(remove()));
 
     // Создание пунктов строки меню и кнопок панели исрументов
-    IMainWindow* iMainWindow = qobject_cast<IMainWindow*>(
+    IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
     m_actionNewModel = new QAction(QIcon(":newmodel"), tr("Новая модель"), this);
@@ -341,8 +341,8 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource)
     if (!indexSource.isValid())
         return;
 
-    PluginManager* pluginManager = PluginManager::instance();
-    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
+    PluginManager *pluginManager = PluginManager::instance();
+    IMainWindow *mainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
     QString tagRole = indexSource.data(TreeXmlModel::TagRole).toString();
@@ -367,11 +367,11 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource)
     else
         return;
 
-    QMdiSubWindow* subWindow = mainWindow->setActiveSubWindow(subWindowName);
-    AbstractPropEditor* propEditor;
+    QMdiSubWindow *subWindow = mainWindow->setActiveSubWindow(subWindowName);
+    AbstractPropEditor *propEditor;
     if (!subWindow) {
         if (tagRole == DBCLASSXML::CLASS) {
-            PropClass* propClass = new PropClass();
+            PropClass *propClass = new PropClass();
             connect(propClass,SIGNAL(editFilter(QModelIndex)),
                     this,SLOT(showPropEditor(QModelIndex)));
             propEditor = qobject_cast<AbstractPropEditor*>(propClass);
@@ -403,8 +403,8 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource)
 
 void ModelerIDEPlug::closePropEditor(const QModelIndex &index)
 {
-    PluginManager* pluginManager = PluginManager::instance();
-    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
+    PluginManager *pluginManager = PluginManager::instance();
+    IMainWindow *mainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
     QString subWindowName = this->dataId(index);
@@ -521,10 +521,10 @@ void ModelerIDEPlug::publishClassModel(const QModelIndex &index)
 
 void ModelerIDEPlug::closeClassModel()
 {   
-    PluginManager* pluginManager = PluginManager::instance();
-    IMainWindow* mainWindow = qobject_cast<IMainWindow*>(
+    PluginManager *pluginManager = PluginManager::instance();
+    IMainWindow *mainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
-    foreach (QMdiSubWindow* subWindow, mainWindow->subWindowList())
+    foreach (QMdiSubWindow *subWindow, mainWindow->subWindowList())
         if (subWindow->widget()->objectName().indexOf(QRegExp("^PropClass::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropFilter::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropEntityGroup::"))  != -1

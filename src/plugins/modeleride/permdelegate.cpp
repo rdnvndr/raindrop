@@ -33,13 +33,13 @@ QWidget *PermDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
     if (tag != DBPERMISSIONXML::PERMISSION)
         return NULL;
 
-    const TreeXmlHashModel* hashModel =this->hashModel(index.model());
+    const TreeXmlHashModel *hashModel =this->hashModel(index.model());
     if (hashModel) {
         QString attr = hashModel->displayedAttr(tag, index.column());
         if (tag == DBPERMISSIONXML::PERMISSION && attr == DBPERMISSIONXML::ROLE) {
             QComboBox *comboBox = new QComboBox(parent);
             comboBox->setItemDelegate(new XmlDelegate(comboBox));
-            comboBox->setModel(const_cast<TreeXmlHashModel* >(hashModel));
+            comboBox->setModel(const_cast<TreeXmlHashModel *>(hashModel));
             comboBox->setRootModelIndex(
                         hashModel->index(0,0).child(4,0));
             return comboBox;
@@ -76,7 +76,7 @@ void PermDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 const TreeXmlHashModel *PermDelegate::hashModel(const QAbstractItemModel *model) const
 {
     const QAbstractProxyModel *proxyModel = dynamic_cast<const QAbstractProxyModel *>(model);
-    const TreeXmlHashModel* hashModel = (proxyModel)?
+    const TreeXmlHashModel *hashModel = (proxyModel)?
                 dynamic_cast<const TreeXmlHashModel*>(proxyModel->sourceModel())
               : dynamic_cast<const TreeXmlHashModel*>(model);
     return hashModel;

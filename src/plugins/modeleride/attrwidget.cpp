@@ -103,7 +103,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     tableViewAttr->setColumnHidden(15,true);
     m_attrGroupModel->setModel(model);
 
-    TableXMLProxyModel* lovFilterModel = new TableXMLProxyModel(this);
+    TableXMLProxyModel *lovFilterModel = new TableXMLProxyModel(this);
     QStringList tags;
     tags << DBLOVLISTXML::LOVLIST;
     lovFilterModel->setAttributeTags(tags);
@@ -120,7 +120,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     tags << DBLOVXML::LOV;
     lovFilterModel->setAttributeTags(tags);
 
-    QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
+    QSortFilterProxyModel *classFilterModel = new QSortFilterProxyModel(this);
     classFilterModel->setFilterKeyColumn(0);
     classFilterModel->setFilterRole(TreeXmlModel::TagRole);
     classFilterModel->setFilterRegExp(DBCLASSXML::CLASS + "|" +
@@ -135,7 +135,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     comboBoxLinkAttr->setIndexColumn(model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                                 DBCLASSXML::ID));
 
-    QSortFilterProxyModel* unitFilterModel = new QSortFilterProxyModel(this);
+    QSortFilterProxyModel *unitFilterModel = new QSortFilterProxyModel(this);
     unitFilterModel->setFilterKeyColumn(0);
     unitFilterModel->setFilterRole(TreeXmlModel::TagRole);
     unitFilterModel->setFilterRegExp(DBUNITXML::UNIT + "|" +

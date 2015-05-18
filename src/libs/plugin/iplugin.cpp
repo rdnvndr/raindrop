@@ -27,7 +27,7 @@ IPlugin::IPlugin(const QString& depInterfaces)
 IPlugin::~IPlugin()
 {
     // NOTE: Возможно надо сделать на цикле for
-    foreach (IPlugin* plug,PluginManager::instance()->dependentPlugins(this)) {
+    foreach (IPlugin *plug,PluginManager::instance()->dependentPlugins(this)) {
         if (PluginManager::instance()->dependentPlugins(this).count() != 0)
             if (plug)
                 delete plug;
@@ -38,7 +38,7 @@ void IPlugin::setSettings(QSettings *s){
     m_settings = s;
 }
 
-QSettings* IPlugin::settings()
+QSettings *IPlugin::settings()
 {
     return m_settings;
 }

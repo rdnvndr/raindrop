@@ -35,10 +35,10 @@ signals:
 protected:
 
     //!  Обработчик события нажатия клавиш
-    virtual void keyPressEvent(QKeyEvent* event);
+    virtual void keyPressEvent(QKeyEvent *event);
 
     //! Обработчик события при показе QWidget
-    virtual void showEvent(QShowEvent* event);
+    virtual void showEvent(QShowEvent *event);
     
 private slots:
     //! Слот обработки изменения текста

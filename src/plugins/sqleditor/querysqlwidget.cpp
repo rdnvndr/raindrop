@@ -30,7 +30,7 @@ QuerySqlWidget::QuerySqlWidget(QWidget *parent) :
     setupUi(this);
 
     m_undoStack = new QUndoStack(this);
-    PluginManager* pluginManager = PluginManager::instance();
+    PluginManager *pluginManager = PluginManager::instance();
     m_undoGroup = qobject_cast<IUndoGroup*>(
                 pluginManager->interfaceObject("IUndoGroup"));
     m_undoGroup->addStack(m_undoStack);

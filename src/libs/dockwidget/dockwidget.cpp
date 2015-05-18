@@ -7,7 +7,7 @@
 namespace RTPTechGroup {
 namespace Widgets {
 
-DockWidget::DockWidget(QWidget * parent)
+DockWidget::DockWidget(QWidget *parent)
     : QDockWidget(parent)
 {
     m_titleBar = titleBarWidget();

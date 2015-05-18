@@ -21,13 +21,13 @@ XmlDelegate::XmlDelegate(QObject *parent) :
 {
 }
 
-QWidget*  XmlDelegate::createEditor(QWidget *parent,
+QWidget *XmlDelegate::createEditor(QWidget *parent,
                                     const QStyleOptionViewItem & option,
                                     const QModelIndex & index ) const
 {
     // Для логического типа создаем QCheckbox
     if (index.data(Qt::EditRole).type() == QVariant::Bool) {
-        QCheckBox* pRes = new  QCheckBox(parent);
+        QCheckBox *pRes = new  QCheckBox(parent);
         pRes->setStyleSheet(
                     "QCheckBox::indicator {subcontrol-position: top center;}");
         return pRes;
@@ -48,7 +48,7 @@ void XmlDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
             }
         }
 
-        TreeComboBox* treeComboBox = dynamic_cast<TreeComboBox*>(editor);
+        TreeComboBox *treeComboBox = dynamic_cast<TreeComboBox*>(editor);
         if (treeComboBox) {
             treeComboBox->setDisplayText(
                         index.model()->data(index,Qt::DisplayRole).toString());
@@ -57,10 +57,10 @@ void XmlDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
             return;
         }
 
-        QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
+        QComboBox *comboBox = dynamic_cast<QComboBox*>(editor);
         if (comboBox) {
-            TreeXmlHashModel* hashModel = this->sourceModel(comboBox->model());
-            TreeXmlHashModel* indexModel = this->sourceModel(
+            TreeXmlHashModel *hashModel = this->sourceModel(comboBox->model());
+            TreeXmlHashModel *indexModel = this->sourceModel(
                         const_cast<QAbstractItemModel*>(index.model()));
             if (hashModel && hashModel == indexModel) {
                 QModelIndex curIndex = mapFromSource(comboBox->model(),
@@ -75,7 +75,7 @@ void XmlDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
             return;
         }
 
-        QLineEdit* lineEdit = dynamic_cast<QLineEdit*>(editor);
+        QLineEdit *lineEdit = dynamic_cast<QLineEdit*>(editor);
         if (lineEdit) {
             if (index.isValid())
                 lineEdit->setText(
@@ -106,18 +106,18 @@ void XmlDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
         return;
     }
 
-    TreeComboBox* treeComboBox = dynamic_cast<TreeComboBox*>(editor);
+    TreeComboBox *treeComboBox = dynamic_cast<TreeComboBox*>(editor);
     if (treeComboBox) {
         if (treeComboBox->currentModelIndex().isValid())
             model->setData(index,treeComboBox->currentModelIndex().data(Qt::EditRole),Qt::EditRole);
         return;
     }
     // Если QComboBox присваиваем текущий текст, а не индекс
-    QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
+    QComboBox *comboBox = dynamic_cast<QComboBox*>(editor);
     if (comboBox) {
 
-        TreeXmlHashModel* hashModel =  this->sourceModel(comboBox->model());
-        TreeXmlHashModel* indexModel = this->sourceModel(
+        TreeXmlHashModel *hashModel =  this->sourceModel(comboBox->model());
+        TreeXmlHashModel *indexModel = this->sourceModel(
                     const_cast<QAbstractItemModel*>(model));
 
         if (hashModel && hashModel == indexModel) {
@@ -138,7 +138,7 @@ void XmlDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
         return;
     }
 
-    QLineEdit* lineEdit = dynamic_cast<QLineEdit*>(editor);
+    QLineEdit *lineEdit = dynamic_cast<QLineEdit*>(editor);
     if (lineEdit)
         if (lineEdit->isReadOnly()) {
             model->setData(index,index.data(Qt::EditRole),Qt::EditRole);

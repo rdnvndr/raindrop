@@ -57,7 +57,7 @@ public:
     //! Активация подокна
     /*! Предназначено для активации указанного подокна
     */
-    void setActiveSubWindow(QMdiSubWindow * window);
+    void setActiveSubWindow(QMdiSubWindow *window);
 
     //! Получение подокна
     /*! Предназначено для получения подокна

@@ -15,7 +15,7 @@ using namespace RTPTechGroup::Plugin;
 namespace RTPTechGroup {
 namespace MainWindow {
 
-MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
+MainWindow::MainWindow(QMainWindow *pwgt) : QMainWindow(pwgt), IPlugin("")
 {
     setupUi(this);
     this->setMenuBar(new MenuBar());
@@ -99,7 +99,7 @@ MainWindow::MainWindow(QMainWindow* pwgt) : QMainWindow(pwgt), IPlugin("")
     newSeparator->setObjectName("actionNewSeparator");
     addAction(tr("Новое меню"),newSeparator);
 
-    PluginManager* pluginManager = PluginManager::instance();
+    PluginManager *pluginManager = PluginManager::instance();
     connect(pluginManager,SIGNAL(endLoadingPlugins()),
             this,SLOT(endLoadingPlugins()));
 }
@@ -338,7 +338,7 @@ void MainWindow::addAction(QString category, QAction *action)
 void MainWindow::removeAction(QObject *obj)
 {
     foreach (const QString &category, m_actions.uniqueKeys())
-        foreach (QAction* actionCategory, m_actions.values(category))
+        foreach (QAction *actionCategory, m_actions.values(category))
             if (obj == qobject_cast< QObject *>(actionCategory))
                 m_actions.remove(category,actionCategory);
 
@@ -355,7 +355,7 @@ void MainWindow::removeAction(QAction *action)
     removeAction(qobject_cast< QObject *>(action));
 }
 
-void MainWindow::closeEvent(QCloseEvent* event)
+void MainWindow::closeEvent(QCloseEvent *event)
 {
     writeSettings();
     event->accept();
@@ -398,13 +398,13 @@ void MainWindow::refreshAllBar(bool readingBarSettings)
             cleanBranchAction(item);
 
     QList<ToolBar *> toolBars = this->findChildren<ToolBar *> ();
-    foreach (ToolBar* toolBar,toolBars) {
+    foreach (ToolBar *toolBar,toolBars) {
         this->removeToolBar(toolBar);
         delete toolBar;
     }
     this->setMenuBar(new MenuBar());
 
-    foreach (QAction* action, m_actions.values()) {
+    foreach (QAction *action, m_actions.values()) {
         if (action) {
             foreach (MenuItemHash actionItem, m_actionItem)
                 foreach (MenuItem *menuItem, actionItem.values(action->objectName())) {
@@ -422,7 +422,7 @@ void MainWindow::refreshAllBar(bool readingBarSettings)
     settings()->endGroup();
 }
 
-QMdiSubWindow* MainWindow::addSubWindow(QWidget* widget)
+QMdiSubWindow *MainWindow::addSubWindow(QWidget *widget)
 {
     if (mdiArea->setActiveSubWindow(widget->objectName()))
     {
@@ -437,12 +437,12 @@ QMdiSubWindow* MainWindow::addSubWindow(QWidget* widget)
     return subWindow;
 }
 
-QMdiSubWindow* MainWindow::setActiveSubWindow(QString objName)
+QMdiSubWindow *MainWindow::setActiveSubWindow(QString objName)
 {
     return mdiArea->setActiveSubWindow(objName);
 }
 
-QMdiSubWindow* MainWindow::subWindow(QString objName)
+QMdiSubWindow *MainWindow::subWindow(QString objName)
 {
     return  mdiArea->subWindow(objName);
 }
@@ -618,7 +618,7 @@ void MainWindow::setEditedAllMenu(bool edited)
     setEditedMenu(this->menuBar(), edited);
 
     const QList<ToolBar *> toolBars = this->findChildren<ToolBar *> ();
-    foreach (ToolBar* toolBar,toolBars) {
+    foreach (ToolBar *toolBar,toolBars) {
         setEditedMenu(toolBar, edited);
     }
 }
@@ -641,7 +641,7 @@ void MainWindow::writeBarSettings() {
     writeMenu(this->menuBar());
 
     const QList<ToolBar *> toolBars = this->findChildren<ToolBar *> ();
-    foreach (ToolBar* toolBar,toolBars) {
+    foreach (ToolBar *toolBar,toolBars) {
         settings()->setArrayIndex(m_menuArrayIndex);
         m_menuArrayIndex++;
         settings()->setValue("level", -1);
@@ -656,7 +656,7 @@ void MainWindow::writeBarSettings() {
 
     settings()->beginWriteArray("HotKeySettings");
     m_menuArrayIndex = 0;
-    foreach (QAction* action, m_actions.values())
+    foreach (QAction *action, m_actions.values())
         if (action)
             if (action->shortcut() != QKeySequence()){
                 settings()->setArrayIndex(m_menuArrayIndex);
