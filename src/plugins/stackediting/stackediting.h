@@ -6,23 +6,25 @@
 #include <QUndoGroup>
 #include <plugin/iplugin.h>
 #include <iundogroup.h>
+#include <iclipboardstack.h>
 #include "stackeditingglobal.h"
 
 namespace RTPTechGroup {
 namespace StackEditing {
 
-//! Плагин стека отмена/повтора команд
+//! Плагин стека отмена/повтора команд и буфера обмена
 /*! Плагин предназначен для организации стека отмена или повтора
- *  команд
+ *  команд и работой с буфером обмена
 */
 
 class  STACKEDITINGLIB StackEditing:
         public QObject,
         public IUndoGroup,
+        public IClipboardStack,
         public IPlugin
 {
     Q_OBJECT
-    Q_INTERFACES(IPlugin IUndoGroup)
+    Q_INTERFACES(IPlugin IUndoGroup IClipboardStack)
 
 #if QT_VERSION >= 0x050000
     Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.StackEditing" FILE "stackediting.json")
