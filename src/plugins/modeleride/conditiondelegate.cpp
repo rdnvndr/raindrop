@@ -105,7 +105,7 @@ QWidget *ConditionDelegate::createEditor(QWidget *parent, const
 void ConditionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                                      const QModelIndex &index) const
 {
-    QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
+    QComboBox *comboBox = dynamic_cast<QComboBox*>(editor);
     if (comboBox && (index.column() == 0 || index.column() == 2)) {
         ConditionProxyModel *proxyModel = qobject_cast<ConditionProxyModel *>(
                     const_cast<QAbstractItemModel *>(index.model()));
@@ -133,7 +133,7 @@ void ConditionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
 void ConditionDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
 
-    QComboBox* comboBox = dynamic_cast<QComboBox*>(editor);
+    QComboBox *comboBox = dynamic_cast<QComboBox*>(editor);
     if (comboBox && (index.column() == 0 || index.column() == 2)) {
         ConditionProxyModel *proxyModel = qobject_cast<ConditionProxyModel *>(
                     const_cast<QAbstractItemModel *>(index.model()));

@@ -22,7 +22,7 @@ public:
     explicit Menu(QWidget *parent = 0);
 
     //! Конструктор класса
-    explicit Menu(const QString & title, QWidget * parent = 0 );
+    explicit Menu(const QString & title, QWidget *parent = 0 );
 
     //! Деструктор класса
     virtual ~Menu();

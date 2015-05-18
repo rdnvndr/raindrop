@@ -29,7 +29,7 @@ class XMLMODELLIB ModifyProxyModel : public QAbstractProxyModel
 public:
 
     //! Конструктор модели
-    explicit ModifyProxyModel(QObject* parent = 0);
+    explicit ModifyProxyModel(QObject *parent = 0);
 
 
     //! Возращает количество столбцов в индексе родителя

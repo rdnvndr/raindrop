@@ -3,7 +3,7 @@
 namespace RTPTechGroup {
 namespace TreeDockWidget {
 
-TreeFilterWidget::TreeFilterWidget(QWidget* pwgt) : QWidget(pwgt) {
+TreeFilterWidget::TreeFilterWidget(QWidget *pwgt) : QWidget(pwgt) {
     setupUi(this);
 
     treeWidget->setIconSize(QSize(20, 20));

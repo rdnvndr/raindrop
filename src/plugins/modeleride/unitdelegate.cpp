@@ -18,10 +18,10 @@ UnitDelegate::UnitDelegate(QObject *parent) :
 void UnitDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
 
-    QLineEdit* lineEdit = dynamic_cast<QLineEdit*>(editor);
+    QLineEdit *lineEdit = dynamic_cast<QLineEdit*>(editor);
     if (lineEdit) {
-        QAbstractProxyModel* proxyModel = dynamic_cast<QAbstractProxyModel*>(model);
-        TreeXmlHashModel* hashModel = (proxyModel)?
+        QAbstractProxyModel *proxyModel = dynamic_cast<QAbstractProxyModel*>(model);
+        TreeXmlHashModel *hashModel = (proxyModel)?
                     dynamic_cast<TreeXmlHashModel*>(proxyModel->sourceModel())
                   : dynamic_cast<TreeXmlHashModel*>(model);
 
@@ -49,10 +49,10 @@ QWidget *UnitDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
 {
     Q_UNUSED(option)
 
-    QLineEdit* lineEdit = new QLineEdit(parent);
+    QLineEdit *lineEdit = new QLineEdit(parent);
 
     const QAbstractProxyModel *proxyModel = dynamic_cast<const QAbstractProxyModel *>(index.model());
-    const TreeXmlHashModel* hashModel = (proxyModel)?
+    const TreeXmlHashModel *hashModel = (proxyModel)?
                 dynamic_cast<const TreeXmlHashModel*>(proxyModel->sourceModel())
               : dynamic_cast<const TreeXmlHashModel*>(index.model());
 

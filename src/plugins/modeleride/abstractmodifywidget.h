@@ -35,7 +35,7 @@ public:
     TreeXmlHashModel *model();
 
     //! Возращает прокси модели
-    ModifyProxyModel* proxyModel();
+    ModifyProxyModel *proxyModel();
 
     //! Проверка на возможность удаления
     virtual bool isRemove(const QModelIndex &proxyIndex);
@@ -72,10 +72,10 @@ public slots:
 private:
 
     //! Прокси модель для значений списка
-    ModifyProxyModel* m_proxyModel;
+    ModifyProxyModel *m_proxyModel;
 
     //! Модель структуры классов
-    TreeXmlHashModel* m_model;
+    TreeXmlHashModel *m_model;
 
     //! Виджет отображения данных
     QAbstractItemView *m_itemView;

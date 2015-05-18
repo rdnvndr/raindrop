@@ -25,7 +25,7 @@ class XMLMODELLIB TableXMLProxyModel : public QSortFilterProxyModel
     Q_OBJECT
 public:
     //! Конструктор модели
-    explicit TableXMLProxyModel(QObject * parent = 0);
+    explicit TableXMLProxyModel(QObject *parent = 0);
 
     //! Метод который определяет отображать ли указанную строку
     virtual bool filterAcceptsRow (int row, const QModelIndex &parent) const;

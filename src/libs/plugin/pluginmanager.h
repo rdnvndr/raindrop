@@ -53,7 +53,7 @@ public:
     //! Получить зависимые плагины
     /*! Позволяет получить список зависимых плагинов от указанного
      */
-    QList<IPlugin*> dependentPlugins(IPlugin* plugin);
+    QList<IPlugin*> dependentPlugins(IPlugin *plugin);
 
     //! Получить от каких плагинов зависит
     /*! Позволяет получить список плагинов от которых зависит указанный плвгин
@@ -91,7 +91,7 @@ signals:
 
 private slots:
     //! Удаляет указанный плагин
-    void removePlugin(QObject* obj);
+    void removePlugin(QObject *obj);
 
 private:
 

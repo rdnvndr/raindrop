@@ -34,8 +34,8 @@ void MdiExtArea::setViewMode(ViewMode mode){
     }
 }
 
-QMdiSubWindow* MdiExtArea::subWindow(QString widgetName) {
-    foreach (QMdiSubWindow * subwindow, this->subWindowList()){
+QMdiSubWindow *MdiExtArea::subWindow(QString widgetName) {
+    foreach (QMdiSubWindow *subwindow, this->subWindowList()){
         if (subwindow->widget()->objectName()==widgetName){
             return subwindow;
         }
@@ -43,9 +43,9 @@ QMdiSubWindow* MdiExtArea::subWindow(QString widgetName) {
     return NULL;
 }
 
-QMdiSubWindow* MdiExtArea::setActiveSubWindow(QString widgetName)
+QMdiSubWindow *MdiExtArea::setActiveSubWindow(QString widgetName)
 {
-    QMdiSubWindow* window  = this->subWindow(widgetName);
+    QMdiSubWindow *window  = this->subWindow(widgetName);
     if (window){
         this->setActiveSubWindow(window);
         return window;
@@ -59,13 +59,13 @@ void MdiExtArea::setActiveSubWindow(QMdiSubWindow *window)
 }
 
 void MdiExtArea::closeActiveSubWindow(){
-    QMdiSubWindow* subWindow = activeSubWindow();
+    QMdiSubWindow *subWindow = activeSubWindow();
     activateNextSubWindow();
     subWindow->close();
 }
 
 void MdiExtArea::closeAllSubWindows(){
-    QMdiSubWindow* subWindow = activeSubWindow();
+    QMdiSubWindow *subWindow = activeSubWindow();
     while (subWindow){
         activateNextSubWindow();
         subWindow->close();

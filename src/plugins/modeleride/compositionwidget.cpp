@@ -61,7 +61,7 @@ void CompositionWidget::setModel(TreeXmlHashModel *model)
     tableViewComp->setModel(proxyModel());
     tableViewComp->setColumnHidden(8,true);
 
-    QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
+    QSortFilterProxyModel *classFilterModel = new QSortFilterProxyModel(this);
     classFilterModel->setFilterKeyColumn(0);
     classFilterModel->setFilterRole(TreeXmlModel::TagRole);
     classFilterModel->setFilterRegExp(DBCLASSXML::CLASS + "|" +

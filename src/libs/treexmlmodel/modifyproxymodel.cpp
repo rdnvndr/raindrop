@@ -12,7 +12,7 @@ struct PrivateModelIndex
     const QAbstractItemModel *m;
 };
 
-ModifyProxyModel::ModifyProxyModel(QObject* parent)
+ModifyProxyModel::ModifyProxyModel(QObject *parent)
     :QAbstractProxyModel (parent)
 {
     m_hiddenRow = true;
@@ -354,7 +354,7 @@ QModelIndex ModifyProxyModel::mapToSource(const QModelIndex &index) const
         return QModelIndex();
 
     QModelIndex sourceIndex;
-    PrivateModelIndex* hack = reinterpret_cast<PrivateModelIndex*>(&sourceIndex);
+    PrivateModelIndex *hack = reinterpret_cast<PrivateModelIndex*>(&sourceIndex);
 
     hack->r = index.row();
     hack->c = index.column();

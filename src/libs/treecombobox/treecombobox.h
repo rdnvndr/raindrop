@@ -23,13 +23,13 @@ class TREECOMBOBOXLIB TreeComboBox : public QComboBox
 {
 public:
     //! Конструктор класса
-    explicit TreeComboBox(QWidget* parent=0);
+    explicit TreeComboBox(QWidget *parent=0);
 
     //! Деструктор класса
     virtual ~TreeComboBox();
 
     //! Устанавливает модель для списка
-    void setModel(QAbstractItemModel * model);
+    void setModel(QAbstractItemModel *model);
 
     //! Устанавливает текущий индекс модели списка
     void setCurrentModelIndex (const QModelIndex & index);
@@ -81,7 +81,7 @@ private:
     bool skipNextHide;
 
     //! Древовидный список
-    QTreeView* treeView;
+    QTreeView *treeView;
 
     //! Текст по умолчанию
     QString m_displayText;

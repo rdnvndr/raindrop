@@ -33,14 +33,14 @@ QList<QObject *> PluginManager::interfaceObjects(QString interfaceName)
 
 PluginManager::~PluginManager()
 {
-    QObject* plug = interfaceObject("IPlugin");
+    QObject *plug = interfaceObject("IPlugin");
     while (plug) {
         delete plug;
         plug = interfaceObject("IPlugin");
     }
 }
 
-QSettings* PluginManager::settings() const
+QSettings *PluginManager::settings() const
 {
     return m_settings;
 }
@@ -51,7 +51,7 @@ QList<IPlugin *> PluginManager::dependPlugins(IPlugin *plugin)
 
     if (plugin)
         foreach (QString depInterfaceName,plugin->depModulList())
-            foreach (QObject* objInterfacePlugin,interfaceObjects(depInterfaceName)) {
+            foreach (QObject *objInterfacePlugin,interfaceObjects(depInterfaceName)) {
                 IPlugin *interfacePlugin = qobject_cast<IPlugin *>(objInterfacePlugin);
                 if (interfacePlugin)
                     pluginList[objInterfacePlugin->objectName()] = interfacePlugin;
@@ -63,10 +63,10 @@ QList<IPlugin *> PluginManager::dependentPlugins(IPlugin *plugin)
 {
     QHash<QString, IPlugin *> pluginList;
 
-    foreach (QObject* objPlug, m_interfaces.values("IPlugin")) {
+    foreach (QObject *objPlug, m_interfaces.values("IPlugin")) {
         IPlugin *plug = qobject_cast<IPlugin *>(objPlug);
         if (plug && plug!=plugin)
-            foreach (IPlugin* interfacePlugin,dependPlugins(plug))
+            foreach (IPlugin *interfacePlugin,dependPlugins(plug))
                 if (plugin == interfacePlugin)
                     pluginList[objPlug->objectName()] = plug;
     }
@@ -108,10 +108,10 @@ bool PluginManager::loadPlugin(QString fileName)
         return false;
     try {
         QPluginLoader loader(m_pluginsDir.absoluteFilePath(fileName));
-        QObject* plugin = loader.instance();
+        QObject *plugin = loader.instance();
         if (plugin)
         {
-            IPlugin* corePlugin = qobject_cast<IPlugin*>(plugin);
+            IPlugin *corePlugin = qobject_cast<IPlugin*>(plugin);
             if (corePlugin){
                 connect(plugin,SIGNAL(destroyed(QObject*)),this,SLOT(removePlugin(QObject*)));
                 plugin->setObjectName(plugin->metaObject()->className());

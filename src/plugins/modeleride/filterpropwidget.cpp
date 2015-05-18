@@ -75,7 +75,7 @@ void FilterPropWidget::setModel(TreeXmlHashModel *model)
 {
     AbstractEditorWidget::setModel(model);
 
-    QSortFilterProxyModel* classFilterModel = new QSortFilterProxyModel(this);
+    QSortFilterProxyModel *classFilterModel = new QSortFilterProxyModel(this);
     classFilterModel->setFilterKeyColumn(0);
     classFilterModel->setFilterRole(TreeXmlModel::TagRole);
     classFilterModel->setSourceModel(model);

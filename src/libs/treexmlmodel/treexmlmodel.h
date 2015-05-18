@@ -44,7 +44,7 @@ class TagXmlItem;
             dbStructModel->setHeaderData(0, Qt::Horizontal, tr("Имя атирибута"));
             dbStructModel->setHeaderData(1, Qt::Horizontal, tr("Родитель"));
 
-            QTreeView* treeView = new QTreeView( this );
+            QTreeView *treeView = new QTreeView( this );
             treeView->setModel(dbStructModel);
         }
         file.close();
@@ -162,7 +162,7 @@ public:
     void removeDisplayedAttr(const QString &tag);
 
     //! Получение корневой узла дерева
-    virtual TagXmlItem* rootItem();
+    virtual TagXmlItem *rootItem();
 
     //! Вставка строки
     bool insertRows (int row, int count, const QModelIndex & parent);

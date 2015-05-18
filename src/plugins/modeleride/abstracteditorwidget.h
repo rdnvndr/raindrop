@@ -29,7 +29,7 @@ public:
     virtual void setModel(TreeXmlHashModel *model);
 
     //! Получение модели структуры классов
-    virtual TreeXmlHashModel* model();
+    virtual TreeXmlHashModel *model();
 
     //! Получение маппера данных
     virtual QDataWidgetMapper *dataMapper();
@@ -81,10 +81,10 @@ signals:
 
 private:
     //! Модель структуры классов
-    TreeXmlHashModel* m_model;
+    TreeXmlHashModel *m_model;
 
     //! Mapper для свойств справочника
-    QDataWidgetMapper* m_mapper;
+    QDataWidgetMapper *m_mapper;
 
     //! Хранит индекс предыдущей активной справочника
     QPersistentModelIndex  m_oldIndex;

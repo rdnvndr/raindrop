@@ -33,7 +33,7 @@ bool FilterTreeWidget::checkFormat(QDropEvent *ev)
     return false; */
 }
 
-void  FilterTreeWidget::mousePressEvent(QMouseEvent* pe){
+void  FilterTreeWidget::mousePressEvent(QMouseEvent *pe){
 	if (pe->button() == Qt::LeftButton){
 		m_ptDragPos=pe->pos();
 	}
@@ -41,7 +41,7 @@ void  FilterTreeWidget::mousePressEvent(QMouseEvent* pe){
 
 }
 
-void  FilterTreeWidget::mouseMoveEvent(QMouseEvent* pe){
+void  FilterTreeWidget::mouseMoveEvent(QMouseEvent *pe){
 
 	if (pe->buttons() & Qt::LeftButton){
 		int distance = (pe->pos()-m_ptDragPos).manhattanLength();
@@ -54,18 +54,18 @@ void  FilterTreeWidget::mouseMoveEvent(QMouseEvent* pe){
 void  FilterTreeWidget::startDrag(){
     if (this->currentItem()==NULL)
 	return;
-    QMimeData* mimeData = new QMimeData();
+    QMimeData *mimeData = new QMimeData();
 
     mimeData->setImageData(this->currentItem()->icon(0));
     mimeData->setText(this->objectName());
 
-    QDrag* drag = new QDrag(this);
+    QDrag *drag = new QDrag(this);
     drag->setPixmap(this->currentItem()->icon(0).pixmap(32,32,QIcon::Normal));
     drag->setMimeData(mimeData);
     drag->start(Qt::MoveAction);
 }
 
-bool FilterTreeWidget::searchShowItem(QString text,QTreeWidgetItem* item){
+bool FilterTreeWidget::searchShowItem(QString text,QTreeWidgetItem *item){
     bool flag = false;
     for (int i=0;i < item->childCount();i++){
 	if (searchShowItem(text,item->child(i))||flag)

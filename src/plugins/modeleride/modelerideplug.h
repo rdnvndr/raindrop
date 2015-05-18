@@ -69,7 +69,7 @@ public:
     virtual ~ModelerIDEPlug();
 
     //! Получение Модели данных плагина
-    TreeXmlHashModel* model();
+    TreeXmlHashModel *model();
 
     //! Создание класса
     void createClassModel(QDomDocument document = QDomDocument());
@@ -119,28 +119,28 @@ private:
     QString m_fileName;
 
     //! Модель дерева классов
-    ClassModelXml* m_model;
+    ClassModelXml *m_model;
 
     //! Дерево классов
-    ClassTreeView* m_treeClassView;
+    ClassTreeView *m_treeClassView;
 
     //! Команда создания структуры классов
-    QAction* m_actionNewModel;
+    QAction *m_actionNewModel;
 
     //! Команда сохранения структуры классов
-    QAction* m_actionSaveModel;
+    QAction *m_actionSaveModel;
 
     //! Команда сохранения структуры классов как...
-    QAction* m_actionSaveAsModel;
+    QAction *m_actionSaveAsModel;
 
     //! Команда открытия структуры классов
-    QAction* m_actionOpenModel;
+    QAction *m_actionOpenModel;
 
     //! Команда публикации структуры классов в БД
-    QAction* m_actionPublishModel;
+    QAction *m_actionPublishModel;
 
     //! Команда закрытия структуры классов
-    QAction* m_actionCloseModel;
+    QAction *m_actionCloseModel;
 
     //! Стыковый компонент для модели метаданных
     DockWidget *m_dockWidget;

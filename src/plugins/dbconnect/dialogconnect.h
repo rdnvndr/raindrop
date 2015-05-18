@@ -12,7 +12,7 @@ class DialogConnect: public QDialog, public Ui::DialogConnect{
 		Q_OBJECT
 	public:
         //! Коструктор диалогового окна подключения к БД
-        explicit DialogConnect(QWidget* pwgt = 0);
+        explicit DialogConnect(QWidget *pwgt = 0);
 	public slots:
         //! Слот для отображения дополнительных параметров подключения к БД
         void onClickButtonProp();

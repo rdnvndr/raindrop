@@ -12,10 +12,10 @@ StackEditing::StackEditing(QObject *parent):
 {
     m_undoGroup = new QUndoGroup(this);
 
-    PluginManager* pluginManager = PluginManager::instance();
+    PluginManager *pluginManager = PluginManager::instance();
 
     // Создание пунктов строки меню и кнопок панели иструментов
-    IMainWindow* iMainWindow = qobject_cast<IMainWindow*>(
+    IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
     actionUndo = m_undoGroup->createUndoAction(this);

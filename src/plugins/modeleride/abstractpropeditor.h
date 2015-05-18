@@ -26,7 +26,7 @@ public:
     virtual void setModel(TreeXmlHashModel *model);
 
     //! Получение модели структуры классов
-    virtual TreeXmlHashModel* model();
+    virtual TreeXmlHashModel *model();
 
     //! Получение данных модели
     virtual QVariant modelData(const QString &tag, const QString &attr,
@@ -47,7 +47,7 @@ public slots:
 
 private:
     //! Модель структуры классов
-    TreeXmlHashModel* m_model;
+    TreeXmlHashModel *m_model;
 };
 
 }}

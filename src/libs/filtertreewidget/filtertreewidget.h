@@ -23,10 +23,10 @@ public:
     explicit FilterTreeWidget(QWidget *parent = 0);
 
     //! Событие по нажатию левой кнопки мыши
-    virtual void mousePressEvent(QMouseEvent* pe);
+    virtual void mousePressEvent(QMouseEvent *pe);
 
     //! Событие по перемещению мыши
-    virtual void mouseMoveEvent(QMouseEvent* pe);
+    virtual void mouseMoveEvent(QMouseEvent *pe);
 
     //! Начало перемещение узла
     void  startDrag();
@@ -46,7 +46,7 @@ public slots:
     void showAllItem();
 
     //! Слот для фильтрации подузлов указанного узла по заданному тексту
-    bool searchShowItem(QString text,QTreeWidgetItem* item);
+    bool searchShowItem(QString text,QTreeWidgetItem *item);
 
     //! Слот для фильтрации узлов дерева по заданному тексту
     void searchShowAllItem(QString text);

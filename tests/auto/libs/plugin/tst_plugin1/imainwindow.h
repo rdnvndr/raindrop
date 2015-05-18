@@ -60,7 +60,7 @@ public slots:
     /*! Слот предназаначен для добавления подчиненного окна(закладки)
         в главное окно. Возращает добавленное подокно QMdiSubWindow
     */
-    virtual QMdiSubWindow* addSubWindow(QWidget* widget) = 0;
+    virtual QMdiSubWindow *addSubWindow(QWidget *widget) = 0;
 
     //! Слот установки активного окна по имени
     /*! Слот предназначен для установки активного подокна в главном окне
@@ -69,7 +69,7 @@ public slots:
     virtual QMdiSubWindow *setActiveSubWindow(QString objName) = 0;
 
     //! Получение области подокон
-    virtual MdiExtArea* getMdiArea() = 0;
+    virtual MdiExtArea *getMdiArea() = 0;
 };
 
 Q_DECLARE_INTERFACE(IMainWindow,"com.RTPTechGroup.Raindrop.IMainWindow/1.0")

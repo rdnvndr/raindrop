@@ -23,7 +23,7 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
                                        &option, const QModelIndex &index) const
 {
     QString tag  = index.data(TreeXmlModel::TagRole).toString();
-    const TreeXmlHashModel* hashModel = this->hashModel(index.model());
+    const TreeXmlHashModel *hashModel = this->hashModel(index.model());
 
     if (hashModel) {
         QString attr = hashModel->displayedAttr(tag, index.column());
@@ -35,7 +35,7 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
         {
             TreeComboBox *comboBoxDestClass = new TreeComboBox(parent);
             comboBoxDestClass->setItemDelegate(new XmlDelegate(comboBoxDestClass));
-            TableXMLProxyModel* classFilterModel = new TableXMLProxyModel(parent);
+            TableXMLProxyModel *classFilterModel = new TableXMLProxyModel(parent);
             QStringList tags;
             tags << DBFILTERXML::FILTER << DBCOMPXML::COMP;
             classFilterModel->setAttributeTags(tags);
@@ -78,7 +78,7 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
             comboBoxDestClass->setItemDelegate(new XmlDelegate(comboBoxDestClass));
 
             QModelIndex srcParentIndex = rootClass(index);
-            TableXMLProxyModel* classFilterModel = new TableXMLProxyModel(parent);
+            TableXMLProxyModel *classFilterModel = new TableXMLProxyModel(parent);
             QStringList tags;
             tags << DBCLASSXML::CLASS;
             classFilterModel->setFilterAllRows(true);
@@ -125,7 +125,7 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
 void RefItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                                    const QModelIndex &index) const
 {
-    TreeComboBox* treeComboBox = dynamic_cast<TreeComboBox*>(editor);
+    TreeComboBox *treeComboBox = dynamic_cast<TreeComboBox*>(editor);
     if (treeComboBox) {
         QModelIndex curIndex = treeComboBox->currentModelIndex();
         if (curIndex.isValid()) {
@@ -156,7 +156,7 @@ void RefItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) c
 QModelIndex RefItemDelegate::rootClass(QModelIndex index) const
 {
     if (index.isValid()) {
-        const TreeXmlHashModel* hashModel = this->hashModel(index.model());
+        const TreeXmlHashModel *hashModel = this->hashModel(index.model());
         if (hashModel) {
             QModelIndex parentIndex = index.parent();
             if (parentIndex.data(TreeXmlModel::TagRole) == DBLINKTOFILTERXML::LINKTOFILTER) {
@@ -205,7 +205,7 @@ QModelIndex RefItemDelegate::rootClass(QModelIndex index) const
 const TreeXmlHashModel *RefItemDelegate::hashModel(const QAbstractItemModel *model) const
 {
     const QAbstractProxyModel *proxyModel = dynamic_cast<const QAbstractProxyModel *>(model);
-    const TreeXmlHashModel* hashModel = (proxyModel)?
+    const TreeXmlHashModel *hashModel = (proxyModel)?
                 dynamic_cast<const TreeXmlHashModel*>(proxyModel->sourceModel())
               : dynamic_cast<const TreeXmlHashModel*>(model);
     return hashModel;

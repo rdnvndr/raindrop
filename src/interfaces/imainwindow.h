@@ -68,7 +68,7 @@ public slots:
     /*! Слот предназаначен для добавления подчиненного окна(закладки)
         в главное окно. Возращает добавленное подокно QMdiSubWindow
     */
-    virtual QMdiSubWindow* addSubWindow(QWidget* widget) = 0;
+    virtual QMdiSubWindow *addSubWindow(QWidget *widget) = 0;
 
     //! Слот установки активного окна по имени
     /*! Слот предназначен для установки активного подокна в главном окне

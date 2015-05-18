@@ -87,8 +87,8 @@ QT_END_NAMESPACE
             QObject(parent), IPlugin("IMainWindow ITreeDockWidget")
         {
             // Получение интерфейса ITreeDockWidget
-            PluginManager* pluginManager = PluginManager::instance();
-            ITreeDockWidget* dockWidget = qobject_cast<ITreeDockWidget*>(
+            PluginManager *pluginManager = PluginManager::instance();
+            ITreeDockWidget *dockWidget = qobject_cast<ITreeDockWidget*>(
                         pluginManager->getPlugin("ITreeDockWidget")->instance());
         }
 
@@ -171,7 +171,7 @@ public:
 
 private:
     //! Настройки
-    QSettings* m_settings;
+    QSettings *m_settings;
 
     //! Список зависимостей плагина
     QStringList m_depModulList;

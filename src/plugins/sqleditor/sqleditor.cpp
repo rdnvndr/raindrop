@@ -10,10 +10,10 @@ namespace SqlEditor {
 SqlEditor::SqlEditor(QObject *parent):
     QObject(parent), IPlugin("IMainWindow IUndoGroup")
 {
-    PluginManager* pluginManager = PluginManager::instance();
+    PluginManager *pluginManager = PluginManager::instance();
 
     // Создание пунктов строки меню и кнопок панели иструментов
-    IMainWindow* iMainWindow = qobject_cast<IMainWindow*>(
+    IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
     actionSqlEditor = new QAction(QIcon(":SqlEditor"), tr("SQL редактор"), this);
@@ -34,7 +34,7 @@ void SqlEditor::showSqlEditor()
                 pluginManager->interfaceObject("IMainWindow"));
 
     QString subWindowName = "QuerySqlWidget";
-    QMdiSubWindow* subWindow = iMainWindow->setActiveSubWindow(subWindowName);
+    QMdiSubWindow *subWindow = iMainWindow->setActiveSubWindow(subWindowName);
     if (!subWindow) {
         QuerySqlWidget *queryWidget = new QuerySqlWidget(NULL);
         subWindow = iMainWindow->addSubWindow(queryWidget);
