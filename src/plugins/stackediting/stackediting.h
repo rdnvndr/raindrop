@@ -4,9 +4,12 @@
 #include <QObject>
 #include <QAction>
 #include <QUndoGroup>
+
 #include <plugin/iplugin.h>
 #include <iundogroup.h>
 #include <iclipboardstack.h>
+#include <iclipboarditem.h>
+
 #include "stackeditingglobal.h"
 
 namespace RTPTechGroup {
@@ -63,6 +66,13 @@ public:
     //! Производитель плагина
     QString vendor() {return tr(APP_COMPANY);};
 
+// IClipboardStack
+    //! Добавление компонента для буфера обмена
+    void addClipboardItem(IClipboardItem *item);
+
+    //! Удаление компонента для буфера обмена
+    void removeClipboardItem(IClipboardItem *item);
+
 // IUndoGroup
     //! Добавление стека отмены
     virtual void addStack(QUndoStack *stack);
@@ -81,9 +91,26 @@ private slots:
     void focusChanged(QWidget *old, QWidget *now);
 
     //! Удаление стека отмены
-    virtual void removeStack(QObject *obj);
+    void removeStack(QObject *obj);
 
+    //! Вырезание в буфер обмена
+    void cut();
+
+    //! Копирование в буфер обмена
+    void copy();
+
+    //! Вставка из буфер обмена
+    void paste();
+
+    //! Выбор всего
+    void selectAll();
 private:
+    //! Установка активного стека отмены для QWidget
+    void setActiveStackForWidget(QWidget *widget);
+
+    //! Установка активного элемента стека буфера обмена для QWidget
+    void setActiveItemForWidget(QWidget *widget);
+
     //! Команда "Отменить"
     QAction *actionUndo;
 
@@ -102,10 +129,19 @@ private:
     //! Команда "Выделить все"
     QAction *actionSelectAll;
 
+
     //! Список соотвествия QWidget и QUndoStack
     QMultiMap<QUndoStack *, QWidget *> m_undoStackList;
 
+    //! Группа стека отмены
     QUndoGroup *m_undoGroup;
+
+
+    //! Список соотвествия QWidget и QUndoStack
+    QList<IClipboardItem *> m_clipboardItemList;
+
+    //! Текущий элемент стека буфера обмена
+    IClipboardItem *m_currentClipboardItem;
 };
 
 }}

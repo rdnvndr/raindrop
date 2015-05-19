@@ -33,29 +33,40 @@ StackEditing::StackEditing(QObject *parent):
 
     actionCut = new QAction(QIcon(":cut"), tr("Вырезать"), this);
     actionCut->setObjectName("actionCut");
-//    connect(actionCut, SIGNAL(triggered()), this, SLOT(closeActiveSubWindow()));
+    connect(actionCut, SIGNAL(triggered()), this, SLOT(cut()));
     iMainWindow->addAction(tr("Редактирование"), actionCut);
 
     actionCopy = new QAction(QIcon(":copy"), tr("Копировать"), this);
     actionCopy->setObjectName("actionCopy");
-//    connect(actionCopy, SIGNAL(triggered()), this, SLOT(closeActiveSubWindow()));
+    connect(actionCopy, SIGNAL(triggered()), this, SLOT(copy()));
     iMainWindow->addAction(tr("Редактирование"), actionCopy);
 
     actionPaste = new QAction(QIcon(":paste"), tr("Вставить"), this);
     actionPaste->setObjectName("actionPaste");
-//    connect(actionPaste, SIGNAL(triggered()), this, SLOT(closeActiveSubWindow()));
+    connect(actionPaste, SIGNAL(triggered()), this, SLOT(paste()));
     iMainWindow->addAction(tr("Редактирование"), actionPaste);
 
     actionSelectAll = new QAction(QIcon(":selectall"), tr("Выделить всё"), this);
     actionSelectAll->setObjectName("actionSelectAll");
-//    connect(actionSelectAll, SIGNAL(triggered()), this, SLOT(closeActiveSubWindow()));
+    connect(actionSelectAll, SIGNAL(triggered()), this, SLOT(selectAll()));
     iMainWindow->addAction(tr("Редактирование"), actionSelectAll);
 }
 
 StackEditing::~StackEditing()
 {
+    m_clipboardItemList.clear();
     m_undoStackList.clear();
     delete m_undoGroup;
+}
+
+void StackEditing::addClipboardItem(IClipboardItem *item)
+{
+    m_clipboardItemList.append(item);
+}
+
+void StackEditing::removeClipboardItem(IClipboardItem *item)
+{
+    m_clipboardItemList.removeOne(item);
 }
 
 void StackEditing::addStack(QUndoStack *stack)
@@ -88,11 +99,48 @@ void StackEditing::focusChanged(QWidget *old, QWidget *now)
     if (now == 0)
         return;
 
+    setActiveItemForWidget(now);
+    setActiveStackForWidget(now);
+}
+
+void StackEditing::removeStack(QObject *obj)
+{
+    QUndoStack *stack = static_cast<QUndoStack *>(obj);
+    removeStack(stack);
+}
+
+void StackEditing::cut()
+{
+    if (m_currentClipboardItem)
+        m_currentClipboardItem->cut();
+}
+
+void StackEditing::copy()
+{
+    if (m_currentClipboardItem)
+        m_currentClipboardItem->copy();
+}
+
+void StackEditing::paste()
+{
+    if (m_currentClipboardItem)
+        m_currentClipboardItem->paste();
+}
+
+void StackEditing::selectAll()
+{
+    if (m_currentClipboardItem)
+        m_currentClipboardItem->selectAll();
+}
+
+void StackEditing::setActiveStackForWidget(QWidget *widget)
+{
+    // Стек отмены/повтора команд
     QMutableMapIterator<QUndoStack *, QWidget *> i(m_undoStackList);
     i.toBack();
     while (i.hasPrevious()) {
         i.previous();
-        if (i.value()->isAncestorOf(now)) {
+        if (i.value()->isAncestorOf(widget)) {
             m_undoGroup->setActiveStack(i.key());
             return;
         }
@@ -100,10 +148,29 @@ void StackEditing::focusChanged(QWidget *old, QWidget *now)
     m_undoGroup->setActiveStack(NULL);
 }
 
-void StackEditing::removeStack(QObject *obj)
+void StackEditing::setActiveItemForWidget(QWidget *widget)
 {
-    QUndoStack *stack = static_cast<QUndoStack *>(obj);
-    removeStack(stack);
+    Q_UNUSED(widget)
+
+    foreach (IClipboardItem *item, m_clipboardItemList) {
+        bool isCut       = item->canCut();
+        bool isCopy      = item->canCopy();
+        bool isPaste     = item->canPaste();
+        bool isSelectAll = item->canSelectAll();
+        if (isCut || isCopy || isPaste || isSelectAll) {
+            m_currentClipboardItem = item;
+            actionCut->setEnabled(isCut);
+            actionCopy->setEnabled(isCopy);
+            actionPaste->setEnabled(isPaste);
+            actionSelectAll->setEnabled(isSelectAll);
+            return;
+        }
+    }
+    m_currentClipboardItem = NULL;
+    actionCut->setEnabled(false);
+    actionCopy->setEnabled(false);
+    actionPaste->setEnabled(false);
+    actionSelectAll->setEnabled(false);
 }
 
 }}
