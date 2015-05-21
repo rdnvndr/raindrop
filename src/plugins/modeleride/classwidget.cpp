@@ -9,6 +9,7 @@
 #include "regexpvalidator.h"
 
 using namespace RTPTechGroup::MetaDataModel;
+using namespace RTPTechGroup::XmlModel;
 
 namespace RTPTechGroup {
 namespace ModelerIde {

@@ -5,8 +5,6 @@
 
 #include <treexmlmodel/treexmlhashmodel.h>
 
-using namespace RTPTechGroup::XmlModel;
-
 namespace RTPTechGroup {
 namespace ModelerIde {
 
@@ -42,7 +40,7 @@ public:
 
 private:
     //! Получение хэш модели
-    TreeXmlHashModel *sourceModel(QAbstractItemModel *model) const;
+    RTPTechGroup::XmlModel::TreeXmlHashModel *sourceModel(QAbstractItemModel *model) const;
 
     //! Получение индекса прокси модели
     QModelIndex mapToSource(QModelIndex index) const;

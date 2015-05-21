@@ -6,8 +6,6 @@
 
 #include <treexmlmodel/treexmlhashmodel.h>
 
-using namespace  RTPTechGroup::XmlModel;
-
 namespace RTPTechGroup {
 namespace ModelerIde {
 
@@ -26,10 +24,10 @@ public:
     virtual ~AbstractEditorWidget();
 
     //! Установка модели структуры классов
-    virtual void setModel(TreeXmlHashModel *model);
+    virtual void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
     //! Получение модели структуры классов
-    virtual TreeXmlHashModel *model();
+    virtual RTPTechGroup::XmlModel::TreeXmlHashModel *model();
 
     //! Получение маппера данных
     virtual QDataWidgetMapper *dataMapper();
@@ -81,7 +79,7 @@ signals:
 
 private:
     //! Модель структуры классов
-    TreeXmlHashModel *m_model;
+    RTPTechGroup::XmlModel::TreeXmlHashModel *m_model;
 
     //! Mapper для свойств справочника
     QDataWidgetMapper *m_mapper;

@@ -9,7 +9,6 @@
 namespace  RTPTechGroup {
 namespace  MetaDataModel {
 
-
 ClassModelXml::ClassModelXml(QDomNode document, QObject *parent)
     : TreeXmlHashModel(document, parent)
 {

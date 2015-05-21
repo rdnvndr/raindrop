@@ -11,8 +11,6 @@
 
 #include "abstractmodifywidget.h"
 
-using namespace RTPTechGroup::XmlModel;
-
 namespace RTPTechGroup {
 namespace ModelerIde {
 
@@ -31,7 +29,7 @@ public:
     virtual ~UnitWidget();
 
     //! Установка модели для редактирования ЕИ
-    void setModel(TreeXmlHashModel *model);
+    void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
 public slots:
     //! Добавление ЕИ

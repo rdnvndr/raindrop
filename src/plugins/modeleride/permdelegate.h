@@ -35,7 +35,7 @@ public:
                const QModelIndex &index) const;
 
 private:
-    const TreeXmlHashModel *hashModel(const QAbstractItemModel *model) const;
+    const RTPTechGroup::XmlModel::TreeXmlHashModel *hashModel(const QAbstractItemModel *model) const;
 };
 
 }}

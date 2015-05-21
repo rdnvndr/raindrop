@@ -31,7 +31,7 @@ public:
     virtual ~RefItemWidget();
 
     //! Установка модели для редактирования элементов справочника
-    void setModel(TreeXmlHashModel *model);
+    void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
 signals:
     //! Сигнал об изменении корневого индекса в прокси  элементов справочника
