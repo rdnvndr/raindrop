@@ -56,7 +56,7 @@ int TagXmlItem::count(QStringList tags, QStringList parentTags){
         {
             QString nodeName = childNode.nodeName();
             if (tags.contains(nodeName))
-                    count++;
+                    ++count;
         }
     else
         count = m_domNode.childNodes().count();
@@ -125,12 +125,12 @@ TagXmlItem *TagXmlItem::child(int i, QStringList tags, QStringList parentTags){
             if (tags.contains(nodeName)) {
                 if (i==number)
                     return childItem;
-                number++;
+                ++number;
             }
         } else {
             if (i==number)
                 return childItem;
-            number++;
+            ++number;
 
         }
     }
@@ -146,7 +146,7 @@ TagXmlItem *TagXmlItem::child(int i, QStringList tags, QStringList parentTags){
                     m_childItems.insert(i,childItem);
                     return childItem;
                 }
-                number++;
+                ++number;
             }
         } else {
             if (i==number){
@@ -154,7 +154,7 @@ TagXmlItem *TagXmlItem::child(int i, QStringList tags, QStringList parentTags){
                 m_childItems.insert(i,childItem);
                 return childItem;
             }
-            number++;
+            ++number;
         }
 
     // Поиск наследуемого узла потомка
@@ -199,12 +199,12 @@ int TagXmlItem::childNumber(TagXmlItem *child, QStringList tags, QStringList par
             if (tags.contains(nodeName)){
                 if (child->m_domNode == childNode)
                     return count;
-                count++;
+                ++count;
             }
         }else{
             if (child->m_domNode == childNode)
                 return count;
-            count++;
+            ++count;
         }
     }
 

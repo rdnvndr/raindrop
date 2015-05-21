@@ -58,7 +58,7 @@ void TreeComboBox::hidePopup()
 void TreeComboBox::setModel(QAbstractItemModel *model)
 {
     QComboBox::setModel(model);
-    for (int i=1;i<treeView->header()->count();i++)
+    for (int i=1;i<treeView->header()->count();++i)
         treeView->hideColumn(i);
 }
 

@@ -61,7 +61,7 @@ void PermissionWidget::setModel(TreeXmlHashModel *model)
     proxyModel()->setHeaderData(7,  Qt::Horizontal, tr("Идентификатор"));
     treeViewPerm->setModel(proxyModel());
 
-    for (int column = 6; column < 16; column++)
+    for (int column = 6; column < 16; ++column)
         treeViewPerm->setColumnHidden(column,true);
 
     treeViewPerm->header()->setSectionResizeMode(0, QHeaderView::Stretch);
@@ -91,7 +91,7 @@ void PermissionWidget::add()
         if (srcCurrentIndex.isValid()){
             treeViewPerm->expand(m_proxyModel->mapFromSource(srcIndex));
             treeViewPerm->setCurrentIndex(m_proxyModel->mapFromSource(srcCurrentIndex));
-            for (int column = 1; column <= 5; column++)
+            for (int column = 1; column <= 5; ++column)
                 m_model->setData(srcCurrentIndex.sibling(srcCurrentIndex.row(), column),
                                  false);
 

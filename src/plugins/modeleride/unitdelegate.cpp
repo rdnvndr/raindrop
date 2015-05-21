@@ -34,7 +34,7 @@ void UnitDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, cons
                 int len = value.length();
                 while (len < 4) {
                     value = QString("0") + value;
-                    len++;
+                    ++len;
                 }
                 model->setData(index, value, Qt::EditRole);
                 return;

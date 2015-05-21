@@ -85,7 +85,7 @@ void PluginManager::loadPlugins()
     // Загрузка файлов
     QDir::setCurrent(qApp->applicationDirPath()+"\\"+"plugins");
     m_listFiles = m_pluginsDir.entryList(QDir::Files);
-    for (m_currentFile=0; m_currentFile < m_listFiles.count(); m_currentFile++)
+    for (m_currentFile=0; m_currentFile < m_listFiles.count(); ++m_currentFile)
         loadPlugin(m_listFiles.at(m_currentFile));
 
     QDir::setCurrent(qApp->applicationDirPath());
@@ -95,7 +95,7 @@ void PluginManager::loadPlugins()
 bool PluginManager::nextLoadPlugin() {
 
     if (m_currentFile <  m_listFiles.count()-1) {
-        m_currentFile++;
+        ++m_currentFile;
         loadPlugin(m_listFiles.at(m_currentFile));
         return true;
     }

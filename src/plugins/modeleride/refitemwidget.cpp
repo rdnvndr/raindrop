@@ -36,7 +36,7 @@ void RefItemWidget::setModel(TreeXmlHashModel *model)
     proxyModel()->setHeaderData(2,  Qt::Horizontal, tr("Родитель"));
     proxyModel()->setHeaderData(3,  Qt::Horizontal, tr("Идентификатор"));
 
-    for (int column = 2; column < proxyModel()->columnCount(); column++)
+    for (int column = 2; column < proxyModel()->columnCount(); ++column)
         treeView->setColumnHidden(column,true);
 
     treeView->header()->setDefaultAlignment(Qt::AlignCenter);

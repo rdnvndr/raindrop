@@ -212,9 +212,9 @@ void ModelInsertCommand::doCommand()
   QModelIndex parent = findIndex(m_rowNumbers);
   m_model->beginInsertRows(parent, m_startRow, m_endRow);
   qint64 parentId = parent.internalId();
-  for (int row = m_startRow; row <= m_endRow; row++)
+  for (int row = m_startRow; row <= m_endRow; ++row)
   {
-    for(int col = 0; col < m_numCols; col++ )
+    for(int col = 0; col < m_numCols; ++col)
     {
       if (m_model->m_childItems[parentId].size() <= col)
       {
@@ -257,7 +257,7 @@ void ModelMoveCommand::doCommand()
     {
         QList<qint64> l = m_model->m_childItems.value(srcParent.internalId())[column].mid(m_startRow, m_endRow - m_startRow + 1 );
 
-        for (int i = m_startRow; i <= m_endRow ; i++)
+        for (int i = m_startRow; i <= m_endRow ; ++i)
         {
             m_model->m_childItems[srcParent.internalId()][column].removeAt(m_startRow);
         }

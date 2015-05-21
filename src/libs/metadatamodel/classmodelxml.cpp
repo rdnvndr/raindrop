@@ -596,7 +596,7 @@ bool ClassModelXml::removeRows(int row, int count, const QModelIndex &parent)
 {
     if (parent.isValid()) {
         QString parentTag = parent.data(TreeXmlModel::TagRole).toString();
-        for (int i = row; i < row+count; i++) {
+        for (int i = row; i < row+count; ++i) {
             QModelIndex childIndex = parent.child(i,0);
             QString tag = childIndex.data(TreeXmlModel::TagRole).toString();
             if (childIndex.isValid()) {
@@ -727,7 +727,7 @@ bool ClassModelXml::isRemove(const QModelIndex &srcIndex)
                     if (success)
                         success = false;
                 }
-                number++;
+                ++number;
                 linkIndex = model->indexHashAttr(
                             tagWithAttr.tag,
                             tagWithAttr.attr,

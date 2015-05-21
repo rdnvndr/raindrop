@@ -121,7 +121,7 @@ void TreeXmlHashModel::makeHashing(TagXmlItem *item, bool remove)
     int row = 0;
     while (TagXmlItem *childItem = item->child(row,tagsFilter())) {
         makeHashing(childItem, remove);
-        row++;
+        ++row;
     }
 }
 
@@ -290,7 +290,7 @@ QModelIndex TreeXmlHashModel::insertLastRows(int row, int count,
     if (!lastInsertRow.isValid())
         return QModelIndex().child(-1,-1);
 
-    for (int i=0;i<count;i++) {
+    for (int i=0;i<count;++i) {
         insertUuid(index(row+i,0,parent),tag);
     }
 
@@ -305,7 +305,7 @@ bool TreeXmlHashModel::removeRows(int row, int count, const QModelIndex &parent)
         return false;
 
     // Удаление хэша уникальности
-    for (int i=row; i < row+count; i++){
+    for (int i=row; i < row+count; ++i){
         QModelIndex childIndex = index(i,0,parent);
         if (!isInherited(childIndex))
             makeHashing(toItem(childIndex),true);
@@ -326,7 +326,7 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex, const QModelIndex 
     if (!index.isValid())
         return false;
 
-    for (int i = 0; i<this->columnCount(srcIndex); i++) {
+    for (int i = 0; i<this->columnCount(srcIndex); ++i) {
         QVariant value = srcIndex.sibling(srcIndex.row(), i).data(Qt::EditRole);
         QString nameAttr = displayedAttr(tag, i);
         QModelIndex existIndex = indexHashAttr(tag,nameAttr,value);

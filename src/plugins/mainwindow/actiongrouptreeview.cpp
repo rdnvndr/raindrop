@@ -20,7 +20,7 @@ void ActionGroupTreeView::startDrag(Qt::DropActions supportedActions)
         if (!data)
             return;
 
-        for (int i = 0; i<indexes.count(); i++){
+        for (int i = 0; i<indexes.count(); ++i){
             QModelIndex idx = indexes.at(i);
             persistentIndexes.append(QPersistentModelIndex(idx));
         }
@@ -38,7 +38,7 @@ void ActionGroupTreeView::startDrag(Qt::DropActions supportedActions)
             defaultDropAction = Qt::MoveAction;
 
         if (drag->exec(supportedActions, defaultDropAction) == Qt::MoveAction){
-            for (int i = 0; i<indexes.count(); i++){
+            for (int i = 0; i<indexes.count(); ++i){
                 QPersistentModelIndex idx = persistentIndexes.at(i);
                 if (idx.isValid())
                     model()->removeRow(idx.row(), idx.parent());

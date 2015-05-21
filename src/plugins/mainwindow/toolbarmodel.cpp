@@ -135,7 +135,7 @@ bool ToolBarModel::removeRows(int row, int count, const QModelIndex &parent)
 {
 
     beginRemoveRows(parent,row,row+count-1);
-    for (int i=count-1;i>=0;i--) {
+    for (int i=count-1;i>=0;--i) {
         ToolBar *toolBar = m_toolBars.at(row+i);
         m_mainWindow->removeToolBar(toolBar);
         delete toolBar;
