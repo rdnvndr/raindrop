@@ -31,7 +31,7 @@ public:
     //! Запись данных в модель
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
 private:
-    const TreeXmlHashModel *hashModel(const QAbstractItemModel *model) const;
+    const RTPTechGroup::XmlModel::TreeXmlHashModel *hashModel(const QAbstractItemModel *model) const;
     QModelIndex rootClass(QModelIndex index) const;
 
 };

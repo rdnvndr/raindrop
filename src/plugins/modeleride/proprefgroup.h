@@ -13,8 +13,6 @@
 namespace RTPTechGroup {
 namespace ModelerIde {
 
-using namespace RTPTechGroup::XmlModel;
-
 //! Диалог редактирования группы справочника
 /*! Диалог предназначен для редактирования группы справочника
 */
@@ -31,7 +29,7 @@ public:
     virtual ~PropRefGroup();
 
     //! Установка модели структуры классов
-    void setModel(TreeXmlHashModel *model);
+    void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
 public slots:
     //! Установка текущей группы справочника

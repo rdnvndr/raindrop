@@ -12,8 +12,6 @@
 #include "attrgroupproxymodel.h"
 #include "abstractitemwidget.h"
 
-using namespace RTPTechGroup::XmlModel;
-
 namespace RTPTechGroup {
 namespace ModelerIde {
 
@@ -34,7 +32,7 @@ public:
     virtual ~AttrWidget();
 
     //! Установка модели для редактирования атрибутов класса
-    void setModel(TreeXmlHashModel *model);
+    void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
 public slots:
     //! Добавление атрибута класса

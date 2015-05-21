@@ -15,7 +15,6 @@
     класса
 */
 
-using namespace RTPTechGroup::XmlModel;
 
 namespace RTPTechGroup {
 namespace ModelerIde {
@@ -32,7 +31,7 @@ public:
     virtual ~CompositionWidget();
 
       //! Установка модели для редактирования составов класса
-    void setModel(TreeXmlHashModel *model);
+    void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
 public slots:
     //! Добавление состава класса

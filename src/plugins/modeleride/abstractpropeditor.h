@@ -4,8 +4,6 @@
 #include <QWidget>
 #include <treexmlmodel/treexmlhashmodel.h>
 
-using namespace RTPTechGroup::XmlModel;
-
 namespace RTPTechGroup {
 namespace ModelerIde {
 
@@ -23,10 +21,10 @@ public:
     virtual ~AbstractPropEditor();
 
     //! Установка модели структуры классов
-    virtual void setModel(TreeXmlHashModel *model);
+    virtual void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
     //! Получение модели структуры классов
-    virtual TreeXmlHashModel *model();
+    virtual RTPTechGroup::XmlModel::TreeXmlHashModel *model();
 
     //! Получение данных модели
     virtual QVariant modelData(const QString &tag, const QString &attr,
@@ -47,7 +45,7 @@ public slots:
 
 private:
     //! Модель структуры классов
-    TreeXmlHashModel *m_model;
+    RTPTechGroup::XmlModel::TreeXmlHashModel *m_model;
 };
 
 }}

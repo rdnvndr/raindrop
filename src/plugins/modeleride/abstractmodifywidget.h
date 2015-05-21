@@ -8,8 +8,6 @@
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <treexmlmodel/modifyproxymodel.h>
 
-using namespace RTPTechGroup::XmlModel;
-
 namespace RTPTechGroup {
 namespace ModelerIde {
 
@@ -29,13 +27,13 @@ public:
     ~AbstractModifyWidget();
 
     //! Установка модели для редактирования
-    void setModel(TreeXmlHashModel *model);
+    void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
      //! Возращает модель
-    TreeXmlHashModel *model();
+    RTPTechGroup::XmlModel::TreeXmlHashModel *model();
 
     //! Возращает прокси модели
-    ModifyProxyModel *proxyModel();
+    RTPTechGroup::XmlModel::ModifyProxyModel *proxyModel();
 
     //! Проверка на возможность удаления
     virtual bool isRemove(const QModelIndex &proxyIndex);
@@ -72,10 +70,10 @@ public slots:
 private:
 
     //! Прокси модель для значений списка
-    ModifyProxyModel *m_proxyModel;
+    RTPTechGroup::XmlModel::ModifyProxyModel *m_proxyModel;
 
     //! Модель структуры классов
-    TreeXmlHashModel *m_model;
+    RTPTechGroup::XmlModel::TreeXmlHashModel *m_model;
 
     //! Виджет отображения данных
     QAbstractItemView *m_itemView;

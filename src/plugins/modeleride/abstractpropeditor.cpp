@@ -2,6 +2,8 @@
 
 #include <QMdiSubWindow>
 
+using namespace RTPTechGroup::XmlModel;
+
 namespace RTPTechGroup {
 namespace ModelerIde {
 

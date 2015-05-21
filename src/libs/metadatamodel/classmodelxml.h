@@ -4,18 +4,15 @@
 #include "metadatamodelglobal.h"
 #include <treexmlmodel/treexmlhashmodel.h>
 
-using namespace RTPTechGroup::XmlModel;
-
 namespace  RTPTechGroup {
 namespace  MetaDataModel {
-
 
 //! Класс модели дерева классов
 /*! Данный класс предназначен для создания дерева метаданных в XML формате
     на основе TreeXmlHashModel. Позволяет отображать указанные наследуемые тэги.
 */
 
-class METADATAMODELLIB ClassModelXml : public TreeXmlHashModel
+class METADATAMODELLIB ClassModelXml : public RTPTechGroup::XmlModel::TreeXmlHashModel
 {
     Q_OBJECT
 public:
