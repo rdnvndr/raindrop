@@ -23,7 +23,7 @@ public:
     virtual ~PropRole();
 
     //! Установка модели структуры классов
-    void setModel(TreeXmlHashModel *model);
+    void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
 public slots:
     //! Установка текущей роли

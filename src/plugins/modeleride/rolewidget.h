@@ -2,7 +2,6 @@
 #define ROLEWIDGET_H
 
 #include "ui_rolewidget.h"
-
 #include "abstracteditorwidget.h"
 
 namespace RTPTechGroup {
@@ -24,7 +23,7 @@ public:
     virtual ~RoleWidget();
 
     //! Установка модели структуры классов
-    void setModel(TreeXmlHashModel *model);
+    void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
     //! Проверка запонена ли имя роли
     bool isEmpty();

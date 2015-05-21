@@ -54,7 +54,7 @@ private:
     QModelIndex m_secondIndex;
 
     //! Модель атрибутов
-    TableXMLProxyModel *m_attrModel;
+    RTPTechGroup::XmlModel::TableXMLProxyModel *m_attrModel;
 };
 
 }}

@@ -7,8 +7,6 @@
 
 #include "permissionproxymodel.h"
 
-using namespace RTPTechGroup::XmlModel;
-
 namespace RTPTechGroup {
 namespace ModelerIde {
 
@@ -28,13 +26,13 @@ public:
     virtual ~PermissionWidget();
 
     //! Возращает модель
-    TreeXmlHashModel *model();
+    RTPTechGroup::XmlModel::TreeXmlHashModel *model();
 
     //! Возращает прокси модели
     PermissionProxyModel *proxyModel();
 
     //! Установка модели для редактирования прав доступа
-    void setModel(TreeXmlHashModel *model);
+    void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
     //! Проверка на возможность удаления
     bool isRemove(const QModelIndex &proxyIndex);
@@ -67,7 +65,7 @@ private:
     PermissionProxyModel *m_proxyModel;
 
     //! Модель структуры классов
-    TreeXmlHashModel *m_model;
+    RTPTechGroup::XmlModel::TreeXmlHashModel *m_model;
 };
 
 }}

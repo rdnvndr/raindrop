@@ -8,8 +8,6 @@
 
 #include "abstractmodifywidget.h"
 
-using namespace RTPTechGroup::XmlModel;
-
 namespace RTPTechGroup {
 namespace ModelerIde {
 
@@ -29,7 +27,7 @@ public:
     virtual ~LovValueWidget();
 
     //! Установка модели для редактирования значений списка
-    void setModel(TreeXmlHashModel *model);
+    void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
 public slots:
     //! Добавление значений списка

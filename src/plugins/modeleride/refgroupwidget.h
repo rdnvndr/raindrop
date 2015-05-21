@@ -11,8 +11,6 @@
 
 #include "abstracteditorwidget.h"
 
-using namespace RTPTechGroup::XmlModel;
-
 namespace RTPTechGroup {
 namespace ModelerIde {
 
@@ -32,7 +30,7 @@ public:
     virtual ~RefGroupWidget();
 
     //! Установка модели структуры классов
-    void setModel(TreeXmlHashModel *model);
+    void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
     //! Проверка запонена ли имя сущности группы справочника
     bool isEmpty();

@@ -3,11 +3,10 @@
 #include <QMessageBox>
 #include <metadatamodel/classmodelxml.h>
 
-using namespace RTPTechGroup::MetaDataModel;
+using namespace RTPTechGroup::XmlModel;
 
 namespace RTPTechGroup {
 namespace ModelerIde {
-
 
 AbstractModifyWidget::AbstractModifyWidget(QWidget *parent) : QWidget(parent)
 {

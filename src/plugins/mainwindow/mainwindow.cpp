@@ -11,6 +11,7 @@
 #include "mdisubwindow.h"
 
 using namespace RTPTechGroup::Plugin;
+using namespace RTPTechGroup::Widgets;
 
 namespace RTPTechGroup {
 namespace MainWindow {

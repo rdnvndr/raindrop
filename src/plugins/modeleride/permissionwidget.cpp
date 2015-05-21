@@ -6,7 +6,7 @@
 
 #include "permdelegate.h"
 
-
+using namespace RTPTechGroup::XmlModel;
 using namespace RTPTechGroup::MetaDataModel;
 
 namespace RTPTechGroup {

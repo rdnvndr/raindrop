@@ -30,7 +30,7 @@ public:
     virtual ~FilterPropWidget();
 
     //! Установка модели структуры классов
-    void setModel(TreeXmlHashModel *model);
+    void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
     //! Проверка запонены ли данные
     virtual bool isEmpty();

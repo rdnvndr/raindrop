@@ -8,11 +8,8 @@
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 
-using namespace RTPTechGroup::XmlModel;
-
 namespace RTPTechGroup {
 namespace ModelerIde {
-
 
 //! Диалог редактирования при помощи списка
 /*! Диалог предназначен для редактирования при помощи списка
@@ -29,13 +26,13 @@ public:
     virtual ~AbstractItemWidget();
 
     //! Установка модели
-    virtual void setModel(TreeXmlHashModel *model);
+    virtual void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
     //! Получение модели
-    virtual TreeXmlHashModel *model();
+    virtual RTPTechGroup::XmlModel::TreeXmlHashModel *model();
 
     //! Получение прокси модели
-    virtual TableXMLProxyModel *proxyModel();
+    virtual RTPTechGroup::XmlModel::TableXMLProxyModel *proxyModel();
 
     //! Получение данных модели
     virtual QVariant modelData(const QString &tag, const QString &attr,
@@ -98,10 +95,10 @@ signals:
 
 private:
     //! Прокси модель
-    TableXMLProxyModel *m_proxyModel;
+    RTPTechGroup::XmlModel::TableXMLProxyModel *m_proxyModel;
 
     //! Модель структуры классов
-    TreeXmlHashModel *m_model;
+    RTPTechGroup::XmlModel::TreeXmlHashModel *m_model;
 
     //! Mapper для свойств
     QDataWidgetMapper *m_mapper;

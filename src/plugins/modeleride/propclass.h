@@ -31,7 +31,7 @@ public:
     virtual ~PropClass();
 
     //! Установка модели структуры классов
-    void setModel(TreeXmlHashModel *model);
+    void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
 signals:
     //! Сигнал вызова редактирования состава

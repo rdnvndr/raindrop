@@ -4,8 +4,6 @@
 #include <treexmlmodel/modifyproxymodel.h>
 #include <treexmlmodel/treexmlmodel.h>
 
-using namespace RTPTechGroup::XmlModel;
-
 namespace RTPTechGroup {
 namespace ModelerIde {
 
@@ -13,7 +11,7 @@ namespace ModelerIde {
 /*! Прокси модель предназначена для редактирования справочника
  */
 
-class RefProxyModel : public ModifyProxyModel
+class RefProxyModel : public RTPTechGroup::XmlModel::ModifyProxyModel
 {
     Q_OBJECT
 public:
