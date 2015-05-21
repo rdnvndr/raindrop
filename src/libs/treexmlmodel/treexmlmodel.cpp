@@ -94,7 +94,7 @@ bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex, const QModelIndex &des
     if (!index.isValid())
         return false;
 
-    for (int i = 0; i<this->columnCount(srcIndex); i++) {
+    for (int i = 0; i<this->columnCount(srcIndex); ++i) {
         QVariant value = srcIndex.sibling(srcIndex.row(), i).data(Qt::EditRole);
         if (value.isValid())
             if (!setData(index.sibling(index.row(), i), value)) {
@@ -196,7 +196,7 @@ void TreeXmlModel::addInsertTags(const QString &tag, const QStringList &value)
 
 int TreeXmlModel::columnDisplayedAttr(const QString &tag, const QString &attr) const
 {
-    for (int i=0;i<m_displayedAttr[tag].count();i++){
+    for (int i=0;i<m_displayedAttr[tag].count();++i){
         if (m_displayedAttr[tag].at(i)==attr)
             return i;
     }
@@ -302,7 +302,7 @@ bool TreeXmlModel::setData(const QModelIndex &index, const QVariant &value,
         while (idx.isValid())
         {
             if (isAttr(idx))
-                emptyRowAttr++;
+                ++emptyRowAttr;
             idx = parent.child(++i,0);
         }
         updateModifyRow(emptyRowAttr,parent, index.column());
@@ -424,14 +424,14 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
     while(indexChild.isValid())
     {
         if (isAttr(indexChild))
-            emptyRowAttr++;
+            ++emptyRowAttr;
         indexChild = parent.child(++i,0);
     }
     updateInsertRows(emptyRowAttr, count, parent, tag);
 
     bool success = true;
     int revertCount;
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; ++i) {
         success = parentItem->insertChild(tag,
                                           row,
                                           m_filterTags,
@@ -531,7 +531,7 @@ bool TreeXmlModel::removeRows(int row, int count, const QModelIndex &parent)
     while (index.isValid())
     {
         if (isAttr(index))
-            emptyRowAttr++;
+            ++emptyRowAttr;
         else if (emptyRowAttr == 0 && i == row+count-1) {
             break;
         }
@@ -539,7 +539,7 @@ bool TreeXmlModel::removeRows(int row, int count, const QModelIndex &parent)
     }
     updateRemoveRows(emptyRowAttr,count,parent);
 
-    for (int i=count-1;i>=0;i--)
+    for (int i=count-1;i>=0;--i)
         parentItem->removeChild(row+i);
 
     endRemoveRows();

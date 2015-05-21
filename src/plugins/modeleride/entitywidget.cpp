@@ -86,7 +86,7 @@ void EntityWidget::rowsAboutToBeRemoved(const QModelIndex &parent, int start, in
 {
     Q_UNUSED(parent)
 
-    for (int row = end; row >= start; row--) {
+    for (int row = end; row >= start; --row) {
         if (comboBoxBasicUnit->currentIndex() == row) {
             comboBoxBasicUnit->setCurrentIndex(-1);
             return;
@@ -132,7 +132,7 @@ void EntityWidget::changeUnit(int current)
     float delta = index.sibling(index.row(),columnDelta).data().toFloat();
     coeff = (coeff==0)? 1: coeff;
 
-    for (int row = 0; row < count; row++) {
+    for (int row = 0; row < count; ++row) {
         index = parent.child(row, columnCoeff);
         model->setData(index,QString("%1").arg(index.data().toFloat()/coeff));
         index = parent.child(row, columnDelta);

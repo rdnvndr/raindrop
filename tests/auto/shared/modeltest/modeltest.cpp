@@ -496,7 +496,7 @@ void ModelTest::rowsInserted ( const QModelIndex & parent, int start, int end )
 //    qDebug() << "rowsInserted"  << "start=" << start << "end=" << end << "oldsize=" << c.oldSize
 //    << "parent=" << model->data ( parent ).toString() << "current rowcount of parent=" << model->rowCount ( parent );
 
-//    for (int ii=start; ii <= end; ii++)
+//    for (int ii=start; ii <= end; ++ii)
 //    {
 //      qDebug() << "itemWasInserted:" << ii << model->data ( model->index ( ii, 0, parent ));
 //    }

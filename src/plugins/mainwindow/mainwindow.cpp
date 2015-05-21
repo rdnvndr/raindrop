@@ -216,7 +216,7 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
     QAction *prevAction = NULL;
     MenuItem *separatorItem = NULL;
 
-    for (int row = parentItem->childItems.count()-1; row >= 0; row--) {
+    for (int row = parentItem->childItems.count()-1; row >= 0; --row) {
         MenuItem *item = parentItem->childItems.at(row);
         if (item == menuItem) {
 
@@ -563,7 +563,7 @@ void MainWindow::endLoadingPlugins()
 
 void MainWindow::writeMenu(QWidget *menu, int level)
 {
-    for (int row = 0;row < menu->actions().count(); row++) {
+    for (int row = 0;row < menu->actions().count(); ++row) {
         QAction *child = menu->actions().at(row);
 
         if (child->isSeparator()
@@ -571,7 +571,7 @@ void MainWindow::writeMenu(QWidget *menu, int level)
             continue;
 
         settings()->setArrayIndex(m_menuArrayIndex);
-        m_menuArrayIndex++;
+        ++m_menuArrayIndex;
         settings()->setValue("level", level);
 
         if (child->isSeparator()) {
@@ -635,7 +635,7 @@ void MainWindow::writeBarSettings() {
     settings()->beginWriteArray("BarSettings");
 
     settings()->setArrayIndex(m_menuArrayIndex);
-    m_menuArrayIndex++;
+    ++m_menuArrayIndex;
     settings()->setValue("level", -1);
     settings()->setValue("type", "MenuBar");
     settings()->setValue("name",  QUuid::createUuid().toString());
@@ -644,7 +644,7 @@ void MainWindow::writeBarSettings() {
     const QList<ToolBar *> toolBars = this->findChildren<ToolBar *> ();
     foreach (ToolBar *toolBar,toolBars) {
         settings()->setArrayIndex(m_menuArrayIndex);
-        m_menuArrayIndex++;
+        ++m_menuArrayIndex;
         settings()->setValue("level", -1);
         settings()->setValue("type", "ToolBar");
         QString toolBarName = QUuid::createUuid().toString();
@@ -661,7 +661,7 @@ void MainWindow::writeBarSettings() {
         if (action)
             if (action->shortcut() != QKeySequence()){
                 settings()->setArrayIndex(m_menuArrayIndex);
-                m_menuArrayIndex++;
+                ++m_menuArrayIndex;
                 settings()->setValue("name", action->objectName());
                 settings()->setValue("hotkey",action->shortcut());
             }

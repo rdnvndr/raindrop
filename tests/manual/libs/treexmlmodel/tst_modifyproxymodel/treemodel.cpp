@@ -189,7 +189,7 @@ void TreeModel::setupModelData(const QStringList &lines, TreeItem *parent)
         while (position < lines[number].length()) {
             if (lines[number].mid(position, 1) != " ")
                 break;
-            position++;
+            ++position;
         }
 
         QString lineData = lines[number].mid(position).trimmed();
@@ -223,6 +223,6 @@ void TreeModel::setupModelData(const QStringList &lines, TreeItem *parent)
                 parent->child(parent->childCount() - 1)->setData(column, columnData[column]);
         }
 
-        number++;
+        ++number;
     }
 }
