@@ -7,7 +7,6 @@
 namespace  RTPTechGroup {
 namespace  MetaDataModel {
 
-
 //! Ключевые слова XML файла для описания Root класса
 namespace DBROOTXML{
     const QString ROOT = "#document";

@@ -11,9 +11,6 @@
 #include "classtreeview.h"
 #include "treefilterproxymodel.h"
 
-using namespace RTPTechGroup::Widgets;
-using namespace RTPTechGroup::MetaDataModel;
-
 namespace RTPTechGroup {
 namespace ModelerIde {
 
@@ -69,7 +66,7 @@ public:
     virtual ~ModelerIDEPlug();
 
     //! Получение Модели данных плагина
-    TreeXmlHashModel *model();
+    RTPTechGroup::XmlModel::TreeXmlHashModel *model();
 
     //! Создание класса
     void createClassModel(QDomDocument document = QDomDocument());
@@ -119,7 +116,7 @@ private:
     QString m_fileName;
 
     //! Модель дерева классов
-    ClassModelXml *m_model;
+    RTPTechGroup::MetaDataModel::ClassModelXml *m_model;
 
     //! Дерево классов
     ClassTreeView *m_treeClassView;
@@ -143,7 +140,7 @@ private:
     QAction *m_actionCloseModel;
 
     //! Стыковый компонент для модели метаданных
-    DockWidget *m_dockWidget;
+    RTPTechGroup::Widgets::DockWidget *m_dockWidget;
 };
 
 }}

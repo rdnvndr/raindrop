@@ -25,6 +25,9 @@
 #include "proprole.h"
 
 using namespace RTPTechGroup::Plugin;
+using namespace RTPTechGroup::Widgets;
+using namespace RTPTechGroup::MetaDataModel;
+using namespace RTPTechGroup::XmlModel;
 
 namespace RTPTechGroup {
 namespace ModelerIde {

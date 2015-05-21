@@ -12,6 +12,7 @@
 #include <treexmlmodel/treexmlhashmodel.h>
 
 using namespace RTPTechGroup::Widgets;
+using namespace RTPTechGroup::XmlModel;
 
 namespace RTPTechGroup {
 namespace ModelerIde {

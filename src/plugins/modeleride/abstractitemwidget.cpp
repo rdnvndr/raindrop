@@ -4,6 +4,8 @@
 
 #include "xmldelegate.h"
 
+using namespace RTPTechGroup::XmlModel;
+
 namespace RTPTechGroup {
 namespace ModelerIde {
 

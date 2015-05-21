@@ -5,8 +5,6 @@
 
 #include <treexmlmodel/modifyproxymodel.h>
 
-using namespace RTPTechGroup::XmlModel;
-
 namespace RTPTechGroup {
 namespace ModelerIde {
 
@@ -14,7 +12,7 @@ namespace ModelerIde {
 /*! Прокси модель предназначена для редактирования условий фильтра
  */
 
-class ConditionProxyModel : public ModifyProxyModel
+class ConditionProxyModel : public RTPTechGroup::XmlModel::ModifyProxyModel
 {
     Q_OBJECT
 public:

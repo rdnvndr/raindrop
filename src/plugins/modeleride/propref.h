@@ -30,7 +30,7 @@ public:
     virtual ~PropRef();
 
     //! Установка модели структуры классов
-    void setModel(TreeXmlHashModel *model);
+    void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
 public slots:
     //! Установка текущего справочника
