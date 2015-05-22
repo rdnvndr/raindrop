@@ -15,10 +15,12 @@ QT += widgets sql
 # Input
 HEADERS   += sqleditor.h sqleditorglobal.h \
     querysqlwidget.h \
-    sqlhighlighter.h
+    sqlhighlighter.h \
+    textclipboarditem.h
 SOURCES   += sqleditor.cpp \
     querysqlwidget.cpp \
-    sqlhighlighter.cpp
+    sqlhighlighter.cpp \
+    textclipboarditem.cpp
 RESOURCES += sqleditor.qrc 
 
 FORMS += \

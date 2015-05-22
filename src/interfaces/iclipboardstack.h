@@ -12,10 +12,10 @@ class IClipboardStack {
 public:
 
     //! Добавление компонента для буфера обмена
-    void addClipboardItem(IClipboardItem *item);
+    virtual void addClipboardItem(IClipboardItem *item) = 0;
 
     //! Удаление компонента для буфера обмена
-    void removeClipboardItem(IClipboardItem *item);
+    virtual void removeClipboardItem(IClipboardItem *item) = 0;
 
 };
 
