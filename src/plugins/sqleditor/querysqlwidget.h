@@ -7,7 +7,11 @@
 #include <QtSql>
 #include <QUndoStack>
 #include <QUndoGroup>
+
 #include <iundogroup.h>
+#include <iclipboardstack.h>
+
+#include "textclipboarditem.h"
 
 namespace RTPTechGroup {
 namespace SqlEditor {
@@ -37,10 +41,12 @@ private slots:
 
 
 private:
-    QSqlQueryModel *m_model;
-    SqlHighlighter *m_sqlHighlighter;
-    QUndoStack     *m_undoStack;
-    IUndoGroup     *m_undoGroup;
+    QSqlQueryModel    *m_model;
+    SqlHighlighter    *m_sqlHighlighter;
+    QUndoStack        *m_undoStack;
+    IUndoGroup        *m_undoGroup;
+    IClipboardStack   *m_clipboardStack;
+    TextClipboardItem *m_clipboardItem;
 };
 
 }}

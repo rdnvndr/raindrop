@@ -1,8 +1,6 @@
 #ifndef ICLIPBOARDITEM_H
 #define ICLIPBOARDITEM_H
 
-#include <QWidget>
-
 //! Класс элемента стека буфера обмена
 /*! Класс элемента стека буфера обмена предназначен для описания элемента для
  *  которого будет работать буфер обмена
@@ -34,6 +32,18 @@ public:
     //! Вызов команды "Выделить все"
     virtual void selectAll() = 0;
 
+//signals:
+//    //! Сигнал о возможности выполнении команды "Вырезать"
+//    void canCutChanged(bool canCut);
+
+//    //! Сигнал о возможности выполнении команды "Копировать"
+//    void canCopyChanged(bool canCopy);
+
+//    //! Сигнал о возможности выполнении команды "Вставить"
+//    void canPasteChanged(bool canPaste);
+
+//    //! Сигнал о возможности выполнении команды "Выделить все"
+//    void canSelectAllChanged(bool canSelectAll);
 };
 
 Q_DECLARE_INTERFACE(IClipboardItem,"com.RTPTechGroup.Raindrop.IClipboardItem/1.0")

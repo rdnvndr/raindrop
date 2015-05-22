@@ -62,6 +62,11 @@ StackEditing::~StackEditing()
 void StackEditing::addClipboardItem(IClipboardItem *item)
 {
     m_clipboardItemList.append(item);
+//    connect(item, SIGNAL(canCutChanged(bool)), this, SLOT(canCutChange()));
+//    connect(item, SIGNAL(canCopyChanged(bool)), this, SLOT(canCopyChange()));
+//    connect(item, SIGNAL(canPasteChanged(bool)), this, SLOT(canPasteChange()));
+//    connect(item, SIGNAL(canSelectAllChanged(bool)), this, SLOT(canSelectAllChange()));
+
 }
 
 void StackEditing::removeClipboardItem(IClipboardItem *item)
@@ -131,6 +136,26 @@ void StackEditing::selectAll()
 {
     if (m_currentClipboardItem)
         m_currentClipboardItem->selectAll();
+}
+
+void StackEditing::canCutChange()
+{
+
+}
+
+void StackEditing::canCopyChange()
+{
+
+}
+
+void StackEditing::canPasteChange()
+{
+
+}
+
+void StackEditing::canSelectAllChange()
+{
+
 }
 
 void StackEditing::setActiveStackForWidget(QWidget *widget)
