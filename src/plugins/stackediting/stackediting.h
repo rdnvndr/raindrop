@@ -106,16 +106,23 @@ private slots:
     void selectAll();
 
     //! Вырезание в буфер обмена
-    void canCutChange();
+    void canCutChange(bool canCut);
 
     //! Копирование в буфер обмена
-    void canCopyChange();
+    void canCopyChange(bool canCopy);
 
     //! Вставка из буфер обмена
-    void canPasteChange();
+    void canPasteChange(bool canPaste);
 
     //! Выбор всего
-    void canSelectAllChange();
+    void canSelectAllChange(bool canSelectAll);
+
+    //! Обработка изменения состояния буфера обмена
+    void clipboardDataChange();
+
+    //! Удаление элемента буфера обмена
+    void removeItem(QObject *obj);
+
 private:
     //! Установка активного стека отмены для QWidget
     void setActiveStackForWidget(QWidget *widget);

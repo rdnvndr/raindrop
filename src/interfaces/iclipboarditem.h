@@ -32,20 +32,20 @@ public:
     //! Вызов команды "Выделить все"
     virtual void selectAll() = 0;
 
-//signals:
-//    //! Сигнал о возможности выполнении команды "Вырезать"
-//    void canCutChanged(bool canCut);
+signals:
+    //! Сигнал о возможности выполнении команды "Вырезать"
+    virtual void canCutChanged(bool canCut) = 0;
 
-//    //! Сигнал о возможности выполнении команды "Копировать"
-//    void canCopyChanged(bool canCopy);
+    //! Сигнал о возможности выполнении команды "Копировать"
+    virtual void canCopyChanged(bool canCopy) = 0;
 
-//    //! Сигнал о возможности выполнении команды "Вставить"
-//    void canPasteChanged(bool canPaste);
+    //! Сигнал о возможности выполнении команды "Вставить"
+    virtual void canPasteChanged(bool canPaste) = 0;
 
-//    //! Сигнал о возможности выполнении команды "Выделить все"
-//    void canSelectAllChanged(bool canSelectAll);
+    //! Сигнал о возможности выполнении команды "Выделить все"
+    virtual void canSelectAllChanged(bool canSelectAll) = 0;
 };
 
-Q_DECLARE_INTERFACE(IClipboardItem,"com.RTPTechGroup.Raindrop.IClipboardItem/1.0")
+//Q_DECLARE_INTERFACE(IClipboardItem,"com.RTPTechGroup.Raindrop.IClipboardItem/1.0")
 
 #endif 

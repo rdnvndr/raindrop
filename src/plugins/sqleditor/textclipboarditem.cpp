@@ -8,9 +8,9 @@ namespace RTPTechGroup {
 namespace SqlEditor {
 
 TextClipboardItem::TextClipboardItem(QPlainTextEdit *editor)
-    : m_editor(editor)
+    : QObject(editor), m_editor(editor)
 {
-
+    connect(editor,SIGNAL(selectionChanged()), this, SLOT(selectionChange()));
 }
 
 bool TextClipboardItem::canCut()
@@ -33,7 +33,11 @@ bool TextClipboardItem::canCopy()
 
 bool TextClipboardItem::canPaste()
 {
-    return (qApp->focusWidget() == m_editor);
+    if (qApp->focusWidget() == m_editor) {
+        QClipboard *clipboard = QApplication::clipboard();
+        return !clipboard->text().isEmpty();
+    }
+    return false;
 }
 
 bool TextClipboardItem::canSelectAll()
@@ -79,6 +83,13 @@ void TextClipboardItem::selectAll()
     cursor.endEditBlock();
 
     m_editor->setTextCursor(cursor);
+}
+
+void TextClipboardItem::selectionChange()
+{
+    bool hasSelection = m_editor->textCursor().hasSelection();
+    emit canCutChanged(hasSelection);
+    emit canCopyChanged(hasSelection);
 }
 
 }}

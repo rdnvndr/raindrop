@@ -1,6 +1,7 @@
 #include "stackediting.h"
 
 #include <imainwindow.h>
+#include <QClipboard>
 
 using namespace RTPTechGroup::Plugin;
 namespace RTPTechGroup {
@@ -30,6 +31,9 @@ StackEditing::StackEditing(QObject *parent):
 
     connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)),
             this, SLOT(focusChanged(QWidget*,QWidget*)));
+
+    connect(qApp->clipboard(), SIGNAL(dataChanged()),
+            this, SLOT(clipboardDataChange()));
 
     actionCut = new QAction(QIcon(":cut"), tr("Вырезать"), this);
     actionCut->setObjectName("actionCut");
@@ -62,16 +66,22 @@ StackEditing::~StackEditing()
 void StackEditing::addClipboardItem(IClipboardItem *item)
 {
     m_clipboardItemList.append(item);
-//    connect(item, SIGNAL(canCutChanged(bool)), this, SLOT(canCutChange()));
-//    connect(item, SIGNAL(canCopyChanged(bool)), this, SLOT(canCopyChange()));
-//    connect(item, SIGNAL(canPasteChanged(bool)), this, SLOT(canPasteChange()));
-//    connect(item, SIGNAL(canSelectAllChanged(bool)), this, SLOT(canSelectAllChange()));
+    connect(dynamic_cast<QObject *>(item), SIGNAL(canCutChanged(bool)),
+            this, SLOT(canCutChange(bool)));
+    connect(dynamic_cast<QObject *>(item), SIGNAL(canCopyChanged(bool)),
+            this, SLOT(canCopyChange(bool)));
+    connect(dynamic_cast<QObject *>(item), SIGNAL(canPasteChanged(bool)),
+            this, SLOT(canPasteChange(bool)));
+    connect(dynamic_cast<QObject *>(item), SIGNAL(canSelectAllChanged(bool)),
+            this, SLOT(canSelectAllChange(bool)));
+    connect(dynamic_cast<QObject *>(item), SIGNAL(destroyed(QObject*)),
+            this, SLOT(removeItem(QObject*)));
 
 }
 
 void StackEditing::removeClipboardItem(IClipboardItem *item)
 {
-    m_clipboardItemList.removeOne(item);
+    m_clipboardItemList.removeAll(item);
 }
 
 void StackEditing::addStack(QUndoStack *stack)
@@ -138,24 +148,47 @@ void StackEditing::selectAll()
         m_currentClipboardItem->selectAll();
 }
 
-void StackEditing::canCutChange()
+void StackEditing::canCutChange(bool canCut)
 {
-
+    if (canCut)
+        actionCut->setEnabled(true);
+    else
+        actionCut->setEnabled(false);
 }
 
-void StackEditing::canCopyChange()
+void StackEditing::canCopyChange(bool canCopy)
 {
-
+    if (canCopy)
+        actionCopy->setEnabled(true);
+    else
+        actionCopy->setEnabled(false);
 }
 
-void StackEditing::canPasteChange()
+void StackEditing::canPasteChange(bool canPaste)
 {
-
+    if (canPaste)
+        actionPaste->setEnabled(true);
+    else
+        actionPaste->setEnabled(false);
 }
 
-void StackEditing::canSelectAllChange()
+void StackEditing::canSelectAllChange(bool canSelectAll)
 {
+    if (canSelectAll)
+        actionSelectAll->setEnabled(true);
+    else
+        actionSelectAll->setEnabled(false);
+}
 
+void StackEditing::clipboardDataChange()
+{
+    setActiveItemForWidget(qApp->focusWidget());
+}
+
+void StackEditing::removeItem(QObject *obj)
+{
+    IClipboardItem *item = (IClipboardItem *)(obj);
+    removeClipboardItem(item);
 }
 
 void StackEditing::setActiveStackForWidget(QWidget *widget)
@@ -176,8 +209,10 @@ void StackEditing::setActiveStackForWidget(QWidget *widget)
 void StackEditing::setActiveItemForWidget(QWidget *widget)
 {
     Q_UNUSED(widget)
-
-    foreach (IClipboardItem *item, m_clipboardItemList) {
+    QListIterator<IClipboardItem *> i(m_clipboardItemList);
+    i.toBack();
+    while (i.hasPrevious()) {
+        IClipboardItem *item = i.previous();
         bool isCut       = item->canCut();
         bool isCopy      = item->canCopy();
         bool isPaste     = item->canPaste();
