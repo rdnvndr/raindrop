@@ -131,22 +131,22 @@ private:
     void setActiveItemForWidget(QWidget *widget);
 
     //! Команда "Отменить"
-    QAction *actionUndo;
+    QAction *m_actionUndo;
 
     //! Команда "Повторить"
-    QAction *actionRedo;
+    QAction *m_actionRedo;
 
     //! Команда "Вырезать"
-    QAction *actionCut;
+    QAction *m_actionCut;
 
     //! Команда "Копировать"
-    QAction *actionCopy;
+    QAction *m_actionCopy;
 
     //! Команда "Вставить"
-    QAction *actionPaste;
+    QAction *m_actionPaste;
 
     //! Команда "Выделить все"
-    QAction *actionSelectAll;
+    QAction *m_actionSelectAll;
 
 
     //! Список соотвествия QWidget и QUndoStack

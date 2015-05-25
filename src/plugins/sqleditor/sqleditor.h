@@ -64,7 +64,7 @@ public slots:
 
 private:
     //! Команда вызова SQL редактора
-    QAction *actionSqlEditor;
+    QAction *m_actionSqlEditor;
 };
 
 }}

@@ -27,67 +27,67 @@ MainWindow::MainWindow(QMainWindow *pwgt) : QMainWindow(pwgt), IPlugin("")
     readBarSettings();
     connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
 
-    actionWindowClose = new QAction(QIcon(":close"), tr("Закрыть"), this);
-    actionWindowClose->setObjectName("actionWindowClose");
-    connect(actionWindowClose, SIGNAL(triggered()), mdiArea, SLOT(closeActiveSubWindow()));
-    addAction(tr("Окно"),actionWindowClose);
+    m_actionWindowClose = new QAction(QIcon(":close"), tr("Закрыть"), this);
+    m_actionWindowClose->setObjectName("actionWindowClose");
+    connect(m_actionWindowClose, SIGNAL(triggered()), mdiArea, SLOT(closeActiveSubWindow()));
+    addAction(tr("Окно"),m_actionWindowClose);
 
-    actionWindowCloseAll = new QAction(QIcon(":closeall"), tr("Закрыть все"), this);
-    actionWindowCloseAll->setObjectName("actionWindowCloseAll");
-    connect(actionWindowCloseAll, SIGNAL(triggered()), mdiArea, SLOT(closeAllSubWindows()));
-    addAction(tr("Окно"),actionWindowCloseAll);
+    m_actionWindowCloseAll = new QAction(QIcon(":closeall"), tr("Закрыть все"), this);
+    m_actionWindowCloseAll->setObjectName("actionWindowCloseAll");
+    connect(m_actionWindowCloseAll, SIGNAL(triggered()), mdiArea, SLOT(closeAllSubWindows()));
+    addAction(tr("Окно"),m_actionWindowCloseAll);
 
-    actionWindowCascade = new QAction(QIcon(":cascade"), tr("Каскадом"), this);
-    actionWindowCascade->setObjectName("actionWindowCascade");
-    connect(actionWindowCascade, SIGNAL(triggered()), mdiArea, SLOT(cascadeSubWindows()));
-    addAction(tr("Окно"),actionWindowCascade);
+    m_actionWindowCascade = new QAction(QIcon(":cascade"), tr("Каскадом"), this);
+    m_actionWindowCascade->setObjectName("actionWindowCascade");
+    connect(m_actionWindowCascade, SIGNAL(triggered()), mdiArea, SLOT(cascadeSubWindows()));
+    addAction(tr("Окно"),m_actionWindowCascade);
 
-    actionWindowTile = new QAction(QIcon(":tile"), tr("Плиткой"), this);
-    actionWindowTile->setObjectName("actionWindowTile");
-    connect(actionWindowTile, SIGNAL(triggered()), mdiArea, SLOT(tileSubWindows()));
-    addAction(tr("Окно"),actionWindowTile);
+    m_actionWindowTile = new QAction(QIcon(":tile"), tr("Плиткой"), this);
+    m_actionWindowTile->setObjectName("actionWindowTile");
+    connect(m_actionWindowTile, SIGNAL(triggered()), mdiArea, SLOT(tileSubWindows()));
+    addAction(tr("Окно"),m_actionWindowTile);
 
-    actionWindowNext = new QAction(QIcon(":next"), tr("Следующее"), this);
-    actionWindowNext->setObjectName("actionWindowNext");
-    connect(actionWindowNext, SIGNAL(triggered()), mdiArea, SLOT(activateNextSubWindow()));
-    addAction(tr("Окно"),actionWindowNext);
+    m_actionWindowNext = new QAction(QIcon(":next"), tr("Следующее"), this);
+    m_actionWindowNext->setObjectName("actionWindowNext");
+    connect(m_actionWindowNext, SIGNAL(triggered()), mdiArea, SLOT(activateNextSubWindow()));
+    addAction(tr("Окно"),m_actionWindowNext);
 
-    actionWindowPrev = new QAction(QIcon(":previous"), tr("Предыдущее"), this);
-    actionWindowPrev->setObjectName("actionWindowPrev");
-    connect(actionWindowPrev, SIGNAL(triggered()), mdiArea, SLOT(activatePreviousSubWindow()));
-    addAction(tr("Окно"),actionWindowPrev);
+    m_actionWindowPrev = new QAction(QIcon(":previous"), tr("Предыдущее"), this);
+    m_actionWindowPrev->setObjectName("actionWindowPrev");
+    connect(m_actionWindowPrev, SIGNAL(triggered()), mdiArea, SLOT(activatePreviousSubWindow()));
+    addAction(tr("Окно"),m_actionWindowPrev);
 
-    actionWindowGui = new QAction(QIcon(":window"), tr("Оконный вид"), this);
-    actionWindowGui->setCheckable(true);
-    actionWindowGui->setObjectName("actionWindowGui");
-    connect(actionWindowGui, SIGNAL(triggered(bool)), this, SLOT(setWindowModeEnable(bool)));
-    addAction(tr("Окно"),actionWindowGui);
+    m_actionWindowGui = new QAction(QIcon(":window"), tr("Оконный вид"), this);
+    m_actionWindowGui->setCheckable(true);
+    m_actionWindowGui->setObjectName("actionWindowGui");
+    connect(m_actionWindowGui, SIGNAL(triggered(bool)), this, SLOT(setWindowModeEnable(bool)));
+    addAction(tr("Окно"),m_actionWindowGui);
 
-    actionGuiOptions = new QAction(QIcon(":guioptions"), tr("Оформление..."), this);
-    actionGuiOptions->setObjectName("actionGuiOptions");
-    connect(actionGuiOptions, SIGNAL(triggered()), this, SLOT(showOptionsDialog()));
-    addAction(tr("Настройка"),actionGuiOptions);
+    m_actionGuiOptions = new QAction(QIcon(":guioptions"), tr("Оформление..."), this);
+    m_actionGuiOptions->setObjectName("actionGuiOptions");
+    connect(m_actionGuiOptions, SIGNAL(triggered()), this, SLOT(showOptionsDialog()));
+    addAction(tr("Настройка"),m_actionGuiOptions);
 
-    actionExit = new QAction(QIcon(":exit"), tr("Выход"), this);
-    actionExit->setObjectName("actionExit");
-    connect(actionExit, SIGNAL(triggered()), this, SLOT(close()));
-    addAction(tr("Файл"),actionExit);
+    m_actionExit = new QAction(QIcon(":exit"), tr("Выход"), this);
+    m_actionExit->setObjectName("actionExit");
+    connect(m_actionExit, SIGNAL(triggered()), this, SLOT(close()));
+    addAction(tr("Файл"),m_actionExit);
 
-    actionAboutQt = new QAction(QIcon(":qt"), tr("О Qt"), this);
-    actionAboutQt->setObjectName("actionAboutQt");
-    connect(actionAboutQt, SIGNAL(triggered()), this, SLOT(aboutQt()));
-    addAction(tr("Справка"),actionAboutQt);
+    m_actionAboutQt = new QAction(QIcon(":qt"), tr("О Qt"), this);
+    m_actionAboutQt->setObjectName("actionAboutQt");
+    connect(m_actionAboutQt, SIGNAL(triggered()), this, SLOT(aboutQt()));
+    addAction(tr("Справка"),m_actionAboutQt);
 
-    actionAbout = new QAction(QIcon(":about"), tr("О программе..."), this);
-    actionAbout->setObjectName("actionAbout");
-    connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
-    addAction(tr("Справка"),actionAbout);
+    m_actionAbout = new QAction(QIcon(":about"), tr("О программе..."), this);
+    m_actionAbout->setObjectName("actionAbout");
+    connect(m_actionAbout, SIGNAL(triggered()), this, SLOT(about()));
+    addAction(tr("Справка"),m_actionAbout);
 
-    actionWhatsThis = new QAction(QIcon(":whatsthis"), tr("Что это?"), this);
-    actionWhatsThis->setObjectName("actionWhatsThis");
-    actionWhatsThis->setShortcut(tr("Shift+F1"));
-    connect(actionWhatsThis, SIGNAL(triggered()), this, SLOT(showWhatsThis()));
-    addAction(tr("Справка"),actionWhatsThis);
+    m_actionWhatsThis = new QAction(QIcon(":whatsthis"), tr("Что это?"), this);
+    m_actionWhatsThis->setObjectName("actionWhatsThis");
+    m_actionWhatsThis->setShortcut(tr("Shift+F1"));
+    connect(m_actionWhatsThis, SIGNAL(triggered()), this, SLOT(showWhatsThis()));
+    addAction(tr("Справка"),m_actionWhatsThis);
 
     Menu *newMenu = new Menu("Новое меню");
     newMenu->setIcon(QIcon(":menu"));
@@ -121,18 +121,18 @@ MainWindow::~MainWindow()
 
     m_actions.clear();
 
-    delete actionWindowClose;
-    delete actionWindowCloseAll;
-    delete actionWindowCascade;
-    delete actionWindowTile;
-    delete actionWindowNext;
-    delete actionWindowPrev;
-    delete actionWindowGui;
-    delete actionGuiOptions;
-    delete actionExit;
-    delete actionAbout;
-    delete actionAboutQt;
-    delete actionWhatsThis;
+    delete m_actionWindowClose;
+    delete m_actionWindowCloseAll;
+    delete m_actionWindowCascade;
+    delete m_actionWindowTile;
+    delete m_actionWindowNext;
+    delete m_actionWindowPrev;
+    delete m_actionWindowGui;
+    delete m_actionGuiOptions;
+    delete m_actionExit;
+    delete m_actionAbout;
+    delete m_actionAboutQt;
+    delete m_actionWhatsThis;
 }
 
 void MainWindow::readSettings()
@@ -378,14 +378,14 @@ void MainWindow::setWindowModeEnable(bool mode)
 void MainWindow::updateMenus()
 {
     bool hasMdiChild = (mdiArea->subWindowList().count()>0);
-    actionWindowClose->setEnabled(hasMdiChild);
-    actionWindowCloseAll->setEnabled(hasMdiChild);
-    actionWindowCascade->setEnabled(hasMdiChild&&mdiArea->viewMode() == QMdiArea::SubWindowView);
-    actionWindowTile->setEnabled(hasMdiChild&&mdiArea->viewMode() == QMdiArea::SubWindowView);
-    actionWindowNext->setEnabled(hasMdiChild);
-    actionWindowPrev->setEnabled(hasMdiChild);
-    actionWindowGui->setEnabled(hasMdiChild);
-    actionWindowGui->setChecked(mdiArea->viewMode() == QMdiArea::SubWindowView);
+    m_actionWindowClose->setEnabled(hasMdiChild);
+    m_actionWindowCloseAll->setEnabled(hasMdiChild);
+    m_actionWindowCascade->setEnabled(hasMdiChild&&mdiArea->viewMode() == QMdiArea::SubWindowView);
+    m_actionWindowTile->setEnabled(hasMdiChild&&mdiArea->viewMode() == QMdiArea::SubWindowView);
+    m_actionWindowNext->setEnabled(hasMdiChild);
+    m_actionWindowPrev->setEnabled(hasMdiChild);
+    m_actionWindowGui->setEnabled(hasMdiChild);
+    m_actionWindowGui->setChecked(mdiArea->viewMode() == QMdiArea::SubWindowView);
 }
 
 void MainWindow::refreshAllBar(bool readingBarSettings)
@@ -462,7 +462,7 @@ QMenu *MainWindow::createPopupMenu()
 {
     QMenu *menu = QMainWindow::createPopupMenu();
     menu->addSeparator();
-    menu->addAction(actionGuiOptions);
+    menu->addAction(m_actionGuiOptions);
     return menu;
 }
 

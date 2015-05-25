@@ -216,40 +216,40 @@ private:
     void setEditedAllMenu(bool edited);
 
     //! Команда закрытия окна
-    QAction *actionWindowClose;
+    QAction *m_actionWindowClose;
 
     //! Команда закрытия всех окон
-    QAction *actionWindowCloseAll;
+    QAction *m_actionWindowCloseAll;
 
     //! Команда расположения окон каскадом
-    QAction *actionWindowCascade;
+    QAction *m_actionWindowCascade;
 
     //! Команда расположения окон плиткой
-    QAction *actionWindowTile;
+    QAction *m_actionWindowTile;
 
     //! Команда выбора следующего окна
-    QAction *actionWindowNext;
+    QAction *m_actionWindowNext;
 
     //! Команда выбора предыдущего окна
-    QAction *actionWindowPrev;
+    QAction *m_actionWindowPrev;
 
     //! Команда выбора типа отображения окон
-    QAction *actionWindowGui;
+    QAction *m_actionWindowGui;
 
     //! Команда вызова настроек меню и панелей инструментов
-    QAction *actionGuiOptions;
+    QAction *m_actionGuiOptions;
 
     //! Команда выхода
-    QAction *actionExit;
+    QAction *m_actionExit;
 
     //! Команда вызова окна "О Qt..."
-    QAction *actionAboutQt;
+    QAction *m_actionAboutQt;
 
     //! Команда вызова окна "О программе..."
-    QAction *actionAbout;
+    QAction *m_actionAbout;
 
     //! Команда вызова "Что это?"
-    QAction *actionWhatsThis;
+    QAction *m_actionWhatsThis;
 
     //! Индекс для записи настроек меню
     int m_menuArrayIndex;
