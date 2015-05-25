@@ -45,7 +45,7 @@ QuerySqlWidget::QuerySqlWidget(QWidget *parent) :
                 pluginManager->interfaceObject("IClipboardStack"));
     m_clipboardItem = new TextClipboardItem(plainQueryEdit);
     m_clipboardStack->addClipboardItem(
-                 static_cast<IClipboardItem *>(m_clipboardItem));
+                 dynamic_cast<IClipboardItem *>(m_clipboardItem));
 
     m_model = new QSqlQueryModel();
 

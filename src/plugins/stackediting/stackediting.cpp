@@ -65,23 +65,23 @@ StackEditing::~StackEditing()
 
 void StackEditing::addClipboardItem(IClipboardItem *item)
 {
-    m_clipboardItemList.append(item);
-    connect(dynamic_cast<QObject *>(item), SIGNAL(canCutChanged(bool)),
+    QObject *itemObject = dynamic_cast<QObject *>(item);
+    m_clipboardItemList.append(itemObject);
+    connect(itemObject, SIGNAL(canCutChanged(bool)),
             this, SLOT(canCutChange(bool)));
-    connect(dynamic_cast<QObject *>(item), SIGNAL(canCopyChanged(bool)),
+    connect(itemObject, SIGNAL(canCopyChanged(bool)),
             this, SLOT(canCopyChange(bool)));
-    connect(dynamic_cast<QObject *>(item), SIGNAL(canPasteChanged(bool)),
+    connect(itemObject, SIGNAL(canPasteChanged(bool)),
             this, SLOT(canPasteChange(bool)));
-    connect(dynamic_cast<QObject *>(item), SIGNAL(canSelectAllChanged(bool)),
+    connect(itemObject, SIGNAL(canSelectAllChanged(bool)),
             this, SLOT(canSelectAllChange(bool)));
-    connect(dynamic_cast<QObject *>(item), SIGNAL(destroyed(QObject*)),
+    connect(itemObject, SIGNAL(destroyed(QObject*)),
             this, SLOT(removeItem(QObject*)));
-
 }
 
 void StackEditing::removeClipboardItem(IClipboardItem *item)
 {
-    m_clipboardItemList.removeAll(item);
+    removeItem(dynamic_cast<QObject *>(item));
 }
 
 void StackEditing::addStack(QUndoStack *stack)
@@ -187,8 +187,7 @@ void StackEditing::clipboardDataChange()
 
 void StackEditing::removeItem(QObject *obj)
 {
-    IClipboardItem *item = (IClipboardItem *)(obj);
-    removeClipboardItem(item);
+    m_clipboardItemList.removeAll(obj);
 }
 
 void StackEditing::setActiveStackForWidget(QWidget *widget)
@@ -209,10 +208,10 @@ void StackEditing::setActiveStackForWidget(QWidget *widget)
 void StackEditing::setActiveItemForWidget(QWidget *widget)
 {
     Q_UNUSED(widget)
-    QListIterator<IClipboardItem *> i(m_clipboardItemList);
+    QListIterator<QObject *> i(m_clipboardItemList);
     i.toBack();
     while (i.hasPrevious()) {
-        IClipboardItem *item = i.previous();
+        IClipboardItem *item = dynamic_cast<IClipboardItem *>(i.previous());
         bool isCut       = item->canCut();
         bool isCopy      = item->canCopy();
         bool isPaste     = item->canPaste();
