@@ -19,15 +19,15 @@ StackEditing::StackEditing(QObject *parent):
     IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    actionUndo = m_undoGroup->createUndoAction(this);
-    actionUndo->setIcon(QIcon(":undo"));
-    actionUndo->setObjectName("actionUndo");    
-    iMainWindow->addAction(tr("Редактирование"), actionUndo);
+    m_actionUndo = m_undoGroup->createUndoAction(this);
+    m_actionUndo->setIcon(QIcon(":undo"));
+    m_actionUndo->setObjectName("actionUndo");
+    iMainWindow->addAction(tr("Редактирование"), m_actionUndo);
 
-    actionRedo = m_undoGroup->createRedoAction(this);
-    actionRedo->setIcon(QIcon(":redo"));
-    actionRedo->setObjectName("actionRedo");
-    iMainWindow->addAction(tr("Редактирование"), actionRedo);
+    m_actionRedo = m_undoGroup->createRedoAction(this);
+    m_actionRedo->setIcon(QIcon(":redo"));
+    m_actionRedo->setObjectName("actionRedo");
+    iMainWindow->addAction(tr("Редактирование"), m_actionRedo);
 
     connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)),
             this, SLOT(focusChanged(QWidget*,QWidget*)));
@@ -35,25 +35,25 @@ StackEditing::StackEditing(QObject *parent):
     connect(qApp->clipboard(), SIGNAL(dataChanged()),
             this, SLOT(clipboardDataChange()));
 
-    actionCut = new QAction(QIcon(":cut"), tr("Вырезать"), this);
-    actionCut->setObjectName("actionCut");
-    connect(actionCut, SIGNAL(triggered()), this, SLOT(cut()));
-    iMainWindow->addAction(tr("Редактирование"), actionCut);
+    m_actionCut = new QAction(QIcon(":cut"), tr("Вырезать"), this);
+    m_actionCut->setObjectName("actionCut");
+    connect(m_actionCut, SIGNAL(triggered()), this, SLOT(cut()));
+    iMainWindow->addAction(tr("Редактирование"), m_actionCut);
 
-    actionCopy = new QAction(QIcon(":copy"), tr("Копировать"), this);
-    actionCopy->setObjectName("actionCopy");
-    connect(actionCopy, SIGNAL(triggered()), this, SLOT(copy()));
-    iMainWindow->addAction(tr("Редактирование"), actionCopy);
+    m_actionCopy = new QAction(QIcon(":copy"), tr("Копировать"), this);
+    m_actionCopy->setObjectName("actionCopy");
+    connect(m_actionCopy, SIGNAL(triggered()), this, SLOT(copy()));
+    iMainWindow->addAction(tr("Редактирование"), m_actionCopy);
 
-    actionPaste = new QAction(QIcon(":paste"), tr("Вставить"), this);
-    actionPaste->setObjectName("actionPaste");
-    connect(actionPaste, SIGNAL(triggered()), this, SLOT(paste()));
-    iMainWindow->addAction(tr("Редактирование"), actionPaste);
+    m_actionPaste = new QAction(QIcon(":paste"), tr("Вставить"), this);
+    m_actionPaste->setObjectName("actionPaste");
+    connect(m_actionPaste, SIGNAL(triggered()), this, SLOT(paste()));
+    iMainWindow->addAction(tr("Редактирование"), m_actionPaste);
 
-    actionSelectAll = new QAction(QIcon(":selectall"), tr("Выделить всё"), this);
-    actionSelectAll->setObjectName("actionSelectAll");
-    connect(actionSelectAll, SIGNAL(triggered()), this, SLOT(selectAll()));
-    iMainWindow->addAction(tr("Редактирование"), actionSelectAll);
+    m_actionSelectAll = new QAction(QIcon(":selectall"), tr("Выделить всё"), this);
+    m_actionSelectAll->setObjectName("actionSelectAll");
+    connect(m_actionSelectAll, SIGNAL(triggered()), this, SLOT(selectAll()));
+    iMainWindow->addAction(tr("Редактирование"), m_actionSelectAll);
 }
 
 StackEditing::~StackEditing()
@@ -151,33 +151,33 @@ void StackEditing::selectAll()
 void StackEditing::canCutChange(bool canCut)
 {
     if (canCut)
-        actionCut->setEnabled(true);
+        m_actionCut->setEnabled(true);
     else
-        actionCut->setEnabled(false);
+        m_actionCut->setEnabled(false);
 }
 
 void StackEditing::canCopyChange(bool canCopy)
 {
     if (canCopy)
-        actionCopy->setEnabled(true);
+        m_actionCopy->setEnabled(true);
     else
-        actionCopy->setEnabled(false);
+        m_actionCopy->setEnabled(false);
 }
 
 void StackEditing::canPasteChange(bool canPaste)
 {
     if (canPaste)
-        actionPaste->setEnabled(true);
+        m_actionPaste->setEnabled(true);
     else
-        actionPaste->setEnabled(false);
+        m_actionPaste->setEnabled(false);
 }
 
 void StackEditing::canSelectAllChange(bool canSelectAll)
 {
     if (canSelectAll)
-        actionSelectAll->setEnabled(true);
+        m_actionSelectAll->setEnabled(true);
     else
-        actionSelectAll->setEnabled(false);
+        m_actionSelectAll->setEnabled(false);
 }
 
 void StackEditing::clipboardDataChange()
@@ -218,18 +218,18 @@ void StackEditing::setActiveItemForWidget(QWidget *widget)
         bool isSelectAll = item->canSelectAll();
         if (isCut || isCopy || isPaste || isSelectAll) {
             m_currentClipboardItem = item;
-            actionCut->setEnabled(isCut);
-            actionCopy->setEnabled(isCopy);
-            actionPaste->setEnabled(isPaste);
-            actionSelectAll->setEnabled(isSelectAll);
+            m_actionCut->setEnabled(isCut);
+            m_actionCopy->setEnabled(isCopy);
+            m_actionPaste->setEnabled(isPaste);
+            m_actionSelectAll->setEnabled(isSelectAll);
             return;
         }
     }
     m_currentClipboardItem = NULL;
-    actionCut->setEnabled(false);
-    actionCopy->setEnabled(false);
-    actionPaste->setEnabled(false);
-    actionSelectAll->setEnabled(false);
+    m_actionCut->setEnabled(false);
+    m_actionCopy->setEnabled(false);
+    m_actionPaste->setEnabled(false);
+    m_actionSelectAll->setEnabled(false);
 }
 
 }}

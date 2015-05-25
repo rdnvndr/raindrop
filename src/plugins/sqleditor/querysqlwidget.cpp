@@ -3,26 +3,12 @@
 #include <QtGui>
 #include <plugin/iplugin.h>
 
+#include "undotextdocument.h"
+
 using namespace RTPTechGroup::Plugin;
 
 namespace RTPTechGroup {
 namespace SqlEditor {
-
-class UndoTextDocument : public QUndoCommand
-{
-public:
-    explicit UndoTextDocument(QTextDocument *document)
-        : QUndoCommand()
-    {
-        m_document = document;
-        setText(QObject::tr("Изменение запроса"));
-    }
-    virtual void undo() { m_document->undo();}
-    virtual void redo() { m_document->redo();}
-
-private:
-    QTextDocument *m_document;
-};
 
 QuerySqlWidget::QuerySqlWidget(QWidget *parent) :
     QWidget(parent)

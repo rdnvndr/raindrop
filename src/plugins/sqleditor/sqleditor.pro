@@ -16,11 +16,13 @@ QT += widgets sql
 HEADERS   += sqleditor.h sqleditorglobal.h \
     querysqlwidget.h \
     sqlhighlighter.h \
-    textclipboarditem.h
+    textclipboarditem.h \
+    undotextdocument.h
 SOURCES   += sqleditor.cpp \
     querysqlwidget.cpp \
     sqlhighlighter.cpp \
-    textclipboarditem.cpp
+    textclipboarditem.cpp \
+    undotextdocument.cpp
 RESOURCES += sqleditor.qrc 
 
 FORMS += \

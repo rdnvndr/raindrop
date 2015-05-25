@@ -37,15 +37,27 @@ public slots:
     void runQuery();
 
 private slots:
+    //! Обработка добавление команды в стек отмены
     void undoCommandAdd();
 
 
 private:
+    //! SQL модель
     QSqlQueryModel    *m_model;
+
+    //! SQL подсветка синтаксиса в редакторе
     SqlHighlighter    *m_sqlHighlighter;
+
+    //! Текущий стек отмены
     QUndoStack        *m_undoStack;
+
+    //! Список стеков отмены
     IUndoGroup        *m_undoGroup;
+
+    //! Стек буфера обмена
     IClipboardStack   *m_clipboardStack;
+
+    //! Текущий элемент стека буфера обмены
     TextClipboardItem *m_clipboardItem;
 };
 

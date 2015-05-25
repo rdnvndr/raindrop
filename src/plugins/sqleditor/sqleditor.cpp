@@ -16,15 +16,15 @@ SqlEditor::SqlEditor(QObject *parent):
     IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    actionSqlEditor = new QAction(QIcon(":SqlEditor"), tr("SQL редактор"), this);
-    connect(actionSqlEditor, SIGNAL(triggered()), this, SLOT(showSqlEditor()));
-    actionSqlEditor->setObjectName("actionSqlEditor");
-    iMainWindow->addAction(tr("Работа с БД"),actionSqlEditor);
+    m_actionSqlEditor = new QAction(QIcon(":SqlEditor"), tr("SQL редактор"), this);
+    connect(m_actionSqlEditor, SIGNAL(triggered()), this, SLOT(showSqlEditor()));
+    m_actionSqlEditor->setObjectName("actionSqlEditor");
+    iMainWindow->addAction(tr("Работа с БД"),m_actionSqlEditor);
 }
 
 SqlEditor::~SqlEditor()
 {
-    delete actionSqlEditor;
+    delete m_actionSqlEditor;
 }
 
 void SqlEditor::showSqlEditor()
