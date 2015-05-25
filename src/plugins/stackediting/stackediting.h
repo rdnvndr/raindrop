@@ -156,8 +156,8 @@ private:
     QUndoGroup *m_undoGroup;
 
 
-    //! Список соотвествия QWidget и QUndoStack
-    QList<IClipboardItem *> m_clipboardItemList;
+    //! Список команд стека буфера обмена
+    QList<QObject *> m_clipboardItemList;
 
     //! Текущий элемент стека буфера обмена
     IClipboardItem *m_currentClipboardItem;
