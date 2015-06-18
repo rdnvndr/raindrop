@@ -36,7 +36,12 @@ void PropEntityGroup::setModel(TreeXmlHashModel *model)
     AbstractPropEditor::setModel(model);
 }
 
-
+QString PropEntityGroup::dataId(const QModelIndex &index)
+{
+    return modelData(DBENTITYGROUPXML::ENTITYGROUP,
+                               DBENTITYGROUPXML::ID,
+                               index).toString();
+}
 
 void PropEntityGroup::setCurrent(const QModelIndex &index)
 {
@@ -50,9 +55,7 @@ void PropEntityGroup::setTabName(const QModelIndex &index)
     QString entityGroupName = modelData(
                 DBENTITYGROUPXML::ENTITYGROUP,
                 DBENTITYGROUPXML::NAME,index).toString();
-    QString id = modelData(DBENTITYGROUPXML::ENTITYGROUP,
-                           DBENTITYGROUPXML::ID,
-                           index).toString();
+    QString id = this->dataId(index);
 
     this->setObjectName("PropEntityGroup::" + id);
     subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));

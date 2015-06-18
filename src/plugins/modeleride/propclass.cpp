@@ -49,6 +49,11 @@ void PropClass::setModel(TreeXmlHashModel *model)
     AbstractPropEditor::setModel(model);
 }
 
+QString PropClass::dataId(const QModelIndex &index)
+{
+    return modelData(DBCLASSXML::CLASS, DBCLASSXML::ID,index).toString();
+}
+
 void PropClass::setCurrent(const QModelIndex &index)
 {
     classWidget->setCurrent(index);
@@ -59,7 +64,7 @@ void PropClass::setTabName(const QModelIndex &index){
     if (!subWindow) return;
 
     QString className = modelData(DBCLASSXML::CLASS, DBCLASSXML::NAME,index).toString();
-    QString id = modelData(DBCLASSXML::CLASS, DBCLASSXML::ID,index).toString();
+    QString id = this->dataId(index);
 
     this->setObjectName("PropClass::" + id);
     subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));

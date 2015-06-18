@@ -36,6 +36,13 @@ void PropRefGroup::setModel(TreeXmlHashModel *model)
     AbstractPropEditor::setModel(model);
 }
 
+QString PropRefGroup::dataId(const QModelIndex &index)
+{
+    return modelData(DBREFGROUPXML::REFGROUP,
+                     DBREFGROUPXML::ID,
+                     index).toString();
+}
+
 void PropRefGroup::setCurrent(const QModelIndex &index)
 {
     refGroupWidget->setCurrent(index);
@@ -48,9 +55,7 @@ void PropRefGroup::setTabName(const QModelIndex &index)
     QString refGroupName = modelData(
                 DBREFGROUPXML::REFGROUP,
                 DBREFGROUPXML::NAME,index).toString();
-    QString id = modelData(DBREFGROUPXML::REFGROUP,
-                           DBREFGROUPXML::ID,
-                           index).toString();
+    QString id = this->dataId(index);
 
     this->setObjectName("PropRefGroup::" + id);
     subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));

@@ -59,6 +59,11 @@ void PropEntity::setModel(TreeXmlHashModel *model)
     AbstractPropEditor::setModel(model);
 }
 
+QString PropEntity::dataId(const QModelIndex &index)
+{
+    return modelData(DBENTITYXML::ENTITY, DBENTITYXML::ID,index).toString();
+}
+
 void PropEntity::setCurrent(const QModelIndex &index)
 {
     entityWidget->setCurrent(index);
@@ -69,7 +74,7 @@ void PropEntity::setTabName(const QModelIndex &index)
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
 
     QString entityName = modelData(DBENTITYXML::ENTITY, DBENTITYXML::NAME,index).toString();
-    QString id = modelData(DBENTITYXML::ENTITY, DBENTITYXML::ID,index).toString();
+    QString id = this->dataId(index);
 
     this->setObjectName("PropEntity::" + id);
     subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));

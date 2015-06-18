@@ -49,6 +49,11 @@ void PropRef::setModel(TreeXmlHashModel *model)
     AbstractPropEditor::setModel(model);
 }
 
+QString PropRef::dataId(const QModelIndex &index)
+{
+    return modelData(DBREFXML::REF, DBREFXML::ID,index).toString();
+}
+
 void PropRef::setCurrent(const QModelIndex &index)
 {
     refWidget->setCurrent(index);
@@ -59,7 +64,7 @@ void PropRef::setTabName(const QModelIndex &index)
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
 
     QString refItemName = modelData(DBREFXML::REF, DBREFXML::NAME,index).toString();
-    QString id = modelData(DBREFXML::REF, DBREFXML::ID,index).toString();
+    QString id = this->dataId(index);
 
     this->setObjectName("PropRef::" + id);
     subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));

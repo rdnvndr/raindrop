@@ -30,6 +30,9 @@ public:
     virtual QVariant modelData(const QString &tag, const QString &attr,
                        const QModelIndex &index);
 
+    //! Получение индетификатора по индексу
+    virtual QString dataId(const QModelIndex &index) = 0;
+
 public slots:
     //! Установка текущей строки
     virtual void setCurrent(const QModelIndex &index) = 0;
