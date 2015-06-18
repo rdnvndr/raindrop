@@ -32,6 +32,11 @@ void PropFilter::setModel(TreeXmlHashModel *model)
     AbstractPropEditor::setModel(model);
 }
 
+QString PropFilter::dataId(const QModelIndex &index)
+{
+    return modelData(DBFILTERXML::FILTER, DBFILTERXML::ID,index).toString();
+}
+
 void PropFilter::setCurrent(const QModelIndex &index)
 {
     propWidget->setCurrent(index);
@@ -42,7 +47,7 @@ void PropFilter::setTabName(const QModelIndex &index)
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
 
     QString className = modelData(DBFILTERXML::FILTER, DBFILTERXML::NAME,index).toString();
-    QString id = modelData(DBFILTERXML::FILTER, DBFILTERXML::ID,index).toString();
+    QString id = this->dataId(index);
 
     this->setObjectName("PropFilter::" + id);
     if (subWindow) {

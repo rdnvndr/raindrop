@@ -44,6 +44,11 @@ void PropRole::setModel(TreeXmlHashModel *model)
     AbstractPropEditor::setModel(model);
 }
 
+QString PropRole::dataId(const QModelIndex &index)
+{
+    return modelData(DBROLEXML::ROLE, DBROLEXML::ID,index).toString();
+}
+
 void PropRole::setCurrent(const QModelIndex &index)
 {
      roleWidget->setCurrent(index);
@@ -54,7 +59,7 @@ void PropRole::setTabName(const QModelIndex &index)
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
 
     QString roleName = modelData(DBROLEXML::ROLE, DBROLEXML::NAME,index).toString();
-    QString id = modelData(DBROLEXML::ROLE, DBROLEXML::ID,index).toString();
+    QString id = this->dataId(index);
 
     this->setObjectName("PropRole::" + id);
     subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));

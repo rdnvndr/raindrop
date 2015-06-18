@@ -50,6 +50,11 @@ void PropLov::setModel(TreeXmlHashModel *model)
     AbstractPropEditor::setModel(model);
 }
 
+QString PropLov::dataId(const QModelIndex &index)
+{
+    return modelData(DBLOVXML::LOV, DBLOVXML::ID,index).toString();
+}
+
 void PropLov::setCurrent(const QModelIndex &index)
 {
     lovWidget->setCurrent(index);
@@ -60,7 +65,7 @@ void PropLov::setTabName(const QModelIndex &index)
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
 
     QString lovName = modelData(DBLOVXML::LOV, DBLOVXML::NAME,index).toString();
-    QString id = modelData(DBLOVXML::LOV, DBLOVXML::ID,index).toString();
+    QString id = this->dataId(index);
 
     this->setObjectName("PropLov::" + id);
     subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));

@@ -25,6 +25,9 @@ public:
     //! Установка модели структуры классов
     void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
+    //! Получение индетификатора по индексу
+    QString dataId(const QModelIndex &index);
+
 public slots:
     //! Установка текущей роли
     void setCurrent(const QModelIndex &index);

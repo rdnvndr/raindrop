@@ -33,6 +33,9 @@ public:
     //! Установка модели структуры классов
     void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
+    //! Получение индетификатора по индексу
+    QString dataId(const QModelIndex &index);
+
 signals:
     //! Сигнал вызова редактирования состава
     void editComposition(const QModelIndex &index);
