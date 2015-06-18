@@ -81,10 +81,10 @@ void AbstractEditorWidget::remove()
         return;
 
     m_mapper->revert();
-    setCurrent(srcParent);
+    emit dataRemoved(srcIndex);
 
     m_model->removeRow(row, srcParent);
-    emit dataRemoved(srcIndex);
+
 }
 
 bool AbstractEditorWidget::removeEmpty()
