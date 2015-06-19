@@ -75,7 +75,6 @@ void PropRef::edit(bool flag)
 {
     if (refWidget->isEmpty()){
         toolButtonAdd->setDisabled(true);
-        flag = true;
     } else
         toolButtonAdd->setEnabled(true);
 

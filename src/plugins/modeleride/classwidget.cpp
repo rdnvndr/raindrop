@@ -113,13 +113,9 @@ bool ClassWidget::isEdit()
 
 void ClassWidget::edit(bool flag)
 {
-    if (isEdit()==flag)
-        return;
-
     if (lineEditClassName->text().isEmpty()){
         toolButtonAddClass->setDisabled(true);
-        flag = true;
-    }else
+    } else
         toolButtonAddClass->setEnabled(true);
 
     groupBoxClass->setEnabled(flag);

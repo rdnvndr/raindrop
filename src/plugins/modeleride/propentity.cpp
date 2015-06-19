@@ -85,7 +85,6 @@ void PropEntity::edit(bool flag)
 {
     if (entityWidget->isEmpty()){
         toolButtonAddEntity->setDisabled(true);
-        flag = true;
     } else
         toolButtonAddEntity->setEnabled(true);
 

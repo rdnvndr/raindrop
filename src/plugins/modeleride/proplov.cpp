@@ -76,7 +76,6 @@ void PropLov::edit(bool flag)
 {
     if (lovWidget->isEmpty()){
         toolButtonAddLov->setDisabled(true);
-        flag = true;
     } else
         toolButtonAddLov->setEnabled(true);
 

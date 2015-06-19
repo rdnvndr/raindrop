@@ -70,7 +70,6 @@ void PropRole::edit(bool flag)
 {
     if (roleWidget->isEmpty()){
         toolButtonAddRole->setDisabled(true);
-        flag = true;
     } else
         toolButtonAddRole->setEnabled(true);
 

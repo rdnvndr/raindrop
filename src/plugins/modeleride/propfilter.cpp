@@ -58,7 +58,7 @@ void PropFilter::setTabName(const QModelIndex &index)
 
 void PropFilter::edit(bool flag)
 {
-    Q_UNUSED(flag)
+    propWidget->edit(flag);
 }
 
 }}
