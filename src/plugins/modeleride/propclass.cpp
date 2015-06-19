@@ -73,7 +73,7 @@ void PropClass::setTabName(const QModelIndex &index){
 
 void PropClass::edit(bool flag)
 {
-    Q_UNUSED(flag)
+    classWidget->edit(flag);
 }
 
 void PropClass::onEditComposition(const QModelIndex &index)
