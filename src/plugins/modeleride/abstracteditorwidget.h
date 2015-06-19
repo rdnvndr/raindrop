@@ -74,9 +74,6 @@ signals:
     //! Сигнал о предстоящем удалении данных
     void dataAboutToBeRemoved(const QModelIndex &index);
 
-    //! Сигнал об удалении данных
-    //void dataRemoved(const QModelIndex &index);
-
     //! Сигнал об изменении данных
     void currentIndexChanged(const QModelIndex &index);
 
