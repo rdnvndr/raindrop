@@ -19,7 +19,7 @@ PropRole::PropRole(QWidget *parent) :
             this,SLOT(setTabName(QModelIndex)));
     connect(roleWidget,SIGNAL(dataChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
-    connect(roleWidget,SIGNAL(dataRemoved(QModelIndex)),
+    connect(roleWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
             this,SLOT(closeTab(QModelIndex)));
 
     connect(roleWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));

@@ -26,9 +26,6 @@ void RefWidget::setModel(TreeXmlHashModel *model)
 {
     AbstractEditorWidget::setModel(model);
 
-    connect(model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
-            this,SLOT(rowsRemoved(QModelIndex,int,int)));
-
     dataMapper()->addMapping(lineEditName,
                              model->columnDisplayedAttr(DBREFXML::REF,
                                                         DBREFXML::NAME));

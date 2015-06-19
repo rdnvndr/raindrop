@@ -31,11 +31,12 @@ TreeXmlHashModel *AbstractPropEditor::model()
 void AbstractPropEditor::closeTab(const QModelIndex &index)
 {
     QString subWindowName = this->objectName();
-    if (subWindowName.contains(this->dataId(index), Qt::CaseInsensitive)) {
-        QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
-        if (subWindow)
-            subWindow->close();
-    }
+    QString id = this->dataId(index);
+    if (!id.isEmpty())
+        if (subWindowName.contains(id, Qt::CaseInsensitive)) {
+            QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
+            if (subWindow) subWindow->close();
+        }
 }
 
 QVariant AbstractPropEditor::modelData(const QString &tag, const QString &attr, const QModelIndex &index)

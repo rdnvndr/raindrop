@@ -60,8 +60,8 @@ public slots:
     //! Отмена изменений
     virtual void revert();
 
-    //! Удаление строки
-        void rowsRemoved(const QModelIndex &index,int start,int end);
+    //! Обработка удаления строки
+    void onRowsAboutToBeRemoved(const QModelIndex &index,int start,int end);
 
     //! Получение данных модели
     QVariant modelData(const QString &tag, const QString &attr,
@@ -71,8 +71,11 @@ signals:
     //! Сигнал об изменении данных
     void dataChanged(const QModelIndex &index);
 
+    //! Сигнал о предстоящем удалении данных
+    void dataAboutToBeRemoved(const QModelIndex &index);
+
     //! Сигнал об удалении данных
-    void dataRemoved(const QModelIndex &index);
+    //void dataRemoved(const QModelIndex &index);
 
     //! Сигнал об изменении данных
     void currentIndexChanged(const QModelIndex &index);

@@ -20,7 +20,7 @@ PropLov::PropLov(QWidget *parent) :
             this,SLOT(setTabName(QModelIndex)));
     connect(lovWidget,SIGNAL(dataChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
-    connect(lovWidget,SIGNAL(dataRemoved(QModelIndex)),
+    connect(lovWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
             this,SLOT(closeTab(QModelIndex)));
 
     connect(lovWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));

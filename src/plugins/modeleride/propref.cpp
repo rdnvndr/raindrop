@@ -20,7 +20,7 @@ PropRef::PropRef(QWidget *parent) :
             this,SLOT(setTabName(QModelIndex)));
     connect(refWidget,SIGNAL(dataChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
-    connect(refWidget,SIGNAL(dataRemoved(QModelIndex)),
+    connect(refWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
             this,SLOT(closeTab(QModelIndex)));
 
     connect(refWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));

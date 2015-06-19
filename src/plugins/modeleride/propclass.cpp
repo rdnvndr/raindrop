@@ -27,7 +27,7 @@ PropClass::PropClass(QWidget *parent) :
 
     connect(classWidget,SIGNAL(dataChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
-    connect(classWidget,SIGNAL(dataRemoved(QModelIndex)),
+    connect(classWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
             this,SLOT(closeTab(QModelIndex)));
     connect(filterWidget,SIGNAL(dataEdited(QModelIndex)),
             this,SLOT(onEditFilter(QModelIndex)));

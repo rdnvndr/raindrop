@@ -20,7 +20,7 @@ PropEntity::PropEntity(QWidget *parent) :
             this,SLOT(setTabName(QModelIndex)));
     connect(entityWidget,SIGNAL(dataChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
-    connect(entityWidget,SIGNAL(dataRemoved(QModelIndex)),
+    connect(entityWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
             this,SLOT(closeTab(QModelIndex)));
     connect(unitWidget,SIGNAL(proxyIndexChanged(QModelIndex)),
             entityWidget, SLOT(setUnitRootIndex(QModelIndex)));
