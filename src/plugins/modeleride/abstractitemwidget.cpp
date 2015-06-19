@@ -89,7 +89,6 @@ void AbstractItemWidget::remove()
     QModelIndex srcIndex = m_proxyModel->mapToSource(m_itemView->rootIndex());
     QModelIndex curIndex = m_proxyModel->mapToSource(m_itemView->currentIndex());
     if (srcIndex.isValid() && curIndex.isValid()){
-        emit dataRemoved(srcIndex);
         m_model->removeRow(curIndex.row(),srcIndex);
         this->setCurrent(m_itemView->currentIndex());
     } else
