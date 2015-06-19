@@ -20,7 +20,7 @@ PropEntityGroup::PropEntityGroup(QWidget *parent) :
             this,SLOT(setTabName(QModelIndex)));
     connect(entityGroupWidget,SIGNAL(dataChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
-    connect(entityGroupWidget,SIGNAL(dataRemoved(QModelIndex)),
+    connect(entityGroupWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
             this,SLOT(closeTab(QModelIndex)));
 }
 

@@ -27,8 +27,8 @@ AbstractEditorWidget::~AbstractEditorWidget()
 void AbstractEditorWidget::setModel(TreeXmlHashModel *model)
 {
     m_model = model;
-    connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
-            this,SLOT(rowsRemoved(QModelIndex,int,int)));
+    connect(m_model,SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
+            this,SLOT(onRowsAboutToBeRemoved(QModelIndex,int,int)));
     m_mapper->setModel(m_model);
 }
 
@@ -82,7 +82,6 @@ void AbstractEditorWidget::remove()
 
     m_mapper->revert();
     m_model->removeRow(row, srcParent);
-
 }
 
 bool AbstractEditorWidget::removeEmpty()
@@ -130,13 +129,13 @@ void AbstractEditorWidget::revert()
     removeEmpty();
 }
 
-void AbstractEditorWidget::rowsRemoved(const QModelIndex &index, int start, int end)
+void AbstractEditorWidget::onRowsAboutToBeRemoved(const QModelIndex &index, int start, int end)
 {
-    Q_UNUSED(start)
-    Q_UNUSED(end)
+    if (index == m_mapper->rootIndex() && !m_oldIndex.isValid())
+        for (int row = start; row <= end; ++row)
+            if (m_mapper->currentIndex() == row)
+                emit dataAboutToBeRemoved(index.child(row, 0));
 
-    if (index == m_mapper->rootIndex() && m_mapper->currentIndex()==-1 && !m_oldIndex.isValid())
-        emit dataRemoved(QModelIndex());
 }
 
 QVariant AbstractEditorWidget::modelData(const QString &tag, const QString &attr,

@@ -215,12 +215,8 @@ bool FilterPropWidget::isEdit()
 
 void FilterPropWidget::edit(bool flag)
 {
-    if (isEdit()==flag)
-        return;
-
     if (isEmpty()){
         toolButtonAdd->setDisabled(true);
-        flag = true;
     }else
         toolButtonAdd->setEnabled(true);
 

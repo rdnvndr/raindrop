@@ -17,7 +17,7 @@ PropFilter::PropFilter(QWidget *parent) :
             this,SLOT(setTabName(QModelIndex)));
     connect(propWidget,SIGNAL(dataChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
-    connect(propWidget,SIGNAL(dataRemoved(QModelIndex)),
+    connect(propWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
             this,SLOT(closeTab(QModelIndex)));
 }
 
