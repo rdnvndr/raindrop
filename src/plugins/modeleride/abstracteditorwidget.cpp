@@ -81,8 +81,6 @@ void AbstractEditorWidget::remove()
         return;
 
     m_mapper->revert();
-    emit dataRemoved(srcIndex);
-
     m_model->removeRow(row, srcParent);
 
 }
