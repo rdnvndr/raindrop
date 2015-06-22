@@ -79,7 +79,7 @@ public:
 
 public slots:
     //! Слот вызова окна редактирования
-    void showPropEditor(const QModelIndex &indexSource);
+    void showPropEditor(const QModelIndex &indexSource, bool editable = false);
 
     //! Закрытие окна по индексу
     void closePropEditor(const QModelIndex& index);
