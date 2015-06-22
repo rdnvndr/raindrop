@@ -80,7 +80,8 @@ void AbstractEditorWidget::remove()
     if (!isRemove(srcIndex))
         return;
 
-    m_mapper->revert();
+    m_oldIndex = QModelIndex();
+    setCurrent(srcIndex);
     m_model->removeRow(row, srcParent);
 }
 
@@ -123,8 +124,6 @@ void AbstractEditorWidget::submit()
 void AbstractEditorWidget::revert()
 {
     m_mapper->revert();
-    QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,m_mapper->rootIndex());
-    setCurrent(srcIndex);
     edit(false);
     removeEmpty();
 }

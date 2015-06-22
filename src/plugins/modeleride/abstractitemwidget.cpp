@@ -111,7 +111,7 @@ void AbstractItemWidget::setCurrent(const QModelIndex &index)
 void AbstractItemWidget::submit()
 {
 
-    QModelIndex srcIndex = m_mapper->rootIndex().child(m_mapper->currentIndex(),0);
+    QPersistentModelIndex srcIndex = m_mapper->rootIndex().child(m_mapper->currentIndex(),0);
     m_mapper->submit();
     edit(false);
 

@@ -189,7 +189,7 @@ void ModelerIDEPlug::add()
 
     if (lastInsertRow.isValid()){
         m_treeClassView->setCurrentIndex(lastInsertRow);
-        showPropEditor(lastInsertRow);
+        showPropEditor(lastInsertRow, true);
     }
 
 }
@@ -339,7 +339,7 @@ void ModelerIDEPlug::remove()
                              tr("Невозможно удалить узел, поскольку он не выбран."));
 }
 
-void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource)
+void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editable)
 {
     if (!indexSource.isValid())
         return;
@@ -399,11 +399,12 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource)
         subWindow =  mainWindow->addSubWindow(propEditor);
         propEditor->setTabName(indexSource);
         propEditor->setCurrent(indexSource);
-        propEditor->edit(true);
-    } else {
+
+    } else
         propEditor = qobject_cast<AbstractPropEditor*>(subWindow->widget());
-        propEditor->setCurrent(indexSource);
-    }
+
+    propEditor->setCurrent(indexSource);
+    if (editable) propEditor->edit(true);
 }
 
 void ModelerIDEPlug::closePropEditor(const QModelIndex &index)
