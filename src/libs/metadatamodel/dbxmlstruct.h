@@ -17,8 +17,6 @@ namespace DBCLASSXML{
     const QString CLASS = "RTPClass";
     const QString NAME = "name";
     const QString TYPE = "type";
-    const QString ISABSTARCT = "isAbstract";
-    const QString ISACTIVE = "isActive";
     const QString VIEW = "view";
     const QString ALIAS = "alias";
     const QString PARENT = "parent";
@@ -87,9 +85,10 @@ namespace DBCLASSTYPEXML{
 
 //!  Вид классов
 namespace DBCLASSVIEWXML{
-    const QString CONTEXT =  "Context";
+    const QString ABSTRACT = "Abstract";
+    const QString CONTEXT  = "Context";
     const QString EMBEDDED = "Embedded";
-    const QString NORMAL =   "Normal";
+    const QString NORMAL   = "Normal";
 }
 
 //! Ключевые слова XML файла для описания фильтра
