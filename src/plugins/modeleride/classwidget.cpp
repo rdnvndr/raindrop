@@ -35,6 +35,7 @@ ClassWidget::ClassWidget(QWidget *parent) :
 
     m_viewClassModel = new QStringListModel();
     const QStringList classView = (QStringList()
+                                   << DBCLASSVIEWXML::ABSTRACT
                                    << DBCLASSVIEWXML::CONTEXT
                                    << DBCLASSVIEWXML::EMBEDDED
                                    << DBCLASSVIEWXML::NORMAL
@@ -79,13 +80,6 @@ void ClassWidget::setModel(TreeXmlHashModel *model)
                              model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                         DBCLASSXML::PARENT));
 
-    dataMapper()->addMapping(checkBoxAbsClass,
-                             model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                        DBCLASSXML::ISABSTARCT));
-    dataMapper()->addMapping(checkBoxActiveClass,
-                             model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                        DBCLASSXML::ISACTIVE));
-
     dataMapper()->addMapping(classViewComboBox,
                              model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                         DBCLASSXML::VIEW));
@@ -102,7 +96,7 @@ void ClassWidget::add()
 {
     if (AbstractEditorWidget::add(DBCLASSXML::CLASS)) {
         comboBoxClassType->setCurrentIndex(2);
-        classViewComboBox->setCurrentIndex(2);
+        classViewComboBox->setCurrentIndex(3);
     }
 }
 
