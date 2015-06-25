@@ -165,7 +165,11 @@ void ModelerIDEPlug::add()
             int column = m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                       DBCLASSXML::TYPE);
             m_model->setData(lastInsertRow.sibling(lastInsertRow.row(),column),
-                             DBCLASSTYPEXML::STANDART);
+                             DBCLASSTYPEXML::USER);
+            column = m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                      DBCLASSXML::VIEW);
+            m_model->setData(lastInsertRow.sibling(lastInsertRow.row(),column),
+                             DBCLASSVIEWXML::NORMAL);
         }
     } else if (tagRole == DBENTITYLISTXML::ENTITYLIST) {
         lastInsertRow =

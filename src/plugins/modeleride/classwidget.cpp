@@ -33,6 +33,14 @@ ClassWidget::ClassWidget(QWidget *parent) :
                                    );
     m_typeClassModel->setStringList(classType);
 
+    m_viewClassModel = new QStringListModel();
+    const QStringList classView = (QStringList()
+                                   << DBCLASSVIEWXML::CONTEXT
+                                   << DBCLASSVIEWXML::EMBEDDED
+                                   << DBCLASSVIEWXML::NORMAL
+                                   );
+    m_viewClassModel->setStringList(classView);
+
     lineEditClassParent->setReadOnly(true);
 
     connect(toolButtonAddClass,SIGNAL(clicked()),this,SLOT(add()));
@@ -46,6 +54,7 @@ ClassWidget::~ClassWidget()
 {
     delete lineEditClassName->validator();
     delete m_typeClassModel;
+    delete m_viewClassModel;
 }
 
 void ClassWidget::setModel(TreeXmlHashModel *model)
@@ -53,6 +62,7 @@ void ClassWidget::setModel(TreeXmlHashModel *model)
     AbstractEditorWidget::setModel(model);
 
     comboBoxClassType->setModel(m_typeClassModel);
+    classViewComboBox->setModel(m_viewClassModel);
 
     dataMapper()->addMapping(lineEditClassName,
                              model->columnDisplayedAttr(DBCLASSXML::CLASS,
@@ -76,12 +86,9 @@ void ClassWidget::setModel(TreeXmlHashModel *model)
                              model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                         DBCLASSXML::ISACTIVE));
 
-    dataMapper()->addMapping(checkBoxContextClass,
+    dataMapper()->addMapping(classViewComboBox,
                              model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                        DBCLASSXML::ISCONTEXT));
-    dataMapper()->addMapping(embeddedCheckBox,
-                             model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                        DBCLASSXML::ISEMBEDDED));
+                                                        DBCLASSXML::VIEW));
 
     dataMapper()->addMapping(plainTextEditShowAttr,
                              model->columnDisplayedAttr(DBCLASSXML::CLASS,
@@ -93,8 +100,10 @@ void ClassWidget::setModel(TreeXmlHashModel *model)
 
 void ClassWidget::add()
 {
-    if (AbstractEditorWidget::add(DBCLASSXML::CLASS))
-        comboBoxClassType->setCurrentIndex(0);
+    if (AbstractEditorWidget::add(DBCLASSXML::CLASS)) {
+        comboBoxClassType->setCurrentIndex(2);
+        classViewComboBox->setCurrentIndex(2);
+    }
 }
 
 void ClassWidget::setCurrent(const QModelIndex &index)
@@ -104,6 +113,11 @@ void ClassWidget::setCurrent(const QModelIndex &index)
                                                           DBCLASSXML::TYPE,
                                                           index).toString());
     comboBoxClassType->setCurrentIndex(indexType);
+
+    int indexView = classViewComboBox->findText(modelData(DBCLASSXML::CLASS,
+                                                          DBCLASSXML::VIEW,
+                                                          index).toString());
+    classViewComboBox->setCurrentIndex(indexView);
 }
 
 bool ClassWidget::isEdit()

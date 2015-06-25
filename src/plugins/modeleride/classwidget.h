@@ -59,6 +59,9 @@ private:
 
     //! Список типов класса
     QStringListModel *m_typeClassModel;
+
+    //! Список видов класса
+    QStringListModel *m_viewClassModel;
 };
 
 }}
