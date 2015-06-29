@@ -126,7 +126,7 @@ namespace DBFILTERBLOCKXML{
 namespace DBENTITYXML {
     const QString ENTITY = "RTPMeasuredEntity";
     const QString BASICUNIT = "basicUnit";
-    const QString DESCRIPTION = "decription";
+    const QString ALIAS = "decription";
     const QString ID = "guid";
     const QString NAME = "name";
     const QString DIMENSIONSYMBOL = "dimensionSymbol";
@@ -152,7 +152,7 @@ namespace DBUNITXML {
 namespace DBENTITYGROUPXML {
     const QString ENTITYGROUP = "RTPEntityGroup";
     const QString NAME = "name";
-    const QString DESCRIPTION = "description";
+    const QString ALIAS = "description";
     const QString PARENT = "parent";
     const QString ID = "guid";
 }
@@ -225,7 +225,7 @@ namespace DBREFLISTXML {
 namespace DBREFGROUPXML {
     const QString REFGROUP = "RTPRefGroup";
     const QString NAME = "name";
-    const QString DESCRIPTION = "description";
+    const QString ALIAS = "description";
     const QString PARENT = "parent";
     const QString ID = "guid";
 }
@@ -234,7 +234,7 @@ namespace DBREFGROUPXML {
 namespace DBREFXML {
     const QString REF = "RTPRef";
     const QString NAME = "name";
-    const QString DESCRIPTION = "description";
+    const QString ALIAS = "description";
     const QString PARENT = "parent";
     const QString ID = "guid";
 }

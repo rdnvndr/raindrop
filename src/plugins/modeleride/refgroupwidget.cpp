@@ -34,9 +34,9 @@ void RefGroupWidget::setModel(TreeXmlHashModel *model)
     dataMapper()->addMapping(lineEditRefGroupName,
                              model->columnDisplayedAttr(DBREFGROUPXML::REFGROUP,
                                                         DBREFGROUPXML::NAME));
-    dataMapper()->addMapping(lineEditRefGroupDesc,
+    dataMapper()->addMapping(lineEditRefGroupAlias,
                              model->columnDisplayedAttr(DBREFGROUPXML::REFGROUP,
-                                                        DBREFGROUPXML::DESCRIPTION));
+                                                        DBREFGROUPXML::ALIAS));
 }
 
 bool RefGroupWidget::isEmpty()

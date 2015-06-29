@@ -107,7 +107,7 @@ void ClassModelXml::initDisplayedAttrs()
     this->addDisplayedAttr(DBCONDITIONXML::COND, propsCondition, QIcon(":/expression"));
 
     QStringList propsEntity;
-    propsEntity << DBENTITYXML::NAME            << DBENTITYXML::DESCRIPTION
+    propsEntity << DBENTITYXML::NAME            << DBENTITYXML::ALIAS
                 << DBENTITYXML::DIMENSIONSYMBOL << DBENTITYXML::BASICUNIT
                 << DBENTITYXML::ID;
     this->addDisplayedAttr(DBENTITYXML::ENTITY, propsEntity, QIcon(":/entity"));
@@ -121,7 +121,7 @@ void ClassModelXml::initDisplayedAttrs()
     this->addDisplayedAttr(DBUNITXML::UNIT, propsUnit, QIcon(":/unit"));
 
     QStringList propsGroup;
-    propsGroup << DBENTITYGROUPXML::NAME   << DBENTITYGROUPXML::DESCRIPTION
+    propsGroup << DBENTITYGROUPXML::NAME   << DBENTITYGROUPXML::ALIAS
                << DBENTITYGROUPXML::PARENT << DBENTITYGROUPXML::ID;
     this->addDisplayedAttr(DBENTITYGROUPXML::ENTITYGROUP, propsGroup, QIcon(":/entitygroup"));
 
@@ -167,12 +167,12 @@ void ClassModelXml::initDisplayedAttrs()
     this->addDisplayedAttr(DBLOVVALUEXML::LOVVALUE, propsLov, QIcon(":/lovvalue"));
 
     QStringList propsRefGroup;
-    propsRefGroup << DBREFGROUPXML::NAME   << DBREFGROUPXML::DESCRIPTION
+    propsRefGroup << DBREFGROUPXML::NAME   << DBREFGROUPXML::ALIAS
                   << DBREFGROUPXML::PARENT << DBREFGROUPXML::ID;
     this->addDisplayedAttr(DBREFGROUPXML::REFGROUP, propsRefGroup, QIcon(":/refgroup"));
 
     QStringList propsRef;
-    propsRef << DBREFXML::NAME   << DBREFXML::DESCRIPTION
+    propsRef << DBREFXML::NAME   << DBREFXML::ALIAS
              << DBREFXML::PARENT << DBREFXML::ID;
     this->addDisplayedAttr(DBREFXML::REF, propsRef, QIcon(":/reference"));
 
