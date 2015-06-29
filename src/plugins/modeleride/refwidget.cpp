@@ -29,9 +29,9 @@ void RefWidget::setModel(TreeXmlHashModel *model)
     dataMapper()->addMapping(lineEditName,
                              model->columnDisplayedAttr(DBREFXML::REF,
                                                         DBREFXML::NAME));
-    dataMapper()->addMapping(lineEditDesc,
+    dataMapper()->addMapping(lineEditAlias,
                              model->columnDisplayedAttr(DBREFXML::REF,
-                                                        DBREFXML::DESCRIPTION));
+                                                        DBREFXML::ALIAS));
 }
 
 bool RefWidget::isEmpty()

@@ -33,9 +33,9 @@ void EntityWidget::setModel(TreeXmlHashModel *model)
     dataMapper()->addMapping(lineEditEntityName,
                              model->columnDisplayedAttr(DBENTITYXML::ENTITY,
                                                         DBENTITYXML::NAME));
-    dataMapper()->addMapping(lineEditEntityDesc,
+    dataMapper()->addMapping(lineEditEntityAlias,
                              model->columnDisplayedAttr(DBENTITYXML::ENTITY,
-                                                        DBENTITYXML::DESCRIPTION));
+                                                        DBENTITYXML::ALIAS));
     dataMapper()->addMapping(lineEditDimensionSymbol,
                              model->columnDisplayedAttr(DBENTITYXML::ENTITY,
                                                         DBENTITYXML::DIMENSIONSYMBOL));

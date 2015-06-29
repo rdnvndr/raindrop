@@ -34,9 +34,9 @@ void EntityGroupWidget::setModel(TreeXmlHashModel *model)
     dataMapper()->addMapping(lineEditEntityGroupName,
                          model->columnDisplayedAttr(DBENTITYGROUPXML::ENTITYGROUP,
                                                     DBENTITYXML::NAME));
-    dataMapper()->addMapping(lineEditEntityGroupDesc,
+    dataMapper()->addMapping(lineEditEntityGroupAlias,
                          model->columnDisplayedAttr(DBENTITYGROUPXML::ENTITYGROUP,
-                                                   DBENTITYGROUPXML::DESCRIPTION));
+                                                   DBENTITYGROUPXML::ALIAS));
 }
 
 bool EntityGroupWidget::isEmpty()
