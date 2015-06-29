@@ -193,7 +193,7 @@ void ModelerIDEPlug::add()
 
     if (lastInsertRow.isValid()){
         m_treeClassView->setCurrentIndex(lastInsertRow);
-        showPropEditor(lastInsertRow, true);
+        editPropEditor(lastInsertRow);
     }
 
 }
@@ -380,7 +380,7 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editabl
         if (tagRole == DBCLASSXML::CLASS) {
             PropClass *propClass = new PropClass();
             connect(propClass,SIGNAL(editFilter(QModelIndex)),
-                    this,SLOT(showPropEditor(QModelIndex)));
+                    this,SLOT(editPropEditor(QModelIndex)));
             propEditor = qobject_cast<AbstractPropEditor*>(propClass);
         } else if (tagRole == DBFILTERXML::FILTER) {
             propEditor = qobject_cast<AbstractPropEditor*>(new PropFilter());
@@ -409,6 +409,11 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editabl
 
     propEditor->setCurrent(indexSource);
     if (editable) propEditor->edit(true);
+}
+
+void ModelerIDEPlug::editPropEditor(const QModelIndex &indexSource)
+{
+    showPropEditor(indexSource, true);
 }
 
 void ModelerIDEPlug::closePropEditor(const QModelIndex &index)
