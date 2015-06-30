@@ -94,9 +94,9 @@ void ClassTreeView::setModel(QAbstractItemModel *model)
 
     classFilterModel->addVisibleTag(DBCLASSXML::CLASS);
     classFilterModel->addVisibleTag(DBCLASSLISTXML::CLASSLIST);
-    classFilterModel->addVisibleTag(DBENTITYGROUPXML::ENTITYGROUP);
-    classFilterModel->addVisibleTag(DBENTITYXML::ENTITY);
-    classFilterModel->addVisibleTag(DBENTITYLISTXML::ENTITYLIST);
+    classFilterModel->addVisibleTag(DBQUANTITYGROUPXML::QUANTITYGROUP);
+    classFilterModel->addVisibleTag(DBQUANTITYXML::QUANTITY);
+    classFilterModel->addVisibleTag(DBQUANTITYLISTXML::QUANTITYLIST);
     classFilterModel->addVisibleTag(DBLOVLISTXML::LOVLIST);
     classFilterModel->addVisibleTag(DBLOVXML::LOV);
     classFilterModel->addVisibleTag(DBREFLISTXML::REFLIST);
@@ -234,8 +234,8 @@ void ClassTreeView::showContextMenu(const QPoint &point)
 
         //! Команда добавить
         if (tagRole == DBCLASSLISTXML::CLASSLIST
-            || tagRole == DBENTITYLISTXML::ENTITYLIST
-            || tagRole == DBENTITYGROUPXML::ENTITYGROUP
+            || tagRole == DBQUANTITYLISTXML::QUANTITYLIST
+            || tagRole == DBQUANTITYGROUPXML::QUANTITYGROUP
             || tagRole == DBLOVLISTXML::LOVLIST
             || tagRole == DBCLASSXML::CLASS
             || tagRole == DBREFLISTXML::REFLIST
@@ -249,7 +249,7 @@ void ClassTreeView::showContextMenu(const QPoint &point)
 
         //! Команда удалить
         if (tagRole == DBCLASSLISTXML::CLASSLIST
-            || tagRole == DBENTITYLISTXML::ENTITYLIST
+            || tagRole == DBQUANTITYLISTXML::QUANTITYLIST
             || tagRole == DBLOVLISTXML::LOVLIST
             || tagRole == DBREFLISTXML::REFLIST
             || tagRole == DBROLELISTXML::ROLELIST

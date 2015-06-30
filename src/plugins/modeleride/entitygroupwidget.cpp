@@ -32,11 +32,11 @@ void EntityGroupWidget::setModel(TreeXmlHashModel *model)
     AbstractEditorWidget::setModel(model);
 
     dataMapper()->addMapping(lineEditEntityGroupName,
-                         model->columnDisplayedAttr(DBENTITYGROUPXML::ENTITYGROUP,
-                                                    DBENTITYXML::NAME));
+                         model->columnDisplayedAttr(DBQUANTITYGROUPXML::QUANTITYGROUP,
+                                                    DBQUANTITYXML::NAME));
     dataMapper()->addMapping(lineEditEntityGroupAlias,
-                         model->columnDisplayedAttr(DBENTITYGROUPXML::ENTITYGROUP,
-                                                   DBENTITYGROUPXML::ALIAS));
+                         model->columnDisplayedAttr(DBQUANTITYGROUPXML::QUANTITYGROUP,
+                                                   DBQUANTITYGROUPXML::ALIAS));
 }
 
 bool EntityGroupWidget::isEmpty()
@@ -46,7 +46,7 @@ bool EntityGroupWidget::isEmpty()
 
 void EntityGroupWidget::add()
 {
-    AbstractEditorWidget::add(DBENTITYGROUPXML::ENTITYGROUP);
+    AbstractEditorWidget::add(DBQUANTITYGROUPXML::QUANTITYGROUP);
 }
 
 void EntityGroupWidget::edit(bool flag)
@@ -71,8 +71,8 @@ void EntityGroupWidget::edit(bool flag)
 void EntityGroupWidget::submit()
 {
     QModelIndex existIndex = model()->indexHashAttr(
-                DBENTITYGROUPXML::ENTITYGROUP,
-                DBENTITYGROUPXML::NAME,
+                DBQUANTITYGROUPXML::QUANTITYGROUP,
+                DBQUANTITYGROUPXML::NAME,
                 lineEditEntityGroupName->text());
     QModelIndex srcIndex = model()->index(dataMapper()->currentIndex(),0,
                                           dataMapper()->rootIndex());

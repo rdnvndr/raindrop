@@ -141,9 +141,9 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     unitFilterModel->setFilterRole(TreeXmlModel::TagRole);
     unitFilterModel->setFilterRegExp(DBUNITXML::UNIT + "|" +
                                      DBMODELXML::MODEL + "|" +
-                                     DBENTITYLISTXML::ENTITYLIST + "|" +
-                                     DBENTITYGROUPXML::ENTITYGROUP + "|" +
-                                     DBENTITYXML::ENTITY);
+                                     DBQUANTITYLISTXML::QUANTITYLIST + "|" +
+                                     DBQUANTITYGROUPXML::QUANTITYGROUP + "|" +
+                                     DBQUANTITYXML::QUANTITY);
     unitFilterModel->setSourceModel(model);
     unitFilterModel->setDynamicSortFilter(false);
 

@@ -122,14 +122,14 @@ namespace DBFILTERBLOCKXML{
     const QString ID = "guid";
 }
 
-//! Ключевые слова XML файла для описания измеряемой сущности
-namespace DBENTITYXML {
-    const QString ENTITY = "RTPMeasuredEntity";
+//! Ключевые слова XML файла для описания величины
+namespace DBQUANTITYXML {
+    const QString QUANTITY = "RTPMeasuredEntity";
     const QString BASICUNIT = "basicUnit";
     const QString ALIAS = "decription";
     const QString ID = "guid";
     const QString NAME = "name";
-    const QString DIMENSIONSYMBOL = "dimensionSymbol";
+    const QString DIMENSION = "dimensionSymbol";
     const QString PARENT = "parent";
 }
 
@@ -148,9 +148,9 @@ namespace DBUNITXML {
     const QString PARENT = "parent";
 }
 
-//! Ключевые слова XML файла для описания групп единиц измерения
-namespace DBENTITYGROUPXML {
-    const QString ENTITYGROUP = "RTPEntityGroup";
+//! Ключевые слова XML файла для описания группы величины
+namespace DBQUANTITYGROUPXML {
+    const QString QUANTITYGROUP = "RTPEntityGroup";
     const QString NAME = "name";
     const QString ALIAS = "description";
     const QString PARENT = "parent";
@@ -167,8 +167,8 @@ namespace DBCLASSLISTXML {
 }
 
 //! Ключевые слова XML файла для описания списка единиц измерения
-namespace DBENTITYLISTXML {
-    const QString ENTITYLIST = "RTPEntityList";
+namespace DBQUANTITYLISTXML {
+    const QString QUANTITYLIST = "RTPEntityList";
     const QString NAME = "name";
     const QString ALIAS = "alias";
     const QString PARENT = "parent";

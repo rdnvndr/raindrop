@@ -38,8 +38,8 @@ void PropEntityGroup::setModel(TreeXmlHashModel *model)
 
 QString PropEntityGroup::dataId(const QModelIndex &index)
 {
-    return modelData(DBENTITYGROUPXML::ENTITYGROUP,
-                               DBENTITYGROUPXML::ID,
+    return modelData(DBQUANTITYGROUPXML::QUANTITYGROUP,
+                               DBQUANTITYGROUPXML::ID,
                                index).toString();
 }
 
@@ -53,8 +53,8 @@ void PropEntityGroup::setTabName(const QModelIndex &index)
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
 
     QString entityGroupName = modelData(
-                DBENTITYGROUPXML::ENTITYGROUP,
-                DBENTITYGROUPXML::NAME,index).toString();
+                DBQUANTITYGROUPXML::QUANTITYGROUP,
+                DBQUANTITYGROUPXML::NAME,index).toString();
     QString id = this->dataId(index);
 
     this->setObjectName("PropEntityGroup::" + id);
