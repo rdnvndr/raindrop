@@ -31,17 +31,17 @@ void EntityWidget::setModel(TreeXmlHashModel *model)
             this,SLOT(rowsAboutToBeRemoved(QModelIndex,int,int)));
 
     dataMapper()->addMapping(lineEditEntityName,
-                             model->columnDisplayedAttr(DBENTITYXML::ENTITY,
-                                                        DBENTITYXML::NAME));
+                             model->columnDisplayedAttr(DBQUANTITYXML::QUANTITY,
+                                                        DBQUANTITYXML::NAME));
     dataMapper()->addMapping(lineEditEntityAlias,
-                             model->columnDisplayedAttr(DBENTITYXML::ENTITY,
-                                                        DBENTITYXML::ALIAS));
+                             model->columnDisplayedAttr(DBQUANTITYXML::QUANTITY,
+                                                        DBQUANTITYXML::ALIAS));
     dataMapper()->addMapping(lineEditDimensionSymbol,
-                             model->columnDisplayedAttr(DBENTITYXML::ENTITY,
-                                                        DBENTITYXML::DIMENSIONSYMBOL));
+                             model->columnDisplayedAttr(DBQUANTITYXML::QUANTITY,
+                                                        DBQUANTITYXML::DIMENSION));
     dataMapper()->addMapping(comboBoxBasicUnit,
-                             model->columnDisplayedAttr(DBENTITYXML::ENTITY,
-                                                        DBENTITYXML::BASICUNIT));
+                             model->columnDisplayedAttr(DBQUANTITYXML::QUANTITY,
+                                                        DBQUANTITYXML::BASICUNIT));
 
 }
 
@@ -52,7 +52,7 @@ bool EntityWidget::isEmpty()
 
 void EntityWidget::add()
 {
-    AbstractEditorWidget::add(DBENTITYXML::ENTITY);
+    AbstractEditorWidget::add(DBQUANTITYXML::QUANTITY);
 }
 
 void EntityWidget::edit(bool flag)
@@ -65,8 +65,8 @@ void EntityWidget::edit(bool flag)
 
 void EntityWidget::submit()
 {
-    QModelIndex existIndex = model()->indexHashAttr(DBENTITYXML::ENTITY,
-                                                     DBENTITYXML::NAME,
+    QModelIndex existIndex = model()->indexHashAttr(DBQUANTITYXML::QUANTITY,
+                                                     DBQUANTITYXML::NAME,
                                                      lineEditEntityName->text());
     QModelIndex srcIndex = model()->index(dataMapper()->currentIndex(),0,
                                           dataMapper()->rootIndex());

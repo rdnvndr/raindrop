@@ -36,11 +36,11 @@ void ClassModelXml::initTagFilters()
     this->addTagFilter(DBFILTERXML::FILTER);
     this->addTagFilter(DBFILTERBLOCKXML::BLOCK);
     this->addTagFilter(DBCONDITIONXML::COND);
-    this->addTagFilter(DBENTITYXML::ENTITY);
+    this->addTagFilter(DBQUANTITYXML::QUANTITY);
     this->addTagFilter(DBUNITXML::UNIT);
-    this->addTagFilter(DBENTITYGROUPXML::ENTITYGROUP);
+    this->addTagFilter(DBQUANTITYGROUPXML::QUANTITYGROUP);
     this->addTagFilter(DBCLASSLISTXML::CLASSLIST);
-    this->addTagFilter(DBENTITYLISTXML::ENTITYLIST);
+    this->addTagFilter(DBQUANTITYLISTXML::QUANTITYLIST);
     this->addTagFilter(DBMODELXML::MODEL);
     this->addTagFilter(DBLOVLISTXML::LOVLIST);
     this->addTagFilter(DBLOVXML::LOV);
@@ -107,10 +107,10 @@ void ClassModelXml::initDisplayedAttrs()
     this->addDisplayedAttr(DBCONDITIONXML::COND, propsCondition, QIcon(":/expression"));
 
     QStringList propsEntity;
-    propsEntity << DBENTITYXML::NAME            << DBENTITYXML::ALIAS
-                << DBENTITYXML::DIMENSIONSYMBOL << DBENTITYXML::BASICUNIT
-                << DBENTITYXML::ID;
-    this->addDisplayedAttr(DBENTITYXML::ENTITY, propsEntity, QIcon(":/entity"));
+    propsEntity << DBQUANTITYXML::NAME            << DBQUANTITYXML::ALIAS
+                << DBQUANTITYXML::DIMENSION << DBQUANTITYXML::BASICUNIT
+                << DBQUANTITYXML::ID;
+    this->addDisplayedAttr(DBQUANTITYXML::QUANTITY, propsEntity, QIcon(":/entity"));
 
     QStringList propsUnit;
     propsUnit << DBUNITXML::NAME           << DBUNITXML::CODE
@@ -121,9 +121,9 @@ void ClassModelXml::initDisplayedAttrs()
     this->addDisplayedAttr(DBUNITXML::UNIT, propsUnit, QIcon(":/unit"));
 
     QStringList propsGroup;
-    propsGroup << DBENTITYGROUPXML::NAME   << DBENTITYGROUPXML::ALIAS
-               << DBENTITYGROUPXML::PARENT << DBENTITYGROUPXML::ID;
-    this->addDisplayedAttr(DBENTITYGROUPXML::ENTITYGROUP, propsGroup, QIcon(":/entitygroup"));
+    propsGroup << DBQUANTITYGROUPXML::NAME   << DBQUANTITYGROUPXML::ALIAS
+               << DBQUANTITYGROUPXML::PARENT << DBQUANTITYGROUPXML::ID;
+    this->addDisplayedAttr(DBQUANTITYGROUPXML::QUANTITYGROUP, propsGroup, QIcon(":/entitygroup"));
 
     QStringList propsClassList;
     propsClassList << DBCLASSLISTXML::NAME   << DBCLASSLISTXML::ALIAS
@@ -131,9 +131,9 @@ void ClassModelXml::initDisplayedAttrs()
     this->addDisplayedAttr(DBCLASSLISTXML::CLASSLIST, propsClassList, QIcon(":/classes"));
 
     QStringList propsEntityList;
-    propsEntityList << DBENTITYLISTXML::NAME   << DBENTITYLISTXML::ALIAS
-                    << DBENTITYLISTXML::PARENT << DBENTITYLISTXML::ID;
-    this->addDisplayedAttr(DBENTITYLISTXML::ENTITYLIST, propsEntityList, QIcon(":/units"));
+    propsEntityList << DBQUANTITYLISTXML::NAME   << DBQUANTITYLISTXML::ALIAS
+                    << DBQUANTITYLISTXML::PARENT << DBQUANTITYLISTXML::ID;
+    this->addDisplayedAttr(DBQUANTITYLISTXML::QUANTITYLIST, propsEntityList, QIcon(":/units"));
 
     QStringList propsLovList;
     propsLovList << DBLOVLISTXML::NAME   << DBLOVLISTXML::ALIAS
@@ -234,22 +234,22 @@ void ClassModelXml::initInsertTags()
     this->addInsertTags(DBCLASSLISTXML::CLASSLIST,insertTags);
 
     insertTags.clear();
-    insertTags << DBENTITYGROUPXML::ENTITYGROUP;
-    this->addInsertTags(DBENTITYLISTXML::ENTITYLIST,insertTags);
+    insertTags << DBQUANTITYGROUPXML::QUANTITYGROUP;
+    this->addInsertTags(DBQUANTITYLISTXML::QUANTITYLIST,insertTags);
 
     insertTags.clear();
     insertTags << DBUNITXML::UNIT;
-    this->addInsertTags(DBENTITYXML::ENTITY,insertTags);
+    this->addInsertTags(DBQUANTITYXML::QUANTITY,insertTags);
 
     insertTags.clear();
-    insertTags << DBCLASSLISTXML::CLASSLIST << DBENTITYLISTXML::ENTITYLIST
+    insertTags << DBCLASSLISTXML::CLASSLIST << DBQUANTITYLISTXML::QUANTITYLIST
                << DBLOVLISTXML::LOVLIST     << DBREFLISTXML::REFLIST
                << DBROLELISTXML::ROLELIST;
     this->addInsertTags(DBMODELXML::MODEL,insertTags);
 
     insertTags.clear();
-    insertTags << DBENTITYXML::ENTITY;
-    this->addInsertTags(DBENTITYGROUPXML::ENTITYGROUP,insertTags);
+    insertTags << DBQUANTITYXML::QUANTITY;
+    this->addInsertTags(DBQUANTITYGROUPXML::QUANTITYGROUP,insertTags);
 
     insertTags.clear();
     insertTags << DBLOVXML::LOV;
@@ -317,14 +317,14 @@ void ClassModelXml::initHashAttrs()
     this->addHashAttr(DBFILTERXML::FILTER,
                       DBFILTERXML::NAME,
                       TreeXmlHashModel::UniqueParentUpperRename);
-    this->addHashAttr(DBENTITYXML::ENTITY,
-                      DBENTITYXML::NAME,
+    this->addHashAttr(DBQUANTITYXML::QUANTITY,
+                      DBQUANTITYXML::NAME,
                       TreeXmlHashModel::UniqueUpperRename);
     this->addHashAttr(DBUNITXML::UNIT,
                       DBUNITXML::NAME,
                       TreeXmlHashModel::UniqueUpperRename);
-    this->addHashAttr(DBENTITYGROUPXML::ENTITYGROUP,
-                      DBENTITYGROUPXML::NAME,
+    this->addHashAttr(DBQUANTITYGROUPXML::QUANTITYGROUP,
+                      DBQUANTITYGROUPXML::NAME,
                       TreeXmlHashModel::UniqueUpperRename);
     this->addHashAttr(DBLOVXML::LOV,
                       DBLOVXML::NAME,
@@ -364,14 +364,14 @@ void ClassModelXml::initHashAttrs()
     this->addHashAttr(DBCONDITIONXML::COND,
                       DBCONDITIONXML::ID,
                       TreeXmlHashModel::Uuid);
-    this->addHashAttr(DBENTITYXML::ENTITY,
-                      DBENTITYXML::ID,
+    this->addHashAttr(DBQUANTITYXML::QUANTITY,
+                      DBQUANTITYXML::ID,
                       TreeXmlHashModel::Uuid);
     this->addHashAttr(DBUNITXML::UNIT,
                       DBUNITXML::ID,
                       TreeXmlHashModel::Uuid);
-    this->addHashAttr(DBENTITYGROUPXML::ENTITYGROUP,
-                      DBENTITYGROUPXML::ID,
+    this->addHashAttr(DBQUANTITYGROUPXML::QUANTITYGROUP,
+                      DBQUANTITYGROUPXML::ID,
                       TreeXmlHashModel::Uuid);
     this->addHashAttr(DBLOVXML::LOV,
                       DBLOVXML::ID,
@@ -442,13 +442,13 @@ void ClassModelXml::initRelations()
     this->addRelation(DBCONDITIONXML::COND, DBCONDITIONXML::SECONDATTR,
                       DBATTRXML::ATTR, DBATTRXML::NAME);
 
-    this->addRelation(DBENTITYXML::ENTITY, DBENTITYXML::BASICUNIT,
+    this->addRelation(DBQUANTITYXML::QUANTITY, DBQUANTITYXML::BASICUNIT,
                       DBUNITXML::UNIT, DBUNITXML::NAME);
-    this->addRelation(DBENTITYXML::ENTITY, DBENTITYXML::PARENT,
-                      DBENTITYGROUPXML::ENTITYGROUP, DBENTITYGROUPXML::NAME);
+    this->addRelation(DBQUANTITYXML::QUANTITY, DBQUANTITYXML::PARENT,
+                      DBQUANTITYGROUPXML::QUANTITYGROUP, DBQUANTITYGROUPXML::NAME);
 
     this->addRelation(DBUNITXML::UNIT, DBUNITXML::PARENT,
-                      DBENTITYXML::ENTITY, DBENTITYXML::NAME);
+                      DBQUANTITYXML::QUANTITY, DBQUANTITYXML::NAME);
 
     this->addRelation(DBLOVVALUEXML::LOVVALUE, DBLOVVALUEXML::PARENT,
                       DBLOVXML::LOV, DBLOVXML::NAME);
@@ -527,13 +527,13 @@ void ClassModelXml::initModel()
             }
         }
 
-        lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource,DBENTITYLISTXML::ENTITYLIST);
+        lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource,DBQUANTITYLISTXML::QUANTITYLIST);
         if (lastIndex.isValid()){
-            int column = this->columnDisplayedAttr(DBENTITYLISTXML::ENTITYLIST,
-                                                      DBENTITYLISTXML::NAME);
+            int column = this->columnDisplayedAttr(DBQUANTITYLISTXML::QUANTITYLIST,
+                                                      DBQUANTITYLISTXML::NAME);
             this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Units"));
-            column = this->columnDisplayedAttr(DBENTITYLISTXML::ENTITYLIST,
-                                                  DBENTITYLISTXML::ALIAS);
+            column = this->columnDisplayedAttr(DBQUANTITYLISTXML::QUANTITYLIST,
+                                                  DBQUANTITYLISTXML::ALIAS);
             this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Единицы измерения"));
         }
 
@@ -577,7 +577,7 @@ QModelIndex ClassModelXml::insertLastRows(int row, int count, const QModelIndex 
         if ((parentTag == DBCLASSLISTXML::CLASSLIST && tag == DBATTRXML::ATTR)
                 || (parentTag == DBMODELXML::MODEL
                     && (tag == DBCLASSLISTXML::CLASSLIST
-                        || tag == DBENTITYLISTXML::ENTITYLIST
+                        || tag == DBQUANTITYLISTXML::QUANTITYLIST
                         || tag == DBLOVLISTXML::LOVLIST
                         || tag == DBREFLISTXML::REFLIST
                         || tag == DBROLELISTXML::ROLELIST
@@ -603,7 +603,7 @@ bool ClassModelXml::removeRows(int row, int count, const QModelIndex &parent)
                     return false;
                 if (parentTag == DBMODELXML::MODEL
                         && (tag == DBCLASSLISTXML::CLASSLIST
-                            || tag == DBENTITYLISTXML::ENTITYLIST
+                            || tag == DBQUANTITYLISTXML::QUANTITYLIST
                             || tag == DBLOVLISTXML::LOVLIST
                             || tag == DBREFLISTXML::REFLIST
                             || tag == DBROLELISTXML::ROLELIST)
@@ -620,7 +620,7 @@ bool ClassModelXml::isRemove(const QModelIndex &srcIndex)
     QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
     if (tag == DBMODELXML::MODEL
             || tag == DBCLASSLISTXML::CLASSLIST
-            || tag == DBENTITYLISTXML::ENTITYLIST
+            || tag == DBQUANTITYLISTXML::QUANTITYLIST
             || tag == DBLOVLISTXML::LOVLIST
             || tag == DBROLELISTXML::ROLELIST)
     {
@@ -633,13 +633,13 @@ bool ClassModelXml::isRemove(const QModelIndex &srcIndex)
     bool success = true;
     QString msg;
 
-    if (tag == DBENTITYGROUPXML::ENTITYGROUP) {
-        QStringList tags(QStringList() << DBENTITYXML::ENTITY);
+    if (tag == DBQUANTITYGROUPXML::QUANTITYGROUP) {
+        QStringList tags(QStringList() << DBQUANTITYXML::QUANTITY);
         if (model->hasChildren(srcIndex, tags)) {
             msg += tr("Необходимо удалить сущности ЕИ.\n\n");
             success = false;
         }
-    } else if (tag == DBENTITYXML::ENTITY) {
+    } else if (tag == DBQUANTITYXML::QUANTITY) {
         QStringList tags(QStringList() << DBUNITXML::UNIT);
         if (model->hasChildren(srcIndex, tags)) {
             msg += tr("Необходимо удалить ЕИ.\n\n");

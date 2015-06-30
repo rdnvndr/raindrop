@@ -171,12 +171,12 @@ void ModelerIDEPlug::add()
             m_model->setData(lastInsertRow.sibling(lastInsertRow.row(),column),
                              DBCLASSVIEWXML::NORMAL);
         }
-    } else if (tagRole == DBENTITYLISTXML::ENTITYLIST) {
+    } else if (tagRole == DBQUANTITYLISTXML::QUANTITYLIST) {
         lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBENTITYGROUPXML::ENTITYGROUP);
-    } else if (tagRole == DBENTITYGROUPXML::ENTITYGROUP) {
+                m_model->insertLastRows(0,1,indexSource,DBQUANTITYGROUPXML::QUANTITYGROUP);
+    } else if (tagRole == DBQUANTITYGROUPXML::QUANTITYGROUP) {
         lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBENTITYXML::ENTITY);
+                m_model->insertLastRows(0,1,indexSource,DBQUANTITYXML::QUANTITY);
     } else if (tagRole == DBLOVLISTXML::LOVLIST) {
         lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBLOVXML::LOV);
@@ -208,11 +208,11 @@ QString ModelerIDEPlug::dataName(const QModelIndex& index)
                                  )).data().toString();
     }
 
-    if (index.data(TreeXmlModel::TagRole) == DBENTITYXML::ENTITY)
+    if (index.data(TreeXmlModel::TagRole) == DBQUANTITYXML::QUANTITY)
     {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
-                                 DBENTITYXML::ENTITY,
-                                 DBENTITYXML::NAME
+                                 DBQUANTITYXML::QUANTITY,
+                                 DBQUANTITYXML::NAME
                                  )).data().toString();
     }
 
@@ -232,10 +232,10 @@ QString ModelerIDEPlug::dataName(const QModelIndex& index)
                                  )).data().toString();
     }
 
-    if (index.data(TreeXmlModel::TagRole) == DBENTITYGROUPXML::ENTITYGROUP) {
+    if (index.data(TreeXmlModel::TagRole) == DBQUANTITYGROUPXML::QUANTITYGROUP) {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
-                                 DBENTITYGROUPXML::ENTITYGROUP,
-                                 DBENTITYGROUPXML::NAME
+                                 DBQUANTITYGROUPXML::QUANTITYGROUP,
+                                 DBQUANTITYGROUPXML::NAME
                                  )).data().toString();
     }
 
@@ -274,11 +274,11 @@ QString ModelerIDEPlug::dataId(const QModelIndex &index)
                                  )).data().toString();
     }
 
-    if (index.data(TreeXmlModel::TagRole) == DBENTITYXML::ENTITY)
+    if (index.data(TreeXmlModel::TagRole) == DBQUANTITYXML::QUANTITY)
     {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
-                                 DBENTITYXML::ENTITY,
-                                 DBENTITYXML::ID
+                                 DBQUANTITYXML::QUANTITY,
+                                 DBQUANTITYXML::ID
                                  )).data().toString();
     }
 
@@ -298,10 +298,10 @@ QString ModelerIDEPlug::dataId(const QModelIndex &index)
                                  )).data().toString();
     }
 
-    if (index.data(TreeXmlModel::TagRole) == DBENTITYGROUPXML::ENTITYGROUP) {
+    if (index.data(TreeXmlModel::TagRole) == DBQUANTITYGROUPXML::QUANTITYGROUP) {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
-                                 DBENTITYGROUPXML::ENTITYGROUP,
-                                 DBENTITYGROUPXML::ID
+                                 DBQUANTITYGROUPXML::QUANTITYGROUP,
+                                 DBQUANTITYGROUPXML::ID
                                  )).data().toString();
     }
 
@@ -359,9 +359,9 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editabl
         subWindowName = "PropClass::" + this->dataId(indexSource);
     else if (tagRole == DBFILTERXML::FILTER)
         subWindowName = "PropFilter::" + this->dataId(indexSource);
-    else if (tagRole == DBENTITYXML::ENTITY)
+    else if (tagRole == DBQUANTITYXML::QUANTITY)
         subWindowName = "PropEntity::" + this->dataId(indexSource);
-    else if (tagRole == DBENTITYGROUPXML::ENTITYGROUP)
+    else if (tagRole == DBQUANTITYGROUPXML::QUANTITYGROUP)
         subWindowName = "PropEntityGroup::" + this->dataId(indexSource);
     else if (tagRole == DBLOVXML::LOV)
         subWindowName = "PropLov::" + this->dataId(indexSource);
@@ -384,9 +384,9 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editabl
             propEditor = qobject_cast<AbstractPropEditor*>(propClass);
         } else if (tagRole == DBFILTERXML::FILTER) {
             propEditor = qobject_cast<AbstractPropEditor*>(new PropFilter());
-        } else if (tagRole == DBENTITYXML::ENTITY) {
+        } else if (tagRole == DBQUANTITYXML::QUANTITY) {
             propEditor = qobject_cast<AbstractPropEditor*>(new PropEntity());
-        } else if (tagRole == DBENTITYGROUPXML::ENTITYGROUP) {
+        } else if (tagRole == DBQUANTITYGROUPXML::QUANTITYGROUP) {
             propEditor = qobject_cast<AbstractPropEditor*>(new PropEntityGroup());
         } else if (tagRole == DBLOVXML::LOV) {
             propEditor = qobject_cast<AbstractPropEditor*>(new PropLov());
@@ -431,9 +431,9 @@ void ModelerIDEPlug::closePropEditor(const QModelIndex &index)
         subWindowName = "PropComposition::" + subWindowName;
     } else if (tagRole == DBFILTERXML::FILTER) {
         subWindowName = "PropFilter::" + subWindowName;
-    } else if (tagRole == DBENTITYXML::ENTITY) {
+    } else if (tagRole == DBQUANTITYXML::QUANTITY) {
         subWindowName = "PropEntiry::" + subWindowName;
-    } else if (tagRole == DBENTITYGROUPXML::ENTITYGROUP) {
+    } else if (tagRole == DBQUANTITYGROUPXML::QUANTITYGROUP) {
         subWindowName = "PropEntityGroup::" + subWindowName;
     } else if (tagRole==DBLOVXML::LOV) {
         subWindowName = "PropLov::" + subWindowName;
