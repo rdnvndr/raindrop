@@ -1,4 +1,4 @@
-#include "propentitygroup.h"
+#include "propquantitygroup.h"
 
 #include <QMdiSubWindow>
 #include <QMessageBox>
@@ -11,60 +11,60 @@ using namespace RTPTechGroup::XmlModel;
 namespace RTPTechGroup {
 namespace ModelerIde {
 
-PropEntityGroup::PropEntityGroup(QWidget *parent) :
+PropQuantityGroup::PropQuantityGroup(QWidget *parent) :
     AbstractPropEditor(parent)
 {
     setupUi(this);
 
-    connect(entityGroupWidget,SIGNAL(currentIndexChanged(QModelIndex)),
+    connect(quantityGroupWidget,SIGNAL(currentIndexChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
-    connect(entityGroupWidget,SIGNAL(dataChanged(QModelIndex)),
+    connect(quantityGroupWidget,SIGNAL(dataChanged(QModelIndex)),
             this,SLOT(setTabName(QModelIndex)));
-    connect(entityGroupWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
+    connect(quantityGroupWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
             this,SLOT(closeTab(QModelIndex)));
 }
 
-PropEntityGroup::~PropEntityGroup()
+PropQuantityGroup::~PropQuantityGroup()
 {
 
 }
 
-void PropEntityGroup::setModel(TreeXmlHashModel *model)
+void PropQuantityGroup::setModel(TreeXmlHashModel *model)
 {
-    entityGroupWidget->setModel(model);
+    quantityGroupWidget->setModel(model);
 
     AbstractPropEditor::setModel(model);
 }
 
-QString PropEntityGroup::dataId(const QModelIndex &index)
+QString PropQuantityGroup::dataId(const QModelIndex &index)
 {
     return modelData(DBQUANTITYGROUPXML::QUANTITYGROUP,
                                DBQUANTITYGROUPXML::ID,
                                index).toString();
 }
 
-void PropEntityGroup::setCurrent(const QModelIndex &index)
+void PropQuantityGroup::setCurrent(const QModelIndex &index)
 {
-    entityGroupWidget->setCurrent(index);
+    quantityGroupWidget->setCurrent(index);
 }
 
-void PropEntityGroup::setTabName(const QModelIndex &index)
+void PropQuantityGroup::setTabName(const QModelIndex &index)
 {
     QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow *> (this->parent());
 
-    QString entityGroupName = modelData(
+    QString quantityGroupName = modelData(
                 DBQUANTITYGROUPXML::QUANTITYGROUP,
                 DBQUANTITYGROUPXML::NAME,index).toString();
     QString id = this->dataId(index);
 
-    this->setObjectName("PropEntityGroup::" + id);
+    this->setObjectName("PropQuantityGroup::" + id);
     subWindow->setWindowIcon(qvariant_cast<QIcon>(index.data(Qt::DecorationRole)));
-    subWindow->setWindowTitle(entityGroupName);
+    subWindow->setWindowTitle(quantityGroupName);
 }
 
-void PropEntityGroup::edit(bool flag)
+void PropQuantityGroup::edit(bool flag)
 {
-    entityGroupWidget->edit(flag);
+    quantityGroupWidget->edit(flag);
 }
 
 }}

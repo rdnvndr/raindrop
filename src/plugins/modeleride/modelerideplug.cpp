@@ -13,11 +13,11 @@
 #include "modelerideplug.h"
 #include "propclass.h"
 #include "propfilter.h"
-#include "propentity.h"
-#include "propentitygroup.h"
+#include "propquantity.h"
+#include "propquantitygroup.h"
 #include "lovwidget.h"
 #include "refgroupwidget.h"
-#include "entitygroupwidget.h"
+#include "quantitygroupwidget.h"
 #include "proplov.h"
 #include "proprefgroup.h"
 #include "propref.h"
@@ -360,9 +360,9 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editabl
     else if (tagRole == DBFILTERXML::FILTER)
         subWindowName = "PropFilter::" + this->dataId(indexSource);
     else if (tagRole == DBQUANTITYXML::QUANTITY)
-        subWindowName = "PropEntity::" + this->dataId(indexSource);
+        subWindowName = "PropQuantity::" + this->dataId(indexSource);
     else if (tagRole == DBQUANTITYGROUPXML::QUANTITYGROUP)
-        subWindowName = "PropEntityGroup::" + this->dataId(indexSource);
+        subWindowName = "PropQuantityGroup::" + this->dataId(indexSource);
     else if (tagRole == DBLOVXML::LOV)
         subWindowName = "PropLov::" + this->dataId(indexSource);
     else if (tagRole == DBREFGROUPXML::REFGROUP)
@@ -385,9 +385,9 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editabl
         } else if (tagRole == DBFILTERXML::FILTER) {
             propEditor = qobject_cast<AbstractPropEditor*>(new PropFilter());
         } else if (tagRole == DBQUANTITYXML::QUANTITY) {
-            propEditor = qobject_cast<AbstractPropEditor*>(new PropEntity());
+            propEditor = qobject_cast<AbstractPropEditor*>(new PropQuantity());
         } else if (tagRole == DBQUANTITYGROUPXML::QUANTITYGROUP) {
-            propEditor = qobject_cast<AbstractPropEditor*>(new PropEntityGroup());
+            propEditor = qobject_cast<AbstractPropEditor*>(new PropQuantityGroup());
         } else if (tagRole == DBLOVXML::LOV) {
             propEditor = qobject_cast<AbstractPropEditor*>(new PropLov());
         } else if (tagRole == DBREFGROUPXML::REFGROUP) {
@@ -434,7 +434,7 @@ void ModelerIDEPlug::closePropEditor(const QModelIndex &index)
     } else if (tagRole == DBQUANTITYXML::QUANTITY) {
         subWindowName = "PropEntiry::" + subWindowName;
     } else if (tagRole == DBQUANTITYGROUPXML::QUANTITYGROUP) {
-        subWindowName = "PropEntityGroup::" + subWindowName;
+        subWindowName = "PropQuantityGroup::" + subWindowName;
     } else if (tagRole==DBLOVXML::LOV) {
         subWindowName = "PropLov::" + subWindowName;
     } else if (tagRole==DBREFGROUPXML::REFGROUP) {
@@ -542,8 +542,8 @@ void ModelerIDEPlug::closeClassModel()
     foreach (QMdiSubWindow *subWindow, mainWindow->subWindowList())
         if (subWindow->widget()->objectName().indexOf(QRegExp("^PropClass::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropFilter::"))  != -1
-         || subWindow->widget()->objectName().indexOf(QRegExp("^PropEntityGroup::"))  != -1
-         || subWindow->widget()->objectName().indexOf(QRegExp("^PropEntity::"))  != -1
+         || subWindow->widget()->objectName().indexOf(QRegExp("^PropQuantityGroup::"))  != -1
+         || subWindow->widget()->objectName().indexOf(QRegExp("^PropQuantity::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropLov::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropRefGroup::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropRef::"))  != -1

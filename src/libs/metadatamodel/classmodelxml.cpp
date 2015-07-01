@@ -106,11 +106,11 @@ void ClassModelXml::initDisplayedAttrs()
                      << DBCONDITIONXML::PARENT      << DBCONDITIONXML::ID;
     this->addDisplayedAttr(DBCONDITIONXML::COND, propsCondition, QIcon(":/expression"));
 
-    QStringList propsEntity;
-    propsEntity << DBQUANTITYXML::NAME            << DBQUANTITYXML::ALIAS
+    QStringList propsQuantity;
+    propsQuantity << DBQUANTITYXML::NAME            << DBQUANTITYXML::ALIAS
                 << DBQUANTITYXML::DIMENSION << DBQUANTITYXML::BASICUNIT
                 << DBQUANTITYXML::ID;
-    this->addDisplayedAttr(DBQUANTITYXML::QUANTITY, propsEntity, QIcon(":/entity"));
+    this->addDisplayedAttr(DBQUANTITYXML::QUANTITY, propsQuantity, QIcon(":/quantity"));
 
     QStringList propsUnit;
     propsUnit << DBUNITXML::NAME           << DBUNITXML::CODE
@@ -123,17 +123,17 @@ void ClassModelXml::initDisplayedAttrs()
     QStringList propsGroup;
     propsGroup << DBQUANTITYGROUPXML::NAME   << DBQUANTITYGROUPXML::ALIAS
                << DBQUANTITYGROUPXML::PARENT << DBQUANTITYGROUPXML::ID;
-    this->addDisplayedAttr(DBQUANTITYGROUPXML::QUANTITYGROUP, propsGroup, QIcon(":/entitygroup"));
+    this->addDisplayedAttr(DBQUANTITYGROUPXML::QUANTITYGROUP, propsGroup, QIcon(":/quantitygroup"));
 
     QStringList propsClassList;
     propsClassList << DBCLASSLISTXML::NAME   << DBCLASSLISTXML::ALIAS
                    << DBCLASSLISTXML::PARENT << DBCLASSLISTXML::ID;
     this->addDisplayedAttr(DBCLASSLISTXML::CLASSLIST, propsClassList, QIcon(":/classes"));
 
-    QStringList propsEntityList;
-    propsEntityList << DBQUANTITYLISTXML::NAME   << DBQUANTITYLISTXML::ALIAS
+    QStringList propsQuantityList;
+    propsQuantityList << DBQUANTITYLISTXML::NAME   << DBQUANTITYLISTXML::ALIAS
                     << DBQUANTITYLISTXML::PARENT << DBQUANTITYLISTXML::ID;
-    this->addDisplayedAttr(DBQUANTITYLISTXML::QUANTITYLIST, propsEntityList, QIcon(":/units"));
+    this->addDisplayedAttr(DBQUANTITYLISTXML::QUANTITYLIST, propsQuantityList, QIcon(":/units"));
 
     QStringList propsLovList;
     propsLovList << DBLOVLISTXML::NAME   << DBLOVLISTXML::ALIAS

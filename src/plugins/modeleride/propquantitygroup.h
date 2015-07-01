@@ -1,7 +1,7 @@
-#ifndef PROPENTITYGROUP_H
-#define PROPENTITYGROUP_H
+#ifndef PROPQUANTITYGROUP_H
+#define PROPQUANTITYGROUP_H
 
-#include "ui_propentitygroup.h"
+#include "ui_propquantitygroup.h"
 
 #include <QDataWidgetMapper>
 
@@ -16,16 +16,16 @@ namespace ModelerIde {
 //! Диалог редактирования группы величины
 /*! Диалог предназначен для редактирования группы величины
 */
-class PropEntityGroup : public AbstractPropEditor, private Ui::PropEntityGroup
+class PropQuantityGroup : public AbstractPropEditor, private Ui::PropQuantityGroup
 {
     Q_OBJECT
 
 public:
     //! Конструктор диалога редактирования группы величины
-    explicit PropEntityGroup(QWidget *parent = 0);
+    explicit PropQuantityGroup(QWidget *parent = 0);
 
     //! Деструктор диалога редактирования группы величины
-    virtual ~PropEntityGroup();
+    virtual ~PropQuantityGroup();
 
     //! Установка модели структуры классов
     void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
@@ -46,4 +46,4 @@ public slots:
 
 }}
 
-#endif // PROPENTITYGROUP_H
+#endif // PROPQUANTITYGROUP_H

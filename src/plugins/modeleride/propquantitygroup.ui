@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RTPTechGroup::ModelerIde::PropEntityGroup</class>
- <widget class="QWidget" name="RTPTechGroup::ModelerIde::PropEntityGroup">
+ <class>RTPTechGroup::ModelerIde::PropQuantityGroup</class>
+ <widget class="QWidget" name="RTPTechGroup::ModelerIde::PropQuantityGroup">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -30,15 +30,15 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="EntityGroupWidget" name="entityGroupWidget" native="true"/>
+    <widget class="QuantityGroupWidget" name="quantityGroupWidget" native="true"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>EntityGroupWidget</class>
+   <class>QuantityGroupWidget</class>
    <extends>QWidget</extends>
-   <header>entitygroupwidget.h</header>
+   <header>quantitygroupwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -32,9 +32,7 @@ HEADERS += modelerideplug.h \
     filterpropwidget.h \
     conditionproxymodel.h \
     conditiondelegate.h \
-    propentity.h \
     regexpvalidator.h \
-    propentitygroup.h \
     unitdelegate.h \
     lovwidget.h \
     proplov.h \
@@ -50,16 +48,18 @@ HEADERS += modelerideplug.h \
     abstractpropeditor.h \
     abstracteditorwidget.h \
     refgroupwidget.h \
-    entitywidget.h \
     unitwidget.h \
-    entitygroupwidget.h \
     abstractitemwidget.h \
     abstractmodifywidget.h \
     proprole.h \
     rolewidget.h \
     permissionwidget.h \
     permissionproxymodel.h \
-    permdelegate.h
+    permdelegate.h \
+    quantitygroupwidget.h \
+    quantitywidget.h \
+    propquantitygroup.h \
+    propquantity.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -73,9 +73,7 @@ SOURCES += modelerideplug.cpp \
     filterpropwidget.cpp \
     conditionproxymodel.cpp \
     conditiondelegate.cpp \
-    propentity.cpp \
     regexpvalidator.cpp \
-    propentitygroup.cpp \
     unitdelegate.cpp \
     lovwidget.cpp \
     proplov.cpp \
@@ -91,16 +89,18 @@ SOURCES += modelerideplug.cpp \
     abstractpropeditor.cpp \
     abstracteditorwidget.cpp \
     refgroupwidget.cpp \
-    entitywidget.cpp \
     unitwidget.cpp \
-    entitygroupwidget.cpp \
     abstractitemwidget.cpp \
     abstractmodifywidget.cpp \
     proprole.cpp \
     rolewidget.cpp \
     permissionwidget.cpp \
     permissionproxymodel.cpp \
-    permdelegate.cpp
+    permdelegate.cpp \
+    quantitygroupwidget.cpp \
+    quantitywidget.cpp \
+    propquantitygroup.cpp \
+    propquantity.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
@@ -112,8 +112,6 @@ FORMS += \
     filterwidget.ui \
     propfilter.ui \
     filterpropwidget.ui \
-    propentity.ui \
-    propentitygroup.ui \
     lovwidget.ui \
     proplov.ui \
     lovvaluewidget.ui \
@@ -122,9 +120,11 @@ FORMS += \
     refwidget.ui \
     refitemwidget.ui \
     refgroupwidget.ui \
-    entitywidget.ui \
     unitwidget.ui \
-    entitygroupwidget.ui \
     proprole.ui \
     rolewidget.ui \
-    permissionwidget.ui
+    permissionwidget.ui \
+    quantitygroupwidget.ui \
+    quantitywidget.ui \
+    propquantity.ui \
+    propquantitygroup.ui
