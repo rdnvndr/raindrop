@@ -80,7 +80,7 @@ void EntityGroupWidget::submit()
     if (existIndex.isValid()){
         if (existIndex.sibling(existIndex.row(),0)!=srcIndex){
             QMessageBox::warning(this,tr("Предупреждение"),
-                                 tr("Группа сущность ЕИ с таким именем уже существует"));
+                                 tr("Группа величины с таким именем уже существует"));
             return;
         }
     }

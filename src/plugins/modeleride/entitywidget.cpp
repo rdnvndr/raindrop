@@ -74,7 +74,7 @@ void EntityWidget::submit()
     if (existIndex.isValid()){
         if (existIndex.sibling(existIndex.row(),0)!=srcIndex){
             QMessageBox::warning(this,tr("Предупреждение"),
-                                 tr("Сущность ЕИ с таким именем уже существует"));
+                                 tr("Величина с таким именем уже существует"));
             return;
         }
     }

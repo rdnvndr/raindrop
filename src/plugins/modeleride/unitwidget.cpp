@@ -40,7 +40,7 @@ void UnitWidget::setModel(TreeXmlHashModel *model)
     proxyModel()->setHeaderData(5,  Qt::Horizontal, tr("Символы"));
     proxyModel()->setHeaderData(6,  Qt::Horizontal, tr("Обозначение (межд.)"));
     proxyModel()->setHeaderData(7,  Qt::Horizontal, tr("Символы (межд.)"));
-    proxyModel()->setHeaderData(8,  Qt::Horizontal, tr("Сущность ЕИ"));
+    proxyModel()->setHeaderData(8,  Qt::Horizontal, tr("Величина"));
     proxyModel()->setHeaderData(9,  Qt::Horizontal, tr("Идентификатор"));
     itemView()->setModel(proxyModel());
 

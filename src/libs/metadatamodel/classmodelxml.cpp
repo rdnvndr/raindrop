@@ -636,7 +636,7 @@ bool ClassModelXml::isRemove(const QModelIndex &srcIndex)
     if (tag == DBQUANTITYGROUPXML::QUANTITYGROUP) {
         QStringList tags(QStringList() << DBQUANTITYXML::QUANTITY);
         if (model->hasChildren(srcIndex, tags)) {
-            msg += tr("Необходимо удалить сущности ЕИ.\n\n");
+            msg += tr("Необходимо удалить величины.\n\n");
             success = false;
         }
     } else if (tag == DBQUANTITYXML::QUANTITY) {

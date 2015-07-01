@@ -14,8 +14,8 @@
 namespace RTPTechGroup {
 namespace ModelerIde {
 
-//! Диалог редактирования сущности единицы измерения
-/*! Диалог предназначен для редактирования сущности единицы измерения
+//! Диалог редактирования величины единицы измерения
+/*! Диалог предназначен для редактирования величины единицы измерения
 */
 
 class PropEntity : public AbstractPropEditor, private Ui::PropEntity
@@ -23,10 +23,10 @@ class PropEntity : public AbstractPropEditor, private Ui::PropEntity
     Q_OBJECT
 
 public:
-    //! Конструктор диалога редактирования сущности единицы измерения
+    //! Конструктор диалога редактирования величины единицы измерения
     explicit PropEntity(QWidget *parent = 0);
 
-    //! Деструктор диалога редактирования сущности единицы измерения
+    //! Деструктор диалога редактирования величины единицы измерения
     virtual ~PropEntity();
 
     //! Установка модели структуры классов
@@ -36,13 +36,13 @@ public:
     QString dataId(const QModelIndex &index);
 
 public slots:
-    //! Установка текущей сущности единицы измерения
+    //! Установка текущей величины единицы измерения
     void setCurrent(const QModelIndex &index);
 
     //! Установка наименования вкладки/подокна
     void setTabName(const QModelIndex &index);
 
-    //! Перевод сущности ЕИ в режим редактирования
+    //! Перевод величины ЕИ в режим редактирования
     void edit(bool flag);
 };
 
