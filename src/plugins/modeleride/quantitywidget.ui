@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RTPTechGroup::ModelerIde::EntityWidget</class>
- <widget class="QWidget" name="RTPTechGroup::ModelerIde::EntityWidget">
+ <class>RTPTechGroup::ModelerIde::QuantityWidget</class>
+ <widget class="QWidget" name="RTPTechGroup::ModelerIde::QuantityWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QGroupBox" name="groupBoxEntity">
+    <widget class="QGroupBox" name="groupBoxQuantity">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -39,14 +39,14 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="QLabel" name="labelEntityName">
+       <widget class="QLabel" name="labelQuantityName">
         <property name="text">
-         <string>Имя сущности:</string>
+         <string>Имя величины:</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEditEntityName">
+       <widget class="QLineEdit" name="lineEditQuantityName">
         <property name="maxLength">
          <number>256</number>
         </property>
@@ -56,7 +56,7 @@
        <widget class="QComboBox" name="comboBoxBasicUnit"/>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEditEntityAlias">
+       <widget class="QLineEdit" name="lineEditQuantityAlias">
         <property name="maxLength">
          <number>256</number>
         </property>
@@ -70,7 +70,7 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="labelEntityAlias">
+       <widget class="QLabel" name="labelQuantityAlias">
         <property name="text">
          <string>Псевдоним:</string>
         </property>

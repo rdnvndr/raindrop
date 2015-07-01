@@ -1,7 +1,7 @@
-#ifndef ENTITYGROUPWIDGET_H
-#define ENTITYGROUPWIDGET_H
+#ifndef QUANTITYGROUPWIDGET_H
+#define QUANTITYGROUPWIDGET_H
 
-#include "ui_entitygroupwidget.h"
+#include "ui_quantitygroupwidget.h"
 
 #include <QDataWidgetMapper>
 #include <QMessageBox>
@@ -18,16 +18,16 @@ namespace ModelerIde {
 /*! Диалог предназначен для редактирования группы величины
 */
 
-class EntityGroupWidget : public AbstractEditorWidget, private Ui::EntityGroupWidget
+class QuantityGroupWidget : public AbstractEditorWidget, private Ui::QuantityGroupWidget
 {
     Q_OBJECT
 
 public:
     //! Конструктор редактора группы величины
-    explicit EntityGroupWidget(QWidget *parent = 0);
+    explicit QuantityGroupWidget(QWidget *parent = 0);
 
     //! Деструктор редактора группы величины
-    virtual ~EntityGroupWidget();
+    virtual ~QuantityGroupWidget();
 
     //! Установка модели структуры классов
     void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
@@ -52,4 +52,4 @@ signals:
 
 }}
 
-#endif // ENTITYGROUPWIDGET_H
+#endif // QUANTITYGROUPWIDGET_H

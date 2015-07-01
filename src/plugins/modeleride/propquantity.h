@@ -1,7 +1,7 @@
-#ifndef PROPENTITY_H
-#define PROPENTITY_H
+#ifndef PROPQUANTITY_H
+#define PROPQUANTITY_H
 
-#include "ui_propentity.h"
+#include "ui_propquantity.h"
 
 #include <QDataWidgetMapper>
 #include <QStringListModel>
@@ -18,16 +18,16 @@ namespace ModelerIde {
 /*! Диалог предназначен для редактирования величины единицы измерения
 */
 
-class PropEntity : public AbstractPropEditor, private Ui::PropEntity
+class PropQuantity : public AbstractPropEditor, private Ui::PropQuantity
 {
     Q_OBJECT
 
 public:
     //! Конструктор диалога редактирования величины единицы измерения
-    explicit PropEntity(QWidget *parent = 0);
+    explicit PropQuantity(QWidget *parent = 0);
 
     //! Деструктор диалога редактирования величины единицы измерения
-    virtual ~PropEntity();
+    virtual ~PropQuantity();
 
     //! Установка модели структуры классов
     void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
@@ -48,4 +48,4 @@ public slots:
 
 }}
 
-#endif // PROPENTITY_H
+#endif // PROPQUANTITY_H

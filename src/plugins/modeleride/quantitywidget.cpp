@@ -1,4 +1,4 @@
-#include "entitywidget.h"
+#include "quantitywidget.h"
 #include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
 #include <QStringListModel>
@@ -9,7 +9,7 @@ using namespace RTPTechGroup::XmlModel;
 namespace RTPTechGroup {
 namespace ModelerIde {
 
-EntityWidget::EntityWidget(QWidget *parent) :
+QuantityWidget::QuantityWidget(QWidget *parent) :
     AbstractEditorWidget(parent)
 {
     setupUi(this);
@@ -18,22 +18,22 @@ EntityWidget::EntityWidget(QWidget *parent) :
             this, SLOT(changeUnit(int)));
 }
 
-EntityWidget::~EntityWidget()
+QuantityWidget::~QuantityWidget()
 {
 
 }
 
-void EntityWidget::setModel(TreeXmlHashModel *model)
+void QuantityWidget::setModel(TreeXmlHashModel *model)
 {
     AbstractEditorWidget::setModel(model);
 
     connect(model,SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
             this,SLOT(rowsAboutToBeRemoved(QModelIndex,int,int)));
 
-    dataMapper()->addMapping(lineEditEntityName,
+    dataMapper()->addMapping(lineEditQuantityName,
                              model->columnDisplayedAttr(DBQUANTITYXML::QUANTITY,
                                                         DBQUANTITYXML::NAME));
-    dataMapper()->addMapping(lineEditEntityAlias,
+    dataMapper()->addMapping(lineEditQuantityAlias,
                              model->columnDisplayedAttr(DBQUANTITYXML::QUANTITY,
                                                         DBQUANTITYXML::ALIAS));
     dataMapper()->addMapping(lineEditDimensionSymbol,
@@ -45,29 +45,29 @@ void EntityWidget::setModel(TreeXmlHashModel *model)
 
 }
 
-bool EntityWidget::isEmpty()
+bool QuantityWidget::isEmpty()
 {
-    return lineEditEntityName->text().isEmpty();
+    return lineEditQuantityName->text().isEmpty();
 }
 
-void EntityWidget::add()
+void QuantityWidget::add()
 {
     AbstractEditorWidget::add(DBQUANTITYXML::QUANTITY);
 }
 
-void EntityWidget::edit(bool flag)
+void QuantityWidget::edit(bool flag)
 {
     if (isEmpty()) flag = true;
-    groupBoxEntity->setEnabled(flag);
+    groupBoxQuantity->setEnabled(flag);
 
     emit edited(flag);
 }
 
-void EntityWidget::submit()
+void QuantityWidget::submit()
 {
     QModelIndex existIndex = model()->indexHashAttr(DBQUANTITYXML::QUANTITY,
                                                      DBQUANTITYXML::NAME,
-                                                     lineEditEntityName->text());
+                                                     lineEditQuantityName->text());
     QModelIndex srcIndex = model()->index(dataMapper()->currentIndex(),0,
                                           dataMapper()->rootIndex());
 
@@ -82,7 +82,7 @@ void EntityWidget::submit()
     AbstractEditorWidget::submit();
 }
 
-void EntityWidget::rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end)
+void QuantityWidget::rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end)
 {
     Q_UNUSED(parent)
 
@@ -94,22 +94,22 @@ void EntityWidget::rowsAboutToBeRemoved(const QModelIndex &parent, int start, in
     }
 }
 
-void EntityWidget::setUnitModel(QAbstractItemModel *model)
+void QuantityWidget::setUnitModel(QAbstractItemModel *model)
 {
     comboBoxBasicUnit->setModel(model);
 }
 
-void EntityWidget::setUnitRootIndex(const QModelIndex &index)
+void QuantityWidget::setUnitRootIndex(const QModelIndex &index)
 {
     comboBoxBasicUnit->setRootModelIndex(index);
 }
 
-void EntityWidget::setUnitColumn(int column)
+void QuantityWidget::setUnitColumn(int column)
 {
     comboBoxBasicUnit->setModelColumn(column);
 }
 
-void EntityWidget::changeUnit(int current)
+void QuantityWidget::changeUnit(int current)
 {
     Q_UNUSED(current)
 

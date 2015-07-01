@@ -1,7 +1,7 @@
-#ifndef ENTITYWIDGET_H
-#define ENTITYWIDGET_H
+#ifndef QUANTITYWIDGET_H
+#define QUANTITYWIDGET_H
 
-#include "ui_entitywidget.h"
+#include "ui_quantitywidget.h"
 
 #include <QDataWidgetMapper>
 #include <QMessageBox>
@@ -18,16 +18,16 @@ namespace ModelerIde {
 //! Диалог редактирования величины
 /*! Диалог предназначен для редактирования величины
  */
-class EntityWidget : public AbstractEditorWidget, private Ui::EntityWidget
+class QuantityWidget : public AbstractEditorWidget, private Ui::QuantityWidget
 {
     Q_OBJECT
 
 public:
     //! Конструктор редактора величины
-    explicit EntityWidget(QWidget *parent = 0);
+    explicit QuantityWidget(QWidget *parent = 0);
 
     //! Деструктор редактора величины
-    virtual ~EntityWidget();
+    virtual ~QuantityWidget();
 
     //! Установка модели структуры классов
     void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
@@ -69,4 +69,4 @@ signals:
 
 }}
 
-#endif // ENTITYWIDGET_H
+#endif // QUANTITYWIDGET_H

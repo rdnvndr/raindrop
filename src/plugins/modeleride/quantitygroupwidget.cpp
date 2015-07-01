@@ -1,4 +1,4 @@
-#include "entitygroupwidget.h"
+#include "quantitygroupwidget.h"
 
 #include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
@@ -9,7 +9,7 @@ using namespace RTPTechGroup::XmlModel;
 namespace RTPTechGroup {
 namespace ModelerIde {
 
-EntityGroupWidget::EntityGroupWidget(QWidget *parent) :
+QuantityGroupWidget::QuantityGroupWidget(QWidget *parent) :
     AbstractEditorWidget(parent)
 {
     setupUi(this);
@@ -22,36 +22,36 @@ EntityGroupWidget::EntityGroupWidget(QWidget *parent) :
     connect(pushButtonPropSave,   SIGNAL(clicked()), this, SLOT(submit()));
 }
 
-EntityGroupWidget::~EntityGroupWidget()
+QuantityGroupWidget::~QuantityGroupWidget()
 {
 
 }
 
-void EntityGroupWidget::setModel(TreeXmlHashModel *model)
+void QuantityGroupWidget::setModel(TreeXmlHashModel *model)
 {
     AbstractEditorWidget::setModel(model);
 
-    dataMapper()->addMapping(lineEditEntityGroupName,
+    dataMapper()->addMapping(lineEditQuantityGroupName,
                          model->columnDisplayedAttr(DBQUANTITYGROUPXML::QUANTITYGROUP,
                                                     DBQUANTITYXML::NAME));
-    dataMapper()->addMapping(lineEditEntityGroupAlias,
+    dataMapper()->addMapping(lineEditQuantityGroupAlias,
                          model->columnDisplayedAttr(DBQUANTITYGROUPXML::QUANTITYGROUP,
                                                    DBQUANTITYGROUPXML::ALIAS));
 }
 
-bool EntityGroupWidget::isEmpty()
+bool QuantityGroupWidget::isEmpty()
 {
-    return lineEditEntityGroupName->text().isEmpty();
+    return lineEditQuantityGroupName->text().isEmpty();
 }
 
-void EntityGroupWidget::add()
+void QuantityGroupWidget::add()
 {
     AbstractEditorWidget::add(DBQUANTITYGROUPXML::QUANTITYGROUP);
 }
 
-void EntityGroupWidget::edit(bool flag)
+void QuantityGroupWidget::edit(bool flag)
 {
-    if (groupBoxEntityGroup->isEnabled()==flag)
+    if (groupBoxQuantityGroup->isEnabled()==flag)
         return;
 
     if (isEmpty()) {
@@ -60,7 +60,7 @@ void EntityGroupWidget::edit(bool flag)
     } else
         toolButtonAdd->setEnabled(true);
 
-    groupBoxEntityGroup->setEnabled(flag);
+    groupBoxQuantityGroup->setEnabled(flag);
     pushButtonPropSave->setEnabled(flag);
     pushButtonPropCancel->setEnabled(flag);
     toolButtonEdit->setDisabled(flag);
@@ -68,12 +68,12 @@ void EntityGroupWidget::edit(bool flag)
     emit edited(flag);
 }
 
-void EntityGroupWidget::submit()
+void QuantityGroupWidget::submit()
 {
     QModelIndex existIndex = model()->indexHashAttr(
                 DBQUANTITYGROUPXML::QUANTITYGROUP,
                 DBQUANTITYGROUPXML::NAME,
-                lineEditEntityGroupName->text());
+                lineEditQuantityGroupName->text());
     QModelIndex srcIndex = model()->index(dataMapper()->currentIndex(),0,
                                           dataMapper()->rootIndex());
 
