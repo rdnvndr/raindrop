@@ -15,37 +15,37 @@
 namespace RTPTechGroup {
 namespace ModelerIde {
 
-//! Диалог редактирования сущности ЕИ
-/*! Диалог предназначен для редактирования сущности ЕИ
+//! Диалог редактирования величины
+/*! Диалог предназначен для редактирования величины
  */
 class EntityWidget : public AbstractEditorWidget, private Ui::EntityWidget
 {
     Q_OBJECT
 
 public:
-    //! Конструктор редактора сущности ЕИ
+    //! Конструктор редактора величины
     explicit EntityWidget(QWidget *parent = 0);
 
-    //! Деструктор редактора сущности ЕИ
+    //! Деструктор редактора величины
     virtual ~EntityWidget();
 
     //! Установка модели структуры классов
     void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
-    //! Проверка запонено ли имя сущности ЕИ
+    //! Проверка запонено ли имя величины
     bool isEmpty();
 
 public slots:
-    //! Добавление сущности ЕИ
+    //! Добавление величины
     void add();
 
-    //! Перевод сущности ЕИ в режим редактирования
+    //! Перевод величины в режим редактирования
     void edit(bool flag = true);
 
-    //! Применение изменений сущности ЕИ
+    //! Применение изменений величины
     void submit();
 
-    //! Выполняется до удаления сущности ЕИ
+    //! Выполняется до удаления величины
     void rowsAboutToBeRemoved(const QModelIndex &parent,int start,int end);
 
     //! Установка модели ЕИ
@@ -62,7 +62,7 @@ private slots:
     void changeUnit(int current);
 
 signals:
-    //! Сигнал о редактировании сущности ЕИ
+    //! Сигнал о редактировании величины
     void edited(bool flag);
 
 };

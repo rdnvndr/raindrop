@@ -14,8 +14,8 @@
 namespace RTPTechGroup {
 namespace ModelerIde {
 
-//! Диалог редактирования группы сущности ЕИ
-/*! Диалог предназначен для редактирования группы сущности ЕИ
+//! Диалог редактирования группы величины
+/*! Диалог предназначен для редактирования группы величины
 */
 
 class EntityGroupWidget : public AbstractEditorWidget, private Ui::EntityGroupWidget
@@ -23,30 +23,30 @@ class EntityGroupWidget : public AbstractEditorWidget, private Ui::EntityGroupWi
     Q_OBJECT
 
 public:
-    //! Конструктор редактора группы сущности ЕИ
+    //! Конструктор редактора группы величины
     explicit EntityGroupWidget(QWidget *parent = 0);
 
-    //! Деструктор редактора группы сущности ЕИ
+    //! Деструктор редактора группы величины
     virtual ~EntityGroupWidget();
 
     //! Установка модели структуры классов
     void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
-    //! Проверка запонена ли имя сущности группы сущности ЕИ
+    //! Проверка запонена ли имя группы величины
     bool isEmpty();
 
 public slots:
-    //! Добавление сущности группы сущности ЕИ
+    //! Добавление группы величины
     void add();
 
-    //! Перевод группы сущности ЕИ в режим редактирования
+    //! Перевод группы величины в режим редактирования
     void edit(bool flag = true);
 
-    //! Применение изменений группы сущности ЕИ
+    //! Применение изменений группы величины
     void submit();
 
 signals:
-    //! Сигнал о редактировании группы сущности ЕИ
+    //! Сигнал о редактировании группы величины
     void edited(bool flag);
 };
 
