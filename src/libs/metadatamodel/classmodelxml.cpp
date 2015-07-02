@@ -61,8 +61,9 @@ void ClassModelXml::initDisplayedAttrs()
     QStringList propsClass;
     propsClass << DBCLASSXML::NAME      << DBCLASSXML::ALIAS
                << DBCLASSXML::TYPE      << DBCLASSXML::VIEW
-               << DBCLASSXML::PARENT    << DBCLASSXML::TEMPLATE
-               << DBCLASSXML::ID        << DBCLASSXML::ICON;
+               << DBCLASSXML::PARENT    << DBCLASSXML::VERCOUNT
+               << DBCLASSXML::TEMPLATE  << DBCLASSXML::ID
+               << DBCLASSXML::ICON;
     this->addDisplayedAttr(DBCLASSXML::CLASS, propsClass,QIcon(":/class"));
 
     QStringList propsAttr;

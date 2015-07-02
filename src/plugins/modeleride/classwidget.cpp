@@ -83,7 +83,9 @@ void ClassWidget::setModel(TreeXmlHashModel *model)
     dataMapper()->addMapping(classViewComboBox,
                              model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                         DBCLASSXML::VIEW));
-
+    dataMapper()->addMapping(spinBoxVersionCount,
+                             model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                        DBCLASSXML::VERCOUNT));
     dataMapper()->addMapping(plainTextEditShowAttr,
                              model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                         DBCLASSXML::TEMPLATE));

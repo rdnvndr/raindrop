@@ -21,6 +21,7 @@ namespace DBCLASSXML{
     const QString ALIAS = "alias";
     const QString PARENT = "parent";
     const QString TEMPLATE = "displayTemplate";
+    const QString VERCOUNT = "versionCount";
     const QString ICON = "icon";
     const QString ID = "guid";
 }
