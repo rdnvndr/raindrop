@@ -258,11 +258,11 @@ namespace DBLINKTOFILTERXML{
     const QString ID = "guid";
 }
 
-//! Ключевые слова XML файла для описания ссылок на состав
-namespace DBLINKTOCOMPXML{
-    const QString LINKTOCOMP = "RTPLinkToComp";
+//! Ключевые слова XML файла для описания ссылок на справочник
+namespace DBLINKTOREFXML{
+    const QString LINKTOREF = "RTPLinkToRef";
     const QString ALIAS = "alias";
-    const QString REFCOMP = "refComp";
+    const QString REFREF = "refRef";
     const QString PARENT = "parent";
     const QString ID = "guid";
 }

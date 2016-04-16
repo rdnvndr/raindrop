@@ -66,6 +66,9 @@ public slots:
     //! Применение изменений фильтра
     void submit();
 
+    //! Отмена изменений фильтра
+    void revert();
+
     //! Установка индексов для делегата ConditionDelegate
     void changeDestClass(const QString& nameClass);
 

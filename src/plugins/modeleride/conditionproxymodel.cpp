@@ -57,11 +57,7 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
                                     DBCONDITIONXML::COND,
                                     DBCONDITIONXML::FIRSTATTR)),
                             role);
-                QModelIndex index = xmlModel->indexLink(DBATTRXML::ATTR, DBATTRXML::ID, value);
-                if (index.isValid() &&  role == Qt::DisplayRole)
-                    return index.data();
-                else
-                    return value;
+                return value;
             }
             case 1:
                 return ModifyProxyModel::data(
@@ -79,11 +75,7 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, int role) cons
                                     DBCONDITIONXML::COND,
                                     DBCONDITIONXML::SECONDATTR)),
                             role);
-                QModelIndex index = xmlModel->indexLink(DBATTRXML::ATTR, DBATTRXML::ID, value);
-                if (index.isValid() && role == Qt::DisplayRole)
-                    return index.data();
-                else
-                    return value;
+                return value;
             }
             case 3:
                 if (proxyIndex.row() < rowCount(proxyIndex.parent())-1)

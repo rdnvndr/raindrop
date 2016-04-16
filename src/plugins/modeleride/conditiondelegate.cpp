@@ -17,7 +17,7 @@ ConditionDelegate::ConditionDelegate(QObject *parent) :
 {
     m_attrModel = new TableXMLProxyModel();
     QStringList tags;
-    tags << DBATTRXML::ATTR;
+    tags << DBATTRXML::ATTR << DBCOMPXML::COMP;
     m_attrModel->setAttributeTags(tags);
     m_attrModel->setDynamicSortFilter(true);
 }
@@ -115,14 +115,22 @@ void ConditionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                         proxyModel->sourceModel());
             if (xmlModel) {
                 QModelIndex currentIndex = comboBox->view()->currentIndex();
-                if (currentIndex.isValid())
+                if (currentIndex.isValid()) {
+                    QString tag = currentIndex.data(TreeXmlModel::TagRole).toString();
+                    int column = (tag == DBATTRXML::ATTR)
+                            ? xmlModel->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                            DBATTRXML::ID)
+                            : xmlModel->columnDisplayedAttr(DBCOMPXML::COMP,
+                                                            DBCOMPXML::ID);
+
                     model->setData(index,
                                    m_attrModel->data(
                                        currentIndex.sibling(
                                            currentIndex.row(),
-                                           xmlModel->columnDisplayedAttr(
-                                               DBATTRXML::ATTR, DBATTRXML::ID))),
+                                           column
+                                           )),
                                    Qt::EditRole);
+                }
                 return;
             }
         }

@@ -203,8 +203,10 @@ QModelIndex TreeXmlHashModel::indexLink(const QString &tag, const QString &attr,
             QString attr = uuidAttr(linkTag);
             if (!attr.isEmpty()) {
                 QModelIndex linkIndex = indexHashAttr(linkTag, attr, value);
-                int column = columnDisplayedAttr(linkTag,linkAttr);
-                return linkIndex.sibling(linkIndex.row(),column);
+                if (linkIndex.isValid()) {
+                    int column = columnDisplayedAttr(linkTag,linkAttr);
+                    return linkIndex.sibling(linkIndex.row(),column);
+                }
             }
         }
     }
