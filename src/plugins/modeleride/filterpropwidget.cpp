@@ -254,6 +254,12 @@ void FilterPropWidget::submit()
     m_conditionModel->submitAll();
 }
 
+void FilterPropWidget::revert()
+{
+    m_conditionModel->revertAll();
+    AbstractEditorWidget::revert();
+}
+
 void FilterPropWidget::changeDestClass(const QString &nameClass)
 {
     QModelIndex index = model()->indexHashAttr(

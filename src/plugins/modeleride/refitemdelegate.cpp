@@ -29,17 +29,25 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
     if (hashModel) {
         QString attr = hashModel->displayedAttr(tag, index.column());
 
-        if ((tag == DBLINKTOFILTERXML::LINKTOFILTER
+        if (tag == DBLINKTOFILTERXML::LINKTOFILTER
              && attr == DBLINKTOFILTERXML::REFFILTER)
-                || (tag == DBLINKTOCOMPXML::LINKTOCOMP
-                    && attr == DBLINKTOCOMPXML::REFCOMP))
         {
             TreeComboBox *comboBoxDestClass = new TreeComboBox(parent);
             comboBoxDestClass->setItemDelegate(new XmlDelegate(comboBoxDestClass));
             TableXMLProxyModel *classFilterModel = new TableXMLProxyModel(parent);
+
             QStringList tags;
-            tags << DBFILTERXML::FILTER << DBCOMPXML::COMP;
+            tags << DBFILTERXML::FILTER;
+
+            classFilterModel->setFilterAllRows(true);
             classFilterModel->setAttributeTags(tags);
+            classFilterModel->setFilterKeyColumn(0);
+            classFilterModel->setFilterRole(TreeXmlModel::TagRole);
+            classFilterModel->setFilterRegExp(DBFILTERXML::FILTER + "|" +
+                                              DBCLASSXML::CLASS + "|" +
+                                              DBMODELXML::MODEL + "|" +
+                                              DBCLASSLISTXML::CLASSLIST);
+
             classFilterModel->setSourceModel(const_cast<QAbstractItemModel *>(
                                                  dynamic_cast<const QAbstractItemModel*>(hashModel)));
 
@@ -56,10 +64,6 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
                 comboBoxDestClass->setIndexColumn(
                             hashModel->columnDisplayedAttr(DBFILTERXML::FILTER,
                                                            DBFILTERXML::ID));
-            else
-                comboBoxDestClass->setIndexColumn(
-                            hashModel->columnDisplayedAttr(DBCOMPXML::COMP,
-                                                           DBCOMPXML::ID));
 
             if (srcParentIndex.isValid()) {
                 QModelIndex parentIndex = classFilterModel->mapFromSource(srcParentIndex);
@@ -133,11 +137,7 @@ void RefItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
             QString tag = curIndex.data(TreeXmlModel::TagRole).toString();
             QAbstractItemModel *indexModel = model;//const_cast<QAbstractItemModel *>(index.model());
             const TreeXmlHashModel *hashModel = this->hashModel(model);
-            if (tag == DBCOMPXML::COMP) {
-                treeComboBox->setIndexColumn(hashModel->columnDisplayedAttr(DBCOMPXML::COMP,
-                                                                            DBCOMPXML::ID));
-                indexModel->setData(index, DBLINKTOCOMPXML::LINKTOCOMP, TreeXmlModel::TagRole);
-            } else if (tag == DBFILTERXML::FILTER) {
+            if (tag == DBFILTERXML::FILTER) {
                 treeComboBox->setIndexColumn(hashModel->columnDisplayedAttr(DBFILTERXML::FILTER,
                                                                             DBFILTERXML::ID));
                 indexModel->setData(index, DBLINKTOFILTERXML::LINKTOFILTER, TreeXmlModel::TagRole);
@@ -172,20 +172,6 @@ QModelIndex RefItemDelegate::rootClass(QModelIndex index) const
                                                 hashModel->columnDisplayedAttr(
                                                     DBFILTERXML::FILTER,
                                                     DBFILTERXML::CLASS));
-                QModelIndex classIndex = hashModel->indexLink(linkIndex);
-                return classIndex;
-            } else  if (parentIndex.data(TreeXmlModel::TagRole) == DBLINKTOCOMPXML::LINKTOCOMP) {
-                QModelIndex linkIndex = parentIndex.sibling(
-                            parentIndex.row(),
-                            hashModel->columnDisplayedAttr(DBLINKTOCOMPXML::LINKTOCOMP,
-                                                           DBLINKTOCOMPXML::REFCOMP));
-                QModelIndex filterIndex = hashModel->indexHashAttr(DBCOMPXML::COMP,
-                                                                   DBCOMPXML::ID,
-                                                                   linkIndex.data(Qt::EditRole));
-                linkIndex = filterIndex.sibling(filterIndex.row(),
-                                                hashModel->columnDisplayedAttr(
-                                                    DBCOMPXML::COMP,
-                                                    DBCOMPXML::CLASS));
                 QModelIndex classIndex = hashModel->indexLink(linkIndex);
                 return classIndex;
             } else if (parentIndex.data(TreeXmlModel::TagRole) == DBLINKTOCLASSXML::LINKTOCLASS) {

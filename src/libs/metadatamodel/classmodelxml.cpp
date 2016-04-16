@@ -50,7 +50,7 @@ void ClassModelXml::initTagFilters()
     this->addTagFilter(DBREFXML::REF);
     this->addTagFilter(DBLINKTOCLASSXML::LINKTOCLASS);
     this->addTagFilter(DBLINKTOFILTERXML::LINKTOFILTER);
-    this->addTagFilter(DBLINKTOCOMPXML::LINKTOCOMP);
+    this->addTagFilter(DBLINKTOREFXML::LINKTOREF);
     this->addTagFilter(DBROLELISTXML::ROLELIST);
     this->addTagFilter(DBROLEXML::ROLE);
     this->addTagFilter(DBPERMISSIONXML::PERMISSION);
@@ -187,10 +187,10 @@ void ClassModelXml::initDisplayedAttrs()
                       << DBLINKTOFILTERXML::PARENT << DBLINKTOFILTERXML::ID;
     this->addDisplayedAttr(DBLINKTOFILTERXML::LINKTOFILTER, propsLinkToFilter, QIcon(":/filter"));
 
-    QStringList propsLinkToComp;
-    propsLinkToComp << DBLINKTOCOMPXML::ALIAS  << DBLINKTOCOMPXML::REFCOMP
-                    << DBLINKTOCOMPXML::PARENT << DBLINKTOCOMPXML::ID;
-    this->addDisplayedAttr(DBLINKTOCOMPXML::LINKTOCOMP, propsLinkToComp, QIcon(":/composition"));
+    QStringList propsLinkToRef;
+    propsLinkToRef << DBLINKTOREFXML::ALIAS  << DBLINKTOREFXML::REFREF
+                    << DBLINKTOREFXML::PARENT << DBLINKTOREFXML::ID;
+    this->addDisplayedAttr(DBLINKTOREFXML::LINKTOREF, propsLinkToRef, QIcon(":/reference"));
 
     QStringList propsRole;
     propsRole << DBROLEXML::NAME   << DBROLEXML::ALIAS
@@ -269,20 +269,17 @@ void ClassModelXml::initInsertTags()
     this->addInsertTags(DBREFGROUPXML::REFGROUP,insertTags);
 
     insertTags.clear();
-    insertTags << DBLINKTOCLASSXML::LINKTOCLASS << DBLINKTOFILTERXML::LINKTOFILTER;
+    insertTags << DBLINKTOCLASSXML::LINKTOCLASS << DBLINKTOFILTERXML::LINKTOFILTER
+               << DBLINKTOREFXML::LINKTOREF;
     this->addInsertTags(DBREFXML::REF,insertTags);
 
     insertTags.clear();
-    insertTags << DBLINKTOFILTERXML::LINKTOFILTER << DBLINKTOCOMPXML::LINKTOCOMP;
+    insertTags << DBLINKTOFILTERXML::LINKTOFILTER;
     this->addInsertTags(DBLINKTOCLASSXML::LINKTOCLASS,insertTags);
 
     insertTags.clear();
-    insertTags << DBLINKTOCLASSXML::LINKTOCLASS;
+    insertTags << DBLINKTOCLASSXML::LINKTOCLASS << DBLINKTOREFXML::LINKTOREF;
     this->addInsertTags(DBLINKTOFILTERXML::LINKTOFILTER,insertTags);
-
-    insertTags.clear();
-    insertTags << DBLINKTOCLASSXML::LINKTOCLASS;
-    this->addInsertTags(DBLINKTOCOMPXML::LINKTOCOMP,insertTags);
 
     insertTags.clear();
     insertTags << DBROLEXML::ROLE;
@@ -392,8 +389,8 @@ void ClassModelXml::initHashAttrs()
     this->addHashAttr(DBLINKTOFILTERXML::LINKTOFILTER,
                       DBLINKTOFILTERXML::ID,
                       TreeXmlHashModel::Uuid);
-    this->addHashAttr(DBLINKTOCOMPXML::LINKTOCOMP,
-                      DBLINKTOCOMPXML::ID,
+    this->addHashAttr(DBLINKTOREFXML::LINKTOREF,
+                      DBLINKTOREFXML::ID,
                       TreeXmlHashModel::Uuid);
     this->addHashAttr(DBCLASSLISTXML::CLASSLIST,
                       DBCLASSLISTXML::ID,
@@ -439,7 +436,11 @@ void ClassModelXml::initRelations()
                       DBCLASSXML::CLASS, DBCLASSXML::NAME);
 
     this->addRelation(DBCONDITIONXML::COND, DBCONDITIONXML::FIRSTATTR,
+                      DBCOMPXML::COMP, DBCOMPXML::LINKCLASS);
+    this->addRelation(DBCONDITIONXML::COND, DBCONDITIONXML::FIRSTATTR,
                       DBATTRXML::ATTR, DBATTRXML::NAME);
+    this->addRelation(DBCONDITIONXML::COND, DBCONDITIONXML::SECONDATTR,
+                      DBCOMPXML::COMP, DBCOMPXML::LINKCLASS);
     this->addRelation(DBCONDITIONXML::COND, DBCONDITIONXML::SECONDATTR,
                       DBATTRXML::ATTR, DBATTRXML::NAME);
 
@@ -461,8 +462,6 @@ void ClassModelXml::initRelations()
                       DBREFXML::REF, DBREFXML::ALIAS);
     this->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::PARENT,
                       DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::ALIAS);
-    this->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::PARENT,
-                      DBLINKTOCOMPXML::LINKTOCOMP, DBLINKTOCOMPXML::ALIAS);
     this->addRelation(DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::REFCLASS,
                       DBCLASSXML::CLASS, DBCLASSXML::NAME);
 
@@ -471,10 +470,12 @@ void ClassModelXml::initRelations()
     this->addRelation(DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::REFFILTER,
                       DBFILTERXML::FILTER, DBFILTERXML::NAME);
 
-    this->addRelation(DBLINKTOCOMPXML::LINKTOCOMP, DBLINKTOCOMPXML::PARENT,
-                      DBLINKTOCLASSXML::LINKTOCLASS, DBLINKTOCLASSXML::ALIAS);
-    this->addRelation(DBLINKTOCOMPXML::LINKTOCOMP, DBLINKTOCOMPXML::REFCOMP,
-                      DBCOMPXML::COMP, DBCOMPXML::LINKCLASS);
+    this->addRelation(DBLINKTOREFXML::LINKTOREF, DBLINKTOREFXML::PARENT,
+                      DBREFXML::REF, DBREFXML::ALIAS);
+    this->addRelation(DBLINKTOREFXML::LINKTOREF, DBLINKTOREFXML::PARENT,
+                      DBLINKTOFILTERXML::LINKTOFILTER, DBLINKTOFILTERXML::ALIAS);
+    this->addRelation(DBLINKTOREFXML::LINKTOREF, DBLINKTOREFXML::REFREF,
+                      DBREFXML::REF, DBREFXML::NAME);
 
     this->addRelation(DBPERMISSIONXML::PERMISSION, DBPERMISSIONXML::PARENT,
                       DBCLASSXML::CLASS, DBCLASSXML::NAME);

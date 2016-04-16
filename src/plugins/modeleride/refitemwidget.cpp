@@ -42,6 +42,8 @@ void RefItemWidget::setModel(TreeXmlHashModel *model)
     treeView->header()->setDefaultAlignment(Qt::AlignCenter);
     treeView->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     treeView->header()->setDefaultSectionSize(200);
+    connect(treeView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+            this, SLOT(changeButtonStatus(QModelIndex, QModelIndex)));
 }
 
 void RefItemWidget::add()
@@ -88,6 +90,22 @@ void RefItemWidget::edit(bool flag)
     toolButtonAddIn->setEnabled(flag);
     toolButtonDelete->setEnabled(flag);
     proxyModel()->setEditable(flag);
+}
+
+void RefItemWidget::changeButtonStatus(QModelIndex curIndex, QModelIndex prevIndex)
+{
+    if (proxyModel()->isEditable() && curIndex != prevIndex) {
+        if (curIndex.data(TreeXmlModel::TagRole) == DBLINKTOREFXML::LINKTOREF)
+        {
+            toolButtonAdd->setEnabled(false);
+            toolButtonAddIn->setEnabled(false);
+            toolButtonDelete->setEnabled(true);
+        } else {
+            toolButtonAdd->setEnabled(true);
+            toolButtonAddIn->setEnabled(true);
+            toolButtonDelete->setEnabled(true);
+        }
+    }
 }
 
 }}

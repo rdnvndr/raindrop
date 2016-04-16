@@ -46,6 +46,9 @@ public slots:
 
     //! Перевод в режим редактирования
     void edit(bool flag = true);
+
+    //! Изменение состояния кнопок
+    void changeButtonStatus(QModelIndex curIndex, QModelIndex prevIndex);
 };
 
 }}
