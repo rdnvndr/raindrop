@@ -108,7 +108,7 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
             comboBoxDestClass->setModel(classFilterModel);
             comboBoxDestClass->setIndexColumn(
                         hashModel->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                       DBATTRXML::ID));
+                                                       DBCLASSXML::ID));
 
             if (srcParentIndex.isValid()) {
                 QModelIndex parentIndex = classFilterModel->mapFromSource(srcParentIndex);
@@ -156,8 +156,8 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
 
             comboBoxDestClass->setModel(classFilterModel);
             comboBoxDestClass->setIndexColumn(
-                        hashModel->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                       DBATTRXML::ID));
+                        hashModel->columnDisplayedAttr(DBREFXML::REF,
+                                                       DBREFXML::ID));
 
             comboBoxDestClass->setRootModelIndex(
                         classFilterModel->index(0,0).child(0,0));
@@ -178,16 +178,13 @@ void RefItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
 {
     TreeComboBox *treeComboBox = dynamic_cast<TreeComboBox*>(editor);
     if (treeComboBox) {
+        // Проверка вводимых данных
         QModelIndex curIndex = treeComboBox->currentModelIndex();
         if (curIndex.isValid()) {
             QString tag = curIndex.data(TreeXmlModel::TagRole).toString();
-            QAbstractItemModel *indexModel = model;//const_cast<QAbstractItemModel *>(index.model());
-            const TreeXmlHashModel *hashModel = this->hashModel(model);
-            if (tag == DBFILTERXML::FILTER) {
-                treeComboBox->setIndexColumn(hashModel->columnDisplayedAttr(DBFILTERXML::FILTER,
-                                                                            DBFILTERXML::ID));
-                indexModel->setData(index, DBLINKTOFILTERXML::LINKTOFILTER, TreeXmlModel::TagRole);
-            }
+            if (tag != DBFILTERXML::FILTER && tag != DBCLASSXML::CLASS
+                    && tag != DBREFXML::REF)
+                return;
         }
     }
     XmlDelegate::setModelData(editor, model, index);
@@ -227,6 +224,15 @@ QModelIndex RefItemDelegate::rootClass(QModelIndex index) const
                                                            DBLINKTOCLASSXML::REFCLASS));
                 QModelIndex classIndex = hashModel->indexHashAttr(DBCLASSXML::CLASS,
                                                                   DBCLASSXML::ID,
+                                                                  linkIndex.data(Qt::EditRole));
+                return classIndex;
+            } else if (parentIndex.data(TreeXmlModel::TagRole) == DBLINKTOREFXML::LINKTOREF) {
+                QModelIndex linkIndex = parentIndex.sibling(
+                            parentIndex.row(),
+                            hashModel->columnDisplayedAttr(DBLINKTOREFXML::LINKTOREF,
+                                                           DBLINKTOREFXML::REFREF));
+                QModelIndex classIndex = hashModel->indexHashAttr(DBLINKTOREFXML::LINKTOREF,
+                                                                  DBREFXML::ID,
                                                                   linkIndex.data(Qt::EditRole));
                 return classIndex;
             }
