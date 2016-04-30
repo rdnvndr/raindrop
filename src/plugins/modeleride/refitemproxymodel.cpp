@@ -1,207 +1,92 @@
 #include "refitemproxymodel.h"
-#include "treexmlhashmodel.h"
-#include <QFont>
+#include <treexmlmodel/treexmlhashmodel.h>
+#include  <metadatamodel/dbxmlstruct.h>
+
+using namespace RTPTechGroup::XmlModel;
+using namespace RTPTechGroup::MetaDataModel;
 
 namespace RTPTechGroup {
 namespace ModelerIde {
 
-struct PrivateModelIndex
-{
-    int r, c;
-    void *p;
-    const QAbstractItemModel *m;
-};
-
 RefItemProxyModel::RefItemProxyModel(QObject *parent)
-    :QAbstractProxyModel (parent)
 {
+    Q_UNUSED(parent)
 
+    setDynamicSortFilter(true);
 }
 
-
-
-void RefItemProxyModel::sourceDataChanged(const QModelIndex &left,
-                                         const QModelIndex &right)
+bool RefItemProxyModel::hasAcceptedChildren(int source_row,
+                                               const QModelIndex &source_parent) const
 {
-    for(int column = left.column(); column <= right.column(); ++column)
-        for(int row = left.row(); row <= right.row(); ++row) {
-            void *p = left.sibling(row, column).internalPointer();
-            QPersistentModelIndex removeIndex(createIndex(row,column,p));
-        }
-
-    emit dataChanged(mapFromSource(left), mapFromSource(right));
-}
-
-void RefItemProxyModel::sourceRowsRemoved(const QModelIndex &parent,
-                                         int start, int end)
-{
-
-}
-
-void RefItemProxyModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent,
-                                                  int start, int end)
-{
-
-}
-
-void RefItemProxyModel::sourceRowsInserted(const QModelIndex &parent, int start, int end)
-{
-    beginInsertRows(mapFromSource(parent), start, end);
-    endInsertRows();
-}
-
-int RefItemProxyModel::columnCount(const QModelIndex &parent) const
-{
-    if(!sourceModel())
-        return 0;
-
-    return sourceModel()->columnCount(mapToSource(parent));
-}
-
-int RefItemProxyModel::rowCount(const QModelIndex &parent) const
-{
-    if(!sourceModel())
-        return 0;
-
-    int parentRowCount = sourceModel()->rowCount(mapToSource(parent));
-    return parentRowCount;
-}
-
-QModelIndex RefItemProxyModel::index(int row, int column, const QModelIndex &parent) const
-{
-    if (!hasIndex(row, column, parent)) {
-        return QModelIndex();
-    }
-
-    QPersistentModelIndex removeIndex(sourceModel()->index(
-                                          row, column, mapToSource(parent)));
-
-    return mapFromSource(removeIndex);
-}
-
-QModelIndex RefItemProxyModel::parent(const QModelIndex &index) const
-{
-    if (!index.isValid())
-        return QModelIndex();
-
-    if (!mapToSource(index).isValid())
-        return QModelIndex();
-
-    return mapFromSource(mapToSource(index).parent());
-}
-
-QModelIndex RefItemProxyModel::mapFromSource(const QModelIndex &index) const
-{
-    if(index.isValid()) {
-        QModelIndex sourceIndex = createIndex(index.row(), index.column(),
-                                              index.internalPointer());
-        if (sourceIndex.isValid())
-            return sourceIndex;
-    }
-
-    return QModelIndex();
-}
-
-QModelIndex RefItemProxyModel::mapToSource(const QModelIndex &index) const
-{
-    if (!index.isValid())
-        return QModelIndex();
-
-    QModelIndex sourceIndex;
-    PrivateModelIndex *hack = reinterpret_cast<PrivateModelIndex*>(&sourceIndex);
-
-    hack->r = index.row();
-    hack->c = index.column();
-    hack->p = index.internalPointer();
-    hack->m = sourceModel();
-
-    if (!sourceIndex.isValid())
-        return QModelIndex();
-
-    if (!sourceIndex.isValid())
-        return QModelIndex();
-
-    return sourceIndex;
-}
-
-QVariant RefItemProxyModel::data(const QModelIndex &proxyIndex, int role) const
-{
-    return sourceModel()->data(mapToSource(proxyIndex),role);
-}
-
-bool RefItemProxyModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    return false;
-}
-
-bool RefItemProxyModel::hasChildren(const QModelIndex &parent) const
-{
-    return rowCount(parent);
-}
-
-void RefItemProxyModel::setSourceModel(QAbstractItemModel *srcModel)
-{
-    QAbstractProxyModel::setSourceModel(srcModel);
-
-    connect(srcModel, SIGNAL(rowsRemoved(const QModelIndex &, int, int)),
-            this, SLOT(sourceRowsRemoved(const QModelIndex &, int, int)));
-    connect(srcModel, SIGNAL(rowsAboutToBeRemoved(const QModelIndex &, int, int)),
-            this, SLOT(sourceRowsAboutToBeRemoved(const QModelIndex &, int, int)));
-    connect(srcModel, SIGNAL(rowsInserted(const QModelIndex &, int, int)),
-            this, SLOT(sourceRowsInserted(const QModelIndex &, int, int)));
-    connect(srcModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-            this, SLOT(sourceDataChanged(QModelIndex,QModelIndex)));
-}
-
-Qt::ItemFlags RefItemProxyModel::flags(const QModelIndex &index) const
-{
-    Q_UNUSED(index)
-
-    return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
-}
-
-QVariant RefItemProxyModel::headerData(int section, Qt::Orientation orientation, int role) const
-{    
-    if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
-        if (m_header[section].isNull())
-            return sourceModel()->headerData(section, orientation, role);
-        else
-            return  m_header[section];
-    }
-    return  QVariant();
-
-}
-
-bool RefItemProxyModel::setHeaderData(int section, Qt::Orientation orientation,
-                                     const QVariant &value, int role)
-{
-    if (role != Qt::EditRole || orientation != Qt::Horizontal)
+    QModelIndex item = sourceModel()->index(source_row,0,source_parent);
+    if (!item.isValid())
         return false;
 
-    m_header[section] = value.toString();
-    emit headerDataChanged(orientation, section, section);
 
-    return true;
-}
+    int childCount = item.model()->rowCount(item);
+    if (childCount == 0)
+        return false;
 
-bool RefItemProxyModel::removeRows(int row, int count, const QModelIndex &parent)
-{
+    for (int i = 0; i < childCount; ++i) {
+        if (filterAcceptsRowItself(i, item))
+            return true;
+        if (hasAcceptedChildren(i, item))
+            return true;
+    }
     return false;
 }
 
-bool RefItemProxyModel::insertRows(int row, int count, const QModelIndex &parent)
+bool RefItemProxyModel::filterAcceptsRowItself(int source_row, const QModelIndex &source_parent) const
 {
+    TreeXmlHashModel *hashModel = qobject_cast<TreeXmlHashModel *>(sourceModel());
+    if (hashModel) {
+        QModelIndex srcIndex = hashModel->index(source_row, 0, source_parent);
+
+        if (srcIndex.data(TreeXmlModel::TagRole) == DBREFXML::REF) {
+            for (QModelIndex srcChild = srcIndex.child(0,0);
+                 srcChild.isValid();
+                 srcChild = srcChild.sibling(srcChild.row()+1,0))
+            {
+                if (srcChild.data(TreeXmlModel::TagRole) == DBLINKTOCLASSXML::LINKTOCLASS) {
+                    int column = hashModel->columnDisplayedAttr(
+                                DBLINKTOCLASSXML::LINKTOCLASS,
+                                DBLINKTOCLASSXML::REFCLASS);
+                    QString classId = srcChild.sibling(
+                                srcChild.row(), column).data(Qt::EditRole).toString();
+                    if (m_classId.isEmpty() || classId == m_classId)
+                        return true;
+                }
+
+            }
+            return false;
+        }
+    }
+
     return false;
 }
 
-QModelIndex RefItemProxyModel::buddy(const QModelIndex &index) const
+bool RefItemProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
-    return QAbstractItemModel::buddy(index);
+    // Если узел удолетворяет  фильтру то показать этот узел
+    if (filterAcceptsRowItself(source_row, source_parent))
+           return true;
+
+    // Если хотя бы 1 ребенок показан по фильтру, то показать и этот узел
+    if (hasAcceptedChildren(source_row, source_parent))
+        return true;
+
+    return false;
 }
 
-bool RefItemProxyModel::canFetchMore(const QModelIndex &parent) const
+bool RefItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    return QAbstractItemModel::canFetchMore(parent);
+    return QSortFilterProxyModel::lessThan(left,right);
 }
+
+void RefItemProxyModel::setClassId(const QString &classId)
+{
+    m_classId = classId;
+}
+
 
 }}
