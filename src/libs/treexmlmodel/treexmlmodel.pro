@@ -19,8 +19,7 @@ HEADERS += \
     treexmlhashmodel.h \
     treexmlmodel.h \
     mimedataindex.h \
-    setdatacommand.h \
-    treexmllinkmodel.h
+    setdatacommand.h
 
 SOURCES += \ 
     tagxmlitem.cpp \
@@ -29,6 +28,5 @@ SOURCES += \
     treexmlhashmodel.cpp \
     treexmlmodel.cpp \
     mimedataindex.cpp \
-    setdatacommand.cpp \
-    treexmllinkmodel.cpp
+    setdatacommand.cpp
 
