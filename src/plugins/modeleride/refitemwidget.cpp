@@ -14,8 +14,9 @@ RefItemWidget::RefItemWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));
-    connect(toolButtonAddIn,SIGNAL(clicked()),this,SLOT(addChild()));
+    connect(toolButtonAddClass,SIGNAL(clicked()),this,SLOT(addLinkToClass()));
+    connect(toolButtonAddFilter,SIGNAL(clicked()),this,SLOT(addLinkToFilter()));
+    connect(toolButtonAddRef,SIGNAL(clicked()),this,SLOT(addLinkToRef()));
     connect(toolButtonDelete,SIGNAL(clicked()),this,SLOT(remove()));
 
     AbstractModifyWidget::setItemView(treeView);
@@ -32,7 +33,7 @@ void RefItemWidget::setModel(TreeXmlHashModel *model)
     AbstractModifyWidget::setModel(model);
 
     proxyModel()->setHeaderData(0,  Qt::Horizontal, tr("Псевдоним"));
-    proxyModel()->setHeaderData(1,  Qt::Horizontal, tr("Класс/Фильтр"));
+    proxyModel()->setHeaderData(1,  Qt::Horizontal, tr("Класс/Справочник/Фильтр"));
     proxyModel()->setHeaderData(2,  Qt::Horizontal, tr("Родитель"));
     proxyModel()->setHeaderData(3,  Qt::Horizontal, tr("Идентификатор"));
 
@@ -42,40 +43,54 @@ void RefItemWidget::setModel(TreeXmlHashModel *model)
     treeView->header()->setDefaultAlignment(Qt::AlignCenter);
     treeView->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     treeView->header()->setDefaultSectionSize(200);
-    connect(treeView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-            this, SLOT(changeButtonStatus(QModelIndex, QModelIndex)));
 }
 
-void RefItemWidget::add()
+void RefItemWidget::addLinkToClass()
 {
-    QModelIndex srcIndex = treeView->currentIndex().parent();
+    QModelIndex srcIndex = treeView->currentIndex();
+    if (srcIndex.data(TreeXmlModel::TagRole) != DBLINKTOFILTERXML::LINKTOFILTER)
+        srcIndex = srcIndex.parent();
+
     if (!srcIndex.isValid())
         srcIndex = treeView->rootIndex();
-
     QModelIndex index = proxyModel()->insertLastRows(0,1,srcIndex);
+
     if (index.isValid()) {
-        if (srcIndex.data(TreeXmlModel::TagRole)==DBLINKTOCLASSXML::LINKTOCLASS) {
-            proxyModel()->setData(index, DBLINKTOFILTERXML::LINKTOFILTER, TreeXmlModel::TagRole);
-        } else {
-            proxyModel()->setData(index, DBLINKTOCLASSXML::LINKTOCLASS, TreeXmlModel::TagRole);
-        }
+        proxyModel()->setData(index, DBLINKTOCLASSXML::LINKTOCLASS, TreeXmlModel::TagRole);
         edit(true);
         treeView->setCurrentIndex(index);
     }
 }
 
-void RefItemWidget::addChild()
+void RefItemWidget::addLinkToRef()
 {
     QModelIndex srcIndex = treeView->currentIndex();
+    if (srcIndex.data(TreeXmlModel::TagRole) != DBLINKTOFILTERXML::LINKTOFILTER)
+        srcIndex = srcIndex.parent();
+
     if (!srcIndex.isValid())
         srcIndex = treeView->rootIndex();
     QModelIndex index = proxyModel()->insertLastRows(0,1,srcIndex);
+
     if (index.isValid()) {
-        if (srcIndex.data(TreeXmlModel::TagRole)==DBLINKTOCLASSXML::LINKTOCLASS) {
-            proxyModel()->setData(index, DBLINKTOFILTERXML::LINKTOFILTER, TreeXmlModel::TagRole);
-        } else {
-            proxyModel()->setData(index, DBLINKTOCLASSXML::LINKTOCLASS, TreeXmlModel::TagRole);
-        }
+        proxyModel()->setData(index, DBLINKTOREFXML::LINKTOREF, TreeXmlModel::TagRole);
+        edit(true);
+        treeView->setCurrentIndex(index);
+    }
+}
+
+void RefItemWidget::addLinkToFilter()
+{
+    QModelIndex srcIndex = treeView->currentIndex();
+    if (srcIndex.data(TreeXmlModel::TagRole) == DBLINKTOFILTERXML::LINKTOFILTER)
+        srcIndex = srcIndex.parent();
+
+    if (!srcIndex.isValid())
+        srcIndex = treeView->rootIndex();
+    QModelIndex index = proxyModel()->insertLastRows(0,1,srcIndex);
+
+    if (index.isValid()) {
+        proxyModel()->setData(index, DBLINKTOFILTERXML::LINKTOFILTER, TreeXmlModel::TagRole);
         edit(true);
         treeView->setCurrentIndex(index);
     }
@@ -83,29 +98,12 @@ void RefItemWidget::addChild()
 
 void RefItemWidget::edit(bool flag)
 {
-
     treeView->setCurrentIndex(QModelIndex());
-
-    toolButtonAdd->setEnabled(flag);
-    toolButtonAddIn->setEnabled(flag);
+    toolButtonAddClass->setEnabled(flag);
+    toolButtonAddRef->setEnabled(flag);
+    toolButtonAddFilter->setEnabled(flag);
     toolButtonDelete->setEnabled(flag);
     proxyModel()->setEditable(flag);
-}
-
-void RefItemWidget::changeButtonStatus(QModelIndex curIndex, QModelIndex prevIndex)
-{
-    if (proxyModel()->isEditable() && curIndex != prevIndex) {
-        if (curIndex.data(TreeXmlModel::TagRole) == DBLINKTOREFXML::LINKTOREF)
-        {
-            toolButtonAdd->setEnabled(false);
-            toolButtonAddIn->setEnabled(false);
-            toolButtonDelete->setEnabled(true);
-        } else {
-            toolButtonAdd->setEnabled(true);
-            toolButtonAddIn->setEnabled(true);
-            toolButtonDelete->setEnabled(true);
-        }
-    }
 }
 
 }}

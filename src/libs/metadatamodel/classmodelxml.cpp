@@ -269,8 +269,7 @@ void ClassModelXml::initInsertTags()
     this->addInsertTags(DBREFGROUPXML::REFGROUP,insertTags);
 
     insertTags.clear();
-    insertTags << DBLINKTOCLASSXML::LINKTOCLASS << DBLINKTOFILTERXML::LINKTOFILTER
-               << DBLINKTOREFXML::LINKTOREF;
+    insertTags << DBLINKTOCLASSXML::LINKTOCLASS << DBLINKTOREFXML::LINKTOREF;
     this->addInsertTags(DBREFXML::REF,insertTags);
 
     insertTags.clear();

@@ -7,6 +7,8 @@
 #include <treecombobox/treecombobox.h>
 #include <metadatamodel/dbxmlstruct.h>
 
+#include "refitemproxymodel.h"
+
 using namespace RTPTechGroup::Widgets;
 using namespace RTPTechGroup::MetaDataModel;
 using namespace RTPTechGroup::XmlModel;
@@ -106,7 +108,7 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
             comboBoxDestClass->setModel(classFilterModel);
             comboBoxDestClass->setIndexColumn(
                         hashModel->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                       DBATTRXML::ID));
+                                                       DBCLASSXML::ID));
 
             if (srcParentIndex.isValid()) {
                 QModelIndex parentIndex = classFilterModel->mapFromSource(srcParentIndex);
@@ -120,6 +122,50 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
                             classFilterModel->index(0,0).child(0,0).child(0,0));
             }
             return comboBoxDestClass;
+        } else  if (tag == DBLINKTOREFXML::LINKTOREF
+                    && attr == DBLINKTOREFXML::REFREF) {
+            TreeComboBox *comboBoxDestClass = new TreeComboBox(parent);
+            comboBoxDestClass->setItemDelegate(new XmlDelegate(comboBoxDestClass));
+
+
+            RefItemProxyModel *classFilterModel = new RefItemProxyModel(parent);
+
+            classFilterModel->setFilterKeyColumn(0);
+            classFilterModel->setFilterRole(TreeXmlModel::TagRole);
+            classFilterModel->setFilterRegExp(DBREFGROUPXML::REFGROUP + "|" +
+                                              DBREFXML::REF + "|" +
+                                              DBMODELXML::MODEL + "|" +
+                                              DBREFLISTXML::REFLIST);
+
+            classFilterModel->setSourceModel(
+                        const_cast<QAbstractItemModel *>(
+                            dynamic_cast<const QAbstractItemModel*>(hashModel)));
+
+            classFilterModel->setDynamicSortFilter(true);
+            classFilterModel->sort(0);
+
+            QModelIndex srcParentIndex = rootClass(index);
+            classFilterModel->setClassId(
+                        srcParentIndex.sibling(
+                            srcParentIndex.row(),
+                            hashModel->columnDisplayedAttr(
+                                DBCLASSXML::CLASS,
+                                DBATTRXML::ID
+                                )
+                            ).data().toString());
+
+            comboBoxDestClass->setModel(classFilterModel);
+            comboBoxDestClass->setIndexColumn(
+                        hashModel->columnDisplayedAttr(DBREFXML::REF,
+                                                       DBREFXML::ID));
+
+            comboBoxDestClass->setRootModelIndex(
+                        classFilterModel->index(0,0).child(0,0));
+
+            comboBoxDestClass->setCurrentModelIndex(
+                        classFilterModel->index(0,0).child(0,0).child(0,0));
+
+            return comboBoxDestClass;
         } else
             return new QLineEdit(parent);
     }
@@ -132,16 +178,13 @@ void RefItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
 {
     TreeComboBox *treeComboBox = dynamic_cast<TreeComboBox*>(editor);
     if (treeComboBox) {
+        // Проверка вводимых данных
         QModelIndex curIndex = treeComboBox->currentModelIndex();
         if (curIndex.isValid()) {
             QString tag = curIndex.data(TreeXmlModel::TagRole).toString();
-            QAbstractItemModel *indexModel = model;//const_cast<QAbstractItemModel *>(index.model());
-            const TreeXmlHashModel *hashModel = this->hashModel(model);
-            if (tag == DBFILTERXML::FILTER) {
-                treeComboBox->setIndexColumn(hashModel->columnDisplayedAttr(DBFILTERXML::FILTER,
-                                                                            DBFILTERXML::ID));
-                indexModel->setData(index, DBLINKTOFILTERXML::LINKTOFILTER, TreeXmlModel::TagRole);
-            }
+            if (tag != DBFILTERXML::FILTER && tag != DBCLASSXML::CLASS
+                    && tag != DBREFXML::REF)
+                return;
         }
     }
     XmlDelegate::setModelData(editor, model, index);
@@ -181,6 +224,15 @@ QModelIndex RefItemDelegate::rootClass(QModelIndex index) const
                                                            DBLINKTOCLASSXML::REFCLASS));
                 QModelIndex classIndex = hashModel->indexHashAttr(DBCLASSXML::CLASS,
                                                                   DBCLASSXML::ID,
+                                                                  linkIndex.data(Qt::EditRole));
+                return classIndex;
+            } else if (parentIndex.data(TreeXmlModel::TagRole) == DBLINKTOREFXML::LINKTOREF) {
+                QModelIndex linkIndex = parentIndex.sibling(
+                            parentIndex.row(),
+                            hashModel->columnDisplayedAttr(DBLINKTOREFXML::LINKTOREF,
+                                                           DBLINKTOREFXML::REFREF));
+                QModelIndex classIndex = hashModel->indexHashAttr(DBLINKTOREFXML::LINKTOREF,
+                                                                  DBREFXML::ID,
                                                                   linkIndex.data(Qt::EditRole));
                 return classIndex;
             }
