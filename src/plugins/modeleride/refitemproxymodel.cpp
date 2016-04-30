@@ -41,8 +41,12 @@ bool RefItemProxyModel::filterAcceptsRowItself(int source_row, const QModelIndex
     TreeXmlHashModel *hashModel = qobject_cast<TreeXmlHashModel *>(sourceModel());
     if (hashModel) {
         QModelIndex srcIndex = hashModel->index(source_row, 0, source_parent);
+        QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
 
-        if (srcIndex.data(TreeXmlModel::TagRole) == DBREFXML::REF) {
+        if (tag == DBMODELXML::MODEL || tag == DBREFLISTXML::REFLIST)
+            return true;
+
+        if (tag == DBREFXML::REF) {
             for (QModelIndex srcChild = srcIndex.child(0,0);
                  srcChild.isValid();
                  srcChild = srcChild.sibling(srcChild.row()+1,0))

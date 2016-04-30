@@ -39,16 +39,16 @@ signals:
 
 public slots:
     //! Добавление элементов справочника
-    void add();
+    void addLinkToClass();
+
+    //! Добавление ссылки на справочник
+    void addLinkToRef();
 
     //! Добавление дочерних элементов справочника
-    void addChild();
+    void addLinkToFilter();
 
     //! Перевод в режим редактирования
     void edit(bool flag = true);
-
-    //! Изменение состояния кнопок
-    void changeButtonStatus(QModelIndex curIndex, QModelIndex prevIndex);
 };
 
 }}
