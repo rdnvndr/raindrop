@@ -99,6 +99,8 @@ void ClassTreeView::setModel(QAbstractItemModel *model)
     classFilterModel->addVisibleTag(DBQUANTITYLISTXML::QUANTITYLIST);
     classFilterModel->addVisibleTag(DBLOVLISTXML::LOVLIST);
     classFilterModel->addVisibleTag(DBLOVXML::LOV);
+    classFilterModel->addVisibleTag(DBNUMERATORLISTXML::NUMERATORLIST);
+    classFilterModel->addVisibleTag(DBNUMERATORXML::NUMERATOR);
     classFilterModel->addVisibleTag(DBREFLISTXML::REFLIST);
     classFilterModel->addVisibleTag(DBREFGROUPXML::REFGROUP);
     classFilterModel->addVisibleTag(DBREFXML::REF);
@@ -237,6 +239,7 @@ void ClassTreeView::showContextMenu(const QPoint &point)
             || tagRole == DBQUANTITYLISTXML::QUANTITYLIST
             || tagRole == DBQUANTITYGROUPXML::QUANTITYGROUP
             || tagRole == DBLOVLISTXML::LOVLIST
+            || tagRole == DBNUMERATORLISTXML::NUMERATORLIST
             || tagRole == DBCLASSXML::CLASS
             || tagRole == DBREFLISTXML::REFLIST
             || tagRole == DBREFGROUPXML::REFGROUP
@@ -251,6 +254,7 @@ void ClassTreeView::showContextMenu(const QPoint &point)
         if (tagRole == DBCLASSLISTXML::CLASSLIST
             || tagRole == DBQUANTITYLISTXML::QUANTITYLIST
             || tagRole == DBLOVLISTXML::LOVLIST
+            || tagRole == DBNUMERATORLISTXML::NUMERATORLIST
             || tagRole == DBREFLISTXML::REFLIST
             || tagRole == DBROLELISTXML::ROLELIST
             || tagRole == DBMODELXML::MODEL)

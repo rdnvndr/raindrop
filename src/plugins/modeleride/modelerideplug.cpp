@@ -180,6 +180,9 @@ void ModelerIDEPlug::add()
     } else if (tagRole == DBLOVLISTXML::LOVLIST) {
         lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBLOVXML::LOV);
+    } else if (tagRole == DBNUMERATORLISTXML::NUMERATORLIST) {
+        lastInsertRow =
+                m_model->insertLastRows(0,1,indexSource,DBNUMERATORXML::NUMERATOR);
     } else if (tagRole == DBREFLISTXML::REFLIST) {
         lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBREFGROUPXML::REFGROUP);
@@ -243,6 +246,13 @@ QString ModelerIDEPlug::dataName(const QModelIndex& index)
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBLOVXML::LOV,
                                  DBLOVXML::NAME
+                                 )).data().toString();
+    }
+
+    if (index.data(TreeXmlModel::TagRole) == DBNUMERATORXML::NUMERATOR) {
+        return index.sibling(index.row(),m_model->columnDisplayedAttr(
+                                 DBNUMERATORXML::NUMERATOR,
+                                 DBNUMERATORXML::NAME
                                  )).data().toString();
     }
 
@@ -313,6 +323,13 @@ QString ModelerIDEPlug::dataId(const QModelIndex &index)
                                  )).data().toString();
     }
 
+    if (index.data(TreeXmlModel::TagRole) == DBNUMERATORXML::NUMERATOR) {
+        return index.sibling(index.row(),m_model->columnDisplayedAttr(
+                                 DBNUMERATORXML::NUMERATOR,
+                                 DBNUMERATORXML::ID
+                                 )).data().toString();
+    }
+
     if (index.data(TreeXmlModel::TagRole) == DBREFGROUPXML::REFGROUP) {
         return index.sibling(index.row(),m_model->columnDisplayedAttr(
                                  DBREFGROUPXML::REFGROUP,
@@ -365,6 +382,8 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editabl
         subWindowName = "PropQuantityGroup::" + this->dataId(indexSource);
     else if (tagRole == DBLOVXML::LOV)
         subWindowName = "PropLov::" + this->dataId(indexSource);
+    if (tagRole == DBNUMERATORXML::NUMERATOR)
+            subWindowName = "PropNumerator::" + this->dataId(indexSource);
     else if (tagRole == DBREFGROUPXML::REFGROUP)
         subWindowName = "PropRefGroup::" + this->dataId(indexSource);
     else if (tagRole == DBREFXML::REF)
@@ -390,6 +409,8 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editabl
             propEditor = qobject_cast<AbstractPropEditor*>(new PropQuantityGroup());
         } else if (tagRole == DBLOVXML::LOV) {
             propEditor = qobject_cast<AbstractPropEditor*>(new PropLov());
+        } else if (tagRole == DBNUMERATORXML::NUMERATOR) {
+            propEditor = NULL; // qobject_cast<AbstractPropEditor*>(new PropNumerator());
         } else if (tagRole == DBREFGROUPXML::REFGROUP) {
             propEditor = qobject_cast<AbstractPropEditor*>(new PropRefGroup());
         } else if (tagRole == DBREFXML::REF) {
@@ -437,6 +458,8 @@ void ModelerIDEPlug::closePropEditor(const QModelIndex &index)
         subWindowName = "PropQuantityGroup::" + subWindowName;
     } else if (tagRole==DBLOVXML::LOV) {
         subWindowName = "PropLov::" + subWindowName;
+    } else if (tagRole==DBNUMERATORXML::NUMERATOR) {
+        subWindowName = "PropNumerator::" + subWindowName;
     } else if (tagRole==DBREFGROUPXML::REFGROUP) {
         subWindowName = "PropRefGroup::" + subWindowName;
     } else if (tagRole==DBREFXML::REF) {
@@ -545,6 +568,7 @@ void ModelerIDEPlug::closeClassModel()
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropQuantityGroup::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropQuantity::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropLov::"))  != -1
+         || subWindow->widget()->objectName().indexOf(QRegExp("^PropNumerator::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropRefGroup::"))  != -1
          || subWindow->widget()->objectName().indexOf(QRegExp("^PropRef::"))  != -1
         ) {
