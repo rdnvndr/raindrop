@@ -299,6 +299,24 @@ namespace DBPERMISSIONXML{
     const QString ID         = "guid";
 }
 
+//! Ключевые слова XML файла для описания списка нумераторов
+namespace DBNUMERATORLISTXML {
+    const QString NUMERATORLIST = "RTPNumeratorList";
+    const QString NAME = "name";
+    const QString ALIAS = "alias";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
+//! Ключевые слова XML файла для нумератора
+namespace DBNUMERATORXML{
+    const QString NUMERATOR = "RTPNumerator";
+    const QString NAME = "name";
+    const QString ALIAS = "alias";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
 }}
 
 #endif // DBXMLSTRUCT_H

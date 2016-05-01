@@ -54,6 +54,8 @@ void ClassModelXml::initTagFilters()
     this->addTagFilter(DBROLELISTXML::ROLELIST);
     this->addTagFilter(DBROLEXML::ROLE);
     this->addTagFilter(DBPERMISSIONXML::PERMISSION);
+    this->addTagFilter(DBNUMERATORLISTXML::NUMERATORLIST);
+    this->addTagFilter(DBNUMERATORXML::NUMERATOR);
 }
 
 void ClassModelXml::initDisplayedAttrs()
@@ -140,6 +142,17 @@ void ClassModelXml::initDisplayedAttrs()
     propsLovList << DBLOVLISTXML::NAME   << DBLOVLISTXML::ALIAS
                  << DBLOVLISTXML::PARENT << DBLOVLISTXML::ID;
     this->addDisplayedAttr(DBLOVLISTXML::LOVLIST, propsLovList, QIcon(":/lovlist"));
+
+    QStringList propsNumeratorList;
+    propsNumeratorList << DBNUMERATORLISTXML::NAME   << DBNUMERATORLISTXML::ALIAS
+                 << DBNUMERATORLISTXML::PARENT << DBNUMERATORLISTXML::ID;
+    this->addDisplayedAttr(DBNUMERATORLISTXML::NUMERATORLIST, propsNumeratorList,
+                           QIcon(":/lovlist"));
+
+    QStringList propsNumerator;
+    propsNumerator << DBNUMERATORXML::NAME   << DBNUMERATORXML::ALIAS
+                   << DBNUMERATORXML::PARENT << DBNUMERATORXML::ID;
+    this->addDisplayedAttr(DBNUMERATORXML::NUMERATOR, propsNumerator, QIcon(":/lov"));
 
     QStringList propsRoleList;
     propsRoleList << DBROLELISTXML::NAME   << DBROLELISTXML::ALIAS
@@ -245,12 +258,16 @@ void ClassModelXml::initInsertTags()
     insertTags.clear();
     insertTags << DBCLASSLISTXML::CLASSLIST << DBQUANTITYLISTXML::QUANTITYLIST
                << DBLOVLISTXML::LOVLIST     << DBREFLISTXML::REFLIST
-               << DBROLELISTXML::ROLELIST;
+               << DBROLELISTXML::ROLELIST   << DBNUMERATORLISTXML::NUMERATORLIST;
     this->addInsertTags(DBMODELXML::MODEL,insertTags);
 
     insertTags.clear();
     insertTags << DBQUANTITYXML::QUANTITY;
     this->addInsertTags(DBQUANTITYGROUPXML::QUANTITYGROUP,insertTags);
+
+    insertTags.clear();
+    insertTags << DBNUMERATORXML::NUMERATOR;
+    this->addInsertTags(DBNUMERATORLISTXML::NUMERATORLIST,insertTags);
 
     insertTags.clear();
     insertTags << DBLOVXML::LOV;
@@ -341,6 +358,9 @@ void ClassModelXml::initHashAttrs()
     this->addHashAttr(DBPERMISSIONXML::PERMISSION,
                       DBPERMISSIONXML::ROLE,
                       TreeXmlHashModel::UniqueParent);
+    this->addHashAttr(DBNUMERATORXML::NUMERATOR,
+                      DBNUMERATORXML::NAME,
+                      TreeXmlHashModel::UniqueUpperRename);
 
 
     this->addHashAttr(DBCLASSXML::CLASS,
@@ -372,6 +392,9 @@ void ClassModelXml::initHashAttrs()
                       TreeXmlHashModel::Uuid);
     this->addHashAttr(DBLOVXML::LOV,
                       DBLOVXML::ID,
+                      TreeXmlHashModel::Uuid);
+    this->addHashAttr(DBNUMERATORXML::NUMERATOR,
+                      DBNUMERATORXML::ID,
                       TreeXmlHashModel::Uuid);
     this->addHashAttr(DBLOVVALUEXML::LOVVALUE,
                       DBLOVVALUEXML::ID,
@@ -548,6 +571,16 @@ void ClassModelXml::initModel()
             this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Список значений"));
         }
 
+        lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource, DBNUMERATORLISTXML::NUMERATORLIST);
+        if (lastIndex.isValid()){
+            int column = this->columnDisplayedAttr(DBNUMERATORLISTXML::NUMERATORLIST,
+                                                   DBNUMERATORLISTXML::NAME);
+            this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Numerators"));
+            column = this->columnDisplayedAttr(DBNUMERATORLISTXML::NUMERATORLIST,
+                                               DBNUMERATORLISTXML::ALIAS);
+            this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Нумераторы"));
+        }
+
         lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource, DBREFLISTXML::REFLIST);
         if (lastIndex.isValid()){
             int column = this->columnDisplayedAttr(DBREFLISTXML::REFLIST,
@@ -580,6 +613,7 @@ QModelIndex ClassModelXml::insertLastRows(int row, int count, const QModelIndex 
                     && (tag == DBCLASSLISTXML::CLASSLIST
                         || tag == DBQUANTITYLISTXML::QUANTITYLIST
                         || tag == DBLOVLISTXML::LOVLIST
+                        || tag == DBNUMERATORLISTXML::NUMERATORLIST
                         || tag == DBREFLISTXML::REFLIST
                         || tag == DBROLELISTXML::ROLELIST
                         )
@@ -605,7 +639,8 @@ bool ClassModelXml::removeRows(int row, int count, const QModelIndex &parent)
                 if (parentTag == DBMODELXML::MODEL
                         && (tag == DBCLASSLISTXML::CLASSLIST
                             || tag == DBQUANTITYLISTXML::QUANTITYLIST
-                            || tag == DBLOVLISTXML::LOVLIST
+                            || tag == DBLOVLISTXML::LOVLIST\
+                            || tag == DBNUMERATORLISTXML::NUMERATORLIST
                             || tag == DBREFLISTXML::REFLIST
                             || tag == DBROLELISTXML::ROLELIST)
                   ) return false;
@@ -622,6 +657,7 @@ bool ClassModelXml::isRemove(const QModelIndex &srcIndex)
     if (tag == DBMODELXML::MODEL
             || tag == DBCLASSLISTXML::CLASSLIST
             || tag == DBQUANTITYLISTXML::QUANTITYLIST
+            || tag == DBNUMERATORLISTXML::NUMERATORLIST
             || tag == DBLOVLISTXML::LOVLIST
             || tag == DBROLELISTXML::ROLELIST)
     {
