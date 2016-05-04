@@ -20,5 +20,7 @@
         <file alias="refgroup">icons/refgroup.svg</file>
         <file alias="role">icons/role.svg</file>
         <file alias="rolelist">icons/roles.svg</file>
+        <file alias="numerator">icons/numerator.svg</file>
+        <file alias="numeratorlist">icons/numeratorlist.svg</file>
     </qresource>
 </RCC>
