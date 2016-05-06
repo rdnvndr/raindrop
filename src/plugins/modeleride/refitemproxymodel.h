@@ -22,18 +22,28 @@ public:
     //! Метод который определяет сортировку
     virtual bool lessThan(const QModelIndex & left, const QModelIndex & right) const;
 
-    //! Установка идентификатора класса по которому сортируются справочники
-    void setClassId(const QString &classId);
+    //! Установка индекса класса по которому отображаются справочники
+    void setClassIndex(QModelIndex &idx);
+
+    //! Получение индекса класса по которому отображаются справочники
+    QModelIndex сlassIndex();
+
+    //! Получение флага рекурсивного обхода классов
+    bool recursion() const;
+
+    //! Установка рекурсивного обхода классов
+    void setRecursion(bool recursion);
 
 protected:
-    //! Поиск детей удолетворящих фильтру
-    bool hasAcceptedChildren(int source_row, const QModelIndex &source_parent) const;
+    //! Поиск класса удолетворяющего фильтру
+    bool hasAcceptedChildren(const QModelIndex &link_index, const QModelIndex &source_parent) const;
 
     //! Фильтр по дереву
     bool filterAcceptsRowItself(int source_row, const QModelIndex &source_parent) const;
 
 private:
-    QString m_classId;
+    QPersistentModelIndex m_classIndex;
+    bool m_recursion;
 };
 
 }}
