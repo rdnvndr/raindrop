@@ -8,65 +8,69 @@ using namespace RTPTechGroup::MetaDataModel;
 namespace RTPTechGroup {
 namespace ModelerIde {
 
-RefItemProxyModel::RefItemProxyModel(QObject *parent)
+RefItemProxyModel::RefItemProxyModel(QObject *parent):QSortFilterProxyModel(parent)
 {
-    Q_UNUSED(parent)
-
     setDynamicSortFilter(true);
-}
-
-bool RefItemProxyModel::hasAcceptedChildren(int source_row,
-                                               const QModelIndex &source_parent) const
-{
-    QModelIndex item = sourceModel()->index(source_row,0,source_parent);
-    if (!item.isValid())
-        return false;
-
-
-    int childCount = item.model()->rowCount(item);
-    if (childCount == 0)
-        return false;
-
-    for (int i = 0; i < childCount; ++i) {
-        if (filterAcceptsRowItself(i, item))
-            return true;
-        if (hasAcceptedChildren(i, item))
-            return true;
-    }
-    return false;
+    setRecursion(true);
 }
 
 bool RefItemProxyModel::filterAcceptsRowItself(int source_row, const QModelIndex &source_parent) const
 {
-    TreeXmlHashModel *hashModel = qobject_cast<TreeXmlHashModel *>(sourceModel());
-    if (hashModel) {
-        QModelIndex srcIndex = hashModel->index(source_row, 0, source_parent);
-        QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
+    QModelIndex srcIndex = sourceModel()->index(source_row, 0, source_parent);
+    QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
+    if (tag == DBMODELXML::MODEL || tag == DBREFLISTXML::REFLIST)
+        return true;
 
-        if (tag == DBMODELXML::MODEL || tag == DBREFLISTXML::REFLIST)
-            return true;
+     if (tag == DBREFGROUPXML::REFGROUP) {
+         int row = 0;
+         QModelIndex childIndex = srcIndex.child(row,0);
+         while (childIndex.isValid())
+         {
+             if (filterAcceptsRowItself(row, srcIndex))
+                 return true;
+             childIndex = srcIndex.child(++row,0);
+         }
+     }
 
-        if (tag == DBREFXML::REF) {
-            for (QModelIndex srcChild = srcIndex.child(0,0);
-                 srcChild.isValid();
-                 srcChild = srcChild.sibling(srcChild.row()+1,0))
-            {
-                if (srcChild.data(TreeXmlModel::TagRole) == DBLINKTOCLASSXML::LINKTOCLASS) {
-                    int column = hashModel->columnDisplayedAttr(
-                                DBLINKTOCLASSXML::LINKTOCLASS,
-                                DBLINKTOCLASSXML::REFCLASS);
-                    QString classId = srcChild.sibling(
-                                srcChild.row(), column).data(Qt::EditRole).toString();
-                    if (m_classId.isEmpty() || classId == m_classId)
-                        return true;
-                }
+     if (tag == DBREFXML::REF) {
+         if (!m_classIndex.isValid())
+             return true;
 
-            }
-            return false;
-        }
-    }
+         TreeXmlHashModel *hashModel = qobject_cast<TreeXmlHashModel *>(sourceModel());
+         if (hashModel) {
+             int refClassColumn = hashModel->columnDisplayedAttr(
+                         DBLINKTOCLASSXML::LINKTOCLASS,
+                         DBLINKTOCLASSXML::REFCLASS);
+
+             int row = 0;
+             QModelIndex childIndex = srcIndex.child(row,0);
+             while (childIndex.isValid())
+             {
+                 if (childIndex.data(TreeXmlModel::TagRole) == DBLINKTOCLASSXML::LINKTOCLASS)
+                 {
+                     QModelIndex linkIndex = hashModel->indexLink(
+                                 childIndex.sibling(childIndex.row(),
+                                                    refClassColumn));
+                     if (hasAcceptedChildren(linkIndex.sibling(linkIndex.row(),0),
+                                             m_classIndex))
+                         return true;
+                 }
+                 childIndex = srcIndex.child(++row, 0);
+             }
+         }
+     }
 
     return false;
+}
+
+bool RefItemProxyModel::recursion() const
+{
+    return m_recursion;
+}
+
+void RefItemProxyModel::setRecursion(bool recursion)
+{
+    m_recursion = recursion;
 }
 
 bool RefItemProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
@@ -74,10 +78,6 @@ bool RefItemProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sour
     // Если узел удолетворяет  фильтру то показать этот узел
     if (filterAcceptsRowItself(source_row, source_parent))
            return true;
-
-    // Если хотя бы 1 ребенок показан по фильтру, то показать и этот узел
-    if (hasAcceptedChildren(source_row, source_parent))
-        return true;
 
     return false;
 }
@@ -87,9 +87,45 @@ bool RefItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &rig
     return QSortFilterProxyModel::lessThan(left,right);
 }
 
-void RefItemProxyModel::setClassId(const QString &classId)
+void RefItemProxyModel::setClassIndex(QModelIndex &idx)
 {
-    m_classId = classId;
+    if (idx.isValid())
+        if (idx.data(TreeXmlModel::TagRole) == DBCLASSXML::CLASS) {
+            m_classIndex = idx.sibling(idx.row(),0);
+            return;
+        }
+    m_classIndex = QModelIndex();
+}
+
+QModelIndex RefItemProxyModel::сlassIndex()
+{
+    return m_classIndex;
+}
+
+bool RefItemProxyModel::hasAcceptedChildren(const QModelIndex &link_index,
+                                            const QModelIndex &source_parent) const
+{
+    if (!source_parent.isValid())
+        return false;
+
+    if (source_parent.data(TreeXmlModel::TagRole) != DBCLASSXML::CLASS)
+        return false;
+
+    if (source_parent == link_index)
+        return true;
+
+    if (recursion()) {
+        int row = 0;
+        QModelIndex childIndex = sourceModel()->index(row, 0, source_parent);
+        while (childIndex.isValid())
+        {
+            if (hasAcceptedChildren(link_index, childIndex))
+                return true;
+            childIndex = sourceModel()->index(++row, 0, source_parent);
+        }
+    }
+
+    return false;
 }
 
 

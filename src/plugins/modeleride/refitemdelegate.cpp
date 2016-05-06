@@ -145,14 +145,7 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
             classFilterModel->sort(0);
 
             QModelIndex srcParentIndex = rootClass(index);
-            classFilterModel->setClassId(
-                        srcParentIndex.sibling(
-                            srcParentIndex.row(),
-                            hashModel->columnDisplayedAttr(
-                                DBCLASSXML::CLASS,
-                                DBATTRXML::ID
-                                )
-                            ).data().toString());
+            classFilterModel->setClassIndex(srcParentIndex);
 
             comboBoxDestClass->setModel(classFilterModel);
             comboBoxDestClass->setIndexColumn(
