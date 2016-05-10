@@ -639,7 +639,7 @@ bool ClassModelXml::removeRows(int row, int count, const QModelIndex &parent)
                 if (parentTag == DBMODELXML::MODEL
                         && (tag == DBCLASSLISTXML::CLASSLIST
                             || tag == DBQUANTITYLISTXML::QUANTITYLIST
-                            || tag == DBLOVLISTXML::LOVLIST\
+                            || tag == DBLOVLISTXML::LOVLIST
                             || tag == DBNUMERATORLISTXML::NUMERATORLIST
                             || tag == DBREFLISTXML::REFLIST
                             || tag == DBROLELISTXML::ROLELIST)

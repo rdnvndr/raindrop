@@ -382,8 +382,8 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editabl
         subWindowName = "PropQuantityGroup::" + this->dataId(indexSource);
     else if (tagRole == DBLOVXML::LOV)
         subWindowName = "PropLov::" + this->dataId(indexSource);
-    if (tagRole == DBNUMERATORXML::NUMERATOR)
-            subWindowName = "PropNumerator::" + this->dataId(indexSource);
+    else if (tagRole == DBNUMERATORXML::NUMERATOR)
+        subWindowName = "PropNumerator::" + this->dataId(indexSource);
     else if (tagRole == DBREFGROUPXML::REFGROUP)
         subWindowName = "PropRefGroup::" + this->dataId(indexSource);
     else if (tagRole == DBREFXML::REF)
