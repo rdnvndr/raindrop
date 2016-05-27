@@ -26,7 +26,7 @@ public:
     void setClassIndex(QModelIndex &idx);
 
     //! Получение индекса класса по которому отображаются справочники
-    QModelIndex сlassIndex();
+    QModelIndex classIndex();
 
     //! Получение флага рекурсивного обхода классов
     bool recursion() const;
