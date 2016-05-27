@@ -97,7 +97,7 @@ void RefItemProxyModel::setClassIndex(QModelIndex &idx)
     m_classIndex = QModelIndex();
 }
 
-QModelIndex RefItemProxyModel::сlassIndex()
+QModelIndex RefItemProxyModel::classIndex()
 {
     return m_classIndex;
 }
