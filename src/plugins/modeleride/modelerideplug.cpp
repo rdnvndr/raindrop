@@ -23,6 +23,7 @@
 #include "propref.h"
 #include "abstractpropeditor.h"
 #include "proprole.h"
+#include "propnumerator.h"
 
 using namespace RTPTechGroup::Plugin;
 using namespace RTPTechGroup::Widgets;
@@ -410,7 +411,7 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editabl
         } else if (tagRole == DBLOVXML::LOV) {
             propEditor = qobject_cast<AbstractPropEditor*>(new PropLov());
         } else if (tagRole == DBNUMERATORXML::NUMERATOR) {
-            propEditor = NULL; // qobject_cast<AbstractPropEditor*>(new PropNumerator());
+            propEditor = qobject_cast<AbstractPropEditor*>(new PropNumerator());
         } else if (tagRole == DBREFGROUPXML::REFGROUP) {
             propEditor = qobject_cast<AbstractPropEditor*>(new PropRefGroup());
         } else if (tagRole == DBREFXML::REF) {
