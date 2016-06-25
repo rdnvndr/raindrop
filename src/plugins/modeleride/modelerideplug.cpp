@@ -135,7 +135,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->setHeaderData(12, Qt::Horizontal, tr("Нулевые значения"));
     m_model->setHeaderData(13, Qt::Horizontal, tr("Уникальный"));
     m_model->setHeaderData(14, Qt::Horizontal, tr("Кандидат в ключ"));
-    m_model->setHeaderData(15, Qt::Horizontal, tr("Индетификатор"));
+    m_model->setHeaderData(15, Qt::Horizontal, tr("Идентификатор"));
 
     connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)),
             this,SLOT(actionSaveEnable()));

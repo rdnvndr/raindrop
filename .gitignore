@@ -27,6 +27,8 @@ Makefile*
 moc_*.cpp
 ui_*.h
 qrc_*.cpp
+.qmake.stash
+.qmake.cache
 Thumbs.db
 .directory
 *.orig
