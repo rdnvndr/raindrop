@@ -48,7 +48,7 @@ LovWidget::~LovWidget()
 
 bool LovWidget::isEmpty()
 {
-    return lineEditLovName->text().isEmpty();;
+    return lineEditLovName->text().isEmpty();
 }
 
 void LovWidget::add()

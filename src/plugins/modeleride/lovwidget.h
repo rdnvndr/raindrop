@@ -25,13 +25,13 @@ public:
     //! Конструктор редактора списка значений
     explicit LovWidget(QWidget *parent = 0);
 
-     //! Деструктор редактора списка значений
+    //! Деструктор редактора списка значений
     virtual ~LovWidget();
 
     //! Установка модели структуры классов
     void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
-    //! Проверка запонено ли имя списка значений
+    //! Проверка заполнено ли имя списка значений
     bool isEmpty();
 
 public slots:
