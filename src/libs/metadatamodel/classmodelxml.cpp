@@ -56,6 +56,7 @@ void ClassModelXml::initTagFilters()
     this->addTagFilter(DBPERMISSIONXML::PERMISSION);
     this->addTagFilter(DBNUMERATORLISTXML::NUMERATORLIST);
     this->addTagFilter(DBNUMERATORXML::NUMERATOR);
+    this->addTagFilter(DBNUMERATORRANGEXML::NUMERATORRANGE);
 }
 
 void ClassModelXml::initDisplayedAttrs()
@@ -153,6 +154,14 @@ void ClassModelXml::initDisplayedAttrs()
     propsNumerator << DBNUMERATORXML::NAME   << DBNUMERATORXML::ALIAS
                    << DBNUMERATORXML::PARENT << DBNUMERATORXML::ID;
     this->addDisplayedAttr(DBNUMERATORXML::NUMERATOR, propsNumerator, QIcon(":/numerator"));
+
+    QStringList propsNumeratorRange;
+    propsNumeratorRange << DBNUMERATORRANGEXML::REGEX
+                        << DBNUMERATORRANGEXML::REFLOV
+                        << DBNUMERATORRANGEXML::PARENT
+                        << DBNUMERATORRANGEXML::ID;
+    this->addDisplayedAttr(DBNUMERATORRANGEXML::NUMERATORRANGE,
+                           propsNumeratorRange, QIcon(":/lovvalue"));
 
     QStringList propsRoleList;
     propsRoleList << DBROLELISTXML::NAME   << DBROLELISTXML::ALIAS
@@ -268,6 +277,10 @@ void ClassModelXml::initInsertTags()
     insertTags.clear();
     insertTags << DBNUMERATORXML::NUMERATOR;
     this->addInsertTags(DBNUMERATORLISTXML::NUMERATORLIST,insertTags);
+
+    insertTags.clear();
+    insertTags << DBNUMERATORRANGEXML::NUMERATORRANGE;
+    this->addInsertTags(DBNUMERATORXML::NUMERATOR,insertTags);
 
     insertTags.clear();
     insertTags << DBLOVXML::LOV;
@@ -390,11 +403,14 @@ void ClassModelXml::initHashAttrs()
     this->addHashAttr(DBQUANTITYGROUPXML::QUANTITYGROUP,
                       DBQUANTITYGROUPXML::ID,
                       TreeXmlHashModel::Uuid);
-    this->addHashAttr(DBLOVXML::LOV,
-                      DBLOVXML::ID,
-                      TreeXmlHashModel::Uuid);
     this->addHashAttr(DBNUMERATORXML::NUMERATOR,
                       DBNUMERATORXML::ID,
+                      TreeXmlHashModel::Uuid);
+    this->addHashAttr(DBNUMERATORRANGEXML::NUMERATORRANGE,
+                      DBNUMERATORRANGEXML::ID,
+                      TreeXmlHashModel::Uuid);
+    this->addHashAttr(DBLOVXML::LOV,
+                      DBLOVXML::ID,
                       TreeXmlHashModel::Uuid);
     this->addHashAttr(DBLOVVALUEXML::LOVVALUE,
                       DBLOVVALUEXML::ID,
@@ -475,6 +491,9 @@ void ClassModelXml::initRelations()
                       DBQUANTITYXML::QUANTITY, DBQUANTITYXML::NAME);
 
     this->addRelation(DBLOVVALUEXML::LOVVALUE, DBLOVVALUEXML::PARENT,
+                      DBLOVXML::LOV, DBLOVXML::NAME);
+
+    this->addRelation(DBNUMERATORRANGEXML::NUMERATORRANGE, DBNUMERATORRANGEXML::REFLOV,
                       DBLOVXML::LOV, DBLOVXML::NAME);
 
     this->addRelation(DBREFXML::REF, DBREFXML::PARENT,

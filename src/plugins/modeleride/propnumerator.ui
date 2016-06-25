@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>282</width>
-    <height>94</height>
+    <height>104</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -107,17 +107,7 @@
     <widget class="NumeratorWidget" name="numeratorWidget" native="true"/>
    </item>
    <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
+    <widget class="NumeratorRangeWidget" name="numeratorRangeWidget" native="true"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutPropSave">
@@ -170,6 +160,12 @@
    <class>NumeratorWidget</class>
    <extends>QWidget</extends>
    <header>numeratorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NumeratorRangeWidget</class>
+   <extends>QWidget</extends>
+   <header>numeratorrangewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
