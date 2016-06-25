@@ -61,7 +61,8 @@ HEADERS += modelerideplug.h \
     propquantitygroup.h \
     propquantity.h \
     refitemproxymodel.h \
-    propnumerator.h
+    propnumerator.h \
+    numeratorwidget.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -104,7 +105,8 @@ SOURCES += modelerideplug.cpp \
     propquantitygroup.cpp \
     propquantity.cpp \
     refitemproxymodel.cpp \
-    propnumerator.cpp
+    propnumerator.cpp \
+    numeratorwidget.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \
@@ -132,4 +134,5 @@ FORMS += \
     quantitywidget.ui \
     propquantity.ui \
     propquantitygroup.ui \
-    propnumerator.ui
+    propnumerator.ui \
+    numeratorwidget.ui
