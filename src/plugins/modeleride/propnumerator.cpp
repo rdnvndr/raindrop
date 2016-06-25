@@ -15,6 +15,21 @@ PropNumerator::PropNumerator(QWidget *parent) :
 {
     setupUi(this);
 
+    connect(numeratorWidget,SIGNAL(currentIndexChanged(QModelIndex)),
+            this,SLOT(setTabName(QModelIndex)));
+    connect(numeratorWidget,SIGNAL(dataChanged(QModelIndex)),
+            this,SLOT(setTabName(QModelIndex)));
+    connect(numeratorWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
+            this,SLOT(closeTab(QModelIndex)));
+
+    connect(numeratorWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));
+
+    connect(toolButtonAddNumerator,  SIGNAL(clicked()), numeratorWidget, SLOT(add()));
+    connect(toolButtonDelNumerator,  SIGNAL(clicked()), numeratorWidget, SLOT(remove()));
+    connect(toolButtonEditNumerator, SIGNAL(clicked()), numeratorWidget, SLOT(edit()));
+
+    connect(pushButtonPropCancel, SIGNAL(clicked()), numeratorWidget, SLOT(revert()));
+    connect(pushButtonPropSave,   SIGNAL(clicked()), numeratorWidget, SLOT(submit()));
 }
 
 PropNumerator::~PropNumerator()
@@ -24,6 +39,8 @@ PropNumerator::~PropNumerator()
 
 void PropNumerator::setModel(TreeXmlHashModel *model)
 {
+    numeratorWidget->setModel(model);
+
     AbstractPropEditor::setModel(model);
 }
 
@@ -36,7 +53,7 @@ QString PropNumerator::dataId(const QModelIndex &index)
 
 void PropNumerator::setCurrent(const QModelIndex &index)
 {
-
+    numeratorWidget->setCurrent(index);
 }
 
 void PropNumerator::setTabName(const QModelIndex &index)
@@ -55,7 +72,14 @@ void PropNumerator::setTabName(const QModelIndex &index)
 
 void PropNumerator::edit(bool flag)
 {
+    if (numeratorWidget->isEmpty()){
+        toolButtonAddNumerator->setDisabled(true);
+    } else
+        toolButtonAddNumerator->setEnabled(true);
 
+    pushButtonPropSave->setEnabled(flag);
+    pushButtonPropCancel->setEnabled(flag);
+    toolButtonEditNumerator->setDisabled(flag);
 }
 
 }}
