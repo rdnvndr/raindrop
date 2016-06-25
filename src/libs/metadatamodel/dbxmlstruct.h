@@ -317,6 +317,15 @@ namespace DBNUMERATORXML{
     const QString ID = "guid";
 }
 
+//! Ключевые слова XML файла для интервала нумератора
+namespace DBNUMERATORRANGEXML{
+    const QString NUMERATORRANGE = "RTPNumeratorRange";
+    const QString REGEX = "regex";
+    const QString REFLOV = "referencedLov";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
 }}
 
 #endif // DBXMLSTRUCT_H
