@@ -61,7 +61,7 @@ void PermissionWidget::setModel(TreeXmlHashModel *model)
     proxyModel()->setHeaderData(7,  Qt::Horizontal, tr("Идентификатор"));
     treeViewPerm->setModel(proxyModel());
 
-    for (int column = 6; column < 16; ++column)
+    for (int column = 6; column < 18; ++column)
         treeViewPerm->setColumnHidden(column,true);
 
     treeViewPerm->header()->setSectionResizeMode(0, QHeaderView::Stretch);

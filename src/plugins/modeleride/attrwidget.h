@@ -68,6 +68,9 @@ public slots:
     //! Очистка поля ввода списка значений
     void cleanLov();
 
+    //! Очистка поля ввода нумератора
+    void cleanNumerator();
+
 private:
     //! Прокси модель для групп атрибутов класса
     AttrGroupProxyModel *m_attrGroupModel;
