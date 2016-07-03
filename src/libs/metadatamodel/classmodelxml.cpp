@@ -72,10 +72,11 @@ void ClassModelXml::initDisplayedAttrs()
     QStringList propsAttr;
     propsAttr << DBATTRXML::NAME           << DBATTRXML::ALIAS
               << DBATTRXML::TYPE           << DBATTRXML::MAXSTRLEN
-              << DBATTRXML::REFCLASS       << DBATTRXML::PARENT
-              << DBATTRXML::REFUNIT        << DBATTRXML::INITIALVAL
-              << DBATTRXML::LOWERBOUND     << DBATTRXML::UPPERBOUND
-              << DBATTRXML::REFLOV         << DBATTRXML::GROUP
+              << DBATTRXML::ACCURACY       << DBATTRXML::REFCLASS
+              << DBATTRXML::PARENT         << DBATTRXML::REFUNIT
+              << DBATTRXML::INITIALVAL     << DBATTRXML::LOWERBOUND
+              << DBATTRXML::UPPERBOUND     << DBATTRXML::REFLOV
+              << DBATTRXML::REFNUMERATOR   << DBATTRXML::GROUP
               << DBATTRXML::ISNULLALLOWED  << DBATTRXML::ISUNIQUE
               << DBATTRXML::ISCANDIDATEKEY << DBATTRXML::ID;
     this->addDisplayedAttr(DBATTRXML::ATTR,propsAttr, QIcon(":/attribute"));
@@ -332,6 +333,9 @@ void ClassModelXml::initHashAttrs()
     this->addHashAttr(DBATTRXML::ATTR,
                       DBATTRXML::REFLOV,
                       TreeXmlHashModel::NoUnique);
+    this->addHashAttr(DBATTRXML::ATTR,
+                      DBATTRXML::REFNUMERATOR,
+                      TreeXmlHashModel::NoUnique);
     this->addHashAttr(DBCOMPXML::COMP,
                       DBCOMPXML::CLASS,
                       TreeXmlHashModel::NoUnique);
@@ -455,6 +459,8 @@ void ClassModelXml::initRelations()
                       DBUNITXML::UNIT, DBUNITXML::NAME);
     this->addRelation(DBATTRXML::ATTR,DBATTRXML::REFLOV,
                       DBLOVXML::LOV, DBLOVXML::NAME);
+    this->addRelation(DBATTRXML::ATTR,DBATTRXML::REFNUMERATOR,
+                      DBNUMERATORXML::NUMERATOR, DBNUMERATORXML::NAME);
 
     this->addRelation(DBCLASSXML::CLASS, DBCLASSXML::PARENT,
                       DBCLASSXML::CLASS, DBCLASSXML::NAME);

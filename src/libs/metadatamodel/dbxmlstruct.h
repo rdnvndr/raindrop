@@ -34,6 +34,7 @@ namespace DBATTRXML{
     const QString TYPE = "type";
     const QString GROUP = "group";
     const QString MAXSTRLEN = "maxStringLength";
+    const QString ACCURACY = "accuracy";
     const QString ISNULLALLOWED = "isNullsAllowed";
     const QString ISUNIQUE = "isUnique";
     const QString ISCANDIDATEKEY = "isCandidateKey";
@@ -43,6 +44,7 @@ namespace DBATTRXML{
     const QString REFCLASS = "referencedClass";
     const QString REFUNIT =  "referencedUnit";
     const QString REFLOV =  "referencedLov";
+    const QString REFNUMERATOR = "referenceNumerator";
     const QString PARENT = "parent";
     const QString ID = "guid";
 }

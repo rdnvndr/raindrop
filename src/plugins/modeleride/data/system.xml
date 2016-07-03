@@ -1070,6 +1070,7 @@
 <RTPLOVValue alias="3" name="Особо тяжелые и особо вредные" guid="{fc0716d2-5196-4291-9191-0a1924c71aac}"/>
 </RTPLOV>
 </RTPLOVList>
+<RTPNumeratorList alias="Нумераторы" name="Numerators"/>
 <RTPRefList alias="Справочники" name="References">
 <RTPRefGroup name="Производство" description="Производство" guid="{0a25425f-0ce1-4b4e-8ac2-d1d6119740c4}">
 <RTPRef name="Тип обработки" description="Тип обработки" guid="{5227d34d-cb43-4833-a695-a96352186280}"/>

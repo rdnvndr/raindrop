@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>546</width>
-    <height>441</height>
+    <width>537</width>
+    <height>471</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -314,12 +314,15 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="2" column="1">
+       <widget class="QSpinBox" name="spinBoxAccuracy"/>
+      </item>
+      <item row="3" column="1">
        <widget class="RTPTechGroup::Widgets::TreeComboBox" name="comboBoxLinkAttr"/>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="labelStringLen">
         <property name="text">
-         <string>Длина строки:</string>
+         <string>Длина:</string>
         </property>
        </widget>
       </item>
@@ -343,7 +346,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
+      <item row="4" column="0">
        <widget class="QLabel" name="labelUnitAttr">
         <property name="text">
          <string>Един. измерения:</string>
@@ -353,51 +356,21 @@
       <item row="0" column="1">
        <widget class="QComboBox" name="comboBoxTypeAttr"/>
       </item>
-      <item row="2" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="labelLinkClass">
         <property name="text">
          <string>Ссылка на класс:</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
-       <widget class="QLineEdit" name="lineEditDefaultValue"/>
-      </item>
-      <item row="1" column="3">
-       <widget class="QLineEdit" name="lineEditLowerBound"/>
-      </item>
-      <item row="2" column="3">
-       <widget class="QLineEdit" name="lineEditUpperBound"/>
-      </item>
-      <item row="0" column="2">
-       <widget class="QLabel" name="labelDefaultValue">
-        <property name="text">
-         <string>По умолчанию:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QLabel" name="labelLowerBound">
-        <property name="text">
-         <string>Нижняя граница:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QLabel" name="labelUpperBound">
-        <property name="text">
-         <string>Верхняя граница:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
+      <item row="4" column="2">
        <widget class="QLabel" name="labelLov">
         <property name="text">
          <string>Список значений:</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="3">
+      <item row="4" column="3">
        <layout class="QHBoxLayout" name="horizontalLayoutLov">
         <property name="spacing">
          <number>0</number>
@@ -411,7 +384,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../treedockwidget/treedockwidget.qrc">
+           <iconset resource="modeleride.qrc">
             <normaloff>:/editclean</normaloff>:/editclean</iconset>
           </property>
           <property name="autoRaise">
@@ -421,7 +394,14 @@
         </item>
        </layout>
       </item>
-      <item row="3" column="1">
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelAccuracy">
+        <property name="text">
+         <string>Точность:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
        <layout class="QHBoxLayout" name="horizontalLayoutUnitAttr">
         <property name="spacing">
          <number>0</number>
@@ -435,7 +415,68 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../treedockwidget/treedockwidget.qrc">
+           <iconset resource="modeleride.qrc">
+            <normaloff>:/editclean</normaloff>:/editclean</iconset>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLineEdit" name="lineEditDefaultValue"/>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLineEdit" name="lineEditLowerBound"/>
+      </item>
+      <item row="1" column="3">
+       <widget class="QLineEdit" name="lineEditUpperBound"/>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="labelDefaultValue">
+        <property name="text">
+         <string>По умолчанию:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="labelLowerBound">
+        <property name="text">
+         <string>Нижняя граница:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="labelUpperBound">
+        <property name="text">
+         <string>Верхняя граница:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLabel" name="labelNumerator">
+        <property name="text">
+         <string>Нумератор:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <layout class="QHBoxLayout" name="horizontalLayoutNumerator">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QComboBox" name="comboBoxNumerator"/>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButtonNumeratorClean">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="modeleride.qrc">
             <normaloff>:/editclean</normaloff>:/editclean</iconset>
           </property>
           <property name="autoRaise">
@@ -453,13 +494,17 @@
      <zorder>comboBoxLinkAttr</zorder>
      <zorder>spinBoxStringLen</zorder>
      <zorder>labelUnitAttr</zorder>
+     <zorder>labelLov</zorder>
+     <zorder>labelAccuracy</zorder>
+     <zorder>spinBoxAccuracy</zorder>
      <zorder>lineEditDefaultValue</zorder>
      <zorder>lineEditLowerBound</zorder>
      <zorder>lineEditUpperBound</zorder>
      <zorder>labelDefaultValue</zorder>
      <zorder>labelLowerBound</zorder>
      <zorder>labelUpperBound</zorder>
-     <zorder>labelLov</zorder>
+     <zorder>labelNumerator</zorder>
+     <zorder>horizontalLayoutWidget</zorder>
     </widget>
    </item>
    <item>
@@ -519,7 +564,6 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../treedockwidget/treedockwidget.qrc"/>
   <include location="modeleride.qrc"/>
  </resources>
  <connections/>

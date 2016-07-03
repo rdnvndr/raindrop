@@ -52,6 +52,7 @@ AttrWidget::AttrWidget(QWidget *parent) :
 
     AbstractItemWidget::setItemView(tableViewAttr);
     comboBoxLov->setItemDelegate(new XmlDelegate(this));
+    comboBoxNumerator->setItemDelegate(new XmlDelegate(this));
 
     connect(tableViewAttr,SIGNAL(clicked(QModelIndex)),
             this,SLOT(setCurrent(QModelIndex)));
@@ -66,6 +67,7 @@ AttrWidget::AttrWidget(QWidget *parent) :
 
     connect(toolButtonUnitAttrClean, SIGNAL(clicked()), this, SLOT(cleanUnit()));
     connect(toolButtonLovClean, SIGNAL(clicked()), this, SLOT(cleanLov()));
+    connect(toolButtonNumeratorClean, SIGNAL(clicked()), this, SLOT(cleanNumerator()));
 
     connect(toolButtonUpAttr,SIGNAL(clicked()),this,SLOT(up()));
     connect(toolButtonDownAttr,SIGNAL(clicked()),this,SLOT(down()));
@@ -87,21 +89,23 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     proxyModel()->setHeaderData(1,  Qt::Horizontal, tr("Псевдоним"));
     proxyModel()->setHeaderData(2,  Qt::Horizontal, tr("Тип"));
     proxyModel()->setHeaderData(3,  Qt::Horizontal, tr("Длина строки"));
-    proxyModel()->setHeaderData(4,  Qt::Horizontal, tr("Ссылочный класс"));
-    proxyModel()->setHeaderData(5,  Qt::Horizontal, tr("Класс"));
-    proxyModel()->setHeaderData(6,  Qt::Horizontal, tr("ЕИ"));
-    proxyModel()->setHeaderData(7,  Qt::Horizontal, tr("По умолчанию"));
-    proxyModel()->setHeaderData(8,  Qt::Horizontal, tr("Нижняя граница"));
-    proxyModel()->setHeaderData(9,  Qt::Horizontal, tr("Верхняя гранница"));
-    proxyModel()->setHeaderData(10, Qt::Horizontal, tr("Список значений"));
-    proxyModel()->setHeaderData(11, Qt::Horizontal, tr("Группа"));
-    proxyModel()->setHeaderData(12, Qt::Horizontal, tr("Нулевые значения"));
-    proxyModel()->setHeaderData(13, Qt::Horizontal, tr("Уникальный"));
-    proxyModel()->setHeaderData(14, Qt::Horizontal, tr("Кандидат в ключ"));
-    proxyModel()->setHeaderData(15, Qt::Horizontal, tr("Индетификатор"));
+    proxyModel()->setHeaderData(4,  Qt::Horizontal, tr("Точность"));
+    proxyModel()->setHeaderData(5,  Qt::Horizontal, tr("Ссылочный класс"));
+    proxyModel()->setHeaderData(6,  Qt::Horizontal, tr("Класс"));
+    proxyModel()->setHeaderData(7,  Qt::Horizontal, tr("ЕИ"));
+    proxyModel()->setHeaderData(8,  Qt::Horizontal, tr("По умолчанию"));
+    proxyModel()->setHeaderData(9,  Qt::Horizontal, tr("Нижняя граница"));
+    proxyModel()->setHeaderData(10, Qt::Horizontal, tr("Верхняя гранница"));
+    proxyModel()->setHeaderData(11, Qt::Horizontal, tr("Список значений"));
+    proxyModel()->setHeaderData(12, Qt::Horizontal, tr("Нумератор"));
+    proxyModel()->setHeaderData(13, Qt::Horizontal, tr("Группа"));
+    proxyModel()->setHeaderData(14, Qt::Horizontal, tr("Нулевые значения"));
+    proxyModel()->setHeaderData(15, Qt::Horizontal, tr("Уникальный"));
+    proxyModel()->setHeaderData(16, Qt::Horizontal, tr("Кандидат в ключ"));
+    proxyModel()->setHeaderData(17, Qt::Horizontal, tr("Индетификатор"));
 
     proxyModel()->setDynamicSortFilter(true);
-    tableViewAttr->setColumnHidden(15,true);
+    tableViewAttr->setColumnHidden(17,true);
     m_attrGroupModel->setModel(model);
 
     TableXMLProxyModel *lovFilterModel = new TableXMLProxyModel(this);
@@ -120,6 +124,26 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     lovFilterModel->setFilterIndex(lovFilterModel->mapToSource(lovFilterModel->index(0,0).child(0,0)));
     tags << DBLOVXML::LOV;
     lovFilterModel->setAttributeTags(tags);
+
+    TableXMLProxyModel *numeratorFilterModel = new TableXMLProxyModel(this);
+    tags.clear();
+    tags << DBNUMERATORLISTXML::NUMERATORLIST;
+    numeratorFilterModel->setAttributeTags(tags);
+    numeratorFilterModel->setSourceModel(model);
+    numeratorFilterModel->setFilterIndex(model->index(0,0));
+    numeratorFilterModel->setFilterRole(Qt::EditRole);
+//    numeratorFilterModel->setFilterKeyColumn(model->columnDisplayedAttr(
+//                                           DBLOVXML::LOV,DBLOVXML::TYPE));
+    numeratorFilterModel->setDynamicSortFilter(true);
+    numeratorFilterModel->sort(0);
+    comboBoxNumerator->setModel(numeratorFilterModel);
+    comboBoxNumerator->setRootModelIndex(numeratorFilterModel->index(0,0).child(0,0));
+    numeratorFilterModel->setFilterIndex(
+                numeratorFilterModel->mapToSource(
+                    numeratorFilterModel->index(0,0).child(0,0))
+                );
+    tags << DBNUMERATORXML::NUMERATOR;
+    numeratorFilterModel->setAttributeTags(tags);
 
     QSortFilterProxyModel *classFilterModel = new QSortFilterProxyModel(this);
     classFilterModel->setFilterKeyColumn(0);
@@ -164,6 +188,9 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     dataMapper()->addMapping(spinBoxStringLen,
                              model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                         DBATTRXML::MAXSTRLEN));
+    dataMapper()->addMapping(spinBoxAccuracy,
+                             model->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                        DBATTRXML::ACCURACY));
     dataMapper()->addMapping(comboBoxLinkAttr,
                              model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                         DBATTRXML::REFCLASS));
@@ -198,6 +225,9 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     dataMapper()->addMapping(comboBoxLov,
                              model->columnDisplayedAttr(DBATTRXML::ATTR,
                                                         DBATTRXML::REFLOV));
+    dataMapper()->addMapping(comboBoxNumerator,
+                             model->columnDisplayedAttr(DBATTRXML::ATTR,
+                                                        DBATTRXML::REFNUMERATOR));
 
 }
 
@@ -230,6 +260,11 @@ void AttrWidget::cleanUnit()
 void AttrWidget::cleanLov()
 {
     comboBoxLov->setCurrentIndex(-1);
+}
+
+void AttrWidget::cleanNumerator()
+{
+    comboBoxNumerator->setCurrentIndex(-1);
 }
 
 void AttrWidget::add()
