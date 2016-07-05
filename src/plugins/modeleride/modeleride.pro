@@ -63,7 +63,9 @@ HEADERS += modelerideplug.h \
     refitemproxymodel.h \
     propnumerator.h \
     numeratorwidget.h \
-    numeratorrangewidget.h
+    numeratorrangewidget.h \
+    regexpvaluevalidator.h \
+    numeratorrangedelegate.h
 SOURCES += modelerideplug.cpp \
     propclass.cpp \
     classtreeview.cpp \
@@ -108,7 +110,9 @@ SOURCES += modelerideplug.cpp \
     refitemproxymodel.cpp \
     propnumerator.cpp \
     numeratorwidget.cpp \
-    numeratorrangewidget.cpp
+    numeratorrangewidget.cpp \
+    regexpvaluevalidator.cpp \
+    numeratorrangedelegate.cpp
 RESOURCES += modeleride.qrc
 
 FORMS += \

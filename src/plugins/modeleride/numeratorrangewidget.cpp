@@ -1,4 +1,5 @@
 #include "numeratorrangewidget.h"
+#include "numeratorrangedelegate.h"
 
 #include <metadatamodel/dbxmlstruct.h>
 #include <QMessageBox>
@@ -18,12 +19,12 @@ NumeratorRangeWidget::NumeratorRangeWidget(QWidget *parent) :
     connect(deleteToolButton,SIGNAL(clicked()),this,SLOT(remove()));
 
     AbstractModifyWidget::setItemView(numeratorRangeTableView);
-//    itemView()->setItemDelegate(new LovDelegate());
+    itemView()->setItemDelegate(new NumeratorRangeDelegate());
 }
 
 NumeratorRangeWidget::~NumeratorRangeWidget()
 {
-//     delete itemView()->itemDelegate();
+    delete itemView()->itemDelegate();
 }
 
 void NumeratorRangeWidget::setModel(TreeXmlHashModel *model)
