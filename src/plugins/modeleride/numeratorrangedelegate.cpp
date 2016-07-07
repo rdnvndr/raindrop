@@ -1,12 +1,16 @@
 #include "numeratorrangedelegate.h"
 #include <treexmlmodel/treexmlhashmodel.h>
+#include <treexmlmodel/tablexmlproxymodel.h>
 #include <metadatamodel/dbxmlstruct.h>
 
 #include <QLineEdit>
+#include <QComboBox>
 #include <QAbstractProxyModel>
 #include <QToolTip>
 
 #include "regexpvaluevalidator.h"
+#include "treefilterproxymodel.h"
+#include "xmldelegate.h"
 
 using namespace RTPTechGroup::XmlModel;
 using namespace RTPTechGroup::MetaDataModel;
@@ -26,9 +30,8 @@ QWidget *NumeratorRangeDelegate::createEditor(QWidget *parent,
 {
     Q_UNUSED(option)
 
-    QLineEdit *lineEdit = new QLineEdit(parent);
-
-    const QAbstractProxyModel *proxyModel = dynamic_cast<const QAbstractProxyModel *>(index.model());
+    const QAbstractProxyModel *proxyModel
+            = dynamic_cast<const QAbstractProxyModel *>(index.model());
     const TreeXmlHashModel *hashModel = (proxyModel)?
                 dynamic_cast<const TreeXmlHashModel*>(proxyModel->sourceModel())
               : dynamic_cast<const TreeXmlHashModel*>(index.model());
@@ -36,17 +39,46 @@ QWidget *NumeratorRangeDelegate::createEditor(QWidget *parent,
     if (hashModel) {
         QString tag  = index.data(TreeXmlModel::TagRole).toString();
         QString attr = hashModel->displayedAttr(tag, index.column());
-        if (tag == DBNUMERATORRANGEXML::NUMERATORRANGE) {
-            if (attr == DBNUMERATORRANGEXML::REGEX)
-            {
-                RegExpValueValidator *validator = new RegExpValueValidator(lineEdit);
-                lineEdit->setValidator(validator);
-                connect(validator,SIGNAL(stateChanged(QValidator::State)),
-                        this,SLOT(validateRegExp(QValidator::State)));
-            }
+        if (tag == DBNUMERATORREGEXXML::NUMERATORREGEX
+                && attr == DBNUMERATORREGEXXML::REGEX) {
+            QLineEdit *lineEdit = new QLineEdit(parent);
+            RegExpValueValidator *validator
+                    = new RegExpValueValidator(lineEdit);
+            lineEdit->setValidator(validator);
+            connect(validator,SIGNAL(stateChanged(QValidator::State)),
+                    this,SLOT(validateRegExp(QValidator::State)));
+            return lineEdit;
+        }
+        if (tag == DBNUMERATORLOVXML::NUMERATORLOV
+                && attr == DBNUMERATORLOVXML::REFLOV) {
+            QComboBox *comboBox = new QComboBox(parent);
+            comboBox->setItemDelegate(new XmlDelegate(parent));
+            TableXMLProxyModel *numeratorFilterModel
+                    = new TableXMLProxyModel(parent);
+            QStringList tags;
+            tags << DBLOVLISTXML::LOVLIST;
+            numeratorFilterModel->setAttributeTags(tags);
+            numeratorFilterModel->setSourceModel(
+                        const_cast<TreeXmlHashModel *>(hashModel));
+            numeratorFilterModel->setFilterIndex(hashModel->index(0,0));
+            numeratorFilterModel->setFilterRole(Qt::EditRole);
+            numeratorFilterModel->setDynamicSortFilter(true);
+            numeratorFilterModel->sort(0);
+
+            numeratorFilterModel->setFilterIndex(
+                        numeratorFilterModel->mapToSource(
+                            numeratorFilterModel->index(0,0).child(0,0))
+                        );
+            tags << DBLOVXML::LOV;
+            numeratorFilterModel->setAttributeTags(tags);
+            comboBox->setModel(numeratorFilterModel);
+            comboBox->setRootModelIndex(
+                        numeratorFilterModel->index(0,0).child(0,0));
+            comboBox->setCurrentIndex(-1);
+            return comboBox;
         }
     }
-    return lineEdit;
+    return QStyledItemDelegate::createEditor(parent, option, index);
 }
 
 void NumeratorRangeDelegate::validateRegExp(QValidator::State state) const

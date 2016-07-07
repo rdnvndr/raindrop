@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>280</width>
+    <height>134</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,19 +56,36 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QToolButton" name="addToolButton">
+         <widget class="QToolButton" name="addLovToolButton">
           <property name="text">
            <string>Добавить</string>
           </property>
           <property name="icon">
-           <iconset resource="modeleride.qrc">
-            <normaloff>:/add</normaloff>:/add</iconset>
+           <iconset resource="../../libs/metadatamodel/metadatamodel.qrc">
+            <normaloff>:/lov</normaloff>:/lov</iconset>
           </property>
           <property name="iconSize">
            <size>
             <width>16</width>
             <height>16</height>
            </size>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextBesideIcon</enum>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="addRegExToolButton">
+          <property name="text">
+           <string>Добавить</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../libs/metadatamodel/metadatamodel.qrc">
+            <normaloff>:/numeratorregex</normaloff>:/numeratorregex</iconset>
           </property>
           <property name="toolButtonStyle">
            <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -144,6 +161,7 @@
   </layout>
  </widget>
  <resources>
+  <include location="../../libs/metadatamodel/metadatamodel.qrc"/>
   <include location="modeleride.qrc"/>
  </resources>
  <connections/>

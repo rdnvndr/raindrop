@@ -132,8 +132,6 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     numeratorFilterModel->setSourceModel(model);
     numeratorFilterModel->setFilterIndex(model->index(0,0));
     numeratorFilterModel->setFilterRole(Qt::EditRole);
-//    numeratorFilterModel->setFilterKeyColumn(model->columnDisplayedAttr(
-//                                           DBLOVXML::LOV,DBLOVXML::TYPE));
     numeratorFilterModel->setDynamicSortFilter(true);
     numeratorFilterModel->sort(0);
     comboBoxNumerator->setModel(numeratorFilterModel);
