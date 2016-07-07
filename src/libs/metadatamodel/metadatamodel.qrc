@@ -22,5 +22,6 @@
         <file alias="rolelist">icons/roles.svg</file>
         <file alias="numerator">icons/numerator.svg</file>
         <file alias="numeratorlist">icons/numeratorlist.svg</file>
+        <file alias="numeratorregex">icons/numeratorregex.svg</file>
     </qresource>
 </RCC>

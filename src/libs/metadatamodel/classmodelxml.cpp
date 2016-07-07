@@ -56,7 +56,8 @@ void ClassModelXml::initTagFilters()
     this->addTagFilter(DBPERMISSIONXML::PERMISSION);
     this->addTagFilter(DBNUMERATORLISTXML::NUMERATORLIST);
     this->addTagFilter(DBNUMERATORXML::NUMERATOR);
-    this->addTagFilter(DBNUMERATORRANGEXML::NUMERATORRANGE);
+    this->addTagFilter(DBNUMERATORLOVXML::NUMERATORLOV);
+    this->addTagFilter(DBNUMERATORREGEXXML::NUMERATORREGEX);
 }
 
 void ClassModelXml::initDisplayedAttrs()
@@ -156,13 +157,19 @@ void ClassModelXml::initDisplayedAttrs()
                    << DBNUMERATORXML::PARENT << DBNUMERATORXML::ID;
     this->addDisplayedAttr(DBNUMERATORXML::NUMERATOR, propsNumerator, QIcon(":/numerator"));
 
-    QStringList propsNumeratorRange;
-    propsNumeratorRange << DBNUMERATORRANGEXML::REGEX
-                        << DBNUMERATORRANGEXML::REFLOV
-                        << DBNUMERATORRANGEXML::PARENT
-                        << DBNUMERATORRANGEXML::ID;
-    this->addDisplayedAttr(DBNUMERATORRANGEXML::NUMERATORRANGE,
-                           propsNumeratorRange, QIcon(":/lovvalue"));
+    QStringList propsNumeratorLov;
+    propsNumeratorLov << DBNUMERATORLOVXML::REFLOV
+                      << DBNUMERATORLOVXML::PARENT
+                      << DBNUMERATORLOVXML::ID;
+    this->addDisplayedAttr(DBNUMERATORLOVXML::NUMERATORLOV,
+                           propsNumeratorLov, QIcon(":/lov"));
+
+    QStringList propsNumeratorRegEx;
+    propsNumeratorRegEx << DBNUMERATORREGEXXML::REGEX
+                        << DBNUMERATORREGEXXML::PARENT
+                        << DBNUMERATORREGEXXML::ID;
+    this->addDisplayedAttr(DBNUMERATORREGEXXML::NUMERATORREGEX,
+                           propsNumeratorRegEx, QIcon(":/numeratorregex"));
 
     QStringList propsRoleList;
     propsRoleList << DBROLELISTXML::NAME   << DBROLELISTXML::ALIAS
@@ -280,7 +287,7 @@ void ClassModelXml::initInsertTags()
     this->addInsertTags(DBNUMERATORLISTXML::NUMERATORLIST,insertTags);
 
     insertTags.clear();
-    insertTags << DBNUMERATORRANGEXML::NUMERATORRANGE;
+    insertTags << DBNUMERATORLOVXML::NUMERATORLOV << DBNUMERATORREGEXXML::NUMERATORREGEX;
     this->addInsertTags(DBNUMERATORXML::NUMERATOR,insertTags);
 
     insertTags.clear();
@@ -410,8 +417,11 @@ void ClassModelXml::initHashAttrs()
     this->addHashAttr(DBNUMERATORXML::NUMERATOR,
                       DBNUMERATORXML::ID,
                       TreeXmlHashModel::Uuid);
-    this->addHashAttr(DBNUMERATORRANGEXML::NUMERATORRANGE,
-                      DBNUMERATORRANGEXML::ID,
+    this->addHashAttr(DBNUMERATORLOVXML::NUMERATORLOV,
+                      DBNUMERATORLOVXML::ID,
+                      TreeXmlHashModel::Uuid);
+    this->addHashAttr(DBNUMERATORREGEXXML::NUMERATORREGEX,
+                      DBNUMERATORREGEXXML::ID,
                       TreeXmlHashModel::Uuid);
     this->addHashAttr(DBLOVXML::LOV,
                       DBLOVXML::ID,
@@ -499,7 +509,7 @@ void ClassModelXml::initRelations()
     this->addRelation(DBLOVVALUEXML::LOVVALUE, DBLOVVALUEXML::PARENT,
                       DBLOVXML::LOV, DBLOVXML::NAME);
 
-    this->addRelation(DBNUMERATORRANGEXML::NUMERATORRANGE, DBNUMERATORRANGEXML::REFLOV,
+    this->addRelation(DBNUMERATORLOVXML::NUMERATORLOV, DBNUMERATORLOVXML::REFLOV,
                       DBLOVXML::LOV, DBLOVXML::NAME);
 
     this->addRelation(DBREFXML::REF, DBREFXML::PARENT,

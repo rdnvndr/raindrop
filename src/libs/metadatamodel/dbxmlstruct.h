@@ -319,14 +319,22 @@ namespace DBNUMERATORXML{
     const QString ID = "guid";
 }
 
-//! Ключевые слова XML файла для интервала нумератора
-namespace DBNUMERATORRANGEXML{
-    const QString NUMERATORRANGE = "RTPNumeratorRange";
-    const QString REGEX = "regex";
+//! Ключевые слова XML файла для списка нумератора
+namespace DBNUMERATORLOVXML{
+    const QString NUMERATORLOV = "RTPNumeratorLOV";
     const QString REFLOV = "referencedLov";
     const QString PARENT = "parent";
     const QString ID = "guid";
 }
+
+//! Ключевые слова XML файла для регулярного выражения нумератора
+namespace DBNUMERATORREGEXXML{
+    const QString NUMERATORREGEX = "RTPNumeratorRegEx";
+    const QString REGEX = "regex";
+    const QString PARENT = "parent";
+    const QString ID = "guid";
+}
+
 
 }}
 

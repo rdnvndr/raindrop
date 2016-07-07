@@ -15,7 +15,8 @@ NumeratorRangeWidget::NumeratorRangeWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(addToolButton,SIGNAL(clicked()),this,SLOT(add()));
+    connect(addLovToolButton,SIGNAL(clicked()),this,SLOT(addLov()));
+    connect(addRegExToolButton,SIGNAL(clicked()),this,SLOT(addRegEx()));
     connect(deleteToolButton,SIGNAL(clicked()),this,SLOT(remove()));
 
     AbstractModifyWidget::setItemView(numeratorRangeTableView);
@@ -31,26 +32,31 @@ void NumeratorRangeWidget::setModel(TreeXmlHashModel *model)
 {
     AbstractModifyWidget::setModel(model);
 
-    proxyModel()->setHeaderData(0,  Qt::Horizontal, tr("Регулярное выражение"));
-    proxyModel()->setHeaderData(1,  Qt::Horizontal, tr("Список"));
-    proxyModel()->setHeaderData(2,  Qt::Horizontal, tr("Идентификатор"));
+    proxyModel()->setHeaderData(0,  Qt::Horizontal, tr("Список/Регулярное выражение"));
+    proxyModel()->setHeaderData(1,  Qt::Horizontal, tr("Идентификатор"));
 
-    for (int column = 2; column < 18; ++column)
+    for (int column = 1; column < 18; ++column)
         numeratorRangeTableView->setColumnHidden(column,true);
 
     numeratorRangeTableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     numeratorRangeTableView->horizontalHeader()->setDefaultSectionSize(200);
 }
 
-void NumeratorRangeWidget::add()
+void NumeratorRangeWidget::addLov()
 {
-    AbstractModifyWidget::add(DBNUMERATORRANGEXML::NUMERATORRANGE);
+    AbstractModifyWidget::add(DBNUMERATORLOVXML::NUMERATORLOV);
+}
+
+void NumeratorRangeWidget::addRegEx()
+{
+    AbstractModifyWidget::add(DBNUMERATORREGEXXML::NUMERATORREGEX);
 }
 
 void NumeratorRangeWidget::edit(bool flag)
 {
     AbstractModifyWidget::edit(flag);
-    addToolButton->setEnabled(flag);
+    addLovToolButton->setEnabled(flag);
+    addRegExToolButton->setEnabled(flag);
     deleteToolButton->setEnabled(flag);
 }
 

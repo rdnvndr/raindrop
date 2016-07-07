@@ -30,8 +30,11 @@ public:
     void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
 public slots:
-    //! Добавление интервала нумератора
-    void add();
+    //! Добавление списка нумератора
+    void addLov();
+
+    //! Добавление регулярного выражения нумератора
+    void addRegEx();
 
     //! Перевод в режим редактирования
     void edit(bool flag = true);
