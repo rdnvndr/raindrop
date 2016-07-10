@@ -109,7 +109,6 @@ void XmlDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
 
     TreeComboBox *treeComboBox = dynamic_cast<TreeComboBox*>(editor);
     if (treeComboBox) {
-        if (treeComboBox->currentModelIndex().isValid())
             model->setData(index,treeComboBox->currentModelIndex().data(Qt::EditRole),Qt::EditRole);
         return;
     }
