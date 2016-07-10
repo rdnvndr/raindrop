@@ -121,7 +121,7 @@ void XmlDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
         TreeXmlHashModel *indexModel = this->sourceModel(
                     const_cast<QAbstractItemModel*>(model));
 
-        if (hashModel && hashModel == indexModel) {
+        if (hashModel && hashModel == indexModel && comboBox->currentIndex()>=0) {
             QString tag  = index.data(TreeXmlModel::TagRole).toString();
             QString attr = hashModel->displayedAttr(tag, mapToSource(index).column());
             int column = hashModel->columnDisplayedAttr(hashModel->toRelation(tag,attr).tag,
