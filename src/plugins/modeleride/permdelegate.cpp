@@ -7,6 +7,7 @@
 #include <QAbstractProxyModel>
 
 #include <treexmlmodel/treexmlmodel.h>
+#include <treexmlmodel/tablexmlproxymodel.h>
 #include <metadatamodel/dbxmlstruct.h>
 
 using namespace RTPTechGroup::XmlModel;
@@ -39,9 +40,30 @@ QWidget *PermDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
         if (tag == DBPERMISSIONXML::PERMISSION && attr == DBPERMISSIONXML::ROLE) {
             QComboBox *comboBox = new QComboBox(parent);
             comboBox->setItemDelegate(new XmlDelegate(comboBox));
-            comboBox->setModel(const_cast<TreeXmlHashModel *>(hashModel));
+
+            TableXMLProxyModel *permFilterModel
+                    = new TableXMLProxyModel(parent);
+            QStringList tags;
+            tags << DBROLELISTXML::ROLELIST;
+            permFilterModel->setAttributeTags(tags);
+            permFilterModel->setSourceModel(
+                        const_cast<TreeXmlHashModel *>(hashModel));
+            permFilterModel->setFilterIndex(hashModel->index(0,0));
+            permFilterModel->setFilterRole(Qt::EditRole);
+            permFilterModel->setDynamicSortFilter(true);
+            permFilterModel->sort(0);
+
+            permFilterModel->setFilterIndex(
+                        permFilterModel->mapToSource(
+                            permFilterModel->index(0,0).child(0,0))
+                        );
+            tags << DBROLEXML::ROLE;
+            permFilterModel->setAttributeTags(tags);
+            comboBox->setModel(permFilterModel);
             comboBox->setRootModelIndex(
-                        hashModel->index(0,0).child(4,0));
+                        permFilterModel->index(0,0).child(0,0));
+            comboBox->setCurrentIndex(-1);
+
             return comboBox;
         }
     }
