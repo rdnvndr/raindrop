@@ -343,6 +343,7 @@ void AttrWidget::changeType(const QString &typeName)
     if (DBTYPEXML::STRING==typeName){
         // String
         spinBoxStringLen->setEnabled(true);
+        spinBoxAccuracy->setEnabled(false);
         comboBoxLinkAttr->setEnabled(false);
         comboBoxLinkAttr->setDisplayText("");
         comboBoxLinkAttr->setCurrentIndex(-1);
@@ -353,9 +354,13 @@ void AttrWidget::changeType(const QString &typeName)
         comboBoxUnitAttr->setEnabled(false);
         comboBoxUnitAttr->setDisplayText("");
         comboBoxUnitAttr->setCurrentIndex(-1);
+        toolButtonUnitAttrClean->setEnabled(false);
+        comboBoxNumerator->setEnabled(false);
+        toolButtonNumeratorClean->setEnabled(false);
     } else if(DBTYPEXML::REFERENCE==typeName){
         //Reference
         spinBoxStringLen->setEnabled(false);
+        spinBoxAccuracy->setEnabled(false);
         spinBoxStringLen->setValue(0);
         comboBoxLinkAttr->setEnabled(true);
         comboBoxLov->setEnabled(false);
@@ -368,9 +373,13 @@ void AttrWidget::changeType(const QString &typeName)
         comboBoxUnitAttr->setEnabled(false);
         comboBoxUnitAttr->setDisplayText("");
         comboBoxUnitAttr->setCurrentIndex(-1);
+        toolButtonUnitAttrClean->setEnabled(false);
+        comboBoxNumerator->setEnabled(false);
+        toolButtonNumeratorClean->setEnabled(false);
     } else {
         spinBoxStringLen->setEnabled(false);
         spinBoxStringLen->setValue(0);
+        spinBoxAccuracy->setEnabled(DBTYPEXML::DECIMAL == typeName);
         comboBoxLinkAttr->setEnabled(false);
         comboBoxLinkAttr->setDisplayText("");
         comboBoxLinkAttr->setCurrentIndex(-1);
@@ -379,16 +388,28 @@ void AttrWidget::changeType(const QString &typeName)
         lineEditLowerBound->setEnabled(true);
         lineEditUpperBound->setEnabled(true);
 
-        // Decimal, Dimension, Double, Integer, Rage
+        if( (DBTYPEXML::DECIMAL   == typeName && spinBoxAccuracy->value() == 0)
+                || DBTYPEXML::INTEGER   == typeName )
+        {
+            comboBoxNumerator->setEnabled(true);
+            toolButtonNumeratorClean->setEnabled(true);
+        } else {
+            comboBoxNumerator->setEnabled(false);
+            toolButtonNumeratorClean->setEnabled(false);
+        }
+
+        // Decimal Double, Integer
         if( DBTYPEXML::DECIMAL   == typeName
          || DBTYPEXML::DOUBLE    == typeName
          || DBTYPEXML::INTEGER   == typeName )
         {
             comboBoxUnitAttr->setEnabled(true);
+            toolButtonUnitAttrClean->setEnabled(true);
         } else {
             comboBoxUnitAttr->setEnabled(false);
             comboBoxUnitAttr->setDisplayText("");
             comboBoxUnitAttr->setCurrentIndex(-1);
+            toolButtonUnitAttrClean->setEnabled(false);
         }
     }
 
