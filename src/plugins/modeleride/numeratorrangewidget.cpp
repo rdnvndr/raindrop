@@ -19,6 +19,9 @@ NumeratorRangeWidget::NumeratorRangeWidget(QWidget *parent) :
     connect(addRegExToolButton,SIGNAL(clicked()),this,SLOT(addRegEx()));
     connect(deleteToolButton,SIGNAL(clicked()),this,SLOT(remove()));
 
+    connect(upRangeToolButton,SIGNAL(clicked()),this,SLOT(up()));
+    connect(downRangeToolButton,SIGNAL(clicked()),this,SLOT(down()));
+
     AbstractModifyWidget::setItemView(numeratorRangeTableView);
     itemView()->setItemDelegate(new NumeratorRangeDelegate());
 }
@@ -58,6 +61,8 @@ void NumeratorRangeWidget::edit(bool flag)
     addLovToolButton->setEnabled(flag);
     addRegExToolButton->setEnabled(flag);
     deleteToolButton->setEnabled(flag);
+    upRangeToolButton->setEnabled(flag);
+    downRangeToolButton->setEnabled(flag);
 }
 
 }}

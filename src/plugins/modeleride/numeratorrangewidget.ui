@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>280</width>
+    <width>416</width>
     <height>134</height>
    </rect>
   </property>
@@ -109,6 +109,40 @@
             <width>16</width>
             <height>16</height>
            </size>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextBesideIcon</enum>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="downRangeToolButton">
+          <property name="text">
+           <string>Ниже</string>
+          </property>
+          <property name="icon">
+           <iconset resource="modeleride.qrc">
+            <normaloff>:/down</normaloff>:/down</iconset>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextBesideIcon</enum>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="upRangeToolButton">
+          <property name="text">
+           <string>Выше</string>
+          </property>
+          <property name="icon">
+           <iconset resource="modeleride.qrc">
+            <normaloff>:/up</normaloff>:/up</iconset>
           </property>
           <property name="toolButtonStyle">
            <enum>Qt::ToolButtonTextBesideIcon</enum>
