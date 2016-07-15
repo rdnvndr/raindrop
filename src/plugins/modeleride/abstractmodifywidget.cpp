@@ -74,10 +74,17 @@ void AbstractModifyWidget::remove()
     QModelIndex curIndex = m_itemView->currentIndex();
     QModelIndex srcIndex = curIndex.parent();
 
-    if (srcIndex.isValid() && curIndex.isValid()){
+    if (srcIndex.isValid() && curIndex.isValid() && m_itemView->rootIndex() != curIndex){
         if (!isRemove(curIndex))
             return;
-        m_itemView->setCurrentIndex(m_itemView->rootIndex());
+
+        QPersistentModelIndex nextIndex = curIndex.sibling(curIndex.row()+1,0);
+        if (!nextIndex.isValid()) nextIndex = curIndex.sibling(curIndex.row()-1,0);
+        if (nextIndex.isValid())
+            m_itemView->setCurrentIndex(nextIndex);
+        else
+            m_itemView->setCurrentIndex(m_itemView->rootIndex());
+
         m_proxyModel->removeRow(curIndex.row(),srcIndex);
         m_itemView->setModel(m_proxyModel);
     } else
