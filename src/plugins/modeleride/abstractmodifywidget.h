@@ -67,6 +67,11 @@ public slots:
     //! Установка родителя значений списка
     void setRootIndex(const QModelIndex &index);
 
+    //! Перемещение выше
+    void up();
+
+    //! Перемещение ниже
+    void down();
 private:
 
     //! Прокси модель для значений списка

@@ -115,4 +115,44 @@ void AbstractModifyWidget::setRootIndex(const QModelIndex &index)
     emit proxyIndexChanged(m_itemView->rootIndex());
 }
 
+void AbstractModifyWidget::up()
+{
+    QPersistentModelIndex srcIndex = itemView()->currentIndex();
+    QPersistentModelIndex dstIndex = srcIndex.sibling(srcIndex.row()-1,0);
+    if (!dstIndex.isValid()) return;
+
+    QVariant srcTag = srcIndex.sibling(srcIndex.row(), 0).data(TreeXmlModel::TagRole);
+    QVariant dstTag = dstIndex.sibling(dstIndex.row(), 0).data(TreeXmlModel::TagRole);
+    proxyModel()->setData(srcIndex.sibling(srcIndex.row(), 0), dstTag, TreeXmlModel::TagRole);
+    proxyModel()->setData(dstIndex.sibling(dstIndex.row(), 0), srcTag, TreeXmlModel::TagRole);
+
+    for (int i = 0; i<proxyModel()->columnCount(srcIndex); ++i) {
+        QVariant srcValue = srcIndex.sibling(srcIndex.row(), i).data(Qt::EditRole);
+        QVariant dstValue = dstIndex.sibling(dstIndex.row(), i).data(Qt::EditRole);
+        proxyModel()->setData(srcIndex.sibling(srcIndex.row(), i), dstValue);
+        proxyModel()->setData(dstIndex.sibling(dstIndex.row(), i), srcValue);
+    }
+    itemView()->setCurrentIndex(dstIndex);
+}
+
+void AbstractModifyWidget::down()
+{
+    QPersistentModelIndex srcIndex = itemView()->currentIndex();
+    QPersistentModelIndex dstIndex = srcIndex.sibling(srcIndex.row()+1,0);
+    if (!dstIndex.isValid()) return;
+
+    QVariant srcTag = srcIndex.sibling(srcIndex.row(), 0).data(TreeXmlModel::TagRole);
+    QVariant dstTag = dstIndex.sibling(dstIndex.row(), 0).data(TreeXmlModel::TagRole);
+    proxyModel()->setData(srcIndex.sibling(srcIndex.row(), 0), dstTag, TreeXmlModel::TagRole);
+    proxyModel()->setData(dstIndex.sibling(dstIndex.row(), 0), srcTag, TreeXmlModel::TagRole);
+
+    for (int i = 0; i<proxyModel()->columnCount(srcIndex); ++i) {
+        QVariant srcValue = srcIndex.sibling(srcIndex.row(), i).data(Qt::EditRole);
+        QVariant dstValue = dstIndex.sibling(dstIndex.row(), i).data(Qt::EditRole);
+        proxyModel()->setData(srcIndex.sibling(srcIndex.row(), i), dstValue);
+        proxyModel()->setData(dstIndex.sibling(dstIndex.row(), i), srcValue);
+    }
+    itemView()->setCurrentIndex(dstIndex);
+}
+
 }}
