@@ -2,14 +2,35 @@
 #include <QTextCodec>
 #include <QTranslator>
 #include <QLibraryInfo>
+#include <QMessageBox>
 #include <plugin/pluginmanager.h>
+#include <signal.h>
 #include "version.h"
 
 using namespace RTPTechGroup::Plugin;
 
+void death_signal(int signum)
+{
+    QMessageBox msgBox;
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.setWindowTitle("Аварийное завершение");
+    msgBox.setTextFormat(Qt::RichText);
+    msgBox.setText("Во время работы программы произошла критическая ошибка.<BR>"
+                   "Выполнение программы приостановлено. <BR><BR>"
+                   "Нажмите <B>OK</B>, если Вы хотите завершить программу, либо<BR>"
+                   "ничего не делайте, если Вы хотите оставить её в текущем<BR>"
+                   "состоянии для отладки. Обратите внимание, что отладка<BR>"
+                   "требует наличия специальных инструментов и навыков,<BR>"
+                   "поэтому рекомендуется просто выбрать <B>OK</B>.<BR>");
+    msgBox.exec();
+    signal(signum, SIG_DFL);
+    exit(3);
+}
+
 int main(int argc, char *argv[])
 {
     QApplication *app = new QApplication(argc,argv);
+
     app->setApplicationName(APP_NAME);
     #if QT_VERSION >= 0x050000
         app->setApplicationDisplayName(APP_PRODUCT);
@@ -45,6 +66,8 @@ int main(int argc, char *argv[])
         foreach(QString fileName, translationDir.entryList(QDir::Files))
             if (translator->load(fileName,translationDir.absolutePath()))
                 app->installTranslator(translator);
+
+    signal(SIGSEGV, death_signal);
 
     QSettings settings(QSettings::IniFormat, QSettings::UserScope,
                                  QLatin1String("RTPTechGroup"), QLatin1String("Raindrop"));
