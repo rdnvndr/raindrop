@@ -12,16 +12,18 @@ using namespace RTPTechGroup::Plugin;
 void death_signal(int signum)
 {
     QMessageBox msgBox;
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.setWindowTitle("Аварийное завершение");
+    msgBox.setIconPixmap(QIcon(":crash").pixmap(64,64));
+    msgBox.setWindowTitle(QObject::tr("Аварийное завершение"));
     msgBox.setTextFormat(Qt::RichText);
-    msgBox.setText("Во время работы программы произошла критическая ошибка.<BR>"
+
+    msgBox.setText(
+       QObject::tr("Во время работы программы произошла критическая ошибка.<BR>"
                    "Выполнение программы приостановлено. <BR><BR>"
                    "Нажмите <B>OK</B>, если Вы хотите завершить программу, либо<BR>"
                    "ничего не делайте, если Вы хотите оставить её в текущем<BR>"
                    "состоянии для отладки. Обратите внимание, что отладка<BR>"
                    "требует наличия специальных инструментов и навыков,<BR>"
-                   "поэтому рекомендуется просто выбрать <B>OK</B>.<BR>");
+                   "поэтому рекомендуется просто выбрать <B>OK</B>.<BR>"));
     msgBox.exec();
     signal(signum, SIG_DFL);
     exit(3);
