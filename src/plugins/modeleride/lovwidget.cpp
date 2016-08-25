@@ -26,16 +26,16 @@ LovWidget::LovWidget(QWidget *parent) :
 
     m_typeAttrModel = new QStringListModel();
     const QStringList attrTypeList = (QStringList()
-                                       << DBTYPEXML::BOOLEAN
-                                       << DBTYPEXML::BINARY
-                                       << DBTYPEXML::CHAR
-                                       << DBTYPEXML::DATE
-                                       << DBTYPEXML::DECIMAL
-                                       << DBTYPEXML::DOUBLE
-                                       << DBTYPEXML::INTEGER
-                                       << DBTYPEXML::STRING
-                                       << DBTYPEXML::TIME
-                                       << DBTYPEXML::TIMESHTAMP
+                                       << DBATTRTYPEXML::BOOLEAN
+                                       << DBATTRTYPEXML::BINARY
+                                       << DBATTRTYPEXML::CHAR
+                                       << DBATTRTYPEXML::DATE
+                                       << DBATTRTYPEXML::DECIMAL
+                                       << DBATTRTYPEXML::DOUBLE
+                                       << DBATTRTYPEXML::INTEGER
+                                       << DBATTRTYPEXML::STRING
+                                       << DBATTRTYPEXML::TIME
+                                       << DBATTRTYPEXML::TIMESHTAMP
                                        );
     m_typeAttrModel->setStringList(attrTypeList);
 }
