@@ -16,8 +16,8 @@ namespace DBROOTXML{
 namespace DBCLASSXML{
     const QString CLASS = "RTPClass";
     const QString NAME = "name";
-    const QString TYPE = "type";
-    const QString VIEW = "view";
+    const QString MODE = "type";
+    const QString TYPE = "view";
     const QString ALIAS = "alias";
     const QString PARENT = "parent";
     const QString TEMPLATE = "displayTemplate";
@@ -80,14 +80,14 @@ namespace DBTYPEXML{
 }
 
 //! Типы классов
-namespace DBCLASSTYPEXML{
+namespace DBACCESSMODEXML{
     const QString SYSTEM = "System";
     const QString STANDART = "Standart";
     const QString USER = "User";
 }
 
 //!  Вид классов
-namespace DBCLASSVIEWXML{
+namespace DBCLASSTYPEXML{
     const QString ABSTRACT = "Abstract";
     const QString CONTEXT  = "Context";
     const QString EMBEDDED = "Embedded";
