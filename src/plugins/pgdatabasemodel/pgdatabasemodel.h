@@ -3,14 +3,16 @@
 
 #include <QObject>
 #include <plugin/iplugin.h>
+#include <idatabasemodel.h>
 #include "pgdatabasemodelglobal.h"
 
 class  PGDATABASEMODELLIB PgDatabaseModel:
         public QObject,
-        public IPlugin
+        public IPlugin,
+        public IDatabaseModel
 {
     Q_OBJECT
-    Q_INTERFACES(IPlugin)
+    Q_INTERFACES(IPlugin IDatabaseModel)
 
 #if QT_VERSION >= 0x050000
     Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.PgDatabaseModel" FILE "pgdatabasemodel.json")
@@ -27,7 +29,7 @@ public:
     QObject *instance() { return this; }
 
     //! Получение имени плагина
-    QString name() {return tr("PgDatabaseModel");};
+    QString name() {return tr("pgdatabasemodel");};
 
     //! Получение иконки плагина
     QIcon icon() {return QIcon(":/pgdatabasemodel");}

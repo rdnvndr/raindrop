@@ -8,6 +8,7 @@ HEADERS += iundogroup.h
 HEADERS += iclipboardstack.h
 HEADERS += iclipboarditem.h
 
+HEADERS += idatabasemodel.h
 HEADERS += idatabaseclass.h
 HEADERS += idatabaseattr.h
 HEADERS += idatabasefilter.h

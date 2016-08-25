@@ -6,7 +6,8 @@ class IDatabaseFilter
 {
 public:
 
-}
+};
 
 Q_DECLARE_INTERFACE(IDatabaseFilter,"com.RTPTechGroup.Raindrop.IDatabaseFilter/1.0")
+
 #endif

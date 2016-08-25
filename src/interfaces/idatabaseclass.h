@@ -13,11 +13,11 @@ class IDatabaseClass
 public:
     //! Перечисление режимов доступа
     enum AccessMode { System, Standart, User };
-    Q_ENUM(AccessMode)
+//    Q_ENUM(AccessMode)
 
     //! Перечисление типов класса
     enum ClassType { Abstract, Context, Embedded, Normal };
-    Q_ENUM(ClassType)
+//    Q_ENUM(ClassType)
 
     //! Возращает идентификатор класса
     virtual QUuid id() = 0;
@@ -78,7 +78,8 @@ public:
 
 private:
 
-}
+};
 
-Q_DECLARE_INTERFACE(IDatabaseClass,"com.RTPTechGroup.Raindrop.IDatabaseClass/1.0")
+//Q_DECLARE_INTERFACE(IDatabaseClass,"com.RTPTechGroup.Raindrop.IDatabaseClass/1.0")
+
 #endif

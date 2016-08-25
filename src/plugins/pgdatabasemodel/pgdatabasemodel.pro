@@ -1,6 +1,6 @@
 VERSION = 1.0
 QMAKE_TARGET_COMPANY = "RTPTechGroup"
-QMAKE_TARGET_PRODUCT = "PgDatabaseModel"
+QMAKE_TARGET_PRODUCT = "Модель данных PostgreSql"
 QMAKE_TARGET_DESCRIPTION = "Реализация модели данных для PostgreSql"
 QMAKE_TARGET_COPYRIGHT = "Copyright (C) RTPTechGroup"
 
@@ -13,6 +13,8 @@ DEFINES +=  PGDATABASEMODEL_LIBRARY
 QT += widgets
 
 # Input
-HEADERS   += pgdatabasemodel.h pgdatabasemodelglobal.h
-SOURCES   += pgdatabasemodel.cpp
+HEADERS   += pgdatabasemodel.h pgdatabasemodelglobal.h \
+    pgdatabaseclass.h
+SOURCES   += pgdatabasemodel.cpp \
+    pgdatabaseclass.cpp
 RESOURCES += pgdatabasemodel.qrc

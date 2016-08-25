@@ -1,7 +1,6 @@
 TEMPLATE = subdirs
 CONFIG += ordered
-SUBDIRS +=  mainwindow \
-    pgdatabasemodel
+SUBDIRS +=  mainwindow
 SUBDIRS +=  stackediting
 SUBDIRS +=  sqleditor
 SUBDIRS +=  dbconnect
