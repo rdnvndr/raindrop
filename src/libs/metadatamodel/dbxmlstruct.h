@@ -65,7 +65,7 @@ namespace DBCOMPXML{
 }
 
 //! Типы атрибутов
-namespace DBTYPEXML{
+namespace DBATTRTYPEXML{
     const QString BOOLEAN = "Boolean";
     const QString BINARY = "Binary";
     const QString CHAR = "Char";

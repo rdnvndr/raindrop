@@ -36,17 +36,17 @@ AttrWidget::AttrWidget(QWidget *parent) :
 
     m_typeAttrModel = new QStringListModel();
     const QStringList attrTypeList = (QStringList()
-                                       << DBTYPEXML::BOOLEAN
-                                       << DBTYPEXML::BINARY
-                                       << DBTYPEXML::CHAR
-                                       << DBTYPEXML::DATE
-                                       << DBTYPEXML::DECIMAL
-                                       << DBTYPEXML::DOUBLE
-                                       << DBTYPEXML::INTEGER
-                                       << DBTYPEXML::STRING
-                                       << DBTYPEXML::REFERENCE
-                                       << DBTYPEXML::TIME
-                                       << DBTYPEXML::TIMESHTAMP
+                                       << DBATTRTYPEXML::BOOLEAN
+                                       << DBATTRTYPEXML::BINARY
+                                       << DBATTRTYPEXML::CHAR
+                                       << DBATTRTYPEXML::DATE
+                                       << DBATTRTYPEXML::DECIMAL
+                                       << DBATTRTYPEXML::DOUBLE
+                                       << DBATTRTYPEXML::INTEGER
+                                       << DBATTRTYPEXML::STRING
+                                       << DBATTRTYPEXML::REFERENCE
+                                       << DBATTRTYPEXML::TIME
+                                       << DBATTRTYPEXML::TIMESHTAMP
                                        );
     m_typeAttrModel->setStringList(attrTypeList);
 
@@ -340,7 +340,7 @@ void AttrWidget::showParentAttr(bool flag)
 
 void AttrWidget::changeType(const QString &typeName)
 {
-    if (DBTYPEXML::STRING==typeName){
+    if (DBATTRTYPEXML::STRING==typeName){
         // String
         spinBoxStringLen->setEnabled(true);
         spinBoxAccuracy->setEnabled(false);
@@ -357,7 +357,7 @@ void AttrWidget::changeType(const QString &typeName)
         toolButtonUnitAttrClean->setEnabled(false);
         comboBoxNumerator->setEnabled(false);
         toolButtonNumeratorClean->setEnabled(false);
-    } else if(DBTYPEXML::REFERENCE==typeName){
+    } else if(DBATTRTYPEXML::REFERENCE==typeName){
         //Reference
         spinBoxStringLen->setEnabled(false);
         spinBoxAccuracy->setEnabled(false);
@@ -379,7 +379,7 @@ void AttrWidget::changeType(const QString &typeName)
     } else {
         spinBoxStringLen->setEnabled(false);
         spinBoxStringLen->setValue(0);
-        spinBoxAccuracy->setEnabled(DBTYPEXML::DECIMAL == typeName);
+        spinBoxAccuracy->setEnabled(DBATTRTYPEXML::DECIMAL == typeName);
         comboBoxLinkAttr->setEnabled(false);
         comboBoxLinkAttr->setDisplayText("");
         comboBoxLinkAttr->setCurrentIndex(-1);
@@ -388,8 +388,8 @@ void AttrWidget::changeType(const QString &typeName)
         lineEditLowerBound->setEnabled(true);
         lineEditUpperBound->setEnabled(true);
 
-        if( (DBTYPEXML::DECIMAL   == typeName && spinBoxAccuracy->value() == 0)
-                || DBTYPEXML::INTEGER   == typeName )
+        if( (DBATTRTYPEXML::DECIMAL   == typeName && spinBoxAccuracy->value() == 0)
+                || DBATTRTYPEXML::INTEGER   == typeName )
         {
             comboBoxNumerator->setEnabled(true);
             toolButtonNumeratorClean->setEnabled(true);
@@ -399,9 +399,9 @@ void AttrWidget::changeType(const QString &typeName)
         }
 
         // Decimal Double, Integer
-        if( DBTYPEXML::DECIMAL   == typeName
-         || DBTYPEXML::DOUBLE    == typeName
-         || DBTYPEXML::INTEGER   == typeName )
+        if( DBATTRTYPEXML::DECIMAL   == typeName
+         || DBATTRTYPEXML::DOUBLE    == typeName
+         || DBATTRTYPEXML::INTEGER   == typeName )
         {
             comboBoxUnitAttr->setEnabled(true);
             toolButtonUnitAttrClean->setEnabled(true);

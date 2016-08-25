@@ -573,7 +573,7 @@ void ClassModelXml::initModel()
                 this->setData(lastIndex.sibling(lastIndex.row(),column),tr("Идентификатор"));
                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
                                                    DBATTRXML::TYPE);
-                this->setData(lastIndex.sibling(lastIndex.row(),column),DBTYPEXML::STRING);
+                this->setData(lastIndex.sibling(lastIndex.row(),column),DBATTRTYPEXML::STRING);
                 column = this->columnDisplayedAttr(DBATTRXML::ATTR,
                                                    DBATTRXML::MAXSTRLEN);
                 this->setData(lastIndex.sibling(lastIndex.row(),column),36);
