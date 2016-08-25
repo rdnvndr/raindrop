@@ -16,8 +16,8 @@ namespace DBROOTXML{
 namespace DBCLASSXML{
     const QString CLASS = "RTPClass";
     const QString NAME = "name";
-    const QString MODE = "type";
-    const QString TYPE = "view";
+    const QString MODE = "accessMode";
+    const QString TYPE = "type";
     const QString ALIAS = "alias";
     const QString PARENT = "parent";
     const QString TEMPLATE = "displayTemplate";
