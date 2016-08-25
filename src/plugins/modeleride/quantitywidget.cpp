@@ -128,8 +128,8 @@ void QuantityWidget::changeUnit(qint32 current)
                 DBUNITXML::UNIT,
                 DBUNITXML::DELTA);
 
-    float coeff = index.sibling(index.row(),columnCoeff).data().toFloat();
-    float delta = index.sibling(index.row(),columnDelta).data().toFloat();
+    qreal coeff = index.sibling(index.row(),columnCoeff).data().toFloat();
+    qreal delta = index.sibling(index.row(),columnDelta).data().toFloat();
     coeff = (coeff==0)? 1: coeff;
 
     for (qint32 row = 0; row < count; ++row) {
