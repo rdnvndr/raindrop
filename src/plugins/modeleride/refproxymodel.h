@@ -19,7 +19,7 @@ public:
     explicit RefProxyModel(QObject *parent = 0);
 
     //! Получение данных модели
-    QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const;
+    QVariant data(const QModelIndex &proxyIndex, qint32 role = Qt::DisplayRole) const;
 };
 
 }}

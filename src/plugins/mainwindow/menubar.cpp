@@ -31,7 +31,7 @@ void MenuBar::mouseMoveEvent(QMouseEvent *event)
     QAction *action  = this->actionAt(m_dragPos);
 
     if (event->buttons() & Qt::LeftButton && action && isEdited()) {
-        int distance = (event->pos() - m_dragPos).manhattanLength();
+        qint32 distance = (event->pos() - m_dragPos).manhattanLength();
         if (distance > QApplication::startDragDistance() ) {
             if (action->menu()) {
                 action->menu()->close();

@@ -9,7 +9,7 @@
 
 using namespace RTPTechGroup::Plugin;
 
-void death_signal(int signum)
+void death_signal(qint32 signum)
 {
     QMessageBox msgBox;
     msgBox.setIconPixmap(QIcon(":crash").pixmap(64,64));
@@ -29,7 +29,7 @@ void death_signal(int signum)
     exit(3);
 }
 
-int main(int argc, char *argv[])
+qint32 main(qint32 argc, char *argv[])
 {
     QApplication *app = new QApplication(argc,argv);
 

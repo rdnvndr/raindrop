@@ -28,7 +28,7 @@ public:
     explicit TableXMLProxyModel(QObject *parent = 0);
 
     //! Метод который определяет отображать ли указанную строку
-    virtual bool filterAcceptsRow (int row, const QModelIndex &parent) const;
+    virtual bool filterAcceptsRow (qint32 row, const QModelIndex &parent) const;
 
     //! Метод который определяет сортировку
     virtual bool lessThan(const QModelIndex & left, const QModelIndex & right) const;
@@ -46,14 +46,14 @@ public:
     void setAttributeTags(QStringList list);
 
     //! Установка количества столбцов
-    void setColumnCount(int column);
+    void setColumnCount(qint32 column);
 
     //! Количество столбцов
-    virtual int columnCount(const QModelIndex &parent) const;
+    virtual qint32 columnCount(const QModelIndex &parent) const;
 
     //! Устанавливает название заголовка
-    bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value,
-                       int role = Qt::EditRole);
+    bool setHeaderData(qint32 section, Qt::Orientation orientation, const QVariant &value,
+                       qint32 role = Qt::EditRole);
 
     //! Установить фильтр для всех строк
     void setFilterAllRows(bool enabled);
@@ -62,7 +62,7 @@ public:
     bool isFilterAllRows() const;
 
     //! Возращает название заголовка
-    QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+    QVariant headerData(qint32 section, Qt::Orientation orientation, qint32 role) const;
 
 private:
     //! Индекс модели, в котором отображаются только атрибуты
@@ -72,10 +72,10 @@ private:
     QStringList m_tags;
 
     //! Количество столбцов
-    int m_columnCount;
+    qint32 m_columnCount;
 
     //! Список названий заголовков
-    QMap<int, QString> m_header;
+    QMap<qint32, QString> m_header;
 
     //! Флаг фильтра для всех строк
     bool m_filterAllRows;

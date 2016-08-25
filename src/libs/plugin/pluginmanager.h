@@ -108,7 +108,7 @@ private:
     QMultiHash<QString, QObject *> m_interfaces;
 
     //! Текущий плагин для загрузки
-    int m_currentFile;
+    qint32 m_currentFile;
 
     //! Каталог нахождения плагинов
     QDir m_pluginsDir;

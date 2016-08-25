@@ -122,7 +122,7 @@ void ClassTreeView::setModel(QAbstractItemModel *model)
 
     treeView->setModel(classFilterModel);
 
-    for (int i=1;i<model->columnCount();++i)
+    for (qint32 i=1;i<model->columnCount();++i)
         treeView->hideColumn(i);
 
     actionShowAttr->setChecked(false);

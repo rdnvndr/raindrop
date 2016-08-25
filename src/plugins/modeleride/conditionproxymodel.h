@@ -20,20 +20,20 @@ public:
     explicit ConditionProxyModel(QObject *parent = 0);
 
     //! Получение количества колонок
-    int columnCount (const QModelIndex& parent = QModelIndex()) const ;
+    qint32 columnCount (const QModelIndex& parent = QModelIndex()) const ;
 
     //! Получение данных модели
-    QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const;
+    QVariant data(const QModelIndex &proxyIndex, qint32 role = Qt::DisplayRole) const;
 
     //! Запись данных в модель
     bool setData(const QModelIndex &proxyIndex, const QVariant &value,
-                 int role = Qt::EditRole);
+                 qint32 role = Qt::EditRole);
 
     //! Вставка строки
-    bool insertRows(int row, int count, const QModelIndex &parent);
+    bool insertRows(qint32 row, qint32 count, const QModelIndex &parent);
 
     //! Вставка строки
-    QModelIndex insertLastRows(int row, int count, const QModelIndex &parent);
+    QModelIndex insertLastRows(qint32 row, qint32 count, const QModelIndex &parent);
 };
 
 }}

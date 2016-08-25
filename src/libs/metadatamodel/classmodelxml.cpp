@@ -547,7 +547,7 @@ void ClassModelXml::initModel()
     QModelIndex indexSource = this->index(-1,-1);
     QModelIndex lastIndex = this->insertLastRows(0,1,indexSource,DBMODELXML::MODEL);
     if (lastIndex.isValid()){
-        int column = this->columnDisplayedAttr(DBMODELXML::MODEL,
+        qint32 column = this->columnDisplayedAttr(DBMODELXML::MODEL,
                                                   DBMODELXML::NAME);
         this->setData(lastIndex.sibling(lastIndex.row(),column),tr("Model"));
         column = this->columnDisplayedAttr(DBMODELXML::MODEL,
@@ -557,7 +557,7 @@ void ClassModelXml::initModel()
         indexSource = lastIndex;
         QModelIndex lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource,DBCLASSLISTXML::CLASSLIST);
         if (lastIndex.isValid()){
-            int column = this->columnDisplayedAttr(DBCLASSLISTXML::CLASSLIST,
+            qint32 column = this->columnDisplayedAttr(DBCLASSLISTXML::CLASSLIST,
                                                       DBCLASSLISTXML::NAME);
             this->setData(lastIndex.sibling(lastIndex.row(),column),tr("Classes"));
             column = this->columnDisplayedAttr(DBCLASSLISTXML::CLASSLIST,
@@ -588,7 +588,7 @@ void ClassModelXml::initModel()
 
         lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource,DBQUANTITYLISTXML::QUANTITYLIST);
         if (lastIndex.isValid()){
-            int column = this->columnDisplayedAttr(DBQUANTITYLISTXML::QUANTITYLIST,
+            qint32 column = this->columnDisplayedAttr(DBQUANTITYLISTXML::QUANTITYLIST,
                                                       DBQUANTITYLISTXML::NAME);
             this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Units"));
             column = this->columnDisplayedAttr(DBQUANTITYLISTXML::QUANTITYLIST,
@@ -598,7 +598,7 @@ void ClassModelXml::initModel()
 
         lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource, DBLOVLISTXML::LOVLIST);
         if (lastIndex.isValid()){
-            int column = this->columnDisplayedAttr(DBLOVLISTXML::LOVLIST,
+            qint32 column = this->columnDisplayedAttr(DBLOVLISTXML::LOVLIST,
                                                       DBLOVLISTXML::NAME);
             this->setData(lastIndex.sibling(lastIndex.row(),column), tr("List of Value"));
             column = this->columnDisplayedAttr(DBLOVLISTXML::LOVLIST,
@@ -608,7 +608,7 @@ void ClassModelXml::initModel()
 
         lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource, DBNUMERATORLISTXML::NUMERATORLIST);
         if (lastIndex.isValid()){
-            int column = this->columnDisplayedAttr(DBNUMERATORLISTXML::NUMERATORLIST,
+            qint32 column = this->columnDisplayedAttr(DBNUMERATORLISTXML::NUMERATORLIST,
                                                    DBNUMERATORLISTXML::NAME);
             this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Numerators"));
             column = this->columnDisplayedAttr(DBNUMERATORLISTXML::NUMERATORLIST,
@@ -618,7 +618,7 @@ void ClassModelXml::initModel()
 
         lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource, DBREFLISTXML::REFLIST);
         if (lastIndex.isValid()){
-            int column = this->columnDisplayedAttr(DBREFLISTXML::REFLIST,
+            qint32 column = this->columnDisplayedAttr(DBREFLISTXML::REFLIST,
                                                       DBREFLISTXML::NAME);
             this->setData(lastIndex.sibling(lastIndex.row(),column), tr("References"));
 
@@ -629,7 +629,7 @@ void ClassModelXml::initModel()
 
         lastIndex = TreeXmlHashModel::insertLastRows(0,1,indexSource, DBROLELISTXML::ROLELIST);
         if (lastIndex.isValid()){
-            int column = this->columnDisplayedAttr(DBROLELISTXML::ROLELIST,
+            qint32 column = this->columnDisplayedAttr(DBROLELISTXML::ROLELIST,
                                                       DBROLELISTXML::NAME);
             this->setData(lastIndex.sibling(lastIndex.row(),column), tr("Roles"));
             column = this->columnDisplayedAttr(DBROLELISTXML::ROLELIST,
@@ -639,7 +639,7 @@ void ClassModelXml::initModel()
     }
 }
 
-QModelIndex ClassModelXml::insertLastRows(int row, int count, const QModelIndex &parent, QString tag)
+QModelIndex ClassModelXml::insertLastRows(qint32 row, qint32 count, const QModelIndex &parent, QString tag)
 {
     if (parent.isValid()) {
         QString parentTag = parent.data(TreeXmlModel::TagRole).toString();
@@ -660,11 +660,11 @@ QModelIndex ClassModelXml::insertLastRows(int row, int count, const QModelIndex 
     return TreeXmlHashModel::insertLastRows(row, count, parent, tag);
 }
 
-bool ClassModelXml::removeRows(int row, int count, const QModelIndex &parent)
+bool ClassModelXml::removeRows(qint32 row, qint32 count, const QModelIndex &parent)
 {
     if (parent.isValid()) {
         QString parentTag = parent.data(TreeXmlModel::TagRole).toString();
-        for (int i = row; i < row+count; ++i) {
+        for (qint32 i = row; i < row+count; ++i) {
             QModelIndex childIndex = parent.child(i,0);
             QString tag = childIndex.data(TreeXmlModel::TagRole).toString();
             if (childIndex.isValid()) {
@@ -754,7 +754,7 @@ bool ClassModelXml::isRemove(const QModelIndex &srcIndex)
 
         foreach (TreeXmlHashModel::TagWithAttr tagWithAttr, model->fromRelation(tag))
         {
-            int number = 0;
+            qint32 number = 0;
             QModelIndex linkIndex = model->indexHashAttr(
                         tagWithAttr.tag,
                         tagWithAttr.attr,

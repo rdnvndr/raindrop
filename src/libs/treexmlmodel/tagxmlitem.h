@@ -44,33 +44,33 @@ public:
     void setValue(const QString& attr, const QVariant& val);
 
     //! Возращает количество записей
-    int count(QStringList tags = QStringList(),
+    qint32 count(QStringList tags = QStringList(),
               QStringList parentTags = QStringList());
 
     //! Возращает True при наличии записей
-    int hasChildren(QStringList tags = QStringList(),
+    qint32 hasChildren(QStringList tags = QStringList(),
                     QStringList parentTags = QStringList());
 
     //! Возращает потомка
-    TagXmlItem *child(int i, QStringList tags = QStringList(),
+    TagXmlItem *child(qint32 i, QStringList tags = QStringList(),
                              QStringList parentTags = QStringList());
 
     //! Возращает номер потомка
-    int childNumber(TagXmlItem *child, QStringList tags, QStringList parentTags);
+    qint32 childNumber(TagXmlItem *child, QStringList tags, QStringList parentTags);
 
     //! Вставка узла
     bool insertChild(const QString &tagName);
 
     //! Вставка узла
-    bool insertChild(const QString &tagName, int i,
+    bool insertChild(const QString &tagName, qint32 i,
                      QStringList tags = QStringList(),
                      QStringList parentTags = QStringList());
 
     //! Удаление узла
-    bool removeChild(const int &row);
+    bool removeChild(const qint32 &row);
 
     //! Проверка на возможность удаление узла
-    bool checkRemoveChild(const int &row);
+    bool checkRemoveChild(const qint32 &row);
 
     //! Возращает True если унаследован
     bool isInherited();

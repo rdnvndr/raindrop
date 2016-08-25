@@ -123,7 +123,7 @@ void XmlDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
         if (hashModel && hashModel == indexModel && comboBox->currentIndex()>=0) {
             QString tag  = index.data(TreeXmlModel::TagRole).toString();
             QString attr = hashModel->displayedAttr(tag, mapToSource(index).column());
-            int column = hashModel->columnDisplayedAttr(hashModel->toRelation(tag,attr).tag,
+            qint32 column = hashModel->columnDisplayedAttr(hashModel->toRelation(tag,attr).tag,
                                                         hashModel->uuidAttr(tag));
 
             QModelIndex curIndex = comboBox->view()->currentIndex();

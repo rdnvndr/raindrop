@@ -207,7 +207,7 @@ private:
     void cleanBranchAction(MenuItem *menuItem);
 
     //! Запись настроек меню определенного уровня
-    void writeMenu(QWidget *menu, int level = 0);
+    void writeMenu(QWidget *menu, qint32 level = 0);
 
     //! Установка режима редактирования меню
     void setEditedMenu(QWidget *widget, bool edited);
@@ -252,7 +252,7 @@ private:
     QAction *m_actionWhatsThis;
 
     //! Индекс для записи настроек меню
-    int m_menuArrayIndex;
+    qint32 m_menuArrayIndex;
 
     //! Список команд по группам
     QMultiHash <QString, QAction *> m_actions;

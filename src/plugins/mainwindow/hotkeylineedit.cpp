@@ -33,7 +33,7 @@ void HotKeyLineEdit::resetKeySequence()
 void HotKeyLineEdit::keyPressEvent(QKeyEvent *event)
 {
     m_keySequence = QKeySequence();
-    int key = event->key();
+    qint32 key = event->key();
 
     if( Qt::Key_Shift   == key ||
             Qt::Key_Control == key ||

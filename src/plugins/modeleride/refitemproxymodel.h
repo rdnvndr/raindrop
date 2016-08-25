@@ -17,7 +17,7 @@ public:
     explicit RefItemProxyModel(QObject *parent = 0);
 
     //! Метод который определяет отображать ли указанную строку
-    virtual bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const;
+    virtual bool filterAcceptsRow (qint32 source_row, const QModelIndex &source_parent) const;
 
     //! Метод который определяет сортировку
     virtual bool lessThan(const QModelIndex & left, const QModelIndex & right) const;
@@ -39,7 +39,7 @@ protected:
     bool hasAcceptedChildren(const QModelIndex &link_index, const QModelIndex &source_parent) const;
 
     //! Фильтр по дереву
-    bool filterAcceptsRowItself(int source_row, const QModelIndex &source_parent) const;
+    bool filterAcceptsRowItself(qint32 source_row, const QModelIndex &source_parent) const;
 
 private:
     QPersistentModelIndex m_classIndex;

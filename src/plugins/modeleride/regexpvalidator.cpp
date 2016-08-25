@@ -15,7 +15,7 @@ RegExpValidator::RegExpValidator(const QRegExp &rx, QObject *parent)
 
 }
 
-QValidator::State RegExpValidator::validate(QString &input, int &pos) const
+QValidator::State RegExpValidator::validate(QString &input, qint32 &pos) const
 {
     QValidator::State state = QRegExpValidator::validate(input, pos);
     emit stateChanged(state);

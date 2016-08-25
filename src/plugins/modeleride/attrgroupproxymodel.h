@@ -18,10 +18,10 @@ public:
     virtual ~AttrGroupProxyModel();
 
     //! Возращает количество строк в индексе родителя
-    int rowCount(const QModelIndex& parent) const;
+    qint32 rowCount(const QModelIndex& parent) const;
 
     //! Возращает хранимые данные
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    QVariant data(const QModelIndex &index, qint32 role = Qt::DisplayRole) const;
 
     //! Установка модели источника
     void setModel(QAbstractItemModel *srcModel);
@@ -36,17 +36,17 @@ public:
     QModelIndex rootModelIndex();
 
     //! Указание столбца с уникальными значениями
-    void setUniqueColumn(int column);
+    void setUniqueColumn(qint32 column);
 
     //! Возращает столбец с уникальными значениями
-    int uniqueColumn() const;
+    qint32 uniqueColumn() const;
 
 public slots:
     //! Инициализация модели
     void reset();
 
 private:
-    int m_uniqueColumn;
+    qint32 m_uniqueColumn;
     QList<QString> m_list;
     QAbstractItemModel *m_model;
     QPersistentModelIndex m_rootIndex;

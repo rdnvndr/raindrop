@@ -172,7 +172,7 @@ void Menu::mouseMoveEvent(QMouseEvent *event)
     QMenu::mouseMoveEvent(event);
     QAction *action = this->actionAt(m_dragPos);
     if (event->buttons() & Qt::LeftButton && action && isEdited()) {
-        int distance = (event->pos() - m_dragPos).manhattanLength();
+        qint32 distance = (event->pos() - m_dragPos).manhattanLength();
         if (distance > QApplication::startDragDistance()) {
             qDebug() << "Menu:" <<m_dragPos;
             qDebug() << "drag menu";

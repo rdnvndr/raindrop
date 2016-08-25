@@ -12,7 +12,7 @@ SqlHighlighter::SqlHighlighter(QTextDocument *parent) :
 
 void SqlHighlighter::highlightBlock(const QString &text)
 {
-    int pos = 0;
+    qint32 pos = 0;
 
     setFormat (0, text.length(), Qt::black);
 

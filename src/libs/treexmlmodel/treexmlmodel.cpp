@@ -30,7 +30,7 @@ TreeXmlModel::~TreeXmlModel()
     delete m_rootItem;
 }
 
-int TreeXmlModel::columnCount(const QModelIndex & parent) const
+qint32 TreeXmlModel::columnCount(const QModelIndex & parent) const
 {
     Q_UNUSED(parent);
     return  m_column;
@@ -74,7 +74,7 @@ bool TreeXmlModel::isInherited(const QModelIndex &index) const
 }
 
 bool TreeXmlModel::moveIndex(const QModelIndex &srcIndex, const QModelIndex &destIndex,
-                             int row, bool recursively)
+                             qint32 row, bool recursively)
 {
     if (!copyIndex(srcIndex, destIndex, row, recursively))
         return false;
@@ -83,7 +83,7 @@ bool TreeXmlModel::moveIndex(const QModelIndex &srcIndex, const QModelIndex &des
 }
 
 bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex, const QModelIndex &destIndex,
-                             int row, bool recursively)
+                             qint32 row, bool recursively)
 {
     if (isInherited(srcIndex))
         return true;
@@ -94,7 +94,7 @@ bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex, const QModelIndex &des
     if (!index.isValid())
         return false;
 
-    for (int i = 0; i<this->columnCount(srcIndex); ++i) {
+    for (qint32 i = 0; i<this->columnCount(srcIndex); ++i) {
         QVariant value = srcIndex.sibling(srcIndex.row(), i).data(Qt::EditRole);
         if (value.isValid())
             if (!setData(index.sibling(index.row(), i), value)) {
@@ -104,7 +104,7 @@ bool TreeXmlModel::copyIndex(const QModelIndex &srcIndex, const QModelIndex &des
     }
 
     if (recursively) {
-        int row = 0;
+        qint32 row = 0;
         QModelIndex childIndex = srcIndex.child(row,0);
         while (childIndex.isValid())
         {
@@ -139,7 +139,7 @@ bool TreeXmlModel::isAttr(const QModelIndex &index) const
     return false;
 }
 
-bool TreeXmlModel::isInsert(int row, const QModelIndex &index, QString tag) const
+bool TreeXmlModel::isInsert(qint32 row, const QModelIndex &index, QString tag) const
 {
     TagXmlItem *item = toItem(index);
 
@@ -194,16 +194,16 @@ void TreeXmlModel::addInsertTags(const QString &tag, const QStringList &value)
     m_insertTags.insert(tag,value);
 }
 
-int TreeXmlModel::columnDisplayedAttr(const QString &tag, const QString &attr) const
+qint32 TreeXmlModel::columnDisplayedAttr(const QString &tag, const QString &attr) const
 {
-    for (int i=0;i<m_displayedAttr[tag].count();++i){
+    for (qint32 i=0;i<m_displayedAttr[tag].count();++i){
         if (m_displayedAttr[tag].at(i)==attr)
             return i;
     }
     return -1;
 }
 
-QString TreeXmlModel::displayedAttr(const QString &tag, int column) const
+QString TreeXmlModel::displayedAttr(const QString &tag, qint32 column) const
 {
     if (m_displayedAttr[tag].count()<=column || column < 0)
         return QString("");
@@ -227,7 +227,7 @@ void TreeXmlModel::removeDisplayedAttr(const QString &tag)
     }
 }
 
-QVariant TreeXmlModel::data(const QModelIndex &index, int role) const
+QVariant TreeXmlModel::data(const QModelIndex &index, qint32 role) const
 {
     TagXmlItem *item = toItem(index);
     QString tag = item->nodeName();
@@ -252,14 +252,14 @@ QVariant TreeXmlModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void TreeXmlModel::updateModifyRow(int emptyRowAttr, const QModelIndex &parent, int column)
+void TreeXmlModel::updateModifyRow(qint32 emptyRowAttr, const QModelIndex &parent, qint32 column)
 {
-    int i = 0;
+    qint32 i = 0;
     QModelIndex index = parent.child(i,0);
     while (index.isValid())
     {
         if (!isAttr(index)){
-            int row = this->rowCount(index)-emptyRowAttr;
+            qint32 row = this->rowCount(index)-emptyRowAttr;
             updateModifyRow(emptyRowAttr, index, column);
             QModelIndex updateIndex = index.child(row,0);
             emit dataChanged(updateIndex, updateIndex);
@@ -269,7 +269,7 @@ void TreeXmlModel::updateModifyRow(int emptyRowAttr, const QModelIndex &parent, 
 }
 
 bool TreeXmlModel::setData(const QModelIndex &index, const QVariant &value,
-                           int role)
+                           qint32 role)
 {
     if (role != Qt::EditRole && role != TreeXmlModel::TagRole) return false;
 
@@ -295,9 +295,9 @@ bool TreeXmlModel::setData(const QModelIndex &index, const QVariant &value,
     item->setValue(attrName,dataValue);
 
     if (isAttr(index)){
-        int emptyRowAttr = 0;
+        qint32 emptyRowAttr = 0;
         QModelIndex parent = index.parent();
-        int i = index.row();
+        qint32 i = index.row();
         QModelIndex idx = parent.child(i,0);
         while (idx.isValid())
         {
@@ -325,8 +325,8 @@ Qt::ItemFlags TreeXmlModel::flags(const QModelIndex &index) const
         return Qt::ItemIsDropEnabled;
 }
 
-QVariant TreeXmlModel::headerData(int section, Qt::Orientation orientation,
-                                  int role) const
+QVariant TreeXmlModel::headerData(qint32 section, Qt::Orientation orientation,
+                                  qint32 role) const
 {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
         if (m_header[section].isNull())
@@ -337,8 +337,8 @@ QVariant TreeXmlModel::headerData(int section, Qt::Orientation orientation,
     return  QVariant();
 }
 
-bool TreeXmlModel::setHeaderData(int section, Qt::Orientation orientation,
-                                 const QVariant &value, int role)
+bool TreeXmlModel::setHeaderData(qint32 section, Qt::Orientation orientation,
+                                 const QVariant &value, qint32 role)
 {
     if (role != Qt::EditRole || orientation != Qt::Horizontal)
         return false;
@@ -349,7 +349,7 @@ bool TreeXmlModel::setHeaderData(int section, Qt::Orientation orientation,
     return true;
 }
 
-QModelIndex TreeXmlModel::index(int row, int column, const QModelIndex &parent)
+QModelIndex TreeXmlModel::index(qint32 row, qint32 column, const QModelIndex &parent)
 const
 {
     if (!hasIndex(row, column, parent))
@@ -364,7 +364,7 @@ const
         return QModelIndex();
 }
 
-bool TreeXmlModel::hasIndex(int row, int column, const QModelIndex &parent) const
+bool TreeXmlModel::hasIndex(qint32 row, qint32 column, const QModelIndex &parent) const
 {
     Q_UNUSED (parent)
 
@@ -384,25 +384,25 @@ QModelIndex TreeXmlModel::parent(const QModelIndex &child) const
     return fromItem(parentItem);
 }
 
-int TreeXmlModel::rowCount(const QModelIndex &parent) const
+qint32 TreeXmlModel::rowCount(const QModelIndex &parent) const
 {
     return this->rowCount(parent, m_filterTags, attrTags(parent));
 }
 
-int TreeXmlModel::rowCount(const QModelIndex &parent,
+qint32 TreeXmlModel::rowCount(const QModelIndex &parent,
                            const QStringList &tags) const
 {
     return this->rowCount(parent, tags, attrTags(parent));
 }
 
-int TreeXmlModel::rowCount(const QModelIndex &parent, const QStringList &tags,
+qint32 TreeXmlModel::rowCount(const QModelIndex &parent, const QStringList &tags,
                            const QStringList &attrTags) const
 {
     TagXmlItem *parentItem = toItem(parent);
     return parentItem->count(tags, attrTags);
 }
 
-bool TreeXmlModel::insertRows(int row, int count, const QModelIndex &parent)
+bool TreeXmlModel::insertRows(qint32 row, qint32 count, const QModelIndex &parent)
 {
     QModelIndex index = insertLastRows(row, count, parent);
     if (index.isValid())
@@ -411,15 +411,15 @@ bool TreeXmlModel::insertRows(int row, int count, const QModelIndex &parent)
     return false;
 }
 
-QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &parent, QString tag)
+QModelIndex TreeXmlModel::insertLastRows(qint32 row, qint32 count, const QModelIndex &parent, QString tag)
 {
     TagXmlItem *parentItem = toItem(parent);
     if (!isInsert(row, parent, tag))
         return QModelIndex().child(-1,-1);
 
     beginInsertRows(parent,row,row+count-1);
-    int emptyRowAttr = 0;
-    int i = row;
+    qint32 emptyRowAttr = 0;
+    qint32 i = row;
     QModelIndex indexChild = parent.child(i,0);
     while(indexChild.isValid())
     {
@@ -430,8 +430,8 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
     updateInsertRows(emptyRowAttr, count, parent, tag);
 
     bool success = true;
-    int revertCount;
-    for (int i = 0; i < count; ++i) {
+    qint32 revertCount;
+    for (qint32 i = 0; i < count; ++i) {
         success = parentItem->insertChild(tag,
                                           row,
                                           m_filterTags,
@@ -456,17 +456,17 @@ QModelIndex TreeXmlModel::insertLastRows(int row, int count, const QModelIndex &
     return QModelIndex().child(-1,-1);
 }
 
-void TreeXmlModel::updateInsertRows(int emptyRowAttr, int count, const QModelIndex &parent, QString tag)
+void TreeXmlModel::updateInsertRows(qint32 emptyRowAttr, qint32 count, const QModelIndex &parent, QString tag)
 {    
     // Если атрибут то обновляем по дереву наследования
     if (isAttr(parent, tag)) {
-        int i = 0;
+        qint32 i = 0;
         QModelIndex index = parent.child(i,0);
         while (index.isValid())
         {
             if (!isAttr(index)
                     && parent.data(TreeXmlModel::TagRole) == index.data(TreeXmlModel::TagRole)){
-                int row = this->rowCount(index)-emptyRowAttr;
+                qint32 row = this->rowCount(index)-emptyRowAttr;
                 beginInsertRows(index,row,row+count-1);
                 updateInsertRows(emptyRowAttr,count,index, tag);
                 endInsertRows();
@@ -476,11 +476,11 @@ void TreeXmlModel::updateInsertRows(int emptyRowAttr, int count, const QModelInd
     }
 }
 
-void TreeXmlModel::revertInsertRows(int row, int count, const QModelIndex &parent, QString tag)
+void TreeXmlModel::revertInsertRows(qint32 row, qint32 count, const QModelIndex &parent, QString tag)
 {
     // Если атрибут
     if (isAttr(parent, tag)) {
-        int i = 0;
+        qint32 i = 0;
         QModelIndex index = parent.child(i,0);
         while (index.isValid())
         {
@@ -495,17 +495,17 @@ void TreeXmlModel::revertInsertRows(int row, int count, const QModelIndex &paren
     endRemoveRows();
 }
 
-void TreeXmlModel::updateRemoveRows(int emptyRowAttr,int count, const QModelIndex &parent)
+void TreeXmlModel::updateRemoveRows(qint32 emptyRowAttr,qint32 count, const QModelIndex &parent)
 {
     // Если атрибут то обновляем по дереву наследования
-    int i = 0;
+    qint32 i = 0;
     QModelIndex index = parent.child(i,0);
     while (index.isValid())
     {
         if (!isAttr(index)
                 && parent.data(TreeXmlModel::TagRole) == index.data(TreeXmlModel::TagRole)){
             updateRemoveRows(emptyRowAttr,count,index);
-            int row = this->rowCount(index)-emptyRowAttr;
+            qint32 row = this->rowCount(index)-emptyRowAttr;
             beginRemoveRows(index,row,row+count-1);
             endRemoveRows();
         }
@@ -513,7 +513,7 @@ void TreeXmlModel::updateRemoveRows(int emptyRowAttr,int count, const QModelInde
     }
 }
 
-bool TreeXmlModel::removeRows(int row, int count, const QModelIndex &parent)
+bool TreeXmlModel::removeRows(qint32 row, qint32 count, const QModelIndex &parent)
 {
     if (!parent.isValid())
         return false;
@@ -525,8 +525,8 @@ bool TreeXmlModel::removeRows(int row, int count, const QModelIndex &parent)
 
     beginRemoveRows(parent,row,row+count-1);
 
-    int emptyRowAttr = 0;
-    int i=row;
+    qint32 emptyRowAttr = 0;
+    qint32 i=row;
     QModelIndex index = parent.child(i,0);
     while (index.isValid())
     {
@@ -539,7 +539,7 @@ bool TreeXmlModel::removeRows(int row, int count, const QModelIndex &parent)
     }
     updateRemoveRows(emptyRowAttr,count,parent);
 
-    for (int i=count-1;i>=0;--i)
+    for (qint32 i=count-1;i>=0;--i)
         parentItem->removeChild(row+i);
 
     endRemoveRows();
@@ -548,7 +548,7 @@ bool TreeXmlModel::removeRows(int row, int count, const QModelIndex &parent)
 }
 
 bool TreeXmlModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
-                                int row, int column, const QModelIndex &parent)
+                                qint32 row, qint32 column, const QModelIndex &parent)
 {
     if (!parent.isValid())
         return false;
@@ -590,7 +590,7 @@ QModelIndex TreeXmlModel::fromItem(TagXmlItem *item) const
         return QModelIndex();
     TagXmlItem *parentItem  = item->parent();
     QString tag = parentItem->nodeName();
-    int row = parentItem->childNumber(item,m_filterTags,m_attrTags[tag]);
+    qint32 row = parentItem->childNumber(item,m_filterTags,m_attrTags[tag]);
 
     return createIndex(row , 0, item);
 }

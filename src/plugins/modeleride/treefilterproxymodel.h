@@ -38,17 +38,17 @@ public:
 
     //! Обработчик окрнчания перетаскивания данных путем Drag and Drop
     bool dropMimeData(const QMimeData *data, Qt::DropAction action,
-                      int row, int column, const QModelIndex &parent);
+                      qint32 row, qint32 column, const QModelIndex &parent);
 
 protected:
     //! Фильтр строчек
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
+    bool filterAcceptsRow(qint32 source_row, const QModelIndex &source_parent) const;
 
     //! Фильтр строчек по дереву
-    bool filterAcceptsRowItself(int source_row, const QModelIndex &source_parent) const;
+    bool filterAcceptsRowItself(qint32 source_row, const QModelIndex &source_parent) const;
 
     //! Поиск детей удолетворящих фильтру
-    bool hasAcceptedChildren(int source_row, const QModelIndex &source_parent) const;
+    bool hasAcceptedChildren(qint32 source_row, const QModelIndex &source_parent) const;
 
     //! Сортировка. Порядок: Класс, Состав, Атрибут, Алфавит
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const;

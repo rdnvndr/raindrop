@@ -17,14 +17,14 @@ AttrGroupProxyModel::~AttrGroupProxyModel()
 }
 
 
-int AttrGroupProxyModel::rowCount(const QModelIndex &parent) const
+qint32 AttrGroupProxyModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
 
     return m_list.count();
 }
 
-QVariant AttrGroupProxyModel::data(const QModelIndex &index, int role) const
+QVariant AttrGroupProxyModel::data(const QModelIndex &index, qint32 role) const
 {
     if (index.isValid() && (role == Qt::DisplayRole || role == Qt::EditRole))
         return m_list.at(index.row());
@@ -34,7 +34,7 @@ QVariant AttrGroupProxyModel::data(const QModelIndex &index, int role) const
 void AttrGroupProxyModel::setModel(QAbstractItemModel *srcModel)
 {
     m_model = srcModel;
-    connect(srcModel, SIGNAL(rowsRemoved(QModelIndex,int,int)),
+    connect(srcModel, SIGNAL(rowsRemoved(QModelIndex,qint32,qint32)),
             this, SLOT(reset()));
     connect(srcModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
             this, SLOT(reset()));
@@ -57,8 +57,8 @@ QModelIndex AttrGroupProxyModel::rootModelIndex()
 
 void AttrGroupProxyModel::reset()
 {
-    int row = 0;
-    int count = m_list.count();
+    qint32 row = 0;
+    qint32 count = m_list.count();
 
     if (!m_list.isEmpty()) {
         beginRemoveRows(QModelIndex(), 0, count-1);
@@ -81,12 +81,12 @@ void AttrGroupProxyModel::reset()
 
 }
 
-void AttrGroupProxyModel::setUniqueColumn(int column)
+void AttrGroupProxyModel::setUniqueColumn(qint32 column)
 {
     m_uniqueColumn = column;
 }
 
-int AttrGroupProxyModel::uniqueColumn() const
+qint32 AttrGroupProxyModel::uniqueColumn() const
 {
     return m_uniqueColumn;
 }

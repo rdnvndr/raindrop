@@ -22,7 +22,7 @@ public:
 
 protected:
     //! Фильтр строчек
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
+    bool filterAcceptsRow(qint32 source_row, const QModelIndex &source_parent) const;
 
     //! Сортировка. Порядок: Класс, Состав, Атрибут, Алфавит
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const;

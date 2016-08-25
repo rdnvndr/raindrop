@@ -91,7 +91,7 @@ public slots:
     void setActionTreeWidget();
 
     //! Слот вызова функции узла дерева
-    void callFuncTreeWidget(QTreeWidgetItem *item, int column);
+    void callFuncTreeWidget(QTreeWidgetItem *item, qint32 column);
     
 private:
     //! Связь между кнопкой модуля панели инструментов и деревом

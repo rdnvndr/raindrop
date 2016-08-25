@@ -14,8 +14,8 @@ QuantityWidget::QuantityWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(comboBoxBasicUnit, SIGNAL(activated(int)),
-            this, SLOT(changeUnit(int)));
+    connect(comboBoxBasicUnit, SIGNAL(activated(qint32)),
+            this, SLOT(changeUnit(qint32)));
 }
 
 QuantityWidget::~QuantityWidget()
@@ -27,8 +27,8 @@ void QuantityWidget::setModel(TreeXmlHashModel *model)
 {
     AbstractEditorWidget::setModel(model);
 
-    connect(model,SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
-            this,SLOT(rowsAboutToBeRemoved(QModelIndex,int,int)));
+    connect(model,SIGNAL(rowsAboutToBeRemoved(QModelIndex,qint32,qint32)),
+            this,SLOT(rowsAboutToBeRemoved(QModelIndex,qint32,qint32)));
 
     dataMapper()->addMapping(lineEditQuantityName,
                              model->columnDisplayedAttr(DBQUANTITYXML::QUANTITY,
@@ -82,11 +82,11 @@ void QuantityWidget::submit()
     AbstractEditorWidget::submit();
 }
 
-void QuantityWidget::rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end)
+void QuantityWidget::rowsAboutToBeRemoved(const QModelIndex &parent, qint32 start, qint32 end)
 {
     Q_UNUSED(parent)
 
-    for (int row = end; row >= start; --row) {
+    for (qint32 row = end; row >= start; --row) {
         if (comboBoxBasicUnit->currentIndex() == row) {
             comboBoxBasicUnit->setCurrentIndex(-1);
             return;
@@ -104,12 +104,12 @@ void QuantityWidget::setUnitRootIndex(const QModelIndex &index)
     comboBoxBasicUnit->setRootModelIndex(index);
 }
 
-void QuantityWidget::setUnitColumn(int column)
+void QuantityWidget::setUnitColumn(qint32 column)
 {
     comboBoxBasicUnit->setModelColumn(column);
 }
 
-void QuantityWidget::changeUnit(int current)
+void QuantityWidget::changeUnit(qint32 current)
 {
     Q_UNUSED(current)
 
@@ -120,11 +120,11 @@ void QuantityWidget::changeUnit(int current)
     QModelIndex parent = comboBoxBasicUnit->rootModelIndex();
     QAbstractItemModel *model = comboBoxBasicUnit->model();
 
-    int count  = parent.model()->rowCount(parent);
-    int columnCoeff = this->model()->columnDisplayedAttr(
+    qint32 count  = parent.model()->rowCount(parent);
+    qint32 columnCoeff = this->model()->columnDisplayedAttr(
                 DBUNITXML::UNIT,
                 DBUNITXML::COEFF);
-    int columnDelta = this->model()->columnDisplayedAttr(
+    qint32 columnDelta = this->model()->columnDisplayedAttr(
                 DBUNITXML::UNIT,
                 DBUNITXML::DELTA);
 
@@ -132,7 +132,7 @@ void QuantityWidget::changeUnit(int current)
     float delta = index.sibling(index.row(),columnDelta).data().toFloat();
     coeff = (coeff==0)? 1: coeff;
 
-    for (int row = 0; row < count; ++row) {
+    for (qint32 row = 0; row < count; ++row) {
         index = parent.child(row, columnCoeff);
         model->setData(index,QString("%1").arg(index.data().toFloat()/coeff));
         index = parent.child(row, columnDelta);

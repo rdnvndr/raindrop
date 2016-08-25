@@ -23,11 +23,11 @@ public:
     virtual ~ClassModelXml();
 
     //! Вставка строки
-    QModelIndex insertLastRows (int row, int count,
+    QModelIndex insertLastRows (qint32 row, qint32 count,
                                 const QModelIndex & parent, QString tag = "element");
 
     //! Удаление строки
-    bool removeRows (int row, int count, const QModelIndex & parent);
+    bool removeRows (qint32 row, qint32 count, const QModelIndex & parent);
 
     //! Проверка на возможность удаления элементов
     bool isRemove(const QModelIndex &srcIndex);

@@ -47,7 +47,7 @@ bool TreeXmlHashModel::makeHashingData(const QModelIndex &index, QString &dataVa
                 ||  unique  == TreeXmlHashModel::UniqueParentUpperRename
                 ||  unique  == TreeXmlHashModel::UniqueParent
                 ||  unique  == TreeXmlHashModel::UniqueParentUpper) {
-            int row = 0;
+            qint32 row = 0;
             QModelIndex rootIndex = index.parent();
             QModelIndex childIndex = this->index(row, index.column(), rootIndex);
             while (childIndex.isValid())
@@ -58,8 +58,8 @@ bool TreeXmlHashModel::makeHashingData(const QModelIndex &index, QString &dataVa
                             == upperValue(tag, attr, childIndex.data(Qt::EditRole).toString())) {
                         if  (unique  == TreeXmlHashModel::UniqueParentRename
                                 ||  unique  == TreeXmlHashModel::UniqueParentUpperRename){
-                            int position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
-                            int number = 1;
+                            qint32 position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
+                            qint32 number = 1;
                             if (position != -1)
                                 number = dataValue.mid(position+1).toInt()+1;
                             dataValue = dataValue.left(position)+QString("_%1").arg(number);
@@ -77,8 +77,8 @@ bool TreeXmlHashModel::makeHashingData(const QModelIndex &index, QString &dataVa
             while (existIndex.isValid() && existIndex!=index) {
                 if (unique  == TreeXmlHashModel::UniqueRename
                         ||  unique  == TreeXmlHashModel::UniqueUpperRename){
-                    int position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
-                    int number = 1;
+                    qint32 position = dataValue.lastIndexOf(QRegExp("_\\d*$"));
+                    qint32 number = 1;
                     if (position != -1)
                         number = dataValue.mid(position+1).toInt()+1;
                     dataValue = dataValue.left(position)+QString("_%1").arg(number);
@@ -118,7 +118,7 @@ void TreeXmlHashModel::makeHashing(TagXmlItem *item, bool remove)
 {    
     makeHashingOne(item, remove);
 
-    int row = 0;
+    qint32 row = 0;
     while (TagXmlItem *childItem = item->child(row,tagsFilter())) {
         makeHashing(childItem, remove);
         ++row;
@@ -126,11 +126,11 @@ void TreeXmlHashModel::makeHashing(TagXmlItem *item, bool remove)
 }
 
 QModelIndex TreeXmlHashModel::indexHashAttr(const QString &tag, const QString &attr,
-                                         const QVariant &value, int number) const
+                                         const QVariant &value, qint32 number) const
 {
     QString dataValue = upperValue(tag, attr, value.toString());
 
-    int column = columnDisplayedAttr(tag,attr);
+    qint32 column = columnDisplayedAttr(tag,attr);
     if (number <  m_hashValue[tag][attr].values(dataValue).count()) {
         QModelIndex index = fromItem(
                     m_hashValue[tag][attr].values(
@@ -204,7 +204,7 @@ QModelIndex TreeXmlHashModel::indexLink(const QString &tag, const QString &attr,
             if (!attr.isEmpty()) {
                 QModelIndex linkIndex = indexHashAttr(linkTag, attr, value);
                 if (linkIndex.isValid()) {
-                    int column = columnDisplayedAttr(linkTag,linkAttr);
+                    qint32 column = columnDisplayedAttr(linkTag,linkAttr);
                     return linkIndex.sibling(linkIndex.row(),column);
                 }
             }
@@ -223,7 +223,7 @@ QModelIndex TreeXmlHashModel::indexLink(const QModelIndex &index) const
     return indexLink(tag, attrName, value);
 }
 
-QVariant TreeXmlHashModel::data(const QModelIndex &index, int role) const
+QVariant TreeXmlHashModel::data(const QModelIndex &index, qint32 role) const
 {
     TagXmlItem *item = toItem(index);
     QString tag = item->nodeName();
@@ -263,7 +263,7 @@ QVariant TreeXmlHashModel::data(const QModelIndex &index, int role) const
 }
 
 bool TreeXmlHashModel::setData(const QModelIndex &index, const QVariant &value,
-                           int role)
+                           qint32 role)
 {
     if (role != Qt::EditRole && role != TreeXmlModel::TagRole) return false;
 
@@ -280,26 +280,26 @@ bool TreeXmlHashModel::setData(const QModelIndex &index, const QVariant &value,
     return TreeXmlModel::setData(index,dataValue,role);
 }
 
-bool TreeXmlHashModel::insertRows(int row, int count, const QModelIndex &parent)
+bool TreeXmlHashModel::insertRows(qint32 row, qint32 count, const QModelIndex &parent)
 {
     return insertLastRows(row,count,parent).isValid();
 }
 
-QModelIndex TreeXmlHashModel::insertLastRows(int row, int count,
+QModelIndex TreeXmlHashModel::insertLastRows(qint32 row, qint32 count,
                                              const QModelIndex &parent, QString tag)
 {
     QModelIndex lastInsertRow = TreeXmlModel::insertLastRows(row, count, parent,tag);
     if (!lastInsertRow.isValid())
         return QModelIndex().child(-1,-1);
 
-    for (int i=0;i<count;++i) {
+    for (qint32 i=0;i<count;++i) {
         insertUuid(index(row+i,0,parent),tag);
     }
 
     return lastInsertRow;
 }
 
-bool TreeXmlHashModel::removeRows(int row, int count, const QModelIndex &parent)
+bool TreeXmlHashModel::removeRows(qint32 row, qint32 count, const QModelIndex &parent)
 {
     TagXmlItem *parentItem = toItem(parent);
 
@@ -307,7 +307,7 @@ bool TreeXmlHashModel::removeRows(int row, int count, const QModelIndex &parent)
         return false;
 
     // Удаление хэша уникальности
-    for (int i=row; i < row+count; ++i){
+    for (qint32 i=row; i < row+count; ++i){
         QModelIndex childIndex = index(i,0,parent);
         if (!isInherited(childIndex))
             makeHashing(toItem(childIndex),true);
@@ -317,7 +317,7 @@ bool TreeXmlHashModel::removeRows(int row, int count, const QModelIndex &parent)
 }
 
 bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex, const QModelIndex &destIndex,
-                                 int row, bool recursively)
+                                 qint32 row, bool recursively)
 {
     if (isInherited(srcIndex))
         return true;
@@ -328,7 +328,7 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex, const QModelIndex 
     if (!index.isValid())
         return false;
 
-    for (int i = 0; i<this->columnCount(srcIndex); ++i) {
+    for (qint32 i = 0; i<this->columnCount(srcIndex); ++i) {
         QVariant value = srcIndex.sibling(srcIndex.row(), i).data(Qt::EditRole);
         QString nameAttr = displayedAttr(tag, i);
         QModelIndex existIndex = indexHashAttr(tag,nameAttr,value);
@@ -341,7 +341,7 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex, const QModelIndex 
 
     bool success = true;
     if (recursively) {
-        int row = 0;
+        qint32 row = 0;
         QModelIndex childIndex = srcIndex.child(row,0);
         while (childIndex.isValid())
         {

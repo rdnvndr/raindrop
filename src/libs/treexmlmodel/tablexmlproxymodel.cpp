@@ -12,7 +12,7 @@ TableXMLProxyModel::TableXMLProxyModel(QObject *parent): QSortFilterProxyModel(p
     m_columnCount = 0;
 }
 
-bool TableXMLProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) const
+bool TableXMLProxyModel::filterAcceptsRow(qint32 row, const QModelIndex &parent) const
 {
     QModelIndex source_index = sourceModel()->index(row,filterKeyColumn(),parent);
     if (!source_index.isValid())
@@ -73,7 +73,7 @@ void TableXMLProxyModel::setAttributeTags(QStringList list)
     m_tags = list;
 }
 
-void TableXMLProxyModel::setColumnCount(int column)
+void TableXMLProxyModel::setColumnCount(qint32 column)
 {
     m_columnCount = column;
 }
@@ -84,7 +84,7 @@ QStringList TableXMLProxyModel::attributeTags()
 }
 
 
-int TableXMLProxyModel::columnCount(const QModelIndex &parent) const
+qint32 TableXMLProxyModel::columnCount(const QModelIndex &parent) const
 {
     if (QSortFilterProxyModel::columnCount(parent)<m_columnCount || m_columnCount<=0)
         return QSortFilterProxyModel::columnCount(parent);
@@ -92,8 +92,8 @@ int TableXMLProxyModel::columnCount(const QModelIndex &parent) const
         return m_columnCount;
 }
 
-QVariant TableXMLProxyModel::headerData(int section, Qt::Orientation orientation,
-                                  int role) const
+QVariant TableXMLProxyModel::headerData(qint32 section, Qt::Orientation orientation,
+                                  qint32 role) const
 {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
         if (m_header[section].isNull())
@@ -104,8 +104,8 @@ QVariant TableXMLProxyModel::headerData(int section, Qt::Orientation orientation
     return  QVariant();
 }
 
-bool TableXMLProxyModel::setHeaderData(int section, Qt::Orientation orientation,
-                                 const QVariant &value, int role)
+bool TableXMLProxyModel::setHeaderData(qint32 section, Qt::Orientation orientation,
+                                 const QVariant &value, qint32 role)
 {
     if (role != Qt::EditRole || orientation != Qt::Horizontal)
         return false;
