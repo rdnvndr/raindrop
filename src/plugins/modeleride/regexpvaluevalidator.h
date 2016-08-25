@@ -18,7 +18,7 @@ public:
 
 public slots:
     //! Проверка значения
-    State   validate(QString &input, int &pos) const;
+    State   validate(QString &input, qint32 &pos) const;
 
 signals:
     //! Сигнал об изменении состояния

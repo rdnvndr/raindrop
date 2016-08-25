@@ -131,7 +131,7 @@ bool PluginManager::loadPlugin(QString fileName)
             qDebug()<<"Error load plugin" << loader.errorString();
             return false;
         }
-    } catch (int e) {
+    } catch (qint32 e) {
         Q_UNUSED(e)
         return false;
     }

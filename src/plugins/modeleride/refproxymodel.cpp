@@ -9,7 +9,7 @@ RefProxyModel::RefProxyModel(QObject *parent) :
 {
 }
 
-QVariant RefProxyModel::data(const QModelIndex &proxyIndex, int role) const
+QVariant RefProxyModel::data(const QModelIndex &proxyIndex, qint32 role) const
 {
     if (role == Qt::DecorationRole && proxyIndex.column() != 0)
         return QVariant();

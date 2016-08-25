@@ -46,7 +46,7 @@ public slots:
     void submit();
 
     //! Выполняется до удаления величины
-    void rowsAboutToBeRemoved(const QModelIndex &parent,int start,int end);
+    void rowsAboutToBeRemoved(const QModelIndex &parent,qint32 start,qint32 end);
 
     //! Установка модели ЕИ
     void setUnitModel(QAbstractItemModel *model);
@@ -55,11 +55,11 @@ public slots:
     void setUnitRootIndex(const QModelIndex &index);
 
     //! Установка колонки отображения для ЕИ
-    void setUnitColumn(int column);
+    void setUnitColumn(qint32 column);
 
 private slots:
     //! Обработка изменения базовой ЕИ
-    void changeUnit(int current);
+    void changeUnit(qint32 current);
 
 signals:
     //! Сигнал о редактировании величины

@@ -216,7 +216,7 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
     QAction *prevAction = NULL;
     MenuItem *separatorItem = NULL;
 
-    for (int row = parentItem->childItems.count()-1; row >= 0; --row) {
+    for (qint32 row = parentItem->childItems.count()-1; row >= 0; --row) {
         MenuItem *item = parentItem->childItems.at(row);
         if (item == menuItem) {
 
@@ -561,9 +561,9 @@ void MainWindow::endLoadingPlugins()
     show();
 }
 
-void MainWindow::writeMenu(QWidget *menu, int level)
+void MainWindow::writeMenu(QWidget *menu, qint32 level)
 {
-    for (int row = 0;row < menu->actions().count(); ++row) {
+    for (qint32 row = 0;row < menu->actions().count(); ++row) {
         QAction *child = menu->actions().at(row);
 
         if (child->isSeparator()
@@ -607,7 +607,7 @@ void MainWindow::setEditedMenu(QWidget *widget, bool edited)
     if (menu)
         menu->setEdited(edited);
 
-    for (int row = 0;row < widget->actions().count(); row++) {
+    for (qint32 row = 0;row < widget->actions().count(); row++) {
         QAction *child = widget->actions().at(row);
         if (child->menu())
             setEditedMenu(child->menu(),edited);
@@ -690,14 +690,14 @@ void MainWindow::readBarSettings()
             (Qt::ToolButtonStyle)settings()->value("IconStyle").toInt();
     this->setToolButtonStyle(style);
 
-    int prevLevel = -1;
+    qint32 prevLevel = -1;
     MenuItem *parentItem  = NULL;
     MenuItem *currentItem = NULL;
 
-    int size = settings()->beginReadArray("BarSettings");
-    for (int i = 0; i < size; ++i) {
+    qint32 size = settings()->beginReadArray("BarSettings");
+    for (qint32 i = 0; i < size; ++i) {
         settings()->setArrayIndex(i);
-        int level = settings()->value("level").toInt();
+        qint32 level = settings()->value("level").toInt();
         QString name = settings()->value("name").toString();
         QString text = settings()->value("text").toString();
         QString typeAction = settings()->value("type").toString();
@@ -734,7 +734,7 @@ void MainWindow::readBarSettings()
 
     m_hotkey.clear();
     size = settings()->beginReadArray("HotKeySettings");
-    for (int i = 0; i < size; ++i) {
+    for (qint32 i = 0; i < size; ++i) {
         settings()->setArrayIndex(i);
         QString name = settings()->value("name").toString();
         QKeySequence hotkey = settings()->value("hotkey").value<QKeySequence>();

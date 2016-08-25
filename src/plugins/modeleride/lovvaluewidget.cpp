@@ -35,7 +35,7 @@ void LovValueWidget::setModel(TreeXmlHashModel *model)
     proxyModel()->setHeaderData(2,  Qt::Horizontal, tr("Список значений"));
     proxyModel()->setHeaderData(3,  Qt::Horizontal, tr("Идентификатор"));
 
-    for (int column = 2; column < 18; ++column)
+    for (qint32 column = 2; column < 18; ++column)
         tableViewLovValue->setColumnHidden(column,true);
 
     tableViewLovValue->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);

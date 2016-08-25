@@ -49,24 +49,24 @@ public:
     virtual ~TreeXmlHashModel();
 
     //! Возращает хранимые данные
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole ) const;
+    QVariant data(const QModelIndex &index, qint32 role = Qt::DisplayRole ) const;
 
     //! Устанавливает значение для указанной записи
-    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+    bool setData(const QModelIndex &index, const QVariant &value, qint32 role = Qt::EditRole);
 
     //! Вставка строки
-    bool insertRows (int row, int count, const QModelIndex & parent);
+    bool insertRows (qint32 row, qint32 count, const QModelIndex & parent);
 
     //! Вставка строки
-    QModelIndex insertLastRows (int row, int count,
+    QModelIndex insertLastRows (qint32 row, qint32 count,
                                 const QModelIndex & parent, QString tag = "element");
 
     //! Удаление строки
-    bool removeRows (int row, int count, const QModelIndex & parent);
+    bool removeRows (qint32 row, qint32 count, const QModelIndex & parent);
 
     //! Перемещение элемента
     bool moveIndex(const QModelIndex &srcIndex, const QModelIndex &destIndex,
-                   int row, bool recursively = false);
+                   qint32 row, bool recursively = false);
 
     //! Добавления поля для хешеирования
     void addHashAttr(const QString &tag, const QString &value,
@@ -74,7 +74,7 @@ public:
 
     //! Возращает индекс по значению хешеированного поля
     QModelIndex indexHashAttr(const QString &tag, const QString &attr,
-                               const QVariant &value, int number = 0) const;
+                               const QVariant &value, qint32 number = 0) const;
 
     //! Обновление хэшей начиная с указанног индекса
     void refreshHashing(const QModelIndex &index = QModelIndex(), bool remove = false);

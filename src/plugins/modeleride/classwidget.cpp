@@ -105,12 +105,12 @@ void ClassWidget::add()
 void ClassWidget::setCurrent(const QModelIndex &index)
 {
     AbstractEditorWidget::setCurrent(index);
-    int indexType = comboBoxClassType->findText(modelData(DBCLASSXML::CLASS,
+    qint32 indexType = comboBoxClassType->findText(modelData(DBCLASSXML::CLASS,
                                                           DBCLASSXML::TYPE,
                                                           index).toString());
     comboBoxClassType->setCurrentIndex(indexType);
 
-    int indexView = classViewComboBox->findText(modelData(DBCLASSXML::CLASS,
+    qint32 indexView = classViewComboBox->findText(modelData(DBCLASSXML::CLASS,
                                                           DBCLASSXML::VIEW,
                                                           index).toString());
     classViewComboBox->setCurrentIndex(indexView);

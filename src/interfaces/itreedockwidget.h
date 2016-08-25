@@ -48,7 +48,7 @@ public slots:
     virtual void setActionTreeWidget()  = 0;
 
     //! Слот вызова функции узла дерева
-    virtual void callFuncTreeWidget(QTreeWidgetItem *item, int column)  = 0;
+    virtual void callFuncTreeWidget(QTreeWidgetItem *item, qint32 column)  = 0;
 };
 
 Q_DECLARE_INTERFACE(ITreeDockWidget,"com.RTPTechGroup.Raindrop.ITreeDockWidget/1.0")

@@ -139,7 +139,7 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
 
     connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)),
             this,SLOT(actionSaveEnable()));
-    connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),
+    connect(m_model,SIGNAL(rowsRemoved(QModelIndex,qint32,qint32)),
             this,SLOT(actionSaveEnable()));
 
     m_treeClassView->setModel(m_model);
@@ -163,7 +163,7 @@ void ModelerIDEPlug::add()
         lastInsertRow =
                 m_model->insertLastRows(0,1,indexSource,DBCLASSXML::CLASS);
         if (lastInsertRow.isValid()){
-            int column = m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
+            qint32 column = m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                       DBCLASSXML::TYPE);
             m_model->setData(lastInsertRow.sibling(lastInsertRow.row(),column),
                              DBCLASSTYPEXML::USER);
@@ -533,7 +533,7 @@ void ModelerIDEPlug::saveAsClassModel()
 
 void ModelerIDEPlug::publishClassModel(const QModelIndex &index)
 {
-    int row=0;
+    qint32 row=0;
     QModelIndex childIndex = m_model->index(row,0,index);
     while (childIndex.isValid())
     {

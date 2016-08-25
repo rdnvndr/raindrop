@@ -133,7 +133,7 @@ void AbstractModifyWidget::up()
     proxyModel()->setData(srcIndex.sibling(srcIndex.row(), 0), dstTag, TreeXmlModel::TagRole);
     proxyModel()->setData(dstIndex.sibling(dstIndex.row(), 0), srcTag, TreeXmlModel::TagRole);
 
-    for (int i = 0; i<proxyModel()->columnCount(srcIndex); ++i) {
+    for (qint32 i = 0; i<proxyModel()->columnCount(srcIndex); ++i) {
         QVariant srcValue = srcIndex.sibling(srcIndex.row(), i).data(Qt::EditRole);
         QVariant dstValue = dstIndex.sibling(dstIndex.row(), i).data(Qt::EditRole);
         proxyModel()->setData(srcIndex.sibling(srcIndex.row(), i), dstValue);
@@ -153,7 +153,7 @@ void AbstractModifyWidget::down()
     proxyModel()->setData(srcIndex.sibling(srcIndex.row(), 0), dstTag, TreeXmlModel::TagRole);
     proxyModel()->setData(dstIndex.sibling(dstIndex.row(), 0), srcTag, TreeXmlModel::TagRole);
 
-    for (int i = 0; i<proxyModel()->columnCount(srcIndex); ++i) {
+    for (qint32 i = 0; i<proxyModel()->columnCount(srcIndex); ++i) {
         QVariant srcValue = srcIndex.sibling(srcIndex.row(), i).data(Qt::EditRole);
         QVariant dstValue = dstIndex.sibling(dstIndex.row(), i).data(Qt::EditRole);
         proxyModel()->setData(srcIndex.sibling(srcIndex.row(), i), dstValue);

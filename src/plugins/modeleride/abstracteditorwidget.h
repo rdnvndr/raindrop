@@ -61,11 +61,11 @@ public slots:
     virtual void revert();
 
     //! Обработка удаления строки
-    void onRowsAboutToBeRemoved(const QModelIndex &index,int start,int end);
+    void onRowsAboutToBeRemoved(const QModelIndex &index,qint32 start,qint32 end);
 
     //! Получение данных модели
     QVariant modelData(const QString &tag, const QString &attr,
-                       const QModelIndex &index, int role = Qt::DisplayRole);
+                       const QModelIndex &index, qint32 role = Qt::DisplayRole);
 
 signals:
     //! Сигнал об изменении данных

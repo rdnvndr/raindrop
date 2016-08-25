@@ -233,7 +233,7 @@ void AttrWidget::setRootIndex(const QModelIndex &index)
 {
     AbstractItemWidget::setRootIndex(index);
 
-    int groupColumn = model()->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::GROUP);
+    qint32 groupColumn = model()->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::GROUP);
     m_attrGroupModel->setUniqueColumn(groupColumn);
     m_attrGroupModel->setRootModelIndex(index);
     m_attrGroupModel->reset();
@@ -274,9 +274,9 @@ void AttrWidget::submit()
 {
     QModelIndex rootIndex = (tableViewAttr->rootIndex());
     QModelIndex srcIndex = dataMapper()->rootIndex().child(dataMapper()->currentIndex(),0);
-    int nameColumn = model()->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::NAME);
+    qint32 nameColumn = model()->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::NAME);
 
-    int row = 0;
+    qint32 row = 0;
     QModelIndex childIndex = proxyModel()->index(row, nameColumn, rootIndex);
     while (childIndex.isValid())
     {
@@ -422,7 +422,7 @@ void AttrWidget::changeType(const QString &typeName)
 void AttrWidget::setCurrent(const QModelIndex &index)
 {
     AbstractItemWidget::setCurrent(index);
-    int indexType = comboBoxTypeAttr->findText(modelData(
+    qint32 indexType = comboBoxTypeAttr->findText(modelData(
                                                    DBATTRXML::ATTR,
                                                    DBATTRXML::TYPE,
                                                    index).toString());

@@ -21,7 +21,7 @@ public:
 
 public slots:
     //! Проверка значения
-    QValidator::State validate(QString &input, int &pos) const;
+    QValidator::State validate(QString &input, qint32 &pos) const;
 
 signals:
     //! Сигнал об изменении состояния

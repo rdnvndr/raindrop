@@ -31,7 +31,7 @@ void UnitDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, cons
 
             if (tag == DBUNITXML::UNIT && attr == DBUNITXML::CODE) {
                 QString value = lineEdit->text();
-                int len = value.length();
+                qint32 len = value.length();
                 while (len < 4) {
                     value = QString("0") + value;
                     ++len;

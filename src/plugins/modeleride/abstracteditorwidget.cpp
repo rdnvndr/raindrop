@@ -27,8 +27,8 @@ AbstractEditorWidget::~AbstractEditorWidget()
 void AbstractEditorWidget::setModel(TreeXmlHashModel *model)
 {
     m_model = model;
-    connect(m_model,SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
-            this,SLOT(onRowsAboutToBeRemoved(QModelIndex,int,int)));
+    connect(m_model,SIGNAL(rowsAboutToBeRemoved(QModelIndex,qint32,qint32)),
+            this,SLOT(onRowsAboutToBeRemoved(QModelIndex,qint32,qint32)));
     m_mapper->setModel(m_model);
 }
 
@@ -73,7 +73,7 @@ bool AbstractEditorWidget::add(const QString &tag)
 
 void AbstractEditorWidget::remove()
 {
-    int row = m_mapper->currentIndex();
+    qint32 row = m_mapper->currentIndex();
     QModelIndex srcParent = m_mapper->rootIndex();
     QModelIndex srcIndex  = m_model->index(row, 0, srcParent);
 
@@ -128,17 +128,17 @@ void AbstractEditorWidget::revert()
     removeEmpty();
 }
 
-void AbstractEditorWidget::onRowsAboutToBeRemoved(const QModelIndex &index, int start, int end)
+void AbstractEditorWidget::onRowsAboutToBeRemoved(const QModelIndex &index, qint32 start, qint32 end)
 {
     if (index == m_mapper->rootIndex() && !m_oldIndex.isValid())
-        for (int row = start; row <= end; ++row)
+        for (qint32 row = start; row <= end; ++row)
             if (m_mapper->currentIndex() == row)
                 emit dataAboutToBeRemoved(index.child(row, 0));
 
 }
 
 QVariant AbstractEditorWidget::modelData(const QString &tag, const QString &attr,
-                                         const QModelIndex &index, int role)
+                                         const QModelIndex &index, qint32 role)
 {
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
                              tag,attr)).data(role);

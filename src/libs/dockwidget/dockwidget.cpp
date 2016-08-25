@@ -34,9 +34,9 @@ bool DockWidget::eventFilter(QObject *obj, QEvent *event)
         if (widget) {
             QPoint globalPos = widget->mapToGlobal(me->pos());
             QPoint localPos  = mapFromGlobal(globalPos);
-            int y = localPos.y();
-            int x = localPos.x();
-            int h = style()->pixelMetric(QStyle::PM_TitleBarHeight);
+            qint32 y = localPos.y();
+            qint32 x = localPos.x();
+            qint32 h = style()->pixelMetric(QStyle::PM_TitleBarHeight);
 
             if (0 <= x && x < width() && 0 <= y && y <= h) {
                 if (!isTitleBarVisible()) {
@@ -76,7 +76,7 @@ void DockWidget::handleToplevelChanged(bool floating)
     setTitleBarVisible(floating);
 }
 
-void DockWidget::setMinimumWidth(int minw)
+void DockWidget::setMinimumWidth(qint32 minw)
 {
     QDockWidget::setMinimumWidth((minw<25)?25:minw);
 }

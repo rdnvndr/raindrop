@@ -76,42 +76,42 @@ public:
     virtual ~TreeXmlModel();
 
     //! Возращает хранимые данные
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole ) const;
+    QVariant data(const QModelIndex &index, qint32 role = Qt::DisplayRole ) const;
 
     //! Устанавливает значение для указанной записи
-    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+    bool setData(const QModelIndex &index, const QVariant &value, qint32 role = Qt::EditRole);
 
     //! Возвращает флаг записи
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
     //! Возращает название заголовка
-    QVariant headerData(int section, Qt::Orientation orientation,
-                        int role = Qt::DisplayRole) const;
+    QVariant headerData(qint32 section, Qt::Orientation orientation,
+                        qint32 role = Qt::DisplayRole) const;
 
     //! Устанавливает название заголовка
-    bool setHeaderData(int section, Qt::Orientation orientation,
-                       const QVariant &value, int role = Qt::EditRole);
+    bool setHeaderData(qint32 section, Qt::Orientation orientation,
+                       const QVariant &value, qint32 role = Qt::EditRole);
 
     //! Возращает индекс модели для строки и колонки
-    QModelIndex index(int row, int m_column,
+    QModelIndex index(qint32 row, qint32 m_column,
                       const QModelIndex &parent = QModelIndex()) const;
 
     //! Возращает индекс родителя
     QModelIndex parent(const QModelIndex &child) const;
 
     //! Возращает количество строк в индексе родителя
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    qint32 rowCount(const QModelIndex &parent = QModelIndex()) const;
 
     //! Возращает количество строк указанных тэгов в индексе родителя
-    virtual int rowCount(const QModelIndex &parent, const QStringList &tags) const;
+    virtual qint32 rowCount(const QModelIndex &parent, const QStringList &tags) const;
 
     //! Возращает количество строк указанных тэгов в индексе родителя c
     //! учетом наследумых тэгов
-    virtual int rowCount(const QModelIndex &parent, const QStringList &tags,
+    virtual qint32 rowCount(const QModelIndex &parent, const QStringList &tags,
                          const QStringList &attrTags) const;
 
     //! Возращает количество столбцов в индексе родителя
-    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    qint32 columnCount(const QModelIndex &parent = QModelIndex()) const;
 
     //! Добавляет тэг для фильтрации
     void addTagFilter(const QString &tag);
@@ -153,10 +153,10 @@ public:
     void addInsertTags(const QString &tag, const QStringList &value);
 
     //! Получение индекса поля в тэге
-    int columnDisplayedAttr(const QString &tag, const QString &attr) const;
+    qint32 columnDisplayedAttr(const QString &tag, const QString &attr) const;
 
     //! Получение поля в тэге по индексу
-    QString displayedAttr(const QString &tag, int column) const;
+    QString displayedAttr(const QString &tag, qint32 column) const;
 
     //! Удаляет xml атрибуты тэга для отображения
     void removeDisplayedAttr(const QString &tag);
@@ -165,18 +165,18 @@ public:
     virtual TagXmlItem *rootItem();
 
     //! Вставка строки
-    bool insertRows (int row, int count, const QModelIndex & parent);
+    bool insertRows (qint32 row, qint32 count, const QModelIndex & parent);
 
     //! Вставка строки
-    virtual QModelIndex insertLastRows (int row, int count,
+    virtual QModelIndex insertLastRows (qint32 row, qint32 count,
                                         const QModelIndex & parent, QString tag = "element");
 
     //! Удаление строки
-    bool removeRows (int row, int count, const QModelIndex & parent);
+    bool removeRows (qint32 row, qint32 count, const QModelIndex & parent);
 
     //! Обработчик окрнчания перетаскивания данных путем Drag and Drop
     bool dropMimeData(const QMimeData *data, Qt::DropAction action,
-                      int row, int column, const QModelIndex &parent);
+                      qint32 row, qint32 column, const QModelIndex &parent);
 
     //! Возращает объект с упакованными данными по списку индексов
     QMimeData *mimeData(const QModelIndexList &indexes) const;
@@ -191,7 +191,7 @@ public:
     Qt::DropActions supportedDragActions() const;
 
     //! Возращает True если можно вставить строку
-    virtual bool isInsert(int row, const QModelIndex &index, QString tag) const;
+    virtual bool isInsert(qint32 row, const QModelIndex &index, QString tag) const;
 
     //! Возращает True если имеются потомки указанных тэгов
     virtual bool hasChildren(const QModelIndex &parent, const QStringList &tags) const;
@@ -204,36 +204,36 @@ public:
 
     //! Перемещение элемента
     virtual bool moveIndex(const QModelIndex &srcIndex, const QModelIndex &destIndex,
-                           int row, bool recursively = false);
+                           qint32 row, bool recursively = false);
 
     //! Копирование элемента
     virtual bool copyIndex(const QModelIndex &srcIndex, const QModelIndex &destIndex,
-                           int row, bool recursively = false);
+                           qint32 row, bool recursively = false);
 
     //! Проверка наличия подчиненного элемента у родителя
-    bool hasIndex(int row, int column, const QModelIndex &parent) const;
+    bool hasIndex(qint32 row, qint32 column, const QModelIndex &parent) const;
 
 private:
 
     //! Обновление отредактированных унаследованных строк
-    virtual void updateModifyRow(int emptyRowAttr, const QModelIndex &parent, int column);
+    virtual void updateModifyRow(qint32 emptyRowAttr, const QModelIndex &parent, qint32 column);
 
     //! Обновление вставленных унаследованных строк
-    virtual void updateInsertRows(int row, int count,
+    virtual void updateInsertRows(qint32 row, qint32 count,
                                   const QModelIndex &parent, QString tag);
 
     //! Удаление вставленных унаследованных строк
-    virtual void revertInsertRows(int row, int count,
+    virtual void revertInsertRows(qint32 row, qint32 count,
                                   const QModelIndex &parent, QString tag);
 
     //! Обновление удаленных унаследованных строк
-    virtual void updateRemoveRows(int emptyRowAttr, int count, const QModelIndex &parent);
+    virtual void updateRemoveRows(qint32 emptyRowAttr, qint32 count, const QModelIndex &parent);
 
     //! Корневой узел
     TagXmlItem *m_rootItem;
 
     //! Количество колонок
-    int m_column;
+    qint32 m_column;
 
     //! Список тэгов для фильтрации
     QStringList m_filterTags;
@@ -248,7 +248,7 @@ private:
     QHash<QString, QIcon> m_displayedIcon;
 
     //! Список названий заголовков
-    QMap<int, QString> m_header;
+    QMap<qint32, QString> m_header;
 
     //! Список тэгов в которые нельзя вставлять строки
     QHash<QString, QStringList> m_insertTags;

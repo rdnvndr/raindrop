@@ -234,9 +234,9 @@ void FilterPropWidget::submit()
     QModelIndex rootIndex = dataMapper()->rootIndex();
     QModelIndex srcIndex = model()->index(
                 dataMapper()->currentIndex(),0,dataMapper()->rootIndex());
-    int filterNameColumn =
+    qint32 filterNameColumn =
             model()->columnDisplayedAttr(DBFILTERXML::FILTER, DBFILTERXML::NAME);
-    int row=0;
+    qint32 row=0;
     QModelIndex childIndex = model()->index(row, filterNameColumn, rootIndex);
     while (childIndex.isValid())
     {

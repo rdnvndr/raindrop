@@ -19,36 +19,36 @@ public:
     virtual ~ToolBarModel();
 
     //! Возращает хранимые данные
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole ) const;
+    QVariant data(const QModelIndex &index, qint32 role = Qt::DisplayRole ) const;
 
     //! Устанавливает значение
-    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+    bool setData(const QModelIndex &index, const QVariant &value, qint32 role = Qt::EditRole);
 
     //! Возвращает флаг записи
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
     //! Возращает название заголовка
-    QVariant headerData(int section, Qt::Orientation orientation,
-                        int role = Qt::DisplayRole) const;
+    QVariant headerData(qint32 section, Qt::Orientation orientation,
+                        qint32 role = Qt::DisplayRole) const;
 
     //! Возращает индекс модели для строки и колонки
-    QModelIndex index(int row, int column,
+    QModelIndex index(qint32 row, qint32 column,
                       const QModelIndex &parent = QModelIndex()) const;
 
     //! Возращает индекс родителя
     QModelIndex parent(const QModelIndex &child) const;
 
     //! Возращает количество строк в индексе родителя
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    qint32 rowCount(const QModelIndex &parent = QModelIndex()) const;
 
     //! Возращает количество столбцов в индексе родителя
-    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    qint32 columnCount(const QModelIndex &parent = QModelIndex()) const;
 
     //! Вставка строки
-    bool insertRows (int row, int count, const QModelIndex & parent);
+    bool insertRows (qint32 row, qint32 count, const QModelIndex & parent);
 
     //! Удаление строки
-    bool removeRows (int row, int count, const QModelIndex & parent);
+    bool removeRows (qint32 row, qint32 count, const QModelIndex & parent);
 
     
 signals:

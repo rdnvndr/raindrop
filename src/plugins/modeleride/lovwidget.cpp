@@ -76,7 +76,7 @@ void LovWidget::setCurrent(const QModelIndex &index)
 {
     AbstractEditorWidget::setCurrent(index);
 
-    int indexType = comboBoxLovType->findText(modelData(
+    qint32 indexType = comboBoxLovType->findText(modelData(
                                                   DBLOVXML::LOV,
                                                   DBLOVXML::TYPE,
                                                   index).toString());

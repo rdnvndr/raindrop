@@ -32,7 +32,7 @@ QModelIndex PermissionProxyModel::rootIndex()
     return m_rootIndex;
 }
 
-bool PermissionProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+bool PermissionProxyModel::filterAcceptsRow(qint32 source_row, const QModelIndex &source_parent) const
 {
     QModelIndex source_index = source_parent.child(source_row,0);
     QString tag =

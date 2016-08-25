@@ -42,7 +42,7 @@ QWidget *ConditionDelegate::createEditor(QWidget *parent, const
                             proxyModel->sourceModel());
                 if (xmlModel) {
 
-                    int column = xmlModel->columnDisplayedAttr(DBATTRXML::ATTR,
+                    qint32 column = xmlModel->columnDisplayedAttr(DBATTRXML::ATTR,
                                                                DBATTRXML::NAME);
                     m_attrModel->setColumnCount(xmlModel->columnCount(firstIndex()));
                     QComboBox *comboBoxAttr = new QComboBox(parent);
@@ -72,7 +72,7 @@ QWidget *ConditionDelegate::createEditor(QWidget *parent, const
                 TreeXmlHashModel *xmlModel = qobject_cast<TreeXmlHashModel *>(
                             proxyModel->sourceModel());
                 if (xmlModel) {
-                    int column = xmlModel->columnDisplayedAttr(DBATTRXML::ATTR,
+                    qint32 column = xmlModel->columnDisplayedAttr(DBATTRXML::ATTR,
                                                                DBATTRXML::NAME);
                     m_attrModel->setColumnCount(xmlModel->columnCount(firstIndex()));
                     QComboBox *comboBoxAttr = new QComboBox(parent);
@@ -117,7 +117,7 @@ void ConditionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                 QModelIndex currentIndex = comboBox->view()->currentIndex();
                 if (currentIndex.isValid()) {
                     QString tag = currentIndex.data(TreeXmlModel::TagRole).toString();
-                    int column = (tag == DBATTRXML::ATTR)
+                    qint32 column = (tag == DBATTRXML::ATTR)
                             ? xmlModel->columnDisplayedAttr(DBATTRXML::ATTR,
                                                             DBATTRXML::ID)
                             : xmlModel->columnDisplayedAttr(DBCOMPXML::COMP,

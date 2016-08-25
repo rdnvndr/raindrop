@@ -53,7 +53,7 @@ public:
     QIcon displayIcon() const;
 
     //! Установка колонки для индекса
-    void setIndexColumn(int column);
+    void setIndexColumn(qint32 column);
 
     //! Утанавливать режим Показа иконки
     void setShowingIcon(bool showing);
@@ -93,7 +93,7 @@ private:
     bool m_showingIcon;
 
     //! Колонка со значением
-    int m_indexColumn ;
+    qint32 m_indexColumn ;
 
     //! Корневой индекс
     QModelIndex m_rootIndex;

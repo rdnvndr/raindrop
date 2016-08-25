@@ -33,17 +33,17 @@ public:
 
 
     //! Возращает количество столбцов в индексе родителя
-    int columnCount (const QModelIndex& parent = QModelIndex()) const;
+    qint32 columnCount (const QModelIndex& parent = QModelIndex()) const;
 
     //! Возращает количество строк в индексе родителя
-    int rowCount(const QModelIndex& parent) const;
+    qint32 rowCount(const QModelIndex& parent) const;
 
     //! Возращает True если имеются потомки
     bool hasChildren(const QModelIndex &parent) const;
 
 
     //! Возращает индекс модели для строки и колонки
-    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const ;
+    QModelIndex index(qint32 row, qint32 column, const QModelIndex& parent = QModelIndex()) const ;
 
     //! Возращает индекс родителя
     QModelIndex parent (const QModelIndex& index) const ;
@@ -57,10 +57,10 @@ public:
 
 
     //! Возращает хранимые данные
-    QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const;
+    QVariant data(const QModelIndex &proxyIndex, qint32 role = Qt::DisplayRole) const;
 
     //! Устанавливает значение для указанной записи
-    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+    bool setData(const QModelIndex &index, const QVariant &value, qint32 role = Qt::EditRole);
 
     //! Установка модели источника
     void setSourceModel(QAbstractItemModel *srcModel);
@@ -76,21 +76,21 @@ public:
 
 
     //! Возращает название заголовка
-    QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+    QVariant headerData(qint32 section, Qt::Orientation orientation, qint32 role) const;
 
     //! Устанавливает название заголовка
-    bool setHeaderData(int section, Qt::Orientation orientation,
-                       const QVariant &value, int role = Qt::EditRole);
+    bool setHeaderData(qint32 section, Qt::Orientation orientation,
+                       const QVariant &value, qint32 role = Qt::EditRole);
 
 
     //! Удаление строки
-    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
+    bool removeRows(qint32 row, qint32 count, const QModelIndex &parent = QModelIndex());
 
     //! Вставка строки
-    bool insertRows(int  row, int count, const QModelIndex &parent = QModelIndex());
+    bool insertRows(qint32  row, qint32 count, const QModelIndex &parent = QModelIndex());
 
     //! Вставка строки
-    QModelIndex insertLastRows(int  row, int count, const QModelIndex &parent = QModelIndex());
+    QModelIndex insertLastRows(qint32  row, qint32 count, const QModelIndex &parent = QModelIndex());
 
     //! Получение индекса последней вставленной строки
     Q_DECL_DEPRECATED QModelIndex lastInsertRow();
@@ -127,13 +127,13 @@ public slots:
     void sourceDataChanged(const QModelIndex &left, const QModelIndex &right);
 
     //! Слот обработки сигнала удаления строк в источнике
-    void sourceRowsRemoved(const QModelIndex &parent, int start, int end);
+    void sourceRowsRemoved(const QModelIndex &parent, qint32 start, qint32 end);
 
     //! Слот обработки сигнала перед удалением строк в источника
-    void sourceRowsAboutToBeRemoved(const QModelIndex &parent, int start, int end);
+    void sourceRowsAboutToBeRemoved(const QModelIndex &parent, qint32 start, qint32 end);
 
     //! Слот обработки сигнала вставки строк в источнике
-    void sourceRowsInserted(const QModelIndex &parent, int start, int end);
+    void sourceRowsInserted(const QModelIndex &parent, qint32 start, qint32 end);
 
 private:
 
@@ -142,7 +142,7 @@ private:
                           const QPersistentModelIndex &sourceParent = QModelIndex());
 
     //! Список измененных значений
-    QHash <QPersistentModelIndex, QHash<int, QVariant> > m_updatedRow;
+    QHash <QPersistentModelIndex, QHash<qint32, QVariant> > m_updatedRow;
 
     //! Список вставленных строк
     QHash <QPersistentModelIndex, QList<QPersistentModelIndex *> > m_insertedRow;
@@ -151,7 +151,7 @@ private:
     QHash  <QPersistentModelIndex,QList<QPersistentModelIndex> > m_removedRow;
 
     //! Список названий заголовков
-    QMap<int, QString> m_header;
+    QMap<qint32, QString> m_header;
 
     //! Флаг скрытия удаленных строк
     bool m_hiddenRow;
@@ -160,7 +160,7 @@ private:
     bool m_editable;
 
     //! Список строк для удаления в текущей модели
-    QHash  <QModelIndex,QSet<int> > m_srcRemovedRow;
+    QHash  <QModelIndex,QSet<qint32> > m_srcRemovedRow;
 };
 
 }}

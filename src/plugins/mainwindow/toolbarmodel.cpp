@@ -27,7 +27,7 @@ ToolBarModel::~ToolBarModel()
 }
 
 bool ToolBarModel::setData(const QModelIndex &index, const QVariant &value,
-                           int role)
+                           qint32 role)
 {
     if (role == Qt::EditRole)
         m_toolBars.at(index.row())->setWindowTitle(value.toString());
@@ -46,7 +46,7 @@ bool ToolBarModel::setData(const QModelIndex &index, const QVariant &value,
     return true;
 }
 
-QVariant ToolBarModel::data(const QModelIndex &index, int role) const
+QVariant ToolBarModel::data(const QModelIndex &index, qint32 role) const
 {
     if (!index.isValid())
         return QVariant();
@@ -70,7 +70,7 @@ Qt::ItemFlags ToolBarModel::flags(const QModelIndex &index) const
             | Qt::ItemIsUserCheckable;
 }
 
-QVariant ToolBarModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant ToolBarModel::headerData(qint32 section, Qt::Orientation orientation, qint32 role) const
 {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
         if (section == 0)
@@ -81,7 +81,7 @@ QVariant ToolBarModel::headerData(int section, Qt::Orientation orientation, int 
     return QVariant();
 }
 
-QModelIndex ToolBarModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex ToolBarModel::index(qint32 row, qint32 column, const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return createIndex(row,column);
@@ -93,19 +93,19 @@ QModelIndex ToolBarModel::parent(const QModelIndex &child) const
     return QModelIndex();
 }
 
-int ToolBarModel::rowCount(const QModelIndex &parent) const
+qint32 ToolBarModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return m_toolBars.count();
 }
 
-int ToolBarModel::columnCount(const QModelIndex &parent) const
+qint32 ToolBarModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return 1;
 }
 
-bool ToolBarModel::insertRows(int row, int count, const QModelIndex &parent)
+bool ToolBarModel::insertRows(qint32 row, qint32 count, const QModelIndex &parent)
 {
     beginInsertRows(parent,row,row+count-1);
     ToolBar *toolBar = new ToolBar();
@@ -123,7 +123,7 @@ void ToolBarModel::setToolBarVisible(QWidget *widget)
 {
     ToolBar *toolBar = qobject_cast<ToolBar *>(widget);
     if (toolBar) {
-        int row = m_toolBars.indexOf(toolBar);
+        qint32 row = m_toolBars.indexOf(toolBar);
         if (toolBar->isVisible())
             setData(index(row,0),Qt::Checked,Qt::CheckStateRole);
         else
@@ -131,11 +131,11 @@ void ToolBarModel::setToolBarVisible(QWidget *widget)
     }
 }
 
-bool ToolBarModel::removeRows(int row, int count, const QModelIndex &parent)
+bool ToolBarModel::removeRows(qint32 row, qint32 count, const QModelIndex &parent)
 {
 
     beginRemoveRows(parent,row,row+count-1);
-    for (int i=count-1;i>=0;--i) {
+    for (qint32 i=count-1;i>=0;--i) {
         ToolBar *toolBar = m_toolBars.at(row+i);
         m_mainWindow->removeToolBar(toolBar);
         delete toolBar;

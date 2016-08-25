@@ -41,7 +41,7 @@ public:
 
 
     //! Устанавливает минимальную ширину компонента
-    void setMinimumWidth(int minw);
+    void setMinimumWidth(qint32 minw);
 
     //! Устанавливает видимость заголовка
     void setTitleBarVisible(bool visible);

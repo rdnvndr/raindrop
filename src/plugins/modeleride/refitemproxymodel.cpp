@@ -14,7 +14,7 @@ RefItemProxyModel::RefItemProxyModel(QObject *parent):QSortFilterProxyModel(pare
     setRecursion(true);
 }
 
-bool RefItemProxyModel::filterAcceptsRowItself(int source_row, const QModelIndex &source_parent) const
+bool RefItemProxyModel::filterAcceptsRowItself(qint32 source_row, const QModelIndex &source_parent) const
 {
     QModelIndex srcIndex = sourceModel()->index(source_row, 0, source_parent);
     QString tag = srcIndex.data(TreeXmlModel::TagRole).toString();
@@ -22,7 +22,7 @@ bool RefItemProxyModel::filterAcceptsRowItself(int source_row, const QModelIndex
         return true;
 
      if (tag == DBREFGROUPXML::REFGROUP) {
-         int row = 0;
+         qint32 row = 0;
          QModelIndex childIndex = srcIndex.child(row,0);
          while (childIndex.isValid())
          {
@@ -38,11 +38,11 @@ bool RefItemProxyModel::filterAcceptsRowItself(int source_row, const QModelIndex
 
          TreeXmlHashModel *hashModel = qobject_cast<TreeXmlHashModel *>(sourceModel());
          if (hashModel) {
-             int refClassColumn = hashModel->columnDisplayedAttr(
+             qint32 refClassColumn = hashModel->columnDisplayedAttr(
                          DBLINKTOCLASSXML::LINKTOCLASS,
                          DBLINKTOCLASSXML::REFCLASS);
 
-             int row = 0;
+             qint32 row = 0;
              QModelIndex childIndex = srcIndex.child(row,0);
              while (childIndex.isValid())
              {
@@ -73,7 +73,7 @@ void RefItemProxyModel::setRecursion(bool recursion)
     m_recursion = recursion;
 }
 
-bool RefItemProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+bool RefItemProxyModel::filterAcceptsRow(qint32 source_row, const QModelIndex &source_parent) const
 {
     // Если узел удолетворяет  фильтру то показать этот узел
     if (filterAcceptsRowItself(source_row, source_parent))
@@ -115,7 +115,7 @@ bool RefItemProxyModel::hasAcceptedChildren(const QModelIndex &link_index,
         return true;
 
     if (recursion()) {
-        int row = 0;
+        qint32 row = 0;
         QModelIndex childIndex = sourceModel()->index(row, 0, source_parent);
         while (childIndex.isValid())
         {

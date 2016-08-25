@@ -130,7 +130,7 @@ void AbstractItemWidget::up()
     QPersistentModelIndex index = itemView()->currentIndex();
     QPersistentModelIndex srcIndex  = proxyModel()->mapToSource(index);
     QPersistentModelIndex srcParent = srcIndex.parent();
-    int row = proxyModel()->mapToSource(index.sibling(index.row()-1,0)).row();
+    qint32 row = proxyModel()->mapToSource(index.sibling(index.row()-1,0)).row();
 
     if (model()->moveIndex(srcIndex,srcParent,row)) {
         if (row >= 0)
@@ -148,7 +148,7 @@ void AbstractItemWidget::down()
     QPersistentModelIndex srcIndex  = proxyModel()->mapToSource(index);
     QPersistentModelIndex srcParent = srcIndex.parent();
     QModelIndex indexNew = index.sibling(index.row()+2,0);
-    int row = (indexNew.isValid()) ? proxyModel()->mapToSource(indexNew).row()
+    qint32 row = (indexNew.isValid()) ? proxyModel()->mapToSource(indexNew).row()
                                    : model()->rowCount(srcParent,
                                                        model()->tagsFilter(),
                                                        QStringList());

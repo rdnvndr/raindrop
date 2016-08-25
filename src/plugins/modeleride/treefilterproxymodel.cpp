@@ -30,7 +30,7 @@ QSet<QString> TreeFilterProxyModel::visibleTags()
     return m_filterTags;
 }
 
-bool TreeFilterProxyModel::filterAcceptsRow(int source_row,
+bool TreeFilterProxyModel::filterAcceptsRow(qint32 source_row,
                                             const QModelIndex &source_parent) const{
 
     if (!m_filterTags.contains(sourceModel()->data(
@@ -49,7 +49,7 @@ bool TreeFilterProxyModel::filterAcceptsRow(int source_row,
     return false;
 }
 
-bool TreeFilterProxyModel::filterAcceptsRowItself(int source_row,
+bool TreeFilterProxyModel::filterAcceptsRowItself(qint32 source_row,
                                                   const QModelIndex &source_parent) const
 {
     if (!m_filterTags.contains(sourceModel()->data(
@@ -60,7 +60,7 @@ bool TreeFilterProxyModel::filterAcceptsRowItself(int source_row,
     return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
 }
 
-bool TreeFilterProxyModel::hasAcceptedChildren(int source_row,
+bool TreeFilterProxyModel::hasAcceptedChildren(qint32 source_row,
                                                const QModelIndex &source_parent) const
 {
     QModelIndex item = sourceModel()->index(source_row,0,source_parent);
@@ -68,11 +68,11 @@ bool TreeFilterProxyModel::hasAcceptedChildren(int source_row,
         return false;
 
 
-    int childCount = item.model()->rowCount(item);
+    qint32 childCount = item.model()->rowCount(item);
     if (childCount == 0)
         return false;
 
-    for (int i = 0; i < childCount; ++i) {
+    for (qint32 i = 0; i < childCount; ++i) {
         if (filterAcceptsRowItself(i, item))
             return true;
         if (hasAcceptedChildren(i, item))
@@ -135,7 +135,7 @@ Qt::DropActions TreeFilterProxyModel::supportedDragActions() const
 }
 
 bool TreeFilterProxyModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
-                                        int row, int column, const QModelIndex &parent)
+                                        qint32 row, qint32 column, const QModelIndex &parent)
 {
     Q_UNUSED (row)
     Q_UNUSED (column)

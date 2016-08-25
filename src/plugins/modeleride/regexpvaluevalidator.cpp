@@ -11,7 +11,7 @@ RegExpValueValidator::RegExpValueValidator(QObject *parent)
 
 }
 
-QValidator::State RegExpValueValidator::validate(QString &input, int &pos) const
+QValidator::State RegExpValueValidator::validate(QString &input, qint32 &pos) const
 {
     Q_UNUSED(pos)
 

@@ -157,9 +157,9 @@ void CompositionWidget::submit()
 {
     QModelIndex rootIndex = tableViewComp->rootIndex();
     QModelIndex srcIndex = dataMapper()->rootIndex().child(dataMapper()->currentIndex(),0);
-    int nameColumn = model()->columnDisplayedAttr(DBCOMPXML::COMP, DBCOMPXML::LINKCLASS);
+    qint32 nameColumn = model()->columnDisplayedAttr(DBCOMPXML::COMP, DBCOMPXML::LINKCLASS);
 
-    int row = 0;
+    qint32 row = 0;
     QModelIndex childIndex = proxyModel()->index(row, nameColumn, rootIndex);
     while (childIndex.isValid())
     {

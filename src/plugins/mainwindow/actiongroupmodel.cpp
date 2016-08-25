@@ -9,7 +9,7 @@ ActionGroupModel::ActionGroupModel(QMultiHash<QString, QAction *> *actions)
     setActionGroup(actions);
 }
 
-QVariant ActionGroupModel::data(const QModelIndex &index, int role) const
+QVariant ActionGroupModel::data(const QModelIndex &index, qint32 role) const
 {
     if (!index.isValid())
         return QVariant();
@@ -44,7 +44,7 @@ QVariant ActionGroupModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool ActionGroupModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool ActionGroupModel::setData(const QModelIndex &index, const QVariant &value, qint32 role)
 {
     if (role == Qt::EditRole && index.internalId()>0) {
         QString key = m_actions->uniqueKeys().at(index.internalId()-1);
@@ -79,7 +79,7 @@ Qt::ItemFlags ActionGroupModel::flags(const QModelIndex &index) const
             Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
 }
 
-QVariant ActionGroupModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant ActionGroupModel::headerData(qint32 section, Qt::Orientation orientation, qint32 role) const
 {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
         switch (section) {
@@ -93,7 +93,7 @@ QVariant ActionGroupModel::headerData(int section, Qt::Orientation orientation, 
     return  QVariant();
 }
 
-QModelIndex ActionGroupModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex ActionGroupModel::index(qint32 row, qint32 column, const QModelIndex &parent) const
 {
     if (!hasIndex(row, column, parent))
         return QModelIndex();
@@ -117,7 +117,7 @@ QModelIndex ActionGroupModel::parent(const QModelIndex &child) const
         return QModelIndex();
 }
 
-int ActionGroupModel::rowCount(const QModelIndex &parent) const
+qint32 ActionGroupModel::rowCount(const QModelIndex &parent) const
 {
     if (!parent.isValid()) {
         return m_actions->uniqueKeys().count();
@@ -129,7 +129,7 @@ int ActionGroupModel::rowCount(const QModelIndex &parent) const
 
 }
 
-int ActionGroupModel::columnCount(const QModelIndex &parent) const
+qint32 ActionGroupModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return 5;

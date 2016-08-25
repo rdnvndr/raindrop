@@ -74,8 +74,8 @@ void TreeDockWidget::insertWidget(QIcon icon,QString name, QWidget *widget){
 QTreeWidget *TreeDockWidget::insertTreeWidget(QIcon icon,QString name){
     TreeFilterWidget *treeWidget = new TreeFilterWidget();
     insertWidget(icon,name, treeWidget);
-    connect(treeWidget->treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
-                this, SLOT(callFuncTreeWidget(QTreeWidgetItem*, int)));
+    connect(treeWidget->treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*, qint32)),
+                this, SLOT(callFuncTreeWidget(QTreeWidgetItem*, qint32)));
     return treeWidget->treeWidget;
 }
 
@@ -84,7 +84,7 @@ void TreeDockWidget::setActionTreeWidget(){
     stackedWidget->setCurrentWidget(stackedTree[action]);
 }
 
-void TreeDockWidget::callFuncTreeWidget(QTreeWidgetItem *item, int column){
+void TreeDockWidget::callFuncTreeWidget(QTreeWidgetItem *item, qint32 column){
     Q_UNUSED(column)
 
     QMetaObject::invokeMethod(objTreeItem[item],funcTreeItem[item]);

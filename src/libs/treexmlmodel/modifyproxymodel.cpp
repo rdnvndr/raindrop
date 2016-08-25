@@ -7,7 +7,7 @@ namespace XmlModel {
 
 struct PrivateModelIndex
 {
-    int r, c;
+    qint32 r, c;
     void *p;
     const QAbstractItemModel *m;
 };
@@ -57,16 +57,16 @@ bool ModifyProxyModel::submitAll()
 
     // Модификация строк
     QHashIterator<QPersistentModelIndex,
-            QHash<int, QVariant> > iterIndex(m_updatedRow);
+            QHash<qint32, QVariant> > iterIndex(m_updatedRow);
     while (iterIndex.hasNext())
     {
         iterIndex.next();
         QModelIndex index = iterIndex.key();
-        QHashIterator<int, QVariant> iterRole(iterIndex.value());
+        QHashIterator<qint32, QVariant> iterRole(iterIndex.value());
         while (iterRole.hasNext()) {
             iterRole.next();
             QVariant value = iterRole.value();
-            int role = iterRole.key();
+            qint32 role = iterRole.key();
             sourceModel()->setData(mapToSource(index),value,role);
         }
         m_updatedRow[index].clear();
@@ -86,7 +86,7 @@ void ModifyProxyModel::revertAll()
         iterParentList.next();
         QPersistentModelIndex parent = iterParentList.key();
         if (parent.isValid()) {
-            int count = m_insertedRow[parent].count();
+            qint32 count = m_insertedRow[parent].count();
             removeRows(rowCount(parent)-count,count,parent);
         }
         m_insertedRow[parent].clear();
@@ -95,7 +95,7 @@ void ModifyProxyModel::revertAll()
 
     // Отмена модификации строк
     QHashIterator<QPersistentModelIndex,
-            QHash<int, QVariant> > iterIndex(m_updatedRow);
+            QHash<qint32, QVariant> > iterIndex(m_updatedRow);
     while (iterIndex.hasNext())
     {
         iterIndex.next();
@@ -115,8 +115,8 @@ void ModifyProxyModel::revertAll()
 void ModifyProxyModel::sourceDataChanged(const QModelIndex &left,
                                          const QModelIndex &right)
 {
-    for(int column = left.column(); column <= right.column(); ++column)
-        for(int row = left.row(); row <= right.row(); ++row) {
+    for(qint32 column = left.column(); column <= right.column(); ++column)
+        for(qint32 row = left.row(); row <= right.row(); ++row) {
             void *p = left.sibling(row, column).internalPointer();
             QPersistentModelIndex removeIndex(createIndex(row,column,p));
             if (m_updatedRow.contains(removeIndex)) {
@@ -128,10 +128,10 @@ void ModifyProxyModel::sourceDataChanged(const QModelIndex &left,
 }
 
 void ModifyProxyModel::sourceRowsRemoved(const QModelIndex &parent,
-                                         int start, int end)
+                                         qint32 start, qint32 end)
 {
     if (parent.isValid())
-        for (int i = start; i < end+1; ++i)
+        for (qint32 i = start; i < end+1; ++i)
             if (m_srcRemovedRow.contains(parent))
                 if (m_srcRemovedRow[parent].contains(i)) {
                     beginRemoveRows(mapFromSource(parent),i,i);
@@ -143,12 +143,12 @@ void ModifyProxyModel::sourceRowsRemoved(const QModelIndex &parent,
 }
 
 void ModifyProxyModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent,
-                                                  int start, int end)
+                                                  qint32 start, qint32 end)
 {
     if (parent.isValid())
-        for (int i = start; i < end+1; ++i) {
+        for (qint32 i = start; i < end+1; ++i) {
             QPersistentModelIndex index = sourceModel()->index(i,0,parent);
-            for (int j = 0; j < sourceModel()->columnCount(parent);++j) {
+            for (qint32 j = 0; j < sourceModel()->columnCount(parent);++j) {
                 QPersistentModelIndex removeIndex(mapFromSource(index.sibling(i,j)));
                 if (m_updatedRow.contains(removeIndex)) {
                     m_updatedRow.remove(removeIndex);
@@ -163,7 +163,7 @@ void ModifyProxyModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent,
         }
 }
 
-void ModifyProxyModel::sourceRowsInserted(const QModelIndex &parent, int start, int end)
+void ModifyProxyModel::sourceRowsInserted(const QModelIndex &parent, qint32 start, qint32 end)
 {
     beginInsertRows(mapFromSource(parent), start, end);
     endInsertRows();
@@ -172,21 +172,21 @@ void ModifyProxyModel::sourceRowsInserted(const QModelIndex &parent, int start, 
 bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
                                         const QPersistentModelIndex &sourceParent)
 {
-    int count = m_insertedRow[parent].count();
+    qint32 count = m_insertedRow[parent].count();
     QPersistentModelIndex srcParent = (sourceParent.isValid())?
                 sourceParent : QPersistentModelIndex(mapToSource(parent));
 
     TreeXmlHashModel *xmlModel = qobject_cast<TreeXmlHashModel *>(sourceModel());
-    for (int i = 0; i < count; ++i) {
+    for (qint32 i = 0; i < count; ++i) {
         bool isInserted = false;
-        int row = sourceModel()->rowCount(srcParent);
+        qint32 row = sourceModel()->rowCount(srcParent);
 
         QPersistentModelIndex indexProxy(
                     index((sourceParent.isValid())? row: row+i,
                           0,
                           parent));
 
-        int lastRow = row;
+        qint32 lastRow = row;
         // Обработка TreeXMLModel
         if (xmlModel) {
             if (m_updatedRow.contains(indexProxy))
@@ -212,15 +212,15 @@ bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
         }
 
         // Запись значений
-        for (int column = 0; column < columnCount(parent); ++column) {
+        for (qint32 column = 0; column < columnCount(parent); ++column) {
             QModelIndex index = indexProxy.sibling(indexProxy.row(),column);
             if (m_updatedRow.contains(index)) {
                 if (isInserted) {
-                    QHashIterator<int, QVariant> iterRole(m_updatedRow[index]);
+                    QHashIterator<qint32, QVariant> iterRole(m_updatedRow[index]);
                     while (iterRole.hasNext()) {
                         iterRole.next();
                         QVariant value = iterRole.value();
-                        int role = iterRole.key();
+                        qint32 role = iterRole.key();
                         sourceModel()->setData(
                                     indexSource.sibling(indexSource.row(),column),
                                     value,role);
@@ -237,7 +237,7 @@ bool ModifyProxyModel::insertSourceRows(const QPersistentModelIndex &parent,
     return true;
 }
 
-int ModifyProxyModel::columnCount(const QModelIndex &parent) const
+qint32 ModifyProxyModel::columnCount(const QModelIndex &parent) const
 {
     if(!sourceModel())
         return 0;
@@ -249,13 +249,13 @@ int ModifyProxyModel::columnCount(const QModelIndex &parent) const
     return sourceModel()->columnCount(mapToSource(parent));
 }
 
-int ModifyProxyModel::rowCount(const QModelIndex &parent) const
+qint32 ModifyProxyModel::rowCount(const QModelIndex &parent) const
 {
     if(!sourceModel())
         return 0;
 
     // Количество вставленных строк
-    int insertRowCount = 0;
+    qint32 insertRowCount = 0;
     QPersistentModelIndex rowIndex(parent.sibling(parent.row(),0));
     if (m_insertedRow.contains(rowIndex))
         insertRowCount = m_insertedRow[rowIndex].count();
@@ -263,16 +263,16 @@ int ModifyProxyModel::rowCount(const QModelIndex &parent) const
         return  insertRowCount;
 
     // Количество удаленных строк
-    int removeRowCount = 0;
+    qint32 removeRowCount = 0;
     if (m_removedRow.contains(QPersistentModelIndex(mapToSource(parent))) && m_hiddenRow)
         removeRowCount =
                 m_removedRow[QPersistentModelIndex(mapToSource(parent))].count();
 
-    int parentRowCount = sourceModel()->rowCount(mapToSource(parent));
+    qint32 parentRowCount = sourceModel()->rowCount(mapToSource(parent));
     return parentRowCount + insertRowCount - removeRowCount;
 }
 
-QModelIndex ModifyProxyModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex ModifyProxyModel::index(qint32 row, qint32 column, const QModelIndex &parent) const
 {
     if (!hasIndex(row, column, parent)) {
         return QModelIndex();
@@ -281,7 +281,7 @@ QModelIndex ModifyProxyModel::index(int row, int column, const QModelIndex &pare
     // Получение вставленной строки
     QPersistentModelIndex rowIndex(parent.sibling(parent.row(),0));
     if (m_insertedRow.contains(rowIndex)) {
-        int count = m_insertedRow[rowIndex].count();
+        qint32 count = m_insertedRow[rowIndex].count();
         if (row >= rowCount(parent)-count) {
             return createIndex(row,column,
                                m_insertedRow[rowIndex].at(
@@ -291,7 +291,7 @@ QModelIndex ModifyProxyModel::index(int row, int column, const QModelIndex &pare
     }
 
     // Скрытие удаленных строк
-    int removeRowCount = 0;
+    qint32 removeRowCount = 0;
     if (m_removedRow.contains(mapToSource(parent)) && m_hiddenRow) {
         foreach (const QPersistentModelIndex &removedIndex,
                  m_removedRow[QPersistentModelIndex(mapToSource(parent))])
@@ -327,7 +327,7 @@ QModelIndex ModifyProxyModel::parent(const QModelIndex &index) const
 QModelIndex ModifyProxyModel::mapFromSource(const QModelIndex &index) const
 {
     if(index.isValid()) {
-        int removeRowCount = 0;
+        qint32 removeRowCount = 0;
         if (m_removedRow.contains(QPersistentModelIndex(index.parent())) && m_hiddenRow) {
             foreach (const QPersistentModelIndex &removedIndex,
                      m_removedRow[QPersistentModelIndex(index.parent())])
@@ -379,7 +379,7 @@ QModelIndex ModifyProxyModel::mapToSource(const QModelIndex &index) const
     return sourceIndex;
 }
 
-QVariant ModifyProxyModel::data(const QModelIndex &proxyIndex, int role) const
+QVariant ModifyProxyModel::data(const QModelIndex &proxyIndex, qint32 role) const
 {
     QPersistentModelIndex dataIndex((role == TreeXmlModel::TagRole)
                                     ? proxyIndex.sibling(proxyIndex.row(),0)
@@ -395,7 +395,7 @@ QVariant ModifyProxyModel::data(const QModelIndex &proxyIndex, int role) const
 
     // Получение измененных данных
     if (m_updatedRow.contains(dataIndex))  {
-        int updateRole = (role==Qt::DisplayRole) ? Qt::EditRole : role;
+        qint32 updateRole = (role==Qt::DisplayRole) ? Qt::EditRole : role;
         QVariant linkData = (m_updatedRow[dataIndex].contains(updateRole)) ?
                     m_updatedRow[dataIndex][updateRole] : QVariant();
         if (linkData.isValid()) {
@@ -432,12 +432,12 @@ QVariant ModifyProxyModel::data(const QModelIndex &proxyIndex, int role) const
     return sourceModel()->data(mapToSource(proxyIndex),role);
 }
 
-bool ModifyProxyModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool ModifyProxyModel::setData(const QModelIndex &index, const QVariant &value, qint32 role)
 {
     QPersistentModelIndex dataIndex((role == TreeXmlModel::TagRole)
                                     ? index.sibling(index.row(),0)
                                       :index);
-    int updateRole = (role==Qt::DisplayRole) ? Qt::EditRole : role;
+    qint32 updateRole = (role==Qt::DisplayRole) ? Qt::EditRole : role;
     m_updatedRow[dataIndex][updateRole] = value;
     emit dataChanged(index,index);
 
@@ -453,12 +453,12 @@ void ModifyProxyModel::setSourceModel(QAbstractItemModel *srcModel)
 {
     QAbstractProxyModel::setSourceModel(srcModel);
 
-    connect(srcModel, SIGNAL(rowsRemoved(const QModelIndex &, int, int)),
-            this, SLOT(sourceRowsRemoved(const QModelIndex &, int, int)));
-    connect(srcModel, SIGNAL(rowsAboutToBeRemoved(const QModelIndex &, int, int)),
-            this, SLOT(sourceRowsAboutToBeRemoved(const QModelIndex &, int, int)));
-    connect(srcModel, SIGNAL(rowsInserted(const QModelIndex &, int, int)),
-            this, SLOT(sourceRowsInserted(const QModelIndex &, int, int)));
+    connect(srcModel, SIGNAL(rowsRemoved(const QModelIndex &, qint32, qint32)),
+            this, SLOT(sourceRowsRemoved(const QModelIndex &, qint32, qint32)));
+    connect(srcModel, SIGNAL(rowsAboutToBeRemoved(const QModelIndex &, qint32, qint32)),
+            this, SLOT(sourceRowsAboutToBeRemoved(const QModelIndex &, qint32, qint32)));
+    connect(srcModel, SIGNAL(rowsInserted(const QModelIndex &, qint32, qint32)),
+            this, SLOT(sourceRowsInserted(const QModelIndex &, qint32, qint32)));
     connect(srcModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
             this, SLOT(sourceDataChanged(QModelIndex,QModelIndex)));
 }
@@ -483,7 +483,7 @@ bool ModifyProxyModel::isEditable()
     return m_editable;
 }
 
-QVariant ModifyProxyModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant ModifyProxyModel::headerData(qint32 section, Qt::Orientation orientation, qint32 role) const
 {    
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
         if (m_header[section].isNull())
@@ -495,8 +495,8 @@ QVariant ModifyProxyModel::headerData(int section, Qt::Orientation orientation, 
 
 }
 
-bool ModifyProxyModel::setHeaderData(int section, Qt::Orientation orientation,
-                                     const QVariant &value, int role)
+bool ModifyProxyModel::setHeaderData(qint32 section, Qt::Orientation orientation,
+                                     const QVariant &value, qint32 role)
 {
     if (role != Qt::EditRole || orientation != Qt::Horizontal)
         return false;
@@ -507,19 +507,19 @@ bool ModifyProxyModel::setHeaderData(int section, Qt::Orientation orientation,
     return true;
 }
 
-bool ModifyProxyModel::removeRows(int row, int count, const QModelIndex &parent)
+bool ModifyProxyModel::removeRows(qint32 row, qint32 count, const QModelIndex &parent)
 {
 
-    int beginRowInsert = row + count;
+    qint32 beginRowInsert = row + count;
 
     // Удаление вставленных строк
     QPersistentModelIndex rowIndex(parent.sibling(parent.row(),0));
     if (m_insertedRow.contains(rowIndex)) {
 
-        int countRowInCache =  m_insertedRow[rowIndex].count();
-        int beginRowInCache =  row - rowCount(parent) + countRowInCache;
+        qint32 countRowInCache =  m_insertedRow[rowIndex].count();
+        qint32 beginRowInCache =  row - rowCount(parent) + countRowInCache;
 
-        int removeRowCountInCache =
+        qint32 removeRowCountInCache =
                 (beginRowInCache >= 0) ? count : count + beginRowInCache;
 
         if (beginRowInCache < 0)
@@ -532,15 +532,15 @@ bool ModifyProxyModel::removeRows(int row, int count, const QModelIndex &parent)
             beginRemoveRows(parent, beginRowInsert,
                             beginRowInsert+removeRowCountInCache-1);
 
-            for (int i = beginRowInsert; i < beginRowInsert + removeRowCountInCache; ++i)
-                for (int j = 0; j < sourceModel()->columnCount(parent);++j) {
+            for (qint32 i = beginRowInsert; i < beginRowInsert + removeRowCountInCache; ++i)
+                for (qint32 j = 0; j < sourceModel()->columnCount(parent);++j) {
                     QPersistentModelIndex removeIndex(parent.child(i,j));
                     if (m_updatedRow.contains(removeIndex)) {
                         m_updatedRow.remove(removeIndex);
                     }
                 }
 
-            for (int i = beginRowInCache + removeRowCountInCache-1;
+            for (qint32 i = beginRowInCache + removeRowCountInCache-1;
                  i >= beginRowInCache; --i)
             {
                 delete m_insertedRow[rowIndex].at(i);
@@ -555,7 +555,7 @@ bool ModifyProxyModel::removeRows(int row, int count, const QModelIndex &parent)
     }
 
     // Удаление строк в исходной модели
-    for (int i = row; i< beginRowInsert; ++i) {
+    for (qint32 i = row; i< beginRowInsert; ++i) {
         QModelIndex insertIndex = mapToSource(index(i,0, parent));
         if (m_hiddenRow) {
             beginRemoveRows(parent, i, i);
@@ -569,20 +569,20 @@ bool ModifyProxyModel::removeRows(int row, int count, const QModelIndex &parent)
     return true;
 }
 
-bool ModifyProxyModel::insertRows(int row, int count, const QModelIndex &parent)
+bool ModifyProxyModel::insertRows(qint32 row, qint32 count, const QModelIndex &parent)
 {
     return insertLastRows(row, count, parent).isValid();
 }
 
-QModelIndex ModifyProxyModel::insertLastRows(int row, int count, const QModelIndex &parent)
+QModelIndex ModifyProxyModel::insertLastRows(qint32 row, qint32 count, const QModelIndex &parent)
 {
     Q_UNUSED(row)
     QPersistentModelIndex rowIndex(parent.sibling(parent.row(),0));
 
-    int position = rowCount(rowIndex);
+    qint32 position = rowCount(rowIndex);
 
     beginInsertRows(parent,position,position+count-1);
-    for (int i = position; i < position+count; ++i) {
+    for (qint32 i = position; i < position+count; ++i) {
         QPersistentModelIndex *index = new QPersistentModelIndex(rowIndex);
         m_insertedRow[rowIndex].append(index);
     }

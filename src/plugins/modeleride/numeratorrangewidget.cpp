@@ -38,7 +38,7 @@ void NumeratorRangeWidget::setModel(TreeXmlHashModel *model)
     proxyModel()->setHeaderData(0,  Qt::Horizontal, tr("Список/Регулярное выражение"));
     proxyModel()->setHeaderData(1,  Qt::Horizontal, tr("Идентификатор"));
 
-    for (int column = 1; column < 18; ++column)
+    for (qint32 column = 1; column < 18; ++column)
         numeratorRangeTableView->setColumnHidden(column,true);
 
     numeratorRangeTableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
