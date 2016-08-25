@@ -7,3 +7,8 @@ HEADERS += itreedockwidget.h
 HEADERS += iundogroup.h
 HEADERS += iclipboardstack.h
 HEADERS += iclipboarditem.h
+
+HEADERS += idatabaseclass.h
+HEADERS += idatabaseattr.h
+HEADERS += idatabasefilter.h
+HEADERS += idatabaserole.h
