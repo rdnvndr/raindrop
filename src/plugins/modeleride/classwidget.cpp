@@ -27,18 +27,18 @@ ClassWidget::ClassWidget(QWidget *parent) :
 
     m_typeClassModel = new QStringListModel();
     const QStringList classType = (QStringList()
-                                   << DBCLASSTYPEXML::STANDART
-                                   << DBCLASSTYPEXML::SYSTEM
-                                   << DBCLASSTYPEXML::USER
+                                   << DBACCESSMODEXML::STANDART
+                                   << DBACCESSMODEXML::SYSTEM
+                                   << DBACCESSMODEXML::USER
                                    );
     m_typeClassModel->setStringList(classType);
 
     m_viewClassModel = new QStringListModel();
     const QStringList classView = (QStringList()
-                                   << DBCLASSVIEWXML::ABSTRACT
-                                   << DBCLASSVIEWXML::CONTEXT
-                                   << DBCLASSVIEWXML::EMBEDDED
-                                   << DBCLASSVIEWXML::NORMAL
+                                   << DBCLASSTYPEXML::ABSTRACT
+                                   << DBCLASSTYPEXML::CONTEXT
+                                   << DBCLASSTYPEXML::EMBEDDED
+                                   << DBCLASSTYPEXML::NORMAL
                                    );
     m_viewClassModel->setStringList(classView);
 
@@ -62,8 +62,8 @@ void ClassWidget::setModel(TreeXmlHashModel *model)
 {
     AbstractEditorWidget::setModel(model);
 
-    comboBoxClassType->setModel(m_typeClassModel);
-    classViewComboBox->setModel(m_viewClassModel);
+    accessModeComboBox->setModel(m_typeClassModel);
+    classTypeComboBox->setModel(m_viewClassModel);
 
     dataMapper()->addMapping(lineEditClassName,
                              model->columnDisplayedAttr(DBCLASSXML::CLASS,
@@ -72,17 +72,17 @@ void ClassWidget::setModel(TreeXmlHashModel *model)
                              model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                         DBCLASSXML::ALIAS));
 
-    dataMapper()->addMapping(comboBoxClassType,
+    dataMapper()->addMapping(accessModeComboBox,
                              model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                        DBCLASSXML::TYPE));
+                                                        DBCLASSXML::MODE));
 
     dataMapper()->addMapping(lineEditClassParent,
                              model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                         DBCLASSXML::PARENT));
 
-    dataMapper()->addMapping(classViewComboBox,
+    dataMapper()->addMapping(classTypeComboBox,
                              model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                        DBCLASSXML::VIEW));
+                                                        DBCLASSXML::TYPE));
     dataMapper()->addMapping(spinBoxVersionCount,
                              model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                         DBCLASSXML::VERCOUNT));
@@ -97,23 +97,23 @@ void ClassWidget::setModel(TreeXmlHashModel *model)
 void ClassWidget::add()
 {
     if (AbstractEditorWidget::add(DBCLASSXML::CLASS)) {
-        comboBoxClassType->setCurrentIndex(2);
-        classViewComboBox->setCurrentIndex(3);
+        accessModeComboBox->setCurrentIndex(2);
+        classTypeComboBox->setCurrentIndex(3);
     }
 }
 
 void ClassWidget::setCurrent(const QModelIndex &index)
 {
     AbstractEditorWidget::setCurrent(index);
-    qint32 indexType = comboBoxClassType->findText(modelData(DBCLASSXML::CLASS,
+    qint32 indexType = accessModeComboBox->findText(modelData(DBCLASSXML::CLASS,
+                                                          DBCLASSXML::MODE,
+                                                          index).toString());
+    accessModeComboBox->setCurrentIndex(indexType);
+
+    qint32 indexView = classTypeComboBox->findText(modelData(DBCLASSXML::CLASS,
                                                           DBCLASSXML::TYPE,
                                                           index).toString());
-    comboBoxClassType->setCurrentIndex(indexType);
-
-    qint32 indexView = classViewComboBox->findText(modelData(DBCLASSXML::CLASS,
-                                                          DBCLASSXML::VIEW,
-                                                          index).toString());
-    classViewComboBox->setCurrentIndex(indexView);
+    classTypeComboBox->setCurrentIndex(indexView);
 }
 
 bool ClassWidget::isEdit()

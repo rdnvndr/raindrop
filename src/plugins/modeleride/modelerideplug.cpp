@@ -164,13 +164,13 @@ void ModelerIDEPlug::add()
                 m_model->insertLastRows(0,1,indexSource,DBCLASSXML::CLASS);
         if (lastInsertRow.isValid()){
             qint32 column = m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                      DBCLASSXML::MODE);
+            m_model->setData(lastInsertRow.sibling(lastInsertRow.row(),column),
+                             DBACCESSMODEXML::USER);
+            column = m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                       DBCLASSXML::TYPE);
             m_model->setData(lastInsertRow.sibling(lastInsertRow.row(),column),
-                             DBCLASSTYPEXML::USER);
-            column = m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                      DBCLASSXML::VIEW);
-            m_model->setData(lastInsertRow.sibling(lastInsertRow.row(),column),
-                             DBCLASSVIEWXML::NORMAL);
+                             DBCLASSTYPEXML::NORMAL);
         }
     } else if (tagRole == DBQUANTITYLISTXML::QUANTITYLIST) {
         lastInsertRow =

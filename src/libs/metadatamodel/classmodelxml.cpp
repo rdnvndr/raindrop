@@ -64,7 +64,7 @@ void ClassModelXml::initDisplayedAttrs()
 {
     QStringList propsClass;
     propsClass << DBCLASSXML::NAME      << DBCLASSXML::ALIAS
-               << DBCLASSXML::TYPE      << DBCLASSXML::VIEW
+               << DBCLASSXML::MODE      << DBCLASSXML::TYPE
                << DBCLASSXML::PARENT    << DBCLASSXML::VERCOUNT
                << DBCLASSXML::TEMPLATE  << DBCLASSXML::ID
                << DBCLASSXML::ICON;
