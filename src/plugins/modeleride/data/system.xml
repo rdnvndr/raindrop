@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <RTPModel alias="Модель" name="Model">
 <RTPClassList alias="Классы" name="Classes" guid="{9ccb6f58-033b-4c3f-a514-7957bae204ba}">
-<RTPClass view="Normal" alias="Изделие" name="Product" icon="" parent="{9ccb6f58-033b-4c3f-a514-7957bae204ba}" versionCount="" type="User" displayTemplate="" guid="{202968c0-9a05-4e25-98ea-e931dd2e77bf}">
+<RTPClass type="Normal" alias="Изделие" name="Product" icon="" parent="{9ccb6f58-033b-4c3f-a514-7957bae204ba}" versionCount="" accessMode="User" displayTemplate="" guid="{202968c0-9a05-4e25-98ea-e931dd2e77bf}">
 <RTPFilter inverseDescription="" directDescription="" alias="Технологическая деталь" name="TechComponent" parent="{202968c0-9a05-4e25-98ea-e931dd2e77bf}" Class="{22e170e2-b459-46ce-ad62-26c89ed775b7}" guid="{2c4f94d6-21db-4e09-937d-d26d583a33de}">
 <RTPCondition operator="=" secondAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" linkOf="И" firstAttr="{bc13a512-02ce-40e2-b014-ab999f453361}" guid="{fa68bd29-ab8d-4583-b533-a5c1328b8787}"/>
 </RTPFilter>
@@ -22,9 +22,9 @@
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{de983bbf-fef7-40ae-9783-46423ac03328}" alias="Технологический состав" parent="{202968c0-9a05-4e25-98ea-e931dd2e77bf}" isView="false" Class="{6b0768e9-7d18-46c4-b9f5-fae76821423b}" guid="{bf35adaf-45b7-4642-a028-75ea49c5e564}"/>
 </RTPClass>
 <RTPAttribute isNullsAllowed="false" group="" alias="Псевдоним" name="alias" lowerBound="" isCandidateKey="true" parent="{9ccb6f58-033b-4c3f-a514-7957bae204ba}" type="String" referencedClass="" isUnique="false" upperBound="" maxStringLength="256" guid="{f0f28f62-d643-41fc-ad50-2f0347cf6061}" initialValue=""/>
-<RTPClass view="Abstract" alias="Встраиваемый тип" name="EmbeddedType" icon="" parent="{9ccb6f58-033b-4c3f-a514-7957bae204ba}" type="System" displayTemplate="" guid="{c573e9b2-c334-4fa9-aefc-d8c9f29f36a4}">
-<RTPClass view="Embedded" alias="Маркер" name="Marker" icon="" parent="{c573e9b2-c334-4fa9-aefc-d8c9f29f36a4}" type="System" displayTemplate="" guid="{66a84126-8685-4c61-ad61-1d4288233062}"/>
-<RTPClass view="Embedded" alias="Резьба" name="Thread" icon="" parent="{c573e9b2-c334-4fa9-aefc-d8c9f29f36a4}" type="System" displayTemplate="" guid="{02009612-eca8-422e-a8b3-1cbeaf51830c}">
+<RTPClass type="Abstract" alias="Встраиваемый тип" name="EmbeddedType" icon="" parent="{9ccb6f58-033b-4c3f-a514-7957bae204ba}" accessMode="System" displayTemplate="" guid="{c573e9b2-c334-4fa9-aefc-d8c9f29f36a4}">
+<RTPClass type="Embedded" alias="Маркер" name="Marker" icon="" parent="{c573e9b2-c334-4fa9-aefc-d8c9f29f36a4}" accessMode="System" displayTemplate="" guid="{66a84126-8685-4c61-ad61-1d4288233062}"/>
+<RTPClass type="Embedded" alias="Резьба" name="Thread" icon="" parent="{c573e9b2-c334-4fa9-aefc-d8c9f29f36a4}" accessMode="System" displayTemplate="" guid="{02009612-eca8-422e-a8b3-1cbeaf51830c}">
 <RTPAttribute isNullsAllowed="false" group="Тип резьбы" alias="Тип резьбы" name="type" lowerBound="" isCandidateKey="false" parent="{02009612-eca8-422e-a8b3-1cbeaf51830c}" referencedLov="{f9c91f57-df4f-45e3-8be9-68411a93de07}" type="String" referencedClass="" isUnique="false" upperBound="" maxStringLength="5" referencedUnit="" guid="{7f68f46e-933d-484f-98c5-8d3e7f32f3b2}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="Тип резьбы" alias="Левая резьба" name="lh" lowerBound="" isCandidateKey="false" parent="{02009612-eca8-422e-a8b3-1cbeaf51830c}" referencedLov="" type="Boolean" referencedClass="" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{b1146f46-ba40-4ea2-a8d7-56451e428f89}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="Тип резьбы" alias="Отверстие" name="hole" lowerBound="" isCandidateKey="false" parent="{02009612-eca8-422e-a8b3-1cbeaf51830c}" referencedLov="" type="Boolean" referencedClass="" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{4aae5799-3472-4442-890c-06edc4cdd5ea}" initialValue=""/>
@@ -36,14 +36,14 @@
 <RTPAttribute isNullsAllowed="false" group="Другие параметры" alias="Длина резьбы" name="length" lowerBound="" isCandidateKey="false" parent="{02009612-eca8-422e-a8b3-1cbeaf51830c}" referencedLov="" type="Reference" referencedClass="{99ac9fe2-3658-43f6-ad0c-067fec52498a}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{4cb9bf42-dcb3-48a6-85c1-17e7b8939b9c}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="Другие параметры" alias="Длина свинчивания" name="lengthwise" lowerBound="" isCandidateKey="false" parent="{02009612-eca8-422e-a8b3-1cbeaf51830c}" referencedLov="" type="Reference" referencedClass="{99ac9fe2-3658-43f6-ad0c-067fec52498a}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{146c32e9-cc49-4114-865a-1e2717e158d7}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Embedded" alias="Допуск формы и расположения" name="GeometricalTolerance" icon="" parent="{c573e9b2-c334-4fa9-aefc-d8c9f29f36a4}" type="System" displayTemplate="" guid="{059c2069-07d8-42f9-8611-a1d949a2e478}"/>
-<RTPClass view="Embedded" alias="Шероховатость" name="Roughness" icon="" parent="{c573e9b2-c334-4fa9-aefc-d8c9f29f36a4}" type="System" displayTemplate="" guid="{4fa43781-7b56-4d6a-b8df-d93968cc59d5}"/>
-<RTPClass view="Embedded" alias="Угловой размер" name="AngleDimension" icon="" parent="{c573e9b2-c334-4fa9-aefc-d8c9f29f36a4}" type="System" displayTemplate="" guid="{04f5708e-f2a4-4c8c-8243-37308a060f01}"/>
-<RTPClass view="Embedded" alias="Линейный размер" name="LineDimension" icon="" parent="{c573e9b2-c334-4fa9-aefc-d8c9f29f36a4}" type="System" displayTemplate="" guid="{99ac9fe2-3658-43f6-ad0c-067fec52498a}"/>
+<RTPClass type="Embedded" alias="Допуск формы и расположения" name="GeometricalTolerance" icon="" parent="{c573e9b2-c334-4fa9-aefc-d8c9f29f36a4}" accessMode="System" displayTemplate="" guid="{059c2069-07d8-42f9-8611-a1d949a2e478}"/>
+<RTPClass type="Embedded" alias="Шероховатость" name="Roughness" icon="" parent="{c573e9b2-c334-4fa9-aefc-d8c9f29f36a4}" accessMode="System" displayTemplate="" guid="{4fa43781-7b56-4d6a-b8df-d93968cc59d5}"/>
+<RTPClass type="Embedded" alias="Угловой размер" name="AngleDimension" icon="" parent="{c573e9b2-c334-4fa9-aefc-d8c9f29f36a4}" accessMode="System" displayTemplate="" guid="{04f5708e-f2a4-4c8c-8243-37308a060f01}"/>
+<RTPClass type="Embedded" alias="Линейный размер" name="LineDimension" icon="" parent="{c573e9b2-c334-4fa9-aefc-d8c9f29f36a4}" accessMode="System" displayTemplate="" guid="{99ac9fe2-3658-43f6-ad0c-067fec52498a}"/>
 </RTPClass>
 <RTPAttribute isNullsAllowed="false" group="" alias="Идентификатор" name="guid" lowerBound="" isCandidateKey="true" parent="{9ccb6f58-033b-4c3f-a514-7957bae204ba}" type="String" referencedClass="" isUnique="true" upperBound="" maxStringLength="36" guid="{74886394-fa32-437f-aba5-20624cc32b1e}" initialValue=""/>
-<RTPClass view="Abstract" alias="Элемент" name="Item" icon="" parent="{9ccb6f58-033b-4c3f-a514-7957bae204ba}" type="System" displayTemplate="" guid="{dc665fef-8ae6-4004-8a35-68b211652483}">
-<RTPClass view="Context" alias="Полуфабрикат" name="SemiFinishedProduction" icon="" parent="{dc665fef-8ae6-4004-8a35-68b211652483}" versionCount="" type="User" displayTemplate="" guid="{5a53cbf4-4257-4612-bf36-129da665bfda}">
+<RTPClass type="Abstract" alias="Элемент" name="Item" icon="" parent="{9ccb6f58-033b-4c3f-a514-7957bae204ba}" accessMode="System" displayTemplate="" guid="{dc665fef-8ae6-4004-8a35-68b211652483}">
+<RTPClass type="Context" alias="Полуфабрикат" name="SemiFinishedProduction" icon="" parent="{dc665fef-8ae6-4004-8a35-68b211652483}" versionCount="" accessMode="User" displayTemplate="" guid="{5a53cbf4-4257-4612-bf36-129da665bfda}">
 <RTPComposition inverseDescription="" directDescription="" isComp="true" linkClass="{bf6036b5-ad62-4874-b43d-d01c14c6ae2f}" alias="Оснастка" parent="{5a53cbf4-4257-4612-bf36-129da665bfda}" isView="true" Class="{bf6036b5-ad62-4874-b43d-d01c14c6ae2f}" guid="{2cd44e4e-7765-431f-a2c8-26b1e2cec1aa}"/>
 <RTPComposition inverseDescription="" directDescription="" isComp="true" linkClass="{5a05c93c-d4aa-4f20-b88e-cbad96a35c6b}" alias="Средство защиты" parent="{5a53cbf4-4257-4612-bf36-129da665bfda}" isView="true" Class="{5a05c93c-d4aa-4f20-b88e-cbad96a35c6b}" guid="{966df376-244c-4c82-af28-fb5e4db38f48}"/>
 <RTPComposition inverseDescription="" directDescription="" isComp="true" linkClass="{48cbb3fa-6146-46f3-b7a3-2167ef9c6284}" alias="Рабочий" parent="{5a53cbf4-4257-4612-bf36-129da665bfda}" isView="true" Class="{48cbb3fa-6146-46f3-b7a3-2167ef9c6284}" guid="{9c56f6ef-b954-488a-b57d-be16c2a8215e}"/>
@@ -62,66 +62,66 @@
 <RTPComposition inverseDescription="" directDescription="" isComp="true" linkClass="{0d43785a-4335-4144-b653-ab456bcb8b48}" alias="Переход" parent="{5a53cbf4-4257-4612-bf36-129da665bfda}" isView="true" Class="{0d43785a-4335-4144-b653-ab456bcb8b48}" guid="{f23b87ae-3571-4342-9c9a-b8032e6ac3e8}"/>
 <RTPComposition inverseDescription="" directDescription="" isComp="true" linkClass="{84ec1b9b-6832-4279-a7f3-30de80566e41}" alias="Оборудование" parent="{5a53cbf4-4257-4612-bf36-129da665bfda}" isView="true" Class="{84ec1b9b-6832-4279-a7f3-30de80566e41}" guid="{03012231-d140-4127-bec8-6ebd716a6c49}"/>
 </RTPClass>
-<RTPClass view="Abstract" alias="Компонент" name="Component" icon="" parent="{dc665fef-8ae6-4004-8a35-68b211652483}" versionCount="" type="System" displayTemplate="" guid="{7b128111-490a-454b-a3b0-375a5c9e3963}">
+<RTPClass type="Abstract" alias="Компонент" name="Component" icon="" parent="{dc665fef-8ae6-4004-8a35-68b211652483}" versionCount="" accessMode="System" displayTemplate="" guid="{7b128111-490a-454b-a3b0-375a5c9e3963}">
 <RTPFilter inverseDescription="" directDescription="" alias="Техпроцесс" name="ManufacturingProcess" parent="{7b128111-490a-454b-a3b0-375a5c9e3963}" Class="{e1795222-c9dd-41d6-800e-20f86e9f8751}" guid="{ca41b001-f174-4d72-a7f0-5ea2d3bfd9a1}">
 <RTPCondition operator="=" secondAttr="{df7732ae-8d35-4f21-91fd-bfa5297a0930}" linkOf="И" firstAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" guid="{65142abd-2e09-4b3d-9267-7689eaced8af}"/>
 </RTPFilter>
-<RTPClass view="Context" alias="Технологическая деталь" name="TechComponent" icon="" parent="{7b128111-490a-454b-a3b0-375a5c9e3963}" versionCount="" type="Standart" displayTemplate="" guid="{22e170e2-b459-46ce-ad62-26c89ed775b7}"/>
-<RTPClass view="Context" alias="Конструкторская деталь" name="DesignComponent" icon="" parent="{7b128111-490a-454b-a3b0-375a5c9e3963}" versionCount="" type="Standart" displayTemplate="" guid="{febdcce7-776b-4a7c-9b70-f29843401ad6}"/>
-<RTPClass view="Abstract" alias="Материал" name="Material" icon="" parent="{7b128111-490a-454b-a3b0-375a5c9e3963}" versionCount="" type="System" displayTemplate="" guid="{1d134fbd-e601-4382-850e-a9bd4816c7b9}">
+<RTPClass type="Context" alias="Технологическая деталь" name="TechComponent" icon="" parent="{7b128111-490a-454b-a3b0-375a5c9e3963}" versionCount="" accessMode="Standart" displayTemplate="" guid="{22e170e2-b459-46ce-ad62-26c89ed775b7}"/>
+<RTPClass type="Context" alias="Конструкторская деталь" name="DesignComponent" icon="" parent="{7b128111-490a-454b-a3b0-375a5c9e3963}" versionCount="" accessMode="Standart" displayTemplate="" guid="{febdcce7-776b-4a7c-9b70-f29843401ad6}"/>
+<RTPClass type="Abstract" alias="Материал" name="Material" icon="" parent="{7b128111-490a-454b-a3b0-375a5c9e3963}" versionCount="" accessMode="System" displayTemplate="" guid="{1d134fbd-e601-4382-850e-a9bd4816c7b9}">
 <RTPFilter inverseDescription="" directDescription="" alias="Сортамент" name="Sortament" parent="{1d134fbd-e601-4382-850e-a9bd4816c7b9}" Class="{f0ad26d6-93b7-40ba-a24b-b444ac643ab5}" guid="{a71e7b73-3b26-40cf-9d2b-fc23c1fc7fe8}">
 <RTPCondition operator="=" secondAttr="{3393c555-ac0a-4586-9156-2d79404f7555}" linkOf="И" firstAttr="{bcca1cb6-c775-4d4c-bdf9-cfcf77099f57}" guid="{3d92ad42-de6a-4f69-af4a-cd4d9a39a6ff}"/>
 </RTPFilter>
-<RTPClass view="Context" alias="Основной Материал" name="BasicMaterial" icon="" parent="{1d134fbd-e601-4382-850e-a9bd4816c7b9}" versionCount="" type="User" displayTemplate="" guid="{67453529-d2c8-4fab-b3d5-473663433790}">
+<RTPClass type="Context" alias="Основной Материал" name="BasicMaterial" icon="" parent="{1d134fbd-e601-4382-850e-a9bd4816c7b9}" versionCount="" accessMode="User" displayTemplate="" guid="{67453529-d2c8-4fab-b3d5-473663433790}">
 <RTPAttribute isNullsAllowed="false" group="" alias="ДСЕ" name="semiFinishedProduction" lowerBound="" isCandidateKey="false" parent="{67453529-d2c8-4fab-b3d5-473663433790}" referencedLov="" type="Reference" referencedClass="{5a53cbf4-4257-4612-bf36-129da665bfda}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{9cc196bd-4f65-4d18-902f-fc70115523e7}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Типоразмер" name="dimension" lowerBound="" isCandidateKey="true" parent="{67453529-d2c8-4fab-b3d5-473663433790}" referencedLov="" type="Reference" referencedClass="{e9700f86-0c6c-48a5-b17d-5986be6162e6}" isUnique="true" upperBound="" maxStringLength="0" referencedUnit="" guid="{26b75359-5fdf-45bf-b086-9c2e7d9bed51}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Сортамент" name="sortament" lowerBound="" isCandidateKey="true" parent="{67453529-d2c8-4fab-b3d5-473663433790}" referencedLov="" type="Reference" referencedClass="{ddb54fca-742a-462c-8c2d-bcb2a953bc87}" isUnique="true" upperBound="" maxStringLength="0" referencedUnit="" guid="{9c83cc40-c98b-48cf-95f8-43ba589f41c5}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Context" alias="Вспомогательный материал" name="AuxiliaryMaterial" icon="" parent="{1d134fbd-e601-4382-850e-a9bd4816c7b9}" versionCount="1" type="User" displayTemplate="" guid="{d8fa3671-f6f2-4026-a2e6-4a783a91bc6d}">
+<RTPClass type="Context" alias="Вспомогательный материал" name="AuxiliaryMaterial" icon="" parent="{1d134fbd-e601-4382-850e-a9bd4816c7b9}" versionCount="1" accessMode="User" displayTemplate="" guid="{d8fa3671-f6f2-4026-a2e6-4a783a91bc6d}">
 <RTPAttribute isNullsAllowed="false" group="" alias="ДСЕ" name="semiFinishedProduction" lowerBound="" isCandidateKey="false" parent="{d8fa3671-f6f2-4026-a2e6-4a783a91bc6d}" referencedLov="" type="Reference" referencedClass="{5a53cbf4-4257-4612-bf36-129da665bfda}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{174c7bc1-3a9e-43d1-a785-99e9a1770c42}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Normal" alias="Сортамент круг" name="RoundDimension" icon="" parent="{1d134fbd-e601-4382-850e-a9bd4816c7b9}" versionCount="1" type="User" displayTemplate="" guid="{3aad9bd2-1688-41d9-aca2-1fa339cbad41}"/>
-<RTPClass view="Abstract" alias="Металл" name="Metal" icon="" parent="{1d134fbd-e601-4382-850e-a9bd4816c7b9}" versionCount="" type="System" displayTemplate="" guid="{81b069ba-13dd-45d9-ae12-c069c8d80875}">
-<RTPClass view="" alias="Металл цветной" name="NonFerrousMetal" icon="" parent="{81b069ba-13dd-45d9-ae12-c069c8d80875}" versionCount="" type="Standart" displayTemplate="" guid="{8d73416c-b5a4-4233-a758-6dad4e68c278}">
-<RTPClass view="" alias="Сплав цветной" name="NonFerrousAlloy" icon="" parent="{8d73416c-b5a4-4233-a758-6dad4e68c278}" versionCount="" type="Standart" displayTemplate="" guid="{ba849b2e-bad0-4cde-bcf4-c255c00728bb}"/>
+<RTPClass type="Normal" alias="Сортамент круг" name="RoundDimension" icon="" parent="{1d134fbd-e601-4382-850e-a9bd4816c7b9}" versionCount="1" accessMode="User" displayTemplate="" guid="{3aad9bd2-1688-41d9-aca2-1fa339cbad41}"/>
+<RTPClass type="Abstract" alias="Металл" name="Metal" icon="" parent="{1d134fbd-e601-4382-850e-a9bd4816c7b9}" versionCount="" accessMode="System" displayTemplate="" guid="{81b069ba-13dd-45d9-ae12-c069c8d80875}">
+<RTPClass type="" alias="Металл цветной" name="NonFerrousMetal" icon="" parent="{81b069ba-13dd-45d9-ae12-c069c8d80875}" versionCount="" accessMode="Standart" displayTemplate="" guid="{8d73416c-b5a4-4233-a758-6dad4e68c278}">
+<RTPClass type="" alias="Сплав цветной" name="NonFerrousAlloy" icon="" parent="{8d73416c-b5a4-4233-a758-6dad4e68c278}" versionCount="" accessMode="Standart" displayTemplate="" guid="{ba849b2e-bad0-4cde-bcf4-c255c00728bb}"/>
 </RTPClass>
-<RTPClass view="" alias="Металл черный" name="FerrousMetal" icon="" parent="{81b069ba-13dd-45d9-ae12-c069c8d80875}" versionCount="" type="Standart" displayTemplate="" guid="{93b08051-ea2c-443a-96c3-7ef3a74042d1}">
-<RTPClass view="" alias="Сталь" name="Steel" icon="" parent="{93b08051-ea2c-443a-96c3-7ef3a74042d1}" versionCount="" type="Standart" displayTemplate="" guid="{5686dde2-8dc0-4a3c-a64d-66e81ca3907e}"/>
-<RTPClass view="" alias="Чугун" name="Cast" icon="" parent="{93b08051-ea2c-443a-96c3-7ef3a74042d1}" versionCount="" type="Standart" displayTemplate="" guid="{a1525d1a-3d00-4c30-9e92-c246ea4152a9}"/>
-<RTPClass view="" alias="Сплав черный" name="FerrousAlloy" icon="" parent="{93b08051-ea2c-443a-96c3-7ef3a74042d1}" versionCount="" type="Standart" displayTemplate="" guid="{d7a77b5f-b5fd-440e-8ea5-bbc3fb2732cc}"/>
-</RTPClass>
-</RTPClass>
-<RTPClass view="Abstract" alias="Не металл" name="NonMetal" icon="" parent="{1d134fbd-e601-4382-850e-a9bd4816c7b9}" versionCount="" type="System" displayTemplate="" guid="{d48c1587-2300-48ad-be01-25a69738f3cf}">
-<RTPClass view="" alias="Бумага" name="PaperMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{da1bbd04-c6ea-49a6-bb33-bbe982516ef2}"/>
-<RTPClass view="" alias="Герметизирующий материал" name="SealantMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{ac9b3ff5-ffe7-43a3-abb7-165289f98fc0}"/>
-<RTPClass view="" alias="Древесные материалы" name="WoodMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{ad7f1c3b-b690-4cfc-82d8-46e50274db23}"/>
-<RTPClass view="" alias="Клей" name="ClayMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{087c9ccf-3425-4eaa-86d0-a4c374f33aa7}"/>
-<RTPClass view="" alias="Компоненты композитных материалов" name="CompositeMaterialPart" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{94e64d13-613b-4dec-a25c-6b61eb8f9455}"/>
-<RTPClass view="" alias="Покрывающий материал" name="CoatingMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{790f830c-5944-4ec4-bd23-493e7535354d}"/>
-<RTPClass view="" alias="Ленты и пленки" name="TapeAndFilmMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{9e6f4a24-beae-48e6-8239-9bece536b932}"/>
-<RTPClass view="" alias="Смазочно-охлаждающие жидкости" name="CoolingLubricant" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{cee3ae83-58a5-46e0-975c-0db87d6c1ab7}"/>
-<RTPClass view="" alias="Материал для пайки и сварки" name="WeldingAndBrazingMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{85503411-8f96-49ef-89c3-7db92ad80575}"/>
-<RTPClass view="" alias="Материалы теплоизоляционные" name="ThermoinsulatingMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{009100fb-b587-43f3-88d5-ff54d973cd1c}"/>
-<RTPClass view="" alias="Паронит" name="AsbestosFibre" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{2c70ae60-9bec-40d4-b399-c185f6ab1faf}"/>
-<RTPClass view="" alias="Пластмассы" name="PlasticMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{5d2f0d01-5ecf-4a8c-8e13-f7104e291594}"/>
-<RTPClass view="" alias="Провода и кабели" name="CablesAndWires" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{b4550548-9101-496e-b102-e100a1e3e1b1}"/>
-<RTPClass view="" alias="Резина и кожа" name="RubberAndLeather" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{8dc1ceba-e0b8-4d5f-b5cb-cc4e237b0db7}"/>
-<RTPClass view="" alias="Стекло и минерал" name="GlassAndMineral" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{39549474-877b-4ff2-87c8-94764c8e3fd4}"/>
-<RTPClass view="" alias="Строительные материалы" name="BuildingMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{fcc6f885-33eb-4dbc-8312-b16ca59c847d}"/>
-<RTPClass view="" alias="Текстильные материалы" name="TextileMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{a9be01b5-ca7a-41a6-9cd8-53dcd771b845}"/>
-<RTPClass view="" alias="Химические материалы" name="ChemicalMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" type="Standart" displayTemplate="" guid="{29aa2fb6-370f-4788-85ed-e061c6e9fe30}"/>
+<RTPClass type="" alias="Металл черный" name="FerrousMetal" icon="" parent="{81b069ba-13dd-45d9-ae12-c069c8d80875}" versionCount="" accessMode="Standart" displayTemplate="" guid="{93b08051-ea2c-443a-96c3-7ef3a74042d1}">
+<RTPClass type="" alias="Сталь" name="Steel" icon="" parent="{93b08051-ea2c-443a-96c3-7ef3a74042d1}" versionCount="" accessMode="Standart" displayTemplate="" guid="{5686dde2-8dc0-4a3c-a64d-66e81ca3907e}"/>
+<RTPClass type="" alias="Чугун" name="Cast" icon="" parent="{93b08051-ea2c-443a-96c3-7ef3a74042d1}" versionCount="" accessMode="Standart" displayTemplate="" guid="{a1525d1a-3d00-4c30-9e92-c246ea4152a9}"/>
+<RTPClass type="" alias="Сплав черный" name="FerrousAlloy" icon="" parent="{93b08051-ea2c-443a-96c3-7ef3a74042d1}" versionCount="" accessMode="Standart" displayTemplate="" guid="{d7a77b5f-b5fd-440e-8ea5-bbc3fb2732cc}"/>
 </RTPClass>
 </RTPClass>
-<RTPClass view="" alias="Деталь" name="Detail" icon="" parent="{7b128111-490a-454b-a3b0-375a5c9e3963}" versionCount="" type="" displayTemplate="" guid="{e8509c12-7822-4852-a7cb-13d498c33fab}">
+<RTPClass type="Abstract" alias="Не металл" name="NonMetal" icon="" parent="{1d134fbd-e601-4382-850e-a9bd4816c7b9}" versionCount="" accessMode="System" displayTemplate="" guid="{d48c1587-2300-48ad-be01-25a69738f3cf}">
+<RTPClass type="" alias="Бумага" name="PaperMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{da1bbd04-c6ea-49a6-bb33-bbe982516ef2}"/>
+<RTPClass type="" alias="Герметизирующий материал" name="SealantMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{ac9b3ff5-ffe7-43a3-abb7-165289f98fc0}"/>
+<RTPClass type="" alias="Древесные материалы" name="WoodMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{ad7f1c3b-b690-4cfc-82d8-46e50274db23}"/>
+<RTPClass type="" alias="Клей" name="ClayMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{087c9ccf-3425-4eaa-86d0-a4c374f33aa7}"/>
+<RTPClass type="" alias="Компоненты композитных материалов" name="CompositeMaterialPart" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{94e64d13-613b-4dec-a25c-6b61eb8f9455}"/>
+<RTPClass type="" alias="Покрывающий материал" name="CoatingMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{790f830c-5944-4ec4-bd23-493e7535354d}"/>
+<RTPClass type="" alias="Ленты и пленки" name="TapeAndFilmMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{9e6f4a24-beae-48e6-8239-9bece536b932}"/>
+<RTPClass type="" alias="Смазочно-охлаждающие жидкости" name="CoolingLubricant" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{cee3ae83-58a5-46e0-975c-0db87d6c1ab7}"/>
+<RTPClass type="" alias="Материал для пайки и сварки" name="WeldingAndBrazingMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{85503411-8f96-49ef-89c3-7db92ad80575}"/>
+<RTPClass type="" alias="Материалы теплоизоляционные" name="ThermoinsulatingMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{009100fb-b587-43f3-88d5-ff54d973cd1c}"/>
+<RTPClass type="" alias="Паронит" name="AsbestosFibre" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{2c70ae60-9bec-40d4-b399-c185f6ab1faf}"/>
+<RTPClass type="" alias="Пластмассы" name="PlasticMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{5d2f0d01-5ecf-4a8c-8e13-f7104e291594}"/>
+<RTPClass type="" alias="Провода и кабели" name="CablesAndWires" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{b4550548-9101-496e-b102-e100a1e3e1b1}"/>
+<RTPClass type="" alias="Резина и кожа" name="RubberAndLeather" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{8dc1ceba-e0b8-4d5f-b5cb-cc4e237b0db7}"/>
+<RTPClass type="" alias="Стекло и минерал" name="GlassAndMineral" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{39549474-877b-4ff2-87c8-94764c8e3fd4}"/>
+<RTPClass type="" alias="Строительные материалы" name="BuildingMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{fcc6f885-33eb-4dbc-8312-b16ca59c847d}"/>
+<RTPClass type="" alias="Текстильные материалы" name="TextileMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{a9be01b5-ca7a-41a6-9cd8-53dcd771b845}"/>
+<RTPClass type="" alias="Химические материалы" name="ChemicalMaterial" icon="" parent="{d48c1587-2300-48ad-be01-25a69738f3cf}" versionCount="" accessMode="Standart" displayTemplate="" guid="{29aa2fb6-370f-4788-85ed-e061c6e9fe30}"/>
+</RTPClass>
+</RTPClass>
+<RTPClass type="" alias="Деталь" name="Detail" icon="" parent="{7b128111-490a-454b-a3b0-375a5c9e3963}" versionCount="" accessMode="Standart" displayTemplate="" guid="{e8509c12-7822-4852-a7cb-13d498c33fab}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Основной материал" name="mainMaterial" lowerBound="" isCandidateKey="true" type="Reference" referencedClass="{7b128111-490a-454b-a3b0-375a5c9e3963}" isUnique="true" upperBound="" maxStringLength="0" guid="{e202e198-84b4-48a7-abf9-6edfb9516228}" initialValue=""/>
 </RTPClass>
-<RTPClass view="" alias="Стандартное изделие" name="Part" icon="" parent="{7b128111-490a-454b-a3b0-375a5c9e3963}" versionCount="" type="" displayTemplate="" guid="{ebd3260c-7781-4185-891e-b9b0c21447c1}">
+<RTPClass type="" alias="Стандартное изделие" name="Part" icon="" parent="{7b128111-490a-454b-a3b0-375a5c9e3963}" versionCount="" accessMode="Standart" displayTemplate="" guid="{ebd3260c-7781-4185-891e-b9b0c21447c1}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Основной материал" name="mainMaterial" lowerBound="" isCandidateKey="true" type="Reference" referencedClass="{7b128111-490a-454b-a3b0-375a5c9e3963}" isUnique="true" upperBound="" maxStringLength="0" guid="{7b2edfbc-bca8-45a3-a6d4-608b787fcf75}" initialValue=""/>
 </RTPClass>
 </RTPClass>
-<RTPClass view="" alias="Заготовка" name="Blank" icon="" parent="{dc665fef-8ae6-4004-8a35-68b211652483}" type="User" displayTemplate="" guid="{a079cebb-43b7-44b8-8942-383df4d7d14c}">
+<RTPClass type="" alias="Заготовка" name="Blank" icon="" parent="{dc665fef-8ae6-4004-8a35-68b211652483}" accessMode="User" displayTemplate="" guid="{a079cebb-43b7-44b8-8942-383df4d7d14c}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Основной материал" name="mainMaterial" lowerBound="" isCandidateKey="true" type="Reference" referencedClass="{7b128111-490a-454b-a3b0-375a5c9e3963}" isUnique="true" upperBound="" maxStringLength="0" guid="{34e942f5-102d-4c4d-8e01-c3cd3ed1f5d0}" initialValue=""/>
-<RTPClass view="Context" alias="Исходная заготовка" name="PrimaryBlank" icon="" parent="{a079cebb-43b7-44b8-8942-383df4d7d14c}" versionCount="1" type="User" displayTemplate="" guid="{2d57f51e-1e32-4806-8efb-6650904582ab}">
+<RTPClass type="Context" alias="Исходная заготовка" name="PrimaryBlank" icon="" parent="{a079cebb-43b7-44b8-8942-383df4d7d14c}" versionCount="1" accessMode="User" displayTemplate="" guid="{2d57f51e-1e32-4806-8efb-6650904582ab}">
 <RTPAttribute isNullsAllowed="false" group="" alias="ДСЕ" name="semiFinishedProduction" lowerBound="" isCandidateKey="false" parent="{2d57f51e-1e32-4806-8efb-6650904582ab}" referencedLov="" type="Reference" referencedClass="{5a53cbf4-4257-4612-bf36-129da665bfda}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{b25aaa33-7ba1-4d61-abb2-a0551df91ef2}" initialValue=""/>
 </RTPClass>
 <RTPAttribute isNullsAllowed="false" group="" alias="Вид заготовки" name="view" lowerBound="" isCandidateKey="true" parent="{a079cebb-43b7-44b8-8942-383df4d7d14c}" referencedLov="" type="String" referencedClass="" isUnique="true" upperBound="" maxStringLength="0" referencedUnit="" guid="{cb94d17f-5132-46ac-b054-e42427339634}" initialValue=""/>
@@ -132,8 +132,8 @@
 <RTPAttribute isNullsAllowed="false" group="Профиль и размеры" alias="Размер 2" name="size2" lowerBound="" isCandidateKey="true" parent="{a079cebb-43b7-44b8-8942-383df4d7d14c}" referencedLov="" type="Dimension" referencedClass="" isUnique="true" upperBound="" maxStringLength="0" referencedUnit="AA297119-C69E-4B7A-B7D7-93A71E0BE6AB" guid="{7d0e3283-018f-49e9-8580-ebdaee79bcb9}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="Профиль и размеры" alias="Размер 3" name="size3" lowerBound="" isCandidateKey="true" parent="{a079cebb-43b7-44b8-8942-383df4d7d14c}" referencedLov="" type="Dimension" referencedClass="" isUnique="true" upperBound="" maxStringLength="0" referencedUnit="AA297119-C69E-4B7A-B7D7-93A71E0BE6AB" guid="{499b701d-5385-4c3f-9dc2-69f6873e886f}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Abstract" alias="Конструкторская сборка" name="Assembly" icon="" parent="{dc665fef-8ae6-4004-8a35-68b211652483}" type="System" displayTemplate="" guid="{6b0768e9-7d18-46c4-b9f5-fae76821423b}">
-<RTPClass view="Context" alias="Технологическая сборка" name="TechAssembly" icon="" parent="{6b0768e9-7d18-46c4-b9f5-fae76821423b}" type="Standart" displayTemplate="" guid="{de983bbf-fef7-40ae-9783-46423ac03328}">
+<RTPClass type="Abstract" alias="Конструкторская сборка" name="Assembly" icon="" parent="{dc665fef-8ae6-4004-8a35-68b211652483}" accessMode="System" displayTemplate="" guid="{6b0768e9-7d18-46c4-b9f5-fae76821423b}">
+<RTPClass type="Context" alias="Технологическая сборка" name="TechAssembly" icon="" parent="{6b0768e9-7d18-46c4-b9f5-fae76821423b}" accessMode="Standart" displayTemplate="" guid="{de983bbf-fef7-40ae-9783-46423ac03328}">
 <RTPFilter inverseDescription="" directDescription="" alias="Конструкторская деталь" name="DesignComponent" parent="{de983bbf-fef7-40ae-9783-46423ac03328}" Class="{febdcce7-776b-4a7c-9b70-f29843401ad6}" guid="{8399a401-f5c9-4d31-b80a-25b0cfd91648}">
 <RTPCondition operator="=" secondAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" linkOf="И" firstAttr="{0c055c19-86fb-49d2-8b17-a670d43e93c0}" guid="{934d9ccf-ea7a-4dd0-9c86-67a6c0a22645}"/>
 </RTPFilter>
@@ -154,7 +154,7 @@
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{399abb96-e6a9-48a6-8ffb-1afdbff9c0e7}" alias="Конструкторская сборка" parent="{de983bbf-fef7-40ae-9783-46423ac03328}" isView="false" Class="{399abb96-e6a9-48a6-8ffb-1afdbff9c0e7}" guid="{515a4e62-5d47-4a9b-9386-35fd0e6be090}"/>
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{de983bbf-fef7-40ae-9783-46423ac03328}" alias="Технологическая сборка" parent="{de983bbf-fef7-40ae-9783-46423ac03328}" isView="true" Class="{6b0768e9-7d18-46c4-b9f5-fae76821423b}" guid="{f08f1502-3d14-45b1-bf1d-d6bf0e9e08e9}"/>
 </RTPClass>
-<RTPClass view="Context" alias="Конструкторская сборка" name="DesignAssembly" icon="" parent="{6b0768e9-7d18-46c4-b9f5-fae76821423b}" type="User" displayTemplate="" guid="{399abb96-e6a9-48a6-8ffb-1afdbff9c0e7}">
+<RTPClass type="Context" alias="Конструкторская сборка" name="DesignAssembly" icon="" parent="{6b0768e9-7d18-46c4-b9f5-fae76821423b}" accessMode="User" displayTemplate="" guid="{399abb96-e6a9-48a6-8ffb-1afdbff9c0e7}">
 <RTPFilter inverseDescription="" directDescription="" alias="Конструкторская деталь" name="DesignComponent" parent="{399abb96-e6a9-48a6-8ffb-1afdbff9c0e7}" Class="{febdcce7-776b-4a7c-9b70-f29843401ad6}" guid="{d60014c6-1da4-47d6-80ac-c415dd78580b}">
 <RTPCondition operator="=" secondAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" linkOf="И" firstAttr="{312a6ce9-9760-49ff-9ac2-3e34de852faa}" guid="{4ef96c76-97aa-41eb-80dc-7d246920872f}"/>
 </RTPFilter>
@@ -165,186 +165,186 @@
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{febdcce7-776b-4a7c-9b70-f29843401ad6}" alias="Конструкторская деталь" parent="{399abb96-e6a9-48a6-8ffb-1afdbff9c0e7}" isView="false" Class="{7b128111-490a-454b-a3b0-375a5c9e3963}" guid="{312a6ce9-9760-49ff-9ac2-3e34de852faa}"/>
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{399abb96-e6a9-48a6-8ffb-1afdbff9c0e7}" alias="Конструкторская сборка" parent="{399abb96-e6a9-48a6-8ffb-1afdbff9c0e7}" isView="false" Class="{6b0768e9-7d18-46c4-b9f5-fae76821423b}" guid="{da596ed8-4fae-47d1-9fc3-e65c6e221b32}"/>
 </RTPClass>
-<RTPClass alias="Комплекс" name="Complex" icon="" parent="{6b0768e9-7d18-46c4-b9f5-fae76821423b}" type="" displayTemplate="" guid="{6b3d4903-a0c7-4400-a919-9c3fec90ddb5}"/>
-<RTPClass alias="Комплект" name="Set" icon="" parent="{6b0768e9-7d18-46c4-b9f5-fae76821423b}" type="" displayTemplate="" guid="{e8bfae15-6321-41fe-ba8b-df14d4658628}"/>
-<RTPClass view="Normal" alias="Сборочная единица" name="AssemblyUnit" icon="" parent="{6b0768e9-7d18-46c4-b9f5-fae76821423b}" type="Standart" displayTemplate="" guid="{f6a4cb52-d55a-4daf-9780-162380342d59}"/>
+<RTPClass alias="Комплекс" name="Complex" icon="" parent="{6b0768e9-7d18-46c4-b9f5-fae76821423b}" accessMode="Standart" displayTemplate="" guid="{6b3d4903-a0c7-4400-a919-9c3fec90ddb5}"/>
+<RTPClass alias="Комплект" name="Set" icon="" parent="{6b0768e9-7d18-46c4-b9f5-fae76821423b}" accessMode="Standart" displayTemplate="" guid="{e8bfae15-6321-41fe-ba8b-df14d4658628}"/>
+<RTPClass type="Normal" alias="Сборочная единица" name="AssemblyUnit" icon="" parent="{6b0768e9-7d18-46c4-b9f5-fae76821423b}" accessMode="Standart" displayTemplate="" guid="{f6a4cb52-d55a-4daf-9780-162380342d59}"/>
 </RTPClass>
 <RTPAttribute isNullsAllowed="false" group="" alias="Обозначение" name="designation" isCandidateKey="true" parent="{dc665fef-8ae6-4004-8a35-68b211652483}" type="String" referencedClass="" isUnique="true" maxStringLength="0" guid="{bcca1cb6-c775-4d4c-bdf9-cfcf77099f57}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Наименование" name="name" isCandidateKey="true" parent="{dc665fef-8ae6-4004-8a35-68b211652483}" type="String" referencedClass="" isUnique="true" maxStringLength="0" guid="{279eb401-d844-4049-b838-15f95d6b4816}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Исполнение" name="variant" isCandidateKey="true" parent="{dc665fef-8ae6-4004-8a35-68b211652483}" type="String" referencedClass="" isUnique="true" maxStringLength="3" guid="{490423a8-a2ca-48c6-a755-65b22527df24}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Abstract" alias="Cправочники" name="References" icon="" parent="{9ccb6f58-033b-4c3f-a514-7957bae204ba}" type="System" displayTemplate="" guid="{6916ce92-e9c4-405e-ab36-89c7071a78ec}">
-<RTPClass alias="Группа операций" name="OperationGroup" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" type="Standart" displayTemplate="" guid="{ce0142de-c949-48e5-aaf2-dbe1614c7514}">
+<RTPClass type="Abstract" alias="Cправочники" name="References" icon="" parent="{9ccb6f58-033b-4c3f-a514-7957bae204ba}" accessMode="System" displayTemplate="" guid="{6916ce92-e9c4-405e-ab36-89c7071a78ec}">
+<RTPClass alias="Группа операций" name="OperationGroup" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" accessMode="Standart" displayTemplate="" guid="{ce0142de-c949-48e5-aaf2-dbe1614c7514}">
 <RTPFilter inverseDescription="" directDescription="" alias="Операции" name="OperationName" parent="{ce0142de-c949-48e5-aaf2-dbe1614c7514}" Class="{3534312e-1689-490f-b33b-3557e669f0bf}" guid="{9589275e-a888-4c4f-b980-b688e5733b46}">
 <RTPCondition operator="=" secondAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" linkOf="И" firstAttr="{37f124a3-82ac-45a1-88e8-0879bf299643}" guid="{15573fe7-66da-4e39-b2ba-cb3c94df9a97}"/>
 </RTPFilter>
-<RTPClass alias="Состав группы операций" name="OperationGroupComp" icon="" parent="{ce0142de-c949-48e5-aaf2-dbe1614c7514}" type="Standart" displayTemplate="" guid="{b29a8057-6abb-4536-b060-d148df858c1a}"/>
+<RTPClass alias="Состав группы операций" name="OperationGroupComp" icon="" parent="{ce0142de-c949-48e5-aaf2-dbe1614c7514}" accessMode="Standart" displayTemplate="" guid="{b29a8057-6abb-4536-b060-d148df858c1a}"/>
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{a9d1c011-b274-4a67-8eb8-b012818b71ed}" alias="Операции" name="Operations" parent="{ce0142de-c949-48e5-aaf2-dbe1614c7514}" isView="false" Class="{3534312e-1689-490f-b33b-3557e669f0bf}" guid="{37f124a3-82ac-45a1-88e8-0879bf299643}"/>
 </RTPClass>
-<RTPClass alias="Название операции" name="OperationName" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" type="Standart" displayTemplate="" guid="{3534312e-1689-490f-b33b-3557e669f0bf}">
-<RTPClass alias="Состав операций" name="OperationNameComp" icon="" parent="{3534312e-1689-490f-b33b-3557e669f0bf}" type="Standart" displayTemplate="" guid="{a9d1c011-b274-4a67-8eb8-b012818b71ed}"/>
+<RTPClass alias="Название операции" name="OperationName" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" accessMode="Standart" displayTemplate="" guid="{3534312e-1689-490f-b33b-3557e669f0bf}">
+<RTPClass alias="Состав операций" name="OperationNameComp" icon="" parent="{3534312e-1689-490f-b33b-3557e669f0bf}" accessMode="Standart" displayTemplate="" guid="{a9d1c011-b274-4a67-8eb8-b012818b71ed}"/>
 </RTPClass>
-<RTPClass alias="Тип производства" name="ProductionType" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" type="User" displayTemplate="" guid="{619428b9-4776-41c4-8b10-fddbcb65af53}"/>
-<RTPClass alias="Профессия" name="Profession" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" type="User" displayTemplate="" guid="{71482064-a325-4c35-88a6-9c493841695f}">
-<RTPClass view="Context" alias="Рабочий в техпроцессе" name="MPProfession" icon="" parent="{71482064-a325-4c35-88a6-9c493841695f}" type="Standart" displayTemplate="" guid="{48cbb3fa-6146-46f3-b7a3-2167ef9c6284}">
+<RTPClass alias="Тип производства" name="ProductionType" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" accessMode="User" displayTemplate="" guid="{619428b9-4776-41c4-8b10-fddbcb65af53}"/>
+<RTPClass alias="Профессия" name="Profession" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" accessMode="User" displayTemplate="" guid="{71482064-a325-4c35-88a6-9c493841695f}">
+<RTPClass type="Context" alias="Рабочий в техпроцессе" name="MPProfession" icon="" parent="{71482064-a325-4c35-88a6-9c493841695f}" accessMode="Standart" displayTemplate="" guid="{48cbb3fa-6146-46f3-b7a3-2167ef9c6284}">
 <RTPAttribute isNullsAllowed="false" group="" alias="ДСЕ" name="semiFinishedProduction" lowerBound="" isCandidateKey="false" parent="{48cbb3fa-6146-46f3-b7a3-2167ef9c6284}" referencedLov="" type="Reference" referencedClass="{5a53cbf4-4257-4612-bf36-129da665bfda}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{21aafe24-d4aa-4004-ad28-87b5bf02e08d}" initialValue=""/>
 </RTPClass>
 </RTPClass>
-<RTPClass alias="Вид производства" name="ProductionView" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" type="User" displayTemplate="" guid="{dcf4d5e7-6980-40be-8f6f-73b7f2392363}"/>
-<RTPClass alias="Вид обработки" name="OperationType" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" type="User" displayTemplate="" guid="{82d0d293-64cf-4c79-9bde-24597069e048}">
+<RTPClass alias="Вид производства" name="ProductionView" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" accessMode="User" displayTemplate="" guid="{dcf4d5e7-6980-40be-8f6f-73b7f2392363}"/>
+<RTPClass alias="Вид обработки" name="OperationType" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" accessMode="User" displayTemplate="" guid="{82d0d293-64cf-4c79-9bde-24597069e048}">
 <RTPFilter inverseDescription="" directDescription="" alias="Группа операций" name="OperationGroup" parent="{82d0d293-64cf-4c79-9bde-24597069e048}" Class="{ce0142de-c949-48e5-aaf2-dbe1614c7514}" guid="{2a3ce01e-2ef3-43b3-a8a2-7571c355072e}">
 <RTPCondition operator="=" secondAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" linkOf="И" firstAttr="{e80f29df-1043-4811-82b3-230085133192}" guid="{6daefd06-c3c7-4700-acdb-3c04ebf84175}"/>
 </RTPFilter>
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{b29a8057-6abb-4536-b060-d148df858c1a}" alias="Группы операций" name="OperationGroups" parent="{82d0d293-64cf-4c79-9bde-24597069e048}" isView="false" Class="{ce0142de-c949-48e5-aaf2-dbe1614c7514}" guid="{e80f29df-1043-4811-82b3-230085133192}"/>
 </RTPClass>
-<RTPClass view="Abstract" alias="Средство оснащения" name="EquipmentMean" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" type="System" displayTemplate="" guid="{c2682351-1b14-4ccb-8bf7-525636656510}">
-<RTPClass alias="Оборудование" name="Equipment" parent="{c2682351-1b14-4ccb-8bf7-525636656510}" type="User" displayTemplate="" guid="{d2056648-6bc0-4264-8ab5-06e0d6526560}">
+<RTPClass type="Abstract" alias="Средство оснащения" name="EquipmentMean" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" accessMode="System" displayTemplate="" guid="{c2682351-1b14-4ccb-8bf7-525636656510}">
+<RTPClass alias="Оборудование" name="Equipment" parent="{c2682351-1b14-4ccb-8bf7-525636656510}" accessMode="User" displayTemplate="" guid="{d2056648-6bc0-4264-8ab5-06e0d6526560}">
 <RTPFilter inverseDescription="" directDescription="" alias="Рабочие на оборудовании" name="Profession" parent="{d2056648-6bc0-4264-8ab5-06e0d6526560}" Class="{48cbb3fa-6146-46f3-b7a3-2167ef9c6284}" guid="{f92f2f67-bb1f-40a3-89d7-3382e3e32286}">
 <RTPCondition operator="=" secondAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" linkOf="И" firstAttr="{d684529f-697c-4c12-afb3-f9a79ce457e2}" guid="{5ba81bcc-2748-4eaf-b600-4f6e647add4e}"/>
 </RTPFilter>
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="true" linkClass="{48cbb3fa-6146-46f3-b7a3-2167ef9c6284}" alias="Рабочие на оборудовании" parent="{d2056648-6bc0-4264-8ab5-06e0d6526560}" isView="true" Class="{71482064-a325-4c35-88a6-9c493841695f}" guid="{d684529f-697c-4c12-afb3-f9a79ce457e2}"/>
-<RTPClass view="" alias="Оборудование техпроцесса" name="MPEquipment" icon="" parent="{d2056648-6bc0-4264-8ab5-06e0d6526560}" type="Standart" displayTemplate="" guid="{84ec1b9b-6832-4279-a7f3-30de80566e41}">
+<RTPClass type="" alias="Оборудование техпроцесса" name="MPEquipment" icon="" parent="{d2056648-6bc0-4264-8ab5-06e0d6526560}" accessMode="Standart" displayTemplate="" guid="{84ec1b9b-6832-4279-a7f3-30de80566e41}">
 <RTPAttribute isNullsAllowed="false" group="" alias="ДСЕ" name="semiFinishedProduction" lowerBound="" isCandidateKey="false" parent="{84ec1b9b-6832-4279-a7f3-30de80566e41}" referencedLov="" type="Reference" referencedClass="{5a53cbf4-4257-4612-bf36-129da665bfda}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{4b898fc5-ccab-434e-a9e6-06a65d23249b}" initialValue=""/>
 </RTPClass>
 <RTPAttribute isNullsAllowed="false" group="" alias="Наименование" name="name" isCandidateKey="true" parent="{d2056648-6bc0-4264-8ab5-06e0d6526560}" type="String" referencedClass="" isUnique="true" maxStringLength="512" guid="{9451c241-7de4-4fd1-8b1c-ff21f3cb084f}" initialValue=""/>
 </RTPClass>
-<RTPClass alias="Оснастка" name="Tooling" parent="{c2682351-1b14-4ccb-8bf7-525636656510}" type="User" displayTemplate="" guid="{fdb0e97a-4525-40d5-a1e2-d4c8ac9c10e9}">
-<RTPClass view="Normal" alias="Средство оснащения техпроцесса" name="MPTooling" icon="" parent="{fdb0e97a-4525-40d5-a1e2-d4c8ac9c10e9}" versionCount="1" type="Standart" displayTemplate="" guid="{bf6036b5-ad62-4874-b43d-d01c14c6ae2f}">
+<RTPClass alias="Оснастка" name="Tooling" parent="{c2682351-1b14-4ccb-8bf7-525636656510}" accessMode="User" displayTemplate="" guid="{fdb0e97a-4525-40d5-a1e2-d4c8ac9c10e9}">
+<RTPClass type="Normal" alias="Средство оснащения техпроцесса" name="MPTooling" icon="" parent="{fdb0e97a-4525-40d5-a1e2-d4c8ac9c10e9}" versionCount="1" accessMode="Standart" displayTemplate="" guid="{bf6036b5-ad62-4874-b43d-d01c14c6ae2f}">
 <RTPAttribute isNullsAllowed="false" group="" alias="ДСЕ" name="semiFinishedProduction" lowerBound="" isCandidateKey="false" parent="{bf6036b5-ad62-4874-b43d-d01c14c6ae2f}" referencedLov="" type="Reference" referencedClass="{5a53cbf4-4257-4612-bf36-129da665bfda}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{f53a5519-f910-48a9-ae2d-bfa90e615502}" initialValue=""/>
 </RTPClass>
-<RTPClass alias="Инструмент" name="Tool" parent="{fdb0e97a-4525-40d5-a1e2-d4c8ac9c10e9}" type="User" displayTemplate="" guid="{65c5e519-fee4-47a4-87a6-2cd2b3827b5a}">
-<RTPClass alias="Режущий инструмент" name="CuttingTool" parent="{65c5e519-fee4-47a4-87a6-2cd2b3827b5a}" type="" displayTemplate="" guid="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}">
+<RTPClass alias="Инструмент" name="Tool" parent="{fdb0e97a-4525-40d5-a1e2-d4c8ac9c10e9}" accessMode="User" displayTemplate="" guid="{65c5e519-fee4-47a4-87a6-2cd2b3827b5a}">
+<RTPClass alias="Режущий инструмент" name="CuttingTool" parent="{65c5e519-fee4-47a4-87a6-2cd2b3827b5a}" accessMode="Standart" displayTemplate="" guid="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}">
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="true" linkClass="{c06da7dc-af68-4c79-8e4b-d76bbb673d92}" alias="Режим резания" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" isView="true" Class="{3b0f6af7-26b3-4438-b076-6b07615764e2}" guid="{48f594ca-4e68-453c-bdf8-9d3ec37bcf55}"/>
-<RTPClass alias="Фреза" name="MillingСutter" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{a038d3f1-a3c1-43fd-a140-69d4c29e5c37}"/>
-<RTPClass alias="Резец" name="ToolBit" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{8781f3b5-ad91-4b25-b34e-178b9e2ba915}"/>
-<RTPClass alias="Сверло" name="Drill" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{f169b986-f3c9-4481-a14e-d36b13c5313f}"/>
-<RTPClass alias="Режущая часть" name="Blade" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{5f01887a-6c86-40d1-8598-0802f61d233d}"/>
-<RTPClass alias="Протяжка" name="Broach" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{1efcec99-124c-45c1-bcf7-36e66da87950}"/>
-<RTPClass alias="Цековка" name="Counterbore" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{8623e9b7-c6b1-4247-9982-d6167a703f54}"/>
-<RTPClass alias="Державка" name="Holder" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{b1038339-78e8-4436-b573-cfc0332f661d}"/>
-<RTPClass alias="Головка" name="Head" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{e67fed2a-a237-4fb2-afd6-e21e88491773}"/>
-<RTPClass alias="Зенкер" name="CoreDrill" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{7eacb5bd-aff2-4a3a-8b10-692ea9615e9d}"/>
-<RTPClass alias="Шевер" name="GearShaving" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="" displayTemplate="" guid="{f4821647-0ef5-4370-84a0-152ef26197b0}"/>
-<RTPClass alias="Напильник" name="File" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{8da975f6-7335-440e-8a51-3b77eaa9404c}"/>
-<RTPClass alias="Ножовочное полотно" name="SawBlade" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{8b97def0-3324-474d-bff7-f0a1d3c54e20}"/>
-<RTPClass alias="Долбяк" name="Cutter" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{e0e9679e-93c6-4139-ac4f-fda2aaa93185}"/>
-<RTPClass alias="Карандаш алмазный" name="MultiPointDiamond" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{ad1ba0fc-3f13-40b1-847a-21fcb74605a0}"/>
-<RTPClass alias="Надфиль алмазный" name="DiamondNeedleFile" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{92c9ed05-eb51-40df-aa56-e0227c2e4c9e}"/>
-<RTPClass alias="Развертка" name="Reamer" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" type="User" displayTemplate="" guid="{64121ab7-80e0-4944-8ee9-3c3fab1b95a7}"/>
+<RTPClass alias="Фреза" name="MillingСutter" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{a038d3f1-a3c1-43fd-a140-69d4c29e5c37}"/>
+<RTPClass alias="Резец" name="ToolBit" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{8781f3b5-ad91-4b25-b34e-178b9e2ba915}"/>
+<RTPClass alias="Сверло" name="Drill" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{f169b986-f3c9-4481-a14e-d36b13c5313f}"/>
+<RTPClass alias="Режущая часть" name="Blade" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{5f01887a-6c86-40d1-8598-0802f61d233d}"/>
+<RTPClass alias="Протяжка" name="Broach" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{1efcec99-124c-45c1-bcf7-36e66da87950}"/>
+<RTPClass alias="Цековка" name="Counterbore" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{8623e9b7-c6b1-4247-9982-d6167a703f54}"/>
+<RTPClass alias="Державка" name="Holder" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{b1038339-78e8-4436-b573-cfc0332f661d}"/>
+<RTPClass alias="Головка" name="Head" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{e67fed2a-a237-4fb2-afd6-e21e88491773}"/>
+<RTPClass alias="Зенкер" name="CoreDrill" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{7eacb5bd-aff2-4a3a-8b10-692ea9615e9d}"/>
+<RTPClass alias="Шевер" name="GearShaving" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="Standart" displayTemplate="" guid="{f4821647-0ef5-4370-84a0-152ef26197b0}"/>
+<RTPClass alias="Напильник" name="File" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{8da975f6-7335-440e-8a51-3b77eaa9404c}"/>
+<RTPClass alias="Ножовочное полотно" name="SawBlade" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{8b97def0-3324-474d-bff7-f0a1d3c54e20}"/>
+<RTPClass alias="Долбяк" name="Cutter" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{e0e9679e-93c6-4139-ac4f-fda2aaa93185}"/>
+<RTPClass alias="Карандаш алмазный" name="MultiPointDiamond" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{ad1ba0fc-3f13-40b1-847a-21fcb74605a0}"/>
+<RTPClass alias="Надфиль алмазный" name="DiamondNeedleFile" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{92c9ed05-eb51-40df-aa56-e0227c2e4c9e}"/>
+<RTPClass alias="Развертка" name="Reamer" icon="" parent="{1aaec13c-ea7e-4ae2-9780-4eea39cac34a}" accessMode="User" displayTemplate="" guid="{64121ab7-80e0-4944-8ee9-3c3fab1b95a7}"/>
 </RTPClass>
-<RTPClass alias="Измерительный инструмент" name="MeasuringTool" parent="{65c5e519-fee4-47a4-87a6-2cd2b3827b5a}" type="" displayTemplate="" guid="{fa63a3ff-a310-41fa-92e7-7615b066982d}"/>
-<RTPClass alias="Слесарный инструмент" name="BenchTool" parent="{65c5e519-fee4-47a4-87a6-2cd2b3827b5a}" type="User" displayTemplate="" guid="{9e2837b6-5a8c-42a9-960a-a702725da8fb}"/>
-<RTPClass alias="Штамповочный инструмент" name="ForgeTool" parent="{65c5e519-fee4-47a4-87a6-2cd2b3827b5a}" type="User" displayTemplate="" guid="{cc1073aa-2509-49da-a270-d791429fc6b5}"/>
-<RTPClass alias="Абразивный инструмент" name="AbrasiveTool" icon="" parent="{65c5e519-fee4-47a4-87a6-2cd2b3827b5a}" type="" displayTemplate="" guid="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}">
-<RTPClass alias="Шлифовальный круг" name="GrindingWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" type="" displayTemplate="" guid="{ecbc72d9-dd11-4097-8147-e66ee35248b2}"/>
-<RTPClass alias="Высокоскоростной круг" name="HighSpeedGrindingWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" type="" displayTemplate="" guid="{3ff71b2c-5f1e-4f9f-8532-735e889a4602}"/>
-<RTPClass alias="Обдирочный круг" name="SnaggingWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" type="" displayTemplate="" guid="{5d76b48e-0a07-4be0-934a-edcc073730f4}"/>
-<RTPClass alias="Шарошлифовальный круг" name="SphereGrindingWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" type="User" displayTemplate="" guid="{4e53814c-fb18-4eca-b9b3-3187fd8f2e2d}"/>
-<RTPClass alias="Профильный круг" name="FormWheel" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" type="User" displayTemplate="" guid="{b15fcf76-ae9f-4de0-9009-ba3ef10d7350}"/>
-<RTPClass alias="Червячный круг" name="WormGrindingWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" type="" displayTemplate="" guid="{19e51f64-1746-43dd-8c85-3fbb12b66462}"/>
-<RTPClass alias="Лепестковый круг" name="FlapWheel" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" type="User" displayTemplate="" guid="{377c2a37-50b5-4c86-9006-f15b6f2bac01}"/>
-<RTPClass alias="Шлифовальная головка" name="MountedWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" type="User" displayTemplate="" guid="{eed52d9d-1d91-4304-9663-6f6fc0fa276c}"/>
-<RTPClass alias="Отрезной круг" name="CutoffWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" type="User" displayTemplate="" guid="{3825569a-52d6-4d1d-9452-4dfd433650bf}"/>
-<RTPClass alias="Полировальный круг" name="PolishingWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" type="User" displayTemplate="" guid="{08216d65-64bc-44b9-8a18-4f537d7a284d}"/>
-<RTPClass alias="Абразивный брусок" name="AbrasiveSlone" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" type="User" displayTemplate="" guid="{cfb0dba9-9892-4589-8223-ee9ab5c0b3bd}"/>
-<RTPClass alias="Абразивный шевер" name="AbrasiveShaver" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" type="User" displayTemplate="" guid="{e6d1a2a1-bdd5-4581-98e8-d635b57764b7}"/>
-<RTPClass alias="Притир" name="Lap" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" type="User" displayTemplate="" guid="{bbd3a95e-39c5-4ded-8101-c2d15ef175b3}"/>
-<RTPClass alias="Шлифовальная шкурка" name="CoatedAbrasive" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" type="User" displayTemplate="" guid="{f72e463b-a5ca-402e-bf18-2463b592636d}"/>
+<RTPClass alias="Измерительный инструмент" name="MeasuringTool" parent="{65c5e519-fee4-47a4-87a6-2cd2b3827b5a}" accessMode="Standart" displayTemplate="" guid="{fa63a3ff-a310-41fa-92e7-7615b066982d}"/>
+<RTPClass alias="Слесарный инструмент" name="BenchTool" parent="{65c5e519-fee4-47a4-87a6-2cd2b3827b5a}" accessMode="User" displayTemplate="" guid="{9e2837b6-5a8c-42a9-960a-a702725da8fb}"/>
+<RTPClass alias="Штамповочный инструмент" name="ForgeTool" parent="{65c5e519-fee4-47a4-87a6-2cd2b3827b5a}" accessMode="User" displayTemplate="" guid="{cc1073aa-2509-49da-a270-d791429fc6b5}"/>
+<RTPClass alias="Абразивный инструмент" name="AbrasiveTool" icon="" parent="{65c5e519-fee4-47a4-87a6-2cd2b3827b5a}" accessMode="Standart" displayTemplate="" guid="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}">
+<RTPClass alias="Шлифовальный круг" name="GrindingWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" accessMode="Standart" displayTemplate="" guid="{ecbc72d9-dd11-4097-8147-e66ee35248b2}"/>
+<RTPClass alias="Высокоскоростной круг" name="HighSpeedGrindingWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" accessMode="Standart" displayTemplate="" guid="{3ff71b2c-5f1e-4f9f-8532-735e889a4602}"/>
+<RTPClass alias="Обдирочный круг" name="SnaggingWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" accessMode="Standart" displayTemplate="" guid="{5d76b48e-0a07-4be0-934a-edcc073730f4}"/>
+<RTPClass alias="Шарошлифовальный круг" name="SphereGrindingWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" accessMode="User" displayTemplate="" guid="{4e53814c-fb18-4eca-b9b3-3187fd8f2e2d}"/>
+<RTPClass alias="Профильный круг" name="FormWheel" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" accessMode="User" displayTemplate="" guid="{b15fcf76-ae9f-4de0-9009-ba3ef10d7350}"/>
+<RTPClass alias="Червячный круг" name="WormGrindingWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" accessMode="Standart" displayTemplate="" guid="{19e51f64-1746-43dd-8c85-3fbb12b66462}"/>
+<RTPClass alias="Лепестковый круг" name="FlapWheel" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" accessMode="User" displayTemplate="" guid="{377c2a37-50b5-4c86-9006-f15b6f2bac01}"/>
+<RTPClass alias="Шлифовальная головка" name="MountedWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" accessMode="User" displayTemplate="" guid="{eed52d9d-1d91-4304-9663-6f6fc0fa276c}"/>
+<RTPClass alias="Отрезной круг" name="CutoffWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" accessMode="User" displayTemplate="" guid="{3825569a-52d6-4d1d-9452-4dfd433650bf}"/>
+<RTPClass alias="Полировальный круг" name="PolishingWheel" icon="" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" accessMode="User" displayTemplate="" guid="{08216d65-64bc-44b9-8a18-4f537d7a284d}"/>
+<RTPClass alias="Абразивный брусок" name="AbrasiveSlone" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" accessMode="User" displayTemplate="" guid="{cfb0dba9-9892-4589-8223-ee9ab5c0b3bd}"/>
+<RTPClass alias="Абразивный шевер" name="AbrasiveShaver" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" accessMode="User" displayTemplate="" guid="{e6d1a2a1-bdd5-4581-98e8-d635b57764b7}"/>
+<RTPClass alias="Притир" name="Lap" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" accessMode="User" displayTemplate="" guid="{bbd3a95e-39c5-4ded-8101-c2d15ef175b3}"/>
+<RTPClass alias="Шлифовальная шкурка" name="CoatedAbrasive" parent="{42c038fe-55e0-4e6f-9e26-4d48d6453c3d}" accessMode="User" displayTemplate="" guid="{f72e463b-a5ca-402e-bf18-2463b592636d}"/>
 </RTPClass>
-<RTPClass alias="Резьбобразующий инструмент" name="ThreadingTool" icon="" parent="{65c5e519-fee4-47a4-87a6-2cd2b3827b5a}" type="" displayTemplate="" guid="{53669d5d-9848-44b1-b1e1-532aa6978158}">
-<RTPClass alias="Метчик" name="Tap" icon="" parent="{53669d5d-9848-44b1-b1e1-532aa6978158}" type="User" displayTemplate="" guid="{d5574011-ecd5-4ff6-ac18-db9136003fe3}"/>
-<RTPClass alias="Плашка" name="ThreadingDie" icon="" parent="{53669d5d-9848-44b1-b1e1-532aa6978158}" type="" displayTemplate="" guid="{d2f56e78-d737-4a76-805e-f892cd2631bd}"/>
-<RTPClass alias="Резьбовой ролик" name="ThreadingRoller" icon="" parent="{53669d5d-9848-44b1-b1e1-532aa6978158}" type="User" displayTemplate="" guid="{792f281b-2232-450c-b307-41f6129bc759}"/>
-<RTPClass alias="Гребенка" name="Threadcutting" parent="{53669d5d-9848-44b1-b1e1-532aa6978158}" type="" displayTemplate="" guid="{b6a2a371-d8a4-499e-85a1-6c33b130c18a}"/>
-</RTPClass>
-</RTPClass>
-<RTPClass alias="Приспособление" name="Fixtun" icon="" parent="{fdb0e97a-4525-40d5-a1e2-d4c8ac9c10e9}" type="User" displayTemplate="" guid="{d30a29da-75a1-4882-8cfc-525ca268388d}">
-<RTPClass alias="Грузозахватное приспособление" name="LiftingFixtun" icon="" parent="{d30a29da-75a1-4882-8cfc-525ca268388d}" type="" displayTemplate="" guid="{2c7e69a2-f5d7-4507-ba85-8e4e115c8e28}"/>
-<RTPClass alias="Станочное приспособление" name="CuttingFixtun" icon="" parent="{d30a29da-75a1-4882-8cfc-525ca268388d}" type="" displayTemplate="" guid="{c084a0fd-0d94-4b18-b816-30d1220626df}"/>
-<RTPClass alias="Штамповочное приспособление" name="ForgeFixtun" icon="" parent="{d30a29da-75a1-4882-8cfc-525ca268388d}" type="User" displayTemplate="" guid="{3682927d-b04f-4d7f-abb1-94692531b977}"/>
-<RTPClass alias="Измерительное приспособление" name="MeasuringFixtun" icon="" parent="{d30a29da-75a1-4882-8cfc-525ca268388d}" type="" displayTemplate="" guid="{3ca3394b-3679-4796-975d-6bd55559ccc3}"/>
+<RTPClass alias="Резьбобразующий инструмент" name="ThreadingTool" icon="" parent="{65c5e519-fee4-47a4-87a6-2cd2b3827b5a}" accessMode="Standart" displayTemplate="" guid="{53669d5d-9848-44b1-b1e1-532aa6978158}">
+<RTPClass alias="Метчик" name="Tap" icon="" parent="{53669d5d-9848-44b1-b1e1-532aa6978158}" accessMode="User" displayTemplate="" guid="{d5574011-ecd5-4ff6-ac18-db9136003fe3}"/>
+<RTPClass alias="Плашка" name="ThreadingDie" icon="" parent="{53669d5d-9848-44b1-b1e1-532aa6978158}" accessMode="Standart" displayTemplate="" guid="{d2f56e78-d737-4a76-805e-f892cd2631bd}"/>
+<RTPClass alias="Резьбовой ролик" name="ThreadingRoller" icon="" parent="{53669d5d-9848-44b1-b1e1-532aa6978158}" accessMode="User" displayTemplate="" guid="{792f281b-2232-450c-b307-41f6129bc759}"/>
+<RTPClass alias="Гребенка" name="Threadcutting" parent="{53669d5d-9848-44b1-b1e1-532aa6978158}" accessMode="Standart" displayTemplate="" guid="{b6a2a371-d8a4-499e-85a1-6c33b130c18a}"/>
 </RTPClass>
 </RTPClass>
-<RTPClass alias="Средство защиты" name="ProtectionMean" icon="" parent="{c2682351-1b14-4ccb-8bf7-525636656510}" type="User" displayTemplate="" guid="{34bcd0ac-a606-4403-a86f-93ededc64055}">
-<RTPClass view="" alias="Средства защиты в техпроцессе" name="MPProtectionMean" icon="" parent="{34bcd0ac-a606-4403-a86f-93ededc64055}" type="Standart" displayTemplate="" guid="{5a05c93c-d4aa-4f20-b88e-cbad96a35c6b}">
+<RTPClass alias="Приспособление" name="Fixtun" icon="" parent="{fdb0e97a-4525-40d5-a1e2-d4c8ac9c10e9}" accessMode="User" displayTemplate="" guid="{d30a29da-75a1-4882-8cfc-525ca268388d}">
+<RTPClass alias="Грузозахватное приспособление" name="LiftingFixtun" icon="" parent="{d30a29da-75a1-4882-8cfc-525ca268388d}" accessMode="Standart" displayTemplate="" guid="{2c7e69a2-f5d7-4507-ba85-8e4e115c8e28}"/>
+<RTPClass alias="Станочное приспособление" name="CuttingFixtun" icon="" parent="{d30a29da-75a1-4882-8cfc-525ca268388d}" accessMode="Standart" displayTemplate="" guid="{c084a0fd-0d94-4b18-b816-30d1220626df}"/>
+<RTPClass alias="Штамповочное приспособление" name="ForgeFixtun" icon="" parent="{d30a29da-75a1-4882-8cfc-525ca268388d}" accessMode="User" displayTemplate="" guid="{3682927d-b04f-4d7f-abb1-94692531b977}"/>
+<RTPClass alias="Измерительное приспособление" name="MeasuringFixtun" icon="" parent="{d30a29da-75a1-4882-8cfc-525ca268388d}" accessMode="Standart" displayTemplate="" guid="{3ca3394b-3679-4796-975d-6bd55559ccc3}"/>
+</RTPClass>
+</RTPClass>
+<RTPClass alias="Средство защиты" name="ProtectionMean" icon="" parent="{c2682351-1b14-4ccb-8bf7-525636656510}" accessMode="User" displayTemplate="" guid="{34bcd0ac-a606-4403-a86f-93ededc64055}">
+<RTPClass type="" alias="Средства защиты в техпроцессе" name="MPProtectionMean" icon="" parent="{34bcd0ac-a606-4403-a86f-93ededc64055}" accessMode="Standart" displayTemplate="" guid="{5a05c93c-d4aa-4f20-b88e-cbad96a35c6b}">
 <RTPAttribute isNullsAllowed="false" group="" alias="ДСЕ" name="semiFinishedProduction" lowerBound="" isCandidateKey="false" parent="{5a05c93c-d4aa-4f20-b88e-cbad96a35c6b}" referencedLov="" type="Reference" referencedClass="{5a53cbf4-4257-4612-bf36-129da665bfda}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{a1c3095f-8173-4afc-a826-4e54dcef143a}" initialValue=""/>
 </RTPClass>
 </RTPClass>
 </RTPClass>
-<RTPClass alias="Ключевое слово перехода" name="StepWord" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" type="User" displayTemplate="" guid="{ca46e18a-c02f-4d0e-bf9e-f1d521c5deec}">
+<RTPClass alias="Ключевое слово перехода" name="StepWord" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" accessMode="User" displayTemplate="" guid="{ca46e18a-c02f-4d0e-bf9e-f1d521c5deec}">
 <RTPFilter inverseDescription="" directDescription="" alias="Поверхность перехода" name="StepSurface" parent="{ca46e18a-c02f-4d0e-bf9e-f1d521c5deec}" Class="{7b78da05-e80c-47d4-8c22-0e644ec441de}" guid="{5937172c-2738-46b1-af26-80266c01b8c8}">
 <RTPCondition operator="=" secondAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" linkOf="И" firstAttr="{60e045ca-d5fe-499f-9d80-a6d9cd028870}" guid="{4321cbbd-daf5-44a7-aca5-55fe8ffe9327}"/>
 </RTPFilter>
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{e44816c8-6e7b-4307-9ee3-f0b6018f7277}" alias="Поверхность перехода" name="StepSurface" parent="{ca46e18a-c02f-4d0e-bf9e-f1d521c5deec}" isView="false" Class="{7b78da05-e80c-47d4-8c22-0e644ec441de}" guid="{60e045ca-d5fe-499f-9d80-a6d9cd028870}"/>
 </RTPClass>
-<RTPClass alias="Поверхность перехода" name="StepSurface" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" type="User" displayTemplate="" guid="{7b78da05-e80c-47d4-8c22-0e644ec441de}">
+<RTPClass alias="Поверхность перехода" name="StepSurface" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" accessMode="User" displayTemplate="" guid="{7b78da05-e80c-47d4-8c22-0e644ec441de}">
 <RTPFilter inverseDescription="" directDescription="" alias="Окончание перехода" name="StepEnd" parent="{7b78da05-e80c-47d4-8c22-0e644ec441de}" Class="{e8463bfb-e95b-4b10-92cd-d41ac163219c}" guid="{24c3ffa8-297d-4488-857a-60fe3164ba6a}">
 <RTPCondition operator="=" secondAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" linkOf="И" firstAttr="{f3e82605-3a63-4f5a-9013-b58d2b232e9c}" guid="{b8931f6b-5592-49d8-b0d5-919a01a087c8}"/>
 </RTPFilter>
-<RTPClass alias="Поверхность перехода" name="StepSurfaceComp" icon="" parent="{7b78da05-e80c-47d4-8c22-0e644ec441de}" type="Standart" displayTemplate="" guid="{e44816c8-6e7b-4307-9ee3-f0b6018f7277}"/>
+<RTPClass alias="Поверхность перехода" name="StepSurfaceComp" icon="" parent="{7b78da05-e80c-47d4-8c22-0e644ec441de}" accessMode="Standart" displayTemplate="" guid="{e44816c8-6e7b-4307-9ee3-f0b6018f7277}"/>
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{a1a397fb-1283-4b2e-8354-dd4e9f2ec263}" alias="Окончание перехода" name="StepEnd" parent="{7b78da05-e80c-47d4-8c22-0e644ec441de}" isView="false" Class="{e8463bfb-e95b-4b10-92cd-d41ac163219c}" guid="{f3e82605-3a63-4f5a-9013-b58d2b232e9c}"/>
 </RTPClass>
-<RTPClass alias="Окончание перехода" name="StepEnd" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" type="User" displayTemplate="" guid="{e8463bfb-e95b-4b10-92cd-d41ac163219c}">
-<RTPClass alias="Окончание перехода" name="StepEndComp" icon="" parent="{e8463bfb-e95b-4b10-92cd-d41ac163219c}" type="Standart" displayTemplate="" guid="{a1a397fb-1283-4b2e-8354-dd4e9f2ec263}"/>
+<RTPClass alias="Окончание перехода" name="StepEnd" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" accessMode="User" displayTemplate="" guid="{e8463bfb-e95b-4b10-92cd-d41ac163219c}">
+<RTPClass alias="Окончание перехода" name="StepEndComp" icon="" parent="{e8463bfb-e95b-4b10-92cd-d41ac163219c}" accessMode="Standart" displayTemplate="" guid="{a1a397fb-1283-4b2e-8354-dd4e9f2ec263}"/>
 </RTPClass>
-<RTPClass alias="Подразделения" name="Subdivision" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" type="User" displayTemplate="" guid="{c2dda30d-f474-4210-97cd-654b841ca2c1}">
-<RTPClass alias="Рабочее место" name="Workplace" icon="" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" type="User" displayTemplate="" guid="{dc7535f5-e632-40e1-9938-d9305a3d5be1}">
-<RTPClass alias="Рабочее место" name="WorkplaceComp" icon="" parent="{dc7535f5-e632-40e1-9938-d9305a3d5be1}" type="Standart" displayTemplate="" guid="{4592cd6e-1960-44cc-a4fa-d67534f59c6f}"/>
+<RTPClass alias="Подразделения" name="Subdivision" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" accessMode="User" displayTemplate="" guid="{c2dda30d-f474-4210-97cd-654b841ca2c1}">
+<RTPClass alias="Рабочее место" name="Workplace" icon="" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" accessMode="User" displayTemplate="" guid="{dc7535f5-e632-40e1-9938-d9305a3d5be1}">
+<RTPClass alias="Рабочее место" name="WorkplaceComp" icon="" parent="{dc7535f5-e632-40e1-9938-d9305a3d5be1}" accessMode="Standart" displayTemplate="" guid="{4592cd6e-1960-44cc-a4fa-d67534f59c6f}"/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Цех" name="shop" lowerBound="" isCandidateKey="true" parent="{dc7535f5-e632-40e1-9938-d9305a3d5be1}" referencedLov="" type="Reference" referencedClass="{81312c85-3af3-4cd0-b4c6-47be5e3d9453}" isUnique="true" upperBound="" maxStringLength="0" referencedUnit="" guid="{328eb7d7-27e4-4c6d-82c5-012a679c86f1}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Участок" name="plot" lowerBound="" isCandidateKey="true" parent="{dc7535f5-e632-40e1-9938-d9305a3d5be1}" referencedLov="" type="Reference" referencedClass="{81b12158-8bf4-4569-8e5f-f18822deb953}" isUnique="true" upperBound="" maxStringLength="0" referencedUnit="" guid="{b4e178c8-aa72-44f9-b84c-31f6b88cab9e}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Оборудование" name="equipment" lowerBound="" isCandidateKey="true" parent="{dc7535f5-e632-40e1-9938-d9305a3d5be1}" referencedLov="" type="Reference" referencedClass="{d2056648-6bc0-4264-8ab5-06e0d6526560}" isUnique="true" upperBound="" maxStringLength="0" referencedUnit="" guid="{e585df81-aa83-4fc6-b6cd-44660035a5f7}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Рабочее место" name="workplace" lowerBound="" isCandidateKey="true" parent="{dc7535f5-e632-40e1-9938-d9305a3d5be1}" referencedLov="" type="String" referencedClass="" isUnique="true" upperBound="" maxStringLength="0" referencedUnit="" guid="{1cf27b78-7249-4518-8599-3b32d8fc660c}" initialValue=""/>
 </RTPClass>
-<RTPClass alias="Цех" name="Shop" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" type="User" displayTemplate="" guid="{81312c85-3af3-4cd0-b4c6-47be5e3d9453}">
-<RTPClass alias="Цех" name="ShopComp" icon="" parent="{81312c85-3af3-4cd0-b4c6-47be5e3d9453}" type="Standart" displayTemplate="" guid="{687a5704-7dc0-4730-963e-823c452c9795}"/>
+<RTPClass alias="Цех" name="Shop" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" accessMode="User" displayTemplate="" guid="{81312c85-3af3-4cd0-b4c6-47be5e3d9453}">
+<RTPClass alias="Цех" name="ShopComp" icon="" parent="{81312c85-3af3-4cd0-b4c6-47be5e3d9453}" accessMode="Standart" displayTemplate="" guid="{687a5704-7dc0-4730-963e-823c452c9795}"/>
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{75de88d7-7a10-4d39-87c8-cb90fdd33458}" alias="Участок" name="Plot" parent="{81312c85-3af3-4cd0-b4c6-47be5e3d9453}" isView="false" Class="{81b12158-8bf4-4569-8e5f-f18822deb953}" guid="{075fbe6a-54d8-40b2-9027-9094acf9cd64}"/>
 </RTPClass>
-<RTPClass alias="Участок" name="Plot" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" type="User" displayTemplate="" guid="{81b12158-8bf4-4569-8e5f-f18822deb953}">
-<RTPClass alias="Участок" name="PlotComp" icon="" parent="{81b12158-8bf4-4569-8e5f-f18822deb953}" type="Standart" displayTemplate="" guid="{75de88d7-7a10-4d39-87c8-cb90fdd33458}"/>
+<RTPClass alias="Участок" name="Plot" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" accessMode="User" displayTemplate="" guid="{81b12158-8bf4-4569-8e5f-f18822deb953}">
+<RTPClass alias="Участок" name="PlotComp" icon="" parent="{81b12158-8bf4-4569-8e5f-f18822deb953}" accessMode="Standart" displayTemplate="" guid="{75de88d7-7a10-4d39-87c8-cb90fdd33458}"/>
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{4592cd6e-1960-44cc-a4fa-d67534f59c6f}" alias="Рабочее место" name="Workplace" parent="{81b12158-8bf4-4569-8e5f-f18822deb953}" isView="false" Class="{dc7535f5-e632-40e1-9938-d9305a3d5be1}" guid="{0c73aae9-01b3-42cd-8dc3-948fe3db93eb}"/>
 </RTPClass>
-<RTPClass alias="Предприятие" name="Enterprise" icon="" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" type="Standart" displayTemplate="" guid="{4679ef1c-5a50-4771-b2dd-5ed1c9edff2f}">
+<RTPClass alias="Предприятие" name="Enterprise" icon="" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" accessMode="Standart" displayTemplate="" guid="{4679ef1c-5a50-4771-b2dd-5ed1c9edff2f}">
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{687a5704-7dc0-4730-963e-823c452c9795}" alias="Цех" name="Shop" parent="{4679ef1c-5a50-4771-b2dd-5ed1c9edff2f}" isView="false" Class="{81312c85-3af3-4cd0-b4c6-47be5e3d9453}" guid="{d839f8cf-442e-4b50-9da6-696088496009}"/>
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{59bcffc2-6538-484f-83ac-5c1f7508489f}" alias="Отдел" name="Department" parent="{4679ef1c-5a50-4771-b2dd-5ed1c9edff2f}" isView="false" Class="{476cad2d-c9c7-4f86-ac95-cf2e5e8080b1}" guid="{22d87174-f4d5-4c81-a143-051f4f4e39fd}"/>
 </RTPClass>
-<RTPClass alias="Отдел" name="Department" icon="" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" type="Standart" displayTemplate="" guid="{476cad2d-c9c7-4f86-ac95-cf2e5e8080b1}">
-<RTPClass alias="Отдел" name="DepartamentComp" icon="" parent="{476cad2d-c9c7-4f86-ac95-cf2e5e8080b1}" type="Standart" displayTemplate="" guid="{59bcffc2-6538-484f-83ac-5c1f7508489f}"/>
+<RTPClass alias="Отдел" name="Department" icon="" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" accessMode="Standart" displayTemplate="" guid="{476cad2d-c9c7-4f86-ac95-cf2e5e8080b1}">
+<RTPClass alias="Отдел" name="DepartamentComp" icon="" parent="{476cad2d-c9c7-4f86-ac95-cf2e5e8080b1}" accessMode="Standart" displayTemplate="" guid="{59bcffc2-6538-484f-83ac-5c1f7508489f}"/>
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{e50afa5b-9661-4283-b097-89370067d67b}" alias="Рабочая группа" name="Workgroup" parent="{476cad2d-c9c7-4f86-ac95-cf2e5e8080b1}" isView="false" Class="{04cb668f-8fd1-4a6d-9635-15ad576eb941}" guid="{3f4f1c41-d718-42cd-a7ab-f070349e865b}"/>
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="false" linkClass="{77c0d27a-fb8f-48c9-af18-ade566efc6cb}" alias="Бюро" name="Bureau" parent="{476cad2d-c9c7-4f86-ac95-cf2e5e8080b1}" isView="false" Class="{c70a9a6a-cd68-4bf5-b1f1-0c44c36e7d19}" guid="{0f222000-b981-4495-b788-a1c687674610}"/>
 </RTPClass>
-<RTPClass alias="Бригада" name="Workgroup" icon="" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" type="" displayTemplate="" guid="{04cb668f-8fd1-4a6d-9635-15ad576eb941}">
-<RTPClass alias="Рабочая группа" name="WorkgroupComp" icon="" parent="{04cb668f-8fd1-4a6d-9635-15ad576eb941}" type="Standart" displayTemplate="" guid="{e50afa5b-9661-4283-b097-89370067d67b}"/>
+<RTPClass alias="Бригада" name="Workgroup" icon="" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" accessMode="Standart" displayTemplate="" guid="{04cb668f-8fd1-4a6d-9635-15ad576eb941}">
+<RTPClass alias="Рабочая группа" name="WorkgroupComp" icon="" parent="{04cb668f-8fd1-4a6d-9635-15ad576eb941}" accessMode="Standart" displayTemplate="" guid="{e50afa5b-9661-4283-b097-89370067d67b}"/>
 </RTPClass>
-<RTPClass alias="Бюро" name="Bureau" icon="" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" type="Standart" displayTemplate="" guid="{c70a9a6a-cd68-4bf5-b1f1-0c44c36e7d19}">
-<RTPClass alias="Бюро" name="BureauComp" icon="" parent="{c70a9a6a-cd68-4bf5-b1f1-0c44c36e7d19}" type="Standart" displayTemplate="" guid="{77c0d27a-fb8f-48c9-af18-ade566efc6cb}"/>
+<RTPClass alias="Бюро" name="Bureau" icon="" parent="{c2dda30d-f474-4210-97cd-654b841ca2c1}" accessMode="Standart" displayTemplate="" guid="{c70a9a6a-cd68-4bf5-b1f1-0c44c36e7d19}">
+<RTPClass alias="Бюро" name="BureauComp" icon="" parent="{c70a9a6a-cd68-4bf5-b1f1-0c44c36e7d19}" accessMode="Standart" displayTemplate="" guid="{77c0d27a-fb8f-48c9-af18-ade566efc6cb}"/>
 </RTPClass>
 <RTPAttribute isNullsAllowed="false" group="" alias="Руководитель" name="leader" isCandidateKey="true" type="Reference" referencedClass="{28f74930-f3f0-44e9-a174-e4e2a1ffc95c}" isUnique="true" maxStringLength="0" guid="{e96c1ebe-5e26-459e-8eb3-9c2a365abf6f}" initialValue=""/>
 </RTPClass>
-<RTPClass alias="Инструкция" name="Instruction" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" type="User" displayTemplate="" guid="{4e1a0173-b6d3-43e1-b6ff-692baadeefca}">
-<RTPClass view="" alias="Инструкция техпроцесса" name="MPInstruction" icon="" parent="{4e1a0173-b6d3-43e1-b6ff-692baadeefca}" type="Standart" displayTemplate="" guid="{9ec3c3c4-70e5-4426-8f0d-48ca7f631221}">
+<RTPClass alias="Инструкция" name="Instruction" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" accessMode="User" displayTemplate="" guid="{4e1a0173-b6d3-43e1-b6ff-692baadeefca}">
+<RTPClass type="" alias="Инструкция техпроцесса" name="MPInstruction" icon="" parent="{4e1a0173-b6d3-43e1-b6ff-692baadeefca}" accessMode="Standart" displayTemplate="" guid="{9ec3c3c4-70e5-4426-8f0d-48ca7f631221}">
 <RTPAttribute isNullsAllowed="false" group="" alias="ДСЕ" name="semiFinishedProduction" lowerBound="" isCandidateKey="false" parent="{9ec3c3c4-70e5-4426-8f0d-48ca7f631221}" referencedLov="" type="Reference" referencedClass="{5a53cbf4-4257-4612-bf36-129da665bfda}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{10aef79b-9ea1-4abb-81d7-182820349a24}" initialValue=""/>
 </RTPClass>
 </RTPClass>
-<RTPClass view="" alias="Сортамент" name="Sortament" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" versionCount="1" type="Standart" displayTemplate="" guid="{f0ad26d6-93b7-40ba-a24b-b444ac643ab5}">
+<RTPClass type="" alias="Сортамент" name="Sortament" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" versionCount="1" accessMode="Standart" displayTemplate="" guid="{f0ad26d6-93b7-40ba-a24b-b444ac643ab5}">
 <RTPFilter inverseDescription="" directDescription="" alias="Сортамент круг" name="RoundDimension" parent="{f0ad26d6-93b7-40ba-a24b-b444ac643ab5}" Class="{3aad9bd2-1688-41d9-aca2-1fa339cbad41}" guid="{0c74875f-8c41-42c9-9236-bc9517a7a385}">
 <RTPCondition operator="=" secondAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" linkOf="И" firstAttr="{3393c555-ac0a-4586-9156-2d79404f7555}" guid="{bf83e3a0-6ce9-4850-9c84-18bf34a66e20}"/>
 </RTPFilter>
 <RTPComposition inverseDescription="" directDescription="" isComp="false" linkClass="{3aad9bd2-1688-41d9-aca2-1fa339cbad41}" alias="Круг" parent="{f0ad26d6-93b7-40ba-a24b-b444ac643ab5}" isView="false" Class="{1d134fbd-e601-4382-850e-a9bd4816c7b9}" guid="{3393c555-ac0a-4586-9156-2d79404f7555}"/>
 </RTPClass>
-<RTPClass alias="" name="StandartDocument" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" type="Standart" displayTemplate="" guid="{c128d593-3fee-4959-8ec8-55e171f1052c}"/>
+<RTPClass alias="" name="StandartDocument" icon="" parent="{6916ce92-e9c4-405e-ab36-89c7071a78ec}" accessMode="Standart" displayTemplate="" guid="{c128d593-3fee-4959-8ec8-55e171f1052c}"/>
 </RTPClass>
-<RTPClass view="Abstract" alias="Технология" name="Technology" icon="" parent="{9ccb6f58-033b-4c3f-a514-7957bae204ba}" type="System" displayTemplate="" guid="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}">
-<RTPClass view="Abstract" alias="Режимы обработки" name="WorkingData" icon="" parent="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}" type="System" displayTemplate="" guid="{14bbb3d8-53cc-4a8c-bf47-5d0d8f39d993}">
-<RTPClass view="Normal" alias="Режим обработки перехода" name="MPStepWorkingData" icon="" parent="{14bbb3d8-53cc-4a8c-bf47-5d0d8f39d993}" type="User" displayTemplate="" guid="{7351e464-6924-49ab-97c1-7e652445ff8b}">
+<RTPClass type="Abstract" alias="Технология" name="Technology" icon="" parent="{9ccb6f58-033b-4c3f-a514-7957bae204ba}" accessMode="System" displayTemplate="" guid="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}">
+<RTPClass type="Abstract" alias="Режимы обработки" name="WorkingData" icon="" parent="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}" accessMode="System" displayTemplate="" guid="{14bbb3d8-53cc-4a8c-bf47-5d0d8f39d993}">
+<RTPClass type="Normal" alias="Режим обработки перехода" name="MPStepWorkingData" icon="" parent="{14bbb3d8-53cc-4a8c-bf47-5d0d8f39d993}" accessMode="User" displayTemplate="" guid="{7351e464-6924-49ab-97c1-7e652445ff8b}">
 <RTPAttribute isNullsAllowed="false" group="" alias="ДСЕ" name="semiFinishedProduction" lowerBound="" isCandidateKey="false" parent="{7351e464-6924-49ab-97c1-7e652445ff8b}" referencedLov="" type="Reference" referencedClass="{5a53cbf4-4257-4612-bf36-129da665bfda}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{b184d9dc-42c3-43c4-8ba2-6a87d596c84e}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Normal" alias="Режимы резания" name="CuttingData" icon="" parent="{14bbb3d8-53cc-4a8c-bf47-5d0d8f39d993}" type="Standart" displayTemplate="" guid="{3b0f6af7-26b3-4438-b076-6b07615764e2}">
-<RTPClass view="Context" alias="Режимы резания инструмента" name="ToolingCuttingData" icon="" parent="{3b0f6af7-26b3-4438-b076-6b07615764e2}" type="Standart" displayTemplate="" guid="{c06da7dc-af68-4c79-8e4b-d76bbb673d92}"/>
+<RTPClass type="Normal" alias="Режимы резания" name="CuttingData" icon="" parent="{14bbb3d8-53cc-4a8c-bf47-5d0d8f39d993}" accessMode="Standart" displayTemplate="" guid="{3b0f6af7-26b3-4438-b076-6b07615764e2}">
+<RTPClass type="Context" alias="Режимы резания инструмента" name="ToolingCuttingData" icon="" parent="{3b0f6af7-26b3-4438-b076-6b07615764e2}" accessMode="Standart" displayTemplate="" guid="{c06da7dc-af68-4c79-8e4b-d76bbb673d92}"/>
 </RTPClass>
 </RTPClass>
-<RTPClass alias="Операция" name="Operation" icon="" parent="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}" type="User" displayTemplate="" guid="{a92bf29b-dc38-4e88-b369-0f92d92e589b}">
+<RTPClass alias="Операция" name="Operation" icon="" parent="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}" accessMode="User" displayTemplate="" guid="{a92bf29b-dc38-4e88-b369-0f92d92e589b}">
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="true" linkClass="{67453529-d2c8-4fab-b3d5-473663433790}" alias="Основной материал" parent="{a92bf29b-dc38-4e88-b369-0f92d92e589b}" isView="true" Class="{1d134fbd-e601-4382-850e-a9bd4816c7b9}" guid="{f7424569-d669-4dbd-815c-eec0b51ac574}"/>
-<RTPClass view="Context" alias="Операции техпроцесса" name="MPOperation" icon="" parent="{a92bf29b-dc38-4e88-b369-0f92d92e589b}" type="Standart" displayTemplate="" guid="{67240c4e-f334-4d96-a070-a9655409a820}">
+<RTPClass type="Context" alias="Операции техпроцесса" name="MPOperation" icon="" parent="{a92bf29b-dc38-4e88-b369-0f92d92e589b}" accessMode="Standart" displayTemplate="" guid="{67240c4e-f334-4d96-a070-a9655409a820}">
 <RTPFilter inverseDescription="" directDescription="" alias="Вспомогательный материал" name="AuxiliaryMaterial" parent="{67240c4e-f334-4d96-a070-a9655409a820}" Class="{d8fa3671-f6f2-4026-a2e6-4a783a91bc6d}" guid="{925e102d-0445-4739-b65e-c4a2e8dd0f49}">
 <RTPCondition operator="=" secondAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" parent="{925e102d-0445-4739-b65e-c4a2e8dd0f49}" linkOf="И" firstAttr="{c703ef07-0d41-4c4d-979c-4b414e664573}" guid="{a941c474-59f9-4842-ac8a-e0014e2008a6}"/>
 <RTPCondition operator="=" secondAttr="{9cc196bd-4f65-4d18-902f-fc70115523e7}" parent="{925e102d-0445-4739-b65e-c4a2e8dd0f49}" linkOf="ИЛИ" firstAttr="{abe78654-6789-43f6-9132-3ab9162537bd}" guid="{714bce28-f511-41d8-981f-841fab6e1d0b}"/>
@@ -408,9 +408,9 @@
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="true" linkClass="{bf6036b5-ad62-4874-b43d-d01c14c6ae2f}" alias="Средства оснащения" name="Tooling" parent="{a92bf29b-dc38-4e88-b369-0f92d92e589b}" isView="true" Class="{fdb0e97a-4525-40d5-a1e2-d4c8ac9c10e9}" guid="{28a4442c-8527-4326-804f-85c4b26885d3}"/>
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="true" linkClass="{2d6d8c5a-9664-4e3a-a8ad-a665bbd91147}" alias="Переменная" name="Variable" parent="{a92bf29b-dc38-4e88-b369-0f92d92e589b}" isView="true" Class="{13bc92cb-4e66-4e46-b43f-cbac1a36ecb0}" guid="{78434f45-4d93-494b-8b4d-72560684ed4c}"/>
 </RTPClass>
-<RTPClass alias="Установ" name="Established" icon="" parent="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}" type="User" displayTemplate="" guid="{b4b3e0da-eb91-41c6-a2ee-57d2c5155dba}">
+<RTPClass alias="Установ" name="Established" icon="" parent="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}" accessMode="User" displayTemplate="" guid="{b4b3e0da-eb91-41c6-a2ee-57d2c5155dba}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Номер установа" name="number" lowerBound="" isCandidateKey="false" parent="{b4b3e0da-eb91-41c6-a2ee-57d2c5155dba}" referencedLov="" type="Integer" referencedClass="" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{222de5fd-4327-42cc-a451-4ef9b11cec7f}" initialValue=""/>
-<RTPClass view="" alias="Установ в техпроцессе" name="MPEstablished" icon="" parent="{b4b3e0da-eb91-41c6-a2ee-57d2c5155dba}" type="Standart" displayTemplate="" guid="{b0c01a0a-f991-4827-a809-a8bc3c94fcf9}">
+<RTPClass type="" alias="Установ в техпроцессе" name="MPEstablished" icon="" parent="{b4b3e0da-eb91-41c6-a2ee-57d2c5155dba}" accessMode="Standart" displayTemplate="" guid="{b0c01a0a-f991-4827-a809-a8bc3c94fcf9}">
 <RTPFilter inverseDescription="" directDescription="" alias="Переход" name="Step" parent="{b0c01a0a-f991-4827-a809-a8bc3c94fcf9}" Class="{0d43785a-4335-4144-b653-ab456bcb8b48}" guid="{bbfb2c87-3c32-4b6a-8b72-e798b36011eb}">
 <RTPCondition operator="=" secondAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" parent="{bbfb2c87-3c32-4b6a-8b72-e798b36011eb}" linkOf="И" firstAttr="{0f8028fe-8c26-4db1-9059-e6c0a9cf357e}" guid="{b1516994-f2cb-4d54-9ac0-318f70278c47}"/>
 <RTPCondition operator="=" secondAttr="{56be396f-7dbc-446e-b8fd-c7cc8c53cccb}" linkOf="И" firstAttr="{80bbee76-ea98-480d-936d-35eecd7b89b6}" guid="{9a74e936-3069-43e1-8d2e-4265e5329eb3}"/>
@@ -433,8 +433,8 @@
 <RTPAttribute isNullsAllowed="false" group="" alias="B" name="B" isCandidateKey="true" parent="{b4b3e0da-eb91-41c6-a2ee-57d2c5155dba}" type="Dimension" referencedClass="" isUnique="true" maxStringLength="0" guid="{b7a3c2a7-b3f7-4929-82a7-238d02efabf8}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="C" name="C" isCandidateKey="true" parent="{b4b3e0da-eb91-41c6-a2ee-57d2c5155dba}" type="Dimension" referencedClass="" isUnique="true" maxStringLength="0" guid="{17427641-a12f-49d4-bb0b-91546a9ba110}" initialValue=""/>
 </RTPClass>
-<RTPClass alias="Переход" name="Step" icon="" parent="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}" type="User" displayTemplate="" guid="{d5d622ff-e81d-478f-9469-795ced2fef68}">
-<RTPClass view="Context" alias="Переходы техпроцесса" name="MPStep" icon="" parent="{d5d622ff-e81d-478f-9469-795ced2fef68}" type="System" displayTemplate="" guid="{0d43785a-4335-4144-b653-ab456bcb8b48}">
+<RTPClass alias="Переход" name="Step" icon="" parent="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}" accessMode="User" displayTemplate="" guid="{d5d622ff-e81d-478f-9469-795ced2fef68}">
+<RTPClass type="Context" alias="Переходы техпроцесса" name="MPStep" icon="" parent="{d5d622ff-e81d-478f-9469-795ced2fef68}" accessMode="System" displayTemplate="" guid="{0d43785a-4335-4144-b653-ab456bcb8b48}">
 <RTPFilter inverseDescription="" directDescription="" alias="Основной материал" name="BasicMaterial" parent="{0d43785a-4335-4144-b653-ab456bcb8b48}" Class="{67453529-d2c8-4fab-b3d5-473663433790}" guid="{58e7cf93-b934-420b-a4a7-4c75b61316b6}">
 <RTPCondition operator="=" secondAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" parent="{58e7cf93-b934-420b-a4a7-4c75b61316b6}" linkOf="И" firstAttr="{f7424569-d669-4dbd-815c-eec0b51ac574}" guid="{bd85f83e-4455-404d-93ae-6e13dc64fa14}"/>
 <RTPCondition operator="=" secondAttr="{9cc196bd-4f65-4d18-902f-fc70115523e7}" parent="{58e7cf93-b934-420b-a4a7-4c75b61316b6}" linkOf="ИЛИ" firstAttr="{abe78654-6789-43f6-9132-3ab9162537bd}" guid="{ed0dc6e1-2717-45ec-9b83-f98a377f0d7e}"/>
@@ -480,14 +480,14 @@
 <RTPAttribute isNullsAllowed="false" group="" alias="Вспомогательный" name="isAuxiliary" lowerBound="" isCandidateKey="true" parent="{d5d622ff-e81d-478f-9469-795ced2fef68}" referencedLov="" type="Boolean" referencedClass="" isUnique="true" upperBound="" maxStringLength="0" referencedUnit="" guid="{173939ad-9ace-4c2a-85c8-33bb3d21af12}" initialValue=""/>
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="true" linkClass="{7351e464-6924-49ab-97c1-7e652445ff8b}" alias="Режим обработки" parent="{d5d622ff-e81d-478f-9469-795ced2fef68}" isView="true" Class="{14bbb3d8-53cc-4a8c-bf47-5d0d8f39d993}" guid="{94a2b34e-cd02-42f9-8aca-f40c8fd9082a}"/>
 </RTPClass>
-<RTPClass view="Normal" alias="Параметр" name="Parameter" icon="" parent="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}" versionCount="1" type="User" displayTemplate="" guid="{13bc92cb-4e66-4e46-b43f-cbac1a36ecb0}">
-<RTPClass view="Normal" alias="Допуск формы и расположения" name="ToleranceParameter" icon="" parent="{13bc92cb-4e66-4e46-b43f-cbac1a36ecb0}" versionCount="1" type="User" displayTemplate="" guid="{ec6c80fa-75ef-41fa-8657-6a56a02e2507}"/>
-<RTPClass view="Normal" alias="Параметр типа размер" name="DimensionParameter" icon="" parent="{13bc92cb-4e66-4e46-b43f-cbac1a36ecb0}" versionCount="1" type="User" displayTemplate="" guid="{15bf6d3e-c41d-44c4-8d7d-ce71a7c8cc84}"/>
-<RTPClass view="Context" alias="Параметр" name="MPParameter" icon="" parent="{13bc92cb-4e66-4e46-b43f-cbac1a36ecb0}" versionCount="1" type="Standart" displayTemplate="" guid="{2d6d8c5a-9664-4e3a-a8ad-a665bbd91147}">
+<RTPClass type="Normal" alias="Параметр" name="Parameter" icon="" parent="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}" versionCount="1" accessMode="User" displayTemplate="" guid="{13bc92cb-4e66-4e46-b43f-cbac1a36ecb0}">
+<RTPClass type="Normal" alias="Допуск формы и расположения" name="ToleranceParameter" icon="" parent="{13bc92cb-4e66-4e46-b43f-cbac1a36ecb0}" versionCount="1" accessMode="User" displayTemplate="" guid="{ec6c80fa-75ef-41fa-8657-6a56a02e2507}"/>
+<RTPClass type="Normal" alias="Параметр типа размер" name="DimensionParameter" icon="" parent="{13bc92cb-4e66-4e46-b43f-cbac1a36ecb0}" versionCount="1" accessMode="User" displayTemplate="" guid="{15bf6d3e-c41d-44c4-8d7d-ce71a7c8cc84}"/>
+<RTPClass type="Context" alias="Параметр" name="MPParameter" icon="" parent="{13bc92cb-4e66-4e46-b43f-cbac1a36ecb0}" versionCount="1" accessMode="Standart" displayTemplate="" guid="{2d6d8c5a-9664-4e3a-a8ad-a665bbd91147}">
 <RTPAttribute isNullsAllowed="false" group="" alias="ДСЕ" name="semiFinishedProduction" lowerBound="" isCandidateKey="false" parent="{2d6d8c5a-9664-4e3a-a8ad-a665bbd91147}" referencedLov="" type="Reference" referencedClass="{5a53cbf4-4257-4612-bf36-129da665bfda}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{e06ae106-01f2-43fb-8f8d-54b88587af6e}" initialValue=""/>
 </RTPClass>
 </RTPClass>
-<RTPClass alias="Технологический процесс" name="ManufacturingProcess" icon="" parent="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}" type="User" displayTemplate="" guid="{e1795222-c9dd-41d6-800e-20f86e9f8751}">
+<RTPClass alias="Технологический процесс" name="ManufacturingProcess" icon="" parent="{93a5ce20-52eb-471d-acab-0b22cbf8d97d}" accessMode="User" displayTemplate="" guid="{e1795222-c9dd-41d6-800e-20f86e9f8751}">
 <RTPFilter inverseDescription="" directDescription="" alias="Операция" name="Operation" parent="{e1795222-c9dd-41d6-800e-20f86e9f8751}" Class="{67240c4e-f334-4d96-a070-a9655409a820}" guid="{52e60ac7-8459-4acd-aac5-62fd35f86821}">
 <RTPCondition operator="=" secondAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" linkOf="И" firstAttr="{9ab8737d-a108-4c81-88ee-a100ea2e67d5}" guid="{0623501c-27b4-4c13-8b16-b174f41e6913}"/>
 <RTPCondition operator="=" secondAttr="{abe78654-6789-43f6-9132-3ab9162537bd}" linkOf="И" firstAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" guid="{561dbdbc-1437-4d24-9d4e-7ed20d2c95d8}"/>
@@ -523,9 +523,9 @@
 <RTPComposition inverseDescription="Входит в" directDescription="Состоит из" isComp="true" linkClass="{2d57f51e-1e32-4806-8efb-6650904582ab}" alias="Исходная заготовка" name="Blank" parent="{e1795222-c9dd-41d6-800e-20f86e9f8751}" isView="true" Class="{a079cebb-43b7-44b8-8942-383df4d7d14c}" guid="{779f1e65-2ad6-4f7e-aad6-bcc21c2adf5a}"/>
 </RTPClass>
 </RTPClass>
-<RTPClass view="Abstract" alias="Метаданные" name="MetaData" icon="" parent="{9ccb6f58-033b-4c3f-a514-7957bae204ba}" type="System" displayTemplate="" guid="{ee28f006-40c4-401d-8b69-7540f995cd47}">
-<RTPClass view="" alias="Элементы класса" name="ClassItem" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" versionCount="1" type="System" displayTemplate="" guid="{ca6b76b4-8df5-4023-b854-b106a79a2c8d}">
-<RTPClass view="" alias="Класс" name="Class" icon="" parent="{ca6b76b4-8df5-4023-b854-b106a79a2c8d}" versionCount="" type="System" displayTemplate="" guid="{07365d21-0334-46f3-8f57-add028f3ece0}">
+<RTPClass type="Abstract" alias="Метаданные" name="MetaData" icon="" parent="{9ccb6f58-033b-4c3f-a514-7957bae204ba}" accessMode="System" displayTemplate="" guid="{ee28f006-40c4-401d-8b69-7540f995cd47}">
+<RTPClass type="" alias="Элементы класса" name="ClassItem" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" versionCount="1" accessMode="System" displayTemplate="" guid="{ca6b76b4-8df5-4023-b854-b106a79a2c8d}">
+<RTPClass type="" alias="Класс" name="Class" icon="" parent="{ca6b76b4-8df5-4023-b854-b106a79a2c8d}" versionCount="" accessMode="System" displayTemplate="" guid="{07365d21-0334-46f3-8f57-add028f3ece0}">
 <RTPFilter inverseDescription="Входит в" directDescription="Состоит из" alias="Атрибуты" name="Attrubute" parent="{07365d21-0334-46f3-8f57-add028f3ece0}" Class="{d65e189c-e2d9-4118-9058-0715bea79881}" guid="{a28743f1-4e58-43eb-80f1-7f9218f94912}">
 <RTPCondition operator="=" secondAttr="{8caa2618-2e49-49a9-9682-4fdf19859805}" parent="{a28743f1-4e58-43eb-80f1-7f9218f94912}" linkOf="И" firstAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" guid="{5c742e1c-b6ba-4da2-8a10-ab342daa8b61}"/>
 </RTPFilter>
@@ -548,7 +548,7 @@
 <RTPAttribute isNullsAllowed="true" group="" alias="Отображаемый атрибут" name="displayTemplate" lowerBound="" isCandidateKey="false" parent="{07365d21-0334-46f3-8f57-add028f3ece0}" referencedLov="" type="String" referencedClass="" isUnique="false" upperBound="" maxStringLength="4000" referencedUnit="" guid="{e8fc6398-0afe-49f4-92fa-ca74e67e5a9f}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Кол-во версий" name="versionCount" lowerBound="1" isCandidateKey="false" parent="{07365d21-0334-46f3-8f57-add028f3ece0}" referencedLov="" type="Integer" referencedClass="" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{b3cee3b6-4a51-4a6c-9369-c0ac8f3110f6}" initialValue="1"/>
 </RTPClass>
-<RTPClass view="" alias="Состав" name="Composition" icon="" parent="{ca6b76b4-8df5-4023-b854-b106a79a2c8d}" versionCount="" type="System" displayTemplate="" guid="{1ae3b8cf-ebb8-4367-b3e8-c73c9dd20079}">
+<RTPClass type="" alias="Состав" name="Composition" icon="" parent="{ca6b76b4-8df5-4023-b854-b106a79a2c8d}" versionCount="" accessMode="System" displayTemplate="" guid="{1ae3b8cf-ebb8-4367-b3e8-c73c9dd20079}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Наименование" name="name" lowerBound="" isCandidateKey="false" parent="{1ae3b8cf-ebb8-4367-b3e8-c73c9dd20079}" referencedLov="" type="String" referencedClass="" isUnique="false" upperBound="" maxStringLength="27" referencedUnit="" guid="{4447a777-5739-48e3-8798-6c64f51716d4}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Контекстный класс" name="linkClass" lowerBound="" isCandidateKey="false" parent="{1ae3b8cf-ebb8-4367-b3e8-c73c9dd20079}" referencedLov="" type="Reference" referencedClass="{07365d21-0334-46f3-8f57-add028f3ece0}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{b70f839b-000c-4f65-8108-4370166efdd4}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Исходный класс" name="srcClass" lowerBound="" isCandidateKey="false" parent="{1ae3b8cf-ebb8-4367-b3e8-c73c9dd20079}" referencedLov="" type="Reference" referencedClass="" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{a79185cd-a46e-431c-a81d-6ec9b12ccba1}" initialValue=""/>
@@ -567,28 +567,28 @@
 <RTPAttribute isNullsAllowed="false" group="" alias="Композиция" name="isComposition" lowerBound="" isCandidateKey="false" parent="{ca6b76b4-8df5-4023-b854-b106a79a2c8d}" referencedLov="" type="Dimension" referencedClass="" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{00ea3181-a81a-4da7-957c-b1b8c956eee5}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Представление" name="isView" lowerBound="" isCandidateKey="false" parent="{ca6b76b4-8df5-4023-b854-b106a79a2c8d}" referencedLov="" type="Boolean" referencedClass="" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{d1f63668-f2b8-4a34-9fd5-858a12e9f892}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Abstract" alias="Родители класса справочника" name="ReferenceClassParent" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" type="System" displayTemplate="" guid="{bd5501fd-44a6-4539-9060-fa4c3bf4c470}">
-<RTPClass view="Normal" alias="Справочник" name="Reference" icon="" parent="{bd5501fd-44a6-4539-9060-fa4c3bf4c470}" type="System" displayTemplate="" guid="{4f21a72b-6956-47c0-9aed-2ce2e3a70337}">
+<RTPClass type="Abstract" alias="Родители класса справочника" name="ReferenceClassParent" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" accessMode="System" displayTemplate="" guid="{bd5501fd-44a6-4539-9060-fa4c3bf4c470}">
+<RTPClass type="Normal" alias="Справочник" name="Reference" icon="" parent="{bd5501fd-44a6-4539-9060-fa4c3bf4c470}" accessMode="System" displayTemplate="" guid="{4f21a72b-6956-47c0-9aed-2ce2e3a70337}">
 <RTPFilter inverseDescription="Входит в" directDescription="Состоит из" alias="Класс справочника" name="ReferenceClass" parent="{4f21a72b-6956-47c0-9aed-2ce2e3a70337}" Class="{107b8c36-15ac-4a4d-b5fb-49b5cc58117f}" guid="{4bc5d9ef-0aef-4e64-a026-1d3c8292b340}">
 <RTPCondition operator="=" secondAttr="{d8fa28ed-df37-4d98-80cb-f28f324a881c}" parent="{4bc5d9ef-0aef-4e64-a026-1d3c8292b340}" linkOf="И" firstAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" guid="{56c8c2e8-678e-4394-b6bf-99234542d4dd}"/>
 </RTPFilter>
 <RTPAttribute isNullsAllowed="false" group="" alias="Наименование" name="name" lowerBound="" isCandidateKey="true" parent="{4f21a72b-6956-47c0-9aed-2ce2e3a70337}" referencedLov="" type="String" referencedClass="" isUnique="true" upperBound="" maxStringLength="256" referencedUnit="" guid="{ad2bfd89-d736-4974-ac4f-d4fa19823ccc}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Родитель" name="parent" lowerBound="" isCandidateKey="true" parent="{4f21a72b-6956-47c0-9aed-2ce2e3a70337}" referencedLov="" type="Reference" referencedClass="{de96f0a2-1cd6-40ba-94d1-38ee98552b6f}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{639bacb8-3651-4916-a961-a3a1c571cb5a}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Abstract" alias="Элемент справочника" name="ReferenceItem" icon="" parent="{bd5501fd-44a6-4539-9060-fa4c3bf4c470}" type="System" displayTemplate="" guid="{b1276039-319b-4e47-a502-e02f02fc04c9}">
+<RTPClass type="Abstract" alias="Элемент справочника" name="ReferenceItem" icon="" parent="{bd5501fd-44a6-4539-9060-fa4c3bf4c470}" accessMode="System" displayTemplate="" guid="{b1276039-319b-4e47-a502-e02f02fc04c9}">
 <RTPFilter inverseDescription="Входит в" directDescription="Состоит из" alias="Класс справочника" name="RefereneceClass" parent="{b1276039-319b-4e47-a502-e02f02fc04c9}" Class="{107b8c36-15ac-4a4d-b5fb-49b5cc58117f}" guid="{8eb49785-20d0-4dbf-8888-a0afdac87072}">
 <RTPCondition operator="=" secondAttr="{d8fa28ed-df37-4d98-80cb-f28f324a881c}" parent="{8eb49785-20d0-4dbf-8888-a0afdac87072}" linkOf="И" firstAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" guid="{2c00ce7c-8c70-48dc-bd9b-ca26aa04e1fe}"/>
 </RTPFilter>
 <RTPAttribute isNullsAllowed="false" group="" alias="Родитель" name="parent" lowerBound="" isCandidateKey="true" parent="{b1276039-319b-4e47-a502-e02f02fc04c9}" referencedLov="" type="Reference" referencedClass="{107b8c36-15ac-4a4d-b5fb-49b5cc58117f}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{03c41c7f-a8d5-4a4b-94f2-d50b835612e8}" initialValue=""/>
-<RTPClass view="Normal" alias="Состав справочника" name="ReferenceComposition" icon="" parent="{b1276039-319b-4e47-a502-e02f02fc04c9}" type="User" displayTemplate="" guid="{5ad20bcb-1b29-4f4d-9e2a-91ded45eadfd}">
+<RTPClass type="Normal" alias="Состав справочника" name="ReferenceComposition" icon="" parent="{b1276039-319b-4e47-a502-e02f02fc04c9}" accessMode="User" displayTemplate="" guid="{5ad20bcb-1b29-4f4d-9e2a-91ded45eadfd}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Ссылка на состав" name="refComp" lowerBound="" isCandidateKey="true" parent="{5ad20bcb-1b29-4f4d-9e2a-91ded45eadfd}" referencedLov="" type="Reference" referencedClass="{1ae3b8cf-ebb8-4367-b3e8-c73c9dd20079}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{3d3ad539-6b8f-4a29-ba5d-38fe425bee67}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Normal" alias="Фильтр справочника" name="ReferenceFilter" icon="" parent="{b1276039-319b-4e47-a502-e02f02fc04c9}" type="User" displayTemplate="" guid="{00b8746d-403d-4410-8488-7288b459bbf4}">
+<RTPClass type="Normal" alias="Фильтр справочника" name="ReferenceFilter" icon="" parent="{b1276039-319b-4e47-a502-e02f02fc04c9}" accessMode="User" displayTemplate="" guid="{00b8746d-403d-4410-8488-7288b459bbf4}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Ссылка на фильтр" name="refFilter" lowerBound="" isCandidateKey="true" parent="{00b8746d-403d-4410-8488-7288b459bbf4}" referencedLov="" type="Reference" referencedClass="{1ae3b8cf-ebb8-4367-b3e8-c73c9dd20079}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{d022bf58-d499-4ded-9d4d-016787735dbd}" initialValue=""/>
 </RTPClass>
 </RTPClass>
 </RTPClass>
-<RTPClass view="Normal" alias="Группы метаданных" name="MetaDataGroup" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" type="User" displayTemplate="" guid="{08c7f9c3-38ac-46c6-88b1-692a51d5de80}">
+<RTPClass type="Normal" alias="Группы метаданных" name="MetaDataGroup" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" accessMode="User" displayTemplate="" guid="{08c7f9c3-38ac-46c6-88b1-692a51d5de80}">
 <RTPFilter inverseDescription="Входит в" directDescription="Состоит из" alias="Группа величин" name="QuantityGroup" parent="{08c7f9c3-38ac-46c6-88b1-692a51d5de80}" Class="{82418a31-38ac-4c15-bb4b-672da12b2cab}" guid="{a7ad0d18-38a7-4f50-b38f-6f2e872e8626}">
 <RTPCondition operator="=" secondAttr="{b96ae526-2611-4cd6-9d4f-78bc857f12d4}" linkOf="И" firstAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" guid="{de48d245-03a0-4f1f-9393-1367a423714e}"/>
 </RTPFilter>
@@ -605,40 +605,40 @@
 <RTPCondition operator="=" secondAttr="{30e33193-a531-4fd5-9725-7bbeeeff86bf}" linkOf="И" firstAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" guid="{6cc4cd42-9642-42dd-a23d-1d381bcde248}"/>
 </RTPFilter>
 </RTPClass>
-<RTPClass view="Normal" alias="Класс справочника" name="ReferenceClass" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" type="User" displayTemplate="" guid="{107b8c36-15ac-4a4d-b5fb-49b5cc58117f}">
+<RTPClass type="Normal" alias="Класс справочника" name="ReferenceClass" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" accessMode="User" displayTemplate="" guid="{107b8c36-15ac-4a4d-b5fb-49b5cc58117f}">
 <RTPFilter inverseDescription="Входит в" directDescription="Состоит из" alias="Элементы справочника" name="ReferenceItem" parent="{107b8c36-15ac-4a4d-b5fb-49b5cc58117f}" Class="{b1276039-319b-4e47-a502-e02f02fc04c9}" guid="{5aae6111-b05e-4930-8148-467c6a775902}">
 <RTPCondition operator="=" secondAttr="{03c41c7f-a8d5-4a4b-94f2-d50b835612e8}" linkOf="И" firstAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" guid="{efe25221-a668-45d9-b601-92424327c240}"/>
 </RTPFilter>
 <RTPAttribute isNullsAllowed="false" group="" alias="Родитель" name="parent" lowerBound="" isCandidateKey="true" parent="{107b8c36-15ac-4a4d-b5fb-49b5cc58117f}" referencedLov="" type="Reference" referencedClass="{bd5501fd-44a6-4539-9060-fa4c3bf4c470}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{d8fa28ed-df37-4d98-80cb-f28f324a881c}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Ссылка на класс" name="refClass" lowerBound="" isCandidateKey="true" parent="{107b8c36-15ac-4a4d-b5fb-49b5cc58117f}" referencedLov="" type="Reference" referencedClass="{07365d21-0334-46f3-8f57-add028f3ece0}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{2a9ff9fd-1956-41f3-918d-dda96c962841}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Abstract" alias="Элементы фильтра" name="FilterItem" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" type="System" displayTemplate="" guid="{8fa44a03-ba8e-4acd-8eb9-5b985f1f350e}">
-<RTPClass view="Normal" alias="Условие фильтра" name="Condition" icon="" parent="{8fa44a03-ba8e-4acd-8eb9-5b985f1f350e}" type="System" displayTemplate="" guid="{b862adb3-9a19-4402-a8ad-9ce43b5a15d5}">
+<RTPClass type="Abstract" alias="Элементы фильтра" name="FilterItem" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" accessMode="System" displayTemplate="" guid="{8fa44a03-ba8e-4acd-8eb9-5b985f1f350e}">
+<RTPClass type="Normal" alias="Условие фильтра" name="Condition" icon="" parent="{8fa44a03-ba8e-4acd-8eb9-5b985f1f350e}" accessMode="System" displayTemplate="" guid="{b862adb3-9a19-4402-a8ad-9ce43b5a15d5}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Оператор" name="operator" lowerBound="" isCandidateKey="false" referencedLov="{e82fd1d0-6df8-42b4-b659-56d15ecd46d0}" type="String" isUnique="false" upperBound="" maxStringLength="10" guid="{15f5fc6e-f797-4bc1-ab23-b64f0a67edf7}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Второй атрибут" name="secondAttr" lowerBound="" isCandidateKey="false" parent="{b862adb3-9a19-4402-a8ad-9ce43b5a15d5}" referencedLov="" type="Reference" referencedClass="{ca6b76b4-8df5-4023-b854-b106a79a2c8d}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{12c37882-41fa-4d47-a070-0b2d770c5878}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Первый атрибут" name="firstAttr" lowerBound="" isCandidateKey="false" type="Reference" referencedClass="{ca6b76b4-8df5-4023-b854-b106a79a2c8d}" isUnique="false" upperBound="" maxStringLength="0" guid="{82ad2454-dcbf-46d5-a47a-abad0d7cd2e9}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Родитель" name="parent" lowerBound="" isCandidateKey="true" parent="{b862adb3-9a19-4402-a8ad-9ce43b5a15d5}" referencedLov="" type="Reference" referencedClass="{8fa44a03-ba8e-4acd-8eb9-5b985f1f350e}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{f9635aa5-bf08-4bda-b017-160a9ce96c01}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Тип связи" name="linkOf" lowerBound="" isCandidateKey="true" parent="{b862adb3-9a19-4402-a8ad-9ce43b5a15d5}" referencedLov="{14b9db38-16a6-4114-902e-6007951f3527}" type="String" referencedClass="" isUnique="false" upperBound="" maxStringLength="10" referencedUnit="" guid="{4ae837b0-09b7-4011-af6c-5eb7d211f4b8}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Normal" alias="Фильтр" name="Filter" icon="" parent="{8fa44a03-ba8e-4acd-8eb9-5b985f1f350e}" type="System" displayTemplate="" guid="{2fe5bd7b-b03b-4c82-9ca6-98f6a64890e1}">
+<RTPClass type="Normal" alias="Фильтр" name="Filter" icon="" parent="{8fa44a03-ba8e-4acd-8eb9-5b985f1f350e}" accessMode="System" displayTemplate="" guid="{2fe5bd7b-b03b-4c82-9ca6-98f6a64890e1}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Описание вхождения" name="inverseDescription" lowerBound="" isCandidateKey="false" parent="{2fe5bd7b-b03b-4c82-9ca6-98f6a64890e1}" referencedLov="" type="String" referencedClass="" isUnique="false" upperBound="" maxStringLength="256" referencedUnit="" guid="{3909e73a-7c60-4674-96fb-7e8a074d4f41}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Описание включения" name="directDescription" lowerBound="" isCandidateKey="false" parent="{2fe5bd7b-b03b-4c82-9ca6-98f6a64890e1}" referencedLov="" type="String" referencedClass="" isUnique="false" upperBound="" maxStringLength="256" referencedUnit="" guid="{02bd8a1b-9071-416c-8bca-acc18ea167be}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Входящий класс" name="dstClass" lowerBound="" isCandidateKey="false" parent="{2fe5bd7b-b03b-4c82-9ca6-98f6a64890e1}" referencedLov="" type="Reference" referencedClass="" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{24f443b5-d2af-4f8b-9f29-c3e54e517ffd}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Исходный класс" name="srcClass" lowerBound="" isCandidateKey="false" parent="{2fe5bd7b-b03b-4c82-9ca6-98f6a64890e1}" referencedLov="" type="Reference" referencedClass="" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{89a9b0d0-ffc0-445b-a97e-7d9ce6d7b347}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Наименование" name="name" lowerBound="" isCandidateKey="false" parent="{2fe5bd7b-b03b-4c82-9ca6-98f6a64890e1}" referencedLov="" type="String" referencedClass="" isUnique="false" upperBound="" maxStringLength="27" referencedUnit="" guid="{9cdc905e-51fa-464e-897e-4d479ee5472d}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Normal" alias="Блок условий фильтра" name="FilterBlock" icon="" parent="{8fa44a03-ba8e-4acd-8eb9-5b985f1f350e}" type="User" displayTemplate="" guid="{ae8d1b81-8727-419f-abd1-46cf03b13444}">
+<RTPClass type="Normal" alias="Блок условий фильтра" name="FilterBlock" icon="" parent="{8fa44a03-ba8e-4acd-8eb9-5b985f1f350e}" accessMode="User" displayTemplate="" guid="{ae8d1b81-8727-419f-abd1-46cf03b13444}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Родитель" name="parent" lowerBound="" isCandidateKey="true" parent="{ae8d1b81-8727-419f-abd1-46cf03b13444}" referencedLov="" type="Reference" referencedClass="{8fa44a03-ba8e-4acd-8eb9-5b985f1f350e}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{4c2e77ed-b9ef-40ad-a0ef-7e863046a48c}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Тип связи" name="linkOf" lowerBound="" isCandidateKey="true" parent="{ae8d1b81-8727-419f-abd1-46cf03b13444}" referencedLov="{14b9db38-16a6-4114-902e-6007951f3527}" type="String" referencedClass="" isUnique="false" upperBound="" maxStringLength="10" referencedUnit="" guid="{a0b7b213-66f5-47d1-ad35-d728ffa97134}" initialValue=""/>
 </RTPClass>
 </RTPClass>
-<RTPClass view="Normal" alias="Роль" name="Role" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" type="System" displayTemplate="" guid="{2294d4e7-bda1-4682-ab52-7c105c5497fc}">
+<RTPClass type="Normal" alias="Роль" name="Role" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" accessMode="System" displayTemplate="" guid="{2294d4e7-bda1-4682-ab52-7c105c5497fc}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Родитель" name="parent" lowerBound="" isCandidateKey="true" parent="{2294d4e7-bda1-4682-ab52-7c105c5497fc}" referencedLov="" type="Reference" referencedClass="{08c7f9c3-38ac-46c6-88b1-692a51d5de80}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{8d54d2b8-7815-4c7f-957b-86cde613c2bf}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Описание" name="decription" lowerBound="" isCandidateKey="true" parent="{2294d4e7-bda1-4682-ab52-7c105c5497fc}" referencedLov="" type="String" referencedClass="" isUnique="true" upperBound="" maxStringLength="256" referencedUnit="" guid="{a0637acd-9fc1-46bf-974c-8c5d89a247f5}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Наименование" name="name" lowerBound="" isCandidateKey="false" parent="{2294d4e7-bda1-4682-ab52-7c105c5497fc}" referencedLov="" type="String" referencedClass="" isUnique="false" upperBound="" maxStringLength="27" referencedUnit="" guid="{6fd8bffa-4b92-467c-a1c4-e3247174d17c}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Normal" alias="Право доступа" name="Permission" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" type="User" displayTemplate="" guid="{48bc86d0-d06e-44ee-a145-e90cc20aa8c5}">
-<RTPClass view="Normal" alias="Право доступа для класса" name="ClassPermission" icon="" parent="{48bc86d0-d06e-44ee-a145-e90cc20aa8c5}" type="User" displayTemplate="" guid="{951e2df3-1440-4fd7-9407-2f3596b70957}">
+<RTPClass type="Normal" alias="Право доступа" name="Permission" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" accessMode="User" displayTemplate="" guid="{48bc86d0-d06e-44ee-a145-e90cc20aa8c5}">
+<RTPClass type="Normal" alias="Право доступа для класса" name="ClassPermission" icon="" parent="{48bc86d0-d06e-44ee-a145-e90cc20aa8c5}" accessMode="User" displayTemplate="" guid="{951e2df3-1440-4fd7-9407-2f3596b70957}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Объект" name="object" lowerBound="" isCandidateKey="false" parent="{951e2df3-1440-4fd7-9407-2f3596b70957}" referencedLov="" type="Reference" referencedClass="{07365d21-0334-46f3-8f57-add028f3ece0}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{cf87db49-b880-4950-9889-be7968148a2b}" initialValue=""/>
 </RTPClass>
 <RTPAttribute isNullsAllowed="false" group="" alias="Роль" name="role" lowerBound="" isCandidateKey="false" parent="{48bc86d0-d06e-44ee-a145-e90cc20aa8c5}" referencedLov="" type="Reference" referencedClass="{2294d4e7-bda1-4682-ab52-7c105c5497fc}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{98ab394d-5173-4c0a-802e-e305a64cef7b}" initialValue=""/>
@@ -647,22 +647,22 @@
 <RTPAttribute isNullsAllowed="false" group="" alias="Удаление" name="isDelete" lowerBound="" isCandidateKey="false" parent="{48bc86d0-d06e-44ee-a145-e90cc20aa8c5}" referencedLov="" type="Boolean" referencedClass="" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{b2aa0c08-b98d-4410-9fe6-5bdef2012386}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Создание" name="isCreate" lowerBound="" isCandidateKey="false" parent="{48bc86d0-d06e-44ee-a145-e90cc20aa8c5}" referencedLov="" type="Boolean" referencedClass="" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{59950571-f0fe-4cfa-ae39-420094a2d86b}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Блокировка" name="isBlock" lowerBound="" isCandidateKey="false" parent="{48bc86d0-d06e-44ee-a145-e90cc20aa8c5}" referencedLov="" type="Boolean" referencedClass="" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{1b26a2ff-c210-413f-a9e4-f5248242e991}" initialValue=""/>
-<RTPClass view="Normal" alias="Право доступа для атрибута" name="AttributePermission" icon="" parent="{48bc86d0-d06e-44ee-a145-e90cc20aa8c5}" type="System" displayTemplate="" guid="{0af57e70-97b4-46d6-8b8e-2aa6dd346a41}">
+<RTPClass type="Normal" alias="Право доступа для атрибута" name="AttributePermission" icon="" parent="{48bc86d0-d06e-44ee-a145-e90cc20aa8c5}" accessMode="System" displayTemplate="" guid="{0af57e70-97b4-46d6-8b8e-2aa6dd346a41}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Объект" name="object" lowerBound="" isCandidateKey="false" parent="{0af57e70-97b4-46d6-8b8e-2aa6dd346a41}" referencedLov="" type="Reference" referencedClass="{d65e189c-e2d9-4118-9058-0715bea79881}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{892b1325-c500-4099-b6e3-12bc7a949ba8}" initialValue=""/>
 </RTPClass>
 </RTPClass>
-<RTPClass view="Normal" alias="Группа справочников" name="ReferenceGroup" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" type="User" displayTemplate="" guid="{de96f0a2-1cd6-40ba-94d1-38ee98552b6f}">
+<RTPClass type="Normal" alias="Группа справочников" name="ReferenceGroup" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" accessMode="User" displayTemplate="" guid="{de96f0a2-1cd6-40ba-94d1-38ee98552b6f}">
 <RTPFilter inverseDescription="Входит в" directDescription="Состоит из" alias="Справочники" name="References" parent="{de96f0a2-1cd6-40ba-94d1-38ee98552b6f}" Class="{4f21a72b-6956-47c0-9aed-2ce2e3a70337}" guid="{556ecf65-ea42-4569-b0be-ad6fc0d1615b}">
 <RTPCondition operator="=" secondAttr="{639bacb8-3651-4916-a961-a3a1c571cb5a}" linkOf="И" firstAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" guid="{44df5ac6-b61a-427b-b060-39c8bf433417}"/>
 </RTPFilter>
 <RTPAttribute isNullsAllowed="false" group="" alias="Родитель" name="parent" lowerBound="" isCandidateKey="true" parent="{de96f0a2-1cd6-40ba-94d1-38ee98552b6f}" referencedLov="" type="Reference" referencedClass="{08c7f9c3-38ac-46c6-88b1-692a51d5de80}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{636b9cbf-700b-4f5b-9758-fdc8ebfda10b}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Наименование" name="name" lowerBound="" isCandidateKey="true" parent="{de96f0a2-1cd6-40ba-94d1-38ee98552b6f}" referencedLov="" type="String" referencedClass="" isUnique="true" upperBound="" maxStringLength="256" referencedUnit="" guid="{c42bf47b-47bb-46aa-93fa-191bbf4f52ab}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Normal" alias="Значение списка значений" name="LovValue" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" type="System" displayTemplate="" guid="{a08fbe44-f996-46b3-aa30-19827bca2148}">
+<RTPClass type="Normal" alias="Значение списка значений" name="LovValue" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" accessMode="System" displayTemplate="" guid="{a08fbe44-f996-46b3-aa30-19827bca2148}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Родитель" name="parent" lowerBound="" isCandidateKey="true" parent="{a08fbe44-f996-46b3-aa30-19827bca2148}" referencedLov="" type="Reference" referencedClass="{46ec5ee7-d2eb-466c-9105-2ed5d3db053c}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{e7033e9a-dfed-42e9-8782-d9d7c030d020}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Значение" name="value" lowerBound="" isCandidateKey="true" type="String" isUnique="false" upperBound="" maxStringLength="256" guid="{8ee66de1-5492-4d41-b240-9e16f6f60ecc}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Normal" alias="Список значений" name="Lov" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" type="System" displayTemplate="" guid="{46ec5ee7-d2eb-466c-9105-2ed5d3db053c}">
+<RTPClass type="Normal" alias="Список значений" name="Lov" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" accessMode="System" displayTemplate="" guid="{46ec5ee7-d2eb-466c-9105-2ed5d3db053c}">
 <RTPFilter inverseDescription="Входит в" directDescription="Состоит из" alias="Значения списка" name="LovValue" parent="{46ec5ee7-d2eb-466c-9105-2ed5d3db053c}" Class="{a08fbe44-f996-46b3-aa30-19827bca2148}" guid="{bd654da9-f6ab-4f07-86a9-ba460f2872b3}">
 <RTPCondition operator="=" secondAttr="{e7033e9a-dfed-42e9-8782-d9d7c030d020}" linkOf="И" firstAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" guid="{925ef9aa-f3f5-41bd-92ea-7b6995019317}"/>
 </RTPFilter>
@@ -670,14 +670,14 @@
 <RTPAttribute isNullsAllowed="false" group="" alias="Тип значений" name="type" lowerBound="" isCandidateKey="true" referencedLov="{b395adac-ee79-4b3a-b0bc-84cd13371b94}" type="Integer" isUnique="false" upperBound="" maxStringLength="0" guid="{a4c5f040-9f87-46a6-881b-f27199c09e7d}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Наименование" name="name" lowerBound="" isCandidateKey="true" type="String" isUnique="false" upperBound="" maxStringLength="27" guid="{aef04bdf-4d17-4b7a-a1aa-be28b9342de7}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Normal" alias="Группа величины" name="QuantityGroup" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" type="User" displayTemplate="" guid="{82418a31-38ac-4c15-bb4b-672da12b2cab}">
+<RTPClass type="Normal" alias="Группа величины" name="QuantityGroup" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" accessMode="User" displayTemplate="" guid="{82418a31-38ac-4c15-bb4b-672da12b2cab}">
 <RTPFilter inverseDescription="Входит в" directDescription="Состоит из" alias="Величина" name="Quantity" parent="{82418a31-38ac-4c15-bb4b-672da12b2cab}" Class="{4a66ffab-5711-420c-9072-00026b543879}" guid="{f62a625a-8f9b-4881-865e-7d5103326a14}">
 <RTPCondition operator="=" secondAttr="{6be742b8-c09d-42ae-9112-06d117843e39}" linkOf="И" firstAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" guid="{eaed3951-58c4-4d67-ad1d-2e5a6730948a}"/>
 </RTPFilter>
 <RTPAttribute isNullsAllowed="false" group="" alias="Родитель" name="parent" lowerBound="" isCandidateKey="true" parent="{82418a31-38ac-4c15-bb4b-672da12b2cab}" referencedLov="" type="Reference" referencedClass="{08c7f9c3-38ac-46c6-88b1-692a51d5de80}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{b96ae526-2611-4cd6-9d4f-78bc857f12d4}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Наименование" name="name" lowerBound="" isCandidateKey="true" parent="{82418a31-38ac-4c15-bb4b-672da12b2cab}" referencedLov="" type="String" referencedClass="" isUnique="true" upperBound="" maxStringLength="256" referencedUnit="" guid="{9310d8bf-32d2-4c89-9fc6-676eff4ef4ed}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Normal" alias="Атрибут" name="Attribute" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" type="System" displayTemplate="" guid="{d65e189c-e2d9-4118-9058-0715bea79881}">
+<RTPClass type="Normal" alias="Атрибут" name="Attribute" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" accessMode="System" displayTemplate="" guid="{d65e189c-e2d9-4118-9058-0715bea79881}">
 <RTPFilter inverseDescription="Входит в" directDescription="Состоит из" alias="Права доступа на атрибут" name="PermissionAttribute" parent="{d65e189c-e2d9-4118-9058-0715bea79881}" Class="{0af57e70-97b4-46d6-8b8e-2aa6dd346a41}" guid="{358bf739-4a06-457e-abc9-46d1b33a0918}">
 <RTPCondition operator="=" secondAttr="{892b1325-c500-4099-b6e3-12bc7a949ba8}" linkOf="И" firstAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" guid="{8fba6aa8-def5-4e80-b688-7fa3f17c6a2e}"/>
 </RTPFilter>
@@ -696,7 +696,7 @@
 <RTPAttribute isNullsAllowed="true" group="Свойства типа" alias="Единица измерения" name="refUnit" lowerBound="" isCandidateKey="false" parent="{d65e189c-e2d9-4118-9058-0715bea79881}" referencedLov="" type="Reference" referencedClass="" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{5ab8c932-7143-435a-8bf5-538103aca0b3}" initialValue=""/>
 <RTPAttribute isNullsAllowed="true" group="Свойства типа" alias="Список значений" name="refLov" lowerBound="" isCandidateKey="false" parent="{d65e189c-e2d9-4118-9058-0715bea79881}" referencedLov="" type="Reference" referencedClass="" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{87904ab2-0ce6-46be-adce-779ec1344427}" initialValue=""/>
 </RTPClass>
-<RTPClass view="" alias="Единица измерения" name="Unit" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" type="System" displayTemplate="" guid="{84d269d6-569a-4bab-b8d7-b22c6b7af2dc}">
+<RTPClass type="" alias="Единица измерения" name="Unit" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" accessMode="System" displayTemplate="" guid="{84d269d6-569a-4bab-b8d7-b22c6b7af2dc}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Родитель" name="parent" lowerBound="" isCandidateKey="true" parent="{84d269d6-569a-4bab-b8d7-b22c6b7af2dc}" referencedLov="" type="Reference" referencedClass="{4a66ffab-5711-420c-9072-00026b543879}" isUnique="false" upperBound="" maxStringLength="0" referencedUnit="" guid="{106f078c-aa8f-4157-9722-0dd16b93d723}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Код ОКЕИ" name="code" lowerBound="" isCandidateKey="true" parent="{84d269d6-569a-4bab-b8d7-b22c6b7af2dc}" type="Integer" referencedClass="" isUnique="true" upperBound="" maxStringLength="0" guid="{a5df4ba6-f1fa-4e29-ba05-4f6978855875}" initialValue="0"/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Буквенное обозначение" name="symbol" lowerBound="" isCandidateKey="true" parent="{84d269d6-569a-4bab-b8d7-b22c6b7af2dc}" type="String" referencedClass="" isUnique="true" upperBound="" maxStringLength="32" guid="{9a53b2dc-e1b2-4514-a4d9-232639de2afb}" initialValue=""/>
@@ -708,7 +708,7 @@
 <RTPAttribute isNullsAllowed="false" group="" alias="Международное условное обозначение" name="intDesignation" lowerBound="" isCandidateKey="true" type="String" isUnique="true" upperBound="" maxStringLength="32" guid="{a9920377-da42-4555-8240-4bc75d8cf4d0}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Международное буквенное обозначение" name="intSymbol" lowerBound="" isCandidateKey="true" type="String" isUnique="true" upperBound="" maxStringLength="32" guid="{8871d3e7-967b-4351-94e6-57dc37bee3ea}" initialValue=""/>
 </RTPClass>
-<RTPClass view="Normal" alias="Величина" name="Quantity" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" type="System" displayTemplate="" guid="{4a66ffab-5711-420c-9072-00026b543879}">
+<RTPClass type="Normal" alias="Величина" name="Quantity" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" accessMode="System" displayTemplate="" guid="{4a66ffab-5711-420c-9072-00026b543879}">
 <RTPAttribute isNullsAllowed="false" group="" alias="Размерность" name="dimension" lowerBound="" isCandidateKey="true" type="String" isUnique="true" upperBound="" maxStringLength="256" guid="{c40edb17-75ec-4d62-8754-b68b2a90ee1a}" initialValue=""/>
 <RTPFilter inverseDescription="Входит в" directDescription="Состоит из" alias="Единица измерения" name="Unit" parent="{4a66ffab-5711-420c-9072-00026b543879}" Class="{84d269d6-569a-4bab-b8d7-b22c6b7af2dc}" guid="{d412c00b-756f-4823-90bf-368163fbbbeb}">
 <RTPCondition operator="=" secondAttr="{106f078c-aa8f-4157-9722-0dd16b93d723}" linkOf="И" firstAttr="{74886394-fa32-437f-aba5-20624cc32b1e}" guid="{3023ca70-8433-40e1-bbb3-19ae41df1a54}"/>
@@ -718,7 +718,7 @@
 <RTPAttribute isNullsAllowed="false" group="" alias="Описание" name="decription" lowerBound="" isCandidateKey="true" parent="{4a66ffab-5711-420c-9072-00026b543879}" type="String" referencedClass="" isUnique="true" upperBound="" maxStringLength="256" guid="{547af757-9aae-4346-958e-f7d749191414}" initialValue=""/>
 <RTPAttribute isNullsAllowed="false" group="" alias="Базовая единица" name="basicUnit" lowerBound="" isCandidateKey="false" parent="{4a66ffab-5711-420c-9072-00026b543879}" type="Reference" referencedClass="{84d269d6-569a-4bab-b8d7-b22c6b7af2dc}" isUnique="true" upperBound="" maxStringLength="0" guid="{1c9eda70-ab5c-41da-a8b1-e0f7dc5ed3bd}" initialValue=""/>
 </RTPClass>
-<RTPClass alias="Пользователь" name="User" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" type="System" displayTemplate="" guid="{28f74930-f3f0-44e9-a174-e4e2a1ffc95c}"/>
+<RTPClass alias="Пользователь" name="User" icon="" parent="{ee28f006-40c4-401d-8b69-7540f995cd47}" accessMode="System" displayTemplate="" guid="{28f74930-f3f0-44e9-a174-e4e2a1ffc95c}"/>
 </RTPClass>
 </RTPClassList>
 <RTPEntityList alias="Единицы измерения" name="Units">
