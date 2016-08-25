@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="PgDatabaseModel">icons/pgdatabasemodel.svg</file>
+    </qresource>
+</RCC>
