@@ -1,12 +1,12 @@
 #ifndef IDATABASEROLE_H
 #define IDATABASEROLE_H
 
+#include <idatabaseitem.h>
+
 //! Роль базы данных
-class IDatabaseRole
+class IDatabaseRole: public IDatabaseItem
 {
 
 };
-
-Q_DECLARE_INTERFACE(IDatabaseRole,"com.RTPTechGroup.Raindrop.IDatabaseRole/1.0")
 
 #endif

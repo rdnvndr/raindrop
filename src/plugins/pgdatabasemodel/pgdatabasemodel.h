@@ -6,6 +6,8 @@
 #include <idatabasemodel.h>
 #include "pgdatabasemodelglobal.h"
 
+#include "pgdatabaseattr.h"
+
 class  PGDATABASEMODELLIB PgDatabaseModel:
         public QObject,
         public IPlugin,
@@ -22,6 +24,9 @@ public:
 
     //! Конструктор плагина
     explicit PgDatabaseModel(QObject *parent = 0);
+
+    //! Деструктор плагина
+    virtual ~PgDatabaseModel();
 
     // IPlugin
 

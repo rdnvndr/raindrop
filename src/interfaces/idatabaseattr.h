@@ -1,34 +1,26 @@
 #ifndef IDATABASEATTR_H
 #define IDATABASEATTR_H
 
-#include <QList>
+#include <QHash>
 #include <QVariant>
+#include <QUuid>
 
+#include <idatabaseitem.h>
 #include <idatabaseclass.h>
+#include <idatabaseexpression.h>
 
 class IDatabaseClass;
 class IDatabaseAttr;
-typedef QList<IDatabaseAttr *> IDatabaseAttrList;
+typedef QHash<QString, IDatabaseAttr *> IDatabaseAttrs;
 
 //! Атрибут класса базы данных
-class IDatabaseAttr
+class IDatabaseAttr: IDatabaseItem
 {
 public:
     //! Перечисление типов атрибутов
     enum AttrType { Boolean, Binary, Char, Date, Decimal, Double, Integer,
                     String, Reference, Time, Timeshtamp };
-
-    //! Возращает имя атрибута
-    virtual QString name() = 0;
-
-    //! Устанавливает имя атрибута
-    virtual void setName(const QString &name) = 0;
-
-    //! Возращает псевдоним атрибута
-    virtual QString alias() = 0;
-
-    //! Устанавливает псевдоним атрибута
-    virtual void setAlias(const QString &alias) = 0;
+//    Q_ENUM(AttrType)
 
     //! Возращает тип атрибута
     virtual AttrType attrType() = 0;
@@ -120,13 +112,50 @@ public:
     //! Устанавливает класс атрибута
     virtual void setParent(IDatabaseClass *parent) = 0;
 
-    //! Возращает идентификатор атрибута
-    virtual QUuid id() = 0;
+    //! Проверка наследования атрибута
+    virtual bool isInherited(IDatabaseClass *parent) = 0;
 
-    //! Устанавливает идентификатор атрибута
-    virtual void setId(QUuid id) = 0;
+// Работа с выражениями
+    //! Формирует выражение равенства
+    virtual IDatabaseExpression &operator == (QVariant value) = 0;
+
+    //! Формирует выражение равенства
+    virtual IDatabaseExpression &operator == (IDatabaseAttr &value) = 0;
+
+    //! Формирует выражение неравенства
+    virtual IDatabaseExpression& operator != (QVariant value) = 0;
+
+    //! Формирует выражение неравенства
+    virtual IDatabaseExpression& operator != (IDatabaseAttr &value) = 0;
+
+    //! Формирует выражение больше или равно
+    virtual IDatabaseExpression& operator >= (QVariant value) = 0;
+
+    //! Формирует выражение больше или равно
+    virtual IDatabaseExpression& operator >= (IDatabaseAttr &value) = 0;
+
+    //! Формирует выражение меньше или равно
+    virtual IDatabaseExpression& operator <= (QVariant value) = 0;
+
+    //! Формирует выражение меньше или равно
+    virtual IDatabaseExpression& operator <= (IDatabaseAttr &value) = 0;
+
+    //! Формирует выражение больше
+    virtual IDatabaseExpression& operator >  (QVariant value) = 0;
+
+    //! Формирует выражение больше
+    virtual IDatabaseExpression& operator >  (IDatabaseAttr &value) = 0;
+
+    //! Формирует выражение меньше
+    virtual IDatabaseExpression& operator <  (QVariant value) = 0;
+
+    //! Формирует выражение меньше
+    virtual IDatabaseExpression& operator <  (IDatabaseAttr &value) = 0;
 
 };
+
+//Q_DECLARE_OPAQUE_POINTER(IDatabaseAttr*)
+Q_DECLARE_METATYPE(IDatabaseAttr*)
 
 //Q_DECLARE_INTERFACE(IDatabaseAttr,"com.RTPTechGroup.Raindrop.IDatabaseAttr/1.0")
 

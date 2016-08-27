@@ -95,7 +95,7 @@ void PgDatabaseClass::setMaxVersion(qint32 maxVersion)
 
 }
 
-IDatabaseAttrList PgDatabaseClass::attrList()
+IDatabaseAttrs PgDatabaseClass::attrList()
 {
-    return IDatabaseAttrList();
+    return IDatabaseAttrs();
 }

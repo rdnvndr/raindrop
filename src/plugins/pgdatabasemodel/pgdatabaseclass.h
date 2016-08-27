@@ -6,7 +6,7 @@
 class PgDatabaseClass : public IDatabaseClass
 {
 public:
-    PgDatabaseClass();
+    explicit PgDatabaseClass();
 
     //! Возращает идентификатор класса
     QUuid id();
@@ -63,7 +63,7 @@ public:
     void setMaxVersion(qint32 maxVersion);
 
     //! Cписок атрибутов в классе
-    IDatabaseAttrList attrList();
+    IDatabaseAttrs attrList();
 };
 
 #endif // PGDATABASECLASS_H

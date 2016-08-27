@@ -1,14 +1,19 @@
 #ifndef IDATABASECLASS_H
 #define IDATABASECLASS_H
 
+#include <idatabaseitem.h>
 #include <idatabaseattr.h>
+#include <idatabasefilter.h>
+#include <idatabaseexpression.h>
 
 #include <QIcon>
 #include <QUuid>
 #include <QString>
 
+class IDatabaseExpression;
+
 //! Класс базы данных
-class IDatabaseClass
+class IDatabaseClass: public IDatabaseItem
 {
 public:
     //! Перечисление режимов доступа
@@ -19,29 +24,11 @@ public:
     enum ClassType { Abstract, Context, Embedded, Normal };
 //    Q_ENUM(ClassType)
 
-    //! Возращает идентификатор класса
-    virtual QUuid id() = 0;
-
-    //! Устанавливает идентификатор класса
-    virtual void setId(QUuid id) = 0;
-
     //! Возращает иконку класса
     virtual QIcon icon() = 0;
 
     //! Устанавливает иконку класса
     virtual void setIcon(QIcon icon) = 0;
-
-    //! Возращает имя класса
-    virtual QString name() = 0;
-
-    //! Устанавлвает имя класса
-    virtual void setName(const QString &name) = 0;
-
-    //! Возращает псевдоним класса
-    virtual QString alias() = 0;
-
-    //! Устанавливает псевдоним класса
-    virtual void setAlias(const QString &alias) = 0;
 
     //! Возращает тип класса
     virtual ClassType classType() = 0;
@@ -74,10 +61,16 @@ public:
     virtual void setMaxVersion(qint32 maxVersion) = 0;
 
     //! Cписок атрибутов в классе
-    virtual IDatabaseAttrList attrList() = 0;
+//    IDatabaseAttrs attrs;
 
-private:
+     //! Получение отфильтрованных объектов класса
+    virtual void filter(IDatabaseFilter *filter) = 0;
 
+    //! Получение отфильтрованных объектов класса
+    virtual void filter(IDatabaseExpression *expr) = 0;
+
+    //! Получение всех объектов класса
+    virtual void all() = 0;
 };
 
 //Q_DECLARE_INTERFACE(IDatabaseClass,"com.RTPTechGroup.Raindrop.IDatabaseClass/1.0")

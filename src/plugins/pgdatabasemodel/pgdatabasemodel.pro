@@ -14,7 +14,11 @@ QT += widgets
 
 # Input
 HEADERS   += pgdatabasemodel.h pgdatabasemodelglobal.h \
-    pgdatabaseclass.h
+    pgdatabaseclass.h \
+    pgdatabaseattr.h \
+    pgdatabaseexpression.h
 SOURCES   += pgdatabasemodel.cpp \
-    pgdatabaseclass.cpp
+    pgdatabaseclass.cpp \
+    pgdatabaseattr.cpp \
+    pgdatabaseexpression.cpp
 RESOURCES += pgdatabasemodel.qrc
