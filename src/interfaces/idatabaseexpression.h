@@ -26,10 +26,10 @@ public:
                              };
 
     //! Логическое "ИЛИ"
-    virtual IDatabaseExpression& operator || (const IDatabaseExpression &expr)  = 0;
+    virtual IDatabaseExpression& operator || (IDatabaseExpression &expr) = 0;
 
     //! Логическое "И"
-    virtual IDatabaseExpression& operator && (const IDatabaseExpression &expr)  = 0;
+    virtual IDatabaseExpression& operator && (IDatabaseExpression &expr) = 0;
 
     //! Sql строка выражения
     virtual QString toSql() = 0;

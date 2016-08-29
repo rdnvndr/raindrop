@@ -10,29 +10,28 @@ PgDatabaseExpression::~PgDatabaseExpression()
 
 }
 
-IDatabaseExpression &PgDatabaseExpression::operator ||(const IDatabaseExpression &expr)
+IDatabaseExpression &PgDatabaseExpression::operator ||(IDatabaseExpression &expr)
 {
-    PgDatabaseExpression *returnExpr = new PgDatabaseExpression();
-//    IDatabaseExpression *firstValue = dynamic_cast<IDatabaseExpression *>(this);
-//    returnExpr->setFirstValue(QVariant::fromValue(firstValue));
-//    returnExpr->setSecondValue(QVariant::fromValue(expr));
-//    returnExpr->setExpressionOperator(IDatabaseExpression::OR);
-//    return returnExpr;
-    return *returnExpr;
+    return createExpression(expr, IDatabaseExpression::OR);
 }
 
-IDatabaseExpression &PgDatabaseExpression::operator &&(const IDatabaseExpression &expr)
+IDatabaseExpression &PgDatabaseExpression::operator &&(IDatabaseExpression &expr)
 {
-    PgDatabaseExpression *returnExpr = new PgDatabaseExpression();
-//    IDatabaseExpression *firstValue = dynamic_cast<IDatabaseExpression *>(this);
-//    returnExpr->setFirstValue(QVariant::fromValue(firstValue));
-//    returnExpr->setSecondValue(QVariant::fromValue(expr));
-//    returnExpr->setExpressionOperator(IDatabaseExpression::AND);
-//    return returnExpr;
-    return *returnExpr;
+    return createExpression(expr, IDatabaseExpression::AND);
 }
 
 QString PgDatabaseExpression::toSql()
 {
     return QString();
+}
+
+IDatabaseExpression &PgDatabaseExpression::createExpression(
+        IDatabaseExpression &expr, IDatabaseExpression::ExpressionOperator oper)
+{
+    PgDatabaseExpression *returnExpr = new PgDatabaseExpression();
+    IDatabaseExpression *firstValue = dynamic_cast<IDatabaseExpression *>(this);
+    returnExpr->setFirstValue(QVariant::fromValue(firstValue));
+    returnExpr->setSecondValue(QVariant::fromValue(&expr));
+    returnExpr->setExpressionOperator(oper);
+    return *returnExpr;
 }

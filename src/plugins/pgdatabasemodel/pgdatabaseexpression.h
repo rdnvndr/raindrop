@@ -3,6 +3,7 @@
 
 #include <idatabaseexpression.h>
 
+//! Реализация выражение базы данных
 class PgDatabaseExpression : public IDatabaseExpression
 {
 public:
@@ -13,14 +14,18 @@ public:
     virtual ~PgDatabaseExpression();
 
     //! Логическое "ИЛИ"
-    IDatabaseExpression &operator || (const IDatabaseExpression &expr);
+    IDatabaseExpression &operator || (IDatabaseExpression &expr);
 
     //! Логическое "И"
-    IDatabaseExpression &operator && (const IDatabaseExpression &expr);
+    IDatabaseExpression &operator && (IDatabaseExpression &expr);
 
     //! Sql строка выражения
     virtual QString toSql();
 
+private:
+    //! Формирование выражения для указанного логического оператора
+    IDatabaseExpression& createExpression(
+            IDatabaseExpression &expr, IDatabaseExpression::ExpressionOperator oper);
 };
 
 #endif // PGDATABASEEXPRESSION_H

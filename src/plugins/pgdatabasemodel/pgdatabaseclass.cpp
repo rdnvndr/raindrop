@@ -5,6 +5,11 @@ PgDatabaseClass::PgDatabaseClass()
 
 }
 
+PgDatabaseClass::~PgDatabaseClass()
+{
+
+}
+
 QUuid PgDatabaseClass::id()
 {
     return QUuid();

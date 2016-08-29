@@ -3,10 +3,15 @@
 
 #include <idatabaseclass.h>
 
+//! Реализация класса базы данных
 class PgDatabaseClass : public IDatabaseClass
 {
 public:
+    //! Конструктор класса
     explicit PgDatabaseClass();
+
+    //! Деструктор класса
+    virtual ~PgDatabaseClass();
 
     //! Возращает идентификатор класса
     QUuid id();

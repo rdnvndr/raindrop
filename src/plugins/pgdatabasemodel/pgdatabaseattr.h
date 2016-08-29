@@ -3,11 +3,14 @@
 
 #include <idatabaseattr.h>
 
+//! Реализация атрибута базы данных
 class PgDatabaseAttr : public IDatabaseAttr
 {
 public:
+    //! Конструктор класса
     explicit PgDatabaseAttr();
 
+    //! Деструктор класса
     virtual ~PgDatabaseAttr();
 
     //! Возращает идентификатор элемента базы данных
