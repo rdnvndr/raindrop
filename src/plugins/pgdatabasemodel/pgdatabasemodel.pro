@@ -10,7 +10,10 @@ include(../plugins.pri)
 DEPENDPATH += .
 INCLUDEPATH += .
 DEFINES +=  PGDATABASEMODEL_LIBRARY
-QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4) {
+  QT += widgets
+}
+
 
 # Input
 HEADERS   += pgdatabasemodel.h pgdatabasemodelglobal.h \
