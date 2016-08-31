@@ -7,4 +7,5 @@ SUBDIRS +=  dbconnect
 SUBDIRS +=  treedockwidget
 SUBDIRS +=  modeleride
 SUBDIRS +=  example
+SUBDIRS +=  databasemodel
 SUBDIRS +=  pgdatabasemodel

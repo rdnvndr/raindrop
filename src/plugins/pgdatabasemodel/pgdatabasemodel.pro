@@ -1,7 +1,7 @@
 VERSION = 1.0
 QMAKE_TARGET_COMPANY = "RTPTechGroup"
-QMAKE_TARGET_PRODUCT = "Модель данных PostgreSql"
-QMAKE_TARGET_DESCRIPTION = "Реализация модели данных для PostgreSql"
+QMAKE_TARGET_PRODUCT = "Реализация модели базы данных PostgreSql"
+QMAKE_TARGET_DESCRIPTION = "Реализация модели базы данных для PostgreSql"
 QMAKE_TARGET_COPYRIGHT = "Copyright (C) RTPTechGroup"
 
 LIBS += -lplugin

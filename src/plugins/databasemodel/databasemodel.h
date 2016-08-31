@@ -1,46 +1,41 @@
-#ifndef PGDATABASEMODEL_H
-#define PGDATABASEMODEL_H
+#ifndef DATABASEMODEL_H
+#define DATABASEMODEL_H
 
 #include <QObject>
 #include <plugin/iplugin.h>
-#include "pgdatabasemodelglobal.h"
+#include "databasemodelglobal.h"
 
-#include <idatabasemodelbuilder.h>
-#include "pgdatabaseattr.h"
+#include <idatabasemodel.h>
 
+//! Модель базы данных
 
-//! Реализация модели базы данных PostgreSql
-//!
-class  PGDATABASEMODELLIB PgDatabaseModel:
+class  DATABASEMODELLIB DatabaseModel:
         public QObject,
-        public IDatabaseModelBuilder,
+        public IDatabaseModel,
         public IPlugin
 {
     Q_OBJECT
-    Q_INTERFACES(IPlugin IDatabaseModelBuilder)
+    Q_INTERFACES(IPlugin IDatabaseModel)
 
 #if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.PgDatabaseModel" FILE "pgdatabasemodel.json")
+    Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.DatabaseModel" FILE "databasemodel.json")
 #endif
 
 public:
 
     //! Конструктор плагина
-    explicit PgDatabaseModel(QObject *parent = 0);
+    explicit DatabaseModel(QObject *parent = 0);
 
     //! Деструктор плагина
-    virtual ~PgDatabaseModel();
+    virtual ~DatabaseModel();
 
-    // IPlugin
-
-    //! Получение экземпляра
-    QObject *instance() { return this; }
+// IPlugin
 
     //! Получение имени плагина
     QString name() {return APP_NAME;};
 
     //! Получение иконки плагина
-    QIcon icon() {return QIcon(":/pgdatabasemodel");}
+    QIcon icon() {return QIcon(":/databasemodel");}
 
     //! Описание продукта
     QString product() {return APP_PRODUCT;};
