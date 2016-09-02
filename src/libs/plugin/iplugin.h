@@ -117,7 +117,7 @@ public:
     virtual ~IPlugin();
 
     //! Получение экземпляра
-    virtual QObject *instance() {return dynamic_cast<QObject *>(this);};
+    virtual QObject *instance() {return dynamic_cast<QObject *>(this);}
 
     //! Получение определенных интерфейсов
     virtual QStringList interfaces() = 0;

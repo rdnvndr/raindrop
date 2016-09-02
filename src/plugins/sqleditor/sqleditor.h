@@ -35,28 +35,28 @@ public:
 // IPlugin
 
     //! Получение имени плагина
-    QString name() {return APP_NAME;};
+    QString name() {return APP_NAME;}
     
     //! Получение иконки плагина
     QIcon icon() {return QIcon(":/sqleditor");}
     
     //! Описание продукта
-    QString product() {return tr(APP_PRODUCT);};
+    QString product() {return tr(APP_PRODUCT);}
 
     //! Авторские права
-    QString copyright() {return tr(APP_COPYRIGHT);};
+    QString copyright() {return tr(APP_COPYRIGHT);}
 
     //! Описание плагина
-    QString descript() {return tr(APP_DESCRIPTION);};
+    QString descript() {return tr(APP_DESCRIPTION);}
 
     //! Категория в которой состоит плагин
-    QString category() {return tr("");};
+    QString category() {return tr("");}
 
     //! Версия плагина
-    QString version() {return APP_VERSION;};
+    QString version() {return APP_VERSION;}
 
     //! Производитель плагина
-    QString vendor() {return tr(APP_COMPANY);};
+    QString vendor() {return tr(APP_COMPANY);}
 
 public slots:
     //! Отображение SQL редактора

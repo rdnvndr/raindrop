@@ -21,4 +21,4 @@ public:
 
 Q_DECLARE_INTERFACE(IClipboardStack,"com.RTPTechGroup.Raindrop.IClipboardStack/1.0")
 
-#endif 
+#endif
