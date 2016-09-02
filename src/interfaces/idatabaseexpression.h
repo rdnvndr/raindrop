@@ -54,12 +54,6 @@ public:
         return createExpression(expr, IDatabaseExpression::AND);
     }
 
-    //! Sql строка выражения
-    QString toSql()
-    {
-        return QString();
-    }
-
     IDatabaseExpression createExpression(
             const IDatabaseExpression &expr, IDatabaseExpression::ExpressionOperator oper)
     {
@@ -69,7 +63,6 @@ public:
         returnExpr.setExpressionOperator(oper);
         return returnExpr;
     }
-
 
 private:
     QVariant m_firstValue;

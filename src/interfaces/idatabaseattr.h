@@ -9,7 +9,6 @@
 #include <idatabaseitem.h>
 #include <idatabaseclass.h>
 
-//class IDatabaseExpression;
 class IDatabaseClass;
 class IDatabaseAttr;
 
@@ -22,7 +21,6 @@ public:
     //! Перечисление типов атрибутов
     enum AttrType { Boolean, Binary, Char, Date, Decimal, Double, Integer,
                     String, Reference, Time, Timeshtamp };
-//    Q_ENUM(AttrType)
 
     //! Возращает тип атрибута
     virtual AttrType attrType() = 0;
@@ -190,6 +188,18 @@ public:
         return createAttrExpression(value, IDatabaseExpression::LT);
     }
 
+    //! Формирует выражение содержит
+    IDatabaseExpression contains (QVariant value)
+    {
+        return createVariantExpression(value, IDatabaseExpression::LIKE);
+    }
+
+   //! Формирует выражение содержит
+    IDatabaseExpression contains (IDatabaseAttr &value)
+    {
+        return createAttrExpression(value, IDatabaseExpression::LIKE);
+    }
+
     IDatabaseExpression createVariantExpression(
             QVariant value, IDatabaseExpression::ExpressionOperator oper)
     {
@@ -214,9 +224,6 @@ public:
 
 };
 
-//Q_DECLARE_OPAQUE_POINTER(IDatabaseAttr*)
 Q_DECLARE_METATYPE(IDatabaseAttr*)
-
-//Q_DECLARE_INTERFACE(IDatabaseAttr,"com.RTPTechGroup.Raindrop.IDatabaseAttr/1.0")
 
 #endif
