@@ -19,11 +19,6 @@ id="A.RTPTechGroupPlugin" category="B.RTPTechGroupProjects">
         <field mandatory="true" name="PluginName">
             <fieldcontrol class="QLineEdit" validator="^[a-zA-Z0-9_]+$"
             defaulttext="MyPlugin"/>
-            <fielddescription>Plugin name:</fielddescription>
-        </field>
-        <field mandatory="true" name="Name">
-            <fieldcontrol class="QLineEdit"
-            defaulttext="Put a name of your plugin here"/>
             <fielddescription>Name:</fielddescription>
         </field>
         <field mandatory="true" name="Category">
