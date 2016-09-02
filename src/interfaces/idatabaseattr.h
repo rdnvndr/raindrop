@@ -5,16 +5,18 @@
 #include <QVariant>
 #include <QUuid>
 
+#include <idatabaseexpression.h>
 #include <idatabaseitem.h>
 #include <idatabaseclass.h>
-#include <idatabaseexpression.h>
 
+//class IDatabaseExpression;
 class IDatabaseClass;
 class IDatabaseAttr;
+
 typedef QHash<QString, IDatabaseAttr *> IDatabaseAttrs;
 
 //! Атрибут класса базы данных
-class IDatabaseAttr: IDatabaseItem
+class IDatabaseAttr: public IDatabaseItem
 {
 public:
     //! Перечисление типов атрибутов
@@ -117,40 +119,98 @@ public:
 
 // Работа с выражениями
     //! Формирует выражение равенства
-    virtual IDatabaseExpression &operator == (QVariant value) = 0;
+    IDatabaseExpression operator == (QVariant value)
+    {
+        return createVariantExpression(value, IDatabaseExpression::EQ);
+    }
 
     //! Формирует выражение равенства
-    virtual IDatabaseExpression &operator == (IDatabaseAttr &value) = 0;
+    IDatabaseExpression operator == (IDatabaseAttr &value)
+    {
+        return createAttrExpression(value, IDatabaseExpression::EQ);
+    }
 
     //! Формирует выражение неравенства
-    virtual IDatabaseExpression& operator != (QVariant value) = 0;
+    IDatabaseExpression operator != (QVariant value)
+    {
+        return createVariantExpression(value, IDatabaseExpression::NE);
+    }
 
     //! Формирует выражение неравенства
-    virtual IDatabaseExpression& operator != (IDatabaseAttr &value) = 0;
+    IDatabaseExpression operator != (IDatabaseAttr &value)
+    {
+        return createAttrExpression(value, IDatabaseExpression::NE);
+    }
 
     //! Формирует выражение больше или равно
-    virtual IDatabaseExpression& operator >= (QVariant value) = 0;
+    IDatabaseExpression operator >= (QVariant value)
+    {
+        return createVariantExpression(value, IDatabaseExpression::GE);
+    }
 
     //! Формирует выражение больше или равно
-    virtual IDatabaseExpression& operator >= (IDatabaseAttr &value) = 0;
+    IDatabaseExpression operator >= (IDatabaseAttr &value)
+    {
+        return createAttrExpression(value, IDatabaseExpression::GE);
+    }
 
     //! Формирует выражение меньше или равно
-    virtual IDatabaseExpression& operator <= (QVariant value) = 0;
+    IDatabaseExpression operator <= (QVariant value)
+    {
+        return createVariantExpression(value, IDatabaseExpression::LE);
+    }
 
     //! Формирует выражение меньше или равно
-    virtual IDatabaseExpression& operator <= (IDatabaseAttr &value) = 0;
+    IDatabaseExpression operator <= (IDatabaseAttr &value)
+    {
+        return createAttrExpression(value, IDatabaseExpression::LE);
+    }
 
     //! Формирует выражение больше
-    virtual IDatabaseExpression& operator >  (QVariant value) = 0;
+    IDatabaseExpression operator >  (QVariant value)
+    {
+        return createVariantExpression(value, IDatabaseExpression::GT);
+    }
 
     //! Формирует выражение больше
-    virtual IDatabaseExpression& operator >  (IDatabaseAttr &value) = 0;
+    IDatabaseExpression operator >  (IDatabaseAttr &value)
+    {
+        return createAttrExpression(value, IDatabaseExpression::GT);
+    }
 
     //! Формирует выражение меньше
-    virtual IDatabaseExpression& operator <  (QVariant value) = 0;
+    IDatabaseExpression operator <  (QVariant value)
+    {
+        return createVariantExpression(value, IDatabaseExpression::LT);
+    }
 
     //! Формирует выражение меньше
-    virtual IDatabaseExpression& operator <  (IDatabaseAttr &value) = 0;
+    IDatabaseExpression operator <  (IDatabaseAttr &value)
+    {
+        return createAttrExpression(value, IDatabaseExpression::LT);
+    }
+
+    IDatabaseExpression createVariantExpression(
+            QVariant value, IDatabaseExpression::ExpressionOperator oper)
+    {
+        IDatabaseExpression expr;
+        IDatabaseAttr *firstValue = dynamic_cast<IDatabaseAttr *>(this);
+        expr.setFirstValue(QVariant::fromValue(firstValue));
+        expr.setSecondValue(value);
+        expr.setExpressionOperator(oper);
+        return expr;
+    }
+
+    IDatabaseExpression createAttrExpression(
+            IDatabaseAttr &value, IDatabaseExpression::ExpressionOperator oper)
+    {
+        IDatabaseExpression expr;
+        IDatabaseAttr *firstValue = dynamic_cast<IDatabaseAttr *>(this);
+        expr.setFirstValue(QVariant::fromValue(firstValue));
+        expr.setSecondValue(QVariant::fromValue(&value));
+        expr.setExpressionOperator(oper);
+        return expr;
+    }
 
 };
 
