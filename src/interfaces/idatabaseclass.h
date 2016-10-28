@@ -39,18 +39,6 @@ public:
     //! Устанавливает иконку класса
     virtual void setIcon(QIcon icon) = 0;
 
-    //! Возращает имя класса
-    QString name() = 0;
-
-    //! Устанавлвает имя класса
-    void setName(const QString &name) = 0;
-
-    //! Возращает псевдоним класса
-    QString alias() = 0;
-
-    //! Устанавливает псевдоним класса
-    void setAlias(const QString &alias) = 0;
-
     //! Возращает тип класса
     virtual ClassType classType() = 0;
 
