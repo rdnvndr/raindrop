@@ -73,8 +73,7 @@ public:
 private:
     QVariant m_firstValue;
     QVariant m_secondValue;
-    ExpressionOperator m_operator;
-
+    ExpressionOperator m_operator =  IDatabaseExpression::EQ;
 };
 
 Q_DECLARE_METATYPE(IDatabaseExpression)
