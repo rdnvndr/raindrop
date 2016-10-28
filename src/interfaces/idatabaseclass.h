@@ -10,7 +10,12 @@
 #include <QUuid>
 #include <QString>
 
+
 class IDatabaseExpression;
+class IDatabaseAttr;
+
+typedef QHash<QString, IDatabaseAttr *> IDatabaseAttrs;
+typedef QHash<QString, IDatabaseFilter *> IDatabaseFilters;
 
 //! Класс базы данных
 class IDatabaseClass: public IDatabaseItem
@@ -18,17 +23,28 @@ class IDatabaseClass: public IDatabaseItem
 public:
     //! Перечисление режимов доступа
     enum AccessMode { System, Standart, User };
-//    Q_ENUM(AccessMode)
 
     //! Перечисление типов класса
     enum ClassType { Abstract, Context, Embedded, Normal };
-//    Q_ENUM(ClassType)
 
     //! Возращает иконку класса
     virtual QIcon icon() = 0;
 
     //! Устанавливает иконку класса
     virtual void setIcon(QIcon icon) = 0;
+
+    //! Возращает имя класса
+    QString name();
+
+    //! Устанавлвает имя класса
+    void setName(const QString &name);
+
+    //! Возращает псевдоним класса
+    QString alias();
+
+    //! Устанавливает псевдоним класса
+    void setAlias(const QString &alias);
+
 
     //! Возращает тип класса
     virtual ClassType classType() = 0;
@@ -61,13 +77,17 @@ public:
     virtual void setMaxVersion(qint32 maxVersion) = 0;
 
     //! Cписок атрибутов в классе
-//    IDatabaseAttrs attrs;
+    virtual IDatabaseAttrs attrList() = 0;
 
+    //! Cписок фильтров в классе
+    virtual IDatabaseFilters filterList() = 0;
+
+//! Работа с объектами
      //! Получение отфильтрованных объектов класса
-    virtual void filter(IDatabaseFilter *filter) = 0;
+    virtual void filtering(IDatabaseFilter *filter) = 0;
 
     //! Получение отфильтрованных объектов класса
-    virtual void filter(IDatabaseExpression *expr) = 0;
+    virtual void filtering(IDatabaseExpression *expr) = 0;
 
     //! Получение всех объектов класса
     virtual void all() = 0;

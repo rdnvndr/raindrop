@@ -1,18 +1,15 @@
 #ifndef IDATABASEATTR_H
 #define IDATABASEATTR_H
 
-#include <QHash>
-#include <QVariant>
-#include <QUuid>
-
 #include <idatabaseexpression.h>
 #include <idatabaseitem.h>
 #include <idatabaseclass.h>
 
-class IDatabaseClass;
-class IDatabaseAttr;
+#include <QVariant>
+#include <QUuid>
 
-typedef QHash<QString, IDatabaseAttr *> IDatabaseAttrs;
+
+class IDatabaseClass;
 
 //! Атрибут класса базы данных
 class IDatabaseAttr: public IDatabaseItem

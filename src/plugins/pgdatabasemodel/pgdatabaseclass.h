@@ -69,6 +69,9 @@ public:
 
     //! Cписок атрибутов в классе
     IDatabaseAttrs attrList();
+
+    //! Cписок фильтров в классе
+    IDatabaseFilters filterList();
 };
 
 #endif // PGDATABASECLASS_H

@@ -104,3 +104,8 @@ IDatabaseAttrs PgDatabaseClass::attrList()
 {
     return IDatabaseAttrs();
 }
+
+IDatabaseFilters PgDatabaseClass::filterList()
+{
+    return IDatabaseFilters();
+}
