@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>537</width>
-    <height>471</height>
+    <height>474</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -504,7 +504,6 @@
      <zorder>labelLowerBound</zorder>
      <zorder>labelUpperBound</zorder>
      <zorder>labelNumerator</zorder>
-     <zorder>horizontalLayoutWidget</zorder>
     </widget>
    </item>
    <item>
@@ -563,6 +562,36 @@
    <header>treecombobox/treecombobox.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>toolButtonAddAttr</tabstop>
+  <tabstop>toolButtonEditAttr</tabstop>
+  <tabstop>toolButtonDeleteAttr</tabstop>
+  <tabstop>toolButtonDownAttr</tabstop>
+  <tabstop>toolButtonUpAttr</tabstop>
+  <tabstop>checkBoxInInherited</tabstop>
+  <tabstop>tableViewAttr</tabstop>
+  <tabstop>lineEditAttrName</tabstop>
+  <tabstop>lineEditAttrAlias</tabstop>
+  <tabstop>lineEditAttrGroup</tabstop>
+  <tabstop>checkBoxIsCandidateKey</tabstop>
+  <tabstop>checkBoxIsUnique</tabstop>
+  <tabstop>checkBoxIsNull</tabstop>
+  <tabstop>comboBoxTypeAttr</tabstop>
+  <tabstop>spinBoxStringLen</tabstop>
+  <tabstop>spinBoxAccuracy</tabstop>
+  <tabstop>comboBoxLinkAttr</tabstop>
+  <tabstop>comboBoxUnitAttr</tabstop>
+  <tabstop>toolButtonUnitAttrClean</tabstop>
+  <tabstop>lineEditLowerBound</tabstop>
+  <tabstop>lineEditUpperBound</tabstop>
+  <tabstop>lineEditDefaultValue</tabstop>
+  <tabstop>comboBoxNumerator</tabstop>
+  <tabstop>toolButtonNumeratorClean</tabstop>
+  <tabstop>comboBoxLov</tabstop>
+  <tabstop>toolButtonLovClean</tabstop>
+  <tabstop>pushButtonAttrSave</tabstop>
+  <tabstop>pushButtonAttrCancel</tabstop>
+ </tabstops>
  <resources>
   <include location="modeleride.qrc"/>
  </resources>
