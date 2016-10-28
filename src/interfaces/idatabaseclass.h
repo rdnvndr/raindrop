@@ -27,6 +27,12 @@ public:
     //! Перечисление типов класса
     enum ClassType { Abstract, Context, Embedded, Normal };
 
+    //! Конструктор класса
+    explicit IDatabaseClass() {};
+
+    //! Деструктор класса
+    virtual ~IDatabaseClass() {};
+
     //! Возращает иконку класса
     virtual QIcon icon() = 0;
 
@@ -34,17 +40,16 @@ public:
     virtual void setIcon(QIcon icon) = 0;
 
     //! Возращает имя класса
-    QString name();
+    QString name() = 0;
 
     //! Устанавлвает имя класса
-    void setName(const QString &name);
+    void setName(const QString &name) = 0;
 
     //! Возращает псевдоним класса
-    QString alias();
+    QString alias() = 0;
 
     //! Устанавливает псевдоним класса
-    void setAlias(const QString &alias);
-
+    void setAlias(const QString &alias) = 0;
 
     //! Возращает тип класса
     virtual ClassType classType() = 0;
@@ -91,6 +96,7 @@ public:
 
     //! Получение всех объектов класса
     virtual void all() = 0;
+
 };
 
 //Q_DECLARE_INTERFACE(IDatabaseClass,"com.RTPTechGroup.Raindrop.IDatabaseClass/1.0")

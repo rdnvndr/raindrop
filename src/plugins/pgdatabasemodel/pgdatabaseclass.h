@@ -72,6 +72,16 @@ public:
 
     //! Cписок фильтров в классе
     IDatabaseFilters filterList();
+
+//! Работа с объектами
+     //! Получение отфильтрованных объектов класса
+    void filtering(IDatabaseFilter *filter);
+
+    //! Получение отфильтрованных объектов класса
+    void filtering(IDatabaseExpression *expr);
+
+    //! Получение всех объектов класса
+    void all();
 };
 
 #endif // PGDATABASECLASS_H

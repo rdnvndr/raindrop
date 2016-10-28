@@ -109,3 +109,18 @@ IDatabaseFilters PgDatabaseClass::filterList()
 {
     return IDatabaseFilters();
 }
+
+void PgDatabaseClass::filtering(IDatabaseFilter *filter)
+{
+
+}
+
+void PgDatabaseClass::filtering(IDatabaseExpression *expr)
+{
+
+}
+
+void PgDatabaseClass::all()
+{
+
+}
