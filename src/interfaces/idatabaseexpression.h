@@ -24,6 +24,12 @@ public:
                                AND   //! Логическое И
                              };
 
+    //! Конструктор класса
+    explicit IDatabaseExpression() {};
+
+    //! Деструктор класса
+    virtual ~IDatabaseExpression() {};
+
     //! Устанавливает первое значение
     void setFirstValue(QVariant value) { m_firstValue = value; }
 
@@ -70,6 +76,7 @@ private:
     ExpressionOperator m_operator;
 
 };
+
 Q_DECLARE_METATYPE(IDatabaseExpression)
 
 #endif // IDATABASEEXPRESSION_H

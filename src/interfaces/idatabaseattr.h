@@ -22,6 +22,12 @@ public:
     enum AttrType { Boolean, Binary, Char, Date, Decimal, Double, Integer,
                     String, Reference, Time, Timeshtamp };
 
+    //! Конструктор класса
+    explicit IDatabaseAttr() {};
+
+    //! Деструктор класса
+    virtual ~IDatabaseAttr() {};
+
     //! Возращает тип атрибута
     virtual AttrType attrType() = 0;
 
