@@ -175,7 +175,7 @@ void XmlDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 {
     // Логический
     if (index.model()->data(index, Qt::EditRole).type() == QVariant::Bool){
-        QStyleOptionViewItemV4 opt = option;
+        QStyleOptionViewItem opt = option;
         initStyleOption(&opt, index);
         opt.text.clear();
 
