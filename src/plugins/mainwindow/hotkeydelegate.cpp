@@ -12,7 +12,7 @@ void HotKeyDelegate::paint(QPainter *painter,
                                const QStyleOptionViewItem &option,
                                const QModelIndex &index) const
 {
-    QStyleOptionViewItemV3 opt = option;
+    QStyleOptionViewItem opt = option;
 
     if (!index.parent().isValid()) {
         opt.font.setBold(true);
