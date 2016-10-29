@@ -13,6 +13,7 @@ HEADERS += idatabasemodel.h
 HEADERS += idatabaseattr.h
 HEADERS += idatabaseclass.h
 HEADERS += idatabasefilter.h
+HEADERS += idatabasecomposition.h
 HEADERS += idatabaserole.h
 HEADERS += idatabaseexpression.h
 

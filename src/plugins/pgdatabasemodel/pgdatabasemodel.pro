@@ -18,8 +18,10 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 # Input
 HEADERS   += pgdatabasemodel.h pgdatabasemodelglobal.h \
     pgdatabaseclass.h \
-    pgdatabaseattr.h
+    pgdatabaseattr.h \
+    pgdatabasecomposition.h
 SOURCES   += pgdatabasemodel.cpp \
     pgdatabaseclass.cpp \
-    pgdatabaseattr.cpp
+    pgdatabaseattr.cpp \
+    pgdatabasecomposition.cpp
 RESOURCES += pgdatabasemodel.qrc

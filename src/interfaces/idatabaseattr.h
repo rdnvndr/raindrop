@@ -4,12 +4,14 @@
 #include <idatabaseexpression.h>
 #include <idatabaseitem.h>
 #include <idatabaseclass.h>
+#include <idatabasecomposition.h>
 
 #include <QVariant>
 #include <QUuid>
 
 
 class IDatabaseClass;
+class IDatabaseComposition;
 
 //! Атрибут класса базы данных
 class IDatabaseAttr: public IDatabaseItem
@@ -131,6 +133,12 @@ public:
         return createAttrExpression(value, IDatabaseExpression::EQ);
     }
 
+    //! Формирует выражение равенства
+    IDatabaseExpression operator == (IDatabaseComposition &value)
+    {
+        return createCompExpression(value, IDatabaseExpression::EQ);
+    }
+
     //! Формирует выражение неравенства
     IDatabaseExpression operator != (QVariant value)
     {
@@ -141,6 +149,12 @@ public:
     IDatabaseExpression operator != (IDatabaseAttr &value)
     {
         return createAttrExpression(value, IDatabaseExpression::NE);
+    }
+
+    //! Формирует выражение неравенства
+    IDatabaseExpression operator != (IDatabaseComposition &value)
+    {
+        return createCompExpression(value, IDatabaseExpression::NE);
     }
 
     //! Формирует выражение больше или равно
@@ -203,6 +217,7 @@ public:
         return createAttrExpression(value, IDatabaseExpression::LIKE);
     }
 
+private:
     IDatabaseExpression createVariantExpression(
             QVariant value, IDatabaseExpression::ExpressionOperator oper)
     {
@@ -216,6 +231,17 @@ public:
 
     IDatabaseExpression createAttrExpression(
             IDatabaseAttr &value, IDatabaseExpression::ExpressionOperator oper)
+    {
+        IDatabaseExpression expr;
+        IDatabaseAttr *firstValue = dynamic_cast<IDatabaseAttr *>(this);
+        expr.setFirstValue(QVariant::fromValue(firstValue));
+        expr.setSecondValue(QVariant::fromValue(&value));
+        expr.setExpressionOperator(oper);
+        return expr;
+    }
+
+    IDatabaseExpression createCompExpression(
+            IDatabaseComposition &value, IDatabaseExpression::ExpressionOperator oper)
     {
         IDatabaseExpression expr;
         IDatabaseAttr *firstValue = dynamic_cast<IDatabaseAttr *>(this);
