@@ -33,41 +33,45 @@ public:
     //! Деструктор класса
     virtual ~IDatabaseClass() {};
 
+
     //! Возращает иконку класса
-    virtual QIcon icon() = 0;
+    virtual QIcon icon() { return m_icon; };
 
     //! Устанавливает иконку класса
-    virtual void setIcon(QIcon icon) = 0;
+    virtual void setIcon(QIcon icon) { m_icon = icon; };
 
     //! Возращает тип класса
-    virtual ClassType classType() = 0;
+    virtual ClassType classType() { return m_classType; };
 
     //! Устанавливает тип класса
-    virtual void setClassType(ClassType classType) = 0;
+    virtual void setClassType(ClassType classType) { m_classType = classType; };
 
     //! Возращает режим доступа
-    virtual AccessMode accessMode() = 0;
+    virtual AccessMode accessMode() { return m_accessMode; };
 
     //! Устанавливает режим доступа
-    virtual void setAccessMode(AccessMode accessMode) = 0;
+    virtual void setAccessMode(AccessMode accessMode)
+    { m_accessMode = accessMode; };
 
     //!  Возращает родительский класс
-    virtual IDatabaseClass *parent() = 0;
+    virtual IDatabaseClass *parent() { return m_parent; };
 
     //!  Устанавливает родительский класс
-    virtual void setParent(IDatabaseClass *parent) = 0;
+    virtual void setParent(IDatabaseClass *parent) { m_parent = parent; };
 
     //!  Возращает шаблон имени объекта
-    virtual QString objectNameTemplate() = 0;
+    virtual QString objectNameTemplate() { return m_objectNameTemplate; };
 
     //!  Устанавливает шаблон имени объекта
-    virtual void setObjectNameTemplate(const QString &objectNameTemplate) = 0;
+    virtual void setObjectNameTemplate(const QString &objectNameTemplate)
+    { m_objectNameTemplate = objectNameTemplate; };
 
     //! Возращает максимальное количество версий объекта
-    virtual qint32 maxVersion() = 0;
+    virtual qint32 maxVersion() { return m_maxVersion; };
 
     //! Устанавливает максимальное количество версий объекта
-    virtual void setMaxVersion(qint32 maxVersion) = 0;
+    virtual void setMaxVersion(qint32 maxVersion) { m_maxVersion = maxVersion; };
+
 
     //! Cписок атрибутов в классе
     virtual IDatabaseAttrs attrList() = 0;
@@ -84,6 +88,25 @@ public:
 
     //! Получение всех объектов класса
     virtual void all() = 0;
+
+private:
+    //! Возращает иконку класса
+    QIcon m_icon;
+
+    //! Тип класса
+    ClassType m_classType = IDatabaseClass::Normal;
+
+    //! Режим доступа
+    AccessMode m_accessMode = IDatabaseClass::Standart;
+
+    //! Родительский класс
+    IDatabaseClass *m_parent = NULL;
+
+    //! Шаблон имени объекта
+    QString m_objectNameTemplate;
+
+    //! Максимальное количество версий объекта
+    qint32 m_maxVersion;
 
 };
 

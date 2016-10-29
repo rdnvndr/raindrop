@@ -17,6 +17,7 @@ QUuid PgDatabaseClass::id()
 
 void PgDatabaseClass::setId(QUuid id)
 {
+    Q_UNUSED(id)
 
 }
 
@@ -27,7 +28,7 @@ QIcon PgDatabaseClass::icon()
 
 void PgDatabaseClass::setIcon(QIcon icon)
 {
-
+    Q_UNUSED(icon)
 }
 
 QString PgDatabaseClass::name()
@@ -37,7 +38,7 @@ QString PgDatabaseClass::name()
 
 void PgDatabaseClass::setName(const QString &name)
 {
-
+    Q_UNUSED(name)
 }
 
 QString PgDatabaseClass::alias()
@@ -47,7 +48,7 @@ QString PgDatabaseClass::alias()
 
 void PgDatabaseClass::setAlias(const QString &alias)
 {
-
+    Q_UNUSED(alias)
 }
 
 IDatabaseClass::ClassType PgDatabaseClass::classType()
@@ -57,7 +58,7 @@ IDatabaseClass::ClassType PgDatabaseClass::classType()
 
 void PgDatabaseClass::setClassType(IDatabaseClass::ClassType classType)
 {
-
+    Q_UNUSED(classType)
 }
 
 IDatabaseClass::AccessMode PgDatabaseClass::accessMode()
@@ -67,7 +68,7 @@ IDatabaseClass::AccessMode PgDatabaseClass::accessMode()
 
 void PgDatabaseClass::setAccessMode(IDatabaseClass::AccessMode accessMode)
 {
-
+    Q_UNUSED(accessMode)
 }
 
 IDatabaseClass *PgDatabaseClass::parent()
@@ -77,7 +78,7 @@ IDatabaseClass *PgDatabaseClass::parent()
 
 void PgDatabaseClass::setParent(IDatabaseClass *parent)
 {
-
+    Q_UNUSED(parent)
 }
 
 QString PgDatabaseClass::objectNameTemplate()
@@ -87,7 +88,7 @@ QString PgDatabaseClass::objectNameTemplate()
 
 void PgDatabaseClass::setObjectNameTemplate(const QString &objectNameTemplate)
 {
-
+    Q_UNUSED(objectNameTemplate)
 }
 
 qint32 PgDatabaseClass::maxVersion()
@@ -97,7 +98,7 @@ qint32 PgDatabaseClass::maxVersion()
 
 void PgDatabaseClass::setMaxVersion(qint32 maxVersion)
 {
-
+    Q_UNUSED(maxVersion)
 }
 
 IDatabaseAttrs PgDatabaseClass::attrList()
@@ -112,12 +113,12 @@ IDatabaseFilters PgDatabaseClass::filterList()
 
 void PgDatabaseClass::filtering(IDatabaseFilter *filter)
 {
-
+    Q_UNUSED(filter)
 }
 
 void PgDatabaseClass::filtering(IDatabaseExpression *expr)
 {
-
+    Q_UNUSED(expr)
 }
 
 void PgDatabaseClass::all()

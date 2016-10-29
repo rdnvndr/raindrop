@@ -8,22 +8,22 @@
 class IDatabaseItem
 {
     //! Возращает идентификатор элемента базы данных
-    virtual QUuid id() = 0;
+    virtual QUuid id() { return m_id; };
 
     //! Устанавливает идентификатор элемента базы данных
-    virtual void setId(QUuid id) = 0;
+    virtual void setId(QUuid id) { m_id = id; };
 
     //! Возращает имя элемента базы данных
-    virtual QString name() = 0;
+    virtual QString name() {return m_name; };
 
     //! Устанавливает имя элемента базы данных
-    virtual void setName(const QString &name) = 0;
+    virtual void setName(const QString &name) { m_name = name; };
 
     //! Возращает псевдоним элемента базы данных
-    virtual QString alias() = 0;
+    virtual QString alias() { return m_alias; };
 
     //! Устанавливает псевдоним элемента базы данных
-    virtual void setAlias(const QString &alias) = 0;
+    virtual void setAlias(const QString &alias) { m_alias = alias; };
 
     //! Проверка существования элемента базы данных
     virtual bool isExist() = 0;
@@ -36,6 +36,16 @@ class IDatabaseItem
 
     //! Удаление элемента базы данных
     virtual bool remove() = 0;
+
+private:
+    //! Индетификатор элемента базы данных
+    QUuid m_id;
+
+    //! Наименование элемента базы данных
+    QString m_name;
+
+    //! Псевдоним элемента базы данных
+    QString m_alias;
 };
 
 #endif // IDATABASEITEM_H
