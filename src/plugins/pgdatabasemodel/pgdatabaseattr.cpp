@@ -50,12 +50,12 @@ bool PgDatabaseAttr::isExist()
     return true;
 }
 
-bool PgDatabaseAttr::create()
+bool PgDatabaseAttr::push()
 {
     return true;
 }
 
-bool PgDatabaseAttr::update()
+bool PgDatabaseAttr::pull()
 {
     return true;
 }

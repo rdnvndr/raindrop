@@ -45,12 +45,12 @@ bool PgDatabaseComposition::isExist()
     return true;
 }
 
-bool PgDatabaseComposition::create()
+bool PgDatabaseComposition::push()
 {
     return true;
 }
 
-bool PgDatabaseComposition::update()
+bool PgDatabaseComposition::pull()
 {
     return true;
 }

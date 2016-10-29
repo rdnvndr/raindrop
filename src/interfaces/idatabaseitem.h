@@ -1,8 +1,8 @@
 #ifndef IDATABASEITEM_H
 #define IDATABASEITEM_H
 
-#include <QString>
 #include <QUuid>
+#include <QString>
 
 //! Элемент базы данных
 class IDatabaseItem
@@ -28,11 +28,11 @@ class IDatabaseItem
     //! Проверка существования элемента базы данных
     virtual bool isExist() = 0;
 
-    //! Создание элемента базы данных
-    virtual bool create() = 0;
+    //! Отправить изменения элемента базы данных
+    virtual bool push() = 0;
 
-    //! Обновление элемента базы данных
-    virtual bool update() = 0;
+    //! Получить изменения элемента базы данных
+    virtual bool pull() = 0;
 
     //! Удаление элемента базы данных
     virtual bool remove() = 0;

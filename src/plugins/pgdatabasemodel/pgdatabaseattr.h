@@ -35,10 +35,10 @@ public:
     bool isExist();
 
     //! Создание элемента базы данных
-    bool create();
+    bool push();
 
     //! Обновление элемента базы данных
-    bool update();
+    bool pull();
 
     //! Удаление элемента базы данных
     bool remove();
