@@ -54,6 +54,12 @@ public:
 
     //! Производитель плагина
     QString vendor() {return tr(APP_COMPANY);}
+
+// IDatabaseModel
+
+    //! Получение строителя по имени
+    IDatabaseModelBuilder *modelBuilder(const QString& name);
+
 };
 
 #endif

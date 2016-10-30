@@ -9,6 +9,8 @@
 //! Строитель модели базы данных
 class IDatabaseModelBuilder
 {
+
+public:
     //! Создание экземпляра класса
     virtual IDatabaseClass *createClass() = 0;
 
@@ -20,6 +22,9 @@ class IDatabaseModelBuilder
 
     //! Создание экземпляра состава
     virtual IDatabaseComposition *createComposition() = 0;
+
+    //! Имя строителя модели базы данных
+    virtual QString modelBuilderName() = 0;
 
 };
 

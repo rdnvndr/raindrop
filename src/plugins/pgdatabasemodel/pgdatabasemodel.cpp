@@ -50,6 +50,11 @@ IDatabaseComposition *PgDatabaseModel::createComposition()
     return new PgDatabaseComposition();
 }
 
+QString PgDatabaseModel::modelBuilderName()
+{
+    return QString("PostgreSql");
+}
+
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(pgdatabasemodel, PgDatabaseModel)
 #endif

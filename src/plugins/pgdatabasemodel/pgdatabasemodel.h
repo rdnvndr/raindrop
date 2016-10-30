@@ -69,6 +69,9 @@ public:
     //! Создание экземпляра состава
     IDatabaseComposition *createComposition();
 
+    //! Имя строителя модели базы данных
+    QString modelBuilderName();
+
 };
 
 #endif
