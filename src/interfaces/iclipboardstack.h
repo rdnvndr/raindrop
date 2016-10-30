@@ -19,6 +19,7 @@ public:
 
 };
 
-Q_DECLARE_INTERFACE(IClipboardStack,"com.RTPTechGroup.Raindrop.IClipboardStack/1.0")
+#define IClipboardStack_iid "com.RTPTechGroup.Raindrop.IClipboardStack"
+Q_DECLARE_INTERFACE(IClipboardStack, IClipboardStack_iid)
 
 #endif

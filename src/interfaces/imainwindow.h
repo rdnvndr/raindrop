@@ -78,6 +78,7 @@ public slots:
     virtual RTPTechGroup::Widgets::MdiExtArea *getMdiArea() = 0;
 };
 
-Q_DECLARE_INTERFACE(IMainWindow,"com.RTPTechGroup.Raindrop.IMainWindow/1.0")
+#define IMainWindow_iid "com.RTPTechGroup.Raindrop.IMainWindow"
+Q_DECLARE_INTERFACE(IMainWindow, IMainWindow_iid)
 
 #endif // IMAINWINDOW_H
