@@ -1,5 +1,5 @@
-#ifndef IDATABASEATTR_H
-#define IDATABASEATTR_H
+#ifndef IDATABASEATTRIBUTE_H
+#define IDATABASEATTRIBUTE_H
 
 #include <idatabaseexpression.h>
 #include <idatabaseitem.h>
@@ -14,24 +14,24 @@ class IDatabaseClass;
 class IDatabaseComposition;
 
 //! Атрибут класса базы данных
-class IDatabaseAttr: public IDatabaseItem
+class IDatabaseAttribute: public IDatabaseItem
 {
 public:
     //! Перечисление типов атрибутов
-    enum AttrType { Boolean, Binary, Char, Date, Decimal, Double, Integer,
-                    String, Reference, Time, Timeshtamp };
+    enum AttrbuteType { Boolean, Binary, Char, Date, Decimal, Double, Integer,
+                        String, Reference, Time, Timeshtamp };
 
     //! Конструктор класса
-    explicit IDatabaseAttr() {};
+    explicit IDatabaseAttribute() {};
 
     //! Деструктор класса
-    virtual ~IDatabaseAttr() {};
+    virtual ~IDatabaseAttribute() {};
 
     //! Возращает тип атрибута
-    virtual AttrType attrType() { return m_attrType; };
+    virtual AttrbuteType attributeType() { return m_attrType; };
 
     //! Устанавливает тип атрибута
-    virtual void setAttrType(AttrType attrType) { m_attrType = attrType; };
+    virtual void setAttrbuteType(AttrbuteType attrType) { m_attrType = attrType; };
 
      //! Возращает группу атрибута
     virtual QString group() { return m_group; };
@@ -133,127 +133,127 @@ public:
     //! Формирует выражение равенства
     IDatabaseExpression operator == (QVariant value)
     {
-        return createVariantExpression(value, IDatabaseExpression::EQ);
+        return createVariantExpr(value, IDatabaseExpression::EQ);
     }
 
     //! Формирует выражение равенства
-    IDatabaseExpression operator == (IDatabaseAttr &value)
+    IDatabaseExpression operator == (IDatabaseAttribute &value)
     {
-        return createAttrExpression(value, IDatabaseExpression::EQ);
+        return createAttrExpr(value, IDatabaseExpression::EQ);
     }
 
     //! Формирует выражение равенства
     IDatabaseExpression operator == (IDatabaseComposition &value)
     {
-        return createCompExpression(value, IDatabaseExpression::EQ);
+        return createCompExpr(value, IDatabaseExpression::EQ);
     }
 
     //! Формирует выражение неравенства
     IDatabaseExpression operator != (QVariant value)
     {
-        return createVariantExpression(value, IDatabaseExpression::NE);
+        return createVariantExpr(value, IDatabaseExpression::NE);
     }
 
     //! Формирует выражение неравенства
-    IDatabaseExpression operator != (IDatabaseAttr &value)
+    IDatabaseExpression operator != (IDatabaseAttribute &value)
     {
-        return createAttrExpression(value, IDatabaseExpression::NE);
+        return createAttrExpr(value, IDatabaseExpression::NE);
     }
 
     //! Формирует выражение неравенства
     IDatabaseExpression operator != (IDatabaseComposition &value)
     {
-        return createCompExpression(value, IDatabaseExpression::NE);
+        return createCompExpr(value, IDatabaseExpression::NE);
     }
 
     //! Формирует выражение больше или равно
     IDatabaseExpression operator >= (QVariant value)
     {
-        return createVariantExpression(value, IDatabaseExpression::GE);
+        return createVariantExpr(value, IDatabaseExpression::GE);
     }
 
     //! Формирует выражение больше или равно
-    IDatabaseExpression operator >= (IDatabaseAttr &value)
+    IDatabaseExpression operator >= (IDatabaseAttribute &value)
     {
-        return createAttrExpression(value, IDatabaseExpression::GE);
+        return createAttrExpr(value, IDatabaseExpression::GE);
     }
 
     //! Формирует выражение меньше или равно
     IDatabaseExpression operator <= (QVariant value)
     {
-        return createVariantExpression(value, IDatabaseExpression::LE);
+        return createVariantExpr(value, IDatabaseExpression::LE);
     }
 
     //! Формирует выражение меньше или равно
-    IDatabaseExpression operator <= (IDatabaseAttr &value)
+    IDatabaseExpression operator <= (IDatabaseAttribute &value)
     {
-        return createAttrExpression(value, IDatabaseExpression::LE);
+        return createAttrExpr(value, IDatabaseExpression::LE);
     }
 
     //! Формирует выражение больше
     IDatabaseExpression operator >  (QVariant value)
     {
-        return createVariantExpression(value, IDatabaseExpression::GT);
+        return createVariantExpr(value, IDatabaseExpression::GT);
     }
 
     //! Формирует выражение больше
-    IDatabaseExpression operator >  (IDatabaseAttr &value)
+    IDatabaseExpression operator >  (IDatabaseAttribute &value)
     {
-        return createAttrExpression(value, IDatabaseExpression::GT);
+        return createAttrExpr(value, IDatabaseExpression::GT);
     }
 
     //! Формирует выражение меньше
     IDatabaseExpression operator <  (QVariant value)
     {
-        return createVariantExpression(value, IDatabaseExpression::LT);
+        return createVariantExpr(value, IDatabaseExpression::LT);
     }
 
     //! Формирует выражение меньше
-    IDatabaseExpression operator <  (IDatabaseAttr &value)
+    IDatabaseExpression operator <  (IDatabaseAttribute &value)
     {
-        return createAttrExpression(value, IDatabaseExpression::LT);
+        return createAttrExpr(value, IDatabaseExpression::LT);
     }
 
     //! Формирует выражение содержит
     IDatabaseExpression contains (QVariant value)
     {
-        return createVariantExpression(value, IDatabaseExpression::LIKE);
+        return createVariantExpr(value, IDatabaseExpression::LIKE);
     }
 
    //! Формирует выражение содержит
-    IDatabaseExpression contains (IDatabaseAttr &value)
+    IDatabaseExpression contains (IDatabaseAttribute &value)
     {
-        return createAttrExpression(value, IDatabaseExpression::LIKE);
+        return createAttrExpr(value, IDatabaseExpression::LIKE);
     }
 
 private:
-    IDatabaseExpression createVariantExpression(
+    IDatabaseExpression createVariantExpr(
             QVariant value, IDatabaseExpression::ExpressionOperator oper)
     {
         IDatabaseExpression expr;
-        IDatabaseAttr *firstValue = dynamic_cast<IDatabaseAttr *>(this);
+        IDatabaseAttribute *firstValue = dynamic_cast<IDatabaseAttribute *>(this);
         expr.setFirstValue(QVariant::fromValue(firstValue));
         expr.setSecondValue(value);
         expr.setExpressionOperator(oper);
         return expr;
     }
 
-    IDatabaseExpression createAttrExpression(
-            IDatabaseAttr &value, IDatabaseExpression::ExpressionOperator oper)
+    IDatabaseExpression createAttrExpr(
+            IDatabaseAttribute &value, IDatabaseExpression::ExpressionOperator oper)
     {
         IDatabaseExpression expr;
-        IDatabaseAttr *firstValue = dynamic_cast<IDatabaseAttr *>(this);
+        IDatabaseAttribute *firstValue = dynamic_cast<IDatabaseAttribute *>(this);
         expr.setFirstValue(QVariant::fromValue(firstValue));
         expr.setSecondValue(QVariant::fromValue(&value));
         expr.setExpressionOperator(oper);
         return expr;
     }
 
-    IDatabaseExpression createCompExpression(
+    IDatabaseExpression createCompExpr(
             IDatabaseComposition &value, IDatabaseExpression::ExpressionOperator oper)
     {
         IDatabaseExpression expr;
-        IDatabaseAttr *firstValue = dynamic_cast<IDatabaseAttr *>(this);
+        IDatabaseAttribute *firstValue = dynamic_cast<IDatabaseAttribute *>(this);
         expr.setFirstValue(QVariant::fromValue(firstValue));
         expr.setSecondValue(QVariant::fromValue(&value));
         expr.setExpressionOperator(oper);
@@ -261,7 +261,7 @@ private:
     }
 
     //! Тип атрибута
-    AttrType m_attrType = IDatabaseAttr::Integer;
+    AttrbuteType m_attrType = IDatabaseAttribute::Integer;
 
     //! Группа атрибута
     QString m_group;
@@ -306,6 +306,6 @@ private:
     IDatabaseClass *m_parent = NULL;
 };
 
-Q_DECLARE_METATYPE(IDatabaseAttr*)
+Q_DECLARE_METATYPE(IDatabaseAttribute*)
 
 #endif

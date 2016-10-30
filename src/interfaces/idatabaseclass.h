@@ -2,7 +2,7 @@
 #define IDATABASECLASS_H
 
 #include <idatabaseitem.h>
-#include <idatabaseattr.h>
+#include <idatabaseattribute.h>
 #include <idatabasefilter.h>
 #include <idatabaseexpression.h>
 
@@ -12,10 +12,10 @@
 
 
 class IDatabaseExpression;
-class IDatabaseAttr;
+class IDatabaseAttribute;
 class IDatabaseFilter;
 
-typedef QHash<QString, IDatabaseAttr *> IDatabaseAttrs;
+typedef QHash<QString, IDatabaseAttribute *> IDatabaseAttrs;
 typedef QHash<QString, IDatabaseFilter *> IDatabaseFilters;
 
 //! Класс базы данных

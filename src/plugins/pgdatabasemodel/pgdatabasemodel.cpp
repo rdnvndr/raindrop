@@ -8,7 +8,7 @@
 PgDatabaseModel::PgDatabaseModel(QObject *parent):
     QObject(parent), IPlugin("")
 {
-    IDatabaseAttr *m_attr = new PgDatabaseAttr();
+    IDatabaseAttribute *m_attr = new PgDatabaseAttr();
     IDatabaseComposition *m_comp = new PgDatabaseComposition();
     QVariant x(10);
     IDatabaseExpression e1 = (*m_attr == *m_attr);
@@ -35,7 +35,7 @@ IDatabaseClass *PgDatabaseModel::createClass()
     return new PgDatabaseClass();
 }
 
-IDatabaseAttr *PgDatabaseModel::createAttr()
+IDatabaseAttribute *PgDatabaseModel::createAttr()
 {
     return new PgDatabaseAttr();
 }

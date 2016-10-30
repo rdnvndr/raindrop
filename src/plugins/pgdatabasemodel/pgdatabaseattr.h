@@ -1,10 +1,10 @@
 #ifndef PGDATABASEATTR_H
 #define PGDATABASEATTR_H
 
-#include <idatabaseattr.h>
+#include <idatabaseattribute.h>
 
 //! Реализация атрибута базы данных
-class PgDatabaseAttr : public IDatabaseAttr
+class PgDatabaseAttr : public IDatabaseAttribute
 {
 public:
     //! Конструктор класса

@@ -2,11 +2,11 @@
 #define IDATABASECOMPOSITION_H
 
 #include <idatabaseitem.h>
-#include <idatabaseattr.h>
+#include <idatabaseattribute.h>
 #include <idatabaseexpression.h>
 
 
-class IDatabaseAttr;
+class IDatabaseAttribute;
 class IDatabaseExpression;
 
 //! Состав класса базы данных
@@ -23,30 +23,30 @@ public:
     //! Формирует выражение равенства
     IDatabaseExpression operator == (IDatabaseComposition &value)
     {
-        return createCompExpression(value, IDatabaseExpression::EQ);
+        return createCompExpr(value, IDatabaseExpression::EQ);
     }
 
     //! Формирует выражение равенства
-    IDatabaseExpression operator == (IDatabaseAttr &value)
+    IDatabaseExpression operator == (IDatabaseAttribute &value)
     {
-        return createAttrExpression(value, IDatabaseExpression::EQ);
+        return createAttrExpr(value, IDatabaseExpression::EQ);
     }
 
     //! Формирует выражение неравенства
     IDatabaseExpression operator != (IDatabaseComposition &value)
     {
-        return createCompExpression(value, IDatabaseExpression::NE);
+        return createCompExpr(value, IDatabaseExpression::NE);
     }
 
     //! Формирует выражение неравенства
-    IDatabaseExpression operator != (IDatabaseAttr &value)
+    IDatabaseExpression operator != (IDatabaseAttribute &value)
     {
-        return createAttrExpression(value, IDatabaseExpression::NE);
+        return createAttrExpr(value, IDatabaseExpression::NE);
     }
 
 private:
-    IDatabaseExpression createAttrExpression(
-            IDatabaseAttr &value, IDatabaseExpression::ExpressionOperator oper)
+    IDatabaseExpression createAttrExpr(
+            IDatabaseAttribute &value, IDatabaseExpression::ExpressionOperator oper)
     {
         IDatabaseExpression expr;
         IDatabaseComposition *firstValue
@@ -57,7 +57,7 @@ private:
         return expr;
     }
 
-    IDatabaseExpression createCompExpression(
+    IDatabaseExpression createCompExpr(
             IDatabaseComposition &value, IDatabaseExpression::ExpressionOperator oper)
     {
         IDatabaseExpression expr;

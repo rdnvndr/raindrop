@@ -61,7 +61,7 @@ public:
     IDatabaseClass *createClass();
 
     //! Создание экземпляра атрибута
-    IDatabaseAttr *createAttr();
+    IDatabaseAttribute *createAttr();
 
     //! Создание экземпляра фильтра
     IDatabaseFilter *createFilter();

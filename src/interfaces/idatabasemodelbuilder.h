@@ -2,7 +2,7 @@
 #define IDATABASEMODELBUILDER_H
 
 #include <idatabaseclass.h>
-#include <idatabaseattr.h>
+#include <idatabaseattribute.h>
 #include <idatabasefilter.h>
 #include <idatabasecomposition.h>
 
@@ -15,7 +15,7 @@ public:
     virtual IDatabaseClass *createClass() = 0;
 
     //! Создание экземпляра атрибута
-    virtual IDatabaseAttr *createAttr() = 0;
+    virtual IDatabaseAttribute *createAttr() = 0;
 
     //! Создание экземпляра фильтра
     virtual IDatabaseFilter *createFilter() = 0;
