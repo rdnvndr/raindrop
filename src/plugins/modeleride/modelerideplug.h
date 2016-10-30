@@ -28,7 +28,7 @@ class ModelerIDEPlug:
     Q_INTERFACES(IPlugin)
 
     #if QT_VERSION >= 0x050000
-        Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.ModelerIDEPlug" FILE "modelerideplug.json")
+        Q_PLUGIN_METADATA(IID IPlugin_iid FILE "modelerideplug.json")
     #endif
 
 public:

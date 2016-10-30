@@ -46,6 +46,6 @@ signals:
     virtual void canSelectAllChanged(bool canSelectAll) = 0;
 };
 
-//Q_DECLARE_INTERFACE(IClipboardItem,"com.RTPTechGroup.Raindrop.IClipboardItem/1.0")
+//Q_DECLARE_INTERFACE(IClipboardItem,"com.RTPTechGroup.Raindrop.IClipboardItem")
 
 #endif 

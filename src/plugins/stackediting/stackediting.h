@@ -30,7 +30,7 @@ class  STACKEDITINGLIB StackEditing:
     Q_INTERFACES(IPlugin IUndoGroup IClipboardStack)
 
 #if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.StackEditing" FILE "stackediting.json")
+    Q_PLUGIN_METADATA(IID IClipboardStack_iid FILE "stackediting.json")
 #endif
 
 public:

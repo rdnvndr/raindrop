@@ -179,7 +179,9 @@ private:
 
 QT_BEGIN_NAMESPACE
 
-Q_DECLARE_INTERFACE(IPlugin, "com.RTPTechGroup.Raindrop.IPlugin/1.0")
+#define IPlugin_iid  "com.RTPTechGroup.Raindrop.IPlugin"
+Q_DECLARE_INTERFACE(IPlugin, IPlugin_iid)
+
 QT_END_NAMESPACE
 
 #endif
