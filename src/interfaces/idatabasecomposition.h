@@ -7,6 +7,7 @@
 
 
 class IDatabaseAttr;
+class IDatabaseExpression;
 
 //! Состав класса базы данных
 class IDatabaseComposition: public IDatabaseItem

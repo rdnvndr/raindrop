@@ -1,6 +1,8 @@
 #include "pgdatabasemodel.h"
 
+#include "pgdatabaseclass.h"
 #include "pgdatabaseattr.h"
+#include "pgdatabasefilter.h"
 #include "pgdatabasecomposition.h"
 
 PgDatabaseModel::PgDatabaseModel(QObject *parent):
@@ -26,6 +28,26 @@ PgDatabaseModel::PgDatabaseModel(QObject *parent):
 PgDatabaseModel::~PgDatabaseModel()
 {
 
+}
+
+IDatabaseClass *PgDatabaseModel::createClass()
+{
+    return new PgDatabaseClass();
+}
+
+IDatabaseAttr *PgDatabaseModel::createAttr()
+{
+    return new PgDatabaseAttr();
+}
+
+IDatabaseFilter *PgDatabaseModel::createFilter()
+{
+    return new PgDatabaseFilter();
+}
+
+IDatabaseComposition *PgDatabaseModel::createComposition()
+{
+    return new PgDatabaseComposition();
 }
 
 #if QT_VERSION < 0x050000

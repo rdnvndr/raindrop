@@ -1,12 +1,8 @@
 #ifndef IDATABASEEXPRESSION_H
 #define IDATABASEEXPRESSION_H
 
-#include <idatabaseattr.h>
-
 #include <QString>
 #include <QVariant>
-
-
 
 //! Выражение базы данных
 class IDatabaseExpression

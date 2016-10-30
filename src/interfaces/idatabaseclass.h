@@ -13,6 +13,7 @@
 
 class IDatabaseExpression;
 class IDatabaseAttr;
+class IDatabaseFilter;
 
 typedef QHash<QString, IDatabaseAttr *> IDatabaseAttrs;
 typedef QHash<QString, IDatabaseFilter *> IDatabaseFilters;

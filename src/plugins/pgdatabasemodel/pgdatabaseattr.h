@@ -29,7 +29,6 @@ public:
 
     //! Проверка наследования атрибута
     bool isInherited(IDatabaseClass *parent);
-
 };
 
 #endif // PGDATABASEATTR_H

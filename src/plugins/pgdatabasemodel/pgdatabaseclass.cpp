@@ -10,95 +10,24 @@ PgDatabaseClass::~PgDatabaseClass()
 
 }
 
-QUuid PgDatabaseClass::id()
+bool PgDatabaseClass::isExist()
 {
-    return QUuid();
+    return  true;
 }
 
-void PgDatabaseClass::setId(QUuid id)
+bool PgDatabaseClass::push()
 {
-    Q_UNUSED(id)
-
+    return  true;
 }
 
-QIcon PgDatabaseClass::icon()
+bool PgDatabaseClass::pull()
 {
-    return QIcon();
+    return  true;
 }
 
-void PgDatabaseClass::setIcon(QIcon icon)
+bool PgDatabaseClass::remove()
 {
-    Q_UNUSED(icon)
-}
-
-QString PgDatabaseClass::name()
-{
-    return QString("");
-}
-
-void PgDatabaseClass::setName(const QString &name)
-{
-    Q_UNUSED(name)
-}
-
-QString PgDatabaseClass::alias()
-{
-    return QString("");
-}
-
-void PgDatabaseClass::setAlias(const QString &alias)
-{
-    Q_UNUSED(alias)
-}
-
-IDatabaseClass::ClassType PgDatabaseClass::classType()
-{
-    return ClassType::Normal;
-}
-
-void PgDatabaseClass::setClassType(IDatabaseClass::ClassType classType)
-{
-    Q_UNUSED(classType)
-}
-
-IDatabaseClass::AccessMode PgDatabaseClass::accessMode()
-{
-    return AccessMode::Standart;
-}
-
-void PgDatabaseClass::setAccessMode(IDatabaseClass::AccessMode accessMode)
-{
-    Q_UNUSED(accessMode)
-}
-
-IDatabaseClass *PgDatabaseClass::parent()
-{
-    return NULL;
-}
-
-void PgDatabaseClass::setParent(IDatabaseClass *parent)
-{
-    Q_UNUSED(parent)
-}
-
-QString PgDatabaseClass::objectNameTemplate()
-{
-    return QString("");
-}
-
-void PgDatabaseClass::setObjectNameTemplate(const QString &objectNameTemplate)
-{
-    Q_UNUSED(objectNameTemplate)
-}
-
-qint32 PgDatabaseClass::maxVersion()
-{
-    return 0;
-}
-
-void PgDatabaseClass::setMaxVersion(qint32 maxVersion)
-{
-    Q_UNUSED(maxVersion)
+    return  true;
 }
 
 IDatabaseAttrs PgDatabaseClass::attrList()

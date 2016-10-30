@@ -31,7 +31,7 @@ public:
     //! Деструктор плагина
     virtual ~PgDatabaseModel();
 
-    // IPlugin
+// IPlugin
     //! Получение имени плагина
     QString name() {return APP_NAME;}
 
@@ -55,6 +55,20 @@ public:
 
     //! Производитель плагина
     QString vendor() {return tr(APP_COMPANY);}
+
+// IDatabaseModelBuilder
+    //! Создание экземпляра класса
+    IDatabaseClass *createClass();
+
+    //! Создание экземпляра атрибута
+    IDatabaseAttr *createAttr();
+
+    //! Создание экземпляра фильтра
+    IDatabaseFilter *createFilter();
+
+    //! Создание экземпляра состава
+    IDatabaseComposition *createComposition();
+
 };
 
 #endif
