@@ -9,7 +9,7 @@ class IDatabaseModel
     //! Получение строителя по имени
     virtual IDatabaseModelBuilder *modelBuilder(const QString& name) = 0;
 };
-
-Q_DECLARE_INTERFACE(IDatabaseModel,"com.RTPTechGroup.Raindrop.IDatabaseModel/1.0")
+#define IDatabaseModel_iid "com.RTPTechGroup.Raindrop.IDatabaseModel"
+Q_DECLARE_INTERFACE(IDatabaseModel, IDatabaseModel_iid)
 
 #endif

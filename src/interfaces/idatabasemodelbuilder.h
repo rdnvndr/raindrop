@@ -28,6 +28,7 @@ public:
 
 };
 
-Q_DECLARE_INTERFACE(IDatabaseModelBuilder,"com.RTPTechGroup.Raindrop.IDatabaseModelBuilder/1.0")
+#define IDatabaseModelBuilder_iid "com.RTPTechGroup.Raindrop.IDatabaseModelBuilder"
+Q_DECLARE_INTERFACE(IDatabaseModelBuilder, IDatabaseModelBuilder_iid)
 
 #endif // IDATABASEMODELBUILDER_H

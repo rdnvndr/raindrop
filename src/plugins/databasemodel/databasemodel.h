@@ -18,7 +18,7 @@ class  DATABASEMODELLIB DatabaseModel:
     Q_INTERFACES(IPlugin IDatabaseModel)
 
 #if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.DatabaseModel" FILE "databasemodel.json")
+    Q_PLUGIN_METADATA(IID IDatabaseModel_iid FILE "databasemodel.json")
 #endif
 
 public:

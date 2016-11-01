@@ -20,7 +20,7 @@ class  PGDATABASEMODELLIB PgDatabaseModel:
     Q_INTERFACES(IPlugin IDatabaseModelBuilder)
 
 #if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.PgDatabaseModel" FILE "pgdatabasemodel.json")
+    Q_PLUGIN_METADATA(IID IDatabaseModelBuilder_iid FILE "pgdatabasemodel.json")
 #endif
 
 public:
