@@ -38,7 +38,7 @@ class MAINWINDOWLIB MainWindow:
     Q_INTERFACES(IPlugin IMainWindow)
 
 #if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.MainWindow" FILE "mainwindow.json")
+    Q_PLUGIN_METADATA(IID IMainWindow_iid FILE "mainwindow.json")
 #endif
 
 public:

@@ -27,6 +27,7 @@ public:
 
 };
 
-Q_DECLARE_INTERFACE(IUndoGroup,"com.RTPTechGroup.Raindrop.IUndoGroup/1.0")
+#define IUndoGroup_iid "com.RTPTechGroup.Raindrop.IUndoGroup"
+Q_DECLARE_INTERFACE(IUndoGroup, IUndoGroup_iid)
 
 #endif 

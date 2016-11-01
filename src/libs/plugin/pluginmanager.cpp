@@ -84,9 +84,15 @@ void PluginManager::loadPlugins()
 
     // Загрузка файлов
     QDir::setCurrent(qApp->applicationDirPath()+"\\"+"plugins");
-    m_listFiles = m_pluginsDir.entryList(QDir::Files);
-    for (m_currentFile=0; m_currentFile < m_listFiles.count(); ++m_currentFile)
-        loadPlugin(m_listFiles.at(m_currentFile));
+    m_fileList = m_pluginsDir.entryList(QDir::Files);
+    do {
+        for (m_currentFile=0; m_currentFile < m_fileList.count(); ++m_currentFile)
+            loadPlugin(m_fileList.at(m_currentFile));
+        if (m_lockFileList.isEmpty() || m_fileList == m_lockFileList)
+            break;
+        m_fileList = m_lockFileList;
+        m_lockFileList.clear();
+    } while (true);
 
     QDir::setCurrent(qApp->applicationDirPath());
     emit endLoadingPlugins();
@@ -94,9 +100,9 @@ void PluginManager::loadPlugins()
 
 bool PluginManager::nextLoadPlugin() {
 
-    if (m_currentFile <  m_listFiles.count()-1) {
+    if (m_currentFile <  m_fileList.count()-1) {
         ++m_currentFile;
-        loadPlugin(m_listFiles.at(m_currentFile));
+        loadPlugin(m_fileList.at(m_currentFile));
         return true;
     }
     return false;
@@ -132,7 +138,11 @@ bool PluginManager::loadPlugin(QString fileName)
             return false;
         }
     } catch (qint32 &e) {
-        Q_UNUSED(e)
+        if (e == 1)
+            m_lockFileList.append(fileName);
+        else
+            qDebug() << "Error load plugin";
+
         return false;
     }
 }

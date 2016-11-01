@@ -51,6 +51,7 @@ public slots:
     virtual void callFuncTreeWidget(QTreeWidgetItem *item, qint32 column)  = 0;
 };
 
-Q_DECLARE_INTERFACE(ITreeDockWidget,"com.RTPTechGroup.Raindrop.ITreeDockWidget/1.0")
+#define ITreeDockWidget_iid "com.RTPTechGroup.Raindrop.ITreeDockWidget"
+Q_DECLARE_INTERFACE(ITreeDockWidget, ITreeDockWidget_iid)
 
 #endif 
