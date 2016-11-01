@@ -114,7 +114,10 @@ private:
     QDir m_pluginsDir;
 
     //! Список файлов в каталоге плагина
-    QStringList m_listFiles;
+    QStringList m_fileList;
+
+    //! Список не загруженных файлов
+    QStringList m_lockFileList;
 };
 
 }}
