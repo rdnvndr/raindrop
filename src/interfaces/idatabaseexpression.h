@@ -21,7 +21,7 @@ public:
                              };
 
     //! Конструктор класса
-    explicit IDatabaseExpression() {};
+    explicit IDatabaseExpression() { m_operator =  IDatabaseExpression::EQ; };
 
     //! Деструктор класса
     virtual ~IDatabaseExpression() {};
@@ -69,7 +69,7 @@ public:
 private:
     QVariant m_firstValue;
     QVariant m_secondValue;
-    ExpressionOperator m_operator =  IDatabaseExpression::EQ;
+    ExpressionOperator m_operator;
 };
 
 Q_DECLARE_METATYPE(IDatabaseExpression)

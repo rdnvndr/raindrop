@@ -29,7 +29,11 @@ public:
     enum ClassType { Abstract, Context, Embedded, Normal };
 
     //! Конструктор класса
-    explicit IDatabaseClass() {};
+    explicit IDatabaseClass() {
+        m_classType = IDatabaseClass::Normal;
+        m_accessMode = IDatabaseClass::Standart;
+        m_parent = NULL;
+    };
 
     //! Деструктор класса
     virtual ~IDatabaseClass() {};
@@ -95,13 +99,13 @@ private:
     QIcon m_icon;
 
     //! Тип класса
-    ClassType m_classType = IDatabaseClass::Normal;
+    ClassType m_classType;
 
     //! Режим доступа
-    AccessMode m_accessMode = IDatabaseClass::Standart;
+    AccessMode m_accessMode;
 
     //! Родительский класс
-    IDatabaseClass *m_parent = NULL;
+    IDatabaseClass *m_parent;
 
     //! Шаблон имени объекта
     QString m_objectNameTemplate;

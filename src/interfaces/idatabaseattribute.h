@@ -22,7 +22,17 @@ public:
                         String, Reference, Time, Timeshtamp };
 
     //! Конструктор класса
-    explicit IDatabaseAttribute() {};
+    explicit IDatabaseAttribute() {
+        m_attrType = IDatabaseAttribute::Integer;
+        m_nullsAllowed = true;
+        m_unique = false;
+        m_candidateKey = false;
+        m_refClass = NULL;
+        m_refUnit = NULL;
+        m_refLov = NULL;
+        m_refNumerator = NULL;
+        m_parent = NULL;
+    };
 
     //! Деструктор класса
     virtual ~IDatabaseAttribute() {};
@@ -261,7 +271,7 @@ private:
     }
 
     //! Тип атрибута
-    AttrbuteType m_attrType = IDatabaseAttribute::Integer;
+    AttrbuteType m_attrType;
 
     //! Группа атрибута
     QString m_group;
@@ -273,13 +283,13 @@ private:
     qint32 m_accuracy;
 
     //! Разрешение использовать пустое значение
-    bool m_nullsAllowed = true;
+    bool m_nullsAllowed;
 
     //! Уникальность значения атрибута
-    bool m_unique = false;
+    bool m_unique;
 
     //! Является ли атрибут ключём
-    bool m_candidateKey = false;
+    bool m_candidateKey;
 
     //! Значение по умолчанию
     QVariant m_initialValue;
@@ -291,19 +301,19 @@ private:
     QVariant m_upperBound;
 
     //! Ссылочный класс
-    IDatabaseClass *m_refClass = NULL;
+    IDatabaseClass *m_refClass;
 
     //! Единица измерения атрибута
-    IDatabaseClass *m_refUnit = NULL;
+    IDatabaseClass *m_refUnit;
 
     //! Список значений атрибута
-    IDatabaseClass *m_refLov = NULL;
+    IDatabaseClass *m_refLov;
 
     //! Нумератор атрибута
-    IDatabaseClass *m_refNumerator = NULL;
+    IDatabaseClass *m_refNumerator;
 
     //! Класс атрибута
-    IDatabaseClass *m_parent = NULL;
+    IDatabaseClass *m_parent;
 };
 
 Q_DECLARE_METATYPE(IDatabaseAttribute*)
