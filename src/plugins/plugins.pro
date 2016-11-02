@@ -9,3 +9,4 @@ SUBDIRS +=  modeleride
 SUBDIRS +=  example
 SUBDIRS +=  databasemodel
 SUBDIRS +=  pgdatabasemodel
+SUBDIRS +=  dbmodelexample
