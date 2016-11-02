@@ -85,14 +85,19 @@ void PluginManager::loadPlugins()
     // Загрузка файлов
     QDir::setCurrent(qApp->applicationDirPath()+"\\"+"plugins");
     m_fileList = m_pluginsDir.entryList(QDir::Files);
-    do {
+    while (true) {
         for (m_currentFile=0; m_currentFile < m_fileList.count(); ++m_currentFile)
             loadPlugin(m_fileList.at(m_currentFile));
+
         if (m_lockFileList.isEmpty() || m_fileList == m_lockFileList)
             break;
+
         m_fileList = m_lockFileList;
         m_lockFileList.clear();
-    } while (true);
+    }
+
+    m_fileList .clear();
+    m_lockFileList.clear();
 
     QDir::setCurrent(qApp->applicationDirPath());
     emit endLoadingPlugins();
