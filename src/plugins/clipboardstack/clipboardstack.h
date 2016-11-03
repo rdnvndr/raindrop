@@ -23,11 +23,9 @@ class  CLIPBOARDSTACKLIB ClipboardStack:
         public IPlugin
 {
     Q_OBJECT
-    Q_INTERFACES(IPlugin IClipboardStack)
 
-#if QT_VERSION >= 0x050000
+    Q_INTERFACES(IPlugin IClipboardStack)
     Q_PLUGIN_METADATA(IID IClipboardStack_iid FILE "clipboardstack.json")
-#endif
 
 public:
 

@@ -19,11 +19,9 @@ class  DBCONNECTLIB DbConnect:
         public IPlugin
 {
     Q_OBJECT
+
     Q_INTERFACES(IPlugin)
-    
-#if QT_VERSION >= 0x050000
     Q_PLUGIN_METADATA(IID IPlugin_iid FILE "dbconnect.json")
-#endif
     
 public:
     

@@ -1,6 +1,8 @@
 #include "pluginmanager.h"
 #include <typeinfo>
 
+#include <QRegExp>
+
 namespace RTPTechGroup {
 namespace Plugin {
 
@@ -9,7 +11,7 @@ PluginManager::PluginManager(QObject *parent) :
 {
     m_instance = this;
     m_settings = NULL;
-    m_currentFile = 0;
+    m_lockFiles = NULL;
 }
 
 PluginManager *PluginManager::m_instance = 0;
@@ -38,6 +40,7 @@ PluginManager::~PluginManager()
         delete plug;
         plug = interfaceObject("IPlugin");
     }
+    delete m_lockFiles;
 }
 
 QSettings *PluginManager::settings() const
@@ -83,73 +86,64 @@ void PluginManager::loadPlugins()
     }
 
     // Загрузка файлов
-    QDir::setCurrent(qApp->applicationDirPath()+"\\"+"plugins");
     m_fileList = m_pluginsDir.entryList(QDir::Files);
-    while (true) {
-        for (m_currentFile=0; m_currentFile < m_fileList.count(); ++m_currentFile)
-            loadPlugin(m_fileList.at(m_currentFile));
+    qint32 count = m_fileList.count();
+    m_lockFiles = new bool[count];
+    for (qint32 i = 0; i < count; ++i)
+        m_lockFiles[i] = false;
 
-        if (m_lockFileList.isEmpty() || m_fileList == m_lockFileList)
-            break;
+    nextLoadPlugins();
 
-        m_fileList = m_lockFileList;
-        m_lockFileList.clear();
-    }
-
-    m_fileList .clear();
-    m_lockFileList.clear();
-
-    QDir::setCurrent(qApp->applicationDirPath());
     emit endLoadingPlugins();
 }
 
-bool PluginManager::nextLoadPlugin() {
-
-    if (m_currentFile <  m_fileList.count()-1) {
-        ++m_currentFile;
-        loadPlugin(m_fileList.at(m_currentFile));
-        return true;
+bool PluginManager::nextLoadPlugins(QString iid)
+{
+    bool result = false;
+    for (int fileNum = 0; fileNum < m_fileList.count(); ++fileNum)
+    {
+        if (!m_lockFiles[fileNum]) {
+            m_lockFiles[fileNum] = true;
+            bool isLoad = loadPlugin(m_fileList.at(fileNum), iid);
+            if (!isLoad) m_lockFiles[fileNum] = false;
+            result = result || isLoad;
+        }
     }
-    return false;
+    return result;
 }
 
-bool PluginManager::loadPlugin(QString fileName)
+bool PluginManager::loadPlugin(QString fileName, QString iid)
 {
+    fileName = m_pluginsDir.absoluteFilePath(fileName);
     if (!QLibrary::isLibrary(fileName))
         return false;
-    try {
-        QPluginLoader loader(m_pluginsDir.absoluteFilePath(fileName));
-        QObject *plugin = loader.instance();
-        if (plugin)
-        {
-            IPlugin *corePlugin = qobject_cast<IPlugin*>(plugin);
-            if (corePlugin){
-                connect(plugin,SIGNAL(destroyed(QObject*)),this,SLOT(removePlugin(QObject*)));
-                plugin->setObjectName(plugin->metaObject()->className());
 
-                foreach (const QString &interface, corePlugin->interfaces())
-                    m_interfaces.insert(interface, plugin);
+    QPluginLoader loader(fileName);
 
-                emit loadedPlugin(plugin);
-                qDebug()<<"Load plugin: "<<corePlugin->name();
-                return true;
-            }else {
-                qDebug()<<"Error load plugin" << loader.errorString();
-                delete plugin;
-                return false;
-            }
-        } else {
-            qDebug()<<"Error load plugin" << loader.errorString();
-            return false;
-        }
-    } catch (qint32 &e) {
-        if (e == 1)
-            m_lockFileList.append(fileName);
-        else
-            qDebug() << "Error load plugin";
-
+    QString plugIid = loader.metaData().value("IID").toString();
+    QRegExp checkIid("\\."+iid+"([\\.\\][0-9]+.?[0-9]*)?");
+    if (!plugIid.isEmpty() && !plugIid.contains(checkIid))
         return false;
+
+    QObject *plugin = loader.instance();
+    if (plugin)
+    {
+        IPlugin *corePlugin = qobject_cast<IPlugin*>(plugin);
+        if (corePlugin){
+            connect(plugin,SIGNAL(destroyed(QObject*)),this,SLOT(removePlugin(QObject*)));
+            plugin->setObjectName(plugin->metaObject()->className());
+
+            foreach (const QString &interface, corePlugin->interfaces())
+                m_interfaces.insert(interface, plugin);
+
+            emit loadedPlugin(plugin);
+            qDebug()<<"Load plugin: "<<corePlugin->name();
+            return true;
+        } else
+            delete plugin;
     }
+    qDebug()<<"Error load plugin" << loader.errorString();
+    return false;
 }
 
 void PluginManager::setSettings(QSettings *s)

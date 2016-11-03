@@ -35,11 +35,9 @@ class MAINWINDOWLIB MainWindow:
 
 {
     Q_OBJECT
-    Q_INTERFACES(IPlugin IMainWindow)
 
-#if QT_VERSION >= 0x050000
+    Q_INTERFACES(IPlugin IMainWindow)
     Q_PLUGIN_METADATA(IID IMainWindow_iid FILE "mainwindow.json")
-#endif
 
 public:
     struct MenuItem {

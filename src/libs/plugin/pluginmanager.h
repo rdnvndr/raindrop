@@ -67,10 +67,10 @@ public:
     void loadPlugins();
 
     //! Загрузка указанного плагина
-    bool loadPlugin(QString fileName);
+    bool loadPlugin(QString fileName, QString iid = "");
 
     //! Загрузка следующего плагина
-    bool nextLoadPlugin();
+    bool nextLoadPlugins(QString iid = "");
 
     //! Устанавливает ссылку на объект для сохранения настроек
     void setSettings(QSettings *s);
@@ -107,17 +107,14 @@ private:
      */
     QMultiHash<QString, QObject *> m_interfaces;
 
-    //! Текущий плагин для загрузки
-    qint32 m_currentFile;
-
     //! Каталог нахождения плагинов
     QDir m_pluginsDir;
 
     //! Список файлов в каталоге плагина
     QStringList m_fileList;
 
-    //! Список не загруженных файлов
-    QStringList m_lockFileList;
+    //! Множество заблокированных файлов
+    bool *m_lockFiles;
 };
 
 }}
