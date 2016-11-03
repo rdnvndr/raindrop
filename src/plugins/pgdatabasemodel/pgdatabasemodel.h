@@ -17,11 +17,9 @@ class  PGDATABASEMODELLIB PgDatabaseModel:
         public IPlugin
 {
     Q_OBJECT
-    Q_INTERFACES(IPlugin IDatabaseModelBuilder)
 
-#if QT_VERSION >= 0x050000
+    Q_INTERFACES(IPlugin IDatabaseModelBuilder)
     Q_PLUGIN_METADATA(IID IDatabaseModelBuilder_iid FILE "pgdatabasemodel.json")
-#endif
 
 public:
 

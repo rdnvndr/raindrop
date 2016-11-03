@@ -10,11 +10,9 @@ class  DBMODELEXAMPLELIB DbModelExample:
         public IPlugin
 {
     Q_OBJECT
-    Q_INTERFACES(IPlugin)
 
-#if QT_VERSION >= 0x050000
+    Q_INTERFACES(IPlugin)
     Q_PLUGIN_METADATA(IID IPlugin_iid FILE "dbmodelexample.json")
-#endif
 
 public:
 

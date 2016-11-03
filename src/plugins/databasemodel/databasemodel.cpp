@@ -26,8 +26,3 @@ IDatabaseModelBuilder *DatabaseModel::modelBuilder(const QString &name)
     return NULL;
 }
 
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(databasemodel, DatabaseModel)
-#endif
-
-
