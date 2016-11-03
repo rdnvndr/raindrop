@@ -7,18 +7,8 @@ IPlugin::IPlugin(const QString& depInterfaces)
     PluginManager *pluginManager = PluginManager::instance();
     m_depModulList = depInterfaces.split(" ");
     foreach (const QString &depPlugin, depModulList()) {
-        bool existPlugin = true;
-        do {   
-            if (pluginManager->interfaceObject(depPlugin) || depPlugin.isEmpty())
-                break;
-            existPlugin = pluginManager->nextLoadPlugin();
-        } while (existPlugin);
-
-        // Интерфейс не найден
-        if (!existPlugin) {
-            qDebug() << "Interface not found: " << depPlugin;
-            throw 1;
-        }
+        if (!depPlugin.isEmpty())
+            pluginManager->nextLoadPlugins(depPlugin);
     }
     if (pluginManager->settings())
         setSettings(pluginManager->settings());
