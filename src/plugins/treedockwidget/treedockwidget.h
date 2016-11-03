@@ -26,9 +26,7 @@ class TREEDOCKWIDGETLIB TreeDockWidget :
     Q_OBJECT
     Q_INTERFACES(IPlugin ITreeDockWidget)
 
-#if QT_VERSION >= 0x050000
     Q_PLUGIN_METADATA(IID ITreeDockWidget_iid FILE "treedockwidget.json")
-#endif
 
 public:
 // IPlugin

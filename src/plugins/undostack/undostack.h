@@ -23,11 +23,9 @@ class  UNDOSTACKLIB UndoStack:
         public IPlugin
 {
     Q_OBJECT
-    Q_INTERFACES(IPlugin IUndoGroup)
 
-#if QT_VERSION >= 0x050000
+    Q_INTERFACES(IPlugin IUndoGroup)
     Q_PLUGIN_METADATA(IID IUndoGroup_iid FILE "undostack.json")
-#endif
 
 public:
 

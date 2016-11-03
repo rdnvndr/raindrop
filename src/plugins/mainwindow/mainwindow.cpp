@@ -745,9 +745,4 @@ void MainWindow::readBarSettings()
     settings()->endGroup();
 }
 
-}
-}
-
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(mainwindow, MainWindow)
-#endif
+}}

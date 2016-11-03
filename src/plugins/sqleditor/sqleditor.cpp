@@ -44,10 +44,3 @@ void SqlEditor::showSqlEditor()
 }
 
 }}
-
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(sqleditor, SqlEditor)
-#endif
-
-
-

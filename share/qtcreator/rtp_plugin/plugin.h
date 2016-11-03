@@ -10,11 +10,9 @@ class  %PluginName:u%LIB %PluginName%:
         public IPlugin
 {
     Q_OBJECT
-    Q_INTERFACES(IPlugin)
 
-#if QT_VERSION >= 0x050000
+    Q_INTERFACES(IPlugin)
     Q_PLUGIN_METADATA(IID "com.%VendorName%.Raindrop.%PluginName%" FILE "%PluginName:l%.json")
-#endif
 
 public:
 
