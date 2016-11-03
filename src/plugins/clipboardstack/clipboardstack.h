@@ -1,52 +1,48 @@
-#ifndef STACKEDITING_H
-#define STACKEDITING_H
+#ifndef CLIPBOARDSTACK_H
+#define CLIPBOARDSTACK_H
 
 #include <QObject>
 #include <QAction>
-#include <QUndoGroup>
 
 #include <plugin/iplugin.h>
-#include <iundogroup.h>
 #include <iclipboardstack.h>
 #include <iclipboarditem.h>
 
-#include "stackeditingglobal.h"
+#include "clipboardstackglobal.h"
 
 namespace RTPTechGroup {
 namespace StackEditing {
 
-//! Плагин стека отмена/повтора команд и буфера обмена
-/*! Плагин предназначен для организации стека отмена или повтора
- *  команд и работой с буфером обмена
+//! Плагин стека буфера обмена
+/*! Плагин предназначен для организации стека буфера обмена
 */
 
-class  STACKEDITINGLIB StackEditing:
+class  CLIPBOARDSTACKLIB ClipboardStack:
         public QObject,
-        public IUndoGroup,
         public IClipboardStack,
         public IPlugin
 {
     Q_OBJECT
-    Q_INTERFACES(IPlugin IUndoGroup IClipboardStack)
+    Q_INTERFACES(IPlugin IClipboardStack)
 
 #if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID IClipboardStack_iid FILE "stackediting.json")
+    Q_PLUGIN_METADATA(IID IClipboardStack_iid FILE "clipboardstack.json")
 #endif
 
 public:
 
     //! Конструктор плагина
-    explicit StackEditing(QObject *parent = 0);
+    explicit ClipboardStack(QObject *parent = 0);
 
     //! Деструктор плагина
-    virtual ~StackEditing();
+    virtual ~ClipboardStack();
 
 // IPlugin
     //! Получение имени плагина
     QString name() {return APP_NAME;}
 
     //! Получение иконки плагина
-    QIcon icon() {return QIcon(":/undostack");}
+    QIcon icon() {return QIcon(":/clipboardstack");}
 
     //! Описание продукта
     QString product() {return APP_PRODUCT;}
@@ -58,7 +54,7 @@ public:
     QString descript() {return tr(APP_DESCRIPTION);}
 
     //! Категория в которой состоит плагин
-    QString category() {return tr("");}
+    QString category() {return tr("Stack Editing");}
 
     //! Версия плагина
     QString version() {return APP_VERSION;}
@@ -73,25 +69,9 @@ public:
     //! Удаление компонента для буфера обмена
     void removeClipboardItem(IClipboardItem *item);
 
-// IUndoGroup
-    //! Добавление стека отмены
-    virtual void addStack(QUndoStack *stack);
-
-    //! Удаление стека отмены
-    virtual void removeStack(QUndoStack *stack);
-
-    //! Добавление QWidget для QUndoStack
-    virtual void addWidgetForStack(QUndoStack *stack, QWidget *widget);
-
-    //! Удаление QWidget для QUndoStack
-    virtual void removeWidgetForStack(QWidget *widget);
-
 private slots:
     //! Обработка смены фокуса визуального элемента
     void focusChanged(QWidget *old, QWidget *now);
-
-    //! Удаление стека отмены
-    void removeStack(QObject *obj);
 
     //! Вырезание в буфер обмена
     void cut();
@@ -124,17 +104,8 @@ private slots:
     void removeItem(QObject *obj);
 
 private:
-    //! Установка активного стека отмены для QWidget
-    void setActiveStackForWidget(QWidget *widget);
-
     //! Установка активного элемента стека буфера обмена для QWidget
     void setActiveItemForWidget(QWidget *widget);
-
-    //! Команда "Отменить"
-    QAction *m_actionUndo;
-
-    //! Команда "Повторить"
-    QAction *m_actionRedo;
 
     //! Команда "Вырезать"
     QAction *m_actionCut;
@@ -148,14 +119,6 @@ private:
     //! Команда "Выделить все"
     QAction *m_actionSelectAll;
 
-
-    //! Список соотвествия QWidget и QUndoStack
-    QMultiMap<QUndoStack *, QWidget *> m_undoStackList;
-
-    //! Группа стека отмены
-    QUndoGroup *m_undoGroup;
-
-
     //! Список команд стека буфера обмена
     QList<QObject *> m_clipboardItemList;
 
@@ -166,4 +129,3 @@ private:
 }}
 
 #endif
-
