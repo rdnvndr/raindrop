@@ -1,7 +1,8 @@
 TEMPLATE = subdirs
 CONFIG += ordered
-SUBDIRS +=  mainwindow 
-SUBDIRS +=  stackediting
+SUBDIRS +=  mainwindow
+SUBDIRS +=  clipboardstack
+SUBDIRS +=  undostack
 SUBDIRS +=  sqleditor
 SUBDIRS +=  dbconnect
 SUBDIRS +=  treedockwidget

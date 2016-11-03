@@ -294,7 +294,7 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
 void MainWindow::deleteBranchAction(MenuItem *menuItem)
 {
     if (menuItem) {
-        // Удаляtncz menuItem без детей
+        // Удаляет menuItem без детей
         if (menuItem->childItems.count()==0) {
             MenuItem *parentMenuItem = menuItem->parentItem;
             if (menuItem->action) {

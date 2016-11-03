@@ -1,4 +1,4 @@
-#include "stackediting.h"
+#include "clipboardstack.h"
 
 #include <imainwindow.h>
 #include <QClipboard>
@@ -7,27 +7,14 @@ using namespace RTPTechGroup::Plugin;
 namespace RTPTechGroup {
 namespace StackEditing {
 
-
-StackEditing::StackEditing(QObject *parent):
+ClipboardStack::ClipboardStack(QObject *parent):
     QObject(parent), IPlugin("IMainWindow")
 {
-    m_undoGroup = new QUndoGroup(this);
-
     PluginManager *pluginManager = PluginManager::instance();
 
     // Создание пунктов строки меню и кнопок панели иструментов
     IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
-
-    m_actionUndo = m_undoGroup->createUndoAction(this);
-    m_actionUndo->setIcon(QIcon(":undo"));
-    m_actionUndo->setObjectName("actionUndo");
-    iMainWindow->addAction(tr("Редактирование"), m_actionUndo);
-
-    m_actionRedo = m_undoGroup->createRedoAction(this);
-    m_actionRedo->setIcon(QIcon(":redo"));
-    m_actionRedo->setObjectName("actionRedo");
-    iMainWindow->addAction(tr("Редактирование"), m_actionRedo);
 
     connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)),
             this, SLOT(focusChanged(QWidget*,QWidget*)));
@@ -54,16 +41,15 @@ StackEditing::StackEditing(QObject *parent):
     m_actionSelectAll->setObjectName("actionSelectAll");
     connect(m_actionSelectAll, SIGNAL(triggered()), this, SLOT(selectAll()));
     iMainWindow->addAction(tr("Редактирование"), m_actionSelectAll);
+
 }
 
-StackEditing::~StackEditing()
+ClipboardStack::~ClipboardStack()
 {
     m_clipboardItemList.clear();
-    m_undoStackList.clear();
-    delete m_undoGroup;
 }
 
-void StackEditing::addClipboardItem(IClipboardItem *item)
+void ClipboardStack::addClipboardItem(IClipboardItem *item)
 {
     QObject *itemObject = dynamic_cast<QObject *>(item);
     m_clipboardItemList.append(itemObject);
@@ -79,35 +65,12 @@ void StackEditing::addClipboardItem(IClipboardItem *item)
             this, SLOT(removeItem(QObject*)));
 }
 
-void StackEditing::removeClipboardItem(IClipboardItem *item)
+void ClipboardStack::removeClipboardItem(IClipboardItem *item)
 {
     removeItem(dynamic_cast<QObject *>(item));
 }
 
-void StackEditing::addStack(QUndoStack *stack)
-{
-    m_undoGroup->addStack(stack);
-    connect(stack, SIGNAL(destroyed(QObject*)), this, SLOT(removeStack(QObject*)));
-}
-
-void StackEditing::removeStack(QUndoStack *stack)
-{
-    m_undoStackList.remove(stack);
-    m_undoGroup->removeStack(stack);
-}
-
-void StackEditing::addWidgetForStack(QUndoStack *stack, QWidget *widget)
-{
-    m_undoStackList.insert(stack, widget);
-}
-
-void StackEditing::removeWidgetForStack(QWidget *widget)
-{
-    foreach (QUndoStack *undoStack, m_undoStackList.keys(widget))
-        m_undoStackList.remove(undoStack, widget);
-}
-
-void StackEditing::focusChanged(QWidget *old, QWidget *now)
+void ClipboardStack::focusChanged(QWidget *old, QWidget *now)
 {
     Q_UNUSED(old)
 
@@ -115,40 +78,33 @@ void StackEditing::focusChanged(QWidget *old, QWidget *now)
         return;
 
     setActiveItemForWidget(now);
-    setActiveStackForWidget(now);
 }
 
-void StackEditing::removeStack(QObject *obj)
-{
-    QUndoStack *stack = static_cast<QUndoStack *>(obj);
-    removeStack(stack);
-}
-
-void StackEditing::cut()
+void ClipboardStack::cut()
 {
     if (m_currentClipboardItem)
         m_currentClipboardItem->cut();
 }
 
-void StackEditing::copy()
+void ClipboardStack::copy()
 {
     if (m_currentClipboardItem)
         m_currentClipboardItem->copy();
 }
 
-void StackEditing::paste()
+void ClipboardStack::paste()
 {
     if (m_currentClipboardItem)
         m_currentClipboardItem->paste();
 }
 
-void StackEditing::selectAll()
+void ClipboardStack::selectAll()
 {
     if (m_currentClipboardItem)
         m_currentClipboardItem->selectAll();
 }
 
-void StackEditing::canCutChange(bool canCut)
+void ClipboardStack::canCutChange(bool canCut)
 {
     if (canCut)
         m_actionCut->setEnabled(true);
@@ -156,7 +112,7 @@ void StackEditing::canCutChange(bool canCut)
         m_actionCut->setEnabled(false);
 }
 
-void StackEditing::canCopyChange(bool canCopy)
+void ClipboardStack::canCopyChange(bool canCopy)
 {
     if (canCopy)
         m_actionCopy->setEnabled(true);
@@ -164,7 +120,7 @@ void StackEditing::canCopyChange(bool canCopy)
         m_actionCopy->setEnabled(false);
 }
 
-void StackEditing::canPasteChange(bool canPaste)
+void ClipboardStack::canPasteChange(bool canPaste)
 {
     if (canPaste)
         m_actionPaste->setEnabled(true);
@@ -172,7 +128,7 @@ void StackEditing::canPasteChange(bool canPaste)
         m_actionPaste->setEnabled(false);
 }
 
-void StackEditing::canSelectAllChange(bool canSelectAll)
+void ClipboardStack::canSelectAllChange(bool canSelectAll)
 {
     if (canSelectAll)
         m_actionSelectAll->setEnabled(true);
@@ -180,32 +136,17 @@ void StackEditing::canSelectAllChange(bool canSelectAll)
         m_actionSelectAll->setEnabled(false);
 }
 
-void StackEditing::clipboardDataChange()
+void ClipboardStack::clipboardDataChange()
 {
     setActiveItemForWidget(qApp->focusWidget());
 }
 
-void StackEditing::removeItem(QObject *obj)
+void ClipboardStack::removeItem(QObject *obj)
 {
     m_clipboardItemList.removeAll(obj);
 }
 
-void StackEditing::setActiveStackForWidget(QWidget *widget)
-{
-    // Стек отмены/повтора команд
-    QMutableMapIterator<QUndoStack *, QWidget *> i(m_undoStackList);
-    i.toBack();
-    while (i.hasPrevious()) {
-        i.previous();
-        if (i.value()->isAncestorOf(widget)) {
-            m_undoGroup->setActiveStack(i.key());
-            return;
-        }
-    }
-    m_undoGroup->setActiveStack(NULL);
-}
-
-void StackEditing::setActiveItemForWidget(QWidget *widget)
+void ClipboardStack::setActiveItemForWidget(QWidget *widget)
 {
     Q_UNUSED(widget)
     QListIterator<QObject *> i(m_clipboardItemList);
@@ -235,8 +176,5 @@ void StackEditing::setActiveItemForWidget(QWidget *widget)
 }}
 
 #if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(undostack, UndoStack)
+Q_EXPORT_PLUGIN2(clipboardstack, ClipboardStack)
 #endif
-
-
-
