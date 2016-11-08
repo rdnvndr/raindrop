@@ -18,7 +18,7 @@ IPlugin::~IPlugin()
 {
     // NOTE: Возможно надо сделать на цикле for
     foreach (IPlugin *plug,PluginManager::instance()->dependentPlugins(this)) {
-        if (PluginManager::instance()->dependentPlugins(this).count() != 0)
+        if (!PluginManager::instance()->dependentPlugins(this).isEmpty())
             if (plug)
                 delete plug;
     }

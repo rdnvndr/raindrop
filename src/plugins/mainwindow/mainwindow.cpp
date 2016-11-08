@@ -216,7 +216,7 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
     QAction *prevAction = NULL;
     MenuItem *separatorItem = NULL;
 
-    for (qint32 row = parentItem->childItems.count()-1; row >= 0; --row) {
+    for (qint32 row = parentItem->childItems.count() - 1; row >= 0; --row) {
         MenuItem *item = parentItem->childItems.at(row);
         if (item == menuItem) {
 
@@ -295,7 +295,7 @@ void MainWindow::deleteBranchAction(MenuItem *menuItem)
 {
     if (menuItem) {
         // Удаляет menuItem без детей
-        if (menuItem->childItems.count()==0) {
+        if (menuItem->childItems.isEmpty()) {
             MenuItem *parentMenuItem = menuItem->parentItem;
             if (menuItem->action) {
                 // Если Menu, то удаляем его иначе убираем QAction из него
@@ -377,7 +377,7 @@ void MainWindow::setWindowModeEnable(bool mode)
 
 void MainWindow::updateMenus()
 {
-    bool hasMdiChild = (mdiArea->subWindowList().count()>0);
+    bool hasMdiChild = (!mdiArea->subWindowList().isEmpty());
     m_actionWindowClose->setEnabled(hasMdiChild);
     m_actionWindowCloseAll->setEnabled(hasMdiChild);
     m_actionWindowCascade->setEnabled(hasMdiChild&&mdiArea->viewMode() == QMdiArea::SubWindowView);
@@ -563,11 +563,11 @@ void MainWindow::endLoadingPlugins()
 
 void MainWindow::writeMenu(QWidget *menu, qint32 level)
 {
-    for (qint32 row = 0;row < menu->actions().count(); ++row) {
+    qint32 actionCount = menu->actions().count();
+    for (qint32 row = 0;row < actionCount; ++row) {
         QAction *child = menu->actions().at(row);
 
-        if (child->isSeparator()
-                && (row == 0 || row == menu->actions().count()-1))
+        if (child->isSeparator() && (row == 0 || row == actionCount - 1))
             continue;
 
         settings()->setArrayIndex(m_menuArrayIndex);
@@ -607,10 +607,10 @@ void MainWindow::setEditedMenu(QWidget *widget, bool edited)
     if (menu)
         menu->setEdited(edited);
 
-    for (qint32 row = 0;row < widget->actions().count(); row++) {
+    for (qint32 row = widget->actions().count() - 1; row >= 0 ; --row) {
         QAction *child = widget->actions().at(row);
         if (child->menu())
-            setEditedMenu(child->menu(),edited);
+            setEditedMenu(child->menu(), edited);
     }
 }
 
