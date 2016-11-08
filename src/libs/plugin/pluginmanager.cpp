@@ -40,7 +40,7 @@ PluginManager::~PluginManager()
         delete plug;
         plug = interfaceObject("IPlugin");
     }
-    delete m_lockFiles;
+    delete [] m_lockFiles;
 }
 
 QSettings *PluginManager::settings() const
