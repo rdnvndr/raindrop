@@ -84,13 +84,11 @@ void PluginManager::loadPlugins()
         QMessageBox::critical(NULL, tr("Ошибка"), tr("Каталог с модулями не найден"));
         return;
     }
-
-    // Загрузка файлов
     m_fileList = m_pluginsDir.entryList(QDir::Files);
+
     qint32 count = m_fileList.count();
     m_lockFiles = new bool[count];
-    for (qint32 i = 0; i < count; ++i)
-        m_lockFiles[i] = false;
+    for (qint32 i = 0; i < count; ++i) m_lockFiles[i] = false;
 
     nextLoadPlugins();
 
@@ -100,7 +98,7 @@ void PluginManager::loadPlugins()
 bool PluginManager::nextLoadPlugins(QString iid)
 {
     bool result = false;
-    for (int fileNum = 0; fileNum < m_fileList.count(); ++fileNum)
+    for (qint32 fileNum = m_fileList.count()-1; fileNum >= 0 ; --fileNum)
     {
         if (!m_lockFiles[fileNum]) {
             m_lockFiles[fileNum] = true;
