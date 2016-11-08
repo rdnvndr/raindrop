@@ -15,7 +15,7 @@ void ActionGroupTreeView::startDrag(Qt::DropActions supportedActions)
     QModelIndexList indexes = selectedIndexes();
     QList<QPersistentModelIndex> persistentIndexes;
 
-    if (indexes.count() > 0) {
+    if (!indexes.isEmpty()) {
         QMimeData *data = model()->mimeData(indexes);
         if (!data)
             return;

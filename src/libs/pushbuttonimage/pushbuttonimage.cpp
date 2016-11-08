@@ -13,7 +13,7 @@ PushButtonImage::PushButtonImage(QWidget *parent) :
 
 bool PushButtonImage::setData(const QByteArray &data)
 {
-    if (data.count() > 0) {
+    if (!data.isEmpty()) {
         m_data = data;
         QPixmap pixmap;
         pixmap.loadFromData(data);

@@ -216,7 +216,7 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
     QAction *prevAction = NULL;
     MenuItem *separatorItem = NULL;
 
-    for (qint32 row = parentItem->childItems.count()-1; row >= 0; --row) {
+    for (qint32 row = parentItem->childItems.count() - 1; row >= 0; --row) {
         MenuItem *item = parentItem->childItems.at(row);
         if (item == menuItem) {
 
@@ -295,7 +295,7 @@ void MainWindow::deleteBranchAction(MenuItem *menuItem)
 {
     if (menuItem) {
         // Удаляет menuItem без детей
-        if (menuItem->childItems.count()==0) {
+        if (menuItem->childItems.isEmpty()) {
             MenuItem *parentMenuItem = menuItem->parentItem;
             if (menuItem->action) {
                 // Если Menu, то удаляем его иначе убираем QAction из него
@@ -377,7 +377,7 @@ void MainWindow::setWindowModeEnable(bool mode)
 
 void MainWindow::updateMenus()
 {
-    bool hasMdiChild = (mdiArea->subWindowList().count()>0);
+    bool hasMdiChild = (!mdiArea->subWindowList().isEmpty());
     m_actionWindowClose->setEnabled(hasMdiChild);
     m_actionWindowCloseAll->setEnabled(hasMdiChild);
     m_actionWindowCascade->setEnabled(hasMdiChild&&mdiArea->viewMode() == QMdiArea::SubWindowView);
