@@ -67,13 +67,12 @@ void  FilterTreeWidget::startDrag(){
 
 bool FilterTreeWidget::searchShowItem(QString text,QTreeWidgetItem *item){
     bool flag = false;
-    for (qint32 i=0;i < item->childCount();++i){
-	if (searchShowItem(text,item->child(i))||flag)
-	    flag = true;
-    }
+    for (qint32 i = item->childCount() - 1; i >= 0; --i)
+        if (searchShowItem(text,item->child(i)) || flag)
+            flag = true;
 
-    for (qint32 i=0;i<item->columnCount();++i)
-        if (flag==false&&item->text(0).contains(text, Qt::CaseInsensitive))
+    for (qint32 i = item->columnCount() - 1; i >= 0; --i)
+        if (flag==false && item->text(0).contains(text, Qt::CaseInsensitive))
             flag=true;
 
     if (flag==false)
@@ -84,13 +83,12 @@ bool FilterTreeWidget::searchShowItem(QString text,QTreeWidgetItem *item){
 }
 
 void FilterTreeWidget::searchShowAllItem(QString text){
-
-    for (qint32 i=0;i<this->topLevelItemCount();++i)
-	searchShowItem(text, this->topLevelItem(i));
+    for (qint32 i = this->topLevelItemCount() - 1; i >= 0; --i)
+        searchShowItem(text, this->topLevelItem(i));
 }
 
 void FilterTreeWidget::showAllItem(){
-    for (qint32 i=0;i<this->topLevelItemCount();++i)
+    for (qint32 i = this->topLevelItemCount() - 1; i >= 0; --i)
         this->topLevelItem(i)->setHidden(true);
 }
 

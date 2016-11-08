@@ -196,7 +196,7 @@ void TreeXmlModel::addInsertTags(const QString &tag, const QStringList &value)
 
 qint32 TreeXmlModel::columnDisplayedAttr(const QString &tag, const QString &attr) const
 {
-    for (qint32 i=0;i<m_displayedAttr[tag].count();++i){
+    for (qint32 i = m_displayedAttr[tag].count() - 1; i >= 0; --i){
         if (m_displayedAttr[tag].at(i)==attr)
             return i;
     }
