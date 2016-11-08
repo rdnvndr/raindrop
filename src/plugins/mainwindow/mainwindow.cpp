@@ -563,11 +563,11 @@ void MainWindow::endLoadingPlugins()
 
 void MainWindow::writeMenu(QWidget *menu, qint32 level)
 {
-    for (qint32 row = 0;row < menu->actions().count(); ++row) {
+    qint32 actionCount = menu->actions().count();
+    for (qint32 row = 0;row < actionCount; ++row) {
         QAction *child = menu->actions().at(row);
 
-        if (child->isSeparator()
-                && (row == 0 || row == menu->actions().count()-1))
+        if (child->isSeparator() && (row == 0 || row == actionCount - 1))
             continue;
 
         settings()->setArrayIndex(m_menuArrayIndex);
@@ -607,10 +607,10 @@ void MainWindow::setEditedMenu(QWidget *widget, bool edited)
     if (menu)
         menu->setEdited(edited);
 
-    for (qint32 row = 0;row < widget->actions().count(); row++) {
+    for (qint32 row = widget->actions().count() - 1; row >= 0 ; --row) {
         QAction *child = widget->actions().at(row);
         if (child->menu())
-            setEditedMenu(child->menu(),edited);
+            setEditedMenu(child->menu(), edited);
     }
 }
 
