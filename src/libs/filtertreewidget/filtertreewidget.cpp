@@ -68,17 +68,18 @@ void  FilterTreeWidget::startDrag(){
 bool FilterTreeWidget::searchShowItem(QString text,QTreeWidgetItem *item){
     bool flag = false;
     for (qint32 i = item->childCount() - 1; i >= 0; --i)
-        if (searchShowItem(text,item->child(i)) || flag)
+        if (searchShowItem(text,item->child(i)) && !flag)
             flag = true;
 
-    for (qint32 i = item->columnCount() - 1; i >= 0; --i)
-        if (flag==false && item->text(0).contains(text, Qt::CaseInsensitive))
-            flag=true;
+    if (!flag) {
+        for (qint32 i = item->columnCount() - 1; i >= 0; --i)
+            if (item->text(i).contains(text, Qt::CaseInsensitive)) {
+                flag=true;
+                break;
+            }
+    }
+    item->setHidden(!flag);
 
-    if (flag==false)
-        item->setHidden(true);
-    else
-        item->setHidden(false);
     return flag;
 }
 
