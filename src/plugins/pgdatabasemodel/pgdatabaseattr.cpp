@@ -5,6 +5,9 @@
 #include <QDebug>
 #include <QVariant>
 
+namespace RTPTechGroup {
+namespace DatabaseModel {
+
 PgDatabaseAttr::PgDatabaseAttr()
 {
 
@@ -41,4 +44,4 @@ bool PgDatabaseAttr::isInherited(IDatabaseClass *parent)
     return true;
 }
 
-
+}}

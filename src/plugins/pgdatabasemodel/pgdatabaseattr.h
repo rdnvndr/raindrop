@@ -3,7 +3,10 @@
 
 #include <idatabaseattribute.h>
 
-//! Реализация атрибута базы данных
+namespace RTPTechGroup {
+namespace DatabaseModel {
+
+//! Реализация атрибута базы данных PostgreSql
 class PgDatabaseAttr : public IDatabaseAttribute
 {
 public:
@@ -30,5 +33,7 @@ public:
     //! Проверка наследования атрибута
     bool isInherited(IDatabaseClass *parent);
 };
+
+}}
 
 #endif // PGDATABASEATTR_H

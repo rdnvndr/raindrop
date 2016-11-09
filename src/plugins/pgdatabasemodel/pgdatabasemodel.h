@@ -8,9 +8,10 @@
 #include <idatabasemodelbuilder.h>
 #include "pgdatabaseattr.h"
 
+namespace RTPTechGroup {
+namespace DatabaseModel {
 
 //! Реализация модели базы данных PostgreSql
-//!
 class  PGDATABASEMODELLIB PgDatabaseModel:
         public QObject,
         public IDatabaseModelBuilder,
@@ -71,5 +72,7 @@ public:
     QString modelBuilderName();
 
 };
+
+}}
 
 #endif

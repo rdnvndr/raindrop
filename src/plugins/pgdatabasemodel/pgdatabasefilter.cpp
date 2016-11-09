@@ -1,5 +1,8 @@
 #include "pgdatabasefilter.h"
 
+namespace RTPTechGroup {
+namespace DatabaseModel {
+
 PgDatabaseFilter::PgDatabaseFilter()
 {
 
@@ -29,3 +32,5 @@ bool PgDatabaseFilter::remove()
 {
     return true;
 }
+
+}}

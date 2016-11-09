@@ -3,7 +3,10 @@
 
 #include <idatabasecomposition.h>
 
-//! Реализация состава базы данных
+namespace RTPTechGroup {
+namespace DatabaseModel {
+
+//! Реализация состава базы данных PostgreSql
 class PgDatabaseComposition : public IDatabaseComposition
 {
 public:
@@ -26,5 +29,7 @@ public:
     //! Удаление элемента базы данных
     bool remove();
 };
+
+}}
 
 #endif // PGDATABASECOMPOSITION_H

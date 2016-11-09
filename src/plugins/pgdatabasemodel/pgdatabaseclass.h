@@ -3,7 +3,10 @@
 
 #include <idatabaseclass.h>
 
-//! Реализация класса базы данных
+namespace RTPTechGroup {
+namespace DatabaseModel {
+
+//! Реализация класса базы данных PostgreSql
 class PgDatabaseClass : public IDatabaseClass
 {
 public:
@@ -43,5 +46,7 @@ public:
     //! Получение всех объектов класса
     void all();
 };
+
+}}
 
 #endif // PGDATABASECLASS_H

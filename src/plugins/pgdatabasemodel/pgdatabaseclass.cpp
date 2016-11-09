@@ -1,5 +1,8 @@
 #include "pgdatabaseclass.h"
 
+namespace RTPTechGroup {
+namespace DatabaseModel {
+
 PgDatabaseClass::PgDatabaseClass()
 {
 
@@ -54,3 +57,5 @@ void PgDatabaseClass::all()
 {
 
 }
+
+}}

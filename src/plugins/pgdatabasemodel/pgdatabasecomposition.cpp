@@ -1,5 +1,8 @@
 #include "pgdatabasecomposition.h"
 
+namespace RTPTechGroup {
+namespace DatabaseModel {
+
 PgDatabaseComposition::PgDatabaseComposition()
 {
 
@@ -29,3 +32,5 @@ bool PgDatabaseComposition::remove()
 {
     return true;
 }
+
+}}

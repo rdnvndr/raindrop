@@ -5,6 +5,9 @@
 #include "pgdatabasefilter.h"
 #include "pgdatabasecomposition.h"
 
+namespace RTPTechGroup {
+namespace DatabaseModel {
+
 PgDatabaseModel::PgDatabaseModel(QObject *parent):
     QObject(parent), IPlugin("")
 {
@@ -54,3 +57,5 @@ QString PgDatabaseModel::modelBuilderName()
 {
     return QString("PostgreSql");
 }
+
+}}

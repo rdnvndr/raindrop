@@ -3,6 +3,10 @@
 
 #include <idatabasefilter.h>
 
+namespace RTPTechGroup {
+namespace DatabaseModel {
+
+//! Реализация фильтра базы данных PostgreSql
 class PgDatabaseFilter : public IDatabaseFilter
 {
 public:
@@ -24,5 +28,7 @@ public:
     //! Удаление элемента базы данных
     bool remove();
 };
+
+}}
 
 #endif // PGDATABASEFILTER_H
