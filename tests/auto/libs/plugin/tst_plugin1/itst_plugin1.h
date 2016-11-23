@@ -6,6 +6,7 @@ class Itst_plugin1
 
 };
 
-Q_DECLARE_INTERFACE(Itst_plugin1,"com.RTPTechGroup.Raindrop.Itst_plugin1/1.0")
+#define Itst_plugin1_iid "com.RTPTechGroup.Raindrop.Itst_plugin1/1.0"
+Q_DECLARE_INTERFACE(Itst_plugin1, Itst_plugin1_iid)
 
 #endif // IMAINWINDOW_H
