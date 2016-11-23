@@ -5,6 +5,8 @@
 #include <plugin/pluginmanager.h>
 #include "pluginloadlog.h"
 
+using namespace RTPTechGroup::Plugin;
+
 class  tst_PluginManager : public QObject
 {
     Q_OBJECT
@@ -206,11 +208,14 @@ void tst_PluginManager::loadPlugins()
     QCOMPARE(plugins.count(), 4);
 
     QVERIFY(plugins.at(0) == "tst_plugin3");
-    QVERIFY(plugins.at(1) == "tst_plugin2");
-    QVERIFY(plugins.at(2) == "tst_plugin1"
-            || plugins.at(2) == "tst_plugin4");
-    QVERIFY(plugins.at(3) == "tst_plugin1"
-            || plugins.at(3) == "tst_plugin4");
+
+    QVERIFY(
+        (plugins.at(1) == "tst_plugin2"
+         && (plugins.at(2) == "tst_plugin1" || plugins.at(3) == "tst_plugin1"))
+     || (plugins.at(2) == "tst_plugin2" && plugins.at(3) == "tst_plugin1")
+    );
+
+    QVERIFY(plugins.at(3) == "tst_plugin1" || plugins.at(3) == "tst_plugin4");
 }
 
 void tst_PluginManager::settings()
