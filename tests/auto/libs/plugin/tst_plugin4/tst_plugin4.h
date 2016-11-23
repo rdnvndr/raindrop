@@ -14,9 +14,7 @@ class  TST_PLUGIN4LIB tst_plugin4:
     Q_OBJECT
     Q_INTERFACES(IPlugin Itst_plugin4)
     
-#if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.tst_plugin4" FILE "tst_plugin4.json")
-#endif
+    Q_PLUGIN_METADATA(IID Itst_plugin4_iid FILE "tst_plugin4.json")
     
 public:
     
