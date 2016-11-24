@@ -7,5 +7,6 @@ SUBDIRS += treecombobox
 SUBDIRS += pushbuttonimage
 SUBDIRS += dockwidget
 SUBDIRS += metadatamodel
+SUBDIRS += tilingframe
 
 
