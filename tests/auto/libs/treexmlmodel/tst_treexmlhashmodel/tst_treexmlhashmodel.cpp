@@ -5,6 +5,8 @@
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <QtXml/QDomDocument>
 
+using namespace RTPTechGroup::XmlModel;
+
 class tst_TreeXmlHashModel : public QObject
 {
     Q_OBJECT
@@ -58,7 +60,7 @@ void tst_TreeXmlHashModel::initTestCase()
             m_model->setHeaderData(0, Qt::Horizontal, tr("Имя атирибута"));
             m_model->setHeaderData(1, Qt::Horizontal, tr("Родитель"));
 
-            m_model->addAttrTag("RTPAttribute");
+            m_model->addAttrTag("RTPClass", "RTPAttribute");
         }
     }
 }
