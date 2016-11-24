@@ -10,6 +10,8 @@ class QAction;
 class QTreeView;
 class QWidget;
 
+using namespace RTPTechGroup::XmlModel;
+
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
     Q_OBJECT
