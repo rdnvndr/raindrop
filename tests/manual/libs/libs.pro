@@ -1,2 +1,3 @@
 TEMPLATE = subdirs
-SUBDIRS = treexmlmodel
+SUBDIRS += treexmlmodel
+SUBDIRS += tilingframe
