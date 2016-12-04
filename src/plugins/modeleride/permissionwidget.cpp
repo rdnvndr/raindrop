@@ -17,14 +17,16 @@ PermissionWidget::PermissionWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(toolButtonAdd,    SIGNAL(clicked()), this, SLOT(add()   ));
-    connect(toolButtonDelete, SIGNAL(clicked()), this, SLOT(remove()));
+    connect(toolButtonAdd, &QToolButton::clicked,
+            this, &PermissionWidget::add);
+    connect(toolButtonDelete, &QToolButton::clicked,
+            this, &PermissionWidget::remove);
 
-    connect(checkBoxInInherited,SIGNAL(clicked(bool)),
-            this,SLOT(showParent(bool)));
+    connect(checkBoxInInherited, &QCheckBox::clicked,
+            this, &PermissionWidget::showParent);
 
-    connect(treeViewPerm, SIGNAL(clicked(QModelIndex)),
-            this, SLOT(cellItemEdit(QModelIndex)));
+    connect(treeViewPerm, &QTreeView::clicked,
+            this, &PermissionWidget::cellItemEdit);
 
     treeViewPerm->setItemDelegate(new PermDelegate(this));
     m_proxyModel = new PermissionProxyModel();
@@ -123,10 +125,8 @@ void PermissionWidget::setRootIndex(const QModelIndex &index)
     QModelIndex proxyIndex = m_proxyModel->mapFromSource(index);
     treeViewPerm->setRootIndex(proxyIndex.parent());
 
-    connect(treeViewPerm->selectionModel(),
-            SIGNAL(currentChanged(QModelIndex,QModelIndex)),
-            this,
-            SLOT(currentIndexChange(QModelIndex,QModelIndex)));
+    connect(treeViewPerm->selectionModel(), &QItemSelectionModel::currentChanged,
+            this, &PermissionWidget::currentIndexChange);
 
     treeViewPerm->setCurrentIndex(proxyIndex);
     treeViewPerm->expand(proxyIndex);

@@ -14,8 +14,9 @@ QuantityWidget::QuantityWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(comboBoxBasicUnit, SIGNAL(activated(qint32)),
-            this, SLOT(changeUnit(qint32)));
+    connect(comboBoxBasicUnit,
+            static_cast<void(QComboBox::*)(int)>(&QComboBox::activated),
+            this, &QuantityWidget::changeUnit);
 }
 
 QuantityWidget::~QuantityWidget()
@@ -27,8 +28,8 @@ void QuantityWidget::setModel(TreeXmlHashModel *model)
 {
     AbstractEditorWidget::setModel(model);
 
-    connect(model,SIGNAL(rowsAboutToBeRemoved(QModelIndex,qint32,qint32)),
-            this,SLOT(rowsAboutToBeRemoved(QModelIndex,qint32,qint32)));
+    connect(model, &QAbstractItemModel::rowsAboutToBeRemoved,
+            this, &QuantityWidget::rowsAboutToBeRemoved);
 
     dataMapper()->addMapping(lineEditQuantityName,
                              model->columnDisplayedAttr(DBQUANTITYXML::QUANTITY,

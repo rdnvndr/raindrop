@@ -453,14 +453,14 @@ void ModifyProxyModel::setSourceModel(QAbstractItemModel *srcModel)
 {
     QAbstractProxyModel::setSourceModel(srcModel);
 
-    connect(srcModel, SIGNAL(rowsRemoved(const QModelIndex &, qint32, qint32)),
-            this, SLOT(sourceRowsRemoved(const QModelIndex &, qint32, qint32)));
-    connect(srcModel, SIGNAL(rowsAboutToBeRemoved(const QModelIndex &, qint32, qint32)),
-            this, SLOT(sourceRowsAboutToBeRemoved(const QModelIndex &, qint32, qint32)));
-    connect(srcModel, SIGNAL(rowsInserted(const QModelIndex &, qint32, qint32)),
-            this, SLOT(sourceRowsInserted(const QModelIndex &, qint32, qint32)));
-    connect(srcModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-            this, SLOT(sourceDataChanged(QModelIndex,QModelIndex)));
+    connect(srcModel, &QAbstractItemModel::rowsRemoved,
+            this, &ModifyProxyModel::sourceRowsRemoved);
+    connect(srcModel, &QAbstractItemModel::rowsAboutToBeRemoved,
+            this, &ModifyProxyModel::sourceRowsAboutToBeRemoved);
+    connect(srcModel, &QAbstractItemModel::rowsInserted,
+            this, &ModifyProxyModel::sourceRowsInserted);
+    connect(srcModel, &QAbstractItemModel::dataChanged,
+            this, &ModifyProxyModel::sourceDataChanged);
 }
 
 Qt::ItemFlags ModifyProxyModel::flags(const QModelIndex &index) const

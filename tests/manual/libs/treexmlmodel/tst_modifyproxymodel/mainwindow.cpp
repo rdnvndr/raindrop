@@ -1,4 +1,5 @@
 #include <QtGui>
+#include <QAction>
 
 #include "mainwindow.h"
 #include "treemodel.h"
@@ -30,24 +31,27 @@ MainWindow::MainWindow(QWidget *parent)
     proxyView->setModel(proxyModel);
 
 
-    connect(exitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(exitAction, &QAction::triggered, qApp, &QApplication::quit);
 
-    connect(view->selectionModel(),
-            SIGNAL(selectionChanged(const QItemSelection &,
-                                    const QItemSelection &)),
-            this, SLOT(updateActions()));
+    connect(view->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, static_cast<void (MainWindow::*)
+            (const QItemSelection &, const QItemSelection &)>
+            (&MainWindow::updateActions));
 
-    connect(actionsMenu, SIGNAL(aboutToShow()), this, SLOT(updateActions()));
-    connect(insertRowAction, SIGNAL(triggered()), this, SLOT(insertRow()));
-    connect(insertColumnAction, SIGNAL(triggered()), this, SLOT(insertColumn()));
-    connect(removeRowAction, SIGNAL(triggered()), this, SLOT(removeRow()));
+    connect(actionsMenu, &QMenu::aboutToShow, this,
+            static_cast<void (MainWindow::*)()>(&MainWindow::updateActions));
+    connect(insertRowAction, &QAction::triggered, this, &MainWindow::insertRow);
+    connect(insertColumnAction, &QAction::triggered, this,
+            static_cast<bool (MainWindow::*)()>(&MainWindow::insertColumn));
+    connect(removeRowAction, &QAction::triggered, this, &MainWindow::removeRow);
 
-    connect(actionInsert, SIGNAL(triggered()), this, SLOT(insert()));
-    connect(actionDelete, SIGNAL(triggered()), this, SLOT(remove()));
-    connect(actionSubmit, SIGNAL(triggered()), this, SLOT(submit()));
+    connect(actionInsert, &QAction::triggered, this, &MainWindow::insert);
+    connect(actionDelete, &QAction::triggered, this, &MainWindow::remove);
+    connect(actionSubmit, &QAction::triggered, this, &MainWindow::submit);
 
-    connect(removeColumnAction, SIGNAL(triggered()), this, SLOT(removeColumn()));
-    connect(insertChildAction, SIGNAL(triggered()), this, SLOT(insertChild()));
+    connect(removeColumnAction, &QAction::triggered, this,
+            static_cast<bool (MainWindow::*)()>(&MainWindow::removeColumn));
+    connect(insertChildAction,  &QAction::triggered, this, &MainWindow::insertChild);
 
     updateActions();
 }
@@ -94,6 +98,11 @@ bool MainWindow::insertColumn(const QModelIndex &parent)
     return changed;
 }
 
+bool MainWindow::insertColumn()
+{
+    return insertColumn(QModelIndex());
+}
+
 void MainWindow::insertRow()
 {
     QModelIndex index = view->selectionModel()->currentIndex();
@@ -122,6 +131,11 @@ bool MainWindow::removeColumn(const QModelIndex &parent)
         updateActions();
 
     return changed;
+}
+
+bool MainWindow::removeColumn()
+{
+    return removeColumn(QModelIndex());
 }
 
 void MainWindow::removeRow()
@@ -175,4 +189,9 @@ void MainWindow::updateActions()
         else
             statusBar()->showMessage(tr("Position: (%1,%2) in top level").arg(row).arg(column));
     }
+}
+
+void MainWindow::updateActions(const QItemSelection &, const QItemSelection &)
+{
+    updateActions();
 }

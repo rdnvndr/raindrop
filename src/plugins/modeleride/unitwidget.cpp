@@ -17,8 +17,10 @@ UnitWidget::UnitWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(toolButtonAddUnit,SIGNAL(clicked()),this,SLOT(add()));
-    connect(toolButtonDeleteUnit,SIGNAL(clicked()),this,SLOT(remove()));
+    connect(toolButtonAddUnit, &QToolButton::clicked,
+            this, &UnitWidget::add);
+    connect(toolButtonDeleteUnit, &QToolButton::clicked,
+            this, &UnitWidget::remove);
     AbstractModifyWidget::setItemView(tableViewUnit);
     itemView()->setItemDelegate(new UnitDelegate());
 }

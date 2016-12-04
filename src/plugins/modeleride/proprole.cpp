@@ -15,21 +15,24 @@ PropRole::PropRole(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(roleWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(roleWidget,SIGNAL(dataChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(roleWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
-            this,SLOT(closeTab(QModelIndex)));
+    connect(roleWidget, &AbstractEditorWidget::currentIndexChanged,
+            this, &PropRole::setTabName);
+    connect(roleWidget, &AbstractEditorWidget::dataChanged,
+            this, &PropRole::setTabName);
+    connect(roleWidget, &AbstractEditorWidget::dataAboutToBeRemoved,
+            this, &AbstractPropEditor::closeTab);
 
-    connect(roleWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));
+    connect(roleWidget, &RoleWidget::edited, this, &PropRole::edit);
 
-    connect(toolButtonAddRole,  SIGNAL(clicked()), roleWidget, SLOT(add()));
-    connect(toolButtonDelRole,  SIGNAL(clicked()), roleWidget, SLOT(remove()));
-    connect(toolButtonEditRole, SIGNAL(clicked()), roleWidget, SLOT(edit()));
+    connect(toolButtonAddRole, &QToolButton::clicked,
+            roleWidget, &RoleWidget::add);
+    connect(toolButtonDelRole, &QToolButton::clicked,
+            roleWidget, &RoleWidget::remove);
+    connect(toolButtonEditRole, &QToolButton::clicked,
+            roleWidget, &RoleWidget::edit);
 
-    connect(pushButtonPropCancel, SIGNAL(clicked()), roleWidget, SLOT(revert()));
-    connect(pushButtonPropSave,   SIGNAL(clicked()), roleWidget, SLOT(submit()));
+    connect(pushButtonPropCancel, &QPushButton::clicked, roleWidget, &RoleWidget::revert);
+    connect(pushButtonPropSave, &QPushButton::clicked, roleWidget, &RoleWidget::submit);
 }
 
 PropRole::~PropRole()

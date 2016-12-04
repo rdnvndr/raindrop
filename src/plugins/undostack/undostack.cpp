@@ -27,8 +27,8 @@ UndoStack::UndoStack(QObject *parent):
     m_actionRedo->setObjectName("actionRedo");
     iMainWindow->addAction(tr("Редактирование"), m_actionRedo);
 
-    connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)),
-            this, SLOT(focusChanged(QWidget*,QWidget*)));
+    connect(qApp, &QApplication::focusChanged,
+            this, &UndoStack::focusChanged);
 }
 
 UndoStack::~UndoStack()
@@ -40,7 +40,8 @@ UndoStack::~UndoStack()
 void UndoStack::addStack(QUndoStack *stack)
 {
     m_undoGroup->addStack(stack);
-    connect(stack, SIGNAL(destroyed(QObject*)), this, SLOT(removeStack(QObject*)));
+    connect(stack, &QObject::destroyed, this,
+            static_cast<void (UndoStack::*)(QObject *)>(&UndoStack::removeStack));
 }
 
 void UndoStack::removeStack(QUndoStack *stack)

@@ -34,10 +34,10 @@ QVariant AttrGroupProxyModel::data(const QModelIndex &index, qint32 role) const
 void AttrGroupProxyModel::setModel(QAbstractItemModel *srcModel)
 {
     m_model = srcModel;
-    connect(srcModel, SIGNAL(rowsRemoved(QModelIndex,qint32,qint32)),
-            this, SLOT(reset()));
-    connect(srcModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-            this, SLOT(reset()));
+    connect(srcModel, &QAbstractItemModel::rowsRemoved,
+            this, &AttrGroupProxyModel::reset);
+    connect(srcModel, &QAbstractItemModel::dataChanged,
+            this, &AttrGroupProxyModel::reset);
 }
 
 QAbstractItemModel *AttrGroupProxyModel::sourceModel() const

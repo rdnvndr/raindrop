@@ -10,7 +10,8 @@ namespace SqlEditor {
 TextClipboardItem::TextClipboardItem(QPlainTextEdit *editor)
     : QObject(editor), m_editor(editor)
 {
-    connect(editor,SIGNAL(selectionChanged()), this, SLOT(selectionChange()));
+    connect(editor, &QPlainTextEdit::selectionChanged,
+            this, &TextClipboardItem::selectionChange);
 }
 
 bool TextClipboardItem::canCut()

@@ -216,11 +216,11 @@ void Menu::mousePressEvent(QMouseEvent *event)
             // Создание контекстного меню
             QMenu *contextMenu = new QMenu();
             QAction *action = new QAction(tr("Удалить"),this);
-            connect(action,SIGNAL(triggered()), this,SLOT(removeContextAction()));
+            connect(action, &QAction::triggered, this, &Menu::removeContextAction);
             contextMenu->addAction(action);
             contextMenu->addSeparator();
             action = new QAction(tr("Свойства..."),this);
-            connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
+            connect(action, &QAction::triggered, this, &Menu::showActionProp);
             contextMenu->addAction(action);
             contextMenu->exec(event->globalPos());
             delete contextMenu;

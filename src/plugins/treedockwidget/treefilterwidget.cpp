@@ -13,8 +13,9 @@ TreeFilterWidget::TreeFilterWidget(QWidget *pwgt) : QWidget(pwgt) {
     treeWidget->setIndentation(10);
     treeWidget->setStyleSheet("QTreeWidget {background: palette(Window);}");
     treeWidget->resize(10,10);
-    connect(lineEditFilter, SIGNAL(textChanged(QString)), treeWidget, SLOT(searchShowAllItem(QString)));
-
+    connect(lineEditFilter, &QLineEdit::textChanged,
+            treeWidget,
+            &RTPTechGroup::Widgets::FilterTreeWidget::searchShowAllItem);
 }
 
 }}

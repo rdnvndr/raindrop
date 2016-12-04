@@ -18,7 +18,7 @@ DbConnect::DbConnect(QObject *parent):
                 pluginManager->interfaceObject("IMainWindow"));
 
     actionDbConnect = new QAction(QIcon(":connect"), tr("Соединение с  БД"), this);
-    connect(actionDbConnect, SIGNAL(triggered()), this, SLOT(dbConnect()));
+    connect(actionDbConnect, &QAction::triggered, this, &DbConnect::dbConnect);
     actionDbConnect->setObjectName("actionDbConnect");
     iMainWindow->addAction(tr("Работа с БД"),actionDbConnect);
 }

@@ -21,11 +21,11 @@ FilterWidget::FilterWidget(QWidget *parent) :
 
     AbstractItemWidget::setItemView(tableViewFilter);
 
-    connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));
-    connect(toolButtonDelete,SIGNAL(clicked()),this,SLOT(remove()));
+    connect(toolButtonAdd, &QToolButton::clicked, this, &FilterWidget::add);
+    connect(toolButtonDelete, &QToolButton::clicked, this, &FilterWidget::remove);
 
-    connect(toolButtonEdit,SIGNAL(clicked()),this,SLOT(edit()));
-    connect(checkBoxInInherited,SIGNAL(clicked(bool)),this,SLOT(showParent(bool)));
+    connect(toolButtonEdit, &QToolButton::clicked, this, &FilterWidget::edit);
+    connect(checkBoxInInherited, &QCheckBox::clicked, this, &FilterWidget::showParent);
 }
 
 FilterWidget::~FilterWidget()

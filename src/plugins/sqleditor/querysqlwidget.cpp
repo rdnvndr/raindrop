@@ -24,8 +24,8 @@ QuerySqlWidget::QuerySqlWidget(QWidget *parent) :
     m_undoGroup->addWidgetForStack(m_undoStack, this->toolButtonRun);
     m_undoGroup->addWidgetForStack(m_undoStack, this);
     plainQueryEdit->installEventFilter(this);
-    connect(plainQueryEdit->document(), SIGNAL(undoCommandAdded()),
-            this, SLOT(undoCommandAdd()));
+    connect(plainQueryEdit->document(), &QTextDocument::undoCommandAdded,
+            this, &QuerySqlWidget::undoCommandAdd);
 
     m_clipboardStack = qobject_cast<IClipboardStack *>(
                 pluginManager->interfaceObject("IClipboardStack"));
@@ -38,7 +38,8 @@ QuerySqlWidget::QuerySqlWidget(QWidget *parent) :
     tableView->setModel(m_model);
     m_sqlHighlighter = new SqlHighlighter(plainQueryEdit->document());
 
-    connect(toolButtonRun,SIGNAL(clicked()),this,SLOT(runQuery()));
+    connect(toolButtonRun, &QToolButton::clicked,
+            this, &QuerySqlWidget::runQuery);
 }
 
 QuerySqlWidget::~QuerySqlWidget()

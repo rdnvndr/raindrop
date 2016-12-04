@@ -8,8 +8,8 @@ namespace MainWindow {
 HotKeyLineEdit::HotKeyLineEdit(QWidget *parent) :
     QLineEdit(parent)
 {
-    connect(this, SIGNAL(textChanged(const QString&)),
-            this, SLOT(onTextChanged(const QString&)));
+    connect(this, &HotKeyLineEdit::textChanged,
+            this, &HotKeyLineEdit::onTextChanged);
 }
 
 const QKeySequence &HotKeyLineEdit::keySequence() const

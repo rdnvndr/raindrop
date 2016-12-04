@@ -25,68 +25,80 @@ MainWindow::MainWindow(QMainWindow *pwgt) : QMainWindow(pwgt), IPlugin("")
     m_optionsDialog = NULL;
 
     readBarSettings();
-    connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
+    connect(mdiArea, &MdiExtArea::subWindowActivated, this, &MainWindow::updateMenus);
 
     m_actionWindowClose = new QAction(QIcon(":close"), tr("Закрыть"), this);
     m_actionWindowClose->setObjectName("actionWindowClose");
-    connect(m_actionWindowClose, SIGNAL(triggered()), mdiArea, SLOT(closeActiveSubWindow()));
+    connect(m_actionWindowClose, &QAction::triggered,
+            mdiArea, &MdiExtArea::closeActiveSubWindow);
     addAction(tr("Окно"),m_actionWindowClose);
 
     m_actionWindowCloseAll = new QAction(QIcon(":closeall"), tr("Закрыть все"), this);
     m_actionWindowCloseAll->setObjectName("actionWindowCloseAll");
-    connect(m_actionWindowCloseAll, SIGNAL(triggered()), mdiArea, SLOT(closeAllSubWindows()));
+    connect(m_actionWindowCloseAll, &QAction::triggered,
+            mdiArea, &MdiExtArea::closeAllSubWindows);
     addAction(tr("Окно"),m_actionWindowCloseAll);
 
     m_actionWindowCascade = new QAction(QIcon(":cascade"), tr("Каскадом"), this);
     m_actionWindowCascade->setObjectName("actionWindowCascade");
-    connect(m_actionWindowCascade, SIGNAL(triggered()), mdiArea, SLOT(cascadeSubWindows()));
+    connect(m_actionWindowCascade, &QAction::triggered,
+            mdiArea, &MdiExtArea::cascadeSubWindows);
     addAction(tr("Окно"),m_actionWindowCascade);
 
     m_actionWindowTile = new QAction(QIcon(":tile"), tr("Плиткой"), this);
     m_actionWindowTile->setObjectName("actionWindowTile");
-    connect(m_actionWindowTile, SIGNAL(triggered()), mdiArea, SLOT(tileSubWindows()));
+    connect(m_actionWindowTile, &QAction::triggered,
+            mdiArea,&MdiExtArea::tileSubWindows);
     addAction(tr("Окно"),m_actionWindowTile);
 
     m_actionWindowNext = new QAction(QIcon(":next"), tr("Следующее"), this);
     m_actionWindowNext->setObjectName("actionWindowNext");
-    connect(m_actionWindowNext, SIGNAL(triggered()), mdiArea, SLOT(activateNextSubWindow()));
+    connect(m_actionWindowNext, &QAction::triggered,
+            mdiArea, &MdiExtArea::activateNextSubWindow);
     addAction(tr("Окно"),m_actionWindowNext);
 
     m_actionWindowPrev = new QAction(QIcon(":previous"), tr("Предыдущее"), this);
     m_actionWindowPrev->setObjectName("actionWindowPrev");
-    connect(m_actionWindowPrev, SIGNAL(triggered()), mdiArea, SLOT(activatePreviousSubWindow()));
+    connect(m_actionWindowPrev, &QAction::triggered,
+            mdiArea, &MdiExtArea::activatePreviousSubWindow);
     addAction(tr("Окно"),m_actionWindowPrev);
 
     m_actionWindowGui = new QAction(QIcon(":window"), tr("Оконный вид"), this);
     m_actionWindowGui->setCheckable(true);
     m_actionWindowGui->setObjectName("actionWindowGui");
-    connect(m_actionWindowGui, SIGNAL(triggered(bool)), this, SLOT(setWindowModeEnable(bool)));
+    connect(m_actionWindowGui, &QAction::triggered,
+            this, &MainWindow::setWindowModeEnable);
     addAction(tr("Окно"),m_actionWindowGui);
 
     m_actionGuiOptions = new QAction(QIcon(":guioptions"), tr("Оформление..."), this);
     m_actionGuiOptions->setObjectName("actionGuiOptions");
-    connect(m_actionGuiOptions, SIGNAL(triggered()), this, SLOT(showOptionsDialog()));
+    connect(m_actionGuiOptions, &QAction::triggered,
+            this, &MainWindow::showOptionsDialog);
     addAction(tr("Настройка"),m_actionGuiOptions);
 
     m_actionExit = new QAction(QIcon(":exit"), tr("Выход"), this);
     m_actionExit->setObjectName("actionExit");
-    connect(m_actionExit, SIGNAL(triggered()), this, SLOT(close()));
+    connect(m_actionExit, &QAction::triggered,
+            this, &MainWindow::close);
     addAction(tr("Файл"),m_actionExit);
 
     m_actionAboutQt = new QAction(QIcon(":qt"), tr("О Qt"), this);
     m_actionAboutQt->setObjectName("actionAboutQt");
-    connect(m_actionAboutQt, SIGNAL(triggered()), this, SLOT(aboutQt()));
+    connect(m_actionAboutQt, &QAction::triggered,
+            this, &MainWindow::aboutQt);
     addAction(tr("Справка"),m_actionAboutQt);
 
     m_actionAbout = new QAction(QIcon(":about"), tr("О программе..."), this);
     m_actionAbout->setObjectName("actionAbout");
-    connect(m_actionAbout, SIGNAL(triggered()), this, SLOT(about()));
+    connect(m_actionAbout, &QAction::triggered,
+            this, &MainWindow::about);
     addAction(tr("Справка"),m_actionAbout);
 
     m_actionWhatsThis = new QAction(QIcon(":whatsthis"), tr("Что это?"), this);
     m_actionWhatsThis->setObjectName("actionWhatsThis");
     m_actionWhatsThis->setShortcut(tr("Shift+F1"));
-    connect(m_actionWhatsThis, SIGNAL(triggered()), this, SLOT(showWhatsThis()));
+    connect(m_actionWhatsThis, &QAction::triggered,
+            this, &MainWindow::showWhatsThis);
     addAction(tr("Справка"),m_actionWhatsThis);
 
     Menu *newMenu = new Menu("Новое меню");
@@ -101,8 +113,8 @@ MainWindow::MainWindow(QMainWindow *pwgt) : QMainWindow(pwgt), IPlugin("")
     addAction(tr("Новое меню"),newSeparator);
 
     PluginManager *pluginManager = PluginManager::instance();
-    connect(pluginManager,SIGNAL(endLoadingPlugins()),
-            this,SLOT(endLoadingPlugins()));
+    connect(pluginManager, &PluginManager::endLoadingPlugins,
+            this, &MainWindow::endLoadingPlugins);
 }
 
 MainWindow::~MainWindow()
@@ -205,7 +217,8 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
         toolBar = this->findChild<ToolBar *>(parentItem->name);
         if (!toolBar) {
             toolBar = new ToolBar();
-            connect(this,SIGNAL(iconSizeChanged(QSize)),toolBar,SLOT(setIconSize(QSize)));
+            connect(this, &MainWindow::iconSizeChanged,
+                    toolBar, &ToolBar::setIconSize);
             toolBar->setIconSize(this->iconSize());
             toolBar->setObjectName(parentItem->name);
             toolBar->setWindowTitle(parentItem->text);
@@ -332,8 +345,8 @@ void MainWindow::addAction(QString category, QAction *action)
     if (hotkey != QKeySequence())
         action->setShortcut(hotkey);
 
-    connect(action,SIGNAL(destroyed(QObject*)),
-            this, SLOT(removeAction(QObject*)));
+    connect(action, &QAction::destroyed, this,
+            static_cast<void (MainWindow::*)(QObject *)>(&MainWindow::removeAction));
 }
 
 void MainWindow::removeAction(QObject *obj)
@@ -504,19 +517,19 @@ void MainWindow::showOptionsDialog()
     m_optionsDialog->createToolBarModel(this);
 
     QMdiSubWindow *subWindow = addSubWindow(m_optionsDialog);
-    connect(subWindow,SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)),
-            this,SLOT(optionsDialogStateChanged(Qt::WindowStates,Qt::WindowStates)));
+    connect(subWindow, &QMdiSubWindow::windowStateChanged,
+            this, &MainWindow::optionsDialogStateChanged);
     setEditedAllMenu(true);
 
-    connect(m_optionsDialog,SIGNAL(accepted()),
-            this,SLOT(saveOptionsDialog()));
-    connect(m_optionsDialog,SIGNAL(rejected()),
-            this,SLOT(cancelOptionsDialog()));
+    connect(m_optionsDialog, &MainWindowOptions::accepted,
+            this, &MainWindow::saveOptionsDialog);
+    connect(m_optionsDialog, &MainWindowOptions::rejected,
+            this, &MainWindow::cancelOptionsDialog);
 
-    connect(m_optionsDialog->pushButtonCancel,SIGNAL(clicked()),
-            subWindow,SLOT(close()));
-    connect(m_optionsDialog->pushButtonSave,SIGNAL(clicked()),
-            subWindow,SLOT(close()));
+    connect(m_optionsDialog->pushButtonCancel, &QPushButton::clicked,
+            subWindow, &QMdiSubWindow::close);
+    connect(m_optionsDialog->pushButtonSave, &QPushButton::clicked,
+            subWindow, &QMdiSubWindow::close);
     addSubWindow(m_optionsDialog);
 
     m_optionsDialog->setIconSize(this->iconSize());

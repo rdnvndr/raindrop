@@ -123,11 +123,11 @@ void MenuBar::contextMenuEvent(QContextMenuEvent *event)
         // Создание контекстного меню
         QMenu *contextMenu = new QMenu();
         QAction *action = new QAction(tr("Удалить"),this);
-        connect(action,SIGNAL(triggered()), this,SLOT(removeContextAction()));
+        connect(action, &QAction::triggered, this, &MenuBar::removeContextAction);
         contextMenu->addAction(action);
         contextMenu->addSeparator();
         action = new QAction(tr("Свойства..."),this);
-        connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
+        connect(action, &QAction::triggered, this, &MenuBar::showActionProp);
         contextMenu->addAction(action);
         m_contextAction = this->actionAt(event->pos());
         contextMenu->exec(event->globalPos());
