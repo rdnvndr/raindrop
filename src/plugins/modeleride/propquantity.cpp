@@ -14,28 +14,35 @@ PropQuantity::PropQuantity(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(quantityWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            unitWidget,SLOT(setRootIndex(QModelIndex)));
-    connect(quantityWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(quantityWidget,SIGNAL(dataChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(quantityWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
-            this,SLOT(closeTab(QModelIndex)));
-    connect(unitWidget,SIGNAL(proxyIndexChanged(QModelIndex)),
-            quantityWidget, SLOT(setUnitRootIndex(QModelIndex)));
+    connect(quantityWidget, &QuantityWidget::currentIndexChanged,
+            unitWidget, &UnitWidget::setRootIndex);
+    connect(quantityWidget, &QuantityWidget::currentIndexChanged,
+            this, &PropQuantity::setTabName);
+    connect(quantityWidget, &QuantityWidget::dataChanged,
+            this, &PropQuantity::setTabName);
+    connect(quantityWidget, &QuantityWidget::dataAboutToBeRemoved,
+            this, &PropQuantity::closeTab);
+    connect(unitWidget, &UnitWidget::proxyIndexChanged,
+            quantityWidget, &QuantityWidget::setUnitRootIndex);
 
-    connect(quantityWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));
-    connect(quantityWidget, SIGNAL(edited(bool)), unitWidget, SLOT(edit(bool)));
+    connect(quantityWidget, &QuantityWidget::edited, this, &PropQuantity::edit);
+    connect(quantityWidget, &QuantityWidget::edited, unitWidget, &UnitWidget::edit);
 
-    connect(toolButtonAddQuantity,  SIGNAL(clicked()), quantityWidget, SLOT(add()));
-    connect(toolButtonDelQuantity,  SIGNAL(clicked()), quantityWidget, SLOT(remove()));
-    connect(toolButtonEditQuantity, SIGNAL(clicked()), quantityWidget, SLOT(edit()));
+    connect(toolButtonAddQuantity, &QToolButton::clicked,
+            quantityWidget, &QuantityWidget::add);
+    connect(toolButtonDelQuantity, &QToolButton::clicked,
+            quantityWidget, &QuantityWidget::remove);
+    connect(toolButtonEditQuantity, &QToolButton::clicked,
+            quantityWidget, &QuantityWidget::edit);
 
-    connect(pushButtonPropCancel, SIGNAL(clicked()), unitWidget, SLOT(revert()));
-    connect(pushButtonPropCancel, SIGNAL(clicked()), quantityWidget, SLOT(revert()));
-    connect(pushButtonPropSave,   SIGNAL(clicked()), unitWidget, SLOT(submit()));
-    connect(pushButtonPropSave,   SIGNAL(clicked()), quantityWidget, SLOT(submit()));
+    connect(pushButtonPropCancel, &QPushButton::clicked,
+            unitWidget, &UnitWidget::revert);
+    connect(pushButtonPropCancel, &QPushButton::clicked,
+            quantityWidget, &QuantityWidget::revert);
+    connect(pushButtonPropSave, &QPushButton::clicked,
+            unitWidget, &UnitWidget::submit);
+    connect(pushButtonPropSave, &QPushButton::clicked,
+            quantityWidget, &QuantityWidget::submit);
 
 }
 

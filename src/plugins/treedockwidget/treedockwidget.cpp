@@ -68,14 +68,15 @@ void TreeDockWidget::insertWidget(QIcon icon,QString name, QWidget *widget){
     stackedWidget->addWidget(widget);
     QAction *button = toolbar->addAction(icon, name);
     stackedTree[button] = widget;
-    connect(button, SIGNAL(triggered()), this, SLOT(setActionTreeWidget()));
+    connect(button, &QAction::triggered,
+            this, &TreeDockWidget::setActionTreeWidget);
 }
 
 QTreeWidget *TreeDockWidget::insertTreeWidget(QIcon icon,QString name){
     TreeFilterWidget *treeWidget = new TreeFilterWidget();
     insertWidget(icon,name, treeWidget);
-    connect(treeWidget->treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*, qint32)),
-                this, SLOT(callFuncTreeWidget(QTreeWidgetItem*, qint32)));
+    connect(treeWidget->treeWidget, &QTreeWidget::itemClicked,
+            this, &TreeDockWidget::callFuncTreeWidget);
     return treeWidget->treeWidget;
 }
 

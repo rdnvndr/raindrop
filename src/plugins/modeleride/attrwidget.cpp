@@ -22,8 +22,8 @@ AttrWidget::AttrWidget(QWidget *parent) :
     RegExpValidator *validator =
             new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9_]{0,26}|^[A-Za-z]{0}"));
     lineEditAttrName->setValidator(validator);
-    connect(validator,SIGNAL(stateChanged(QValidator::State)),
-            this,SLOT(validateAttrName(QValidator::State)));
+    connect(validator, &RegExpValidator::stateChanged,
+            this, &AttrWidget::validateAttrName);
 
     QStringList tags;
     tags << DBATTRXML::ATTR;
@@ -54,23 +54,30 @@ AttrWidget::AttrWidget(QWidget *parent) :
     comboBoxLov->setItemDelegate(new XmlDelegate(this));
     comboBoxNumerator->setItemDelegate(new XmlDelegate(this));
 
-    connect(tableViewAttr,SIGNAL(clicked(QModelIndex)),
-            this,SLOT(setCurrent(QModelIndex)));
-    connect(toolButtonAddAttr,SIGNAL(clicked()),this,SLOT(add()));
-    connect(toolButtonDeleteAttr,SIGNAL(clicked()),this,SLOT(remove()));
+    connect(tableViewAttr,&QAbstractItemView::clicked,
+            this, &AttrWidget::setCurrent);
+    connect(toolButtonAddAttr, &QToolButton::clicked, this, &AttrWidget::add);
+    connect(toolButtonDeleteAttr, &QToolButton::clicked,
+            this, &AttrWidget::remove);
 
-    connect(comboBoxTypeAttr,SIGNAL(currentIndexChanged(QString)),this,SLOT(changeType(QString)));
-    connect(pushButtonAttrSave,SIGNAL(clicked()),this,SLOT(submit()));
-    connect(pushButtonAttrCancel,SIGNAL(clicked()),this,SLOT(revert()));
-    connect(toolButtonEditAttr,SIGNAL(clicked()),this,SLOT(edit()));
-    connect(checkBoxInInherited,SIGNAL(clicked(bool)),this,SLOT(showParentAttr(bool)));
+    connect(comboBoxTypeAttr,
+            static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged),
+            this, &AttrWidget::changeType);
+    connect(pushButtonAttrSave, &QPushButton::clicked, this, &AttrWidget::submit);
+    connect(pushButtonAttrCancel, &QPushButton::clicked, this, &AttrWidget::revert);
+    connect(toolButtonEditAttr, &QToolButton::clicked, this, &AttrWidget::edit);
+    connect(checkBoxInInherited, &QCheckBox::clicked,
+            this, &AttrWidget::showParentAttr);
 
-    connect(toolButtonUnitAttrClean, SIGNAL(clicked()), this, SLOT(cleanUnit()));
-    connect(toolButtonLovClean, SIGNAL(clicked()), this, SLOT(cleanLov()));
-    connect(toolButtonNumeratorClean, SIGNAL(clicked()), this, SLOT(cleanNumerator()));
+    connect(toolButtonUnitAttrClean, &QToolButton::clicked,
+            this, &AttrWidget::cleanUnit);
+    connect(toolButtonLovClean, &QToolButton::clicked,
+            this, &AttrWidget::cleanLov);
+    connect(toolButtonNumeratorClean, &QToolButton::clicked,
+            this, &AttrWidget::cleanNumerator);
 
-    connect(toolButtonUpAttr,SIGNAL(clicked()),this,SLOT(up()));
-    connect(toolButtonDownAttr,SIGNAL(clicked()),this,SLOT(down()));
+    connect(toolButtonUpAttr, &QToolButton::clicked, this, &AttrWidget::up);
+    connect(toolButtonDownAttr, &QToolButton::clicked, this, &AttrWidget::down);
 }
 
 AttrWidget::~AttrWidget()

@@ -16,12 +16,12 @@ PropRefGroup::PropRefGroup(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(refGroupWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(refGroupWidget,SIGNAL(dataChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(refGroupWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
-            this,SLOT(closeTab(QModelIndex)));
+    connect(refGroupWidget, &AbstractEditorWidget::currentIndexChanged,
+            this, &PropRefGroup::setTabName);
+    connect(refGroupWidget, &AbstractEditorWidget::dataChanged,
+            this, &PropRefGroup::setTabName);
+    connect(refGroupWidget, &AbstractEditorWidget::dataAboutToBeRemoved,
+            this, &AbstractPropEditor::closeTab);
 }
 
 PropRefGroup::~PropRefGroup()

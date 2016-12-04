@@ -15,27 +15,37 @@ PropNumerator::PropNumerator(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(numeratorWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            numeratorRangeWidget,SLOT(setRootIndex(QModelIndex)));
-    connect(numeratorWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(numeratorWidget,SIGNAL(dataChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(numeratorWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
-            this,SLOT(closeTab(QModelIndex)));
+    connect(numeratorWidget, &AbstractEditorWidget::currentIndexChanged,
+            numeratorRangeWidget, &AbstractModifyWidget::setRootIndex);
+    connect(numeratorWidget, &AbstractEditorWidget::currentIndexChanged,
+            this, &PropNumerator::setTabName);
+    connect(numeratorWidget, &AbstractEditorWidget::dataChanged,
+            this, &PropNumerator::setTabName);
+    connect(numeratorWidget, &AbstractEditorWidget::dataAboutToBeRemoved,
+            this, &AbstractPropEditor::closeTab);
 
-    connect(numeratorWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));
-    connect(numeratorWidget, SIGNAL(edited(bool)), numeratorRangeWidget, SLOT(edit(bool)));
+    connect(numeratorWidget, &NumeratorWidget::edited,
+            this, &PropNumerator::edit);
+    connect(numeratorWidget, &NumeratorWidget::edited,
+            numeratorRangeWidget, &NumeratorRangeWidget::edit);
 
-    connect(toolButtonAddNumerator,  SIGNAL(clicked()), numeratorWidget, SLOT(add()));
-    connect(toolButtonDelNumerator,  SIGNAL(clicked()), numeratorRangeWidget, SLOT(revert()));
-    connect(toolButtonDelNumerator,  SIGNAL(clicked()), numeratorWidget, SLOT(remove()));
-    connect(toolButtonEditNumerator, SIGNAL(clicked()), numeratorWidget, SLOT(edit()));
+    connect(toolButtonAddNumerator, &QToolButton::clicked,
+            numeratorWidget, &NumeratorWidget::add);
+    connect(toolButtonDelNumerator, &QToolButton::clicked,
+            numeratorRangeWidget, &NumeratorRangeWidget::revert);
+    connect(toolButtonDelNumerator, &QToolButton::clicked,
+            numeratorWidget, &NumeratorWidget::remove);
+    connect(toolButtonEditNumerator, &QToolButton::clicked,
+            numeratorWidget, &NumeratorWidget::edit);
 
-    connect(pushButtonPropCancel, SIGNAL(clicked()), numeratorRangeWidget, SLOT(revert()));
-    connect(pushButtonPropCancel, SIGNAL(clicked()), numeratorWidget, SLOT(revert()));
-    connect(pushButtonPropSave,   SIGNAL(clicked()), numeratorRangeWidget, SLOT(submit()));
-    connect(pushButtonPropSave,   SIGNAL(clicked()), numeratorWidget, SLOT(submit()));
+    connect(pushButtonPropCancel, &QPushButton::clicked,
+            numeratorRangeWidget, &NumeratorRangeWidget::revert);
+    connect(pushButtonPropCancel, &QPushButton::clicked,
+            numeratorWidget, &NumeratorWidget::revert);
+    connect(pushButtonPropSave, &QPushButton::clicked,
+            numeratorRangeWidget, &NumeratorRangeWidget::submit);
+    connect(pushButtonPropSave, &QPushButton::clicked,
+            numeratorWidget, &NumeratorWidget::submit);
 }
 
 PropNumerator::~PropNumerator()

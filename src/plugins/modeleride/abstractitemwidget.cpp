@@ -50,8 +50,8 @@ void AbstractItemWidget::setItemView(QAbstractItemView *tableView)
     m_itemView->setItemDelegate(new XmlDelegate(this));
     m_itemView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    connect(m_itemView,SIGNAL(clicked(QModelIndex)),
-            this,SLOT(setCurrent(QModelIndex)));
+    connect(m_itemView, &QAbstractItemView::clicked,
+            this, &AbstractItemWidget::setCurrent);
 }
 
 QAbstractItemView *AbstractItemWidget::itemView()

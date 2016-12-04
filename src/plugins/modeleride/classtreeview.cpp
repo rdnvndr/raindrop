@@ -18,19 +18,19 @@ ClassTreeView::ClassTreeView(QWidget *parent) :
     treeView->setAcceptDrops(true);
     treeView->setDropIndicatorShown(true);
 
-    connect(treeView,SIGNAL(doubleClicked(QModelIndex)),
-            this,SLOT(treeDoubleClicked(QModelIndex)));
+    connect(treeView, &QTreeView::doubleClicked,
+            this, &ClassTreeView::treeDoubleClicked);
 
     // Создание контекстного меню
     contextMenu = new QMenu();
 
     actionAddClass = new QAction(tr("Добавить"),this);
     contextMenu->addAction(actionAddClass);
-    connect(actionAddClass,SIGNAL(triggered()),this,SLOT(actionInsert()));
+    connect(actionAddClass, &QAction::triggered, this, &ClassTreeView::actionInsert);
 
     actionRemoveClass = new QAction(tr("Удалить"),this);
     contextMenu->addAction(actionRemoveClass);
-    connect(actionRemoveClass,SIGNAL(triggered()),this,SLOT(actionRemove()));
+    connect(actionRemoveClass, &QAction::triggered, this, &ClassTreeView::actionRemove);
 
     actionSeparator = new QAction(tr("Разделитель"),this);
     actionSeparator->setSeparator(true);
@@ -39,33 +39,33 @@ ClassTreeView::ClassTreeView(QWidget *parent) :
     actionShowAttr = new QAction(tr("Показать атрибуты"),this);
     actionShowAttr->setCheckable(true);
     contextMenu->addAction(actionShowAttr);
-    connect(actionShowAttr,SIGNAL(triggered(bool)),this,SLOT(setShowAttr(bool)));
+    connect(actionShowAttr,&QAction::triggered, this, &ClassTreeView::setShowAttr);
 
     actionShowComp = new QAction(tr("Показать состав"),this);
     actionShowComp->setCheckable(true);
     contextMenu->addAction(actionShowComp);
-    connect(actionShowComp,SIGNAL(triggered(bool)),this,SLOT(setShowComp(bool)));
+    connect(actionShowComp, &QAction::triggered, this, &ClassTreeView::setShowComp);
 
     actionShowFilter = new QAction(tr("Показать фильтры"),this);
     actionShowFilter->setCheckable(true);
     contextMenu->addAction(actionShowFilter);
-    connect(actionShowFilter,SIGNAL(triggered(bool)),this,SLOT(setShowFilter(bool)));
+    connect(actionShowFilter, &QAction::triggered, this, &ClassTreeView::setShowFilter);
 
     actionShowPermission = new QAction(tr("Показать права"),this);
     actionShowPermission->setCheckable(true);
     contextMenu->addAction(actionShowPermission);
-    connect(actionShowPermission,SIGNAL(triggered(bool)),this,SLOT(setShowPermission(bool)));
+    connect(actionShowPermission, &QAction::triggered, this, &ClassTreeView::setShowPermission);
 
 
     actionShowUnit = new QAction(tr("Показать ЕИ"),this);
     actionShowUnit->setCheckable(true);
     contextMenu->addAction(actionShowUnit);
-    connect(actionShowUnit,SIGNAL(triggered(bool)),this,SLOT(setShowUnit(bool)));
+    connect(actionShowUnit, &QAction::triggered, this, &ClassTreeView::setShowUnit);
 
 
     treeView->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(treeView,SIGNAL(customContextMenuRequested(const QPoint&)),
-            this,SLOT(showContextMenu(const QPoint&)));
+    connect(treeView, &QTreeView::customContextMenuRequested,
+            this, &ClassTreeView::showContextMenu);
 
     classFilterModel = NULL;
 }
@@ -112,13 +112,16 @@ void ClassTreeView::setModel(QAbstractItemModel *model)
     QRegExp regex = classFilterModel->filterRegExp();
     classFilterModel->setFilterRegExp(regex);
 
-    connect(model, SIGNAL(destroyed()), this, SLOT(destroyModel()));
+    connect(model, &QAbstractItemModel::destroyed,
+            this, &ClassTreeView::destroyModel);
 
-    connect(lineEditFiler,SIGNAL(textChanged(QString)),
-            classFilterModel,SLOT(setFilterRegExp(QString)));
+    connect(lineEditFiler, &QLineEdit::textChanged,
+            classFilterModel,
+            static_cast<void (TreeFilterProxyModel::*)(const QString&)>
+            (&TreeFilterProxyModel::setFilterRegExp));
 
-    connect(lineEditFiler,SIGNAL(textChanged(QString)),
-            treeView,SLOT(expandAll()));
+    connect(lineEditFiler, &QLineEdit::textChanged,
+            treeView, &QTreeView::expandAll);
 
     treeView->setModel(classFilterModel);
 

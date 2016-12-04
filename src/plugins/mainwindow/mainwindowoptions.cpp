@@ -11,16 +11,21 @@ MainWindowOptions::MainWindowOptions(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(pushButtonNew,SIGNAL(clicked()),this,SLOT(insertToolBar()));
-    connect(pushButtonDelete,SIGNAL(clicked()),this,SLOT(removeToolBar()));
-    connect(pushButtonRename,SIGNAL(clicked()),this,SLOT(renameToolBar()));
-    connect(lineEditHotKey,SIGNAL(changeHotKey(QKeySequence)),
-            this, SLOT(changeHotKey(QKeySequence)));
-    connect(pushButtonKeyClear,SIGNAL(clicked()),this,SLOT(resetHotKey()));
-    connect(pushButtonKeyDelete,SIGNAL(clicked()),this,SLOT(deleteHotKey()));
+    connect(pushButtonNew,   &QPushButton::clicked,
+            this, &MainWindowOptions::insertToolBar);
+    connect(pushButtonDelete,&QPushButton::clicked,
+            this, &MainWindowOptions::removeToolBar);
+    connect(pushButtonRename,&QPushButton::clicked,
+            this, &MainWindowOptions::renameToolBar);
+    connect(lineEditHotKey, &HotKeyLineEdit::changeHotKey,
+            this, &MainWindowOptions::changeHotKey);
+    connect(pushButtonKeyClear, &QPushButton::clicked,
+            this, &MainWindowOptions::resetHotKey);
+    connect(pushButtonKeyDelete, &QPushButton::clicked,
+            this,&MainWindowOptions::deleteHotKey);
     treeViewCommands->setItemDelegate(new HotKeyDelegate());
-    connect(radioButtonOther,SIGNAL(toggled(bool)),
-            this, SLOT(selectOtherSize(bool)));
+    connect(radioButtonOther, &QRadioButton::toggled,
+            this, &MainWindowOptions::selectOtherSize);
     spinBoxIconSize->setDisabled(true);
 }
 
@@ -40,8 +45,8 @@ void MainWindowOptions::createActionsModel(QMultiHash <QString, QAction *> *acti
     treeViewCommands->setColumnHidden(4,true);
     treeViewCommands->expandAll();
 
-    connect(treeViewCommands->selectionModel(),SIGNAL(currentChanged(QModelIndex,QModelIndex)),
-            this,SLOT(commandCurrentChange(QModelIndex,QModelIndex)));
+    connect(treeViewCommands->selectionModel(), &QItemSelectionModel::currentChanged,
+            this, &MainWindowOptions::commandCurrentChange);
 }
 
 void MainWindowOptions::createToolBarModel(QMainWindow *mainWindow)

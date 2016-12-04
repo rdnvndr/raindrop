@@ -172,8 +172,8 @@ TagXmlItem *TagXmlItem::child(qint32 i, QStringList tags, QStringList parentTags
                 if (!child->m_inherited.contains(this)) {
                     childItem = new TagXmlItem(child->m_domNode, this);
                     child->m_inherited.insert(this, childItem);
-                    connect(this, SIGNAL(destroyedItem(TagXmlItem*)),
-                            child, SLOT(removeInheritedItem(TagXmlItem*)));
+                    connect(this, &TagXmlItem::destroyedItem,
+                            child, &TagXmlItem::removeInheritedItem);
 
                 } else
                     childItem = child->m_inherited.value(this);

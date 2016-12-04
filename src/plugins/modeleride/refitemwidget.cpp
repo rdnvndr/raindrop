@@ -14,10 +14,14 @@ RefItemWidget::RefItemWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(toolButtonAddClass,SIGNAL(clicked()),this,SLOT(addLinkToClass()));
-    connect(toolButtonAddFilter,SIGNAL(clicked()),this,SLOT(addLinkToFilter()));
-    connect(toolButtonAddRef,SIGNAL(clicked()),this,SLOT(addLinkToRef()));
-    connect(toolButtonDelete,SIGNAL(clicked()),this,SLOT(remove()));
+    connect(toolButtonAddClass, &QToolButton::clicked,
+            this, &RefItemWidget::addLinkToClass);
+    connect(toolButtonAddFilter, &QToolButton::clicked,
+            this, &RefItemWidget::addLinkToFilter);
+    connect(toolButtonAddRef, &QToolButton::clicked,
+            this, &RefItemWidget::addLinkToRef);
+    connect(toolButtonDelete, &QToolButton::clicked,
+            this, &RefItemWidget::remove);
 
     AbstractModifyWidget::setItemView(treeView);
     itemView()->setItemDelegate(new RefItemDelegate());

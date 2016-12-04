@@ -45,8 +45,8 @@ QWidget *NumeratorRangeDelegate::createEditor(QWidget *parent,
             RegExpValueValidator *validator
                     = new RegExpValueValidator(lineEdit);
             lineEdit->setValidator(validator);
-            connect(validator,SIGNAL(stateChanged(QValidator::State)),
-                    this,SLOT(validateRegExp(QValidator::State)));
+            connect(validator, &RegExpValueValidator::stateChanged,
+                    this, &NumeratorRangeDelegate::validateRegExp);
             return lineEdit;
         }
         if (tag == DBNUMERATORLOVXML::NUMERATORLOV

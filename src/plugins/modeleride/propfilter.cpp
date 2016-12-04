@@ -13,12 +13,12 @@ PropFilter::PropFilter(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(propWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(propWidget,SIGNAL(dataChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(propWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
-            this,SLOT(closeTab(QModelIndex)));
+    connect(propWidget, &AbstractEditorWidget::currentIndexChanged,
+            this, &PropFilter::setTabName);
+    connect(propWidget, &AbstractEditorWidget::dataChanged,
+            this, &PropFilter::setTabName);
+    connect(propWidget, &AbstractEditorWidget::dataAboutToBeRemoved,
+            this, &AbstractPropEditor::closeTab);
 }
 
 PropFilter::~PropFilter()

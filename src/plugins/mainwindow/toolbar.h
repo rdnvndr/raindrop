@@ -16,7 +16,10 @@ class ToolBar : public QToolBar
 {
     Q_OBJECT
 public:
+    //! Конструктор класса
     explicit ToolBar(QWidget *parent = 0);
+
+    //! Деструктор класса
     virtual ~ToolBar();
 
     //! Событие обрабатывающее перещение курсора мыши
@@ -49,6 +52,10 @@ public:
     //! Возращает режим редактирования
     bool isEdited();
 
+signals:
+    //! Сигнал об изменении видимости
+    void stateVisibilityChanged();
+
 private slots:
 
     //! Удаление QAction на котором вызвано контекстное меню
@@ -56,6 +63,9 @@ private slots:
 
     //! Вызов редактирования свойств QAction
     void showActionProp();
+
+    //! Функция испускает сигнал visibilityChanged()
+    void crossVisibilityChange(bool visible);
 
 private:
 

@@ -8,7 +8,7 @@ namespace Widgets {
 PushButtonImage::PushButtonImage(QWidget *parent) :
     QPushButton(parent)
 {
-    connect(this,SIGNAL(clicked()),this,SLOT(openImage()));
+    connect(this, &PushButtonImage::clicked, this, &PushButtonImage::openImage);
 }
 
 bool PushButtonImage::setData(const QByteArray &data)

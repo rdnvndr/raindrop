@@ -128,7 +128,8 @@ bool PluginManager::loadPlugin(QString fileName, QString iid)
     {
         IPlugin *corePlugin = qobject_cast<IPlugin*>(plugin);
         if (corePlugin){
-            connect(plugin,SIGNAL(destroyed(QObject*)),this,SLOT(removePlugin(QObject*)));
+            connect(plugin, &QObject::destroyed,
+                    this, &PluginManager::removePlugin);
             plugin->setObjectName(plugin->metaObject()->className());
 
             foreach (const QString &interface, corePlugin->interfaces())

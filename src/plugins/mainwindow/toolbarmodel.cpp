@@ -11,12 +11,13 @@ ToolBarModel::ToolBarModel(QMainWindow *mainWindow, QObject *parent) :
     m_mapper = new QSignalMapper(this);
     m_toolBars = mainWindow->findChildren<ToolBar *> ();
     foreach (ToolBar *toolBar, m_toolBars) {
-        connect(toolBar, SIGNAL(visibilityChanged(bool)),
-                m_mapper,SLOT(map()));
+        connect(toolBar, &ToolBar::stateVisibilityChanged, m_mapper,
+                static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
         m_mapper->setMapping(toolBar,toolBar);
     }
-    connect(m_mapper,SIGNAL(mapped(QWidget*)),
-            this,SLOT(setToolBarVisible(QWidget*)));
+    connect(m_mapper,
+            static_cast<void (QSignalMapper::*)(QWidget *)>(&QSignalMapper::mapped),
+            this, &ToolBarModel::setToolBarVisible);
 
 }
 
@@ -111,8 +112,8 @@ bool ToolBarModel::insertRows(qint32 row, qint32 count, const QModelIndex &paren
     ToolBar *toolBar = new ToolBar();
     m_mainWindow->addToolBar(toolBar);
     m_toolBars.insert(row,toolBar);
-    connect(toolBar, SIGNAL(visibilityChanged(bool)),
-            m_mapper,SLOT(map()));
+    connect(toolBar, &ToolBar::stateVisibilityChanged, m_mapper,
+            static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
     m_mapper->setMapping(toolBar,toolBar);
     endInsertRows();
     toolBar->setEdited(true);

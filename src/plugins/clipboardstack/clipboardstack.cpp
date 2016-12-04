@@ -16,30 +16,30 @@ ClipboardStack::ClipboardStack(QObject *parent):
     IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)),
-            this, SLOT(focusChanged(QWidget*,QWidget*)));
+    connect(qApp, &QApplication::focusChanged,
+            this, &ClipboardStack::focusChanged);
 
-    connect(qApp->clipboard(), SIGNAL(dataChanged()),
-            this, SLOT(clipboardDataChange()));
+    connect(qApp->clipboard(), &QClipboard::dataChanged,
+            this, &ClipboardStack::clipboardDataChange);
 
     m_actionCut = new QAction(QIcon(":cut"), tr("Вырезать"), this);
     m_actionCut->setObjectName("actionCut");
-    connect(m_actionCut, SIGNAL(triggered()), this, SLOT(cut()));
+    connect(m_actionCut, &QAction::triggered, this, &ClipboardStack::cut);
     iMainWindow->addAction(tr("Редактирование"), m_actionCut);
 
     m_actionCopy = new QAction(QIcon(":copy"), tr("Копировать"), this);
     m_actionCopy->setObjectName("actionCopy");
-    connect(m_actionCopy, SIGNAL(triggered()), this, SLOT(copy()));
+    connect(m_actionCopy, &QAction::triggered, this, &ClipboardStack::copy);
     iMainWindow->addAction(tr("Редактирование"), m_actionCopy);
 
     m_actionPaste = new QAction(QIcon(":paste"), tr("Вставить"), this);
     m_actionPaste->setObjectName("actionPaste");
-    connect(m_actionPaste, SIGNAL(triggered()), this, SLOT(paste()));
+    connect(m_actionPaste, &QAction::triggered, this, &ClipboardStack::paste);
     iMainWindow->addAction(tr("Редактирование"), m_actionPaste);
 
     m_actionSelectAll = new QAction(QIcon(":selectall"), tr("Выделить всё"), this);
     m_actionSelectAll->setObjectName("actionSelectAll");
-    connect(m_actionSelectAll, SIGNAL(triggered()), this, SLOT(selectAll()));
+    connect(m_actionSelectAll, &QAction::triggered, this, &ClipboardStack::selectAll);
     iMainWindow->addAction(tr("Редактирование"), m_actionSelectAll);
 
 }
