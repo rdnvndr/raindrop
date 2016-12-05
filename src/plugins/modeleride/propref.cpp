@@ -23,16 +23,18 @@ PropRef::PropRef(QWidget *parent) :
     connect(refWidget, &AbstractEditorWidget::dataAboutToBeRemoved,
             this, &AbstractPropEditor::closeTab);
 
-    connect(refWidget, &RefWidget::edited, this, &PropRef::edit);
-    connect(refWidget, &RefWidget::edited, refItemWidget, &RefItemWidget::edit);
+    connect(refWidget, &RefWidget::edited, this,
+            static_cast<void (AbstractPropEditor::*)()>(&AbstractPropEditor::edit));
+    connect(refWidget, &RefWidget::edited, refItemWidget,
+            static_cast<void (AbstractModifyWidget::*)()>(&AbstractModifyWidget::edit));
     connect(toolButtonAdd, &QToolButton::clicked,
             refWidget, &RefWidget::add);
     connect(toolButtonDel, &QToolButton::clicked,
             refItemWidget, &RefItemWidget::revert);
     connect(toolButtonDel, &QToolButton::clicked,
             refWidget, &RefWidget::remove);
-    connect(toolButtonEdit,&QToolButton::clicked,
-            refWidget, &RefWidget::edit);
+    connect(toolButtonEdit,&QToolButton::clicked, refWidget,
+            static_cast<void (AbstractEditorWidget::*)()>(&AbstractEditorWidget::edit));
 
     connect(pushButtonPropCancel, &QPushButton::clicked,
             refItemWidget, &RefItemWidget::revert);

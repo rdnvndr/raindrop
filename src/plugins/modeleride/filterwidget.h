@@ -37,7 +37,7 @@ public slots:
     void add();
 
     //! Вызов редактирования фильтра класса
-    void edit(bool flag = true);
+    void edit(bool flag);
 
     //! Проверка находится ли в режиме редактирования
     bool isEdit();

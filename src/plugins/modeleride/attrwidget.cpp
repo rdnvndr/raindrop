@@ -65,7 +65,8 @@ AttrWidget::AttrWidget(QWidget *parent) :
             this, &AttrWidget::changeType);
     connect(pushButtonAttrSave, &QPushButton::clicked, this, &AttrWidget::submit);
     connect(pushButtonAttrCancel, &QPushButton::clicked, this, &AttrWidget::revert);
-    connect(toolButtonEditAttr, &QToolButton::clicked, this, &AttrWidget::edit);
+    connect(toolButtonEditAttr, &QToolButton::clicked, this,
+            static_cast<void (AbstractItemWidget::*)()>(&AbstractItemWidget::edit));
     connect(checkBoxInInherited, &QCheckBox::clicked,
             this, &AttrWidget::showParentAttr);
 

@@ -125,6 +125,11 @@ void AbstractItemWidget::revert()
     edit(false);
 }
 
+void AbstractItemWidget::edit()
+{
+    edit(true);
+}
+
 void AbstractItemWidget::up()
 {
     QPersistentModelIndex index = itemView()->currentIndex();

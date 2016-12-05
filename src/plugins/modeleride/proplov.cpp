@@ -23,8 +23,10 @@ PropLov::PropLov(QWidget *parent) :
     connect(lovWidget, &AbstractEditorWidget::dataAboutToBeRemoved,
             this, &AbstractPropEditor::closeTab);
 
-    connect(lovWidget, &LovWidget::edited, this, &PropLov::edit);
-    connect(lovWidget, &LovWidget::edited, lovValueWidget, &LovValueWidget::edit);
+    connect(lovWidget, &LovWidget::edited, this,
+            static_cast<void (AbstractPropEditor::*)()>(&AbstractPropEditor::edit));
+    connect(lovWidget, &LovWidget::edited, lovValueWidget,
+            static_cast<void (AbstractModifyWidget::*)()>(&AbstractModifyWidget::edit));
 
     connect(toolButtonAddLov, &QToolButton::clicked,
             lovWidget, &LovWidget::add);
@@ -32,8 +34,8 @@ PropLov::PropLov(QWidget *parent) :
             lovValueWidget, &LovValueWidget::revert);
     connect(toolButtonDelLov, &QToolButton::clicked,
             lovWidget, &LovWidget::remove);
-    connect(toolButtonEditLov, &QToolButton::clicked,
-            lovWidget, &LovWidget::edit);
+    connect(toolButtonEditLov, &QToolButton::clicked, lovWidget,
+            static_cast<void (AbstractEditorWidget::*)()>(&AbstractEditorWidget::edit));
 
     connect(pushButtonPropCancel, &QPushButton::clicked,
             lovValueWidget, &LovValueWidget::revert);

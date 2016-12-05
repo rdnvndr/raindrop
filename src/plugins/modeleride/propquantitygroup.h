@@ -41,7 +41,7 @@ public slots:
     void setTabName(const QModelIndex &index);
 
     //! Перевод группы величины в режим редактирования
-    void edit(bool flag = true);
+    void edit(bool flag);
 };
 
 }}

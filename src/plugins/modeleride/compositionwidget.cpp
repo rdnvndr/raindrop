@@ -34,8 +34,8 @@ CompositionWidget::CompositionWidget(QWidget *parent) :
     connect(pushButtonCancel, &QToolButton::clicked,
             this, &CompositionWidget::revert);
 
-    connect(toolButtonEdit, &QToolButton::clicked,
-            this, &CompositionWidget::edit);
+    connect(toolButtonEdit, &QToolButton::clicked, this,
+            static_cast<void (AbstractItemWidget::*)()>(&AbstractItemWidget::edit));
     connect(checkBoxInInherited, &QToolButton::clicked,
             this, &CompositionWidget::showParent);
 

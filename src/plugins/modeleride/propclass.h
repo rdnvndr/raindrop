@@ -51,7 +51,7 @@ public slots:
     void setTabName(const QModelIndex &index);
 
     //! Перевод в режим редактирования
-    virtual void edit(bool flag  = true);
+    virtual void edit(bool flag);
 
     //! Вызов редактирования состава
     void onEditComposition(const QModelIndex &index);

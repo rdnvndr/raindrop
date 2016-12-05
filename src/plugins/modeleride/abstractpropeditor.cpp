@@ -39,6 +39,11 @@ void AbstractPropEditor::closeTab(const QModelIndex &index)
         }
 }
 
+void AbstractPropEditor::edit()
+{
+    edit(true);
+}
+
 QVariant AbstractPropEditor::modelData(const QString &tag, const QString &attr, const QModelIndex &index)
 {
     return index.sibling(index.row(), m_model->columnDisplayedAttr(

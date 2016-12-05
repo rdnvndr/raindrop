@@ -48,7 +48,7 @@ public slots:
     bool isEdit();
 
     //! Перевод в режим редактирования атрибута класса
-    void edit(bool flag = true);
+    void edit(bool flag);
 
     //! Установка отображения родительских атрибутов класса
     void showParentAttr(bool flag);

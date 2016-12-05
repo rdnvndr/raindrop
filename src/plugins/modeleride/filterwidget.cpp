@@ -24,7 +24,8 @@ FilterWidget::FilterWidget(QWidget *parent) :
     connect(toolButtonAdd, &QToolButton::clicked, this, &FilterWidget::add);
     connect(toolButtonDelete, &QToolButton::clicked, this, &FilterWidget::remove);
 
-    connect(toolButtonEdit, &QToolButton::clicked, this, &FilterWidget::edit);
+    connect(toolButtonEdit, &QToolButton::clicked, this,
+            static_cast<void (AbstractItemWidget::*)()>(&AbstractItemWidget::edit));
     connect(checkBoxInInherited, &QCheckBox::clicked, this, &FilterWidget::showParent);
 }
 

@@ -18,8 +18,8 @@ QuantityGroupWidget::QuantityGroupWidget(QWidget *parent) :
             this, &QuantityGroupWidget::add);
     connect(toolButtonDel, &QToolButton::clicked,
             this, &QuantityGroupWidget::remove);
-    connect(toolButtonEdit, &QToolButton::clicked,
-            this, &QuantityGroupWidget::edit);
+    connect(toolButtonEdit, &QToolButton::clicked, this,
+            static_cast<void (AbstractEditorWidget::*)()>(&AbstractEditorWidget::edit));
 
     connect(pushButtonPropCancel, &QPushButton::clicked,
             this, &QuantityGroupWidget::revert);

@@ -44,7 +44,7 @@ public slots:
     bool isEdit();
 
     //! Перевод класса в режим редактирования
-    void edit(bool flag = true);
+    void edit(bool flag);
 
     //! Проверка запонены ли данные
     bool isEmpty();
