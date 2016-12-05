@@ -564,6 +564,11 @@ void ModelerIDEPlug::publishClassModel(const QModelIndex &index)
     }
 }
 
+void ModelerIDEPlug::publishClassModel()
+{
+    publishClassModel(QModelIndex());
+}
+
 void ModelerIDEPlug::closeClassModel()
 {   
     PluginManager *pluginManager = PluginManager::instance();

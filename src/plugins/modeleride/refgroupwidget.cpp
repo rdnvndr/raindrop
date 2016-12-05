@@ -16,7 +16,8 @@ RefGroupWidget::RefGroupWidget(QWidget *parent) :
 
     connect(toolButtonAdd, &QToolButton::clicked, this, &RefGroupWidget::add);
     connect(toolButtonDel, &QToolButton::clicked, this, &RefGroupWidget::remove);
-    connect(toolButtonEdit, &QToolButton::clicked, this, &RefGroupWidget::edit);
+    connect(toolButtonEdit, &QToolButton::clicked, this,
+            static_cast<void (AbstractEditorWidget::*)()>(&AbstractEditorWidget::edit));
 
     connect(pushButtonPropCancel, &QPushButton::clicked, this, &RefGroupWidget::revert);
     connect(pushButtonPropSave, &QPushButton::clicked, this, &RefGroupWidget::submit);

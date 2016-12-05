@@ -137,7 +137,10 @@ public slots:
     void updateMenus();
 
     //! Обновляет главное меню окна и панели инструментов по структуре
-    void refreshAllBar(bool readingBarSettings = true);
+    void refreshAllBar(bool readingBarSettings);
+
+    //! Обновляет главное меню окна и панели инструментов по структуре
+    void refreshAllBar();
 
     //! Слот установки оконного режима
     /*! Слот предназначен переключение приложения в закладочный

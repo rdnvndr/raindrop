@@ -48,7 +48,8 @@ ClassWidget::ClassWidget(QWidget *parent) :
     connect(toolButtonDelClass,   &QToolButton::clicked, this, &ClassWidget::remove);
     connect(pushButtonPropSave,   &QToolButton::clicked, this, &ClassWidget::submit);
     connect(pushButtonPropCancel, &QToolButton::clicked, this, &ClassWidget::revert);
-    connect(toolButtonEditClass,  &QToolButton::clicked, this, &ClassWidget::edit);
+    connect(toolButtonEditClass,  &QToolButton::clicked, this,
+            static_cast<void (AbstractEditorWidget::*)()>(&AbstractEditorWidget::edit));
 }
 
 ClassWidget::~ClassWidget()

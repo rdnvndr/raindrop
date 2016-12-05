@@ -22,14 +22,15 @@ PropRole::PropRole(QWidget *parent) :
     connect(roleWidget, &AbstractEditorWidget::dataAboutToBeRemoved,
             this, &AbstractPropEditor::closeTab);
 
-    connect(roleWidget, &RoleWidget::edited, this, &PropRole::edit);
+    connect(roleWidget, &RoleWidget::edited, this,
+            static_cast<void (AbstractPropEditor::*)()>(&AbstractPropEditor::edit));
 
     connect(toolButtonAddRole, &QToolButton::clicked,
             roleWidget, &RoleWidget::add);
     connect(toolButtonDelRole, &QToolButton::clicked,
             roleWidget, &RoleWidget::remove);
-    connect(toolButtonEditRole, &QToolButton::clicked,
-            roleWidget, &RoleWidget::edit);
+    connect(toolButtonEditRole, &QToolButton::clicked, roleWidget,
+            static_cast<void (AbstractEditorWidget::*)()>(&AbstractEditorWidget::edit));
 
     connect(pushButtonPropCancel, &QPushButton::clicked, roleWidget, &RoleWidget::revert);
     connect(pushButtonPropSave, &QPushButton::clicked, roleWidget, &RoleWidget::submit);

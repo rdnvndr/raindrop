@@ -33,7 +33,7 @@ public slots:
     void add();
 
     //! Перевод роли в режим редактирования
-    void edit(bool flag = true);
+    void edit(bool flag);
 
     //! Применение изменений роли
     void submit();

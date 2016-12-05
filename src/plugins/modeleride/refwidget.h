@@ -40,7 +40,7 @@ public slots:
     void add();
 
     //! Перевод справочника в режим редактирования
-    void edit(bool flag = true);
+    void edit(bool flag);
 
     //! Применение изменений справочника
     void submit();

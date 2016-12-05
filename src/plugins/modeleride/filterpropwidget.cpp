@@ -53,7 +53,8 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
             this, &FilterPropWidget::submit);
     connect(pushButtonPropCancel, &QPushButton::clicked,
             this, &FilterPropWidget::revert);
-    connect(toolButtonEdit, &QToolButton::clicked, this, &FilterPropWidget::edit);
+    connect(toolButtonEdit, &QToolButton::clicked, this,
+            static_cast<void (AbstractEditorWidget::*)()>(&AbstractEditorWidget::edit));
 
     connect(actionAddCondition, &QAction::triggered,
             this, &FilterPropWidget::addCondition);

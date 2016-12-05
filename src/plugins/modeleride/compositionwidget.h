@@ -44,7 +44,7 @@ public slots:
     bool isEdit();
 
     //! Перевод в режим редактирования состава класса
-    void edit(bool flag = true);
+    void edit(bool flag);
 
     //! Установка отображения родительских составов класса
     void showParent(bool flag);

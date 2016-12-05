@@ -436,6 +436,11 @@ void MainWindow::refreshAllBar(bool readingBarSettings)
     settings()->endGroup();
 }
 
+void MainWindow::refreshAllBar()
+{
+    refreshAllBar(true);
+}
+
 QMdiSubWindow *MainWindow::addSubWindow(QWidget *widget)
 {
     if (mdiArea->setActiveSubWindow(widget->objectName()))

@@ -61,7 +61,7 @@ public slots:
     bool isEdit();
 
     //! Перевод фильтра в режим редактирования
-    void edit(bool flag = true);
+    void edit(bool flag);
 
     //! Применение изменений фильтра
     void submit();

@@ -25,15 +25,17 @@ PropQuantity::PropQuantity(QWidget *parent) :
     connect(unitWidget, &UnitWidget::proxyIndexChanged,
             quantityWidget, &QuantityWidget::setUnitRootIndex);
 
-    connect(quantityWidget, &QuantityWidget::edited, this, &PropQuantity::edit);
-    connect(quantityWidget, &QuantityWidget::edited, unitWidget, &UnitWidget::edit);
+    connect(quantityWidget, &QuantityWidget::edited, this,
+            static_cast<void (AbstractPropEditor::*)()>(&AbstractPropEditor::edit));
+    connect(quantityWidget, &QuantityWidget::edited, unitWidget,
+            static_cast<void (AbstractModifyWidget::*)()>(&AbstractModifyWidget::edit));
 
     connect(toolButtonAddQuantity, &QToolButton::clicked,
             quantityWidget, &QuantityWidget::add);
     connect(toolButtonDelQuantity, &QToolButton::clicked,
             quantityWidget, &QuantityWidget::remove);
-    connect(toolButtonEditQuantity, &QToolButton::clicked,
-            quantityWidget, &QuantityWidget::edit);
+    connect(toolButtonEditQuantity, &QToolButton::clicked, quantityWidget,
+            static_cast<void (AbstractEditorWidget::*)()>(&AbstractEditorWidget::edit));
 
     connect(pushButtonPropCancel, &QPushButton::clicked,
             unitWidget, &UnitWidget::revert);

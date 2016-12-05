@@ -101,7 +101,10 @@ public slots:
     void saveAsClassModel();
 
     //! Публикация структуры классов на сервере БД
-    void publishClassModel(const QModelIndex &index = QModelIndex());
+    void publishClassModel(const QModelIndex &index);
+
+    //! Публикация структуры классов на сервере БД
+    void publishClassModel();
 
     //! Закрытие структуры классов
     void closeClassModel();

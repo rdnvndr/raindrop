@@ -42,7 +42,7 @@ public slots:
     void setCurrent(const QModelIndex &index);
 
     //! Перевод списка значений в режим редактирования
-    void edit(bool flag = true);
+    void edit(bool flag);
 
     //! Применение изменений списка значений
     void submit();

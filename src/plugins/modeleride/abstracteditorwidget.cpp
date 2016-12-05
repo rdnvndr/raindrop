@@ -111,6 +111,11 @@ void AbstractEditorWidget::setCurrent(const QModelIndex &index)
     edit(false);
 }
 
+void AbstractEditorWidget::edit()
+{
+    edit(true);
+}
+
 void AbstractEditorWidget::submit()
 {
     QModelIndex srcIndex = m_model->index(m_mapper->currentIndex(),0,

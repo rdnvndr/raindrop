@@ -24,10 +24,10 @@ PropNumerator::PropNumerator(QWidget *parent) :
     connect(numeratorWidget, &AbstractEditorWidget::dataAboutToBeRemoved,
             this, &AbstractPropEditor::closeTab);
 
-    connect(numeratorWidget, &NumeratorWidget::edited,
-            this, &PropNumerator::edit);
-    connect(numeratorWidget, &NumeratorWidget::edited,
-            numeratorRangeWidget, &NumeratorRangeWidget::edit);
+    connect(numeratorWidget, &NumeratorWidget::edited, this,
+            static_cast<void (AbstractPropEditor::*)()>(&AbstractPropEditor::edit));
+    connect(numeratorWidget, &NumeratorWidget::edited, numeratorRangeWidget,
+            static_cast<void (AbstractModifyWidget::*)()>(&AbstractModifyWidget::edit));
 
     connect(toolButtonAddNumerator, &QToolButton::clicked,
             numeratorWidget, &NumeratorWidget::add);
@@ -35,8 +35,8 @@ PropNumerator::PropNumerator(QWidget *parent) :
             numeratorRangeWidget, &NumeratorRangeWidget::revert);
     connect(toolButtonDelNumerator, &QToolButton::clicked,
             numeratorWidget, &NumeratorWidget::remove);
-    connect(toolButtonEditNumerator, &QToolButton::clicked,
-            numeratorWidget, &NumeratorWidget::edit);
+    connect(toolButtonEditNumerator, &QToolButton::clicked, numeratorWidget,
+            static_cast<void (AbstractEditorWidget::*)()>(&AbstractEditorWidget::edit));
 
     connect(pushButtonPropCancel, &QPushButton::clicked,
             numeratorRangeWidget, &NumeratorRangeWidget::revert);
