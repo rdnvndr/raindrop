@@ -35,7 +35,7 @@ public:
 
 public slots:
     //! Добавление состава класса
-    void add();
+    bool add();
 
     //! Применение изменений состава класса
     void submit();

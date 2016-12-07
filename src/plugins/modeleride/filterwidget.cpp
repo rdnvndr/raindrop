@@ -60,9 +60,17 @@ bool FilterWidget::add()
 
 void FilterWidget::edit(bool flag)
 {
+    QModelIndex currentIndex = proxyModel()->mapToSource(tableViewFilter->currentIndex());
     if (flag) {
-        QModelIndex index = proxyModel()->mapToSource(tableViewFilter->currentIndex());
-        emit dataEdited(index);
+        emit dataEdited(currentIndex);
+    }
+
+    if (!currentIndex.isValid()){
+        toolButtonDelete->setEnabled(false);
+        toolButtonEdit->setEnabled(false);
+    } else {
+        toolButtonDelete->setEnabled(true);
+        toolButtonEdit->setEnabled(true);
     }
 }
 
