@@ -6,7 +6,7 @@ namespace Widgets {
 TilingWidget::TilingWidget(QWidget *parent)
     :QWidget (parent)
 {
-
+    m_tilingFrame = NULL;
 }
 
 TilingWidget::~TilingWidget()
