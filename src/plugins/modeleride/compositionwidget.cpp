@@ -118,14 +118,16 @@ void CompositionWidget::setModel(TreeXmlHashModel *model)
 }
 
 
-void CompositionWidget::add()
+bool CompositionWidget::add()
 {
     if (AbstractItemWidget::add(DBCOMPXML::COMP)){
         comboBoxDestClass->setCurrentIndex(-1);
         comboBoxDestClass->setDisplayText("");
         comboBoxLinkClass->setCurrentIndex(-1);
         comboBoxLinkClass->setDisplayText("");
+        return true;
     }
+    return false;
 }
 
 void CompositionWidget::edit(bool flag)
