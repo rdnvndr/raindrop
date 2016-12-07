@@ -52,9 +52,9 @@ bool RoleWidget::isEmpty()
     return lineEditRoleName->text().isEmpty();
 }
 
-void RoleWidget::add()
+bool RoleWidget::add()
 {
-    AbstractEditorWidget::add(DBROLEXML::ROLE);
+    return AbstractEditorWidget::add(DBROLEXML::ROLE);
 }
 
 void RoleWidget::edit(bool flag)

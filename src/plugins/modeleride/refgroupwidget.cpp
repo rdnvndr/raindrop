@@ -45,9 +45,9 @@ bool RefGroupWidget::isEmpty()
     return lineEditRefGroupName->text().isEmpty();
 }
 
-void RefGroupWidget::add()
+bool RefGroupWidget::add()
 {
-    AbstractEditorWidget::add(DBREFGROUPXML::REFGROUP);
+    return AbstractEditorWidget::add(DBREFGROUPXML::REFGROUP);
 }
 
 void RefGroupWidget::edit(bool flag)

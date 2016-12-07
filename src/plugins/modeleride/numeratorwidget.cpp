@@ -47,9 +47,9 @@ bool NumeratorWidget::isEmpty()
     return numeratorNameLineEdit->text().isEmpty();
 }
 
-void NumeratorWidget::add()
+bool NumeratorWidget::add()
 {
-     AbstractEditorWidget::add(DBNUMERATORXML::NUMERATOR);
+     return AbstractEditorWidget::add(DBNUMERATORXML::NUMERATOR);
 }
 
 void NumeratorWidget::setCurrent(const QModelIndex &index)

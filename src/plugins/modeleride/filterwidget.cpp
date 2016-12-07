@@ -53,9 +53,9 @@ void FilterWidget::setModel(TreeXmlHashModel *model)
     tableViewFilter->setColumnHidden(6,true);
 }
 
-void FilterWidget::add()
+bool FilterWidget::add()
 {
-    AbstractItemWidget::add(DBFILTERXML::FILTER);
+    return AbstractItemWidget::add(DBFILTERXML::FILTER);
 }
 
 void FilterWidget::edit(bool flag)

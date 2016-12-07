@@ -34,8 +34,8 @@ public:
     bool isEmpty();
 
 public slots:
-    //! Добавление нумратора
-    void add();
+    //! Добавление нумератора
+    bool add();
 
     //! Установка текущего нумератора
     void setCurrent(const QModelIndex &index);

@@ -39,9 +39,9 @@ bool RefWidget::isEmpty()
     return lineEditName->text().isEmpty();
 }
 
-void RefWidget::add()
+bool RefWidget::add()
 {
-   AbstractEditorWidget::add(DBREFXML::REF);
+   return AbstractEditorWidget::add(DBREFXML::REF);
 }
 
 void RefWidget::edit(bool flag)

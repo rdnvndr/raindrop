@@ -51,9 +51,9 @@ bool QuantityWidget::isEmpty()
     return lineEditQuantityName->text().isEmpty();
 }
 
-void QuantityWidget::add()
+bool QuantityWidget::add()
 {
-    AbstractEditorWidget::add(DBQUANTITYXML::QUANTITY);
+    return AbstractEditorWidget::add(DBQUANTITYXML::QUANTITY);
 }
 
 void QuantityWidget::edit(bool flag)
