@@ -84,7 +84,7 @@ public slots:
                     const QString &attrTag,  const QString &attrParent);
 
     //! Установка родителя
-    virtual void setRootIndex(QModelIndex index);
+    virtual void setRootIndex(const QModelIndex &index);
 
 signals:
     //! Сигнал об изменении данных

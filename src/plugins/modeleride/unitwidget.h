@@ -33,7 +33,7 @@ public:
 
 public slots:
     //! Добавление ЕИ
-    void add();
+    bool add();
 
     //! Перевод в режим редактирования
     void edit(bool flag);

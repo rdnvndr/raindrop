@@ -52,7 +52,7 @@ void UnitWidget::setModel(TreeXmlHashModel *model)
     tableViewUnit->horizontalHeader()->setDefaultSectionSize(75);
 }
 
-void UnitWidget::add()
+bool UnitWidget::add()
 {
     if (AbstractModifyWidget::add(DBUNITXML::UNIT)) {
         QModelIndex index = itemView()->currentIndex();
@@ -77,7 +77,9 @@ void UnitWidget::add()
                                      DBUNITXML::CODE)
                                  ),
                              0);
+        return true;
     }
+    return false;
 }
 
 void UnitWidget::edit(bool flag)

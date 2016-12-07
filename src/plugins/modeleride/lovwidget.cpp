@@ -51,9 +51,9 @@ bool LovWidget::isEmpty()
     return lineEditLovName->text().isEmpty();
 }
 
-void LovWidget::add()
+bool LovWidget::add()
 {
-    AbstractEditorWidget::add(DBLOVXML::LOV);
+    return AbstractEditorWidget::add(DBLOVXML::LOV);
 }
 
 void LovWidget::setModel(TreeXmlHashModel *model)

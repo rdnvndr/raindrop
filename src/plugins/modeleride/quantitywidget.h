@@ -37,7 +37,7 @@ public:
 
 public slots:
     //! Добавление величины
-    void add();
+    bool add();
 
     //! Перевод величины в режим редактирования
     void edit(bool flag);

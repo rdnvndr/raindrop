@@ -273,9 +273,9 @@ void AttrWidget::cleanNumerator()
     comboBoxNumerator->setCurrentIndex(-1);
 }
 
-void AttrWidget::add()
+bool AttrWidget::add()
 {
-    AbstractItemWidget::add(DBATTRXML::ATTR);
+    return AbstractItemWidget::add(DBATTRXML::ATTR);
 }
 
 void AttrWidget::submit()

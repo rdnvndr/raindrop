@@ -34,7 +34,7 @@ public:
 
 public slots:
     //! Добавление фильтра класса
-    void add();
+    bool add();
 
     //! Вызов редактирования фильтра класса
     void edit(bool flag);

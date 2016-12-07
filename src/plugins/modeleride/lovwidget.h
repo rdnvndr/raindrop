@@ -36,7 +36,7 @@ public:
 
 public slots:
     //! Добавление списка значений
-    void add();
+    bool add();
 
     //! Установка текущего списка значений
     void setCurrent(const QModelIndex &index);

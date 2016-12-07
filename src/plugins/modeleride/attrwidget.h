@@ -36,7 +36,7 @@ public:
 
 public slots:
     //! Добавление атрибута класса
-    void add();
+    bool add();
 
     //! Установка текущего атрибута класса
     void setCurrent(const QModelIndex &index);

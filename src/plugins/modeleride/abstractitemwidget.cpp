@@ -188,7 +188,7 @@ void AbstractItemWidget::showParent(bool flag,
                 model()->columnDisplayedAttr(attrTag, attrParent));
 }
 
-void AbstractItemWidget::setRootIndex(QModelIndex index)
+void AbstractItemWidget::setRootIndex(const QModelIndex &index)
 {
     QModelIndex rootIndex = m_proxyModel->mapToSource(m_itemView->rootIndex());
     if (rootIndex == index)
