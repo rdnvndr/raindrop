@@ -7,3 +7,4 @@ HEADERS += itreedockwidget.h
 HEADERS += iundogroup.h
 HEADERS += iclipboardstack.h
 HEADERS += iclipboarditem.h
+HEADERS += iclipboardelement.h

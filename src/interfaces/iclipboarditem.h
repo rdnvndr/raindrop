@@ -1,13 +1,21 @@
 #ifndef ICLIPBOARDITEM_H
 #define ICLIPBOARDITEM_H
 
+#include <iclipboardelement.h>
+
 //! Класс элемента стека буфера обмена
 /*! Класс элемента стека буфера обмена предназначен для описания элемента для
  *  которого будет работать буфер обмена
 */
-class IClipboardItem {
+class IClipboardItem: public IClipboardElement {
 
 public:
+    //! Конструктор класса
+    explicit IClipboardItem(){}
+
+    //! Деструктор класса
+    virtual ~IClipboardItem() {}
+
     //! Возращает возможность вызова команды "Вырезать"
     virtual bool canCut()       = 0;
 
@@ -32,18 +40,30 @@ public:
     //! Вызов команды "Выделить все"
     virtual void selectAll() = 0;
 
-signals:
-    //! Сигнал о возможности выполнении команды "Вырезать"
-    virtual void canCutChanged(bool canCut) = 0;
 
-    //! Сигнал о возможности выполнении команды "Копировать"
-    virtual void canCopyChanged(bool canCopy) = 0;
+    //! Включение возможности выполнении команды "Вырезать"
+    virtual void enableCut(bool enabled) {
+        foreach (IClipboardElement *stack, m_elementList)
+            stack->enableCut(enabled);
+    }
 
-    //! Сигнал о возможности выполнении команды "Вставить"
-    virtual void canPasteChanged(bool canPaste) = 0;
+    //! Включение возможности выполнении команды "Копировать"
+    virtual void enableCopy(bool enabled) {
+        foreach (IClipboardElement *stack, m_elementList)
+            stack->enableCopy(enabled);
+    }
 
-    //! Сигнал о возможности выполнении команды "Выделить все"
-    virtual void canSelectAllChanged(bool canSelectAll) = 0;
+    //! Включение возможности выполнении команды "Вставить"
+    virtual void enablePaste(bool enabled) {
+        foreach (IClipboardElement *stack, m_elementList)
+            stack->enablePaste(enabled);
+    }
+
+    //! Включение возможности выполнении команды "Выделить все"
+    virtual void enableSelectAll(bool enabled) {
+        foreach (IClipboardElement *stack, m_elementList)
+            stack->enableSelectAll(enabled);
+    }
 };
 
 //Q_DECLARE_INTERFACE(IClipboardItem,"com.RTPTechGroup.Raindrop.IClipboardItem")

@@ -89,8 +89,8 @@ void TextClipboardItem::selectAll()
 void TextClipboardItem::selectionChange()
 {
     bool hasSelection = m_editor->textCursor().hasSelection();
-    emit canCutChanged(hasSelection);
-    emit canCopyChanged(hasSelection);
+    enableCut(hasSelection);
+    enableCopy(hasSelection);
 }
 
 }}

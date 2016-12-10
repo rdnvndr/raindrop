@@ -5,9 +5,9 @@
 #include <QAction>
 
 #include <plugin/iplugin.h>
-#include <iclipboardstack.h>
-#include <iclipboarditem.h>
 
+#include <iclipboarditem.h>
+#include <iclipboardstack.h>
 #include "clipboardstackglobal.h"
 
 namespace RTPTechGroup {
@@ -61,11 +61,18 @@ public:
     QString vendor() {return tr(APP_COMPANY);}
 
 // IClipboardStack
-    //! Добавление компонента для буфера обмена
-    void addClipboardItem(IClipboardItem *item);
 
-    //! Удаление компонента для буфера обмена
-    void removeClipboardItem(IClipboardItem *item);
+    //! Включение возможности выполнении команды "Вырезать"
+    void enableCut(bool enabled);
+
+    //! Включение возможности выполнении команды "Копировать"
+    void enableCopy(bool enabled);
+
+    //! Включение возможности выполнении команды "Вставить"
+    void enablePaste(bool enabled);
+
+    //! Включение возможности выполнении команды "Выделить все"
+    void enableSelectAll(bool enabled);
 
 private slots:
     //! Обработка смены фокуса визуального элемента
@@ -83,23 +90,8 @@ private slots:
     //! Выбор всего
     void selectAll();
 
-    //! Вырезание в буфер обмена
-    void canCutChange(bool canCut);
-
-    //! Копирование в буфер обмена
-    void canCopyChange(bool canCopy);
-
-    //! Вставка из буфер обмена
-    void canPasteChange(bool canPaste);
-
-    //! Выбор всего
-    void canSelectAllChange(bool canSelectAll);
-
     //! Обработка изменения состояния буфера обмена
     void clipboardDataChange();
-
-    //! Удаление элемента буфера обмена
-    void removeItem(QObject *obj);
 
 private:
     //! Установка активного элемента стека буфера обмена для QWidget
@@ -116,9 +108,6 @@ private:
 
     //! Команда "Выделить все"
     QAction *m_actionSelectAll;
-
-    //! Список команд стека буфера обмена
-    QList<QObject *> m_clipboardItemList;
 
     //! Текущий элемент стека буфера обмена
     IClipboardItem *m_currentClipboardItem;
