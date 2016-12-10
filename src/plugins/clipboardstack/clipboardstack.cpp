@@ -46,28 +46,7 @@ ClipboardStack::ClipboardStack(QObject *parent):
 
 ClipboardStack::~ClipboardStack()
 {
-    m_clipboardItemList.clear();
-}
 
-void ClipboardStack::addClipboardItem(IClipboardItem *item)
-{
-    QObject *itemObject = dynamic_cast<QObject *>(item);
-    m_clipboardItemList.append(itemObject);
-    connect(itemObject, SIGNAL(canCutChanged(bool)),
-            this, SLOT(canCutChange(bool)));
-    connect(itemObject, SIGNAL(canCopyChanged(bool)),
-            this, SLOT(canCopyChange(bool)));
-    connect(itemObject, SIGNAL(canPasteChanged(bool)),
-            this, SLOT(canPasteChange(bool)));
-    connect(itemObject, SIGNAL(canSelectAllChanged(bool)),
-            this, SLOT(canSelectAllChange(bool)));
-    connect(itemObject, SIGNAL(destroyed(QObject*)),
-            this, SLOT(removeItem(QObject*)));
-}
-
-void ClipboardStack::removeClipboardItem(IClipboardItem *item)
-{
-    removeItem(dynamic_cast<QObject *>(item));
 }
 
 void ClipboardStack::focusChanged(QWidget *old, QWidget *now)
@@ -104,33 +83,33 @@ void ClipboardStack::selectAll()
         m_currentClipboardItem->selectAll();
 }
 
-void ClipboardStack::canCutChange(bool canCut)
+void ClipboardStack::enableCut(bool enabled)
 {
-    if (canCut)
+    if (enabled)
         m_actionCut->setEnabled(true);
     else
         m_actionCut->setEnabled(false);
 }
 
-void ClipboardStack::canCopyChange(bool canCopy)
+void ClipboardStack::enableCopy(bool enabled)
 {
-    if (canCopy)
+    if (enabled)
         m_actionCopy->setEnabled(true);
     else
         m_actionCopy->setEnabled(false);
 }
 
-void ClipboardStack::canPasteChange(bool canPaste)
+void ClipboardStack::enablePaste(bool enabled)
 {
-    if (canPaste)
+    if (enabled)
         m_actionPaste->setEnabled(true);
     else
         m_actionPaste->setEnabled(false);
 }
 
-void ClipboardStack::canSelectAllChange(bool canSelectAll)
+void ClipboardStack:: enableSelectAll(bool enabled)
 {
-    if (canSelectAll)
+    if (enabled)
         m_actionSelectAll->setEnabled(true);
     else
         m_actionSelectAll->setEnabled(false);
@@ -141,15 +120,10 @@ void ClipboardStack::clipboardDataChange()
     setActiveItemForWidget(qApp->focusWidget());
 }
 
-void ClipboardStack::removeItem(QObject *obj)
-{
-    m_clipboardItemList.removeAll(obj);
-}
-
 void ClipboardStack::setActiveItemForWidget(QWidget *widget)
 {
     Q_UNUSED(widget)
-    QListIterator<QObject *> i(m_clipboardItemList);
+    QListIterator<IClipboardElement *> i(m_elementList);
     i.toBack();
     while (i.hasPrevious()) {
         IClipboardItem *item = dynamic_cast<IClipboardItem *>(i.previous());
