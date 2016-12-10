@@ -77,7 +77,10 @@ public:
 
 public slots:
     //! Слот вызова окна редактирования
-    void showPropEditor(const QModelIndex &indexSource, bool editable = false);
+    void showPropEditor(const QModelIndex &indexSource, bool editable);
+
+    //! Слот вызова окна редактирования
+    void showPropEditor(const QModelIndex &indexSource);
 
     //! Слот вызова редактирования в окне редактирования
     void editPropEditor(const QModelIndex &indexSource);
@@ -98,7 +101,10 @@ public slots:
     void saveAsClassModel();
 
     //! Публикация структуры классов на сервере БД
-    void publishClassModel(const QModelIndex &index = QModelIndex());
+    void publishClassModel(const QModelIndex &index);
+
+    //! Публикация структуры классов на сервере БД
+    void publishClassModel();
 
     //! Закрытие структуры классов
     void closeClassModel();

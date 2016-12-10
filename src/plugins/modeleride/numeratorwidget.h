@@ -34,14 +34,14 @@ public:
     bool isEmpty();
 
 public slots:
-    //! Добавление нумратора
-    void add();
+    //! Добавление нумератора
+    bool add();
 
     //! Установка текущего нумератора
     void setCurrent(const QModelIndex &index);
 
     //! Перевод нумератора в режим редактирования
-    void edit(bool flag = true);
+    void edit(bool flag);
 
     //! Применение изменений нумератора
     void submit();

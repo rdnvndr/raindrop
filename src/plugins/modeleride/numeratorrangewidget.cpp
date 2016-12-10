@@ -15,12 +15,17 @@ NumeratorRangeWidget::NumeratorRangeWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(addLovToolButton,SIGNAL(clicked()),this,SLOT(addLov()));
-    connect(addRegExToolButton,SIGNAL(clicked()),this,SLOT(addRegEx()));
-    connect(deleteToolButton,SIGNAL(clicked()),this,SLOT(remove()));
+    connect(addLovToolButton, &QToolButton::clicked,
+            this, &NumeratorRangeWidget::addLov);
+    connect(addRegExToolButton, &QToolButton::clicked,
+            this, &NumeratorRangeWidget::addRegEx);
+    connect(deleteToolButton, &QToolButton::clicked,
+            this, &NumeratorRangeWidget::remove);
 
-    connect(upRangeToolButton,SIGNAL(clicked()),this,SLOT(up()));
-    connect(downRangeToolButton,SIGNAL(clicked()),this,SLOT(down()));
+    connect(upRangeToolButton, &QToolButton::clicked,
+            this, &NumeratorRangeWidget::up);
+    connect(downRangeToolButton, &QToolButton::clicked,
+            this, &NumeratorRangeWidget::down);
 
     AbstractModifyWidget::setItemView(numeratorRangeTableView);
     itemView()->setItemDelegate(new NumeratorRangeDelegate());

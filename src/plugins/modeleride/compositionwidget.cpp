@@ -24,17 +24,25 @@ CompositionWidget::CompositionWidget(QWidget *parent) :
 
     setItemView(tableViewComp);
 
-    connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));
-    connect(toolButtonDelete,SIGNAL(clicked()),this,SLOT(remove()));
+    connect(toolButtonAdd, &QToolButton::clicked,
+            this, &CompositionWidget::add);
+    connect(toolButtonDelete, &QToolButton::clicked,
+            this, &CompositionWidget::remove);
 
-    connect(pushButtonSave,SIGNAL(clicked()),this,SLOT(submit()));
-    connect(pushButtonCancel,SIGNAL(clicked()),this,SLOT(revert()));
+    connect(pushButtonSave, &QToolButton::clicked,
+            this, &CompositionWidget::submit);
+    connect(pushButtonCancel, &QToolButton::clicked,
+            this, &CompositionWidget::revert);
 
-    connect(toolButtonEdit,SIGNAL(clicked()),this,SLOT(edit()));
-    connect(checkBoxInInherited,SIGNAL(clicked(bool)),this,SLOT(showParent(bool)));
+    connect(toolButtonEdit, &QToolButton::clicked, this,
+            static_cast<void (AbstractItemWidget::*)()>(&AbstractItemWidget::edit));
+    connect(checkBoxInInherited, &QToolButton::clicked,
+            this, &CompositionWidget::showParent);
 
-    connect(toolButtonDown,SIGNAL(clicked()),this,SLOT(down()));
-    connect(toolButtonUp,SIGNAL(clicked()),this,SLOT(up()));
+    connect(toolButtonDown, &QToolButton::clicked,
+            this, &CompositionWidget::down);
+    connect(toolButtonUp, &QToolButton::clicked,
+            this, &CompositionWidget::up);
 }
 
 CompositionWidget::~CompositionWidget()
@@ -110,14 +118,16 @@ void CompositionWidget::setModel(TreeXmlHashModel *model)
 }
 
 
-void CompositionWidget::add()
+bool CompositionWidget::add()
 {
     if (AbstractItemWidget::add(DBCOMPXML::COMP)){
         comboBoxDestClass->setCurrentIndex(-1);
         comboBoxDestClass->setDisplayText("");
         comboBoxLinkClass->setCurrentIndex(-1);
         comboBoxLinkClass->setDisplayText("");
+        return true;
     }
+    return false;
 }
 
 void CompositionWidget::edit(bool flag)

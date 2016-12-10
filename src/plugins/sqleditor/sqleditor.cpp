@@ -17,7 +17,8 @@ SqlEditor::SqlEditor(QObject *parent):
                 pluginManager->interfaceObject("IMainWindow"));
 
     m_actionSqlEditor = new QAction(QIcon(":SqlEditor"), tr("SQL редактор"), this);
-    connect(m_actionSqlEditor, SIGNAL(triggered()), this, SLOT(showSqlEditor()));
+    connect(m_actionSqlEditor, &QAction::triggered,
+            this, &SqlEditor::showSqlEditor);
     m_actionSqlEditor->setObjectName("actionSqlEditor");
     iMainWindow->addAction(tr("Работа с БД"),m_actionSqlEditor);
 }

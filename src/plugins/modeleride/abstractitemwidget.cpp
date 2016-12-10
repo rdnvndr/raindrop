@@ -50,8 +50,8 @@ void AbstractItemWidget::setItemView(QAbstractItemView *tableView)
     m_itemView->setItemDelegate(new XmlDelegate(this));
     m_itemView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    connect(m_itemView,SIGNAL(clicked(QModelIndex)),
-            this,SLOT(setCurrent(QModelIndex)));
+    connect(m_itemView, &QAbstractItemView::clicked,
+            this, &AbstractItemWidget::setCurrent);
 }
 
 QAbstractItemView *AbstractItemWidget::itemView()
@@ -125,6 +125,11 @@ void AbstractItemWidget::revert()
     edit(false);
 }
 
+void AbstractItemWidget::edit()
+{
+    edit(true);
+}
+
 void AbstractItemWidget::up()
 {
     QPersistentModelIndex index = itemView()->currentIndex();
@@ -183,7 +188,7 @@ void AbstractItemWidget::showParent(bool flag,
                 model()->columnDisplayedAttr(attrTag, attrParent));
 }
 
-void AbstractItemWidget::setRootIndex(QModelIndex index)
+void AbstractItemWidget::setRootIndex(const QModelIndex &index)
 {
     QModelIndex rootIndex = m_proxyModel->mapToSource(m_itemView->rootIndex());
     if (rootIndex == index)

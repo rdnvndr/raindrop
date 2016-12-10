@@ -36,7 +36,7 @@ public:
 
 public slots:
     //! Добавление атрибута класса
-    void add();
+    bool add();
 
     //! Установка текущего атрибута класса
     void setCurrent(const QModelIndex &index);
@@ -48,7 +48,7 @@ public slots:
     bool isEdit();
 
     //! Перевод в режим редактирования атрибута класса
-    void edit(bool flag = true);
+    void edit(bool flag);
 
     //! Установка отображения родительских атрибутов класса
     void showParentAttr(bool flag);

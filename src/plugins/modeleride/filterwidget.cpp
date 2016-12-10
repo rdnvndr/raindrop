@@ -21,11 +21,12 @@ FilterWidget::FilterWidget(QWidget *parent) :
 
     AbstractItemWidget::setItemView(tableViewFilter);
 
-    connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));
-    connect(toolButtonDelete,SIGNAL(clicked()),this,SLOT(remove()));
+    connect(toolButtonAdd, &QToolButton::clicked, this, &FilterWidget::add);
+    connect(toolButtonDelete, &QToolButton::clicked, this, &FilterWidget::remove);
 
-    connect(toolButtonEdit,SIGNAL(clicked()),this,SLOT(edit()));
-    connect(checkBoxInInherited,SIGNAL(clicked(bool)),this,SLOT(showParent(bool)));
+    connect(toolButtonEdit, &QToolButton::clicked, this,
+            static_cast<void (AbstractItemWidget::*)()>(&AbstractItemWidget::edit));
+    connect(checkBoxInInherited, &QCheckBox::clicked, this, &FilterWidget::showParent);
 }
 
 FilterWidget::~FilterWidget()
@@ -52,16 +53,24 @@ void FilterWidget::setModel(TreeXmlHashModel *model)
     tableViewFilter->setColumnHidden(6,true);
 }
 
-void FilterWidget::add()
+bool FilterWidget::add()
 {
-    AbstractItemWidget::add(DBFILTERXML::FILTER);
+    return AbstractItemWidget::add(DBFILTERXML::FILTER);
 }
 
 void FilterWidget::edit(bool flag)
 {
+    QModelIndex currentIndex = proxyModel()->mapToSource(tableViewFilter->currentIndex());
     if (flag) {
-        QModelIndex index = proxyModel()->mapToSource(tableViewFilter->currentIndex());
-        emit dataEdited(index);
+        emit dataEdited(currentIndex);
+    }
+
+    if (!currentIndex.isValid()){
+        toolButtonDelete->setEnabled(false);
+        toolButtonEdit->setEnabled(false);
+    } else {
+        toolButtonDelete->setEnabled(true);
+        toolButtonEdit->setEnabled(true);
     }
 }
 

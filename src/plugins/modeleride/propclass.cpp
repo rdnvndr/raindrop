@@ -14,23 +14,23 @@ PropClass::PropClass(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(classWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            attrWidget,SLOT(setRootIndex(QModelIndex)));
-    connect(classWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            compWidget,SLOT(setRootIndex(QModelIndex)));
-    connect(classWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            filterWidget,SLOT(setRootIndex(QModelIndex)));
-    connect(classWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(classWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            permWidget,SLOT(setRootIndex(QModelIndex)));
+    connect(classWidget, &AbstractEditorWidget::currentIndexChanged,
+            attrWidget, &AttrWidget::setRootIndex);
+    connect(classWidget, &AbstractEditorWidget::currentIndexChanged,
+            compWidget, &AbstractItemWidget::setRootIndex);
+    connect(classWidget, &AbstractEditorWidget::currentIndexChanged,
+            filterWidget, &AbstractItemWidget::setRootIndex);
+    connect(classWidget, &AbstractEditorWidget::currentIndexChanged,
+            this, &PropClass::setTabName);
+    connect(classWidget, &AbstractEditorWidget::currentIndexChanged,
+            permWidget, &PermissionWidget::setRootIndex);
 
-    connect(classWidget,SIGNAL(dataChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(classWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
-            this,SLOT(closeTab(QModelIndex)));
-    connect(filterWidget,SIGNAL(dataEdited(QModelIndex)),
-            this,SLOT(onEditFilter(QModelIndex)));
+    connect(classWidget, &AbstractEditorWidget::dataChanged,
+            this, &PropClass::setTabName);
+    connect(classWidget, &AbstractEditorWidget::dataAboutToBeRemoved,
+            this, &AbstractPropEditor::closeTab);
+    connect(filterWidget, &FilterWidget::dataEdited,
+            this, &PropClass::onEditFilter);
 }
 
 PropClass::~PropClass()

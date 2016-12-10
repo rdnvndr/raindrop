@@ -21,12 +21,15 @@ public:
     ModifyProxyModel *proxyModel;
 public slots:
     void updateActions();
+    void updateActions(const QItemSelection &, const QItemSelection &);
 
 private slots:
     void insertChild();
-    bool insertColumn(const QModelIndex &parent = QModelIndex());
+    bool insertColumn(const QModelIndex &parent);
+    bool insertColumn();
     void insertRow();
-    bool removeColumn(const QModelIndex &parent = QModelIndex());
+    bool removeColumn(const QModelIndex &parent);
+    bool removeColumn();
     void removeRow();
 
     void insert();

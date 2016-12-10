@@ -52,7 +52,10 @@ public slots:
     virtual void setCurrent(const QModelIndex &index);
 
     //! Перевод в режим редактирования
-    virtual void edit(bool flag = true) = 0;
+    virtual void edit(bool flag) = 0;
+
+    //! Перевод в режим редактирования
+    virtual void edit();
 
     //! Применение изменений
     virtual void submit();

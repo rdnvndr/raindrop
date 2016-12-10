@@ -22,8 +22,8 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     RegExpValidator *validator =
             new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9_]{0,26}|^[A-Za-z]{0}"));
     lineEditName->setValidator(validator);
-    connect(validator,SIGNAL(stateChanged(QValidator::State)),
-            this,SLOT(validateFilterName(QValidator::State)));
+    connect(validator, &RegExpValidator::stateChanged,
+            this, &FilterPropWidget::validateFilterName);
 
     menuAddCondition = new QMenu(tr("Добавить"), this);
 
@@ -39,25 +39,36 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     m_conditionModel = new ConditionProxyModel();
     treeViewCondition->setItemDelegate(new ConditionDelegate(this));
 
-    connect(comboBoxDestClass,SIGNAL(currentIndexChanged(QString)),
-            this,SLOT(changeDestClass(QString)));
+    connect(comboBoxDestClass,
+            static_cast<void (QComboBox::*)(const QString&)>
+            (&RTPTechGroup::Widgets::TreeComboBox::currentIndexChanged),
+            this, &FilterPropWidget::changeDestClass);
 
     lineEditSrcClass->setReadOnly(true);
 
-    connect(toolButtonAdd,SIGNAL(clicked()),this,SLOT(add()));
-    connect(toolButtonDel,SIGNAL(clicked()),this,SLOT(revert()));
-    connect(toolButtonDel,SIGNAL(clicked()),this,SLOT(remove()));
-    connect(pushButtonPropSave,SIGNAL(clicked()),this,SLOT(submit()));
-    connect(pushButtonPropCancel,SIGNAL(clicked()),this,SLOT(revert()));
-    connect(toolButtonEdit,SIGNAL(clicked()),this,SLOT(edit()));
+    connect(toolButtonAdd, &QToolButton::clicked, this, &FilterPropWidget::add);
+    connect(toolButtonDel, &QToolButton::clicked, this, &FilterPropWidget::revert);
+    connect(toolButtonDel, &QToolButton::clicked, this, &FilterPropWidget::remove);
+    connect(pushButtonPropSave, &QPushButton::clicked,
+            this, &FilterPropWidget::submit);
+    connect(pushButtonPropCancel, &QPushButton::clicked,
+            this, &FilterPropWidget::revert);
+    connect(toolButtonEdit, &QToolButton::clicked, this,
+            static_cast<void (AbstractEditorWidget::*)()>(&AbstractEditorWidget::edit));
 
-    connect(actionAddCondition,SIGNAL(triggered()),this,SLOT(addCondition()));
-    connect(actionAddBlock,SIGNAL(triggered()),this,SLOT(addBlock()));
-    connect(actionAddSubCondition,SIGNAL(triggered()),this,SLOT(addSubCondition()));
-    connect(actionAddSubBlock,SIGNAL(triggered()),this,SLOT(addSubBlock()));
+    connect(actionAddCondition, &QAction::triggered,
+            this, &FilterPropWidget::addCondition);
+    connect(actionAddBlock, &QAction::triggered,
+            this, &FilterPropWidget::addBlock);
+    connect(actionAddSubCondition, &QAction::triggered,
+            this, &FilterPropWidget::addSubCondition);
+    connect(actionAddSubBlock, &QAction::triggered,
+            this, &FilterPropWidget::addSubBlock);
 
-    connect(toolButtonCondAdd,SIGNAL(clicked()),toolButtonCondAdd,SLOT(showMenu()));
-    connect(toolButtonCondDel,SIGNAL(clicked()),this,SLOT(removeCondition()));
+    connect(toolButtonCondAdd, &QToolButton::clicked,
+            toolButtonCondAdd, &QToolButton::showMenu);
+    connect(toolButtonCondDel, &QToolButton::clicked,
+            this, &FilterPropWidget::removeCondition);
 
 }
 

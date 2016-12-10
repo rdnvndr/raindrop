@@ -131,6 +131,10 @@ QVariant RefItemProxyModel::data(const QModelIndex &proxyIndex, int role) const
 
 bool RefItemProxyModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+    Q_UNUSED(index)
+    Q_UNUSED(value)
+    Q_UNUSED(role)
+
     return false;
 }
 
@@ -143,14 +147,14 @@ void RefItemProxyModel::setSourceModel(QAbstractItemModel *srcModel)
 {
     QAbstractProxyModel::setSourceModel(srcModel);
 
-    connect(srcModel, SIGNAL(rowsRemoved(const QModelIndex &, int, int)),
-            this, SLOT(sourceRowsRemoved(const QModelIndex &, int, int)));
-    connect(srcModel, SIGNAL(rowsAboutToBeRemoved(const QModelIndex &, int, int)),
-            this, SLOT(sourceRowsAboutToBeRemoved(const QModelIndex &, int, int)));
-    connect(srcModel, SIGNAL(rowsInserted(const QModelIndex &, int, int)),
-            this, SLOT(sourceRowsInserted(const QModelIndex &, int, int)));
-    connect(srcModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-            this, SLOT(sourceDataChanged(QModelIndex,QModelIndex)));
+    connect(srcModel, &QAbstractItemModel::rowsRemoved,
+            this, &RefItemProxyModel::sourceRowsRemoved);
+    connect(srcModel, &QAbstractItemModel::rowsAboutToBeRemoved,
+            this, &RefItemProxyModel::sourceRowsAboutToBeRemoved);
+    connect(srcModel, &QAbstractItemModel::rowsInserted,
+            this, &RefItemProxyModel::sourceRowsInserted);
+    connect(srcModel, &QAbstractItemModel::dataChanged,
+            this, &RefItemProxyModel::sourceDataChanged);
 }
 
 Qt::ItemFlags RefItemProxyModel::flags(const QModelIndex &index) const

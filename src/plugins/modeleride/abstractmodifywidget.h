@@ -59,7 +59,10 @@ public slots:
     void submit();
 
     //! Перевод в режим редактирования
-    void edit(bool flag = true);
+    void edit(bool flag);
+
+    //! Перевод в режим редактирования
+    void edit();
 
     //! Отмена изменений значений списка
     void revert();

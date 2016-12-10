@@ -106,6 +106,11 @@ void AbstractModifyWidget::edit(bool flag)
     m_proxyModel->setEditable(flag);
 }
 
+void AbstractModifyWidget::edit()
+{
+    edit(true);
+}
+
 void AbstractModifyWidget::revert()
 {
     m_proxyModel->revertAll();

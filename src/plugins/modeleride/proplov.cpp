@@ -14,27 +14,37 @@ PropLov::PropLov(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(lovWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            lovValueWidget,SLOT(setRootIndex(QModelIndex)));
-    connect(lovWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(lovWidget,SIGNAL(dataChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(lovWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
-            this,SLOT(closeTab(QModelIndex)));
+    connect(lovWidget, &AbstractEditorWidget::currentIndexChanged,
+            lovValueWidget,&AbstractModifyWidget::setRootIndex);
+    connect(lovWidget, &AbstractEditorWidget::currentIndexChanged,
+            this, &PropLov::setTabName);
+    connect(lovWidget, &AbstractEditorWidget::dataChanged,
+            this, &PropLov::setTabName);
+    connect(lovWidget, &AbstractEditorWidget::dataAboutToBeRemoved,
+            this, &AbstractPropEditor::closeTab);
 
-    connect(lovWidget, SIGNAL(edited(bool)), this, SLOT(edit(bool)));
-    connect(lovWidget, SIGNAL(edited(bool)), lovValueWidget, SLOT(edit(bool)));
+    connect(lovWidget, &LovWidget::edited, this,
+            static_cast<void (AbstractPropEditor::*)()>(&AbstractPropEditor::edit));
+    connect(lovWidget, &LovWidget::edited, lovValueWidget,
+            static_cast<void (AbstractModifyWidget::*)()>(&AbstractModifyWidget::edit));
 
-    connect(toolButtonAddLov,  SIGNAL(clicked()), lovWidget, SLOT(add()));
-    connect(toolButtonDelLov,  SIGNAL(clicked()), lovValueWidget, SLOT(revert()));
-    connect(toolButtonDelLov,  SIGNAL(clicked()), lovWidget, SLOT(remove()));
-    connect(toolButtonEditLov, SIGNAL(clicked()), lovWidget, SLOT(edit()));
+    connect(toolButtonAddLov, &QToolButton::clicked,
+            lovWidget, &LovWidget::add);
+    connect(toolButtonDelLov, &QToolButton::clicked,
+            lovValueWidget, &LovValueWidget::revert);
+    connect(toolButtonDelLov, &QToolButton::clicked,
+            lovWidget, &LovWidget::remove);
+    connect(toolButtonEditLov, &QToolButton::clicked, lovWidget,
+            static_cast<void (AbstractEditorWidget::*)()>(&AbstractEditorWidget::edit));
 
-    connect(pushButtonPropCancel, SIGNAL(clicked()), lovValueWidget, SLOT(revert()));
-    connect(pushButtonPropCancel, SIGNAL(clicked()), lovWidget, SLOT(revert()));
-    connect(pushButtonPropSave,   SIGNAL(clicked()), lovValueWidget, SLOT(submit()));
-    connect(pushButtonPropSave,   SIGNAL(clicked()), lovWidget, SLOT(submit()));
+    connect(pushButtonPropCancel, &QPushButton::clicked,
+            lovValueWidget, &LovValueWidget::revert);
+    connect(pushButtonPropCancel, &QPushButton::clicked,
+            lovWidget, &LovWidget::revert);
+    connect(pushButtonPropSave, &QPushButton::clicked,
+            lovValueWidget, &LovValueWidget::submit);
+    connect(pushButtonPropSave, &QPushButton::clicked,
+            lovWidget, &LovWidget::submit);
 }
 
 PropLov::~PropLov()

@@ -48,7 +48,7 @@ public slots:
     void addLinkToFilter();
 
     //! Перевод в режим редактирования
-    void edit(bool flag = true);
+    void edit(bool flag);
 };
 
 }}

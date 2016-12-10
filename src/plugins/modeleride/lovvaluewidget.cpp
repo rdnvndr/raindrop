@@ -14,8 +14,8 @@ LovValueWidget::LovValueWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(toolButtonAddLovValue,SIGNAL(clicked()),this,SLOT(add()));
-    connect(toolButtonDeleteLovValue,SIGNAL(clicked()),this,SLOT(remove()));
+    connect(toolButtonAddLovValue, &QToolButton::clicked, this, &LovValueWidget::add);
+    connect(toolButtonDeleteLovValue, &QToolButton::clicked, this, &LovValueWidget::remove);
 
     AbstractModifyWidget::setItemView(tableViewLovValue);
     itemView()->setItemDelegate(new LovDelegate());

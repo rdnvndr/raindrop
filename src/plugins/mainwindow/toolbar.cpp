@@ -24,6 +24,9 @@ ToolBar::ToolBar(QWidget *parent) :
 
     m_edited = false;
     m_contextAction = NULL;
+
+    connect(this, &QToolBar::visibilityChanged,
+            this, &ToolBar::crossVisibilityChange);
 }
 
 ToolBar::~ToolBar()
@@ -161,11 +164,11 @@ void ToolBar::contextMenuEvent(QContextMenuEvent *event)
         // Создание контекстного меню
         QMenu *contextMenu = new QMenu();
         QAction *action = new QAction(tr("Удалить"),this);
-        connect(action,SIGNAL(triggered()), this,SLOT(removeContextAction()));
+        connect(action, &QAction::triggered, this, &ToolBar::removeContextAction);
         contextMenu->addAction(action);
         contextMenu->addSeparator();
         action = new QAction(tr("Свойства..."),this);
-        connect(action,SIGNAL(triggered()), this, SLOT(showActionProp()));
+        connect(action, &QAction::triggered, this, &ToolBar::showActionProp);
         contextMenu->addAction(action);
         m_contextAction = this->actionAt(event->pos());
         contextMenu->exec(event->globalPos());
@@ -197,6 +200,12 @@ void ToolBar::showActionProp()
         }
     }
     delete actionProp;
+}
+
+void ToolBar::crossVisibilityChange(bool visible)
+{
+    Q_UNUSED(visible)
+    emit stateVisibilityChanged();
 }
 
 void ToolBar::setEdited(bool edited)

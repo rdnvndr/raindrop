@@ -21,8 +21,8 @@ NumeratorWidget::NumeratorWidget(QWidget *parent) :
     RegExpValidator *validator =
             new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9_]{0,26}|^[A-Za-z]{0}"));
     numeratorNameLineEdit->setValidator(validator);
-    connect(validator,SIGNAL(stateChanged(QValidator::State)),
-            this,SLOT(validateNumeratorName(QValidator::State)));
+    connect(validator, &RegExpValidator::stateChanged,
+            this, &NumeratorWidget::validateNumeratorName);
 }
 
 NumeratorWidget::~NumeratorWidget()
@@ -47,9 +47,9 @@ bool NumeratorWidget::isEmpty()
     return numeratorNameLineEdit->text().isEmpty();
 }
 
-void NumeratorWidget::add()
+bool NumeratorWidget::add()
 {
-     AbstractEditorWidget::add(DBNUMERATORXML::NUMERATOR);
+     return AbstractEditorWidget::add(DBNUMERATORXML::NUMERATOR);
 }
 
 void NumeratorWidget::setCurrent(const QModelIndex &index)

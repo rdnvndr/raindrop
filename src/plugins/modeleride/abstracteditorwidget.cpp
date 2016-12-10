@@ -27,8 +27,8 @@ AbstractEditorWidget::~AbstractEditorWidget()
 void AbstractEditorWidget::setModel(TreeXmlHashModel *model)
 {
     m_model = model;
-    connect(m_model,SIGNAL(rowsAboutToBeRemoved(QModelIndex,qint32,qint32)),
-            this,SLOT(onRowsAboutToBeRemoved(QModelIndex,qint32,qint32)));
+    connect(m_model, &QAbstractItemModel::rowsAboutToBeRemoved,
+            this, &AbstractEditorWidget::onRowsAboutToBeRemoved);
     m_mapper->setModel(m_model);
 }
 
@@ -109,6 +109,11 @@ void AbstractEditorWidget::setCurrent(const QModelIndex &index)
     m_mapper->setCurrentModelIndex(index);
 
     edit(false);
+}
+
+void AbstractEditorWidget::edit()
+{
+    edit(true);
 }
 
 void AbstractEditorWidget::submit()

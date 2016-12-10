@@ -14,12 +14,17 @@ QuantityGroupWidget::QuantityGroupWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(toolButtonAdd,  SIGNAL(clicked()), this, SLOT(add()));
-    connect(toolButtonDel,  SIGNAL(clicked()), this, SLOT(remove()));
-    connect(toolButtonEdit, SIGNAL(clicked()), this, SLOT(edit()));
+    connect(toolButtonAdd, &QToolButton::clicked,
+            this, &QuantityGroupWidget::add);
+    connect(toolButtonDel, &QToolButton::clicked,
+            this, &QuantityGroupWidget::remove);
+    connect(toolButtonEdit, &QToolButton::clicked, this,
+            static_cast<void (AbstractEditorWidget::*)()>(&AbstractEditorWidget::edit));
 
-    connect(pushButtonPropCancel, SIGNAL(clicked()), this, SLOT(revert()));
-    connect(pushButtonPropSave,   SIGNAL(clicked()), this, SLOT(submit()));
+    connect(pushButtonPropCancel, &QPushButton::clicked,
+            this, &QuantityGroupWidget::revert);
+    connect(pushButtonPropSave, &QPushButton::clicked,
+            this, &QuantityGroupWidget::submit);
 }
 
 QuantityGroupWidget::~QuantityGroupWidget()

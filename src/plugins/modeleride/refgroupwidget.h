@@ -37,10 +37,10 @@ public:
 
 public slots:
     //! Добавление  группы справочника
-    void add();
+    bool add();
 
     //! Перевод группы справочника в режим редактирования
-    void edit(bool flag = true);
+    void edit(bool flag);
 
     //! Применение изменений группы справочника
     void submit();

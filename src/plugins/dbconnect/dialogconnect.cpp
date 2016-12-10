@@ -36,7 +36,8 @@ DialogConnect::DialogConnect(QWidget *pwgt) : QDialog(pwgt) {
     comboDriver->addItems(drivers);
 
     this->adjustSize();
-    connect(pushButtonProp, SIGNAL(clicked()), this, SLOT(onClickButtonProp()));
+    connect(pushButtonProp, &QPushButton::clicked,
+            this, &DialogConnect::onClickButtonProp);
 }
 
 void DialogConnect::onClickButtonProp(){

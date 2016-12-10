@@ -41,47 +41,48 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     PluginManager *pluginManager = PluginManager::instance();
 
     m_treeClassView = new ClassTreeView();
-    connect(m_treeClassView,SIGNAL(doubleClicked(QModelIndex)),
-            this,SLOT(showPropEditor(QModelIndex)));
-    connect(m_treeClassView,SIGNAL(actionInserted()),
-            this,SLOT(add()));
-    connect(m_treeClassView,SIGNAL(actionRemoved()),
-            this,SLOT(remove()));
+    connect(m_treeClassView, &ClassTreeView::doubleClicked,
+            this, static_cast<void (ModelerIDEPlug::*)
+            (const QModelIndex &)>(&ModelerIDEPlug::showPropEditor));
+    connect(m_treeClassView, &ClassTreeView::actionInserted,
+            this, &ModelerIDEPlug::add);
+    connect(m_treeClassView, &ClassTreeView::actionRemoved,
+            this, &ModelerIDEPlug::remove);
 
     // Создание пунктов строки меню и кнопок панели исрументов
     IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
     m_actionNewModel = new QAction(QIcon(":newmodel"), tr("Новая модель"), this);
-    connect(m_actionNewModel, SIGNAL(triggered()), this, SLOT(newClassModel()));
+    connect(m_actionNewModel, &QAction::triggered, this, &ModelerIDEPlug::newClassModel);
     m_actionNewModel->setObjectName("actionNewModel");
     iMainWindow->addAction(tr("Редактор модели"),m_actionNewModel);
 
     m_actionOpenModel = new QAction(QIcon(":openmodel"), tr("Открыть модель..."), this);
-    connect(m_actionOpenModel, SIGNAL(triggered()), this, SLOT(openClassModel()));
+    connect(m_actionOpenModel, &QAction::triggered, this, &ModelerIDEPlug::openClassModel);
     m_actionOpenModel->setObjectName("actionOpenModel");
     iMainWindow->addAction(tr("Редактор модели"),m_actionOpenModel);
 
     m_actionSaveModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель"), this);
-    connect(m_actionSaveModel, SIGNAL(triggered()), this, SLOT(saveClassModel()));
+    connect(m_actionSaveModel, &QAction::triggered, this, &ModelerIDEPlug::saveClassModel);
     m_actionSaveModel->setDisabled(true);
     m_actionSaveModel->setObjectName("actionSaveModel");
     iMainWindow->addAction(tr("Редактор модели"),m_actionSaveModel);
 
     m_actionSaveAsModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель как..."), this);
-    connect(m_actionSaveAsModel, SIGNAL(triggered()), this, SLOT(saveAsClassModel()));
+    connect(m_actionSaveAsModel, &QAction::triggered, this, &ModelerIDEPlug::saveAsClassModel);
     m_actionSaveAsModel->setDisabled(true);
     m_actionSaveAsModel->setObjectName("actionSaveAsModel");
     iMainWindow->addAction(tr("Редактор модели"),m_actionSaveAsModel);
 
     m_actionPublishModel = new QAction(QIcon(":publish"), tr("Опубликовать модель..."), this);
-    connect(m_actionPublishModel, SIGNAL(triggered()), this, SLOT(publishClassModel()));
+//    connect(m_actionPublishModel, &QAction::triggered, this, &ModelerIDEPlug::publishClassModel);
     m_actionPublishModel->setDisabled(true);
     m_actionPublishModel->setObjectName("actionPublishModel");
     iMainWindow->addAction(tr("Редактор модели"),m_actionPublishModel);
 
     m_actionCloseModel = new QAction(QIcon(":closemodel"), tr("Закрыть модель"), this);
-    connect(m_actionCloseModel, SIGNAL(triggered()), this, SLOT(closeClassModel()));
+    connect(m_actionCloseModel, &QAction::triggered, this, &ModelerIDEPlug::closeClassModel);
     m_actionCloseModel->setDisabled(true);
     m_actionCloseModel->setObjectName("actionCloseModel");
     iMainWindow->addAction(tr("Редактор модели"),m_actionCloseModel);
@@ -137,10 +138,10 @@ void ModelerIDEPlug::createClassModel(QDomDocument document)
     m_model->setHeaderData(14, Qt::Horizontal, tr("Кандидат в ключ"));
     m_model->setHeaderData(15, Qt::Horizontal, tr("Идентификатор"));
 
-    connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-            this,SLOT(actionSaveEnable()));
-    connect(m_model,SIGNAL(rowsRemoved(QModelIndex,qint32,qint32)),
-            this,SLOT(actionSaveEnable()));
+    connect(m_model, &QAbstractItemModel::dataChanged,
+            this, &ModelerIDEPlug::actionSaveEnable);
+    connect(m_model, &QAbstractItemModel::rowsRemoved,
+            this, &ModelerIDEPlug::actionSaveEnable);
 
     m_treeClassView->setModel(m_model);
 
@@ -399,8 +400,8 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editabl
     if (!subWindow) {
         if (tagRole == DBCLASSXML::CLASS) {
             PropClass *propClass = new PropClass();
-            connect(propClass,SIGNAL(editFilter(QModelIndex)),
-                    this,SLOT(editPropEditor(QModelIndex)));
+            connect(propClass, &PropClass::editFilter,
+                    this, &ModelerIDEPlug::editPropEditor);
             propEditor = qobject_cast<AbstractPropEditor*>(propClass);
         } else if (tagRole == DBFILTERXML::FILTER) {
             propEditor = qobject_cast<AbstractPropEditor*>(new PropFilter());
@@ -431,6 +432,11 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editabl
 
     propEditor->setCurrent(indexSource);
     if (editable) propEditor->edit(true);
+}
+
+void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource)
+{
+    showPropEditor(indexSource, false);
 }
 
 void ModelerIDEPlug::editPropEditor(const QModelIndex &indexSource)
@@ -556,6 +562,11 @@ void ModelerIDEPlug::publishClassModel(const QModelIndex &index)
         publishClassModel(childIndex);
         childIndex = m_model->index(++row,0,index);
     }
+}
+
+void ModelerIDEPlug::publishClassModel()
+{
+    publishClassModel(QModelIndex());
 }
 
 void ModelerIDEPlug::closeClassModel()

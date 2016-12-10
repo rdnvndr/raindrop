@@ -67,7 +67,10 @@ public slots:
     virtual bool isEdit() = 0;
 
     //! Перевод в режим редактирования
-    virtual void edit(bool flag = true) = 0;
+    virtual void edit(bool flag) = 0;
+
+    //! Перевод в режим редактирования
+    virtual void edit();
 
     //! Перемещение выше
     void up();
@@ -81,7 +84,7 @@ public slots:
                     const QString &attrTag,  const QString &attrParent);
 
     //! Установка родителя
-    virtual void setRootIndex(QModelIndex index);
+    virtual void setRootIndex(const QModelIndex &index);
 
 signals:
     //! Сигнал об изменении данных

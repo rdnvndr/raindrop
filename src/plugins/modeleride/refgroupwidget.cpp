@@ -14,12 +14,13 @@ RefGroupWidget::RefGroupWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(toolButtonAdd,  SIGNAL(clicked()), this, SLOT(add()));
-    connect(toolButtonDel,  SIGNAL(clicked()), this, SLOT(remove()));
-    connect(toolButtonEdit, SIGNAL(clicked()), this, SLOT(edit()));
+    connect(toolButtonAdd, &QToolButton::clicked, this, &RefGroupWidget::add);
+    connect(toolButtonDel, &QToolButton::clicked, this, &RefGroupWidget::remove);
+    connect(toolButtonEdit, &QToolButton::clicked, this,
+            static_cast<void (AbstractEditorWidget::*)()>(&AbstractEditorWidget::edit));
 
-    connect(pushButtonPropCancel, SIGNAL(clicked()), this, SLOT(revert()));
-    connect(pushButtonPropSave,   SIGNAL(clicked()), this, SLOT(submit()));
+    connect(pushButtonPropCancel, &QPushButton::clicked, this, &RefGroupWidget::revert);
+    connect(pushButtonPropSave, &QPushButton::clicked, this, &RefGroupWidget::submit);
 }
 
 RefGroupWidget::~RefGroupWidget()
@@ -44,9 +45,9 @@ bool RefGroupWidget::isEmpty()
     return lineEditRefGroupName->text().isEmpty();
 }
 
-void RefGroupWidget::add()
+bool RefGroupWidget::add()
 {
-    AbstractEditorWidget::add(DBREFGROUPXML::REFGROUP);
+    return AbstractEditorWidget::add(DBREFGROUPXML::REFGROUP);
 }
 
 void RefGroupWidget::edit(bool flag)

@@ -21,8 +21,8 @@ RoleWidget::RoleWidget(QWidget *parent) :
     RegExpValidator *validator =
             new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9_]{0,26}|^[A-Za-z]{0}"));
     lineEditRoleName->setValidator(validator);
-    connect(validator,SIGNAL(stateChanged(QValidator::State)),
-            this,SLOT(validateRoleName(QValidator::State)));
+    connect(validator, &RegExpValidator::stateChanged,
+            this, &RoleWidget::validateRoleName);
 }
 
 RoleWidget::~RoleWidget()
@@ -52,9 +52,9 @@ bool RoleWidget::isEmpty()
     return lineEditRoleName->text().isEmpty();
 }
 
-void RoleWidget::add()
+bool RoleWidget::add()
 {
-    AbstractEditorWidget::add(DBROLEXML::ROLE);
+    return AbstractEditorWidget::add(DBROLEXML::ROLE);
 }
 
 void RoleWidget::edit(bool flag)

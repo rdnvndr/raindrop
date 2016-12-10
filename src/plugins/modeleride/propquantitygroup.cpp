@@ -16,12 +16,12 @@ PropQuantityGroup::PropQuantityGroup(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(quantityGroupWidget,SIGNAL(currentIndexChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(quantityGroupWidget,SIGNAL(dataChanged(QModelIndex)),
-            this,SLOT(setTabName(QModelIndex)));
-    connect(quantityGroupWidget,SIGNAL(dataAboutToBeRemoved(QModelIndex)),
-            this,SLOT(closeTab(QModelIndex)));
+    connect(quantityGroupWidget, &AbstractEditorWidget::currentIndexChanged,
+            this, &PropQuantityGroup::setTabName);
+    connect(quantityGroupWidget, &AbstractEditorWidget::dataChanged,
+            this, &PropQuantityGroup::setTabName);
+    connect(quantityGroupWidget, &AbstractEditorWidget::dataAboutToBeRemoved,
+            this, &AbstractPropEditor::closeTab);
 }
 
 PropQuantityGroup::~PropQuantityGroup()

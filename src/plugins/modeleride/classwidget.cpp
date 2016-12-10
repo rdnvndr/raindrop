@@ -22,8 +22,8 @@ ClassWidget::ClassWidget(QWidget *parent) :
     RegExpValidator *validator =
             new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9_]{0,26}|^[A-Za-z]{0}"));
     lineEditClassName->setValidator(validator);
-    connect(validator,SIGNAL(stateChanged(QValidator::State)),
-            this,SLOT(validateClassName(QValidator::State)));
+    connect(validator, &RegExpValidator::stateChanged,
+            this, &ClassWidget::validateClassName);
 
     m_typeClassModel = new QStringListModel();
     const QStringList classType = (QStringList()
@@ -44,11 +44,12 @@ ClassWidget::ClassWidget(QWidget *parent) :
 
     lineEditClassParent->setReadOnly(true);
 
-    connect(toolButtonAddClass,SIGNAL(clicked()),this,SLOT(add()));
-    connect(toolButtonDelClass,SIGNAL(clicked()),this,SLOT(remove()));
-    connect(pushButtonPropSave,SIGNAL(clicked()),this,SLOT(submit()));
-    connect(pushButtonPropCancel,SIGNAL(clicked()),this,SLOT(revert()));
-    connect(toolButtonEditClass,SIGNAL(clicked()),this,SLOT(edit()));
+    connect(toolButtonAddClass,   &QToolButton::clicked, this, &ClassWidget::add);
+    connect(toolButtonDelClass,   &QToolButton::clicked, this, &ClassWidget::remove);
+    connect(pushButtonPropSave,   &QToolButton::clicked, this, &ClassWidget::submit);
+    connect(pushButtonPropCancel, &QToolButton::clicked, this, &ClassWidget::revert);
+    connect(toolButtonEditClass,  &QToolButton::clicked, this,
+            static_cast<void (AbstractEditorWidget::*)()>(&AbstractEditorWidget::edit));
 }
 
 ClassWidget::~ClassWidget()

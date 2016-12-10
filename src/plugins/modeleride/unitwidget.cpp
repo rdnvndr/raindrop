@@ -17,8 +17,10 @@ UnitWidget::UnitWidget(QWidget *parent) :
 {
     setupUi(this);
 
-    connect(toolButtonAddUnit,SIGNAL(clicked()),this,SLOT(add()));
-    connect(toolButtonDeleteUnit,SIGNAL(clicked()),this,SLOT(remove()));
+    connect(toolButtonAddUnit, &QToolButton::clicked,
+            this, &UnitWidget::add);
+    connect(toolButtonDeleteUnit, &QToolButton::clicked,
+            this, &UnitWidget::remove);
     AbstractModifyWidget::setItemView(tableViewUnit);
     itemView()->setItemDelegate(new UnitDelegate());
 }
@@ -50,7 +52,7 @@ void UnitWidget::setModel(TreeXmlHashModel *model)
     tableViewUnit->horizontalHeader()->setDefaultSectionSize(75);
 }
 
-void UnitWidget::add()
+bool UnitWidget::add()
 {
     if (AbstractModifyWidget::add(DBUNITXML::UNIT)) {
         QModelIndex index = itemView()->currentIndex();
@@ -75,7 +77,9 @@ void UnitWidget::add()
                                      DBUNITXML::CODE)
                                  ),
                              0);
+        return true;
     }
+    return false;
 }
 
 void UnitWidget::edit(bool flag)

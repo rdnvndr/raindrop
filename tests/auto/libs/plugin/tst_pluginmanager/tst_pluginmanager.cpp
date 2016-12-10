@@ -66,16 +66,16 @@ void tst_PluginManager::initTestCase()
         QApplication::installTranslator(translator);
 
     m_pluginLoadLog = new PluginLoadLog();
-    connect(PluginManager::instance(),SIGNAL(loadedPlugin(QObject*)),
-            m_pluginLoadLog, SLOT(loadPlugin(QObject*)));
+    connect(PluginManager::instance(), &PluginManager::loadedPlugin,
+            m_pluginLoadLog, &PluginLoadLog::loadPlugin);
     m_pluginManager.loadPlugins();
 }
 
 void tst_PluginManager::cleanupTestCase()
 {
     PluginLoadLog *pluginUnloadLog = new PluginLoadLog();
-    connect(PluginManager::instance(),SIGNAL(removedPlugin(QObject*)),
-            pluginUnloadLog, SLOT(loadPlugin(QObject*)));
+    connect(PluginManager::instance(), &PluginManager::removedPlugin,
+            pluginUnloadLog, &PluginLoadLog::loadPlugin);
     delete m_pluginManager.interfaceObject("Itst_plugin3");
     QStringList plugins = pluginUnloadLog->loadedPlugins();
     QCOMPARE(plugins.count(), 4);
