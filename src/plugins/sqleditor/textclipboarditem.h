@@ -41,18 +41,6 @@ public:
     //! Вызов команды "Выделить все"
     void selectAll();
 
-signals:
-    //! Сигнал о возможности выполнении команды "Вырезать"
-    void canCutChanged(bool canCut);
-
-    //! Сигнал о возможности выполнении команды "Копировать"
-    void canCopyChanged(bool canCopy);
-
-    //! Сигнал о возможности выполнении команды "Вставить"
-    void canPasteChanged(bool canPaste);
-
-    //! Сигнал о возможности выполнении команды "Выделить все"
-    void canSelectAllChanged(bool canSelectAll);
 private slots:
     //! Обработка сигнала выбора текста
     void selectionChange();
