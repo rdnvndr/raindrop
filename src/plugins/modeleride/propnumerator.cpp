@@ -25,9 +25,9 @@ PropNumerator::PropNumerator(QWidget *parent) :
             this, &AbstractPropEditor::closeTab);
 
     connect(numeratorWidget, &NumeratorWidget::edited, this,
-            static_cast<void (AbstractPropEditor::*)()>(&AbstractPropEditor::edit));
+            static_cast<void (AbstractPropEditor::*)(bool flag)>(&AbstractPropEditor::edit));
     connect(numeratorWidget, &NumeratorWidget::edited, numeratorRangeWidget,
-            static_cast<void (AbstractModifyWidget::*)()>(&AbstractModifyWidget::edit));
+            static_cast<void (AbstractModifyWidget::*)(bool flag)>(&AbstractModifyWidget::edit));
 
     connect(toolButtonAddNumerator, &QToolButton::clicked,
             numeratorWidget, &NumeratorWidget::add);

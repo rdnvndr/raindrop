@@ -24,9 +24,9 @@ PropRef::PropRef(QWidget *parent) :
             this, &AbstractPropEditor::closeTab);
 
     connect(refWidget, &RefWidget::edited, this,
-            static_cast<void (AbstractPropEditor::*)()>(&AbstractPropEditor::edit));
+            static_cast<void (AbstractPropEditor::*)(bool flag)>(&AbstractPropEditor::edit));
     connect(refWidget, &RefWidget::edited, refItemWidget,
-            static_cast<void (AbstractModifyWidget::*)()>(&AbstractModifyWidget::edit));
+            static_cast<void (AbstractModifyWidget::*)(bool flag)>(&AbstractModifyWidget::edit));
     connect(toolButtonAdd, &QToolButton::clicked,
             refWidget, &RefWidget::add);
     connect(toolButtonDel, &QToolButton::clicked,

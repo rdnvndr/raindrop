@@ -50,31 +50,32 @@ signals:
 
 public slots:
     //! Добавление значений списка
-    bool add(const QString &tag);
+    virtual bool add(const QString &tag);
 
     //! Удаление значений списка
-    void remove();
+    virtual void remove();
 
     //! Применение изменений значений списка
-    void submit();
+    virtual void submit();
 
     //! Перевод в режим редактирования
-    void edit(bool flag);
+    virtual void edit(bool flag);
 
     //! Перевод в режим редактирования
-    void edit();
+    virtual void edit();
 
     //! Отмена изменений значений списка
-    void revert();
+    virtual void revert();
 
     //! Установка родителя значений списка
-    void setRootIndex(const QModelIndex &index);
+    virtual void setRootIndex(const QModelIndex &index);
 
     //! Перемещение выше
-    void up();
+    virtual void up();
 
     //! Перемещение ниже
-    void down();
+    virtual void down();
+
 private:
 
     //! Прокси модель для значений списка

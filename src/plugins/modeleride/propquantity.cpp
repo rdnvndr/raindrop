@@ -26,9 +26,9 @@ PropQuantity::PropQuantity(QWidget *parent) :
             quantityWidget, &QuantityWidget::setUnitRootIndex);
 
     connect(quantityWidget, &QuantityWidget::edited, this,
-            static_cast<void (AbstractPropEditor::*)()>(&AbstractPropEditor::edit));
+            static_cast<void (AbstractPropEditor::*)(bool flag)>(&AbstractPropEditor::edit));
     connect(quantityWidget, &QuantityWidget::edited, unitWidget,
-            static_cast<void (AbstractModifyWidget::*)()>(&AbstractModifyWidget::edit));
+            static_cast<void (AbstractModifyWidget::*)(bool flag)>(&AbstractModifyWidget::edit));
 
     connect(toolButtonAddQuantity, &QToolButton::clicked,
             quantityWidget, &QuantityWidget::add);
