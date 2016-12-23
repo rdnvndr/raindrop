@@ -73,15 +73,15 @@ public slots:
     virtual void edit();
 
     //! Перемещение выше
-    void up();
+    virtual void up();
 
     //! Перемещение ниже
-    void down();
+    virtual void down();
 
     //! Установка отображения родительских данных
-    void showParent(bool flag,
-                    const QString &classTag, const QString &classId,
-                    const QString &attrTag,  const QString &attrParent);
+    virtual void showParent(bool flag,
+                            const QString &classTag, const QString &classId,
+                            const QString &attrTag,  const QString &attrParent);
 
     //! Установка родителя
     virtual void setRootIndex(const QModelIndex &index);
