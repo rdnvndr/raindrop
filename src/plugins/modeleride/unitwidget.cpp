@@ -84,7 +84,7 @@ bool UnitWidget::add()
 
 void UnitWidget::edit(bool flag)
 {
-    AbstractModifyWidget::edit();
+    AbstractModifyWidget::edit(flag);
 
     toolButtonAddUnit->setEnabled(flag);
     toolButtonDeleteUnit->setEnabled(flag);

@@ -23,7 +23,7 @@ PropRole::PropRole(QWidget *parent) :
             this, &AbstractPropEditor::closeTab);
 
     connect(roleWidget, &RoleWidget::edited, this,
-            static_cast<void (AbstractPropEditor::*)()>(&AbstractPropEditor::edit));
+            static_cast<void (AbstractPropEditor::*)(bool flag)>(&AbstractPropEditor::edit));
 
     connect(toolButtonAddRole, &QToolButton::clicked,
             roleWidget, &RoleWidget::add);

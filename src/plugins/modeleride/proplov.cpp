@@ -24,9 +24,9 @@ PropLov::PropLov(QWidget *parent) :
             this, &AbstractPropEditor::closeTab);
 
     connect(lovWidget, &LovWidget::edited, this,
-            static_cast<void (AbstractPropEditor::*)()>(&AbstractPropEditor::edit));
+            static_cast<void (AbstractPropEditor::*)(bool flag)>(&AbstractPropEditor::edit));
     connect(lovWidget, &LovWidget::edited, lovValueWidget,
-            static_cast<void (AbstractModifyWidget::*)()>(&AbstractModifyWidget::edit));
+            static_cast<void (AbstractModifyWidget::*)(bool flag)>(&AbstractModifyWidget::edit));
 
     connect(toolButtonAddLov, &QToolButton::clicked,
             lovWidget, &LovWidget::add);
