@@ -421,9 +421,8 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editabl
             propEditor = qobject_cast<AbstractPropEditor*>(new PropRole());
         } else return;
 
-
         propEditor->setModel(m_model);
-        subWindow =  mainWindow->addSubWindow(propEditor);
+        mainWindow->addSubWindow(propEditor);
         propEditor->setTabName(indexSource);
         propEditor->setCurrent(indexSource);
 
