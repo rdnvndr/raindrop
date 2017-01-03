@@ -16,3 +16,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h tilingbutton.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    rsrc.qrc
