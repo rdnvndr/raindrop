@@ -9,6 +9,9 @@ Product {
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
 
+    cpp.dynamicLibraries: base.concat(["treexmlmodel"])
+    Depends { name: "Qt"; submodules: ["xml"] }
+
     files: [
         "tst_treexmlmodel.cpp",
         "tst_treexmlmodel.qrc"

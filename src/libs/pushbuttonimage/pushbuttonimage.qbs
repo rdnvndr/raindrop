@@ -3,11 +3,14 @@ import "../main.qbs" as Product
 Product {
     name: "pushbuttonimage"
 
-    product:     ""
+    product:     "PushButtonImage Library"
     version:     "1.0.0"
-    description: ""
+    description: "PushButtonImage Library"
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
+
+    cpp.defines: base.concat(["PUSHBUTTONIMAGE_LIBRARY"])
+    Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
         "pushbuttonimage.h",

@@ -1,5 +1,5 @@
 Project {
- references: [
-  "raindrop/raindrop.qbs"
- ]
+    references: [
+        "raindrop/raindrop.qbs"
+    ]
 }

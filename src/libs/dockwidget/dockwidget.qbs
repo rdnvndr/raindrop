@@ -3,11 +3,14 @@ import "../main.qbs" as Product
 Product {
     name: "dockwidget"
 
-    product:     ""
+    product:     "DockWidget Library"
     version:     "1.0.0"
-    description: ""
+    description: "DockWidget Library"
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
+
+    cpp.defines: base.concat(["DOCKWIDGET_LIBRARY"])
+    Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
         "dockwidget.h",

@@ -3,11 +3,14 @@ import "../main.qbs" as Product
 Product {
     name: "treecombobox"
 
-    product:     ""
+    product:     "TreeComboBox Library"
     version:     "1.0.0"
-    description: ""
+    description: "TreeComboBox Library"
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
+
+    cpp.defines: base.concat(["TREECOMBOBOX_LIBRARY"])
+    Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
         "treecombobox.h",

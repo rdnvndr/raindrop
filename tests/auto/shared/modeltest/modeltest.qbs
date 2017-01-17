@@ -9,6 +9,8 @@ Product {
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
 
+    Depends { name: "Qt"; submodules: ["widgets"] }
+
     files: [
         "dynamictreemodel.h",
         "modeltest.h",

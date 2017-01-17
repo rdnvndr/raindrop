@@ -3,11 +3,17 @@ import "../main.qbs" as Product
 Product {
     name: "sqleditor"
 
-    product:     ""
+    product:     "SQL редактор"
     version:     "1.0.0"
-    description: ""
+    description: "SqlEditor Plugin"
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
+
+    cpp.defines:          base.concat(["SQLEDITOR_LIBRARY"])
+    cpp.dynamicLibraries: base.concat(["plugin"])
+    cpp.includePaths:     base.concat([ '.'])
+
+    Depends { name: "Qt"; submodules: ["widgets", "sql"] }
 
     files: [
         "querysqlwidget.h",

@@ -3,11 +3,14 @@ import "../main.qbs" as Product
 Product {
     name: "mdiextarea"
 
-    product:     ""
+    product:     "MdiExtArea Library"
     version:     "1.0.0"
-    description: ""
+    description: "MdiExtArea Library"
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
+
+    cpp.defines: base.concat(["MDIEXTAREA_LIBRARY"])
+    Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
         "mdiextarea.h",

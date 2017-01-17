@@ -2,12 +2,19 @@ import "../main.qbs" as Product
 
 Product {
     name: "tst_plugin1"
+    type: "dynamiclibrary"
 
-    product:     ""
+    product:     "TST_PLUGIN1"
     version:     "1.0.0"
-    description: ""
+    description: "TST_PLUGIN1"
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
+
+    cpp.defines:          base.concat(["TST_PLUGIN1_LIBRARY"])
+    cpp.dynamicLibraries: base.concat(["plugin"])
+    cpp.includePaths:     base.concat([ '.'])
+
+    Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
         "imainwindow.h",

@@ -3,11 +3,14 @@ import "../main.qbs" as Product
 Product {
     name: "treexmlmodel"
 
-    product:     ""
+    product:     "TreeXmlModel Library"
     version:     "1.0.0"
-    description: ""
+    description: "TreeXmlModel Library"
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
+
+    cpp.defines: base.concat(["XMLMODEL_LIBRARY"])
+    Depends { name: "Qt"; submodules: ["widgets", "xml"] }
 
     files: [
         "mimedataindex.h",
