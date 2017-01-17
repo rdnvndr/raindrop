@@ -10,10 +10,12 @@ PluginProduct {
     copyright:   "Copyright (C) RTPTechGroup"
 
     cpp.defines:          base.concat(["SQLEDITOR_LIBRARY"])
-    cpp.dynamicLibraries: base.concat(["plugin", "filtertreewidget"])
+//    cpp.dynamicLibraries: base.concat(["plugin", "filtertreewidget"])
     cpp.includePaths:     base.concat([ '.'])
 
     Depends { name: "Qt"; submodules: ["widgets", "sql"] }
+    Depends { name: "plugin" }
+    Depends { name: "filtertreewidget" }
 
     files: [
         "treedockwidget.h",

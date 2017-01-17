@@ -10,10 +10,11 @@ PluginProduct {
     copyright:   "Copyright (C) RTPTechGroup"
 
     cpp.defines:          base.concat(["CLIPBOARDSTACK_LIBRARY"])
-    cpp.dynamicLibraries: base.concat(["plugin"])
+//    cpp.dynamicLibraries: base.concat(["plugin"])
     cpp.includePaths:     base.concat([ '.'])
 
     Depends { name: "Qt"; submodules: ["widgets"] }
+    Depends { name: "plugin" }
 
     files: [
         "clipboardstack.h",

@@ -10,10 +10,13 @@ PluginProduct {
     copyright:   "Copyright (C) RTPTechGroup"
 
     cpp.defines:          base.concat(["MAINWINDOW_LIBRARY"])
-    cpp.dynamicLibraries: base.concat(["plugin", "mdiextarea", "pushbuttonimage"])
+//    cpp.dynamicLibraries: base.concat(["plugin", "mdiextarea", "pushbuttonimage"])
     cpp.includePaths:     base.concat([ '.'])
 
     Depends { name: "Qt"; submodules: ["widgets"] }
+    Depends { name: "plugin" }
+    Depends { name: "mdiextarea" }
+    Depends { name: "pushbuttonimage" }
 
     files: [
         "actiongroupmodel.h",

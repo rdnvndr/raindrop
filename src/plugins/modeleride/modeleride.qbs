@@ -9,18 +9,25 @@ PluginProduct {
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
 
-    cpp.dynamicLibraries:
-        base.concat(
-            ["plugin",
-             "mdiextarea",
-             "treexmlmodel",
-             "treecombobox",
-             "pushbuttonimage",
-             "dockwidget",
-             "metadatamodel"])
+//    cpp.dynamicLibraries:
+//        base.concat(
+//            ["plugin",
+//             "mdiextarea",
+//             "treexmlmodel",
+//             "treecombobox",
+//             "pushbuttonimage",
+//             "dockwidget",
+//             "metadatamodel"])
     cpp.includePaths:     base.concat([ '.'])
 
     Depends { name: "Qt"; submodules: ["widgets", "xml"] }
+    Depends { name: "plugin" }
+    Depends { name: "mdiextarea" }
+    Depends { name: "treexmlmodel" }
+    Depends { name: "treecombobox" }
+    Depends { name: "dockwidget" }
+    Depends { name: "pushbuttonimage" }
+    Depends { name: "metadatamodel" }
 
     files: [
         "abstracteditorwidget.h",

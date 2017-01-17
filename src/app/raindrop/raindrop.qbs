@@ -10,6 +10,7 @@ AppProduct {
     copyright:   "Copyright (C) RTPTechGroup"
 
     Depends { name: "Qt"; submodules: ["widgets"] }
+    Depends { name: "plugin"}
 
     files: [
         "main.cpp",
