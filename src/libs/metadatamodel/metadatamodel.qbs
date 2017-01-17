@@ -1,13 +1,18 @@
 import "../main.qbs" as Product
 
 Product {
-    name: ""
+    name: "metadatamodel"
 
-    product:     "metadatamodel"
+    product:     "MetadataModel Library"
     version:     "1.0.0"
-    description: ""
+    description: "MetadataModel Library"
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
+
+    cpp.defines:          base.concat(["METADATAMODEL_LIBRARY"])
+    cpp.dynamicLibraries: base.concat(["treexmlmodel"])
+
+    Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
         "classmodelxml.h",

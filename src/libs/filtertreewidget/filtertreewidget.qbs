@@ -3,11 +3,14 @@ import "../main.qbs" as Product
 Product {
     name: "filtertreewidget"
 
-    product:     ""
+    product:     "FilterTreeWidget Library"
     version:     "1.0.0"
-    description: ""
+    description: "FilterTreeWidget Library"
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
+
+    cpp.defines: base.concat(["FILTERTREEWIDGET_LIBRARY"])
+    Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
         "filtertreewidget.h",

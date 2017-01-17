@@ -3,11 +3,17 @@ import "../main.qbs" as Product
 Product {
     name: "mainwindow"
 
-    product:     ""
+    product:     "Главное окно"
     version:     "1.0.0"
-    description: ""
+    description: "MainWindow Plugin"
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
+
+    cpp.defines:          base.concat(["MAINWINDOW_LIBRARY"])
+    cpp.dynamicLibraries: base.concat(["plugin", "mdiextarea", "pushbuttonimage"])
+    cpp.includePaths:     base.concat([ '.'])
+
+    Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
         "actiongroupmodel.h",

@@ -9,6 +9,9 @@ Product {
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
 
+    cpp.dynamicLibraries: base.concat(["tilingframe"])
+    Depends { name: "Qt"; submodules: ["core", "gui", "widgets"] }
+
     files: [
         "mainwindow.h",
         "tilingbutton.h",

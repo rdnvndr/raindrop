@@ -3,11 +3,17 @@ import "../main.qbs" as Product
 Product {
     name: "dbconnect"
 
-    product:     ""
+    product:     "Подключение к БД"
     version:     "1.0.0"
-    description: ""
+    description: "DbConnect Plugin"
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
+
+    cpp.defines:          base.concat(["DBCONNECT_LIBRARY"])
+    cpp.dynamicLibraries: base.concat(["plugin"])
+    cpp.includePaths:     base.concat([ '.'])
+
+    Depends { name: "Qt"; submodules: ["widgets", "sql"] }
 
     files: [
         "dbconnect.h",

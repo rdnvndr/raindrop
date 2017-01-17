@@ -3,11 +3,24 @@ import "../main.qbs" as Product
 Product {
     name: "modeleride"
 
-    product:     ""
+    product:     "Редактор модели данных"
     version:     "1.0.0"
-    description: ""
+    description: "ModelerIDE Plugin"
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
+
+    cpp.dynamicLibraries:
+        base.concat(
+            ["plugin",
+             "mdiextarea",
+             "treexmlmodel",
+             "treecombobox",
+             "pushbuttonimage",
+             "dockwidget",
+             "metadatamodel"])
+    cpp.includePaths:     base.concat([ '.'])
+
+    Depends { name: "Qt"; submodules: ["widgets", "xml"] }
 
     files: [
         "abstracteditorwidget.h",
