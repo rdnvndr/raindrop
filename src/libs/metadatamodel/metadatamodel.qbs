@@ -10,9 +10,10 @@ LibProduct {
     copyright:   "Copyright (C) RTPTechGroup"
 
     cpp.defines:          base.concat(["METADATAMODEL_LIBRARY"])
-    cpp.dynamicLibraries: base.concat(["treexmlmodel"])
+//    cpp.dynamicLibraries: base.concat(["treexmlmodel"])
 
-    Depends { name: "Qt"; submodules: ["widgets"] }
+    Depends { name: "Qt"; submodules: ["widgets", "xml"] }
+    Depends { name: "treexmlmodel"}
 
     files: [
         "classmodelxml.h",
