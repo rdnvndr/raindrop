@@ -10,5 +10,14 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "mainwindow.h",
+        "treeitem.h",
+        "treemodel.h",
+        "main.cpp",
+        "mainwindow.cpp",
+        "treeitem.cpp",
+        "treemodel.cpp",
+        "mainwindow.ui",
+        "modifyproxymodel.qrc"
     ]
 }

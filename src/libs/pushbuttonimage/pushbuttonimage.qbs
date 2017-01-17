@@ -10,5 +10,9 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "pushbuttonimage.h",
+        "pushbuttonimageglobal.h",
+        "version.h",
+        "pushbuttonimage.cpp"
     ]
 }

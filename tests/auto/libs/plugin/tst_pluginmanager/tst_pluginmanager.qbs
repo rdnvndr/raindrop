@@ -10,5 +10,8 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "pluginloadlog.h",
+        "pluginloadlog.cpp",
+        "tst_pluginmanager.cpp"
     ]
 }

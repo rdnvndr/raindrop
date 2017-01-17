@@ -10,5 +10,13 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "dbconnect.h",
+        "dbconnectglobal.h",
+        "dialogconnect.h",
+        "version.h",
+        "dbconnect.cpp",
+        "dialogconnect.cpp",
+        "dialogconnect.ui",
+        "dbconnect.qrc"
     ]
 }

@@ -10,5 +10,10 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "itst_plugin2.h",
+        "tst_plugin2.h",
+        "tst_plugin2global.h",
+        "tst_plugin2.cpp",
+        "tst_plugin2.qrc"
     ]
 }

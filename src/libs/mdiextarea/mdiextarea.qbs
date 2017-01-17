@@ -10,5 +10,9 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "mdiextarea.h",
+        "mdiextareaglobal.h",
+        "version.h",
+        "mdiextarea.cpp"
     ]
 }

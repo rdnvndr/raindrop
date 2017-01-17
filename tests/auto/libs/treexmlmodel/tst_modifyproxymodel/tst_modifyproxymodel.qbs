@@ -10,5 +10,7 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "tst_modifyproxymodel.cpp",
+        "tst_modifyproxymodel.qrc"
     ]
 }

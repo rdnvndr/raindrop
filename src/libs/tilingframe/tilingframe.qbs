@@ -10,5 +10,11 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "tilingframe.h",
+        "tilingframeglobal.h",
+        "tilingwidget.h",
+        "version.h",
+        "tilingframe.cpp",
+        "tilingwidget.cpp"
     ]
 }
