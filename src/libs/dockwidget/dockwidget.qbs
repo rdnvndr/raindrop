@@ -10,5 +10,9 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "dockwidget.h",
+        "dockwidgetglobal.h",
+        "version.h",
+        "dockwidget.cpp"
     ]
 }

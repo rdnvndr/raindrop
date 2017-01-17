@@ -10,5 +10,12 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "mainwindow.h",
+        "tilingbutton.h",
+        "main.cpp",
+        "mainwindow.cpp",
+        "tilingbutton.cpp",
+        "mainwindow.ui",
+        "rsrc.qrc"
     ]
 }

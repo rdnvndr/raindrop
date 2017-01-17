@@ -10,5 +10,9 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "filtertreewidget.h",
+        "filtertreewidgetglobal.h",
+        "version.h",
+        "filtertreewidget.cpp"
     ]
 }

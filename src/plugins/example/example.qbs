@@ -10,5 +10,10 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "exampleglobal.h",
+        "exampleplug.h",
+        "version.h",
+        "exampleplug.cpp",
+        "example.qrc"
     ]
 }

@@ -10,5 +10,10 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "clipboardstack.h",
+        "clipboardstackglobal.h",
+        "version.h",
+        "clipboardstack.cpp",
+        "clipboardstack.qrc"
     ]
 }

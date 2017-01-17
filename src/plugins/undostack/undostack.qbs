@@ -10,5 +10,10 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "undostack.h",
+        "undostackglobal.h",
+        "version.h",
+        "undostack.cpp",
+        "undostack.qrc"
     ]
 }

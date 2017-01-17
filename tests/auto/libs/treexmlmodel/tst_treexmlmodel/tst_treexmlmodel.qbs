@@ -10,5 +10,7 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "tst_treexmlmodel.cpp",
+        "tst_treexmlmodel.qrc"
     ]
 }

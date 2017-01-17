@@ -10,5 +10,11 @@ Product {
     copyright:   "Copyright (C) RTPTechGroup"
 
     files: [
+        "classmodelxml.h",
+        "dbxmlstruct.h",
+        "metadatamodelglobal.h",
+        "version.h",
+        "classmodelxml.cpp",
+        "metadatamodel.qrc"
     ]
 }
