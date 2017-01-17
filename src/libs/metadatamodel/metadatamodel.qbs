@@ -3,7 +3,7 @@ import "../main.qbs" as LibProduct
 LibProduct {
     name: "metadatamodel"
 
-    product:     "MetadataModel Library"
+    productname: "MetadataModel Library"
     version:     "1.0.0"
     description: "MetadataModel Library"
     company:     "RTPTechGroup"

@@ -3,7 +3,7 @@ import "../main.qbs" as TilingFrameProduct
 TilingFrameProduct {
     name: "tst_tilingframe_mnl"
 
-    product:     ""
+    productname: ""
     version:     "1.0.0"
     description: ""
     company:     "RTPTechGroup"

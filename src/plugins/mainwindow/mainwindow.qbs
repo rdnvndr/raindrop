@@ -3,7 +3,7 @@ import "../main.qbs" as PluginProduct
 PluginProduct {
     name: "mainwindow"
 
-    product:     "Главное окно"
+    productname: "Главное окно"
     version:     "1.0.0"
     description: "MainWindow Plugin"
     company:     "RTPTechGroup"

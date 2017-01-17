@@ -3,7 +3,7 @@ import "../main.qbs" as LibProduct
 LibProduct {
     name: "treecombobox"
 
-    product:     "TreeComboBox Library"
+    productname: "TreeComboBox Library"
     version:     "1.0.0"
     description: "TreeComboBox Library"
     company:     "RTPTechGroup"

@@ -3,7 +3,7 @@ import "../main.qbs" as PluginProduct
 PluginProduct {
     name: "example"
 
-    product:     "Пример"
+    productname: "Пример"
     version:     "1.0.0"
     description: "Example Plugin"
     company:     "RTPTechGroup"

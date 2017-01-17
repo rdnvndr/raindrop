@@ -3,7 +3,7 @@ import "../main.qbs" as LibProduct
 LibProduct {
     name: "tilingframe"
 
-    product:     "TilingFrame Library"
+    productname: "TilingFrame Library"
     version:     "1.0.0"
     description: "TilingFrame Library"
     company:     "RTPTechGroup"

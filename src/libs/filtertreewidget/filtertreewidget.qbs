@@ -3,7 +3,7 @@ import "../main.qbs" as LibProduct
 LibProduct {
     name: "filtertreewidget"
 
-    product:     "FilterTreeWidget Library"
+    productname: "FilterTreeWidget Library"
     version:     "1.0.0"
     description: "FilterTreeWidget Library"
     company:     "RTPTechGroup"

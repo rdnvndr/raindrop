@@ -3,7 +3,7 @@ import "../main.qbs" as LibProduct
 LibProduct {
     name: "dockwidget"
 
-    product:     "DockWidget Library"
+    productname: "DockWidget Library"
     version:     "1.0.0"
     description: "DockWidget Library"
     company:     "RTPTechGroup"

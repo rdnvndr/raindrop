@@ -3,7 +3,7 @@ import "../main.qbs" as PluginProduct
 PluginProduct {
     name: "modeleride"
 
-    product:     "Редактор модели данных"
+    productname: "Редактор модели данных"
     version:     "1.0.0"
     description: "ModelerIDE Plugin"
     company:     "RTPTechGroup"
@@ -145,6 +145,6 @@ PluginProduct {
         "refwidget.ui",
         "rolewidget.ui",
         "unitwidget.ui",
-        "modeleride.qrc "
+        "modeleride.qrc"
     ]
 }

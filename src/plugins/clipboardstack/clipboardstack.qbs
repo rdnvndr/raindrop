@@ -3,7 +3,7 @@ import "../main.qbs" as PluginProduct
 PluginProduct {
     name: "clipboardstack"
 
-    product:     "Clipboard Stack"
+    productname: "Clipboard Stack"
     version:     "1.0.0"
     description: "Clipboard Stack Plugin"
     company:     "RTPTechGroup"

@@ -4,7 +4,7 @@ PluginProduct {
     name: "tst_plugin3"
     type: "dynamiclibrary"
 
-    product:     "TST_PLUGIN3"
+    productname: "TST_PLUGIN3"
     version:     "1.0.0"
     description: "TST_PLUGIN3"
     company:     "RTPTechGroup"
