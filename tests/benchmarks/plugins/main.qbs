@@ -1,4 +1,4 @@
-import "../main.qbs" as Product
+import "../main.qbs" as BenchmarkProduct
 Product {
    name: "plugins"
 }

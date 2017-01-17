@@ -1,5 +1,5 @@
-import "../main.qbs" as Product
-Product {
+import "../main.qbs" as SrcProduct
+SrcProduct {
    name: "app"
    type: "application"
 }

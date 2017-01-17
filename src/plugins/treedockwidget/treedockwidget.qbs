@@ -1,6 +1,6 @@
-import "../main.qbs" as Product
+import "../main.qbs" as PluginProduct
 
-Product {
+PluginProduct {
     name: "treedockwidget"
 
     product:     "Дерево команд"

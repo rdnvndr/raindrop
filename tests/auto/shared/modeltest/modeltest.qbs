@@ -1,6 +1,6 @@
-import "../main.qbs" as Product
+import "../main.qbs" as SharedProduct
 
-Product {
+SharedProduct {
     name: "modeltest"
 
     product:     ""

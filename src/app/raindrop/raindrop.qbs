@@ -1,6 +1,6 @@
-import "../main.qbs" as Product
+import "../main.qbs" as AppProduct
 
-Product {
+AppProduct {
     name: "raindrop"
 
     product:     "Raindrop"
@@ -8,6 +8,8 @@ Product {
     description: "Main program"
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
+
+    Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
         "main.cpp",

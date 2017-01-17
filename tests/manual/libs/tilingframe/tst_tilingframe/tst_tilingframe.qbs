@@ -1,6 +1,6 @@
-import "../main.qbs" as Product
+import "../main.qbs" as TilingFrameProduct
 
-Product {
+TilingFrameProduct {
     name: "tst_tilingframe_mnl"
 
     product:     ""

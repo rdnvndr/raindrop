@@ -1,6 +1,6 @@
-import "../main.qbs" as Product
+import "../main.qbs" as TreeXmlModelProduct
 
-Product {
+TreeXmlModelProduct {
     name: "tst_modifyproxymodel_mnl"
 
     product:     ""

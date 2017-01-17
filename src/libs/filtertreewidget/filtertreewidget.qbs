@@ -1,6 +1,6 @@
-import "../main.qbs" as Product
+import "../main.qbs" as LibProduct
 
-Product {
+LibProduct {
     name: "filtertreewidget"
 
     product:     "FilterTreeWidget Library"

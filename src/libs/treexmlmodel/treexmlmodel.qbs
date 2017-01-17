@@ -1,6 +1,6 @@
-import "../main.qbs" as Product
+import "../main.qbs" as LibProduct
 
-Product {
+LibProduct {
     name: "treexmlmodel"
 
     product:     "TreeXmlModel Library"
@@ -31,3 +31,4 @@ Product {
         "treexmlmodel.cpp"
     ]
 }
+
