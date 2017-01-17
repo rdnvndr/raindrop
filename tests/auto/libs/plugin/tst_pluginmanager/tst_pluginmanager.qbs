@@ -3,7 +3,7 @@ import "../main.qbs" as PluginProduct
 PluginProduct {
     name: "tst_pluginmanager"
 
-    product:     ""
+    productname: ""
     version:     "1.0.0"
     description: ""
     company:     "RTPTechGroup"

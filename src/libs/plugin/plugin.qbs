@@ -3,7 +3,7 @@ import "../main.qbs" as LibProduct
 LibProduct {
     name: "plugin"
 
-    product:     "Plugin Library"
+    productname: "Plugin Library"
     version:     "1.0.0"
     description: "Plugin Library"
     company:     "RTPTechGroup"

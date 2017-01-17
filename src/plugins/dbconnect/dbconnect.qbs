@@ -3,7 +3,7 @@ import "../main.qbs" as PluginProduct
 PluginProduct {
     name: "dbconnect"
 
-    product:     "Подключение к БД"
+    productname: "Подключение к БД"
     version:     "1.0.0"
     description: "DbConnect Plugin"
     company:     "RTPTechGroup"

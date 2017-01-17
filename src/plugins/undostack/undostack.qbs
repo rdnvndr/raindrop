@@ -3,7 +3,7 @@ import "../main.qbs" as PluginProduct
 PluginProduct {
     name: "undostack"
 
-    product:     "UndoStack"
+    productname: "UndoStack"
     version:     "1.0.0"
     description: "Undo Stack Plugin"
     company:     "RTPTechGroup"

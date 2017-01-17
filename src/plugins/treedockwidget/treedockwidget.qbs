@@ -3,7 +3,7 @@ import "../main.qbs" as PluginProduct
 PluginProduct {
     name: "treedockwidget"
 
-    product:     "Дерево команд"
+    productname: "Дерево команд"
     version:     "1.0.0"
     description: "TreeDockWidget Plugin"
     company:     "RTPTechGroup"

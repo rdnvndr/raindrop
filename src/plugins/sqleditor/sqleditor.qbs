@@ -3,7 +3,7 @@ import "../main.qbs" as PluginProduct
 PluginProduct {
     name: "sqleditor"
 
-    product:     "SQL редактор"
+    productname: "SQL редактор"
     version:     "1.0.0"
     description: "SqlEditor Plugin"
     company:     "RTPTechGroup"

@@ -3,7 +3,7 @@ import "../main.qbs" as LibProduct
 LibProduct {
     name: "mdiextarea"
 
-    product:     "MdiExtArea Library"
+    productname: "MdiExtArea Library"
     version:     "1.0.0"
     description: "MdiExtArea Library"
     company:     "RTPTechGroup"

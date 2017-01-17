@@ -3,7 +3,7 @@ import "../main.qbs" as TreeXmlModelProduct
 TreeXmlModelProduct {
     name: "tst_tablexmlproxymodel"
 
-    product:     ""
+    productname: ""
     version:     "1.0.0"
     description: ""
     company:     "RTPTechGroup"

@@ -3,7 +3,7 @@ import "../main.qbs" as LibProduct
 LibProduct {
     name: "treexmlmodel"
 
-    product:     "TreeXmlModel Library"
+    productname: "TreeXmlModel Library"
     version:     "1.0.0"
     description: "TreeXmlModel Library"
     company:     "RTPTechGroup"

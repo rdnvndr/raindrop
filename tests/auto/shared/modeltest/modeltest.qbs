@@ -3,7 +3,7 @@ import "../main.qbs" as SharedProduct
 SharedProduct {
     name: "modeltest"
 
-    product:     ""
+    productname: ""
     version:     "1.0.0"
     description: ""
     company:     "RTPTechGroup"

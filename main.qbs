@@ -1,7 +1,7 @@
 import qbs
 
 Product {
-    property string product:     ""
+    property string productname: ""
     property string version:     "1"
     property string description: ""
     property string company:     ""

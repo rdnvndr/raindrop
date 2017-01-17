@@ -3,7 +3,7 @@ import "../main.qbs" as AppProduct
 AppProduct {
     name: "raindrop"
 
-    product:     "Raindrop"
+    productname: "Raindrop"
     version:     "1.0.0"
     description: "Main program"
     company:     "RTPTechGroup"
