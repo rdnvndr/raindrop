@@ -1,4 +1,4 @@
-import "../main.qbs" as Product
-Product {
+import "../main.qbs" as TestProduct
+TestProduct {
    name: "auto"
 }

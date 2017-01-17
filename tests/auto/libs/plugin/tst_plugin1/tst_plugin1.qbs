@@ -1,6 +1,6 @@
-import "../main.qbs" as Product
+import "../main.qbs" as PluginProduct
 
-Product {
+PluginProduct {
     name: "tst_plugin1"
     type: "dynamiclibrary"
 
