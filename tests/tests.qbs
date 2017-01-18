@@ -1,7 +1,8 @@
 Project {
- references: [
-     "auto/auto.qbs",
-     "benchmarks/benchmarks.qbs",
-     "manual/manual.qbs"
- ]
+    condition: project.withTests
+    references: [
+        "auto/auto.qbs",
+        "benchmarks/benchmarks.qbs",
+        "manual/manual.qbs"
+    ]
 }

@@ -6,4 +6,7 @@ SrcProduct {
        Depends { name: "cpp" }
        cpp.includePaths: product.sourceDirectory + "/../"
    }
+
+   qbs.install: true
+   qbs.installDir: ""
 }
