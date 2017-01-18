@@ -12,6 +12,6 @@ SrcProduct {
            "dynamiclibrary_symlink",
            "dynamiclibrary_import"]
        qbs.install: true
-       qbs.installDir: "plugins"
+       qbs.installDir: product.appdir + "/" + product.plugindir
    }
 }
