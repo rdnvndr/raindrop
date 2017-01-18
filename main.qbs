@@ -6,6 +6,9 @@ Product {
     property string description: ""
     property string company:     ""
     property string copyright:   ""
+    property string appdir:      "bin"
+    property string libdir:      ""
+    property string plugindir:   "../lib/raindrop/plugins/"
 
     cpp.defines: [
         "APP_VERSION="     + "\"" +  product.version + "\"",

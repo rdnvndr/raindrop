@@ -9,7 +9,10 @@ LibProduct {
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
 
-    cpp.defines: base.concat(["PLUGIN_LIBRARY"])
+    cpp.defines: base.concat([
+        "PLUGIN_LIBRARY",
+        "PLUGIN_DIR=\"" + product.plugindir + "\"",
+    ])
     Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
