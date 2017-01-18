@@ -6,7 +6,13 @@ SrcProduct {
        Depends { name: "cpp" }
        cpp.includePaths: product.sourceDirectory + "/../"
    }
-
-   qbs.install: true
-   qbs.installDir: ""
+   Group {
+       fileTagsFilter: [
+           "dynamiclibrary",
+           "dynamiclibrary_symlink",
+           "dynamiclibrary_import"
+       ]
+       qbs.install: true
+       qbs.installDir: ""
+   }
 }
