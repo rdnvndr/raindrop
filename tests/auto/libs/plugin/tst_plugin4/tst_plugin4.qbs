@@ -11,10 +11,11 @@ PluginProduct {
     copyright:   "Copyright (C) RTPTechGroup"
 
     cpp.defines:          base.concat(["TST_PLUGIN4_LIBRARY"])
-    cpp.dynamicLibraries: base.concat(["plugin"])
+//    cpp.dynamicLibraries: base.concat(["plugin"])
     cpp.includePaths:     base.concat([ '.'])
 
     Depends { name: "Qt"; submodules: ["widgets"] }
+    Depends { name: "plugin" }
 
     files: [
         "itst_plugin4.h",

@@ -9,10 +9,11 @@ PluginProduct {
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
 
-    cpp.dynamicLibraries: base.concat(["plugin"])
+//    cpp.dynamicLibraries: base.concat(["plugin"])
     cpp.includePaths:     base.concat([ '.'])
 
-    Depends { name: "Qt"; submodules: ["widgets"] }
+    Depends { name: "Qt"; submodules: ["widgets", "testlib"] }
+    Depends { name: "plugin" }
 
     files: [
         "pluginloadlog.h",
