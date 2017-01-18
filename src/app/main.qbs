@@ -5,6 +5,6 @@ SrcProduct {
    Group {
        fileTagsFilter: ["application"]
        qbs.install: true
-       qbs.installDir: product.appdir
+       qbs.installDir: product.applicationPath
    }
 }

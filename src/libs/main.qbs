@@ -13,6 +13,6 @@ SrcProduct {
            "dynamiclibrary_import"
        ]
        qbs.install: true
-       qbs.installDir: product.appdir + "/" + product.libdir
+       qbs.installDir: product.applicationPath + "/" + product.rLibraryPath
    }
 }

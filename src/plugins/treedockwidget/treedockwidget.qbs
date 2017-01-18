@@ -10,8 +10,7 @@ PluginProduct {
     copyright:   "Copyright (C) RTPTechGroup"
 
     cpp.defines:          base.concat(["TREEDOCKWIDGET_LIBRARY"])
-//    cpp.dynamicLibraries: base.concat(["plugin", "filtertreewidget"])
-    cpp.includePaths:     base.concat([ '.'])
+    cpp.includePaths:     base.concat(['.'])
 
     Depends { name: "Qt"; submodules: ["widgets"] }
     Depends { name: "plugin" }

@@ -11,7 +11,7 @@ LibProduct {
 
     cpp.defines: base.concat([
         "PLUGIN_LIBRARY",
-        "PLUGIN_DIR=\"" + product.plugindir + "\"",
+        "PLUGIN_DIR=\"" + product.rPluginPath + "\"",
     ])
     Depends { name: "Qt"; submodules: ["widgets"] }
 
