@@ -9,7 +9,6 @@ TreeXmlModelProduct {
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
 
-//    cpp.dynamicLibraries: base.concat(["treexmlmodel"])
     Depends { name: "Qt"; submodules: ["widgets", "xml", "testlib"] }
     Depends { name: "treexmlmodel" }
     Depends { name: "modeltest" }

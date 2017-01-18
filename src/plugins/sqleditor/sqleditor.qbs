@@ -10,8 +10,7 @@ PluginProduct {
     copyright:   "Copyright (C) RTPTechGroup"
 
     cpp.defines:          base.concat(["SQLEDITOR_LIBRARY"])
-//    cpp.dynamicLibraries: base.concat(["plugin"])
-    cpp.includePaths:     base.concat([ '.'])
+    cpp.includePaths:     base.concat(['.'])
 
     Depends { name: "Qt"; submodules: ["widgets", "sql"] }
     Depends { name: "plugin" }
