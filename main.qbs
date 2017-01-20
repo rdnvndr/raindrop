@@ -1,4 +1,6 @@
 import qbs
+import qbs.Process
+import qbs.File
 
 Product {
     property string productname: ""
@@ -29,4 +31,30 @@ Product {
         "APP_NAME="        + "\"" +  product.name + "\""
     ]
     Depends { name: "cpp" }
+
+    readonly property string prjDir: project.sourceDirectory
+    Probe {
+        configure: {
+            //A bit of a hack to make qbs re-resolve (see QBS-996)
+            var hack = File.lastModified(prjDir + "/.git/logs/HEAD")
+
+            var cmd;
+            var args;
+            if (qbs.targetOS.contains("windows")) {
+                cmd = "cmd";
+                args = ["/c", prjDir+"/scripts/version.bat"];
+            } else {
+                cmd = prjDir+"/scripts/version.sh";
+                args = [];
+            }
+            var p = new Process();
+            p.setWorkingDirectory(sourceDirectory)
+            if (0 === p.exec(cmd, args)) {
+                found = true;
+            } else {
+                found = false;
+            }
+            p.close();
+        }
+    }
 }
