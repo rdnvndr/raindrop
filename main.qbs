@@ -44,7 +44,7 @@ Product {
                 cmd = "cmd";
                 args = ["/c", prjDir+"/scripts/version.bat"];
             } else {
-                cmd = prjDir+"/scripts/version.sh";
+                cmd  = prjDir+"/scripts/version.sh";
                 args = [];
             }
             var p = new Process();

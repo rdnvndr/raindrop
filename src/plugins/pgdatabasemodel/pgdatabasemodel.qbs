@@ -25,7 +25,7 @@ PluginProduct {
         "pgdatabasemodelglobal.h",
         "pgdatabaseattr.cpp",
         "pgdatabaseclass.cpp",
-        "pgdatabasecomposition.cpp ",
+        "pgdatabasecomposition.cpp",
         "pgdatabaseexpression.cpp",
         "pgdatabasefilter.cpp",
         "pgdatabasemodel.cpp",
