@@ -7,7 +7,9 @@ Project {
      "modeleride/modeleride.qbs",
      "sqleditor/sqleditor.qbs",
      "treedockwidget/treedockwidget.qbs",
-     "undostack/undostack.qbs"
-
+     "databasemodel/databasemodel.qbs",
+     "dbmodelexample/dbmodelexample.qbs",
+     "pgdatabasemodel/pgdatabasemodel.qbs",
+     "undostack/undostack.qbs"     
  ]
 }
