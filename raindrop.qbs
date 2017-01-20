@@ -1,5 +1,6 @@
+import qbs
 Project {
-    minimumQbsVersion: "1.6"
+    minimumQbsVersion: qbs.version
     references: [
         "src/src.qbs",
         "tests/tests.qbs"
