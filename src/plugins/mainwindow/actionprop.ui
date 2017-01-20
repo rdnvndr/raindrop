@@ -142,7 +142,7 @@
   <customwidget>
    <class>RTPTechGroup::Widgets::PushButtonImage</class>
    <extends>QPushButton</extends>
-   <header>pushbuttonimage.h</header>
+   <header location="global">pushbuttonimage/pushbuttonimage.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -1,5 +1,4 @@
 #include "xmldelegate.h"
-#include "pushbuttonimage.h"
 #include <QComboBox>
 #include <QCheckBox>
 #include <QAbstractItemView>
@@ -10,6 +9,7 @@
 #include <QAbstractProxyModel>
 #include <treecombobox/treecombobox.h>
 #include <treexmlmodel/treexmlhashmodel.h>
+#include <pushbuttonimage/pushbuttonimage.h>
 
 using namespace RTPTechGroup::Widgets;
 using namespace RTPTechGroup::XmlModel;

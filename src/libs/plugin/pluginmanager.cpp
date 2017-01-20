@@ -78,10 +78,19 @@ QList<IPlugin *> PluginManager::dependentPlugins(IPlugin *plugin)
 
 void PluginManager::loadPlugins()
 {
-    m_pluginsDir = QDir(qApp->applicationDirPath());
-    if (!m_pluginsDir.cd("plugins"))
+#ifndef PLUGIN_DIR
+    m_pluginsDir = QDir(qApp->applicationDirPath() + "/plugins/");
+#else
+    m_pluginsDir = QDir(qApp->applicationDirPath() + "/" + PLUGIN_DIR);
+#endif
+
+    if (!m_pluginsDir.exists())
     {
-        QMessageBox::critical(NULL, tr("Ошибка"), tr("Каталог с модулями не найден"));
+        QMessageBox::critical(NULL,
+                              tr("Ошибка"),
+                              tr("Каталог с модулями не найден\n")
+                              + m_pluginsDir.absolutePath()
+                              );
         return;
     }
     m_fileList = m_pluginsDir.entryList(QDir::Files);
