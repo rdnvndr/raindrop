@@ -35,10 +35,11 @@ Product {
     Probe {
         property string prjDir: project.sourceDirectory
         property string prdDir: product.sourceDirectory
-        configure: {
+        property int hack: {
             //A bit of a hack to make qbs re-resolve (see QBS-996)
-            var hack = File.lastModified(prjDir + "/.git/logs/HEAD")
-
+            return  File.lastModified(prjDir + "/.git/logs/HEAD");
+        }
+        configure: {
             var cmd;
             var args;
             if (qbs.targetOS.contains("windows")) {
