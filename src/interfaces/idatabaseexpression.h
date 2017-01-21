@@ -73,5 +73,6 @@ private:
 };
 
 Q_DECLARE_METATYPE(IDatabaseExpression)
+Q_DECLARE_METATYPE(IDatabaseExpression*)
 
 #endif // IDATABASEEXPRESSION_H
