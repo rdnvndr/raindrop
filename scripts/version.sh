@@ -1,7 +1,8 @@
 #!/bin/sh
 
 TVER=`cat version.h | grep '#define VER_REV'`
-VER=`git describe --tags --always`
+COMMIT=`git rev-list -1 HEAD -- .`
+VER=`git describe --tags --always $COMMIT`
 
 if [ "$TVER" != "#define VER_REV \"$VER\"" ]; then
   DATE_REV=`git show -s --format=format:"%ci" $VER`

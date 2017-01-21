@@ -32,8 +32,9 @@ Product {
     ]
     Depends { name: "cpp" }
 
-    readonly property string prjDir: project.sourceDirectory
     Probe {
+        property string prjDir: project.sourceDirectory
+        property string prdDir: product.sourceDirectory
         configure: {
             //A bit of a hack to make qbs re-resolve (see QBS-996)
             var hack = File.lastModified(prjDir + "/.git/logs/HEAD")
@@ -43,12 +44,14 @@ Product {
             if (qbs.targetOS.contains("windows")) {
                 cmd = "cmd";
                 args = ["/c", prjDir+"/scripts/version.bat"];
-            } else {
-                cmd = prjDir+"/scripts/version.sh";
-                args = [];
             }
+            if (qbs.targetOS.contains("linux")) {
+                cmd = "/usr/bin/sh";
+                args = ["-c", prjDir+"/scripts/version.sh"];
+            }
+
             var p = new Process();
-            p.setWorkingDirectory(sourceDirectory)
+            p.setWorkingDirectory(prdDir)
             if (0 === p.exec(cmd, args)) {
                 found = true;
             } else {
