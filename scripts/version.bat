@@ -1,6 +1,9 @@
 @echo off
 
-for /f "tokens=*" %%i in ('git describe --tags --always') do (
+for /f "tokens=*" %%m in ('git rev-list -1 HEAD -- .') do (
+   set commit=%%m
+)
+for /f "tokens=*" %%i in ('git describe --tags --always %commit%') do (
    set ver=%%i
 )
 set test=-
