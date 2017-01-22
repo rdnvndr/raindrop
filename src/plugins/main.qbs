@@ -9,7 +9,6 @@ SrcProduct {
    Group {
        fileTagsFilter: [
            "dynamiclibrary",
-           "dynamiclibrary_symlink",
            "dynamiclibrary_import"]
        qbs.install: true
        qbs.installDir: product.applicationPath + "/" + product.rPluginPath
