@@ -6,7 +6,7 @@ Requirements
 ------------------------------------------------------------------------------
 To build Raindrop you will need a C compiler and Qt Framework 
 
-For all platforms: Qt Framework >= **4.8.6**
+For all platforms: Qt Framework >= **5.5.1**
 
 + **Windows:** MSVC++ (either [free](http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express) or commercial).
 + **Linux:** Make  and GCC. 

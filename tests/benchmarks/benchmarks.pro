@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS += interfaces
+SUBDIRS += app
 SUBDIRS += libs
 SUBDIRS += plugins
 SUBDIRS += shared

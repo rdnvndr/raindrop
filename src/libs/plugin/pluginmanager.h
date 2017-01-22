@@ -78,6 +78,12 @@ public:
     //! Получает ссылку на объект для сохранения настроек
     QSettings *settings() const;
 
+    //! Получение каталога для плагина
+    QDir pluginsDir() const;
+
+    //! Установка каталога для плагина
+    void setPluginsDir(const QDir &pluginsDir);
+
 signals:
 
     //! Сигнал о загрузке плагина

@@ -12,16 +12,19 @@ Product {
     property string applicationPath: "bin"
     property string interfacePath:   "include/raindrop/"
     property string rPluginPath:     "../lib/raindrop/plugins/"
+
     Properties {
         condition: qbs.targetOS.contains("linux")
-        property string rLibraryPath:    "../lib/raindrop"
+        property string rLibraryPath:     "../lib/raindrop"
+        property string rLibraryTestPath: "../../lib/raindrop"
     }
     Properties {
         condition: qbs.targetOS.contains("windows")
-        property string rLibraryPath:    ""
+        property string rLibraryPath:     ""
+        property string rLibraryTestPath: ""
     }
 
-    cpp.rpaths: "../lib/raindrop"
+    cpp.rpaths: rLibraryPath
     cpp.defines: [
         "APP_VERSION="     + "\"" +  product.version + "\"",
         "APP_COMPANY="     + "\"" +  product.company + "\"",
@@ -32,23 +35,27 @@ Product {
     ]
     Depends { name: "cpp" }
 
-    readonly property string prjDir: project.sourceDirectory
     Probe {
-        configure: {
+        property string prjDir: project.sourceDirectory
+        property string prdDir: product.sourceDirectory
+        property int hack: {
             //A bit of a hack to make qbs re-resolve (see QBS-996)
-            var hack = File.lastModified(prjDir + "/.git/logs/HEAD")
-
+            return  File.lastModified(prjDir + "/.git/logs/HEAD");
+        }
+        configure: {
             var cmd;
             var args;
             if (qbs.targetOS.contains("windows")) {
                 cmd = "cmd";
                 args = ["/c", prjDir+"/scripts/version.bat"];
-            } else {
-                cmd  = prjDir+"/scripts/version.sh";
-                args = [];
             }
+            if (qbs.targetOS.contains("linux")) {
+                cmd = "/usr/bin/sh";
+                args = ["-c", prjDir+"/scripts/version.sh"];
+            }
+
             var p = new Process();
-            p.setWorkingDirectory(sourceDirectory)
+            p.setWorkingDirectory(prdDir)
             if (0 === p.exec(cmd, args)) {
                 found = true;
             } else {
