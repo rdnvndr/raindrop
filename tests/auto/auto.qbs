@@ -1,8 +1,6 @@
 Project {
  references: [
-  "interfaces/interfaces.qbs",
-  "libs/libs.qbs",
-  "plugins/plugins.qbs",
-  "shared/shared.qbs"
+  "treexmlmodel/treexmlmodel.qbs",
+  "plugin/plugin.qbs"
  ]
 }

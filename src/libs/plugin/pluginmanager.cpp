@@ -12,6 +12,12 @@ PluginManager::PluginManager(QObject *parent) :
     m_instance = this;
     m_settings = NULL;
     m_lockFiles = NULL;
+
+#ifndef PLUGIN_DIR
+    m_pluginsDir = QDir(qApp->applicationDirPath() + "/plugins/");
+#else
+    m_pluginsDir = QDir(qApp->applicationDirPath() + "/" + PLUGIN_DIR);
+#endif
 }
 
 PluginManager *PluginManager::m_instance = 0;
@@ -78,12 +84,6 @@ QList<IPlugin *> PluginManager::dependentPlugins(IPlugin *plugin)
 
 void PluginManager::loadPlugins()
 {
-#ifndef PLUGIN_DIR
-    m_pluginsDir = QDir(qApp->applicationDirPath() + "/plugins/");
-#else
-    m_pluginsDir = QDir(qApp->applicationDirPath() + "/" + PLUGIN_DIR);
-#endif
-
     if (!m_pluginsDir.exists())
     {
         QMessageBox::critical(NULL,
@@ -169,6 +169,16 @@ void PluginManager::removePlugin(QObject *obj)
             }
     emit removedPlugin(obj);
     qDebug() << "Remove plugin:" << obj->objectName();
+}
+
+QDir PluginManager::pluginsDir() const
+{
+    return m_pluginsDir;
+}
+
+void PluginManager::setPluginsDir(const QDir &pluginsDir)
+{
+    m_pluginsDir = pluginsDir;
 }
 
 }}

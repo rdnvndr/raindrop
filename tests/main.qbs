@@ -1,5 +1,6 @@
+import qbs.FileInfo
 import "../main.qbs" as MainProduct
 MainProduct {
    name: "tests"
-   type: "aplication"
+   cpp.rpaths: rLibraryTestPath
 }

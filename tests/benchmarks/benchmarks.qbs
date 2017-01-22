@@ -1,6 +1,6 @@
 Project {
  references: [
-  "interfaces/interfaces.qbs",
+  "app/app.qbs",
   "libs/libs.qbs",
   "plugins/plugins.qbs",
   "shared/shared.qbs"
