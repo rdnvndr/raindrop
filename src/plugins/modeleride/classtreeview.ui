@@ -60,7 +60,7 @@
         </property>
         <property name="icon">
          <iconset resource="modeleride.qrc">
-          <normaloff>:/cleanfilter</normaloff>:/cleanfilter</iconset>
+          <normaloff>:/leditclean</normaloff>:/leditclean</iconset>
         </property>
         <property name="iconSize">
          <size>
