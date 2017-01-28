@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file alias="modeleride">icons/classicon.svg</file>
-        <file alias="cleanfilter">icons/editclean.svg</file>
+        <file alias="leditclean">icons/leditclean.svg</file>
         <file alias="savemodel">icons/document-save.svg</file>
         <file alias="openmodel">icons/document-open.svg</file>
         <file alias="publish">icons/emblem-package.svg</file>
@@ -12,7 +12,7 @@
         <file alias="edit">icons/gtk-edit.svg</file>
         <file alias="block">icons/block.svg</file>
         <file alias="expression">icons/formula.svg</file>
-        <file alias="editclean">icons/reditclean.svg</file>
+        <file alias="reditclean">icons/reditclean.svg</file>
         <file alias="down">icons/go-down.svg</file>
         <file alias="up">icons/go-up.svg</file>
         <file alias="addchild">icons/addchild.svg</file>
