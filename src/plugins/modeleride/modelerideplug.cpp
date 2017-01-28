@@ -510,13 +510,13 @@ void ModelerIDEPlug::saveClassModel()
         return;
     }
 
-    QFile File(m_fileName);
-    if ( File.open(QIODevice::WriteOnly) )
+    QFile file(m_fileName);
+    if ( file.open(QIODevice::WriteOnly) )
     {
-        QTextStream TextStream(&File);
+        QTextStream TextStream(&file);
         QDomDocument doc = m_model->rootItem()->node().toDocument();
         doc.save(TextStream, 0);
-        File.close();
+        file.close();
     }
     m_actionSaveModel->setDisabled(true);
 }
@@ -525,13 +525,15 @@ void ModelerIDEPlug::saveAsClassModel()
 {
     m_fileName = QFileDialog::getSaveFileName(NULL, tr("Сохранение модели"),
                                                     "", tr("Фаил модели (*.xml)"));
-    QFile File(m_fileName);
-    if ( File.open(QIODevice::WriteOnly) )
+    if (m_fileName.right(4) != ".xml")
+        m_fileName += ".xml";
+    QFile file(m_fileName);
+    if ( file.open(QIODevice::WriteOnly) )
     {
-        QTextStream TextStream(&File);
+        QTextStream TextStream(&file);
         QDomDocument doc = m_model->rootItem()->node().toDocument();
         doc.save(TextStream, 0);
-        File.close();
+        file.close();
     }
     m_actionSaveModel->setDisabled(true);
 }

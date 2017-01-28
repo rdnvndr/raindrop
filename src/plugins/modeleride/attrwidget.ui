@@ -385,7 +385,7 @@
           </property>
           <property name="icon">
            <iconset resource="modeleride.qrc">
-            <normaloff>:/editclean</normaloff>:/editclean</iconset>
+            <normaloff>:/reditclean</normaloff>:/reditclean</iconset>
           </property>
           <property name="autoRaise">
            <bool>true</bool>
@@ -416,7 +416,7 @@
           </property>
           <property name="icon">
            <iconset resource="modeleride.qrc">
-            <normaloff>:/editclean</normaloff>:/editclean</iconset>
+            <normaloff>:/reditclean</normaloff>:/reditclean</iconset>
           </property>
           <property name="autoRaise">
            <bool>true</bool>
@@ -477,7 +477,7 @@
           </property>
           <property name="icon">
            <iconset resource="modeleride.qrc">
-            <normaloff>:/editclean</normaloff>:/editclean</iconset>
+            <normaloff>:/reditclean</normaloff>:/reditclean</iconset>
           </property>
           <property name="autoRaise">
            <bool>true</bool>
