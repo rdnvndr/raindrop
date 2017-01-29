@@ -8,3 +8,4 @@ HEADERS += iundogroup.h
 HEADERS += iclipboardstack.h
 HEADERS += iclipboarditem.h
 HEADERS += iclipboardelement.h
+HEADERS += idatabaseconnect.h
