@@ -7,7 +7,8 @@ InterfacesProduct {
         "iundogroup.h",
         "iclipboardstack.h",
         "iclipboarditem.h",
-        "iclipboardelement.h"
+        "iclipboardelement.h",
+        "idatabaseconnect.h"
     ]
 
     FileTagger {

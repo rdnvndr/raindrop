@@ -8,7 +8,7 @@ namespace SqlEditor {
 
 
 SqlEditor::SqlEditor(QObject *parent):
-    QObject(parent), IPlugin("IMainWindow IUndoGroup IClipboardStack")
+    QObject(parent), IPlugin("IMainWindow IUndoGroup IClipboardStack IDatabaseConnect")
 {
     PluginManager *pluginManager = PluginManager::instance();
 
