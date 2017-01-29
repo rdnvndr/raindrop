@@ -8,7 +8,7 @@ namespace SqlEditor {
 
 
 SqlEditor::SqlEditor(QObject *parent):
-    QObject(parent), IPlugin("IMainWindow IUndoGroup IClipboardStack")
+    QObject(parent), IPlugin("IMainWindow IUndoGroup IClipboardStack IDatabaseConnect")
 {
     PluginManager *pluginManager = PluginManager::instance();
 
@@ -25,6 +25,14 @@ SqlEditor::SqlEditor(QObject *parent):
 
 SqlEditor::~SqlEditor()
 {
+    PluginManager *pluginManager = PluginManager::instance();
+    IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
+                pluginManager->interfaceObject("IMainWindow"));
+
+    QMdiSubWindow *subWindow = iMainWindow->setActiveSubWindow("QuerySqlWidget");
+    if (subWindow)
+        subWindow->close();
+
     delete m_actionSqlEditor;
 }
 

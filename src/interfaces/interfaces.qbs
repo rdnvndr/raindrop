@@ -2,9 +2,6 @@ import "../main.qbs" as InterfacesProduct
 InterfacesProduct {
     name: "interfaces"
     files: [
-        "iclipboardelement.h",
-        "iclipboarditem.h",
-        "iclipboardstack.h",
         "idatabaseattribute.h",
         "idatabaseclass.h",
         "idatabasecomposition.h",
@@ -16,7 +13,11 @@ InterfacesProduct {
         "idatabaserole.h",
         "imainwindow.h",
         "itreedockwidget.h",
-        "iundogroup.h"
+        "iundogroup.h",
+        "iclipboardstack.h",
+        "iclipboarditem.h",
+        "iclipboardelement.h",
+        "idatabaseconnect.h"
     ]
 
     Depends { name: "Qt"; submodules: ["widgets"] }

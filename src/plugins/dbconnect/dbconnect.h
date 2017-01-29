@@ -5,6 +5,7 @@
 #include <QAction>
 #include <QSqlDatabase>
 #include <plugin/iplugin.h>
+#include <idatabaseconnect.h>
 #include "dbconnectglobal.h"
 
 namespace RTPTechGroup {
@@ -16,12 +17,13 @@ namespace DbConnect {
 
 class  DBCONNECTLIB DbConnect:
         public QObject,
-        public IPlugin
+        public IPlugin,
+        public IDatabaseConnect
 {
     Q_OBJECT
 
-    Q_INTERFACES(IPlugin)
-    Q_PLUGIN_METADATA(IID IPlugin_iid FILE "dbconnect.json")
+    Q_INTERFACES(IPlugin IDatabaseConnect)
+    Q_PLUGIN_METADATA(IID IDatabaseConnect_iid FILE "dbconnect.json")
     
 public:
     
