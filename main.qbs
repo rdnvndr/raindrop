@@ -11,6 +11,7 @@ Product {
 
     property string applicationPath: "bin"
     property string interfacePath:   "include/raindrop/"
+    property string docPath:         "share/doc/raindrop"
     property string rPluginPath:     "../lib/raindrop/plugins/"
 
     Properties {
