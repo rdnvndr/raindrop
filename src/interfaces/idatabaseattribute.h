@@ -32,109 +32,109 @@ public:
         m_refLov = NULL;
         m_refNumerator = NULL;
         m_parent = NULL;
-    };
+    }
 
     //! Деструктор класса
-    virtual ~IDatabaseAttribute() {};
+    virtual ~IDatabaseAttribute() {}
 
     //! Возращает тип атрибута
-    virtual AttrbuteType attributeType() { return m_attrType; };
+    virtual AttrbuteType attributeType() { return m_attrType; }
 
     //! Устанавливает тип атрибута
-    virtual void setAttrbuteType(AttrbuteType attrType) { m_attrType = attrType; };
+    virtual void setAttrbuteType(AttrbuteType attrType) { m_attrType = attrType; }
 
      //! Возращает группу атрибута
-    virtual QString group() { return m_group; };
+    virtual QString group() { return m_group; }
 
     //! Устанавливает группу атрибута
-    virtual void setGroup(const QString &group) { m_group = group; };
+    virtual void setGroup(const QString &group) { m_group = group; }
 
      //! Возращает максимальную длину
-    virtual qint32 maxStringLength() { return m_length; };
+    virtual qint32 maxStringLength() { return m_length; }
 
     //! Устанавливает максимальную длину
-    virtual void setMaxStringLength(qint32 length) {m_length = length; };
+    virtual void setMaxStringLength(qint32 length) {m_length = length; }
 
      //! Возращает точность
-    virtual qint32 accuracy() { return m_accuracy; };
+    virtual qint32 accuracy() { return m_accuracy; }
 
     //! Устанавливает точность
-    virtual void setAccuracy(qint32 accuracy) { m_accuracy = accuracy; };
+    virtual void setAccuracy(qint32 accuracy) { m_accuracy = accuracy; }
 
      //! Возращает разрешение присваивать NULL
-    virtual bool isNullsAllowed() { return m_nullsAllowed; };
+    virtual bool isNullsAllowed() { return m_nullsAllowed; }
 
     //! Устанавливает разрешение присваивать NULL
     virtual void setNullsAllowed(bool nullsAllowed)
-    { m_nullsAllowed = nullsAllowed; };
+    { m_nullsAllowed = nullsAllowed; }
 
      //! Возращает уникальность атрибута
-    virtual bool isUnique() { return m_unique; };
+    virtual bool isUnique() { return m_unique; }
 
     //! Устанавливает уникальность атрибута
-    virtual void setUnique(bool unique) { m_unique = unique; };
+    virtual void setUnique(bool unique) { m_unique = unique; }
 
      //! Возращает является ли атрибут ключом
-    virtual bool isCandidateKey() { return m_candidateKey; };
+    virtual bool isCandidateKey() { return m_candidateKey; }
 
     //! Устанавливает атрибут ключом
     virtual void setCandidateKey(bool candidateKey)
-    { m_candidateKey = candidateKey; };
+    { m_candidateKey = candidateKey; }
 
      //! Возращает значение по умолчанию
-    virtual QVariant initialValue() { return m_initialValue; };
+    virtual QVariant initialValue() { return m_initialValue; }
 
     //! Устанавливает значение по умолчанию
     virtual void setInitialValue(QVariant initialValue)
-    { m_initialValue = initialValue; };
+    { m_initialValue = initialValue; }
 
      //! Возращает нижнюю границу атрибута
-    virtual QVariant lowerBound() { return m_lowerBound; };
+    virtual QVariant lowerBound() { return m_lowerBound; }
 
     //! Устанавливает нижнюю границу атрибута
     virtual void setLowerBound(QVariant lowerBound)
-    { m_lowerBound = lowerBound; };
+    { m_lowerBound = lowerBound; }
 
      //! Возращает верхнюю границу атрибута
-    virtual QVariant upperBound() { return m_upperBound; };
+    virtual QVariant upperBound() { return m_upperBound; }
 
     //! Устанавливает верхнюю границу атрибута
     virtual void setUpperBound(QVariant upperBound)
-    { m_upperBound = upperBound; };
+    { m_upperBound = upperBound; }
 
      //! Возращает ссылочный класс
-    virtual IDatabaseClass *referencedClass() { return m_refClass; };
+    virtual IDatabaseClass *referencedClass() { return m_refClass; }
 
     //! Устанавливает ссылочный класс
     virtual void setReferencedClass(IDatabaseClass *refClass)
-    { m_refClass = refClass; };
+    { m_refClass = refClass; }
 
      //! Возращает единицу измерения атрибута
-    virtual IDatabaseClass *referencedUnit() { return m_refUnit; };
+    virtual IDatabaseClass *referencedUnit() { return m_refUnit; }
 
     //! Устанавливает единицу измерения атрибута
     virtual void setReferencedUnit(IDatabaseClass *refUnit)
-    { m_refUnit = refUnit; };
+    { m_refUnit = refUnit; }
 
      //! Возращает список значений атрибута
-    virtual IDatabaseClass *referencedLov() { return m_refLov; };
+    virtual IDatabaseClass *referencedLov() { return m_refLov; }
 
     //! Устанавливает список значений атрибута
     virtual void setReferencedLov(IDatabaseClass *refLov)
-    { m_refLov = refLov; };
+    { m_refLov = refLov; }
 
      //! Возращает нумератор для атрибута
-    virtual IDatabaseClass *referenceNumerator() { return m_refNumerator; };
+    virtual IDatabaseClass *referenceNumerator() { return m_refNumerator; }
 
     //! Устанавливает нумератор для атрибута
     virtual void setReferenceNumerator(IDatabaseClass *refNumerator)
-    { m_refNumerator = refNumerator; };
+    { m_refNumerator = refNumerator; }
 
      //! Возращает класс атрибута
-    virtual IDatabaseClass *parent() { return m_parent; };
+    virtual IDatabaseClass *parent() { return m_parent; }
 
     //! Устанавливает класс атрибута
-    virtual void setParent(IDatabaseClass *parent) { m_parent = parent; };
+    virtual void setParent(IDatabaseClass *parent) { m_parent = parent; }
 
     //! Проверка наследования атрибута
     virtual bool isInherited(IDatabaseClass *parent) = 0;

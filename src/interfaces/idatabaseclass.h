@@ -33,49 +33,49 @@ public:
         m_classType = IDatabaseClass::Normal;
         m_accessMode = IDatabaseClass::Standart;
         m_parent = NULL;
-    };
+    }
 
     //! Деструктор класса
-    virtual ~IDatabaseClass() {};
+    virtual ~IDatabaseClass() {}
 
 
     //! Возращает иконку класса
-    virtual QIcon icon() { return m_icon; };
+    virtual QIcon icon() { return m_icon; }
 
     //! Устанавливает иконку класса
-    virtual void setIcon(QIcon icon) { m_icon = icon; };
+    virtual void setIcon(QIcon icon) { m_icon = icon; }
 
     //! Возращает тип класса
-    virtual ClassType classType() { return m_classType; };
+    virtual ClassType classType() { return m_classType; }
 
     //! Устанавливает тип класса
-    virtual void setClassType(ClassType classType) { m_classType = classType; };
+    virtual void setClassType(ClassType classType) { m_classType = classType; }
 
     //! Возращает режим доступа
-    virtual AccessMode accessMode() { return m_accessMode; };
+    virtual AccessMode accessMode() { return m_accessMode; }
 
     //! Устанавливает режим доступа
     virtual void setAccessMode(AccessMode accessMode)
-    { m_accessMode = accessMode; };
+    { m_accessMode = accessMode; }
 
     //!  Возращает родительский класс
-    virtual IDatabaseClass *parent() { return m_parent; };
+    virtual IDatabaseClass *parent() { return m_parent; }
 
     //!  Устанавливает родительский класс
-    virtual void setParent(IDatabaseClass *parent) { m_parent = parent; };
+    virtual void setParent(IDatabaseClass *parent) { m_parent = parent; }
 
     //!  Возращает шаблон имени объекта
-    virtual QString objectNameTemplate() { return m_objectNameTemplate; };
+    virtual QString objectNameTemplate() { return m_objectNameTemplate; }
 
     //!  Устанавливает шаблон имени объекта
     virtual void setObjectNameTemplate(const QString &objectNameTemplate)
-    { m_objectNameTemplate = objectNameTemplate; };
+    { m_objectNameTemplate = objectNameTemplate; }
 
     //! Возращает максимальное количество версий объекта
-    virtual qint32 maxVersion() { return m_maxVersion; };
+    virtual qint32 maxVersion() { return m_maxVersion; }
 
     //! Устанавливает максимальное количество версий объекта
-    virtual void setMaxVersion(qint32 maxVersion) { m_maxVersion = maxVersion; };
+    virtual void setMaxVersion(qint32 maxVersion) { m_maxVersion = maxVersion; }
 
 
     //! Cписок атрибутов в классе

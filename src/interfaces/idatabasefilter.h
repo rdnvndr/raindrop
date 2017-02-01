@@ -9,10 +9,10 @@ class IDatabaseFilter: public IDatabaseItem
 {
 public:
     //! Конструктор класса
-    explicit IDatabaseFilter() {};
+    explicit IDatabaseFilter() {}
 
     //! Деструктор класса
-    virtual ~IDatabaseFilter() {};
+    virtual ~IDatabaseFilter() {}
 
 //    virtual void setExpression(IDatabaseExpression *expr) = 0;
 //    virtual IDatabaseFilter orderBy() = 0;

@@ -14,10 +14,10 @@ class IDatabaseComposition: public IDatabaseItem
 {
 public:
     //! Конструктор класса
-    explicit IDatabaseComposition() {};
+    explicit IDatabaseComposition() {}
 
     //! Деструктор класса
-    virtual ~IDatabaseComposition() {};
+    virtual ~IDatabaseComposition() {}
 
 // Работа с выражениями
     //! Формирует выражение равенства

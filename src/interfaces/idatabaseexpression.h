@@ -21,10 +21,10 @@ public:
                              };
 
     //! Конструктор класса
-    explicit IDatabaseExpression() { m_operator =  IDatabaseExpression::EQ; };
+    explicit IDatabaseExpression() { m_operator =  IDatabaseExpression::EQ; }
 
     //! Деструктор класса
-    virtual ~IDatabaseExpression() {};
+    virtual ~IDatabaseExpression() {}
 
     //! Устанавливает первое значение
     void setFirstValue(QVariant value) { m_firstValue = value; }
