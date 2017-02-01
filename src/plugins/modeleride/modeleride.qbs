@@ -145,4 +145,11 @@ PluginProduct {
         "unitwidget.ui",
         "modeleride.qrc"
     ]
+
+    Group {
+        name: "Example"
+        files: "data/system.xml"
+        qbs.install: true
+        qbs.installDir: product.docPath + "/modeleride/"
+    }
 }
