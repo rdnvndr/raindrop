@@ -4,6 +4,7 @@
 //! Соединение с базой данных
 class IDatabaseConnect
 {
+public:
     explicit IDatabaseConnect() {}
     virtual ~IDatabaseConnect() {}
 };
