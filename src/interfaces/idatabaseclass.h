@@ -4,19 +4,22 @@
 #include <idatabaseitem.h>
 #include <idatabaseattribute.h>
 #include <idatabasefilter.h>
+#include <idatabasecomposition.h>
 #include <idatabaseexpression.h>
 
 #include <QIcon>
 #include <QUuid>
 #include <QString>
 
-
 class IDatabaseExpression;
 class IDatabaseAttribute;
 class IDatabaseFilter;
+class IDatabaseComposition;
 
-typedef QHash<QString, IDatabaseAttribute *> IDatabaseAttrs;
-typedef QHash<QString, IDatabaseFilter *> IDatabaseFilters;
+typedef QHash<QString, IDatabaseClass       *> IDatabaseClasses;
+typedef QHash<QString, IDatabaseAttribute   *> IDatabaseAttrs;
+typedef QHash<QString, IDatabaseFilter      *> IDatabaseFilters;
+typedef QHash<QString, IDatabaseComposition *> IDatabaseComps;
 
 //! Класс базы данных
 class IDatabaseClass: public IDatabaseItem
@@ -77,6 +80,22 @@ public:
     //! Устанавливает максимальное количество версий объекта
     virtual void setMaxVersion(qint32 maxVersion) { m_maxVersion = maxVersion; }
 
+// Получение доступа к элементам класса по имени
+    //! Получение дочернего класса по имени
+    virtual IDatabaseClass *childClass(const QString &name) = 0;
+
+    //! Получение атрибута по имени
+    virtual IDatabaseAttribute *attr(const QString &name) = 0;
+
+    //! Получение фильтра по имени
+    virtual IDatabaseFilter *filter(const QString &name) = 0;
+
+    //! Получение состава по имени
+    virtual IDatabaseComposition *comp(const QString &name) = 0;
+
+// Получение доступа к спискам элементов класса по имени
+    //! Cписок атрибутов в классе
+    virtual IDatabaseClasses classList() = 0;
 
     //! Cписок атрибутов в классе
     virtual IDatabaseAttrs attrList() = 0;
@@ -84,7 +103,10 @@ public:
     //! Cписок фильтров в классе
     virtual IDatabaseFilters filterList() = 0;
 
-//! Работа с объектами
+    //! Cписок атрибутов в классе
+    virtual IDatabaseComps compList() = 0;
+
+// Работа с объектами
      //! Получение отфильтрованных объектов класса
     virtual void filtering(IDatabaseFilter *filter) = 0;
 
