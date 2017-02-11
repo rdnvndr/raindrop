@@ -16,20 +16,28 @@ PluginProduct {
     Depends { name: "plugin" }
 
     files: [
-        "pgdatabaseattr.h",
+        "pgdatabaseattribute.cpp",
+        "pgdatabaseattribute.h",
+        "pgdatabaseattrs.cpp",
+        "pgdatabaseattrs.h",
         "pgdatabaseclass.h",
+        "pgdatabaseclasses.cpp",
+        "pgdatabaseclasses.h",
         "pgdatabasecomposition.h",
+        "pgdatabasecomps.cpp",
+        "pgdatabasecomps.h",
         "pgdatabaseexpression.h",
         "pgdatabasefilter.h",
+        "pgdatabasefilters.cpp",
+        "pgdatabasefilters.h",
         "pgdatabasemodel.h",
         "pgdatabasemodelglobal.h",
-        "pgdatabaseattr.cpp",
         "pgdatabaseclass.cpp",
         "pgdatabasecomposition.cpp",
         "pgdatabaseexpression.cpp",
         "pgdatabasefilter.cpp",
         "pgdatabasemodel.cpp",
         "version.h",
-        "pgdatabasemodel.qrc"
+        "pgdatabasemodel.qrc",
     ]
 }

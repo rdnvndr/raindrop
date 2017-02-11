@@ -6,20 +6,13 @@
 #include <idatabasefilter.h>
 #include <idatabasecomposition.h>
 #include <idatabaseexpression.h>
+#include <idatabaselist.h>
 
 #include <QIcon>
 #include <QUuid>
 #include <QString>
 
 class IDatabaseExpression;
-class IDatabaseAttribute;
-class IDatabaseFilter;
-class IDatabaseComposition;
-
-typedef QHash<QString, IDatabaseClass       *> IDatabaseClasses;
-typedef QHash<QString, IDatabaseAttribute   *> IDatabaseAttrs;
-typedef QHash<QString, IDatabaseFilter      *> IDatabaseFilters;
-typedef QHash<QString, IDatabaseComposition *> IDatabaseComps;
 
 //! Класс базы данных
 class IDatabaseClass: public IDatabaseItem
@@ -94,17 +87,17 @@ public:
     virtual IDatabaseComposition *comp(const QString &name) = 0;
 
 // Получение доступа к спискам элементов класса по имени
-    //! Cписок атрибутов в классе
-    virtual IDatabaseClasses classList() = 0;
+    //! Cписок дочерних в классе
+    virtual IDatabaseClasses *classList() = 0;
 
     //! Cписок атрибутов в классе
-    virtual IDatabaseAttrs attrList() = 0;
+    virtual IDatabaseAttrs *attrList() = 0;
 
     //! Cписок фильтров в классе
-    virtual IDatabaseFilters filterList() = 0;
+    virtual IDatabaseFilters *filterList() = 0;
 
     //! Cписок атрибутов в классе
-    virtual IDatabaseComps compList() = 0;
+    virtual IDatabaseComps *compList() = 0;
 
 // Работа с объектами
      //! Получение отфильтрованных объектов класса

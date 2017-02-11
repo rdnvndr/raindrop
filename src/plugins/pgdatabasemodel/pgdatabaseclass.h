@@ -29,14 +29,33 @@ public:
     //! Удаление элемента базы данных
     virtual bool remove();
 
+// Получение доступа к элементам класса по имени
+    //! Получение дочернего класса по имени
+    IDatabaseClass *childClass(const QString &name) ;
+
+    //! Получение атрибута по имени
+    IDatabaseAttribute *attr(const QString &name);
+
+    //! Получение фильтра по имени
+    IDatabaseFilter *filter(const QString &name);
+
+    //! Получение состава по имени
+    IDatabaseComposition *comp(const QString &name);
+
+// Получение доступа к спискам элементов класса по имени
+    //! Cписок дочерних классов в классе
+    IDatabaseClasses *classList();
 
     //! Cписок атрибутов в классе
-    IDatabaseAttrs attrList();
+    IDatabaseAttrs *attrList();
 
     //! Cписок фильтров в классе
-    IDatabaseFilters filterList();
+    IDatabaseFilters *filterList();
 
-//! Работа с объектами
+    //! Cписок атрибутов в классе
+    IDatabaseComps *compList();
+
+// Работа с объектами
      //! Получение отфильтрованных объектов класса
     void filtering(IDatabaseFilter *filter);
 

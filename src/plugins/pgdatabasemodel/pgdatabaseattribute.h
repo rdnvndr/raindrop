@@ -1,5 +1,5 @@
-#ifndef PGDATABASEATTR_H
-#define PGDATABASEATTR_H
+#ifndef PGDATABASEATTRIBUTE_H
+#define PGDATABASEATTRIBUTE_H
 
 #include <idatabaseattribute.h>
 
@@ -7,14 +7,14 @@ namespace RTPTechGroup {
 namespace DatabaseModel {
 
 //! Реализация атрибута базы данных PostgreSql
-class PgDatabaseAttr : public IDatabaseAttribute
+class PgDatabaseAttribute : public IDatabaseAttribute
 {
 public:
     //! Конструктор класса
-    explicit PgDatabaseAttr();
+    explicit PgDatabaseAttribute();
 
     //! Деструктор класса
-    virtual ~PgDatabaseAttr();
+    virtual ~PgDatabaseAttribute();
 
 
     //! Проверка существования элемента базы данных
@@ -36,4 +36,4 @@ public:
 
 }}
 
-#endif // PGDATABASEATTR_H
+#endif // PGDATABASEATTRIBUTE_H

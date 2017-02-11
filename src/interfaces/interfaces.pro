@@ -19,4 +19,4 @@ HEADERS += idatabasecomposition.h
 HEADERS += idatabaserole.h
 HEADERS += idatabaseexpression.h
 HEADERS += idatabasemodelbuilder.h
-
+HEADERS += idatabaselist.h

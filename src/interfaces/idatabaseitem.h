@@ -3,7 +3,7 @@
 
 #include <QUuid>
 #include <QString>
-#include <QSqlDatabase>
+#include <QtSql/QSqlDatabase>
 
 //! Элемент базы данных
 class IDatabaseItem

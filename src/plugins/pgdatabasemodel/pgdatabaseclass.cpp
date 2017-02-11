@@ -1,5 +1,10 @@
 #include "pgdatabaseclass.h"
 
+#include "pgdatabaseclasses.h"
+#include "pgdatabaseattrs.h"
+#include "pgdatabasefilters.h"
+#include "pgdatabasecomps.h"
+
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
@@ -33,14 +38,48 @@ bool PgDatabaseClass::remove()
     return  true;
 }
 
-IDatabaseAttrs PgDatabaseClass::attrList()
+IDatabaseClass *PgDatabaseClass::childClass(const QString &name)
 {
-    return IDatabaseAttrs();
+    Q_UNUSED(name)
+    return NULL;
 }
 
-IDatabaseFilters PgDatabaseClass::filterList()
+IDatabaseAttribute *PgDatabaseClass::attr(const QString &name)
 {
-    return IDatabaseFilters();
+    Q_UNUSED(name)
+    return NULL;
+}
+
+IDatabaseFilter *PgDatabaseClass::filter(const QString &name)
+{
+    Q_UNUSED(name)
+    return NULL;
+}
+
+IDatabaseComposition *PgDatabaseClass::comp(const QString &name)
+{
+    Q_UNUSED(name)
+    return NULL;
+}
+
+IDatabaseClasses *PgDatabaseClass::classList()
+{
+    return dynamic_cast<IDatabaseClasses *>(new PgDatabaseClasses(this));
+}
+
+IDatabaseAttrs *PgDatabaseClass::attrList()
+{
+    return dynamic_cast<IDatabaseAttrs *>(new PgDatabaseAttrs(this));
+}
+
+IDatabaseFilters *PgDatabaseClass::filterList()
+{
+    return dynamic_cast<IDatabaseFilters *>(new PgDatabaseFilters(this));
+}
+
+IDatabaseComps *PgDatabaseClass::compList()
+{
+    return dynamic_cast<IDatabaseComps *>(new PgDatabaseComps(this));
 }
 
 void PgDatabaseClass::filtering(IDatabaseFilter *filter)

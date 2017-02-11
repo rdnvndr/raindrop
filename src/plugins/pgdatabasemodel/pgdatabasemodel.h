@@ -6,7 +6,7 @@
 #include "pgdatabasemodelglobal.h"
 
 #include <idatabasemodelbuilder.h>
-#include "pgdatabaseattr.h"
+#include "pgdatabaseattribute.h"
 
 namespace RTPTechGroup {
 namespace DatabaseModel {

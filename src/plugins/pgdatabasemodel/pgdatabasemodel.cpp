@@ -1,7 +1,7 @@
 #include "pgdatabasemodel.h"
 
 #include "pgdatabaseclass.h"
-#include "pgdatabaseattr.h"
+#include "pgdatabaseattribute.h"
 #include "pgdatabasefilter.h"
 #include "pgdatabasecomposition.h"
 
@@ -11,7 +11,7 @@ namespace DatabaseModel {
 PgDatabaseModel::PgDatabaseModel(QObject *parent):
     QObject(parent), IPlugin("")
 {
-    IDatabaseAttribute *m_attr = new PgDatabaseAttr();
+    IDatabaseAttribute *m_attr = new PgDatabaseAttribute();
     IDatabaseComposition *m_comp = new PgDatabaseComposition();
     QVariant x(10);
     IDatabaseExpression e1 = (*m_attr == *m_attr);
@@ -40,7 +40,7 @@ IDatabaseClass *PgDatabaseModel::createClass()
 
 IDatabaseAttribute *PgDatabaseModel::createAttr()
 {
-    return new PgDatabaseAttr();
+    return new PgDatabaseAttribute();
 }
 
 IDatabaseFilter *PgDatabaseModel::createFilter()
