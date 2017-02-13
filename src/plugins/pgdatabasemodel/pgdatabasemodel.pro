@@ -11,7 +11,7 @@ DEPENDPATH += .
 INCLUDEPATH += .
 DEFINES +=  PGDATABASEMODEL_LIBRARY
 greaterThan(QT_MAJOR_VERSION, 4) {
-  QT += widgets
+  QT += widgets sql
 }
 
 
@@ -27,7 +27,7 @@ HEADERS   += pgdatabasemodel.h pgdatabasemodelglobal.h \
     pgdatabasefilters.h
 SOURCES   += pgdatabasemodel.cpp \
     pgdatabaseclass.cpp \
-    pgdatabaseattrobute.cpp \
+    pgdatabaseattribute.cpp \
     pgdatabasecomposition.cpp \
     pgdatabasefilter.cpp \
     pgdatabaseclasses.cpp \
