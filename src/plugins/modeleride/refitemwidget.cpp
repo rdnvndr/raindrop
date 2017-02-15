@@ -22,6 +22,10 @@ RefItemWidget::RefItemWidget(QWidget *parent) :
             this, &RefItemWidget::addLinkToRef);
     connect(toolButtonDelete, &QToolButton::clicked,
             this, &RefItemWidget::remove);
+    connect(toolButtonUp, &QToolButton::clicked,
+            this, &RefItemWidget::up);
+    connect(toolButtonDown, &QToolButton::clicked,
+            this, &RefItemWidget::down);
 
     AbstractModifyWidget::setItemView(treeView);
     itemView()->setItemDelegate(new RefItemDelegate());
@@ -107,6 +111,8 @@ void RefItemWidget::edit(bool flag)
     toolButtonAddRef->setEnabled(flag);
     toolButtonAddFilter->setEnabled(flag);
     toolButtonDelete->setEnabled(flag);
+    toolButtonUp->setEnabled(flag);
+    toolButtonDown->setEnabled(flag);
     proxyModel()->setEditable(flag);
 }
 
