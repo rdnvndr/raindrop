@@ -142,13 +142,13 @@
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="toolButtonUp">
+         <widget class="QToolButton" name="toolButtonDown">
           <property name="text">
-           <string>Выше</string>
+           <string>Ниже</string>
           </property>
           <property name="icon">
            <iconset resource="modeleride.qrc">
-            <normaloff>:/up</normaloff>:/up</iconset>
+            <normaloff>:/down</normaloff>:/down</iconset>
           </property>
           <property name="toolButtonStyle">
            <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -159,13 +159,13 @@
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="toolButtonDown">
+         <widget class="QToolButton" name="toolButtonUp">
           <property name="text">
-           <string>Ниже</string>
+           <string>Выше</string>
           </property>
           <property name="icon">
            <iconset resource="modeleride.qrc">
-            <normaloff>:/down</normaloff>:/down</iconset>
+            <normaloff>:/up</normaloff>:/up</iconset>
           </property>
           <property name="toolButtonStyle">
            <enum>Qt::ToolButtonTextBesideIcon</enum>
