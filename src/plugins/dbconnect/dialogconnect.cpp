@@ -1,5 +1,9 @@
 #include "dialogconnect.h"
 
+#include <QSqlDatabase>
+#include <QMessageBox>
+#include <QCloseEvent>
+
 namespace RTPTechGroup {
 namespace DbConnect {
 
@@ -15,6 +19,13 @@ DialogConnect::DialogConnect(QWidget *pwgt) : QDialog(pwgt) {
     textLabelDrv->hide();
     comboDriver->hide();
     line->hide();
+
+    m_movie = new QMovie(":connecting");
+    m_movie->setScaledSize(QSize(65,50));
+    m_movie->start();
+    m_movie->stop();
+    labelImage->setAttribute(Qt::WA_NoSystemBackground);
+    labelImage->setMovie(m_movie);
 
     QStringList drivers = QSqlDatabase::drivers();
 
@@ -38,6 +49,173 @@ DialogConnect::DialogConnect(QWidget *pwgt) : QDialog(pwgt) {
     this->adjustSize();
     connect(pushButtonProp, &QPushButton::clicked,
             this, &DialogConnect::onClickButtonProp);
+
+    threadConnect = new ThreadConnect(this);
+    connect(threadConnect, &ThreadConnect::finishConnect,
+            this, &DialogConnect::finishConnect);
+}
+
+DialogConnect::~DialogConnect()
+{
+    delete threadConnect;
+    delete m_movie;
+}
+
+void DialogConnect::accept()
+{
+    startConnect();
+}
+
+void DialogConnect::setDriver(const QString &name)
+{
+    comboDriver->setCurrentIndex(comboDriver->findText(name));
+}
+
+void DialogConnect::setDatabaseName(const QString &name)
+{
+    editDatabase->setText(name);
+}
+
+void DialogConnect::setHostName(const QString &host)
+{
+    editHostname->setText(host);
+}
+
+void DialogConnect::setUserName(const QString &name)
+{
+    editUsername->setText(name);
+}
+
+void DialogConnect::setPassword(const QString &password)
+{
+    editPassword->setText(password);
+}
+
+void DialogConnect::setPort(int port)
+{
+    portSpinBox->setValue(port);
+}
+
+QString DialogConnect::driver() const
+{
+    return comboDriver->currentText();
+}
+
+QString DialogConnect::databaseName() const
+{
+    return editDatabase->text();
+}
+
+QString DialogConnect::hostName() const
+{
+    return editHostname->text();
+}
+
+QString DialogConnect::userName() const
+{
+    return editUsername->text();
+}
+
+QString DialogConnect::password() const
+{
+    return editPassword->text();
+}
+
+int DialogConnect::port() const
+{
+    return portSpinBox->value();
+}
+
+void DialogConnect::closeEvent(QCloseEvent *event)
+{
+    if (!comboDriver->isEnabled())
+        event->ignore();
+}
+
+void DialogConnect::setLockDialog(bool locked)
+{
+    comboDriver->setDisabled(locked);
+    editDatabase->setDisabled(locked);
+    editHostname->setDisabled(locked);
+    editUsername->setDisabled(locked);
+    editPassword->setDisabled(locked);
+    portSpinBox->setDisabled(locked);
+    pushButtonOk->setDisabled(locked);
+    pushButtonCancel->setDisabled(locked);    
+    if (locked)
+        m_movie->start();
+    else
+        m_movie->stop();
+}
+
+void DialogConnect::startConnect()
+{
+    setLockDialog(true);
+    if (QSqlDatabase::database().isOpen()) {
+        QSqlDatabase::database().close();
+        QSqlDatabase::removeDatabase(QSqlDatabase::defaultConnection);
+    }
+
+    {
+        QSqlDatabase db;
+
+        if (driver() == "MSSQL"){
+            db = QSqlDatabase::addDatabase("QODBC");
+
+            db.setDatabaseName(
+                        QString("%1;%2;%3").arg("DRIVER={SQL Server}")
+                        .arg("DATABASE=" + databaseName())
+                        .arg("SERVER=" + hostName()));
+            db.setPort(port());
+            db.setUserName(userName());
+            db.setPassword(password());
+        } else if (driver() == "QOCI") {
+            db = QSqlDatabase::addDatabase("QOCI");
+
+            db.setDatabaseName(
+                        QString("(DESCRIPTION = "
+                                "(ADDRESS_LIST = "
+                                "(ADDRESS = "
+                                "(PROTOCOL = TCP)"
+                                "(HOST = %1)"
+                                "(PORT = %2)"
+                                ")"
+                                ")"
+                                "(CONNECT_DATA ="
+                                "(SERVER = DEDICATED)"
+                                "(SID =%3)"
+                                ")"
+                                ")")
+                        .arg(hostName())
+                        .arg(port())
+                        .arg(databaseName()));
+        } else {
+            db = QSqlDatabase::addDatabase(driver());
+            db.setDatabaseName(databaseName());
+            db.setHostName(hostName());
+        }
+
+        db.setPort(port());
+        db.setUserName(userName());
+        db.setPassword(password());
+
+        threadConnect->start();
+    }
+}
+
+void DialogConnect::finishConnect(QString result)
+{
+    setLockDialog(false);
+
+    QSqlDatabase db = QSqlDatabase::database();
+    if (!result.isEmpty()) {
+        QMessageBox::warning(
+                    this,
+                    tr("Не удается открыть базу данных"),
+                    tr("Произошла ошибка при создании соединения:\n")
+                    + result);
+    } else
+        QDialog::accept();
 }
 
 void DialogConnect::onClickButtonProp(){

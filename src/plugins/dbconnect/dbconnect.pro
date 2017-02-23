@@ -15,9 +15,9 @@ QT += sql
 
 # Input
 HEADERS   += dbconnect.h dbconnectglobal.h \
-    dialogconnect.h
+    dialogconnect.h threadconnect.h
 SOURCES   += dbconnect.cpp \
-    dialogconnect.cpp
+    dialogconnect.cpp threadconnect.cpp
 RESOURCES += dbconnect.qrc
 
 FORMS += \
