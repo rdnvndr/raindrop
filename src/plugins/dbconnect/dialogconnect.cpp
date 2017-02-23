@@ -40,6 +40,66 @@ DialogConnect::DialogConnect(QWidget *pwgt) : QDialog(pwgt) {
             this, &DialogConnect::onClickButtonProp);
 }
 
+void DialogConnect::setDriver(const QString &name)
+{
+    comboDriver->setCurrentIndex(comboDriver->findText(name));
+}
+
+void DialogConnect::setDatabaseName(const QString &name)
+{
+    editDatabase->setText(name);
+}
+
+void DialogConnect::setHostName(const QString &host)
+{
+    editHostname->setText(host);
+}
+
+void DialogConnect::setUserName(const QString &name)
+{
+    editUsername->setText(name);
+}
+
+void DialogConnect::setPassword(const QString &password)
+{
+    editPassword->setText(password);
+}
+
+void DialogConnect::setPort(int port)
+{
+    portSpinBox->setValue(port);
+}
+
+QString DialogConnect::driver() const
+{
+    return comboDriver->currentText();
+}
+
+QString DialogConnect::databaseName() const
+{
+    return editDatabase->text();
+}
+
+QString DialogConnect::hostName() const
+{
+    return editHostname->text();
+}
+
+QString DialogConnect::userName() const
+{
+    return editUsername->text();
+}
+
+QString DialogConnect::password() const
+{
+    return editPassword->text();
+}
+
+int DialogConnect::port() const
+{
+    return portSpinBox->value();
+}
+
 void DialogConnect::onClickButtonProp(){
     if (textLabelHostname->isHidden()){
         pushButtonProp->setText(tr("Кратко"));
