@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>282</width>
-    <height>259</height>
+    <width>312</width>
+    <height>268</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -138,9 +138,7 @@
    <item row="0" column="1" colspan="3">
     <widget class="QLabel" name="labelText">
      <property name="text">
-      <string>Введите имя пользователя и пароль
-для инициализации рабочего места 
-системы</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Введите&lt;b&gt; имя пользователя&lt;/b&gt; и &lt;b&gt; пароль&lt;/b&gt;&lt;br&gt;для инициализации рабочего места&lt;br&gt;системы&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -149,23 +147,8 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="labelImage">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>63</width>
-       <height>43</height>
-      </size>
-     </property>
      <property name="text">
       <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="res.qrc">:/connectlogo</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -215,9 +198,7 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="res.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>pushButtonOk</sender>

@@ -4,6 +4,7 @@
 #include "ui_dialogconnect.h"
 #include "threadconnect.h"
 
+#include <QMovie>
 #include <QtSql>
 
 namespace RTPTechGroup {
@@ -80,6 +81,7 @@ public slots:
 
 private:
      ThreadConnect *threadConnect;
+     QMovie *m_movie;
 };
 
 }}
