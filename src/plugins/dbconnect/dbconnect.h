@@ -4,9 +4,12 @@
 #include <QObject>
 #include <QAction>
 #include <QSqlDatabase>
+
 #include <plugin/iplugin.h>
 #include <idatabaseconnect.h>
+
 #include "dbconnectglobal.h"
+#include "dialogconnect.h"
 
 namespace RTPTechGroup {
 namespace DbConnect {
@@ -64,7 +67,7 @@ public slots:
 
 private:
     //! Команда отображения окна соединения
-    QAction *actionDbConnect;
+    QAction *m_actionDbConnect;
 };
 
 }}
