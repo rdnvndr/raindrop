@@ -68,9 +68,6 @@ public slots:
 private:
     //! Команда отображения окна соединения
     QAction *m_actionDbConnect;
-
-    //! Диалоговое окно соединения
-    DialogConnect *m_windowConnect;
 };
 
 }}

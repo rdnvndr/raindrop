@@ -31,7 +31,6 @@ DbConnect::~DbConnect()
         QSqlDatabase::database().close();
         QSqlDatabase::removeDatabase(QSqlDatabase::defaultConnection);
     }
-    delete m_windowConnect;
     delete m_actionDbConnect;
 }
 
@@ -41,25 +40,26 @@ void DbConnect::dbConnect()
     IPlugin *iMainWindow = qobject_cast<IPlugin*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    m_windowConnect = new DialogConnect(
+    DialogConnect *windowConnect = new DialogConnect(
                 qobject_cast<QWidget *>(iMainWindow->instance()));
-    m_windowConnect->setWindowTitle(tr("Соединение"));
+    windowConnect->setWindowTitle(tr("Соединение"));
 
     settings()->beginGroup("DbConnect");
 
-    m_windowConnect->setDriver(settings()->value("driver").toString());
-    m_windowConnect->setDatabaseName(settings()->value("database").toString());
-    m_windowConnect->setHostName(settings()->value("hostname").toString());
-    m_windowConnect->setPort(settings()->value("port",-1).toInt());
+    windowConnect->setDriver(settings()->value("driver").toString());
+    windowConnect->setDatabaseName(settings()->value("database").toString());
+    windowConnect->setHostName(settings()->value("hostname").toString());
+    windowConnect->setPort(settings()->value("port",-1).toInt());
 
-    m_windowConnect->setUserName(settings()->value("username").toString());
-    if (m_windowConnect->exec() == QDialog::Accepted) {
-        settings()->setValue("driver",   m_windowConnect->driver());
-        settings()->setValue("database", m_windowConnect->databaseName());
-        settings()->setValue("hostname", m_windowConnect->hostName());
-        settings()->setValue("port",     m_windowConnect->port());
-        settings()->setValue("username", m_windowConnect->userName());
+    windowConnect->setUserName(settings()->value("username").toString());
+    if (windowConnect->exec() == QDialog::Accepted) {
+        settings()->setValue("driver",   windowConnect->driver());
+        settings()->setValue("database", windowConnect->databaseName());
+        settings()->setValue("hostname", windowConnect->hostName());
+        settings()->setValue("port",     windowConnect->port());
+        settings()->setValue("username", windowConnect->userName());
     }
+    delete windowConnect;
 
     settings()->endGroup();
     return;
