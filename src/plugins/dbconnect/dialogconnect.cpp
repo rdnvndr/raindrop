@@ -20,6 +20,13 @@ DialogConnect::DialogConnect(QWidget *pwgt) : QDialog(pwgt) {
     comboDriver->hide();
     line->hide();
 
+    m_movie = new QMovie(":connecting");
+    m_movie->setScaledSize(QSize(65,50));
+    m_movie->start();
+    m_movie->stop();
+    labelImage->setAttribute(Qt::WA_NoSystemBackground);
+    labelImage->setMovie(m_movie);
+
     QStringList drivers = QSqlDatabase::drivers();
 
     // remove compat names
@@ -51,6 +58,7 @@ DialogConnect::DialogConnect(QWidget *pwgt) : QDialog(pwgt) {
 DialogConnect::~DialogConnect()
 {
     delete threadConnect;
+    delete m_movie;
 }
 
 void DialogConnect::accept()
@@ -133,8 +141,11 @@ void DialogConnect::setLockDialog(bool locked)
     editPassword->setDisabled(locked);
     portSpinBox->setDisabled(locked);
     pushButtonOk->setDisabled(locked);
-    pushButtonCancel->setDisabled(locked);
-
+    pushButtonCancel->setDisabled(locked);    
+    if (locked)
+        m_movie->start();
+    else
+        m_movie->stop();
 }
 
 void DialogConnect::startConnect()
@@ -199,7 +210,7 @@ void DialogConnect::finishConnect(QString result)
     QSqlDatabase db = QSqlDatabase::database();
     if (!result.isEmpty()) {
         QMessageBox::warning(
-                    NULL,
+                    this,
                     tr("Не удается открыть базу данных"),
                     tr("Произошла ошибка при создании соединения:\n")
                     + result);
