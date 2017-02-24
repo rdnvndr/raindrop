@@ -46,14 +46,14 @@ void DbConnect::dbConnect()
 
     settings()->beginGroup("DbConnect");
 
-    windowConnect->setDriver(settings()->value("driver").toString());
+    windowConnect->setDriverName(settings()->value("driver").toString());
     windowConnect->setDatabaseName(settings()->value("database").toString());
     windowConnect->setHostName(settings()->value("hostname").toString());
     windowConnect->setPort(settings()->value("port",-1).toInt());
-
     windowConnect->setUserName(settings()->value("username").toString());
+
     if (windowConnect->exec() == QDialog::Accepted) {
-        settings()->setValue("driver",   windowConnect->driver());
+        settings()->setValue("driver",   windowConnect->driverName());
         settings()->setValue("database", windowConnect->databaseName());
         settings()->setValue("hostname", windowConnect->hostName());
         settings()->setValue("port",     windowConnect->port());
