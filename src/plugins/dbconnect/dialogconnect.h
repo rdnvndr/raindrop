@@ -25,7 +25,7 @@ public:
     void accept() override;
 
     //! Установка драйвера БД
-    void setDriver(const QString &name);
+    void setDriverName(const QString &name);
 
     //! Установка имени БД
     void setDatabaseName(const QString &name);
@@ -44,7 +44,7 @@ public:
 
 
     //! Получение драйвера БД
-    QString driver() const;
+    QString driverName() const;
 
     //! Получение имени БД
     QString databaseName() const;
