@@ -66,7 +66,7 @@ void DialogConnect::accept()
     startConnect();
 }
 
-void DialogConnect::setDriver(const QString &name)
+void DialogConnect::setDriverName(const QString &name)
 {
     comboDriver->setCurrentIndex(comboDriver->findText(name));
 }
@@ -96,7 +96,7 @@ void DialogConnect::setPort(int port)
     portSpinBox->setValue(port);
 }
 
-QString DialogConnect::driver() const
+QString DialogConnect::driverName() const
 {
     return comboDriver->currentText();
 }
@@ -159,7 +159,7 @@ void DialogConnect::startConnect()
     {
         QSqlDatabase db;
 
-        if (driver() == "MSSQL"){
+        if (driverName() == "MSSQL"){
             db = QSqlDatabase::addDatabase("QODBC");
 
             db.setDatabaseName(
@@ -169,7 +169,7 @@ void DialogConnect::startConnect()
             db.setPort(port());
             db.setUserName(userName());
             db.setPassword(password());
-        } else if (driver() == "QOCI") {
+        } else if (driverName() == "QOCI") {
             db = QSqlDatabase::addDatabase("QOCI");
 
             db.setDatabaseName(
@@ -190,7 +190,7 @@ void DialogConnect::startConnect()
                         .arg(port())
                         .arg(databaseName()));
         } else {
-            db = QSqlDatabase::addDatabase(driver());
+            db = QSqlDatabase::addDatabase(driverName());
             db.setDatabaseName(databaseName());
             db.setHostName(hostName());
         }
