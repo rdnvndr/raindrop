@@ -66,6 +66,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private:
+    //! Блокирует диалоговое окно
     void setLockDialog(bool locked);
 
 private slots:
@@ -80,7 +81,10 @@ public slots:
     void onClickButtonProp();
 
 private:
-     ThreadConnect *threadConnect;
+    //! Поток соединения
+    ThreadConnect *m_threadConnect;
+
+     //! Анимация соединения
      QMovie *m_movie;
 };
 

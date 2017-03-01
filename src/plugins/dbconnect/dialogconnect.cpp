@@ -50,14 +50,14 @@ DialogConnect::DialogConnect(QWidget *pwgt) : QDialog(pwgt) {
     connect(pushButtonProp, &QPushButton::clicked,
             this, &DialogConnect::onClickButtonProp);
 
-    threadConnect = new ThreadConnect(this);
-    connect(threadConnect, &ThreadConnect::finishConnect,
+    m_threadConnect = new ThreadConnect(this);
+    connect(m_threadConnect, &ThreadConnect::finishConnect,
             this, &DialogConnect::finishConnect);
 }
 
 DialogConnect::~DialogConnect()
 {
-    delete threadConnect;
+    delete m_threadConnect;
     delete m_movie;
 }
 
@@ -199,7 +199,7 @@ void DialogConnect::startConnect()
         db.setUserName(userName());
         db.setPassword(password());
 
-        threadConnect->start();
+        m_threadConnect->start();
     }
 }
 
