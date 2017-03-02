@@ -8,5 +8,5 @@ SUBDIRS += pushbuttonimage
 SUBDIRS += dockwidget
 SUBDIRS += metadatamodel
 SUBDIRS += tilingframe
-
+SUBDIRS += sqlextension
 
