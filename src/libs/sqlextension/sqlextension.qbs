@@ -14,6 +14,10 @@ LibProduct {
 
     files: [
         "sqlextensionglobal.h",
-        "version.h"
+        "threadquery.cpp",
+        "threadquery.h",
+        "threadqueryprivate.cpp",
+        "threadqueryprivate.h",
+        "version.h",
     ]
 }

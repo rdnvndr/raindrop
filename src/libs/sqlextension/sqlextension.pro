@@ -11,5 +11,5 @@ greaterThan(QT_MAJOR_VERSION, 4) {
   QT += sql
 }
 # Input
-HEADERS += sqlextensionglobal.h
-SOURCES += 
+HEADERS += sqlextensionglobal.h threadquery.h threadqueryprivate.h
+SOURCES += threadquery.cpp threadqueryprivate.cpp
