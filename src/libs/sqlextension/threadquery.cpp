@@ -37,21 +37,6 @@ ThreadQuery::ThreadQuery(QSqlDatabase db)
     this->start();
 }
 
-ThreadQuery::ThreadQuery(const ThreadQuery &other)
-{
-    m_driverName = other.m_databaseName;
-    m_databaseName = other.m_databaseName;
-    m_hostName = other.m_hostName;
-    m_port = other.m_port;
-    m_userName = other.m_userName;
-    m_password = other.m_password;
-    m_precisionPolicy = other.m_precisionPolicy;
-    m_forwardOnly = false;
-    m_queryText = "";
-
-    this->start();
-}
-
 ThreadQuery::~ThreadQuery()
 {
     delete m_queryPrivate;
