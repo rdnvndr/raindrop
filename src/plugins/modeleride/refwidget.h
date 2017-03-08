@@ -45,6 +45,9 @@ public slots:
     //! Применение изменений справочника
     void submit();
 
+    //! Сообщение о неверном имени справочника
+    void validateRefName(QValidator::State state) const;
+
 signals:
 
     //! Сигнал о редактировании справочника

@@ -1,7 +1,10 @@
 #include "refgroupwidget.h"
 
+#include <QToolTip>
+
 #include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
+#include "regexpvalidator.h"
 
 using namespace RTPTechGroup::MetaDataModel;
 using namespace RTPTechGroup::XmlModel;
@@ -13,6 +16,13 @@ RefGroupWidget::RefGroupWidget(QWidget *parent) :
     AbstractEditorWidget(parent)
 {
     setupUi(this);
+
+
+    RegExpValidator *validator =
+            new RegExpValidator(QRegExp("^[A-Za-z]{1}[A-Za-z0-9_]{0,26}|^[A-Za-z]{0}"));
+    lineEditRefGroupName->setValidator(validator);
+    connect(validator, &RegExpValidator::stateChanged,
+            this, &RefGroupWidget::validateRefGroupName);
 
     connect(toolButtonAdd, &QToolButton::clicked, this, &RefGroupWidget::add);
     connect(toolButtonDel, &QToolButton::clicked, this, &RefGroupWidget::remove);
@@ -88,6 +98,16 @@ void RefGroupWidget::submit()
     }
 
     AbstractEditorWidget::submit();
+}
+
+void RefGroupWidget::validateRefGroupName(QValidator::State state) const
+{
+    if(state != QValidator::Acceptable)
+        QToolTip::showText(lineEditRefGroupName->mapToGlobal(QPoint(0,5)),
+                           tr("Имя группы должно содержать только латинские\n"
+                              "символы и цифры длиной не более 27 символов"));
+    else
+        QToolTip::hideText();
 }
 
 }}
