@@ -56,6 +56,15 @@ public slots:
     //! Установка отображения прав доступа в дереве классов
     void setShowPermission(bool shown);
 
+    //! Установка отображения псевдонима
+    void setShowAlias();
+
+    //! Установка отображения имени
+    void setShowName();
+
+    //! Установка отображения псевдонима и имени
+    void setShowNameAndAlias();
+
 private slots:
 
     //! Обработка двойного щелчка мыши в дереве классов
@@ -109,9 +118,24 @@ private:
     //! Команда отображения прав доступа в дереве классов
     QAction *actionShowPermission;
 
+    //! Меню экранного имени
+    QMenu *screenNameMenu;
+
+    //! Группа экранной колонки
+    QActionGroup *actionGroupSwitch;
+
+    //! Команда отображения псевдонима в дереве классов
+    QAction *actionSwitchAlias;
+
+    //! Команда отображения имени в дереве классов
+    QAction *actionSwitchName;
+
+    //! Команда отображения псевдонима и имени в дереве классов
+    QAction *actionSwitchNameAndAlias;
 
     //! Команда разделитель
-    QAction *actionSeparator;
+    QAction *actionSeparator1;
+    QAction *actionSeparator2;
 };
 
 }}
