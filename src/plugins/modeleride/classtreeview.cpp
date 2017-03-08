@@ -24,43 +24,80 @@ ClassTreeView::ClassTreeView(QWidget *parent) :
     // Создание контекстного меню
     contextMenu = new QMenu();
 
-    actionAddClass = new QAction(tr("Добавить"),this);
+    actionAddClass = new QAction(tr("Добавить"), this);
     contextMenu->addAction(actionAddClass);
-    connect(actionAddClass, &QAction::triggered, this, &ClassTreeView::actionInsert);
+    connect(actionAddClass, &QAction::triggered,
+            this, &ClassTreeView::actionInsert);
 
-    actionRemoveClass = new QAction(tr("Удалить"),this);
+    actionRemoveClass = new QAction(tr("Удалить"), this);
     contextMenu->addAction(actionRemoveClass);
-    connect(actionRemoveClass, &QAction::triggered, this, &ClassTreeView::actionRemove);
+    connect(actionRemoveClass, &QAction::triggered,
+            this, &ClassTreeView::actionRemove);
 
-    actionSeparator = new QAction(tr("Разделитель"),this);
-    actionSeparator->setSeparator(true);
-    contextMenu->addAction(actionSeparator);
+    actionSeparator1 = new QAction(tr("Разделитель"), this);
+    actionSeparator1->setSeparator(true);
+    contextMenu->addAction(actionSeparator1);
 
-    actionShowAttr = new QAction(tr("Показать атрибуты"),this);
+    actionShowAttr = new QAction(tr("Показать атрибуты"), this);
     actionShowAttr->setCheckable(true);
     contextMenu->addAction(actionShowAttr);
-    connect(actionShowAttr,&QAction::triggered, this, &ClassTreeView::setShowAttr);
+    connect(actionShowAttr,&QAction::triggered,
+            this, &ClassTreeView::setShowAttr);
 
-    actionShowComp = new QAction(tr("Показать состав"),this);
+    actionShowComp = new QAction(tr("Показать состав"), this);
     actionShowComp->setCheckable(true);
     contextMenu->addAction(actionShowComp);
-    connect(actionShowComp, &QAction::triggered, this, &ClassTreeView::setShowComp);
+    connect(actionShowComp, &QAction::triggered,
+            this, &ClassTreeView::setShowComp);
 
-    actionShowFilter = new QAction(tr("Показать фильтры"),this);
+    actionShowFilter = new QAction(tr("Показать фильтры"), this);
     actionShowFilter->setCheckable(true);
     contextMenu->addAction(actionShowFilter);
-    connect(actionShowFilter, &QAction::triggered, this, &ClassTreeView::setShowFilter);
+    connect(actionShowFilter, &QAction::triggered,
+            this, &ClassTreeView::setShowFilter);
 
-    actionShowPermission = new QAction(tr("Показать права"),this);
+    actionShowPermission = new QAction(tr("Показать права"), this);
     actionShowPermission->setCheckable(true);
     contextMenu->addAction(actionShowPermission);
-    connect(actionShowPermission, &QAction::triggered, this, &ClassTreeView::setShowPermission);
+    connect(actionShowPermission, &QAction::triggered,
+            this, &ClassTreeView::setShowPermission);
 
-
-    actionShowUnit = new QAction(tr("Показать ЕИ"),this);
+    actionShowUnit = new QAction(tr("Показать ЕИ"), this);
     actionShowUnit->setCheckable(true);
     contextMenu->addAction(actionShowUnit);
-    connect(actionShowUnit, &QAction::triggered, this, &ClassTreeView::setShowUnit);
+    connect(actionShowUnit, &QAction::triggered,
+            this, &ClassTreeView::setShowUnit);
+
+    actionSeparator2 = new QAction(tr("Разделитель"), this);
+    actionSeparator2->setSeparator(true);
+    contextMenu->addAction(actionSeparator2);
+
+    screenNameMenu = new QMenu(tr("Экранное имя"));
+    contextMenu->addMenu(screenNameMenu);
+
+    actionSwitchName = new QAction(tr("Имя"), this);
+    actionSwitchName->setCheckable(true);
+    screenNameMenu->addAction(actionSwitchName);
+    connect(actionSwitchName, &QAction::triggered,
+            this, &ClassTreeView::setShowName);
+
+    actionSwitchAlias = new QAction(tr("Псевдоним"), this);
+    actionSwitchAlias->setCheckable(true);
+    screenNameMenu->addAction(actionSwitchAlias);
+    connect(actionSwitchAlias, &QAction::triggered,
+            this, &ClassTreeView::setShowAlias);
+
+    actionSwitchNameAndAlias = new QAction(tr("Имя (Псевдоним)"), this);
+    actionSwitchNameAndAlias->setCheckable(true);
+    screenNameMenu->addAction(actionSwitchNameAndAlias);
+    connect(actionSwitchNameAndAlias, &QAction::triggered,
+            this, &ClassTreeView::setShowNameAndAlias);
+
+    actionGroupSwitch = new QActionGroup(this);
+    actionGroupSwitch->addAction(actionSwitchName);
+    actionGroupSwitch->addAction(actionSwitchAlias);
+    actionGroupSwitch->addAction(actionSwitchNameAndAlias);
+    actionSwitchName->setChecked(true);
 
 
     treeView->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -79,8 +116,14 @@ ClassTreeView::~ClassTreeView()
     delete actionShowAttr;
     delete actionShowComp;
     delete actionShowFilter;
-    delete actionSeparator;
+    delete actionSeparator1;
+    delete actionSeparator2;
     delete actionShowUnit;
+    delete actionGroupSwitch;
+    delete actionSwitchAlias;
+    delete actionSwitchName;
+    delete actionSwitchNameAndAlias;
+    delete screenNameMenu;
     delete contextMenu;
 }
 
@@ -90,6 +133,7 @@ void ClassTreeView::setModel(QAbstractItemModel *model)
     classFilterModel = new TreeFilterProxyModel();
     classFilterModel->setSourceModel(model);
     classFilterModel->setDynamicSortFilter(true);
+    classFilterModel->setFormatDisplayColumn("%1 (%2)");
     classFilterModel->sort(0);
 
     classFilterModel->addVisibleTag(DBCLASSXML::CLASS);
@@ -132,6 +176,7 @@ void ClassTreeView::setModel(QAbstractItemModel *model)
     actionShowComp->setChecked(false);
     actionShowFilter->setChecked(false);
     actionShowUnit->setChecked(false);
+    actionSwitchAlias->setChecked(false);
 }
 
 QModelIndex ClassTreeView::currentIndex() const
@@ -197,6 +242,24 @@ void ClassTreeView::setShowPermission(bool shown)
     QRegExp regex = classFilterModel->filterRegExp();
     classFilterModel->setFilterRegExp(regex);
     actionShowPermission->setChecked(shown);
+}
+
+void ClassTreeView::setShowAlias()
+{
+    classFilterModel->setDisplayColumn(1);
+    classFilterModel->sort(1);
+}
+
+void ClassTreeView::setShowName()
+{
+    classFilterModel->setDisplayColumn(0);
+    classFilterModel->sort(0);
+}
+
+void ClassTreeView::setShowNameAndAlias()
+{
+    classFilterModel->setDisplayColumn(0, 1);
+    classFilterModel->sort(0);
 }
 
 void ClassTreeView::treeDoubleClicked(const QModelIndex &index)
@@ -272,7 +335,8 @@ void ClassTreeView::showContextMenu(const QPoint &point)
             return;
 
         if (tagRole == DBATTRXML::ATTR
-            && indexParentSource.data(TreeXmlModel::TagRole)==DBCLASSLISTXML::CLASSLIST)
+                && indexParentSource.data(TreeXmlModel::TagRole)
+                == DBCLASSLISTXML::CLASSLIST)
             contextMenu->actions().at(1)->setVisible(false);
 
         contextMenu->exec(treeView->mapToGlobal(point));
