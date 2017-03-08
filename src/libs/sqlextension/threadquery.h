@@ -57,9 +57,6 @@ public:
     //! Конструктор класса
     explicit ThreadQuery(QSqlDatabase db);
 
-    //! Конструктор класса
-    explicit ThreadQuery(const ThreadQuery &other);
-
     //! Деструктор класса
     virtual ~ThreadQuery();
 
