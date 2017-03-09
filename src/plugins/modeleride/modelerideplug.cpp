@@ -63,6 +63,58 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     m_actionOpenModel->setObjectName("actionOpenModel");
     iMainWindow->addAction(tr("Редактор модели"),m_actionOpenModel);
 
+    m_actionClearRecentModels = new QAction(QIcon(), tr("Очистить меню"), this);
+    connect(m_actionClearRecentModels, &QAction::triggered,
+            this, &ModelerIDEPlug::clearRecentModels);
+    m_actionClearRecentModels->setObjectName("actionClearRecentModel");
+    m_actionClearRecentModels->setDisabled(true);
+    iMainWindow->addAction(tr("Недавние модели"), m_actionClearRecentModels);
+
+    m_actionRecentModel9 = new QAction(QIcon(), tr("9:"), this);
+    m_actionRecentModel9->setObjectName("actionRecentModel9");
+    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel9);
+    m_actionRecentModel9->setVisible(false);
+
+    m_actionRecentModel8 = new QAction(QIcon(), tr("8:"), this);
+    m_actionRecentModel8->setObjectName("actionRecentModel8");
+    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel8);
+    m_actionRecentModel8->setVisible(false);
+
+    m_actionRecentModel7 = new QAction(QIcon(), tr("7:"), this);
+    m_actionRecentModel7->setObjectName("actionRecentModel7");
+    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel7);
+    m_actionRecentModel7->setVisible(false);
+
+    m_actionRecentModel6 = new QAction(QIcon(), tr("6:"), this);
+    m_actionRecentModel6->setObjectName("actionRecentModel6");
+    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel6);
+    m_actionRecentModel6->setVisible(false);
+
+    m_actionRecentModel5 = new QAction(QIcon(), tr("5:"), this);
+    m_actionRecentModel5->setObjectName("actionRecentModel5");
+    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel5);
+    m_actionRecentModel5->setVisible(false);
+
+    m_actionRecentModel4 = new QAction(QIcon(), tr("4:"), this);
+    m_actionRecentModel4->setObjectName("actionRecentModel4");
+    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel4);
+    m_actionRecentModel4->setVisible(false);
+
+    m_actionRecentModel3 = new QAction(QIcon(), tr("3:"), this);
+    m_actionRecentModel3->setObjectName("actionRecentModel3");
+    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel3);
+    m_actionRecentModel3->setVisible(false);
+
+    m_actionRecentModel2 = new QAction(QIcon(), tr("2:"), this);
+    m_actionRecentModel2->setObjectName("actionRecentModel2");
+    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel2);
+    m_actionRecentModel2->setVisible(false);
+
+    m_actionRecentModel1 = new QAction(QIcon(), tr("1:"), this);
+    m_actionRecentModel1->setObjectName("actionRecentModel1");
+    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel1);
+    m_actionRecentModel1->setVisible(false);
+
     m_actionSaveModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель"), this);
     connect(m_actionSaveModel, &QAction::triggered, this, &ModelerIDEPlug::saveClassModel);
     m_actionSaveModel->setDisabled(true);
@@ -103,6 +155,15 @@ ModelerIDEPlug::~ModelerIDEPlug()
     delete m_actionSaveAsModel;
     delete m_actionNewModel;
     delete m_actionOpenModel;
+    delete m_actionRecentModel1;
+    delete m_actionRecentModel2;
+    delete m_actionRecentModel3;
+    delete m_actionRecentModel4;
+    delete m_actionRecentModel5;
+    delete m_actionRecentModel6;
+    delete m_actionRecentModel7;
+    delete m_actionRecentModel8;
+    delete m_actionRecentModel9;
     delete m_actionPublishModel;
     delete m_actionCloseModel;
 }
@@ -110,6 +171,12 @@ ModelerIDEPlug::~ModelerIDEPlug()
 void ModelerIDEPlug::actionSaveEnable()
 {
     m_actionSaveModel->setEnabled(true);
+}
+
+void ModelerIDEPlug::clearRecentModels()
+{
+
+    m_actionClearRecentModels->setDisabled(true);
 }
 
 TreeXmlHashModel *ModelerIDEPlug::model()
