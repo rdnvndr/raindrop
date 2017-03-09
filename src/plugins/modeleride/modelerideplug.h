@@ -118,6 +118,9 @@ public slots:
     //! Устанавливает активность QAction "Сохранить модель"
     void actionSaveEnable();
 
+    //! Очистка списка последних моделей
+    void clearRecentModels();
+
 private:
     //! Имя файла структуры
     QString m_fileName;
@@ -139,6 +142,20 @@ private:
 
     //! Команда открытия структуры классов
     QAction *m_actionOpenModel;
+
+    //! Команда открытия последних моделей
+    QAction *m_actionRecentModel1;
+    QAction *m_actionRecentModel2;
+    QAction *m_actionRecentModel3;
+    QAction *m_actionRecentModel4;
+    QAction *m_actionRecentModel5;
+    QAction *m_actionRecentModel6;
+    QAction *m_actionRecentModel7;
+    QAction *m_actionRecentModel8;
+    QAction *m_actionRecentModel9;
+
+    //! Команда очистки списка последних моделей
+    QAction *m_actionClearRecentModels;
 
     //! Команда публикации структуры классов в БД
     QAction *m_actionPublishModel;
