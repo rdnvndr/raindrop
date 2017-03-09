@@ -269,6 +269,9 @@ private:
 
     //! Cписок горячих клавиш команд
     QHash <QString, QKeySequence> m_hotkey;
+
+    //! Список спрятанных команд
+    QList <QAction *> m_hideActions;
 };
 
 }
