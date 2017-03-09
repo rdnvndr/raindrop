@@ -45,6 +45,9 @@ public slots:
     //! Применение изменений группы справочника
     void submit();
 
+    //! Сообщение о неверном имени группы справочника
+    void validateRefGroupName(QValidator::State state) const;
+
 signals:
     //! Сигнал о редактировании группы справочника
     void edited(bool flag);

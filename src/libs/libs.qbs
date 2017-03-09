@@ -8,6 +8,7 @@ Project {
      "pushbuttonimage/pushbuttonimage.qbs",
      "tilingframe/tilingframe.qbs",
      "treecombobox/treecombobox.qbs",
-     "treexmlmodel/treexmlmodel.qbs"
+     "treexmlmodel/treexmlmodel.qbs",
+     "sqlextension/sqlextension.qbs"
  ]
 }
