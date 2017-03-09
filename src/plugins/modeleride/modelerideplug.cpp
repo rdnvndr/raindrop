@@ -70,50 +70,16 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     m_actionClearRecentModels->setDisabled(true);
     iMainWindow->addAction(tr("Недавние модели"), m_actionClearRecentModels);
 
-    m_actionRecentModel9 = new QAction(QIcon(), tr("9:"), this);
-    m_actionRecentModel9->setObjectName("actionRecentModel9");
-    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel9);
-    m_actionRecentModel9->setVisible(false);
-
-    m_actionRecentModel8 = new QAction(QIcon(), tr("8:"), this);
-    m_actionRecentModel8->setObjectName("actionRecentModel8");
-    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel8);
-    m_actionRecentModel8->setVisible(false);
-
-    m_actionRecentModel7 = new QAction(QIcon(), tr("7:"), this);
-    m_actionRecentModel7->setObjectName("actionRecentModel7");
-    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel7);
-    m_actionRecentModel7->setVisible(false);
-
-    m_actionRecentModel6 = new QAction(QIcon(), tr("6:"), this);
-    m_actionRecentModel6->setObjectName("actionRecentModel6");
-    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel6);
-    m_actionRecentModel6->setVisible(false);
-
-    m_actionRecentModel5 = new QAction(QIcon(), tr("5:"), this);
-    m_actionRecentModel5->setObjectName("actionRecentModel5");
-    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel5);
-    m_actionRecentModel5->setVisible(false);
-
-    m_actionRecentModel4 = new QAction(QIcon(), tr("4:"), this);
-    m_actionRecentModel4->setObjectName("actionRecentModel4");
-    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel4);
-    m_actionRecentModel4->setVisible(false);
-
-    m_actionRecentModel3 = new QAction(QIcon(), tr("3:"), this);
-    m_actionRecentModel3->setObjectName("actionRecentModel3");
-    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel3);
-    m_actionRecentModel3->setVisible(false);
-
-    m_actionRecentModel2 = new QAction(QIcon(), tr("2:"), this);
-    m_actionRecentModel2->setObjectName("actionRecentModel2");
-    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel2);
-    m_actionRecentModel2->setVisible(false);
-
-    m_actionRecentModel1 = new QAction(QIcon(), tr("1:"), this);
-    m_actionRecentModel1->setObjectName("actionRecentModel1");
-    iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel1);
-    m_actionRecentModel1->setVisible(false);
+    for (int i = 8; i >= 0; i--) {
+        m_actionRecentModel[i] = new QAction(this);
+        connect(m_actionRecentModel[i], &QAction::triggered,
+                this, &ModelerIDEPlug::openRecentModel);
+        m_actionRecentModel[i]->setObjectName(
+                    QString("actionRecentModel%1").arg(i+1));
+        m_actionRecentModel[i]->setVisible(false);
+        iMainWindow->addAction(tr("Недавние модели"), m_actionRecentModel[i]);
+    }
+    readRecentFiles();
 
     m_actionSaveModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель"), this);
     connect(m_actionSaveModel, &QAction::triggered, this, &ModelerIDEPlug::saveClassModel);
@@ -155,16 +121,9 @@ ModelerIDEPlug::~ModelerIDEPlug()
     delete m_actionSaveAsModel;
     delete m_actionNewModel;
     delete m_actionOpenModel;
-    delete m_actionRecentModel1;
-    delete m_actionRecentModel2;
-    delete m_actionRecentModel3;
-    delete m_actionRecentModel4;
-    delete m_actionRecentModel5;
-    delete m_actionRecentModel6;
-    delete m_actionRecentModel7;
-    delete m_actionRecentModel8;
-    delete m_actionRecentModel9;
-    delete m_actionPublishModel;
+    for (int i = 8; i>=0; i--)
+    delete m_actionRecentModel[i];
+    writeRecentFiles();
     delete m_actionCloseModel;
 }
 
@@ -173,10 +132,79 @@ void ModelerIDEPlug::actionSaveEnable()
     m_actionSaveModel->setEnabled(true);
 }
 
+void ModelerIDEPlug::openRecentModel()
+{
+    if (const QAction *action = qobject_cast<const QAction *>(sender())) {
+        m_fileName = action->text().remove(0,3);
+
+        QFile file(m_fileName);
+        if (file.open(QIODevice::ReadOnly)) {
+            QDomDocument document;
+            if (document.setContent(&file)) {
+                createClassModel(document);
+            }
+            file.close();
+        }
+        m_actionSaveModel->setDisabled(true);
+    }
+}
+
 void ModelerIDEPlug::clearRecentModels()
 {
-
+    for (int i = 0; i < 9; i++)
+        m_actionRecentModel[i]->setVisible(false);
+    m_recentFiles.clear();
     m_actionClearRecentModels->setDisabled(true);
+}
+
+void ModelerIDEPlug::updateRecentModels()
+{
+    int pos = m_recentFiles.count();
+    if (m_recentFiles.value(pos-1) != m_fileName) {
+        if (pos > 8) {
+            pos = 8;
+            for (int i = 1; i < 9; i++) {
+                QString text = QString("%1: %2")
+                        .arg(i).arg(m_recentFiles.value(i));
+                m_actionRecentModel[i-1]->setText(text);
+                m_recentFiles.value(i-1) = m_recentFiles.value(i);
+            }
+        }
+        m_actionClearRecentModels->setEnabled(true);
+        m_actionRecentModel[pos]->setVisible(true);
+        QString text = QString("%1: %2").arg(pos+1).arg(m_fileName);
+        m_actionRecentModel[pos]->setText(text);
+        m_recentFiles.insert(pos, m_fileName);
+    }
+}
+
+void ModelerIDEPlug::readRecentFiles()
+{
+    settings()->beginGroup("ModelerIde");
+    const int count = settings()->beginReadArray("recentFileList");
+    for (int i = 0; i < count; ++i) {
+        settings()->setArrayIndex(i);
+        QString fileName = settings()->value("file").toString();
+        m_recentFiles.append(fileName);
+        m_actionRecentModel[i]->setText(QString("%1: %2").arg(i+1).arg(fileName));
+        m_actionRecentModel[i]->setVisible(true);
+    }
+    if (count > 0) m_actionClearRecentModels->setEnabled(true);
+    settings()->endArray();
+    settings()->endGroup();
+}
+
+void ModelerIDEPlug::writeRecentFiles()
+{
+    const int count = m_recentFiles.size();
+    settings()->beginGroup("ModelerIde");
+    settings()->beginWriteArray("recentFileList");
+    for (int i = 0; i < count; ++i) {
+        settings()->setArrayIndex(i);
+        settings()->setValue("file", m_recentFiles.at(i));
+    }
+    settings()->endArray();
+    settings()->endGroup();
 }
 
 TreeXmlHashModel *ModelerIDEPlug::model()
@@ -566,6 +594,7 @@ void ModelerIDEPlug::openClassModel()
            createClassModel(document);
         }
         file.close();
+        updateRecentModels();
     }
     m_actionSaveModel->setDisabled(true);
 }
