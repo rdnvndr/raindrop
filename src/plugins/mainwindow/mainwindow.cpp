@@ -521,6 +521,14 @@ void MainWindow::showOptionsDialog()
     m_optionsDialog->createActionsModel(&m_actions);
     m_optionsDialog->createToolBarModel(this);
 
+    // Показать и запомнить спрятанные команды
+    foreach (QAction *action, m_actions.values()) {
+        if (!action->isVisible()) {
+            m_hideActions.append(action);
+            action->setVisible(true);
+        }
+    }
+
     QMdiSubWindow *subWindow = addSubWindow(m_optionsDialog);
     connect(subWindow, &QMdiSubWindow::windowStateChanged,
             this, &MainWindow::optionsDialogStateChanged);
@@ -548,12 +556,24 @@ void MainWindow::saveOptionsDialog()
     writeBarSettings();
     settings()->sync();
     m_optionsDialog = NULL;
+
+    // Скрыть спрятанные команды
+    foreach (QAction *action, m_hideActions) {
+            action->setVisible(false);
+    }
+    m_hideActions.clear();
 }
 
 void MainWindow::cancelOptionsDialog()
 {
     refreshAllBar();
     m_optionsDialog = NULL;
+
+    // Скрыть спрятанные команды
+    foreach (QAction *action, m_hideActions) {
+            action->setVisible(false);
+    }
+    m_hideActions.clear();
 }
 
 void MainWindow::optionsDialogStateChanged(Qt::WindowStates oldState,
