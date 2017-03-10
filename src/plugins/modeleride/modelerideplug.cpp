@@ -72,6 +72,7 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
 
     for (int i = 8; i >= 0; i--) {
         m_actionRecentModel[i] = new QAction(this);
+        m_actionRecentModel[i]->setText(QString("%1: Недавняя модель").arg(i+1));
         connect(m_actionRecentModel[i], &QAction::triggered,
                 this, &ModelerIDEPlug::openRecentModel);
         m_actionRecentModel[i]->setObjectName(
