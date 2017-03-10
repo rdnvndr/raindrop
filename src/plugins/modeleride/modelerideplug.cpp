@@ -53,13 +53,17 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
 
-    m_actionNewModel = new QAction(QIcon(":newmodel"), tr("Новая модель"), this);
-    connect(m_actionNewModel, &QAction::triggered, this, &ModelerIDEPlug::newClassModel);
+    m_actionNewModel = new QAction(QIcon(":newmodel"),
+                                   tr("Новая модель"), this);
+    connect(m_actionNewModel, &QAction::triggered,
+            this, &ModelerIDEPlug::newClassModel);
     m_actionNewModel->setObjectName("actionNewModel");
     iMainWindow->addAction(tr("Редактор модели"),m_actionNewModel);
 
-    m_actionOpenModel = new QAction(QIcon(":openmodel"), tr("Открыть модель..."), this);
-    connect(m_actionOpenModel, &QAction::triggered, this, &ModelerIDEPlug::openClassModel);
+    m_actionOpenModel = new QAction(QIcon(":openmodel"),
+                                    tr("Открыть модель..."), this);
+    connect(m_actionOpenModel, &QAction::triggered,
+            this, &ModelerIDEPlug::openClassModel);
     m_actionOpenModel->setObjectName("actionOpenModel");
     iMainWindow->addAction(tr("Редактор модели"),m_actionOpenModel);
 
@@ -82,29 +86,35 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     }
     readRecentFiles();
 
-    m_actionSaveModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель"), this);
-    connect(m_actionSaveModel, &QAction::triggered, this, &ModelerIDEPlug::saveClassModel);
+    m_actionSaveModel = new QAction(QIcon(":savemodel"),
+                                    tr("Сохранить модель"), this);
+    connect(m_actionSaveModel, &QAction::triggered,
+            this, &ModelerIDEPlug::saveClassModel);
     m_actionSaveModel->setDisabled(true);
     m_actionSaveModel->setObjectName("actionSaveModel");
     iMainWindow->addAction(tr("Редактор модели"),m_actionSaveModel);
 
-    m_actionSaveAsModel = new QAction(QIcon(":savemodel"), tr("Сохранить модель как..."), this);
-    connect(m_actionSaveAsModel, &QAction::triggered, this, &ModelerIDEPlug::saveAsClassModel);
+    m_actionSaveAsModel = new QAction(QIcon(":savemodel"),
+                                      tr("Сохранить модель как..."), this);
+    connect(m_actionSaveAsModel, &QAction::triggered,
+            this, &ModelerIDEPlug::saveAsClassModel);
     m_actionSaveAsModel->setDisabled(true);
     m_actionSaveAsModel->setObjectName("actionSaveAsModel");
     iMainWindow->addAction(tr("Редактор модели"),m_actionSaveAsModel);
 
-    m_actionPublishModel = new QAction(QIcon(":publish"), tr("Опубликовать модель..."), this);
-//    connect(m_actionPublishModel, &QAction::triggered, this, &ModelerIDEPlug::publishClassModel);
+    m_actionPublishModel = new QAction(QIcon(":publish"),
+                                       tr("Опубликовать модель..."), this);
     m_actionPublishModel->setDisabled(true);
     m_actionPublishModel->setObjectName("actionPublishModel");
     iMainWindow->addAction(tr("Редактор модели"),m_actionPublishModel);
 
-    m_actionCloseModel = new QAction(QIcon(":closemodel"), tr("Закрыть модель"), this);
-    connect(m_actionCloseModel, &QAction::triggered, this, &ModelerIDEPlug::closeClassModel);
+    m_actionCloseModel = new QAction(QIcon(":closemodel"),
+                                     tr("Закрыть модель"), this);
+    connect(m_actionCloseModel, &QAction::triggered,
+            this, &ModelerIDEPlug::closeClassModel);
     m_actionCloseModel->setDisabled(true);
     m_actionCloseModel->setObjectName("actionCloseModel");
-    iMainWindow->addAction(tr("Редактор модели"),m_actionCloseModel);
+    iMainWindow->addAction(tr("Редактор модели"), m_actionCloseModel);
 
     m_dockWidget = new DockWidget();
     m_dockWidget->setObjectName("MetamodelDockWidget");
@@ -187,7 +197,9 @@ void ModelerIDEPlug::readRecentFiles()
         settings()->setArrayIndex(i);
         QString fileName = settings()->value("file").toString();
         m_recentFiles.append(fileName);
-        m_actionRecentModel[i]->setText(QString("%1: %2").arg(i+1).arg(fileName));
+        m_actionRecentModel[i]->setText(QString("%1: %2")
+                                        .arg(i+1)
+                                        .arg(fileName));
         m_actionRecentModel[i]->setVisible(true);
     }
     if (count > 0) m_actionClearRecentModels->setEnabled(true);
@@ -257,39 +269,40 @@ void ModelerIDEPlug::add()
     QString tagRole = indexSource.data(TreeXmlModel::TagRole).toString();
     if (tagRole == DBCLASSLISTXML::CLASSLIST || tagRole == DBCLASSXML::CLASS)
     {
-        lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBCLASSXML::CLASS);
+        lastInsertRow = m_model->insertLastRows(0, 1, indexSource,
+                                                DBCLASSXML::CLASS);
         if (lastInsertRow.isValid()){
             qint32 column = m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                      DBCLASSXML::MODE);
-            m_model->setData(lastInsertRow.sibling(lastInsertRow.row(),column),
+                                                         DBCLASSXML::MODE);
+            m_model->setData(lastInsertRow.sibling(lastInsertRow.row(), column),
                              DBACCESSMODEXML::USER);
             column = m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
-                                                      DBCLASSXML::TYPE);
-            m_model->setData(lastInsertRow.sibling(lastInsertRow.row(),column),
+                                                  DBCLASSXML::TYPE);
+            m_model->setData(lastInsertRow.sibling(lastInsertRow.row(), column),
                              DBCLASSTYPEXML::NORMAL);
         }
     } else if (tagRole == DBQUANTITYLISTXML::QUANTITYLIST) {
         lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBQUANTITYGROUPXML::QUANTITYGROUP);
+                m_model->insertLastRows(0, 1, indexSource,
+                                        DBQUANTITYGROUPXML::QUANTITYGROUP);
     } else if (tagRole == DBQUANTITYGROUPXML::QUANTITYGROUP) {
-        lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBQUANTITYXML::QUANTITY);
+        lastInsertRow = m_model->insertLastRows(0, 1, indexSource,
+                                                DBQUANTITYXML::QUANTITY);
     } else if (tagRole == DBLOVLISTXML::LOVLIST) {
-        lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBLOVXML::LOV);
+        lastInsertRow = m_model->insertLastRows(0, 1, indexSource,
+                                                DBLOVXML::LOV);
     } else if (tagRole == DBNUMERATORLISTXML::NUMERATORLIST) {
-        lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBNUMERATORXML::NUMERATOR);
+        lastInsertRow = m_model->insertLastRows(0, 1, indexSource,
+                                                DBNUMERATORXML::NUMERATOR);
     } else if (tagRole == DBREFLISTXML::REFLIST) {
-        lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBREFGROUPXML::REFGROUP);
+        lastInsertRow = m_model->insertLastRows(0, 1, indexSource,
+                                                DBREFGROUPXML::REFGROUP);
     } else if (tagRole == DBREFGROUPXML::REFGROUP) {
-        lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBREFXML::REF);
+        lastInsertRow = m_model->insertLastRows(0, 1, indexSource,
+                                                DBREFXML::REF);
     } else if (tagRole == DBROLELISTXML::ROLELIST) {
-        lastInsertRow =
-                m_model->insertLastRows(0,1,indexSource,DBROLEXML::ROLE);
+        lastInsertRow = m_model->insertLastRows(0, 1, indexSource,
+                                                DBROLEXML::ROLE);
     } else return;
 
     if (lastInsertRow.isValid()){
@@ -452,9 +465,9 @@ void ModelerIDEPlug::remove()
     if (currentIndex.isValid()){
         if (!m_model->isRemove(currentIndex))
             return;
-        m_model->removeRow(currentIndex.row(),currentIndex.parent());
+        m_model->removeRow(currentIndex.row(), currentIndex.parent());
     } else
-        QMessageBox::warning(NULL,tr("Предупреждение"),
+        QMessageBox::warning(NULL, tr("Предупреждение"),
                              tr("Невозможно удалить узел, поскольку он не выбран."));
 }
 
@@ -584,7 +597,7 @@ void ModelerIDEPlug::newClassModel()
 void ModelerIDEPlug::openClassModel()
 {
     m_fileName = QFileDialog::getOpenFileName(NULL, tr("Открытие модели"),
-                                                    ".", tr("Фаил модели (*.xml)"));
+                                              ".", tr("Фаил модели (*.xml)"));
     if (m_fileName.isEmpty())
         return;
 
@@ -621,7 +634,7 @@ void ModelerIDEPlug::saveClassModel()
 void ModelerIDEPlug::saveAsClassModel()
 {
     m_fileName = QFileDialog::getSaveFileName(NULL, tr("Сохранение модели"),
-                                                    "", tr("Фаил модели (*.xml)"));
+                                              "", tr("Фаил модели (*.xml)"));
     if (m_fileName.right(4) != ".xml")
         m_fileName += ".xml";
     QFile file(m_fileName);
@@ -672,18 +685,21 @@ void ModelerIDEPlug::closeClassModel()
     PluginManager *pluginManager = PluginManager::instance();
     IMainWindow *mainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
-    foreach (QMdiSubWindow *subWindow, mainWindow->subWindowList())
-        if (subWindow->widget()->objectName().indexOf(QRegExp("^PropClass::"))  != -1
-         || subWindow->widget()->objectName().indexOf(QRegExp("^PropFilter::"))  != -1
-         || subWindow->widget()->objectName().indexOf(QRegExp("^PropQuantityGroup::"))  != -1
-         || subWindow->widget()->objectName().indexOf(QRegExp("^PropQuantity::"))  != -1
-         || subWindow->widget()->objectName().indexOf(QRegExp("^PropLov::"))  != -1
-         || subWindow->widget()->objectName().indexOf(QRegExp("^PropNumerator::"))  != -1
-         || subWindow->widget()->objectName().indexOf(QRegExp("^PropRefGroup::"))  != -1
-         || subWindow->widget()->objectName().indexOf(QRegExp("^PropRef::"))  != -1
+
+    foreach (QMdiSubWindow *subWindow, mainWindow->subWindowList()) {
+        QString objName = subWindow->widget()->objectName();
+        if (objName.indexOf(QRegExp("^PropClass::"))  != -1
+         || objName.indexOf(QRegExp("^PropFilter::"))  != -1
+         || objName.indexOf(QRegExp("^PropQuantityGroup::"))  != -1
+         || objName.indexOf(QRegExp("^PropQuantity::"))  != -1
+         || objName.indexOf(QRegExp("^PropLov::"))  != -1
+         || objName.indexOf(QRegExp("^PropNumerator::"))  != -1
+         || objName.indexOf(QRegExp("^PropRefGroup::"))  != -1
+         || objName.indexOf(QRegExp("^PropRef::"))  != -1
         ) {
             subWindow->close();
         }
+    }
 
     if (m_model){
         delete m_model;
