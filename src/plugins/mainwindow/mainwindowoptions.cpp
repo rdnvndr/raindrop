@@ -27,10 +27,13 @@ MainWindowOptions::MainWindowOptions(QWidget *parent) :
     connect(radioButtonOther, &QRadioButton::toggled,
             this, &MainWindowOptions::selectOtherSize);
     spinBoxIconSize->setDisabled(true);
+    setResult(-1);
 }
 
 MainWindowOptions::~MainWindowOptions()
 {
+    if (result() == -1)
+        reject();
     delete m_actionGroupModel;
     delete m_toolBarModel;
 }
