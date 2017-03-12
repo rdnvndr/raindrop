@@ -10,7 +10,7 @@ InterfacesProduct {
         "idatabaseitem.h",
         "idatabaselist.h",
         "idatabasemodelbuilder.h",
-        "idatabasemodel.h",
+        "idatabasemodelmanager.h",
         "idatabaserole.h",
         "imainwindow.h",
         "itreedockwidget.h",
@@ -19,6 +19,7 @@ InterfacesProduct {
         "iclipboarditem.h",
         "iclipboardelement.h",
         "idatabaseconnect.h",
+        "idatabasemodel.h"
     ]
 
     Depends { name: "Qt"; submodules: ["widgets"] }

@@ -1,30 +1,20 @@
 #ifndef IDATABASEMODELBUILDER_H
 #define IDATABASEMODELBUILDER_H
 
-#include <idatabaseclass.h>
-#include <idatabaseattribute.h>
-#include <idatabasefilter.h>
-#include <idatabasecomposition.h>
+#include <QtSql/QSqlDatabase>
+
+#include <idatabasemodel.h>
 
 //! Строитель модели базы данных
 class IDatabaseModelBuilder
 {
 
 public:
-    //! Создание экземпляра класса
-    virtual IDatabaseClass *createClass() = 0;
+    //! Создание экземпляра модели базы данных
+    virtual IDatabaseModel *createDatabaseModel(QSqlDatabase db) = 0;
 
-    //! Создание экземпляра атрибута
-    virtual IDatabaseAttribute *createAttr() = 0;
-
-    //! Создание экземпляра фильтра
-    virtual IDatabaseFilter *createFilter() = 0;
-
-    //! Создание экземпляра состава
-    virtual IDatabaseComposition *createComposition() = 0;
-
-    //! Имя строителя модели базы данных
-    virtual QString modelBuilderName() = 0;
+    //! Имя драйвера базы данных для которого реализована модель
+    virtual QString implDriverName() const = 0;
 
 };
 

@@ -1,26 +1,26 @@
-#include "databasemodel.h"
+#include "databasemodelmanager.h"
 
 #include <plugin/pluginmanager.h>
 using namespace RTPTechGroup::Plugin;
 
-DatabaseModel::DatabaseModel(QObject *parent):
+DatabaseModelManager::DatabaseModelManager(QObject *parent):
     QObject(parent), IPlugin("IDatabaseModelBuilder")
 {
 
 }
 
-DatabaseModel::~DatabaseModel()
+DatabaseModelManager::~DatabaseModelManager()
 {
 
 }
 
-IDatabaseModelBuilder *DatabaseModel::modelBuilder(const QString &name)
+IDatabaseModel *DatabaseModelManager::createInstance(QSqlDatabase db)
 {
     PluginManager *pluginManager = PluginManager::instance();
     foreach (QObject *obj, pluginManager->interfaceObjects("IDatabaseModelBuilder")) {
         IDatabaseModelBuilder *iBuilder = qobject_cast<IDatabaseModelBuilder*>(obj);
-        if (iBuilder->modelBuilderName() == name)
-            return iBuilder;
+        if (iBuilder->implDriverName() == db.driverName())
+            return iBuilder->createDatabaseModel(db);
     }
 
     return NULL;

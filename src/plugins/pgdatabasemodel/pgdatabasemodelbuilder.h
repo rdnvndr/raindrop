@@ -1,39 +1,43 @@
-#ifndef DATABASEMODEL_H
-#define DATABASEMODEL_H
+#ifndef PGDATABASEMODELBUILDER_H
+#define PGDATABASEMODELBUILDER_H
 
 #include <QObject>
 #include <plugin/iplugin.h>
-#include "databasemodelglobal.h"
+#include "pgdatabasemodelglobal.h"
 
+#include <idatabasemodelbuilder.h>
 #include <idatabasemodel.h>
 
-//! Модель базы данных
+#include "pgdatabaseattribute.h"
 
-class  DATABASEMODELLIB DatabaseModel:
+namespace RTPTechGroup {
+namespace DatabaseModel {
+
+//! Реализация модели базы данных PostgreSql
+class  PGDATABASEMODELLIB PgDatabaseModelBuilder:
         public QObject,
-        public IDatabaseModel,
+        public IDatabaseModelBuilder,
         public IPlugin
 {
     Q_OBJECT
 
-    Q_INTERFACES(IPlugin IDatabaseModel)
-    Q_PLUGIN_METADATA(IID IDatabaseModel_iid FILE "databasemodel.json")
+    Q_INTERFACES(IPlugin IDatabaseModelBuilder)
+    Q_PLUGIN_METADATA(IID IDatabaseModelBuilder_iid FILE "pgdatabasemodel.json")
 
 public:
 
     //! Конструктор плагина
-    explicit DatabaseModel(QObject *parent = 0);
+    explicit PgDatabaseModelBuilder(QObject *parent = 0);
 
     //! Деструктор плагина
-    virtual ~DatabaseModel();
+    virtual ~PgDatabaseModelBuilder();
 
 // IPlugin
-
     //! Получение имени плагина
     QString name() {return APP_NAME;}
 
     //! Получение иконки плагина
-    QIcon icon() {return QIcon(":/databasemodel");}
+    QIcon icon() {return QIcon(":/pgdatabasemodel");}
 
     //! Описание продукта
     QString product() {return APP_PRODUCT;}
@@ -53,11 +57,15 @@ public:
     //! Производитель плагина
     QString vendor() {return tr(APP_COMPANY);}
 
-// IDatabaseModel
+// IDatabaseModelBuilder
+    //! Создание экземпляра модели базы данных
+    IDatabaseModel *createDatabaseModel(QSqlDatabase db);
 
-    //! Получение строителя по имени
-    IDatabaseModelBuilder *modelBuilder(const QString& name);
+    //! Модель базы данных
+    QString implDriverName() const;
 
 };
+
+}}
 
 #endif
