@@ -31,7 +31,7 @@ public:
 
 // Получение доступа к элементам класса по имени
     //! Получение дочернего класса по имени
-    IDatabaseClass *childClass(const QString &name) ;
+    IDatabaseClass *derivedClass(const QString &name) ;
 
     //! Получение атрибута по имени
     IDatabaseAttribute *attr(const QString &name);

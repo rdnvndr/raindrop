@@ -38,7 +38,7 @@ bool PgDatabaseClass::remove()
     return  true;
 }
 
-IDatabaseClass *PgDatabaseClass::childClass(const QString &name)
+IDatabaseClass *PgDatabaseClass::derivedClass(const QString &name)
 {
     Q_UNUSED(name)
     return NULL;

@@ -26,9 +26,9 @@ public:
 
     //! Конструктор класса
     explicit IDatabaseClass() {
-        m_classType = IDatabaseClass::Normal;
+        m_classType  = IDatabaseClass::Normal;
         m_accessMode = IDatabaseClass::Standart;
-        m_parent = NULL;
+        m_parent     = NULL;
     }
 
     //! Деструктор класса
@@ -73,9 +73,22 @@ public:
     //! Устанавливает максимальное количество версий объекта
     virtual void setMaxVersion(qint32 maxVersion) { m_maxVersion = maxVersion; }
 
+// Создание элемента класса по имени
+    //! Создание производного класса по имени
+    virtual IDatabaseClass *createDerivedClass(const QString &name) = 0;
+
+    //! Создание атрибута по имени
+    virtual IDatabaseAttribute *createAttr(const QString &name) = 0;
+
+    //! Создание фильтра по имени
+    virtual IDatabaseFilter *createFilter(const QString &name) = 0;
+
+    //! Создание состава по имени
+    virtual IDatabaseComposition *createComp(const QString &name) = 0;
+
 // Получение доступа к элементам класса по имени
-    //! Получение дочернего класса по имени
-    virtual IDatabaseClass *childClass(const QString &name) = 0;
+    //! Получение производного класса по имени
+    virtual IDatabaseClass *derivedClass(const QString &name) = 0;
 
     //! Получение атрибута по имени
     virtual IDatabaseAttribute *attr(const QString &name) = 0;
@@ -87,7 +100,7 @@ public:
     virtual IDatabaseComposition *comp(const QString &name) = 0;
 
 // Получение доступа к спискам элементов класса по имени
-    //! Cписок дочерних в классе
+    //! Cписок производных классов
     virtual IDatabaseClasses *classList() = 0;
 
     //! Cписок атрибутов в классе
@@ -110,7 +123,7 @@ public:
     virtual void all() = 0;
 
 private:
-    //! Возращает иконку класса
+    //! Иконка класса
     QIcon m_icon;
 
     //! Тип класса
