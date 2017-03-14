@@ -146,7 +146,15 @@ void ModelerIDEPlug::actionSaveEnable()
 void ModelerIDEPlug::openRecentModel()
 {
     if (const QAction *action = qobject_cast<const QAction *>(sender())) {
-        m_fileName = action->text().remove(0,3);
+        for (int i = 0; i< 9; i++) {
+            if (action == m_actionRecentModel[i])
+            {
+                m_fileName = m_recentFiles[i];
+                break;
+            }
+            return;
+        }
+
         QFile file(m_fileName);
         if (file.open(QIODevice::ReadOnly)) {
             QDomDocument document;
@@ -181,9 +189,10 @@ void ModelerIDEPlug::updateRecentModels()
 
     for (int i = 0; i < 9; i++) {
         if (i < count) {
-            QString text = QString("%1: %2").arg(i + 1)
-                    .arg(m_recentFiles.value(count - i - 1));
-            m_actionRecentModel[i]->setText(text);
+            QString text = m_recentFiles.value(count - i - 1);
+            if (text.length() > 64)
+                text = "..." + text.right(64);
+            m_actionRecentModel[i]->setText(QString("%1: %2").arg(i+1).arg(text));
             m_actionRecentModel[i]->setVisible(true);
         } else {
             m_actionRecentModel[i]->setVisible(false);
@@ -199,9 +208,12 @@ void ModelerIDEPlug::readRecentFiles()
     for (int i = 0; i < count; ++i) {
         settings()->setArrayIndex(i);
         QString fileName = settings()->value("file").toString();
-        m_recentFiles.append(fileName);
-        QString text = QString("%1: %2").arg(count - i).arg(fileName);
-        m_actionRecentModel[count - i - 1]->setText(text);
+        m_recentFiles.append(fileName);        
+
+        if (fileName.length() > 64)
+            fileName = "..." + fileName.right(64);
+        m_actionRecentModel[count - i - 1]->setText(
+                    QString("%1: %2").arg(i+1).arg(fileName));
         m_actionRecentModel[count - i - 1]->setVisible(true);
     }
     if (count > 0)
