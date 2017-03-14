@@ -2,6 +2,8 @@
 #include <QString>
 #include <QWhatsThis>
 #include <QUuid>
+#include <QMenu>
+#include <QToolButton>
 #include <plugin/pluginmanager.h>
 
 #include "mainwindow.h"
@@ -266,9 +268,13 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
         } else if (toolBar) {
             currentAction = currentMenu->menuAction();
             if (prevAction)
-                toolBar->insertAction(prevAction,currentMenu->menuAction());
+                toolBar->insertAction(prevAction, currentAction);
             else
-                toolBar->addAction(currentMenu->menuAction());
+                toolBar->addAction(currentAction);
+            QToolButton *button = dynamic_cast<QToolButton*>(
+                        toolBar->widgetForAction(currentAction));
+            connect(currentAction, &QAction::triggered,
+                    button, &QToolButton::showMenu);
         } else {
             currentAction = (prevAction)
                     ? menuBar()->insertMenu(prevAction,currentMenu)
@@ -371,6 +377,7 @@ void MainWindow::removeAction(QAction *action)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    getMdiArea()->closeAllSubWindows();
     writeSettings();
     event->accept();
 }
@@ -403,8 +410,6 @@ void MainWindow::updateMenus()
 
 void MainWindow::refreshAllBar(bool readingBarSettings)
 {
-
-
     if (readingBarSettings)
         readBarSettings();
     else
