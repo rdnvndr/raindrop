@@ -371,6 +371,7 @@ void MainWindow::removeAction(QAction *action)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    getMdiArea()->closeAllSubWindows();
     writeSettings();
     event->accept();
 }
@@ -403,8 +404,6 @@ void MainWindow::updateMenus()
 
 void MainWindow::refreshAllBar(bool readingBarSettings)
 {
-
-
     if (readingBarSettings)
         readBarSettings();
     else

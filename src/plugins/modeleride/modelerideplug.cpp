@@ -149,22 +149,21 @@ void ModelerIDEPlug::openRecentModel()
         for (int i = 0; i< 9; i++) {
             if (action == m_actionRecentModel[i])
             {
-                m_fileName = m_recentFiles[i];
-                break;
+                int count = m_recentFiles.count();
+                m_fileName = m_recentFiles[count - i - 1];
+                QFile file(m_fileName);
+                if (file.open(QIODevice::ReadOnly)) {
+                    QDomDocument document;
+                    if (document.setContent(&file)) {
+                        createClassModel(document);
+                    }
+                    file.close();
+                }
+                updateRecentModels();
+                m_actionSaveModel->setDisabled(true);
+                return;
             }
-            return;
         }
-
-        QFile file(m_fileName);
-        if (file.open(QIODevice::ReadOnly)) {
-            QDomDocument document;
-            if (document.setContent(&file)) {
-                createClassModel(document);
-            }
-            file.close();
-        }
-        updateRecentModels();
-        m_actionSaveModel->setDisabled(true);
     }
 }
 
@@ -192,7 +191,8 @@ void ModelerIDEPlug::updateRecentModels()
             QString text = m_recentFiles.value(count - i - 1);
             if (text.length() > 64)
                 text = "..." + text.right(64);
-            m_actionRecentModel[i]->setText(QString("%1: %2").arg(i+1).arg(text));
+            m_actionRecentModel[i]->setText(QString("%1: %2")
+                                            .arg(i+1).arg(text));
             m_actionRecentModel[i]->setVisible(true);
         } else {
             m_actionRecentModel[i]->setVisible(false);
@@ -213,7 +213,7 @@ void ModelerIDEPlug::readRecentFiles()
         if (fileName.length() > 64)
             fileName = "..." + fileName.right(64);
         m_actionRecentModel[count - i - 1]->setText(
-                    QString("%1: %2").arg(i+1).arg(fileName));
+                    QString("%1: %2").arg(count - i).arg(fileName));
         m_actionRecentModel[count - i - 1]->setVisible(true);
     }
     if (count > 0)
