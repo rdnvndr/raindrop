@@ -4,6 +4,7 @@
 #include <QUuid>
 #include <QMenu>
 #include <QToolButton>
+#include <QListIterator>
 #include <plugin/pluginmanager.h>
 
 #include "mainwindow.h"
@@ -231,8 +232,10 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
     QAction *prevAction = NULL;
     MenuItem *separatorItem = NULL;
 
-    for (qint32 row = parentItem->childItems.count() - 1; row >= 0; --row) {
-        MenuItem *item = parentItem->childItems.at(row);
+    QListIterator<MenuItem *> i(parentItem->childItems);
+    i.toBack();
+    while (i.hasPrevious()) {
+        MenuItem *item = i.previous();
         if (item == menuItem) {
 
             // Создание разделителя между двумя существующими QAction
@@ -606,11 +609,13 @@ void MainWindow::endLoadingPlugins()
 
 void MainWindow::writeMenu(QWidget *menu, qint32 level)
 {
-    qint32 actionCount = menu->actions().count();
-    for (qint32 row = 0;row < actionCount; ++row) {
-        QAction *child = menu->actions().at(row);
+    QListIterator<QAction *> i(menu->actions());
+    while (i.hasNext()) {
+        bool isBeginOrEnd = !(i.hasPrevious());
+        QAction *child = i.next();
+        isBeginOrEnd = isBeginOrEnd || !(i.hasNext());
 
-        if (child->isSeparator() && (row == 0 || row == actionCount - 1))
+        if (child->isSeparator() && isBeginOrEnd)
             continue;
 
         settings()->setArrayIndex(m_menuArrayIndex);
@@ -650,8 +655,10 @@ void MainWindow::setEditedMenu(QWidget *widget, bool edited)
     if (menu)
         menu->setEdited(edited);
 
-    for (qint32 row = widget->actions().count() - 1; row >= 0 ; --row) {
-        QAction *child = widget->actions().at(row);
+    QListIterator<QAction *> i(widget->actions());
+    i.toBack();
+    while (i.hasPrevious()) {
+        QAction *child = i.previous();
         if (child->menu())
             setEditedMenu(child->menu(), edited);
     }
