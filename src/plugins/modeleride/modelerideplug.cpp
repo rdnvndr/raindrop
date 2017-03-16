@@ -146,7 +146,7 @@ void ModelerIDEPlug::actionSaveEnable()
 void ModelerIDEPlug::openRecentModel()
 {
     if (const QAction *action = qobject_cast<const QAction *>(sender())) {
-        for (int i = 0; i< 9; i++) {
+        for (int i = 0; i< RECENTCOUNT; i++) {
             if (action == m_actionRecentModel[i])
             {
                 int count = m_recentFiles.count();
@@ -169,7 +169,7 @@ void ModelerIDEPlug::openRecentModel()
 
 void ModelerIDEPlug::clearRecentModels()
 {
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < RECENTCOUNT; i++)
         m_actionRecentModel[i]->setVisible(false);
     m_recentFiles.clear();
     m_actionClearRecentModels->setDisabled(true);
@@ -181,12 +181,12 @@ void ModelerIDEPlug::updateRecentModels()
     m_recentFiles.append(m_fileName);
 
     int count = m_recentFiles.count();
-    if (count > 9) {
+    if (count > RECENTCOUNT) {
         m_recentFiles.removeAt(0);
-        count = 9;
+        count = RECENTCOUNT;
     }
 
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < RECENTCOUNT; i++) {
         if (i < count) {
             QString text = m_recentFiles.value(count - i - 1);
             if (text.length() > 64)
