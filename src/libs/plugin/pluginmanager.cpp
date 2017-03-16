@@ -29,7 +29,7 @@ PluginManager *PluginManager::instance()
 
 QObject *PluginManager::interfaceObject(QString interfaceName)
 {
-    if (m_interfaces.count(interfaceName) > 0)
+    if (m_interfaces.contains(interfaceName))
         return m_interfaces.values(interfaceName).takeFirst();
     return 0;
 }
