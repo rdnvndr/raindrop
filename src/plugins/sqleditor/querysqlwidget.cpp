@@ -75,14 +75,13 @@ void QuerySqlWidget::runQuery() {
         tabWidget->setCurrentIndex(1);
     }
     else{
-
         if (m_model->rowCount()<1)
             tabWidget->setCurrentIndex(1);
         else{
             tableView->show();
             tabWidget->setCurrentIndex(0);
         }
-        if (m_model->lastError().text().count())
+        if (m_model->lastError().text().isEmpty())
             plainLogEdit->setPlainText(tr("Запрос успешно выполнен"));
         else
             plainLogEdit->setPlainText(m_model->lastError().text());

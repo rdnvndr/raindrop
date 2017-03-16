@@ -11,15 +11,18 @@
 #include "classtreeview.h"
 #include "treefilterproxymodel.h"
 
+
+
 namespace RTPTechGroup {
 namespace ModelerIde {
+
+#define RECENTCOUNT 9 //! Количество последних моделей
 
 //! Плагин среды разработки структуры классов
 /*! Плагин предназначен для разработки структуры классов
     с сохранением ее XML. Имеется возможность разработанную
     структуру классов опубликовать на сервере БД
 */
-
 class ModelerIDEPlug:
         public QObject,
         public IPlugin
@@ -159,7 +162,7 @@ private:
     QAction *m_actionOpenModel;
 
     //! Команда открытия последних моделей
-    QAction *m_actionRecentModel[9];
+    QAction *m_actionRecentModel[RECENTCOUNT];
 
     //! Команда очистки списка последних моделей
     QAction *m_actionClearRecentModels;
