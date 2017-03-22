@@ -331,13 +331,13 @@ void ClassTreeView::showContextMenu(const QPoint &point)
         }
 
         QModelIndex indexParentSource = indexSource.parent();
-        if (!indexParentSource.isValid())
-            return;
-
-        if (tagRole == DBATTRXML::ATTR
-                && indexParentSource.data(TreeXmlModel::TagRole)
-                == DBCLASSLISTXML::CLASSLIST)
-            contextMenu->actions().at(1)->setVisible(false);
+        if (indexParentSource.isValid() && tagRole == DBATTRXML::ATTR) {
+            if (indexParentSource.data(TreeXmlModel::TagRole)
+                    == DBCLASSLISTXML::CLASSLIST)
+            {
+                contextMenu->actions().at(1)->setVisible(false);
+            }
+        }
 
         contextMenu->exec(treeView->mapToGlobal(point));
     }
