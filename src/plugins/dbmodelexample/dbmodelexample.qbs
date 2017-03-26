@@ -12,7 +12,7 @@ PluginProduct {
     cpp.defines:          base.concat(["DBMODELEXAMPLE_LIBRARY"])
     cpp.includePaths:     base.concat(['.'])
 
-    Depends { name: "Qt"; submodules: ["widgets"] }
+    Depends { name: "Qt"; submodules: ["widgets", "sql"] }
     Depends { name: "plugin" }
 
     files: [

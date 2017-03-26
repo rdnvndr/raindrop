@@ -5,6 +5,9 @@
 #include <plugin/iplugin.h>
 #include "dbmodelexampleglobal.h"
 
+namespace RTPTechGroup {
+namespace DatabaseModel {
+
 class  DBMODELEXAMPLELIB DbModelExample:
         public QObject,
         public IPlugin
@@ -45,5 +48,7 @@ public:
     //! Производитель плагина
     QString vendor() {return tr(APP_COMPANY);}
 };
+
+}}
 
 #endif
