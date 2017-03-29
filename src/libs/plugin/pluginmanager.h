@@ -47,6 +47,12 @@ public:
     //! Получение объекта для указанного интерфейса
     QObject *interfaceObject(QString interfaceName);
 
+    //! Получение объекта для указанного интерфейса с приведением типа
+    template<typename T> T interfaceObject(QString interfaceName)
+    {
+        return qobject_cast<T>(m_interfaces.value(interfaceName, NULL));
+    }
+
     //! Получение объектов для указанного интерфейса
     QList<QObject *> interfaceObjects(QString interfaceName);
 

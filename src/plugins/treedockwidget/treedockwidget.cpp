@@ -38,8 +38,8 @@ TreeDockWidget::TreeDockWidget(QWidget *parent) :
     toolbar->show();
 
     PluginManager *pluginManager = PluginManager::instance();
-    QMainWindow *mainWindow = qobject_cast<QMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
+    QMainWindow *mainWindow
+            = pluginManager->interfaceObject <QMainWindow*>("IMainWindow");
 
     if (QApplication::style()->objectName() == "windows")
         mainWindow->setStyleSheet(mainWindow->styleSheet()+

@@ -50,8 +50,8 @@ ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
             this, &ModelerIDEPlug::remove);
 
     // Создание пунктов строки меню и кнопок панели исрументов
-    IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
+    IMainWindow *iMainWindow
+            = pluginManager->interfaceObject<IMainWindow*>("IMainWindow");
 
     m_actionNewModel = new QAction(QIcon(":newmodel"),
                                    tr("Новая модель"), this);
@@ -491,8 +491,8 @@ void ModelerIDEPlug::showPropEditor(const QModelIndex &indexSource, bool editabl
         return;
 
     PluginManager *pluginManager = PluginManager::instance();
-    IMainWindow *mainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
+    IMainWindow *mainWindow
+            = pluginManager->interfaceObject<IMainWindow*>("IMainWindow");
 
     QString tagRole = indexSource.data(TreeXmlModel::TagRole).toString();
     QString subWindowName;
@@ -569,8 +569,8 @@ void ModelerIDEPlug::editPropEditor(const QModelIndex &indexSource)
 void ModelerIDEPlug::closePropEditor(const QModelIndex &index)
 {
     PluginManager *pluginManager = PluginManager::instance();
-    IMainWindow *mainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
+    IMainWindow *mainWindow
+            = pluginManager->interfaceObject<IMainWindow*>("IMainWindow");
 
     QString subWindowName = this->dataId(index);
     QString tagRole = index.data(TreeXmlModel::TagRole).toString();
@@ -697,8 +697,8 @@ void ModelerIDEPlug::publishClassModel()
 void ModelerIDEPlug::closeClassModel()
 {   
     PluginManager *pluginManager = PluginManager::instance();
-    IMainWindow *mainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
+    IMainWindow *mainWindow
+            = pluginManager->interfaceObject<IMainWindow*>("IMainWindow");
 
     foreach (QMdiSubWindow *subWindow, mainWindow->subWindowList()) {
         QString objName = subWindow->widget()->objectName();

@@ -13,8 +13,8 @@ ClipboardStack::ClipboardStack(QObject *parent):
     PluginManager *pluginManager = PluginManager::instance();
 
     // Создание пунктов строки меню и кнопок панели иструментов
-    IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
+    IMainWindow *iMainWindow
+            = pluginManager->interfaceObject<IMainWindow*>("IMainWindow");
 
     connect(qApp, &QApplication::focusChanged,
             this, &ClipboardStack::focusChanged);
