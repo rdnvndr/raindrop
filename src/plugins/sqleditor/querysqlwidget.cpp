@@ -18,8 +18,7 @@ QuerySqlWidget::QuerySqlWidget(QWidget *parent) :
     m_undoStack = new QUndoStack(this);
     PluginManager *pluginManager = PluginManager::instance();
 
-    m_undoGroup = qobject_cast<IUndoGroup*>(
-                pluginManager->interfaceObject("IUndoGroup"));
+    m_undoGroup = pluginManager->interfaceObject<IUndoGroup*>("IUndoGroup");
     m_undoGroup->addStack(m_undoStack);
     m_undoGroup->addWidgetForStack(m_undoStack, this->toolButtonRun);
     m_undoGroup->addWidgetForStack(m_undoStack, this);
@@ -27,8 +26,8 @@ QuerySqlWidget::QuerySqlWidget(QWidget *parent) :
     connect(plainQueryEdit->document(), &QTextDocument::undoCommandAdded,
             this, &QuerySqlWidget::undoCommandAdd);
 
-    m_clipboardStack = qobject_cast<IClipboardStack *>(
-                pluginManager->interfaceObject("IClipboardStack"));
+    m_clipboardStack
+          = pluginManager->interfaceObject<IClipboardStack*>("IClipboardStack");
     m_clipboardItem = new TextClipboardItem(plainQueryEdit);
     m_clipboardStack->addClipboardItem(
                  dynamic_cast<IClipboardItem *>(m_clipboardItem));
