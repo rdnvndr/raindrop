@@ -1,5 +1,4 @@
 #include "pluginmanager.h"
-#include <typeinfo>
 
 #include <QRegExp>
 
@@ -29,9 +28,7 @@ PluginManager *PluginManager::instance()
 
 QObject *PluginManager::interfaceObject(QString interfaceName)
 {
-    if (m_interfaces.contains(interfaceName))
-        return m_interfaces.values(interfaceName).takeFirst();
-    return 0;
+    return m_interfaces.value(interfaceName, NULL);
 }
 
 QList<QObject *> PluginManager::interfaceObjects(QString interfaceName)

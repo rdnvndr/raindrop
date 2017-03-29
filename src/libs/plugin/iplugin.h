@@ -43,10 +43,8 @@ QT_END_NAMESPACE
         {
             Q_OBJECT
             Q_INTERFACES(IPlugin)
-
-
-        #if QT_VERSION >= 0x050000
-            Q_PLUGIN_METADATA(IID "com.RTPTechGroup.Raindrop.Example" FILE "example.json")
+            Q_PLUGIN_METADATA(
+                 IID "com.RTPTechGroup.Raindrop.Example" FILE "example.json")
         #endif
 
         public:
@@ -54,26 +52,29 @@ QT_END_NAMESPACE
             ExamplePlug(QObject *parent = 0);
 
         // IPlugin
-            //! Получение экземпляра
-            QObject *instance() { return this; }
-
             //! Получение имени плагина
-            QString name() {return tr("Пример плагина");};
+            QString name() {return tr("Пример плагина");}
 
             //! Получение иконки плагина
             QIcon icon() {return QIcon(":/example");}
 
+            //! Описание продукта
+            QString product() {return tr("");}
+
+            //! Авторские права
+            QString copyright() {return tr("");}
+
             //! Описание плагина
-            QString descript() {return tr("");};
+            QString descript() {return tr("");}
 
             //! Категория в которой состоит плагин
-            QString category() {return tr("");};
+            QString category() {return tr("");}
 
             //! Версия плагина
-            QString version() {return tr("");};
+            QString version() {return tr("");}
 
             //! Производитель плагина
-            QString vendor() {return tr("");};
+            QString vendor() {return tr("");}
 
             MainWindow *window;
         };
@@ -88,8 +89,9 @@ QT_END_NAMESPACE
         {
             // Получение интерфейса ITreeDockWidget
             PluginManager *pluginManager = PluginManager::instance();
-            ITreeDockWidget *dockWidget = qobject_cast<ITreeDockWidget*>(
-                        pluginManager->getPlugin("ITreeDockWidget")->instance());
+            ITreeDockWidget *dockWidget
+                      = pluginManager->interfaceObject<ITreeDockWidget*>(
+                          "ITreeDockWidget");
         }
 
         void ExamplePlug::readSettings()
@@ -118,6 +120,9 @@ public:
 
     //! Получение экземпляра
     virtual QObject *instance() {return dynamic_cast<QObject *>(this);}
+
+    //! Получение экземпляра с приведением типа
+    template<typename T> T instance() {return dynamic_cast<T>(this);}
 
     //! Получение определенных интерфейсов
     virtual QStringList interfaces() = 0;
