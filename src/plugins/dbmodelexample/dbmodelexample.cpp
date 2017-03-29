@@ -13,8 +13,8 @@ DbModelExample::DbModelExample(QObject *parent):
 {
     PluginManager *pluginManager = PluginManager::instance();
     IDatabaseModelManager *dbModelManager
-            = qobject_cast<IDatabaseModelManager *>(
-                pluginManager->interfaceObject("IDatabaseModelManager"));
+            = pluginManager->interfaceObject<IDatabaseModelManager *>(
+                "IDatabaseModelManager");
 
     IDatabaseModel *dbModel = dbModelManager->createInstance();
 }
