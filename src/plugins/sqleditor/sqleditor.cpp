@@ -13,8 +13,8 @@ SqlEditor::SqlEditor(QObject *parent):
     PluginManager *pluginManager = PluginManager::instance();
 
     // Создание пунктов строки меню и кнопок панели иструментов
-    IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
+    IMainWindow *iMainWindow
+            = pluginManager->interfaceObject<IMainWindow*>("IMainWindow");
 
     m_actionSqlEditor = new QAction(QIcon(":SqlEditor"), tr("SQL редактор"), this);
     connect(m_actionSqlEditor, &QAction::triggered,
@@ -26,8 +26,8 @@ SqlEditor::SqlEditor(QObject *parent):
 SqlEditor::~SqlEditor()
 {
     PluginManager *pluginManager = PluginManager::instance();
-    IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
+    IMainWindow *iMainWindow
+            = pluginManager->interfaceObject<IMainWindow*>("IMainWindow");
 
     QMdiSubWindow *subWindow = iMainWindow->setActiveSubWindow("QuerySqlWidget");
     if (subWindow)
@@ -39,8 +39,8 @@ SqlEditor::~SqlEditor()
 void SqlEditor::showSqlEditor()
 {
     PluginManager *pluginManager = PluginManager::instance();
-    IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
+    IMainWindow *iMainWindow
+            = pluginManager->interfaceObject<IMainWindow*>("IMainWindow");
 
     QString subWindowName = "QuerySqlWidget";
     QMdiSubWindow *subWindow = iMainWindow->setActiveSubWindow(subWindowName);

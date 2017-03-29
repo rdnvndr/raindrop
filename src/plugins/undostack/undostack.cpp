@@ -14,8 +14,8 @@ UndoStack::UndoStack(QObject *parent):
     PluginManager *pluginManager = PluginManager::instance();
 
     // Создание пунктов строки меню и кнопок панели иструментов
-    IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
-                pluginManager->interfaceObject("IMainWindow"));
+    IMainWindow *iMainWindow
+            = pluginManager->interfaceObject<IMainWindow*>("IMainWindow");
 
     m_actionUndo = m_undoGroup->createUndoAction(this);
     m_actionUndo->setIcon(QIcon(":undo"));
