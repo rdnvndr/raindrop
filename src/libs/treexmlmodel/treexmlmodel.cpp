@@ -221,7 +221,7 @@ void TreeXmlModel::removeDisplayedAttr(const QString &tag)
 
     if (flagcolumn){
         m_column = 1;
-        foreach (QStringList diplayedAttr, m_displayedAttr.values())
+        foreach (const QStringList &diplayedAttr, m_displayedAttr.values())
             if (diplayedAttr.count()>m_column)
                 m_column = diplayedAttr.count();
     }

@@ -356,7 +356,7 @@ bool TreeXmlHashModel::moveIndex(const QModelIndex &srcIndex, const QModelIndex 
 
 QString TreeXmlHashModel::uuidAttr(const QString &tag) const
 {
-    foreach (QString attr,m_hashAttr[tag].keys())
+    foreach (const QString &attr, m_hashAttr[tag].keys())
         if (m_hashAttr[tag][attr]==TreeXmlHashModel::Uuid)
             return attr;
     return QString();
