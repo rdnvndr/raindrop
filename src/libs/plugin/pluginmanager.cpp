@@ -56,7 +56,7 @@ QList<IPlugin *> PluginManager::dependPlugins(IPlugin *plugin)
     QHash<QString, IPlugin *> pluginList;
 
     if (plugin)
-        foreach (QString depInterfaceName,plugin->depModulList())
+        foreach (const QString &depInterfaceName,plugin->depModulList())
             foreach (QObject *objInterfacePlugin,interfaceObjects(depInterfaceName)) {
                 IPlugin *interfacePlugin = qobject_cast<IPlugin *>(objInterfacePlugin);
                 if (interfacePlugin)
@@ -158,7 +158,7 @@ void PluginManager::setSettings(QSettings *s)
 
 void PluginManager::removePlugin(QObject *obj)
 {
-    foreach (QString interface, m_interfaces.keys())
+    foreach (const QString &interface, m_interfaces.keys())
         foreach (QObject *plug,m_interfaces.values(interface))
             if (plug == obj) {
                 m_interfaces.remove(interface,plug);
