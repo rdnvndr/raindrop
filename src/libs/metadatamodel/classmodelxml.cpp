@@ -752,7 +752,7 @@ bool ClassModelXml::isRemove(const QModelIndex &srcIndex)
                                         model->columnDisplayedAttr(tag,fieldId)
                                         ).data().toString();
 
-        foreach (TreeXmlHashModel::TagWithAttr tagWithAttr, model->fromRelation(tag))
+        foreach (const TreeXmlHashModel::TagWithAttr &tagWithAttr, model->fromRelation(tag))
         {
             qint32 number = 0;
             QModelIndex linkIndex = model->indexHashAttr(
