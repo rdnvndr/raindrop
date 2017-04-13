@@ -345,7 +345,7 @@ void MainWindow::addAction(QString category, QAction *action)
 
     QString name = action->objectName();
 
-    foreach (MenuItemHash actionItem, m_actionItem)
+    foreach (const MenuItemHash &actionItem, m_actionItem)
         foreach (MenuItem *menuItem,actionItem.values(name)) {
             menuItem->action = action;
             createBranchAction(menuItem);
@@ -428,7 +428,7 @@ void MainWindow::refreshAllBar(bool readingBarSettings)
 
     foreach (QAction *action, m_actions.values()) {
         if (action) {
-            foreach (MenuItemHash actionItem, m_actionItem)
+            foreach (const MenuItemHash &actionItem, m_actionItem)
                 foreach (MenuItem *menuItem, actionItem.values(action->objectName())) {
                     menuItem->action = action;
                     createBranchAction(menuItem);
