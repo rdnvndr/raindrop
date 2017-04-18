@@ -17,8 +17,6 @@ INCLUDEPATH += .
 LIBS += -lplugin -lmdiextarea
 DEFINES += EXAMPLE_LIBRARY
 # Input
-HEADERS += exampleplug.h \
-    exampleglobal.h
-SOURCES += exampleplug.cpp
-RESOURCES += \
-    example.qrc
+HEADERS   = *.h
+SOURCES   = *.cpp
+RESOURCES = *.qrc

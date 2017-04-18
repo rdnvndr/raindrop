@@ -15,9 +15,10 @@ PluginProduct {
     Depends { name: "plugin" }
 
     files: [
-        "pluginloadlog.h",
-        "pluginloadlog.cpp",
-        "tst_pluginmanager.cpp"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
     Group {
         fileTagsFilter: ["application"]

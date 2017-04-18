@@ -17,12 +17,10 @@ PluginProduct {
     Depends { name: "plugin" }
 
     files: [
-        "imainwindow.h",
-        "itst_plugin1.h",
-        "tst_plugin1.h",
-        "tst_plugin1global.h",
-        "tst_plugin1.cpp",
-        "tst_plugin1.qrc"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
     Group {
         fileTagsFilter: ["dynamiclibrary"]

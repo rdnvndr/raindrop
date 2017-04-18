@@ -13,12 +13,9 @@ TilingFrameProduct {
     Depends { name: "tilingframe" }
 
     files: [
-        "mainwindow.h",
-        "tilingbutton.h",
-        "main.cpp",
-        "mainwindow.cpp",
-        "tilingbutton.cpp",
-        "mainwindow.ui",
-        "rsrc.qrc"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

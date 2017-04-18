@@ -10,7 +10,7 @@ QMAKE_TARGET_DESCRIPTION = "TST_PLUGIN2"
 QMAKE_TARGET_COPYRIGHT = "Copyright (C) RTPTechGroup"
 
 # Input
-HEADERS   += tst_plugin2.h tst_plugin2global.h itst_plugin2.h
-SOURCES   += tst_plugin2.cpp
-RESOURCES += tst_plugin2.qrc
+HEADERS   = *.h
+SOURCES   = *.cpp
+RESOURCES = *.qrc
 

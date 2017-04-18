@@ -13,9 +13,9 @@ LibProduct {
     Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
-        "dockwidget.h",
-        "dockwidgetglobal.h",
-        "version.h",
-        "dockwidget.cpp"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

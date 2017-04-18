@@ -13,9 +13,9 @@ LibProduct {
     Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
-        "mdiextarea.h",
-        "mdiextareaglobal.h",
-        "version.h",
-        "mdiextarea.cpp"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

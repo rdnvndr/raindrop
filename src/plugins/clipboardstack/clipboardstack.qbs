@@ -16,10 +16,9 @@ PluginProduct {
     Depends { name: "plugin" }
 
     files: [
-        "clipboardstack.h",
-        "clipboardstackglobal.h",
-        "version.h",
-        "clipboardstack.cpp",
-        "clipboardstack.qrc"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

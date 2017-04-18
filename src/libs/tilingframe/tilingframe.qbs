@@ -13,11 +13,9 @@ LibProduct {
     Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
-        "tilingframe.h",
-        "tilingframeglobal.h",
-        "tilingwidget.h",
-        "version.h",
-        "tilingframe.cpp",
-        "tilingwidget.cpp"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

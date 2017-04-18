@@ -13,6 +13,6 @@ DEFINES +=  UNDOSTACK_LIBRARY
 QT += widgets
 
 # Input
-HEADERS   += undostack.h undostackglobal.h
-SOURCES   += undostack.cpp
-RESOURCES += undostack.qrc
+HEADERS   = *.h
+SOURCES   = *.cpp
+RESOURCES = *.qrc
