@@ -9,7 +9,7 @@ namespace DatabaseModel {
 
 class PgDatabaseClass;
 
-//! Реализация списка дочерних классов базы данных PostgreSql
+//! Реализация списка производных классов базы данных PostgreSql
 class PgDatabaseClasses
         : public IDatabaseList<PgDatabaseClass, PgDatabaseClass>
 {

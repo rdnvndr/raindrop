@@ -30,7 +30,7 @@ public:
     virtual bool remove();
 
 // Получение доступа к элементам класса по имени
-    //! Получение дочернего класса по имени
+    //! Получение производного класса по имени
     IDatabaseClass *derivedClass(const QString &name) ;
 
     //! Получение атрибута по имени
@@ -43,7 +43,7 @@ public:
     IDatabaseComposition *comp(const QString &name);
 
 // Получение доступа к спискам элементов класса по имени
-    //! Cписок дочерних классов в классе
+    //! Cписок производных классов
     IDatabaseClasses *classList();
 
     //! Cписок атрибутов в классе
