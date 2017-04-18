@@ -9,5 +9,5 @@ include(../libs.pri)
 DEFINES += TILINGFRAME_LIBRARY
 QT += widgets
 # Input
-HEADERS += tilingframe.h tilingwidget.h tilingframeglobal.h
-SOURCES += tilingframe.cpp tilingwidget.cpp
+HEADERS   = *.h
+SOURCES   = *.cpp

@@ -13,9 +13,9 @@ LibProduct {
     Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
-        "pushbuttonimage.h",
-        "pushbuttonimageglobal.h",
-        "version.h",
-        "pushbuttonimage.cpp"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

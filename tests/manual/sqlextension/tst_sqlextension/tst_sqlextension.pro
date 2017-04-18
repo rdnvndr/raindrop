@@ -9,10 +9,6 @@ TEMPLATE = app
 
 LIBS += -lsqlextension
 
-SOURCES += main.cpp\
-        mainwindow.cpp
-
-HEADERS  += mainwindow.h
-
-FORMS    += mainwindow.ui
-
+HEADERS   = *.h
+SOURCES   = *.cpp
+FORMS     = *.ui

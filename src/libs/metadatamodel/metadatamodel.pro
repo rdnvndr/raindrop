@@ -13,11 +13,6 @@ greaterThan(QT_MAJOR_VERSION, 4) {
   QT += widgets
 }
 # Input
-HEADERS += metadatamodelglobal.h \
-    classmodelxml.h \
-    dbxmlstruct.h
-SOURCES += \ 
-    classmodelxml.cpp
-
-RESOURCES += \
-    metadatamodel.qrc
+HEADERS   = *.h
+SOURCES   = *.cpp
+RESOURCES = *.qrc

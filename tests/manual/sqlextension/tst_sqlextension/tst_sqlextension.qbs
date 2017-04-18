@@ -13,10 +13,10 @@ SqlExtensionProduct {
     Depends { name: "sqlextension" }
 
     files: [
-        "mainwindow.h",
-        "main.cpp",
-        "mainwindow.cpp",
-        "mainwindow.ui"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 
     Group {

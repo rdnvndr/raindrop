@@ -13,18 +13,8 @@ DEFINES +=  SQLEDITOR_LIBRARY
 QT += widgets sql
 
 # Input
-HEADERS   += sqleditor.h sqleditorglobal.h \
-    querysqlwidget.h \
-    sqlhighlighter.h \
-    textclipboarditem.h \
-    undotextdocument.h
-SOURCES   += sqleditor.cpp \
-    querysqlwidget.cpp \
-    sqlhighlighter.cpp \
-    textclipboarditem.cpp \
-    undotextdocument.cpp
-RESOURCES += sqleditor.qrc 
-
-FORMS += \
-    querysqlwidget.ui
+HEADERS   = *.h
+SOURCES   = *.cpp
+RESOURCES = *.qrc
+FORMS     = *.ui
 

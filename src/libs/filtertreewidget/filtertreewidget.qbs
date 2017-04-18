@@ -13,9 +13,9 @@ LibProduct {
     Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
-        "filtertreewidget.h",
-        "filtertreewidgetglobal.h",
-        "version.h",
-        "filtertreewidget.cpp"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

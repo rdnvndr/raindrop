@@ -16,10 +16,9 @@ PluginProduct {
     Depends { name: "plugin" }
 
     files: [
-        "undostack.h",
-        "undostackglobal.h",
-        "version.h",
-        "undostack.cpp",
-        "undostack.qrc"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

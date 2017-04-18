@@ -16,15 +16,9 @@ PluginProduct {
     Depends { name: "plugin" }
 
     files: [
-        "dbconnect.h",
-        "dbconnectglobal.h",
-        "dialogconnect.h",
-        "threadconnect.cpp",
-        "threadconnect.h",
-        "version.h",
-        "dbconnect.cpp",
-        "dialogconnect.cpp",
-        "dialogconnect.ui",
-        "dbconnect.qrc",
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

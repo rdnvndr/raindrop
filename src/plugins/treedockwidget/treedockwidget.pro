@@ -19,10 +19,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 DEFINES += TREEDOCKWIDGET_LIBRARY
 
 
-HEADERS += treedockwidget.h \
-           treefilterwidget.h \
-    treedockwidgetglobal.h
-FORMS += treefilterwidget.ui
-SOURCES += treedockwidget.cpp treefilterwidget.cpp
-RESOURCES += \
-    treedockwidget.qrc
+HEADERS   = *.h
+SOURCES   = *.cpp
+RESOURCES = *.qrc
+FORMS     = *.ui
