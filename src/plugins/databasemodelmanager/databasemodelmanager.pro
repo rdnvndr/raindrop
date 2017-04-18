@@ -9,13 +9,13 @@ include(../plugins.pri)
 
 DEPENDPATH += .
 INCLUDEPATH += .
-DEFINES +=  DATABASEMODEL_LIBRARY
+DEFINES +=  DATABASEMODELMANAGER_LIBRARY
 greaterThan(QT_MAJOR_VERSION, 4) {
-  QT += widgets
+  QT += widgets sql
 }
 
 
 # Input
-HEADERS   += databasemodel.h databasemodelglobal.h
-SOURCES   += databasemodel.cpp
-RESOURCES += databasemodel.qrc
+HEADERS   = *.h
+SOURCES   = *.cpp
+RESOURCES = *.qrc

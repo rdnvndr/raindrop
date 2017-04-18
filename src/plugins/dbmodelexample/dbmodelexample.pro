@@ -10,9 +10,9 @@ include(../plugins.pri)
 DEPENDPATH += .
 INCLUDEPATH += .
 DEFINES +=  DBMODELEXAMPLE_LIBRARY
-QT += widgets
+QT += widgets sql
 
 # Input
-HEADERS   += dbmodelexample.h dbmodelexampleglobal.h
-SOURCES   += dbmodelexample.cpp
-RESOURCES += dbmodelexample.qrc
+HEADERS   = *.h
+SOURCES   = *.cpp
+RESOURCES = *.qrc

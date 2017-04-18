@@ -1,6 +1,7 @@
 #include "dbmodelexample.h"
 
 #include <plugin/pluginmanager.h>
+#include <idatabasemodel.h>
 #include <idatabasemodelmanager.h>
 
 using namespace RTPTechGroup::Plugin;

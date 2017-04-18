@@ -16,10 +16,9 @@ PluginProduct {
     Depends { name: "plugin" }
 
     files: [
-        "dbmodelexample.h",
-        "dbmodelexampleglobal.h",
-        "dbmodelexample.cpp",
-        "version.h",
-        "dbmodelexample.qrc"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

@@ -16,22 +16,6 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 
 
 # Input
-HEADERS   += pgdatabasemodel.h pgdatabasemodelglobal.h \
-    pgdatabaseclass.h \
-    pgdatabaseattribute.h \
-    pgdatabasecomposition.h \
-    pgdatabasefilter.h \
-    pgdatabaseclasses.h \
-    pgdatabaseattrs.h \
-    pgdatabasecomps.h \
-    pgdatabasefilters.h
-SOURCES   += pgdatabasemodel.cpp \
-    pgdatabaseclass.cpp \
-    pgdatabaseattribute.cpp \
-    pgdatabasecomposition.cpp \
-    pgdatabasefilter.cpp \
-    pgdatabaseclasses.cpp \
-    pgdatabaseattrs.cpp \
-    pgdatabasecomps.cpp \
-    pgdatabasefilters.cpp
-RESOURCES += pgdatabasemodel.qrc
+HEADERS   = *.h
+SOURCES   = *.cpp
+RESOURCES = *.qrc

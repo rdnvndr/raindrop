@@ -16,10 +16,9 @@ PluginProduct {
     Depends { name: "plugin" }
 
     files: [
-        "databasemodelmanager.cpp",
-        "databasemodelmanager.h",
-        "databasemodelmanagerglobal.h",
-        "version.h",
-        "databasemodelmanager.qrc",
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }
