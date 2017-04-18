@@ -15,11 +15,9 @@ LibProduct {
     Depends { name: "treexmlmodel"}
 
     files: [
-        "classmodelxml.h",
-        "dbxmlstruct.h",
-        "metadatamodelglobal.h",
-        "version.h",
-        "classmodelxml.cpp",
-        "metadatamodel.qrc"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

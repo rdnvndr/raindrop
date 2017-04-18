@@ -13,11 +13,9 @@ LibProduct {
     Depends { name: "Qt"; submodules: ["sql"] }
 
     files: [
-        "sqlextensionglobal.h",
-        "threadquery.cpp",
-        "threadquery.h",
-        "threadqueryprivate.cpp",
-        "threadqueryprivate.h",
-        "version.h",
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

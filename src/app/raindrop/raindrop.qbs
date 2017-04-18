@@ -13,8 +13,9 @@ AppProduct {
     Depends { name: "plugin"}
 
     files: [
-        "main.cpp",
-        "raindrop.qrc",
-        "version.h"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

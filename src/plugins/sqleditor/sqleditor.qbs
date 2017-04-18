@@ -16,19 +16,9 @@ PluginProduct {
     Depends { name: "plugin" }
 
     files: [
-        "querysqlwidget.h",
-        "sqleditor.h",
-        "sqleditorglobal.h",
-        "sqlhighlighter.h",
-        "textclipboarditem.h",
-        "undotextdocument.h",
-        "version.h",
-        "querysqlwidget.cpp",
-        "sqleditor.cpp",
-        "sqlhighlighter.cpp",
-        "textclipboarditem.cpp",
-        "undotextdocument.cpp",
-        "querysqlwidget.ui",
-        "sqleditor.qrc"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

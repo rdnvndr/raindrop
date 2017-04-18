@@ -16,11 +16,9 @@ LibProduct {
     Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
-        "iplugin.h",
-        "pluginglobal.h",
-        "pluginmanager.h",
-        "version.h",
-        "iplugin.cpp",
-        "pluginmanager.cpp"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

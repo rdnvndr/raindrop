@@ -11,8 +11,5 @@ greaterThan(QT_MAJOR_VERSION, 4) {
   QT += widgets
 }
 # Input
-HEADERS += \
-    dockwidget.h \
-    dockwidgetglobal.h
-SOURCES += \ 
-    dockwidget.cpp
+HEADERS   = *.h
+SOURCES   = *.cpp

@@ -13,6 +13,6 @@ DEFINES +=  CLIPBOARDSTACK_LIBRARY
 QT += widgets
 
 # Input
-HEADERS   += clipboardstack.h clipboardstackglobal.h
-SOURCES   += clipboardstack.cpp
-RESOURCES += clipboardstack.qrc
+HEADERS   = *.h
+SOURCES   = *.cpp
+RESOURCES = *.qrc

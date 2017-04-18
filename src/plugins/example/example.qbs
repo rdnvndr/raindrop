@@ -17,10 +17,9 @@ PluginProduct {
     Depends { name: "mdiextarea" }
 
     files: [
-        "exampleglobal.h",
-        "exampleplug.h",
-        "version.h",
-        "exampleplug.cpp",
-        "example.qrc"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

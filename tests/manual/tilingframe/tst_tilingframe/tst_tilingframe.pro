@@ -9,13 +9,7 @@ TEMPLATE = app
 
 LIBS += -ltilingframe
 
-SOURCES += main.cpp\
-        mainwindow.cpp\ 
-        tilingbutton.cpp
-
-HEADERS  += mainwindow.h tilingbutton.h
-
-FORMS    += mainwindow.ui
-
-RESOURCES += \
-    rsrc.qrc
+HEADERS   = *.h
+SOURCES   = *.cpp
+RESOURCES = *.qrc
+FORMS     = *.ui

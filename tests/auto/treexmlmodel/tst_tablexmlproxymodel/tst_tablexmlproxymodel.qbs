@@ -14,7 +14,9 @@ TreeXmlModelProduct {
     Depends { name: "modeltest" }
 
     files: [
-        "tst_tablexmlproxymodel.cpp",
-        "tst_tablexmlproxymodel.qrc"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

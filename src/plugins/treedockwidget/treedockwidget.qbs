@@ -17,13 +17,9 @@ PluginProduct {
     Depends { name: "filtertreewidget" }
 
     files: [
-        "treedockwidget.h",
-        "treedockwidgetglobal.h",
-        "treefilterwidget.h",
-        "version.h",
-        "treedockwidget.cpp",
-        "treefilterwidget.cpp",
-        "treefilterwidget.ui",
-        "treedockwidget.qrc"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

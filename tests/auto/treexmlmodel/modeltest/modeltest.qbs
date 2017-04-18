@@ -18,10 +18,9 @@ SharedProduct {
     }
 
     files: [
-        "dynamictreemodel.h",
-        "modeltest.h",
-        "dynamictreemodel.cpp",
-        "modeltest.cpp",
-        "tst_modeltest.cpp"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

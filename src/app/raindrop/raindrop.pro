@@ -17,9 +17,6 @@ LIBS += -lplugin
 include(../app.pri)
 
 # Input
-#HEADERS +=
-#FORMS +=
-SOURCES += main.cpp
-
-RESOURCES += \
-    raindrop.qrc
+HEADERS   = *.h
+SOURCES   = *.cpp
+RESOURCES = *.qrc

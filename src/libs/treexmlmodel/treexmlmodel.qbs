@@ -13,22 +13,10 @@ LibProduct {
     Depends { name: "Qt"; submodules: ["widgets", "xml"] }
 
     files: [
-        "mimedataindex.h",
-        "modifyproxymodel.h",
-        "setdatacommand.h",
-        "tablexmlproxymodel.h",
-        "tagxmlitem.h",
-        "treexmlhashmodel.h",
-        "treexmlmodel.h",
-        "treexmlmodelglobal.h",
-        "version.h",
-        "mimedataindex.cpp",
-        "modifyproxymodel.cpp",
-        "setdatacommand.cpp",
-        "tablexmlproxymodel.cpp",
-        "tagxmlitem.cpp",
-        "treexmlhashmodel.cpp",
-        "treexmlmodel.cpp"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }
 

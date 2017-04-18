@@ -13,9 +13,9 @@ LibProduct {
     Depends { name: "Qt"; submodules: ["widgets"] }
 
     files: [
-        "treecombobox.h",
-        "treecomboboxglobal.h",
-        "version.h",
-        "treecombobox.cpp"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
 }

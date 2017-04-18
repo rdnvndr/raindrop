@@ -17,11 +17,10 @@ PluginProduct {
     Depends { name: "plugin" }
 
     files: [
-        "itst_plugin3.h",
-        "tst_plugin3.h",
-        "tst_plugin3global.h",
-        "tst_plugin3.cpp",
-        "tst_plugin3.qrc"
+        "*.h",
+        "*.cpp",
+        "*.ui",
+        "*.qrc"
     ]
     Group {
         fileTagsFilter: [
