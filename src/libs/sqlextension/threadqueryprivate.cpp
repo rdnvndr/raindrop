@@ -15,36 +15,37 @@ ThreadQueryPrivate::ThreadQueryPrivate(const QString &driverName,
                                  const QString &query)
 {
     QThread* curThread = QThread::currentThread();
-    QSqlDatabase m_db = QSqlDatabase::addDatabase(
-                driverName,
-                QString("RTP0x%1").arg((qlonglong)curThread, 0, 16));
-    m_db.setDatabaseName(databaseName);
-    m_db.setHostName(hostName);
-    m_db.setPort(port);
-    m_db.setUserName(userName);
-    m_db.setPassword(password);
-    if (!m_db.open()) {
-        emit error(m_db.lastError());
+    m_connectionName = QString("RTP0x%1").arg((qlonglong)curThread, 0, 16);
+    QSqlDatabase db = QSqlDatabase::addDatabase(driverName, m_connectionName);
+    db.setDatabaseName(databaseName);
+    db.setHostName(hostName);
+    db.setPort(port);
+    db.setUserName(userName);
+    db.setPassword(password);
+    if (!db.open()) {
+        emit error(db.lastError());
         emit executeDone(false);
     }
 
     if (query.isEmpty())
-        m_query = new QSqlQuery(m_db);
+        m_query = new QSqlQuery(db);
     else
-        m_query = new QSqlQuery(query, m_db);
+        m_query = new QSqlQuery(query, db);
 }
 
 ThreadQueryPrivate::~ThreadQueryPrivate()
 {
     delete m_query;
-    if (m_db.isOpen()) {
-        m_db.close();
+    {
+        QSqlDatabase db = QSqlDatabase::database(m_connectionName);
+        if (db.isOpen()) db.close();
     }
-    QSqlDatabase::removeDatabase(m_db.connectionName());
+    QSqlDatabase::removeDatabase(m_connectionName);
 }
 
-void ThreadQueryPrivate::bindValue(const QString &placeholder, const QVariant &val,
-                                QSql::ParamType paramType)
+void ThreadQueryPrivate::bindValue(const QString &placeholder,
+                                   const QVariant &val,
+                                   QSql::ParamType paramType)
 {
     m_query->bindValue(placeholder, val, paramType);
 }
