@@ -101,7 +101,7 @@ private:
     QSqlQuery *m_query;
 
     //! Соединение с БД
-    QSqlDatabase m_db;
+    QString m_connectionName;
 };
 
 }}
