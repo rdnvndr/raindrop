@@ -37,6 +37,7 @@ Product {
     Depends { name: "cpp" }
 
     Probe {
+        id: version
         property string prjDir: project.sourceDirectory
         property string prdDir: product.sourceDirectory
         property int hack: {
