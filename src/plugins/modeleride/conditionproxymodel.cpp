@@ -32,7 +32,6 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, qint32 role) c
             switch (proxyIndex.column()) {
             case 0:
                 return QString("{Блок}");
-                break;
             case 3:
                 if (proxyIndex.row() < rowCount(proxyIndex.parent())-1)
                     return ModifyProxyModel::data(
@@ -42,6 +41,8 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, qint32 role) c
                                         DBFILTERBLOCKXML::BLOCK,
                                         DBFILTERBLOCKXML::LINKOF)),
                                 role);
+                else
+                    return QVariant();
             default:
                 return QVariant();
             }
@@ -86,6 +87,8 @@ QVariant ConditionProxyModel::data(const QModelIndex &proxyIndex, qint32 role) c
                                         DBCONDITIONXML::COND,
                                         DBCONDITIONXML::LINKOF)),
                                 role);
+                else
+                    return QVariant();
             default:
                 return QVariant();
             }
@@ -160,7 +163,6 @@ bool ConditionProxyModel::setData(const QModelIndex &proxyIndex,
                                     DBCONDITIONXML::FIRSTATTR)),
                             value,
                             role);
-                break;
             case 1:
                 return ModifyProxyModel::setData(
                             proxyIndex.sibling(
@@ -170,7 +172,6 @@ bool ConditionProxyModel::setData(const QModelIndex &proxyIndex,
                                     DBCONDITIONXML::OPERATOR)),
                             value,
                             role);
-                break;
             case 2:
                 return ModifyProxyModel::setData(
                             proxyIndex.sibling(
@@ -180,7 +181,6 @@ bool ConditionProxyModel::setData(const QModelIndex &proxyIndex,
                                     DBCONDITIONXML::SECONDATTR)),
                             value,
                             role);
-                break;
             case 3:
                 column = xmlModel->columnDisplayedAttr(
                             DBCONDITIONXML::COND,
