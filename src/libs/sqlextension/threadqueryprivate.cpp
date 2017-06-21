@@ -15,7 +15,8 @@ ThreadQueryPrivate::ThreadQueryPrivate(const QString &driverName,
                                  const QString &query)
 {
     QThread* curThread = QThread::currentThread();
-    m_connectionName = QString("RTP0x%1").arg((qlonglong)curThread, 0, 16);
+    m_connectionName = QString("RTP0x%1").arg(
+                reinterpret_cast<qlonglong>(curThread), 0, 16);
     QSqlDatabase db = QSqlDatabase::addDatabase(driverName, m_connectionName);
     db.setDatabaseName(databaseName);
     db.setHostName(hostName);

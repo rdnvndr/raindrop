@@ -260,10 +260,6 @@ public slots:
         for (int row = 0; row < m_persistentProxyIndexes.size(); ++row) {
             QModelIndex updatedProxy = m_persistentProxyIndexes.at(row);
             QModelIndex updatedSource = m_persistentSourceIndexes.at(row);
-        }
-        for (int row = 0; row < m_persistentProxyIndexes.size(); ++row) {
-            QModelIndex updatedProxy = m_persistentProxyIndexes.at(row);
-            QModelIndex updatedSource = m_persistentSourceIndexes.at(row);
             if (m_proxy->mapToSource(updatedProxy) != updatedSource) {
                 qWarning("%s: check failed at row %d", Q_FUNC_INFO, row);
                 ++checkPersistentFailureCount;
