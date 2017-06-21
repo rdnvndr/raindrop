@@ -23,7 +23,8 @@ TilingButton::TilingButton(QWidget *parent) : TilingWidget(parent)
     QToolButton *button1 = new QToolButton(this);
     button1->setAutoRaise(true);
     button1->setIcon(QIcon(":/horizontal"));
-    button1->setText("Разделить по горизонтали");
+    button1->setText(tr("Разделить по горизонтали"));
+    button1->setToolTip(tr("Разделить по горизонтали"));
     hlayout->addWidget(button1);
     connect(button1, &QAbstractButton::clicked,
             this, &TilingWidget::splitHorizontal);
@@ -31,7 +32,8 @@ TilingButton::TilingButton(QWidget *parent) : TilingWidget(parent)
     QToolButton *button2 = new QToolButton(this);
     button2->setAutoRaise(true);
     button2->setIcon(QIcon(":/vertical"));
-    button2->setText("Разделить по вертикали");
+    button2->setText(tr("Разделить по вертикали"));
+    button2->setToolTip(tr("Разделить по вертикали"));
     hlayout->addWidget(button2);
     connect(button2, &QAbstractButton::clicked,
             this, &TilingWidget::splitVertical);
@@ -39,7 +41,8 @@ TilingButton::TilingButton(QWidget *parent) : TilingWidget(parent)
     QToolButton *button3 = new QToolButton(this);
     button3->setAutoRaise(true);
     button3->setIcon(QIcon(":/closeleft"));
-    button3->setText("Удалить разделение");
+    button3->setText(tr("Удалить разделение"));
+    button3->setToolTip(tr("Удалить разделение"));
     hlayout->addWidget(button3);
     connect(button3, &QAbstractButton::clicked,
             this, &TilingWidget::unsplit);
@@ -47,7 +50,8 @@ TilingButton::TilingButton(QWidget *parent) : TilingWidget(parent)
     QToolButton *button4 = new QToolButton(this);
     button4->setAutoRaise(true);
     button4->setIcon(QIcon(":/closetop"));
-    button4->setText("Удалить все разделения");
+    button4->setText(tr("Удалить все разделения"));
+    button4->setToolTip(tr("Удалить все разделения"));
     hlayout->addWidget(button4);
     connect(button4, &QAbstractButton::clicked,
             this, &TilingWidget::unsplitAll);
@@ -89,10 +93,10 @@ TilingWidget *TilingButton::clone()
             this, &TilingButton::setPlainText);
 
     for (int i = m_stackedLayout->count() - 1; i >= 0; i--) {
-        QPlainTextEdit *srcPlainTextEdit
-                = qobject_cast<QPlainTextEdit *>(m_stackedLayout->widget(i));
-        QPlainTextEdit *dstPlainTextEdit
-                = qobject_cast<QPlainTextEdit *>(tilingButton->m_stackedLayout->widget(i));
+        QPlainTextEdit *srcPlainTextEdit = qobject_cast<QPlainTextEdit *>(
+                    m_stackedLayout->widget(i));
+        QPlainTextEdit *dstPlainTextEdit = qobject_cast<QPlainTextEdit *>(
+                    tilingButton->m_stackedLayout->widget(i));
         dstPlainTextEdit->setPlainText(srcPlainTextEdit->toPlainText());
     }
 
