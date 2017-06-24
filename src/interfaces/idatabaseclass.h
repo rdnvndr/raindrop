@@ -113,7 +113,7 @@ public:
     virtual IDatabaseComps *compList() = 0;
 
 // Работа с объектами
-     //! Получение отфильтрованных объектов класса
+    //! Получение отфильтрованных объектов класса
     virtual void filtering(IDatabaseFilter *filter) = 0;
 
     //! Получение отфильтрованных объектов класса
@@ -121,6 +121,24 @@ public:
 
     //! Получение всех объектов класса
     virtual void all() = 0;
+
+    //! Получение отсортированных объектов
+    virtual void orderBy() = 0;
+
+    //! Получение уникальных объектов
+    virtual void distinct() = 0;
+
+    //! Получение количества объектов
+    virtual void count() = 0;
+
+    //! Сцепление объектов
+    virtual void join() = 0;
+
+    //! Объединение объектов
+    virtual void unionAll() = 0;
+
+    //! Ограничение объектов
+    virtual void limit(int up, int down = 0) = 0;
 
 private:
     //! Иконка класса

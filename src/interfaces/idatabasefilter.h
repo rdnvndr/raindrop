@@ -67,8 +67,6 @@ public:
         return m_expression;
     }
 
-//    virtual IDatabaseFilter orderBy() = 0;
-
 private:
     //! Основной класс
     IDatabaseClass *m_primaryClass;
