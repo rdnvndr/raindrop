@@ -9,7 +9,6 @@
 #include <idatabaseconnect.h>
 
 #include "dbconnectglobal.h"
-#include "dialogconnect.h"
 
 namespace RTPTechGroup {
 namespace DbConnect {

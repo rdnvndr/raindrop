@@ -4,6 +4,8 @@
 #include <QtCore/QObject>
 #include <QMetaObject>
 
+#include "threadqueryprivate.h"
+
 namespace RTPTechGroup {
 namespace SqlExtension {
 

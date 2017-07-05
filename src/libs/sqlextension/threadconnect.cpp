@@ -4,7 +4,7 @@
 #include <QSqlError>
 
 namespace RTPTechGroup {
-namespace DbConnect {
+namespace SqlExtension {
 
 ThreadConnect::ThreadConnect(QObject *parent): QThread(parent)
 {
@@ -13,14 +13,18 @@ ThreadConnect::ThreadConnect(QObject *parent): QThread(parent)
 
 void ThreadConnect::run()
 {
-    QSqlDatabase db = QSqlDatabase::database();
-    if (!db.open()) {
+    {
+        QSqlDatabase db = QSqlDatabase::database();
+        if (db.open()) {
+            emit finishConnect("");
+            return;
+        }
+
         QSqlError err = db.lastError();
-        if (err.type() != QSqlError::NoError)
-            emit finishConnect(err.text());
+        emit finishConnect(err.text());
+    }
+    if (QSqlDatabase::contains(QSqlDatabase::defaultConnection))
         QSqlDatabase::removeDatabase(QSqlDatabase::defaultConnection);
-    } else
-        emit finishConnect("");
 }
 
 }}

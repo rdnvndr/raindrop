@@ -1,17 +1,52 @@
 #ifndef DIALOGCONNECT_H
 #define	DIALOGCONNECT_H
 
-#include "ui_dialogconnect.h"
-#include "threadconnect.h"
-
 #include <QMovie>
-#include <QtSql>
+#include <QDialog>
+
+#include "sqlextensionglobal.h"
+
+namespace Ui {
+class DialogConnect;
+}
 
 namespace RTPTechGroup {
-namespace DbConnect {
+namespace SqlExtension {
+
+class ThreadConnect;
 
 //! Диалоговое окно подключения к БД
-class DialogConnect: public QDialog, private Ui::DialogConnect{
+/*! Данный класс предназначен для создания соединения с базой данных с
+    использованием диалогового окна.\n
+    Пример:\n
+    \code
+
+    DialogConnect *windowConnect = new DialogConnect();
+    windowConnect->setWindowTitle(tr("Соединение"));
+
+    QSettings settings("MySoft", "Star Runner");
+    settings.beginGroup("DbConnect");
+
+    windowConnect->setDriverName(settings.value("driver").toString());
+    windowConnect->setDatabaseName(settings.value("database").toString());
+    windowConnect->setHostName(settings.value("hostname").toString());
+    windowConnect->setPort(settings.value("port",-1).toInt());
+    windowConnect->setUserName(settings.value("username").toString());
+
+    if (windowConnect->exec() == QDialog::Accepted) {
+        settings.setValue("driver",   windowConnect->driverName());
+        settings.setValue("database", windowConnect->databaseName());
+        settings.setValue("hostname", windowConnect->hostName());
+        settings.setValue("port",     windowConnect->port());
+        settings.setValue("username", windowConnect->userName());
+    }
+
+    settings.endGroup();
+    delete windowConnect;
+
+    \endcode
+*/
+class SQLEXTENSIONLIB DialogConnect: public QDialog {
 
     Q_OBJECT
 public:
@@ -84,8 +119,11 @@ private:
     //! Поток соединения
     ThreadConnect *m_threadConnect;
 
-     //! Анимация соединения
-     QMovie *m_movie;
+    //! Анимация соединения
+    QMovie *m_movie;
+
+    //! Пользовательский интерфейс
+    Ui::DialogConnect *ui;
 };
 
 }}

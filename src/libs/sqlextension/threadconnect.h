@@ -4,7 +4,7 @@
 #include <QThread>
 
 namespace RTPTechGroup {
-namespace DbConnect {
+namespace SqlExtension {
 
 //! Класс для запуска соединения в отдельном потоке
 class ThreadConnect: public QThread {

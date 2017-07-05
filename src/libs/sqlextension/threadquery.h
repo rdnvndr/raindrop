@@ -4,16 +4,19 @@
 #include <QtCore/QThread>
 #include <QtCore/QMutex>
 #include <QtCore/QObject>
+#include <QtCore/QMap>
+
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlRecord>
 
 #include "sqlextensionglobal.h"
-#include "threadqueryprivate.h"
 
 namespace RTPTechGroup {
 namespace SqlExtension {
+
+class ThreadQueryPrivate;
 
 //! Класс предназначенный для выполнения SQL запросов в отдельном потоке
 /*! Пример:
