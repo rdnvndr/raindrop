@@ -13,6 +13,6 @@ InterfacesProduct {
     Group {
         fileTagsFilter: "interfaces"
         qbs.install: true
-        qbs.installDir: product.interfacePath
+        qbs.installDir: product.includePath + "/" + "interfaces"
     }
 }
