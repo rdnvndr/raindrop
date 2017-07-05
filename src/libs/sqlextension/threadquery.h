@@ -61,10 +61,10 @@ public:
     virtual ~ThreadQuery();
 
 // Общие настройки
-     //! Установка политики тчоности числа
+     //! Установка политики точности числа
     void setNumericalPrecisionPolicy(QSql::NumericalPrecisionPolicy precisionPolicy);
 
-    //! Получение политики тчоности числа
+    //! Получение политики точности числа
     QSql::NumericalPrecisionPolicy numericalPrecisionPolicy();
 
     //! Установка просмотра записей только вперёд
@@ -122,7 +122,7 @@ public:
     //! Вызывает получение всех значений в потоке
     void fetchAll();
 
-    //! Вызывает получение значениz из потока
+    //! Вызывает получение значения из потока
     void fetchOne();
 
 // Окончание выполнения запроса
@@ -182,7 +182,7 @@ private:
     QString m_hostName;
 
     //! Порт БД
-    int     m_port;
+    int m_port;
 
     //! Логин пользователя БД
     QString m_userName;

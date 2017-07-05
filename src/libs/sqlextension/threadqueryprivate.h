@@ -27,12 +27,12 @@ public:
 
 public slots:
 
-// Плдготовка и выолнение запроса
+// Плдготовка и выполнение запроса
     //! Установка заполнителя
     void bindValue(const QString  &placeholder,
                    const QVariant &val, QSql::ParamType paramType = QSql::In);
 
-    //! Установка политики тчоности числа
+    //! Установка политики точности числа
     void setNumericalPrecisionPolicy(QSql::NumericalPrecisionPolicy precisionPolicy);
 
     //! Установка просмотра записей только вперёд
@@ -70,7 +70,7 @@ public slots:
     //! Вызывает получение всех значений в потоке
     void fetchAll();
 
-    //! Вызывает получение значениz из потока
+    //! Вызывает получение значения из потока
     void fetchOne();
 
 // Окончание выполнения запроса
@@ -93,7 +93,7 @@ signals:
     //! Возращает все значения из потока
     void values(const QList<QSqlRecord> &records);
 
-    //! Возращает значениt из потока
+    //! Возращает значение из потока
     void value(const QSqlRecord &record);
 
 private:
