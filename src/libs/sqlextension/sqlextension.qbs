@@ -10,7 +10,7 @@ LibProduct {
     copyright:   "Copyright (C) RTPTechGroup"
 
     cpp.defines: base.concat(["SQLEXTENSION_LIBRARY"])
-    Depends { name: "Qt"; submodules: ["sql"] }
+    Depends { name: "Qt"; submodules: ["widgets", "sql", "core"] }
 
     files: [
         "*.h",

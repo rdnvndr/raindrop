@@ -4,28 +4,33 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 
+#include "ui_dialogconnect.h"
+#include "threadconnect.h"
+
 namespace RTPTechGroup {
-namespace DbConnect {
+namespace SqlExtension {
 
-DialogConnect::DialogConnect(QWidget *pwgt) : QDialog(pwgt) {
-    setupUi(this);
+DialogConnect::DialogConnect(QWidget *pwgt)
+    : QDialog(pwgt), ui(new Ui::DialogConnect)
+{
+    ui->setupUi(this);
 
-    textLabelHostname->hide();
-    editHostname->hide();
-    textLabelBD->hide();
-    editDatabase->hide();
-    textLabelPort->hide();
-    portSpinBox->hide();
-    textLabelDrv->hide();
-    comboDriver->hide();
-    line->hide();
+    ui->textLabelHostname->hide();
+    ui->editHostname->hide();
+    ui->textLabelBD->hide();
+    ui->editDatabase->hide();
+    ui->textLabelPort->hide();
+    ui->portSpinBox->hide();
+    ui->textLabelDrv->hide();
+    ui->comboDriver->hide();
+    ui->line->hide();
 
     m_movie = new QMovie(":connecting");
     m_movie->setScaledSize(QSize(65,50));
     m_movie->start();
     m_movie->stop();
-    labelImage->setAttribute(Qt::WA_NoSystemBackground);
-    labelImage->setMovie(m_movie);
+    ui->labelImage->setAttribute(Qt::WA_NoSystemBackground);
+    ui->labelImage->setMovie(m_movie);
 
     QStringList drivers = QSqlDatabase::drivers();
 
@@ -44,10 +49,10 @@ DialogConnect::DialogConnect(QWidget *pwgt) : QDialog(pwgt) {
     //drivers.removeAll("QPSQL");
     //drivers.removeAll("QIBASE");
 
-    comboDriver->addItems(drivers);
+    ui->comboDriver->addItems(drivers);
 
     this->adjustSize();
-    connect(pushButtonProp, &QPushButton::clicked,
+    connect(ui->pushButtonProp, &QPushButton::clicked,
             this, &DialogConnect::onClickButtonProp);
 
     m_threadConnect = new ThreadConnect(this);
@@ -57,6 +62,7 @@ DialogConnect::DialogConnect(QWidget *pwgt) : QDialog(pwgt) {
 
 DialogConnect::~DialogConnect()
 {
+    delete ui;
     delete m_threadConnect;
     delete m_movie;
 }
@@ -68,80 +74,80 @@ void DialogConnect::accept()
 
 void DialogConnect::setDriverName(const QString &name)
 {
-    comboDriver->setCurrentIndex(comboDriver->findText(name));
+    ui->comboDriver->setCurrentIndex(ui->comboDriver->findText(name));
 }
 
 void DialogConnect::setDatabaseName(const QString &name)
 {
-    editDatabase->setText(name);
+    ui->editDatabase->setText(name);
 }
 
 void DialogConnect::setHostName(const QString &host)
 {
-    editHostname->setText(host);
+    ui->editHostname->setText(host);
 }
 
 void DialogConnect::setUserName(const QString &name)
 {
-    editUsername->setText(name);
+    ui->editUsername->setText(name);
 }
 
 void DialogConnect::setPassword(const QString &password)
 {
-    editPassword->setText(password);
+    ui->editPassword->setText(password);
 }
 
 void DialogConnect::setPort(int port)
 {
-    portSpinBox->setValue(port);
+    ui->portSpinBox->setValue(port);
 }
 
 QString DialogConnect::driverName() const
 {
-    return comboDriver->currentText();
+    return ui->comboDriver->currentText();
 }
 
 QString DialogConnect::databaseName() const
 {
-    return editDatabase->text();
+    return ui->editDatabase->text();
 }
 
 QString DialogConnect::hostName() const
 {
-    return editHostname->text();
+    return ui->editHostname->text();
 }
 
 QString DialogConnect::userName() const
 {
-    return editUsername->text();
+    return ui->editUsername->text();
 }
 
 QString DialogConnect::password() const
 {
-    return editPassword->text();
+    return ui->editPassword->text();
 }
 
 int DialogConnect::port() const
 {
-    return portSpinBox->value();
+    return ui->portSpinBox->value();
 }
 
 void DialogConnect::closeEvent(QCloseEvent *event)
 {
-    if (!comboDriver->isEnabled())
+    if (!ui->comboDriver->isEnabled())
         event->ignore();
 }
 
 void DialogConnect::setLockDialog(bool locked)
 {
-    comboDriver->setDisabled(locked);
-    editDatabase->setDisabled(locked);
-    editHostname->setDisabled(locked);
-    editUsername->setDisabled(locked);
-    editPassword->setDisabled(locked);
-    portSpinBox->setDisabled(locked);
-    pushButtonOk->setDisabled(locked);
-    pushButtonCancel->setDisabled(locked);    
+    ui->comboDriver->setDisabled(locked);
+    ui->editDatabase->setDisabled(locked);
+    ui->editHostname->setDisabled(locked);
+    ui->editUsername->setDisabled(locked);
+    ui->editPassword->setDisabled(locked);
+    ui->portSpinBox->setDisabled(locked);
+    ui->pushButtonOk->setDisabled(locked);
+    ui->pushButtonCancel->setDisabled(locked);
     if (locked)
         m_movie->start();
     else
@@ -207,7 +213,6 @@ void DialogConnect::finishConnect(QString result)
 {
     setLockDialog(false);
 
-    QSqlDatabase db = QSqlDatabase::database();
     if (!result.isEmpty()) {
         QMessageBox::warning(
                     this,
@@ -219,28 +224,28 @@ void DialogConnect::finishConnect(QString result)
 }
 
 void DialogConnect::onClickButtonProp(){
-    if (textLabelHostname->isHidden()){
-        pushButtonProp->setText(tr("Кратко"));
-        textLabelHostname->show();
-        editHostname->show();
-        textLabelBD->show();
-        editDatabase->show();
-        textLabelPort->show();
-        portSpinBox->show();
-        textLabelDrv->show();
-        comboDriver->show();
-        line->show();
+    if (ui->textLabelHostname->isHidden()){
+        ui->pushButtonProp->setText(tr("Кратко"));
+        ui->textLabelHostname->show();
+        ui->editHostname->show();
+        ui->textLabelBD->show();
+        ui->editDatabase->show();
+        ui->textLabelPort->show();
+        ui->portSpinBox->show();
+        ui->textLabelDrv->show();
+        ui->comboDriver->show();
+        ui->line->show();
     } else {
-        pushButtonProp->setText(tr("Подробно"));
-        textLabelHostname->hide();
-        editHostname->hide();
-        textLabelBD->hide();
-        editDatabase->hide();
-        textLabelPort->hide();
-        portSpinBox->hide();
-        textLabelDrv->hide();
-        comboDriver->hide();
-        line->hide();
+        ui->pushButtonProp->setText(tr("Подробно"));
+        ui->textLabelHostname->hide();
+        ui->editHostname->hide();
+        ui->textLabelBD->hide();
+        ui->editDatabase->hide();
+        ui->textLabelPort->hide();
+        ui->portSpinBox->hide();
+        ui->textLabelDrv->hide();
+        ui->comboDriver->hide();
+        ui->line->hide();
     }
     this->adjustSize();
 }

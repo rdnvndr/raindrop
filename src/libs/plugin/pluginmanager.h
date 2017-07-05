@@ -13,7 +13,7 @@ namespace Plugin {
 //! Класс для управления плагинами
 /*! Данный класс предназначен для загрузки плагинов,
     получения объектов плагина, сохранение настроек плагина.\n
-    Пример использования:
+    Пример:\n
     \code
         QSettings *settings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
                                  QLatin1String("RTPTechGroup"), QLatin1String("UniversalPlatform"));
