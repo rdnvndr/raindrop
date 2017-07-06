@@ -1,4 +1,9 @@
 import "../main.qbs" as LibProduct
 LibProduct {
-   name: "treexmlmodel"
+    name: "treexmlmodel"
+    Group {
+        fileTagsFilter: ["application"]
+        qbs.install: true
+        qbs.installDir: "tests/manual/treexmlmodel/"
+    }
 }

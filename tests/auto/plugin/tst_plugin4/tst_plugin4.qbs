@@ -27,6 +27,6 @@ PluginProduct {
             "dynamiclibrary",
             "dynamiclibrary_import"]
         qbs.install: true
-        qbs.installDir: "tests/auto/tst_plugin/plugins"
+        qbs.installDir: "tests/auto/plugin/plugins"
     }
 }

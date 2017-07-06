@@ -88,7 +88,7 @@ void tst_ModifyProxyModel::cleanup()
 
 void tst_ModifyProxyModel::modelTest()
 {
-    new ModelTest(m_proxy, this);
+//    new ModelTest(m_proxy, this);
 }
 
 QTEST_MAIN(tst_ModifyProxyModel)

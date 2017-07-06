@@ -1,10 +1,10 @@
 include(../../manual.pri)
 
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = tst_sqlextension
+TARGET = tst_threadquery_mnl
 TEMPLATE = app
 
 LIBS += -lsqlextension

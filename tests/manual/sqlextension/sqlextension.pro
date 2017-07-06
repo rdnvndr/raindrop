@@ -1,2 +1,2 @@
 TEMPLATE=subdirs
-SUBDIRS= tst_sqlextension
+SUBDIRS= tst_threadquery_mnl

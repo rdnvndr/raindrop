@@ -20,9 +20,4 @@ PluginProduct {
         "*.ui",
         "*.qrc"
     ]
-    Group {
-        fileTagsFilter: ["application"]
-        qbs.install: true
-        qbs.installDir: "tests/auto/tst_plugin/"
-    }
 }

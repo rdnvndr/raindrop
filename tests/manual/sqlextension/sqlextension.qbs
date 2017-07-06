@@ -1,5 +1,5 @@
 Project {
     references: [
-        "tst_sqlextension/tst_sqlextension.qbs"
+        "tst_threadquery_mnl/tst_threadquery_mnl.qbs"
     ]
 }

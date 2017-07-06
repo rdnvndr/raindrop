@@ -83,7 +83,7 @@ void tst_TreeXmlModel::cleanup()
 
 void tst_TreeXmlModel::modelTest()
 {
-    new ModelTest(m_model, this);
+//    new ModelTest(m_model, this);
 }
 
 QTEST_MAIN(tst_TreeXmlModel)
