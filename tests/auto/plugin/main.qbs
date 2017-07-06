@@ -1,5 +1,9 @@
 import "../main.qbs" as LibProduct
 LibProduct {
-   name: "plugin"
-   cpp.rpaths: "../" + rLibraryTestPath
+    name: "plugin"
+    Group {
+        fileTagsFilter: ["application"]
+        qbs.install: true
+        qbs.installDir: "tests/auto/plugin/"
+    }
 }

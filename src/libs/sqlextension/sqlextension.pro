@@ -8,8 +8,11 @@ include(../libs.pri)
 
 DEFINES += SQLEXTENSION_LIBRARY
 greaterThan(QT_MAJOR_VERSION, 4) {
-  QT += sql
+  QT += sql widgets
 }
+
 # Input
 HEADERS   = *.h
 SOURCES   = *.cpp
+RESOURCES = *.qrc
+FORMS     = *.ui

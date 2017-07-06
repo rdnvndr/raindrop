@@ -1,3 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS += auto benchmarks manual
+SUBDIRS += auto
+SUBDIRS += benchmarks
+SUBDIRS += manual
     

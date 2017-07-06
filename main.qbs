@@ -17,7 +17,7 @@ Product {
     Properties {
         condition: qbs.targetOS.contains("linux")
         property string rLibraryPath:     "../lib/raindrop"
-        property string rLibraryTestPath: "../../lib/raindrop"
+        property string rLibraryTestPath: "../../../lib/raindrop"
     }
     Properties {
         condition: qbs.targetOS.contains("windows")

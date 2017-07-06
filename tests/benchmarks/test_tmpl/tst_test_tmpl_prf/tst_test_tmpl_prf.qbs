@@ -1,7 +1,7 @@
-import "../main.qbs" as SqlExtensionProduct
+import "../main.qbs" as TestTmpl
 
-SqlExtensionProduct {
-    name: "tst_sqlextension_mnl"
+TestTmpl {
+    name: "tst_test_tmpl_prf"
 
     productname: ""
     version:     "1.0.0"
@@ -18,11 +18,4 @@ SqlExtensionProduct {
         "*.ui",
         "*.qrc"
     ]
-
-    Group {
-        name: "Runtime resources"
-        files: "*.db"
-        qbs.install: true
-        qbs.installDir: "tests/manual/" + "/"
-    }
 }

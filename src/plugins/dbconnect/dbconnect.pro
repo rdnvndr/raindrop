@@ -17,5 +17,4 @@ QT += sql
 HEADERS   = *.h
 SOURCES   = *.cpp
 RESOURCES = *.qrc
-FORMS     = *.ui
 
