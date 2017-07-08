@@ -2,6 +2,7 @@ import "../main.qbs" as PluginProduct
 
 PluginProduct {
     name: "example"
+    builtByDefault: false
 
     productname: "Пример"
     version:     "1.0.0"
