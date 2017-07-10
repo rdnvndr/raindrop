@@ -7,6 +7,8 @@
 namespace RTPTechGroup {
 namespace Widgets {
 
+Q_LOGGING_CATEGORY(lcWidgets,"RTPTechGroup.Widgets")
+
 PushButtonImage::PushButtonImage(QWidget *parent) :
     QPushButton(parent)
 {

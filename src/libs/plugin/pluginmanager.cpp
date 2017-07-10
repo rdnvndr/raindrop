@@ -7,6 +7,8 @@
 namespace RTPTechGroup {
 namespace Plugin {
 
+Q_LOGGING_CATEGORY(lcPlugin,"RTPTechGroup.Plugin")
+
 PluginManager::PluginManager(QObject *parent) :
     QObject(parent)
 {
@@ -131,7 +133,6 @@ bool PluginManager::loadPlugin(QString fileName, QString iid)
     QString plugIid = loader.metaData().value("IID").toString();
     QRegExp checkIid("\\."+iid+"([\\.\\][0-9]+.?[0-9]*)?");
     if (!plugIid.isEmpty() && !plugIid.contains(checkIid)) {
-        qCWarning(lcPlugin) << tr("Не верный IID в файле модуля ") + fileName;
         return false;
     }
 
