@@ -9,6 +9,8 @@
 namespace RTPTechGroup {
 namespace XmlModel {
 
+Q_LOGGING_CATEGORY(lcXmlModel,"RTPTechGroup.XmlModel")
+
 TreeXmlModel::TreeXmlModel(QDomNode document, QObject *parent)
     : QAbstractItemModel(parent)
 {

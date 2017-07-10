@@ -7,7 +7,6 @@ namespace RTPTechGroup {
 namespace Plugin {
 
 Q_DECLARE_LOGGING_CATEGORY(lcPlugin)
-Q_LOGGING_CATEGORY(lcPlugin,"RTPTechGroup.Plugin")
 
 }}
 

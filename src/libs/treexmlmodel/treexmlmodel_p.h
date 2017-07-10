@@ -7,7 +7,6 @@ namespace RTPTechGroup {
 namespace XmlModel {
 
 Q_DECLARE_LOGGING_CATEGORY(lcXmlModel)
-Q_LOGGING_CATEGORY(lcXmlModel,"RTPTechGroup.XmlModel")
 
 }}
 

@@ -7,7 +7,6 @@ namespace RTPTechGroup {
 namespace Widgets {
 
 Q_DECLARE_LOGGING_CATEGORY(lcWidgets)
-Q_LOGGING_CATEGORY(lcPlugin,"RTPTechGroup.Widgets")
 
 }}
 
