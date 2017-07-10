@@ -6,9 +6,12 @@
 
 #include "ui_dialogconnect.h"
 #include "threadconnect.h"
+#include "sqlextension_p.h"
 
 namespace RTPTechGroup {
 namespace SqlExtension {
+
+Q_LOGGING_CATEGORY(lcSqlExtension,"RTPTechGroup.SqlExtension")
 
 DialogConnect::DialogConnect(QWidget *pwgt)
     : QDialog(pwgt), ui(new Ui::DialogConnect)
@@ -214,6 +217,7 @@ void DialogConnect::finishConnect(QString result)
     setLockDialog(false);
 
     if (!result.isEmpty()) {
+        qCWarning(lcSqlExtension) << result;
         QMessageBox::warning(
                     this,
                     tr("Не удается открыть базу данных"),

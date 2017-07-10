@@ -5,6 +5,7 @@
 #include <QMetaObject>
 
 #include "threadqueryprivate.h"
+#include "sqlextension_p.h"
 
 namespace RTPTechGroup {
 namespace SqlExtension {
@@ -243,6 +244,8 @@ void ThreadQuery::pError(QSqlError err)
 
     m_lastError = err;
     emit error(err);
+
+    qCWarning(lcSqlExtension) << err.text();
 }
 
 }}
