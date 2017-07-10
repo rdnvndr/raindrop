@@ -70,7 +70,7 @@ public:
     /*! Производит поиск плагина на диске в каталоге
         plugins запущенного приложения и его загрузку
     */
-    void loadPlugins();
+    bool loadPlugins();
 
     //! Загрузка указанного плагина
     bool loadPlugin(QString fileName, QString iid = "");
