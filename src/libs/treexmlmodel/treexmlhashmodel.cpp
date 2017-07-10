@@ -1,6 +1,6 @@
 #include <QtXml>
-#include <QMessageBox>
 #include <QUuid>
+
 #include "tagxmlitem.h"
 #include "treexmlhashmodel.h"
 

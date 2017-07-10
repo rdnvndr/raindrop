@@ -1,9 +1,10 @@
 #include <QtXml>
-#include <QMessageBox>
 #include <QUuid>
+
 #include "mimedataindex.h"
 #include "tagxmlitem.h"
 #include "treexmlmodel.h"
+#include "treexmlmodel_p.h"
 
 namespace RTPTechGroup {
 namespace XmlModel {
@@ -11,7 +12,6 @@ namespace XmlModel {
 TreeXmlModel::TreeXmlModel(QDomNode document, QObject *parent)
     : QAbstractItemModel(parent)
 {
-
     bool isNewModel = document.isNull();
 
     if (isNewModel) {
@@ -152,12 +152,12 @@ bool TreeXmlModel::isInsert(qint32 row, const QModelIndex &index, QString tag) c
 
         return true;
     } else {
-        if (!hasChildren(index))
+        if (!hasChildren(index)) {
             return !isAttr(index);
-        else
-            QMessageBox::warning(NULL,
-                                 tr("Предупреждение"),
-                                 tr("У дерева может быть только один корневой узел"));
+        } else {
+            qCWarning(lcXmlModel)
+                    << tr("У дерева может быть только один корневой узел");
+        }
     }
     return false;
 }
