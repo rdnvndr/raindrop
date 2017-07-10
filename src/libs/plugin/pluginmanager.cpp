@@ -2,6 +2,8 @@
 
 #include <QRegExp>
 
+#include "plugin_p.h"
+
 namespace RTPTechGroup {
 namespace Plugin {
 
@@ -11,6 +13,7 @@ PluginManager::PluginManager(QObject *parent) :
     m_instance = this;
     m_settings = NULL;
     m_lockFiles = NULL;
+
 
 #ifndef PLUGIN_DIR
     m_pluginsDir = QDir(qApp->applicationDirPath() + "/plugins/");
@@ -56,8 +59,8 @@ QList<IPlugin *> PluginManager::dependPlugins(IPlugin *plugin)
     QHash<QString, IPlugin *> pluginList;
 
     if (plugin)
-        foreach (const QString &depInterfaceName,plugin->depModulList())
-            foreach (QObject *objInterfacePlugin,interfaceObjects(depInterfaceName)) {
+        foreach (const QString &depInterfaceName, plugin->depModulList())
+            foreach (QObject *objInterfacePlugin, interfaceObjects(depInterfaceName)) {
                 IPlugin *interfacePlugin = qobject_cast<IPlugin *>(objInterfacePlugin);
                 if (interfacePlugin)
                     pluginList[objInterfacePlugin->objectName()] = interfacePlugin;
@@ -79,16 +82,13 @@ QList<IPlugin *> PluginManager::dependentPlugins(IPlugin *plugin)
     return pluginList.values();
 }
 
-void PluginManager::loadPlugins()
+bool PluginManager::loadPlugins()
 {
     if (!m_pluginsDir.exists())
     {
-        QMessageBox::critical(NULL,
-                              tr("Ошибка"),
-                              tr("Каталог с модулями не найден\n")
-                              + m_pluginsDir.absolutePath()
-                              );
-        return;
+        qCWarning(lcPlugin) << tr("Не найден каталог с модулями ")
+                               + m_pluginsDir.absolutePath();
+        return false;
     }
     m_fileList = m_pluginsDir.entryList(QDir::Files);
 
@@ -97,8 +97,9 @@ void PluginManager::loadPlugins()
     for (qint32 i = 0; i < count; ++i) m_lockFiles[i] = false;
 
     nextLoadPlugins();
-
     emit endLoadingPlugins();
+
+    return true;
 }
 
 bool PluginManager::nextLoadPlugins(QString iid)
@@ -109,7 +110,8 @@ bool PluginManager::nextLoadPlugins(QString iid)
         if (!m_lockFiles[fileNum]) {
             m_lockFiles[fileNum] = true;
             bool isLoad = loadPlugin(m_fileList.at(fileNum), iid);
-            if (!isLoad) m_lockFiles[fileNum] = false;
+            if (!isLoad)
+                m_lockFiles[fileNum] = false;
             result = result || isLoad;
         }
     }
@@ -119,15 +121,19 @@ bool PluginManager::nextLoadPlugins(QString iid)
 bool PluginManager::loadPlugin(QString fileName, QString iid)
 {
     fileName = m_pluginsDir.absoluteFilePath(fileName);
-    if (!QLibrary::isLibrary(fileName))
+    if (!QLibrary::isLibrary(fileName)) {
+        qCWarning(lcPlugin) << tr("Файл не является модулем ") + fileName;
         return false;
+    }
 
     QPluginLoader loader(fileName);
 
     QString plugIid = loader.metaData().value("IID").toString();
     QRegExp checkIid("\\."+iid+"([\\.\\][0-9]+.?[0-9]*)?");
-    if (!plugIid.isEmpty() && !plugIid.contains(checkIid))
+    if (!plugIid.isEmpty() && !plugIid.contains(checkIid)) {
+        qCWarning(lcPlugin) << tr("Не верный IID в файле модуля ") + fileName;
         return false;
+    }
 
     QObject *plugin = loader.instance();
     if (plugin)
@@ -142,12 +148,12 @@ bool PluginManager::loadPlugin(QString fileName, QString iid)
                 m_interfaces.insert(interface, plugin);
 
             emit loadedPlugin(plugin);
-            qDebug()<<"Load plugin: "<<corePlugin->name();
+            qCDebug(lcPlugin) << tr("Загружен модуль ") + plugin->objectName();
             return true;
         } else
             delete plugin;
     }
-    qDebug()<<"Error load plugin" << loader.errorString();
+    qCWarning(lcPlugin) << loader.errorString();
     return false;
 }
 
@@ -161,11 +167,11 @@ void PluginManager::removePlugin(QObject *obj)
     foreach (const QString &interface, m_interfaces.keys())
         foreach (QObject *plug,m_interfaces.values(interface))
             if (plug == obj) {
-                m_interfaces.remove(interface,plug);
-                qDebug() << "clean:" << plug->objectName();
+                m_interfaces.remove(interface, plug);
+                qCDebug(lcPlugin) << tr("Очищен модуль ") + plug->objectName();
             }
+    qCDebug(lcPlugin) << tr("Выгружен модуль ") + obj->objectName();
     emit removedPlugin(obj);
-    qDebug() << "Remove plugin:" << obj->objectName();
 }
 
 QDir PluginManager::pluginsDir() const
