@@ -218,11 +218,7 @@ void DialogConnect::finishConnect(QString result)
 
     if (!result.isEmpty()) {
         qCWarning(lcSqlExtension) << result;
-        QMessageBox::warning(
-                    this,
-                    tr("Не удается открыть базу данных"),
-                    tr("Произошла ошибка при создании соединения:\n")
-                    + result);
+        QMessageBox::warning(this, tr("Ошибка создании соединения"), result);
     } else
         QDialog::accept();
 }
