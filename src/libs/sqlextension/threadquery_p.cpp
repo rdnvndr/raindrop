@@ -1,4 +1,4 @@
-#include "threadqueryprivate.h"
+#include "threadquery_p.h"
 
 #include <QtCore/QThread>
 #include <QtSql/QSqlRecord>

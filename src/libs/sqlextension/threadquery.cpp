@@ -4,7 +4,7 @@
 #include <QtCore/QObject>
 #include <QMetaObject>
 
-#include "threadqueryprivate.h"
+#include "threadquery_p.h"
 #include "sqlextension_p.h"
 
 namespace RTPTechGroup {
