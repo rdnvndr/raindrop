@@ -1,5 +1,5 @@
-#ifndef THREADQUERYPRIVATE_H
-#define THREADQUERYPRIVATE_H
+#ifndef THREADQUERY_P_H
+#define THREADQUERY_P_H
 
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
@@ -16,12 +16,12 @@ class ThreadQueryPrivate: public QObject
 public:
     //! Конструктор класса
     explicit ThreadQueryPrivate(const QString &driverName,
-                             const QString &databaseName,
-                             const QString &hostName,
-                             int port,
-                             const QString &userName,
-                             const QString &password,
-                             const QString &query);
+                                const QString &databaseName,
+                                const QString &hostName,
+                                int port,
+                                const QString &userName,
+                                const QString &password,
+                                const QString &query);
     //! Деструктор класса
     virtual ~ThreadQueryPrivate();
 
@@ -105,4 +105,4 @@ private:
 };
 
 }}
-#endif // THREADQUERYPRIVATE_H
+#endif // THREADQUERY_P_H
