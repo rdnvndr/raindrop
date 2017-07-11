@@ -2,12 +2,10 @@
 #include <QFile>
 #include <QFileDialog>
 
-#include "pushbuttonimage_p.h"
+#include "clogging.h"
 
 namespace RTPTechGroup {
 namespace Widgets {
-
-Q_LOGGING_CATEGORY(lcWidgets,"RTPTechGroup.Widgets")
 
 PushButtonImage::PushButtonImage(QWidget *parent) :
     QPushButton(parent)

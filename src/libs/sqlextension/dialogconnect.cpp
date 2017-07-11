@@ -6,7 +6,7 @@
 
 #include "ui_dialogconnect.h"
 #include "threadconnect.h"
-#include "sqlextension_p.h"
+#include "clogging.h"
 
 namespace RTPTechGroup {
 namespace SqlExtension {

@@ -1,5 +1,5 @@
-#ifndef PLUGIN_P_H
-#define PLUGIN_P_H
+#ifndef CLOGGING_H
+#define CLOGGING_H
 
 #include <QtCore/QLoggingCategory>
 
@@ -10,4 +10,4 @@ Q_DECLARE_LOGGING_CATEGORY(lcPlugin)
 
 }}
 
-#endif // PLUGIN_P_H
+#endif // CLOGGING_H
