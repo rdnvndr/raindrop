@@ -1,5 +1,5 @@
-#ifndef PUSHBUTTONIMAGE_P_H
-#define PUSHBUTTONIMAGE_P_H
+#ifndef CLOGGING_H
+#define CLOGGING_H
 
 #include <QtCore/QLoggingCategory>
 
@@ -10,4 +10,4 @@ Q_DECLARE_LOGGING_CATEGORY(lcWidgets)
 
 }}
 
-#endif // PUSHBUTTONIMAGE_P_H
+#endif // CLOGGING_H

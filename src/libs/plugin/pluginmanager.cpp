@@ -2,12 +2,10 @@
 
 #include <QRegExp>
 
-#include "plugin_p.h"
+#include "clogging.h"
 
 namespace RTPTechGroup {
 namespace Plugin {
-
-Q_LOGGING_CATEGORY(lcPlugin,"RTPTechGroup.Plugin")
 
 PluginManager::PluginManager(QObject *parent) :
     QObject(parent)

@@ -5,7 +5,7 @@
 #include <QMetaObject>
 
 #include "threadquery_p.h"
-#include "sqlextension_p.h"
+#include "clogging.h"
 
 namespace RTPTechGroup {
 namespace SqlExtension {

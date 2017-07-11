@@ -4,12 +4,10 @@
 #include "mimedataindex.h"
 #include "tagxmlitem.h"
 #include "treexmlmodel.h"
-#include "treexmlmodel_p.h"
+#include "clogging.h"
 
 namespace RTPTechGroup {
 namespace XmlModel {
-
-Q_LOGGING_CATEGORY(lcXmlModel,"RTPTechGroup.XmlModel")
 
 TreeXmlModel::TreeXmlModel(QDomNode document, QObject *parent)
     : QAbstractItemModel(parent)
