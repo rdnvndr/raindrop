@@ -6,7 +6,7 @@
 namespace  RTPTechGroup {
 namespace  MetaDataModel {
 
-Q_DECLARE_LOGGING_CATEGORY(lcPluginMetaDataModel)
+Q_DECLARE_LOGGING_CATEGORY(lcMetaDataModel)
 
 }}
 

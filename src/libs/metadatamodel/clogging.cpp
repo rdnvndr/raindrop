@@ -3,6 +3,6 @@
 namespace  RTPTechGroup {
 namespace  MetaDataModel {
 
-Q_LOGGING_CATEGORY(lcPluginMetaDataModel,"RTPTechGroup.MetaDataModel")
+Q_LOGGING_CATEGORY(lcMetaDataModel,"RTPTechGroup.MetaDataModel")
 
 }}

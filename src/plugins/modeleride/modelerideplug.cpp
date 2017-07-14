@@ -477,8 +477,15 @@ void ModelerIDEPlug::remove()
     QModelIndex currentIndex = m_treeClassView->currentIndex();
 
     if (currentIndex.isValid()){
-        if (!m_model->isRemove(currentIndex))
+        if (!m_model->isRemove(currentIndex)) {
+            QMessageBox msgBox;
+            msgBox.setText(tr("Удаление данного объекта невозможно."));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setDetailedText(m_model->lastError());
+            msgBox.setWindowTitle(tr("Предупреждение"));
+            msgBox.exec();
             return;
+        }
         m_model->removeRow(currentIndex.row(), currentIndex.parent());
     } else
         QMessageBox::warning(NULL, tr("Предупреждение"),
