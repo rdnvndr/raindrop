@@ -1,5 +1,7 @@
 #include "abstracteditorwidget.h"
 
+#include <QMessageBox>
+
 #include <metadatamodel/classmodelxml.h>
 #include "xmldelegate.h"
 
@@ -50,7 +52,16 @@ bool AbstractEditorWidget::isRemove(const QModelIndex &srcIndex)
     if (!model)
         return false;
 
-    return model->isRemove(srcIndex);
+    if (!model->isRemove(srcIndex)) {
+        QMessageBox msgBox;
+        msgBox.setText(tr("Удаление данного объекта невоможно."));
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setDetailedText(model->lastError());
+        msgBox.setWindowTitle(tr("Предупреждение"));
+        msgBox.exec();
+        return false;
+    }
+    return true;
 }
 
 bool AbstractEditorWidget::add(const QString &tag)
