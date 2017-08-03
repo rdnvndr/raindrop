@@ -43,7 +43,7 @@ Product {
     Export {
         Depends { name: "cpp" }
         cpp.includePaths: product.pubIncludePath
-        cpp.rpaths: product.rLibraryPath
+        cpp.rpaths: [product.rLibraryPath, product.rLibraryTestPath]
     }
 
 
