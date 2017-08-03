@@ -25,7 +25,6 @@ Product {
         property string rLibraryTestPath: ""
     }
 
-    cpp.rpaths: rLibraryPath
     cpp.defines: [
         "APP_VERSION="     + "\"" +  product.version + "\"",
         "APP_COMPANY="     + "\"" +  product.company + "\"",
