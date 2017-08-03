@@ -8,7 +8,7 @@ SrcProduct {
     Export {
         Depends { name: "cpp" }
         cpp.includePaths: product.sourceDirectory + "/../"
-        cpp.rpaths: rLibraryPath
+        cpp.rpaths: [product.rLibraryPath, product.rLibraryTestPath]
     }
 
     Group {
