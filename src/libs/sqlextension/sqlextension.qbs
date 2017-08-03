@@ -1,5 +1,6 @@
 Project {
     references: [
-        "src/sqlextension.qbs"
+        "src/sqlextension.qbs",
+        "tests/tests.qbs"
     ]
 }
