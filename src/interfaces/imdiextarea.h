@@ -1,49 +1,29 @@
-#ifndef MDIEXTAREA_H
-#define MDIEXTAREA_H
+#ifndef IMDIEXTAREA_H
+#define IMDIEXTAREA_H
 
 #include <QMdiArea>
 #include <QTabBar>
 #include <QMdiSubWindow>
-#include "mdiextareaglobal.h"
 
-namespace RTPTechGroup {
-namespace Widgets {
 
 //! Класс области подокон
-/*! Класс области подокон предназначен для создания
-    подокон и для работы с ними
-    \code
-        mdiArea = new MdiExtArea(MainWindow);
-        mdiArea->setObjectName(QString::fromUtf8("mdiArea"));
-        MainWindow->setCentralWidget(mdiArea);
-        QMdiSubWindow *subWindow = new QMdiSubWindow;
-        QWidget widget = new QWidget();
-        widget->setObjectName('MyWidgetName');
-        subWindow->setWidget(widget);
-        mdiArea->addSubWindow(subWindow);
-     \endcode
-*/
-
-class MDIEXTAREALIB MdiExtArea : public QMdiArea
+class IMdiExtArea
 {
-    Q_OBJECT
-public:
-    //! Конструктор класса области подокон
-    explicit MdiExtArea(QWidget *parent = 0);
 
+public:
     //! Добавление подокна
     /*! Предназначено для добавления подокна с выбранным
         визуальным компонентом
         \param widget Визуальный компонент
     */
-    QMdiSubWindow *addSubWindow(QWidget *widget, Qt::WindowFlags flags = 0);
+    virtual QMdiSubWindow *addSubWindow(QWidget *widget, Qt::WindowFlags flags = 0) = 0;
 
     //! Установка режима отображения окна
     /*! Предназначено для установки режима отображения подокна.
         Можно установить закладочный или оконный.
         \param mode Режим отображения подокна
     */
-    void setViewMode(ViewMode mode);
+    virtual void setViewMode(QMdiArea::ViewMode mode) = 0;
 
 
     //! Активация подокна по имени компонента
@@ -52,33 +32,30 @@ public:
         имя объекта.
        \sa addSubWindow()
     */
-    QMdiSubWindow *setActiveSubWindow(QString widgetName);
+    virtual QMdiSubWindow *setActiveSubWindow(QString widgetName) = 0;
 
     //! Активация подокна
     /*! Предназначено для активации указанного подокна
     */
-    void setActiveSubWindow(QMdiSubWindow *window);
+    virtual void setActiveSubWindow(QMdiSubWindow *window) = 0;
 
     //! Получение подокна
     /*! Предназначено для получения подокна
     */
-    QMdiSubWindow *subWindow(QString widgetName);
-signals:
+    virtual QMdiSubWindow *subWindow(QString widgetName) = 0;
 
 public slots:
     //! Слот закрытия активного подокна
-    void closeActiveSubWindow();
+    virtual void closeActiveSubWindow() = 0;
 
     //! Слот закрытия всех подокон
-    void closeAllSubWindows();
+    virtual void closeAllSubWindows() = 0;
 
     //! Слот для расположения подокон каскадом
-    void cascadeSubWindows();
+    virtual void cascadeSubWindows() = 0;
 
     //! Слот для расположения подокон плиткой
-    void tileSubWindows();
+    virtual void tileSubWindows() = 0;
 };
 
-}}
-
-#endif // MDIEXTAREA_H
+#endif // IMDIEXTAREA_H

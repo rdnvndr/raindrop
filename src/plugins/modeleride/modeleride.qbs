@@ -13,7 +13,6 @@ PluginProduct {
 
     Depends { name: "Qt"; submodules: ["widgets", "xml"] }
     Depends { name: "plugin" }
-    Depends { name: "mdiextarea" }
     Depends { name: "treexmlmodel" }
     Depends { name: "guiextension" }
     Depends { name: "metadatamodel" }

@@ -15,7 +15,6 @@ PluginProduct {
     Depends { name: "Qt"; submodules: ["widgets", "sql", "core"] }
     Depends { name: "plugin" }
     Depends { name: "sqlextension" }
-    Depends { name: "mdiextarea" }
 
     files: [
         "*.h",

@@ -72,7 +72,7 @@
   <customwidget>
    <class>RTPTechGroup::Widgets::MdiExtArea</class>
    <extends>QWidget</extends>
-   <header location="global">mdiextarea/mdiextarea.h</header>
+   <header>mdiextarea.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

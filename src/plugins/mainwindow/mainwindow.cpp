@@ -492,7 +492,7 @@ QMenu *MainWindow::createPopupMenu()
     return menu;
 }
 
-MdiExtArea *MainWindow::getMdiArea()
+IMdiExtArea *MainWindow::getMdiArea()
 {
     return mdiArea;
 }
