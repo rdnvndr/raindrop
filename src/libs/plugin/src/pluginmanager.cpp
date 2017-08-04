@@ -14,12 +14,7 @@ PluginManager::PluginManager(QObject *parent) :
     m_settings = NULL;
     m_lockFiles = NULL;
 
-
-#ifndef PLUGIN_DIR
     m_pluginsDir = QDir(qApp->applicationDirPath() + "/plugins/");
-#else
-    m_pluginsDir = QDir(qApp->applicationDirPath() + "/" + PLUGIN_DIR);
-#endif
 }
 
 PluginManager *PluginManager::m_instance = 0;
