@@ -1,6 +1,7 @@
-import "../main.qbs" as LibProduct
-LibProduct {
-    name: "plugin"
+import "../main.qbs" as TestProduct
+TestProduct {
+    name: "auto"
+    type: "application"
     Group {
         fileTagsFilter: ["application"]
         qbs.install: true

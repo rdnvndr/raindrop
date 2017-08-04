@@ -76,6 +76,11 @@ qint32 main(qint32 argc, char *argv[])
 
     PluginManager pluginManager;
     pluginManager.setSettings(&settings);
+
+#ifdef PLUGIN_DIR
+    pluginManager.setPluginsDir(QDir(qApp->applicationDirPath() + "/" + PLUGIN_DIR));
+#endif
+
     pluginManager.loadPlugins();
 
     return app->exec();
