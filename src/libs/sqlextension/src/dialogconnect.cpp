@@ -11,8 +11,6 @@
 namespace RTPTechGroup {
 namespace SqlExtension {
 
-Q_LOGGING_CATEGORY(lcSqlExtension,"RTPTechGroup.SqlExtension")
-
 DialogConnect::DialogConnect(QWidget *pwgt)
     : QDialog(pwgt), ui(new Ui::DialogConnect)
 {
