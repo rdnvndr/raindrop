@@ -7,7 +7,7 @@ for /f "tokens=*" %%i in ('git describe --tags --always %commit%') do (
    set ver=%%i
 )
 set test=-
-if exist version.h (
+if exist src\version.h (
   for /F "TOKENS=2,3*" %%j in (version.h) do ( 
     set test=%%j
   ) 
@@ -17,8 +17,8 @@ for /f "tokens=*" %%k in ('git show -s --format^=format:%%ci %ver%') do (
 )
 
 if not %test%=="%ver%" (  
-  echo #ifndef VERSION_H > version.h
-  echo #define VERSION_H >> version.h
-  echo #define VER_REV "%datever% (%ver%)" >> version.h
-  echo #endif >> version.h
+  echo #ifndef VERSION_H > src\version.h
+  echo #define VERSION_H >> src\version.h
+  echo #define VER_REV "%datever% (%ver%)" >> src\version.h
+  echo #endif >> src\version.h
 )
