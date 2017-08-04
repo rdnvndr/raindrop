@@ -1,6 +1,6 @@
 #ifndef TREECOMBOBOX_H
 #define TREECOMBOBOX_H
-#include "treecomboboxglobal.h"
+#include "guiextensionglobal.h"
 #include <QComboBox>
 #include <QTreeView>
 
@@ -19,7 +19,7 @@ namespace Widgets {
     \endcode
 */
 
-class TREECOMBOBOXLIB TreeComboBox : public QComboBox
+class GUIEXTENSIONLIB TreeComboBox : public QComboBox
 {
 public:
     //! Конструктор класса
