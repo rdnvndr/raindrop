@@ -1,5 +1,4 @@
 #include "exampleplug.h"
-#include <mdiextarea/mdiextarea.h>
 #include <QTextEdit>
 
 using namespace RTPTechGroup::Plugin;
