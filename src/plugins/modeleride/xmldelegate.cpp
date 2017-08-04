@@ -7,9 +7,9 @@
 #include <QSize>
 #include <QPainter>
 #include <QAbstractProxyModel>
-#include <treecombobox/treecombobox.h>
+#include <guiextension/treecombobox.h>
 #include <treexmlmodel/treexmlhashmodel.h>
-#include <pushbuttonimage/pushbuttonimage.h>
+#include <guiextension/pushbuttonimage.h>
 
 using namespace RTPTechGroup::Widgets;
 using namespace RTPTechGroup::XmlModel;

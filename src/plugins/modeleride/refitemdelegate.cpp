@@ -4,7 +4,7 @@
 #include <QLineEdit>
 
 #include <treexmlmodel/tablexmlproxymodel.h>
-#include <treecombobox/treecombobox.h>
+#include <guiextension/treecombobox.h>
 #include <metadatamodel/dbxmlstruct.h>
 
 #include "refitemproxymodel.h"
