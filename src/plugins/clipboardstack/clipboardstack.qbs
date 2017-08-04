@@ -14,6 +14,7 @@ PluginProduct {
 
     Depends { name: "Qt"; submodules: ["widgets"] }
     Depends { name: "plugin" }
+    Depends { name: "mdiextarea" }
 
     files: [
         "*.h",
