@@ -1,6 +1,7 @@
-import "../main.qbs" as LibProduct
-LibProduct {
-    name: "treexmlmodel"
+import "../main.qbs" as TestProduct
+TestProduct {
+    name: "manual"
+    type: "application"
     Group {
         fileTagsFilter: ["application"]
         qbs.install: true

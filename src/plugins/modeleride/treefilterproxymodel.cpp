@@ -1,7 +1,6 @@
 #include "treefilterproxymodel.h"
 #include <metadatamodel/dbxmlstruct.h>
 #include <treexmlmodel/treexmlhashmodel.h>
-#include <treexmlmodel/mimedataindex.h>
 #include <QMimeData>
 
 using namespace RTPTechGroup::XmlModel;

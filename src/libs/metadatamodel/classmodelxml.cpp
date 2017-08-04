@@ -1,6 +1,5 @@
 #include "classmodelxml.h"
 
-#include <treexmlmodel/tagxmlitem.h>
 #include "dbxmlstruct.h"
 #include "clogging.h"
 
