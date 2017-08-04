@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QDockWidget>
 #include <QTimer>
-#include "dockwidgetglobal.h"
+#include "guiextensionglobal.h"
 
 namespace RTPTechGroup {
 namespace Widgets {
@@ -14,7 +14,7 @@ namespace Widgets {
 //! к главному окну QMainWindow. По сравнению с QDockWidget
 //! обладает свойством скрытия заголовка и автоскрытием заголовка
 
-class DOCKWIDGETLIB DockWidget : public QDockWidget
+class GUIEXTENSIONLIB DockWidget : public QDockWidget
 {
 public:
     //! Конструктор класса

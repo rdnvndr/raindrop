@@ -1,7 +1,7 @@
 #ifndef PUSHBUTTONIMAGE_H
 #define PUSHBUTTONIMAGE_H
 
-#include "pushbuttonimageglobal.h"
+#include "guiextensionglobal.h"
 #include <QPushButton>
 
 namespace RTPTechGroup {
@@ -12,7 +12,7 @@ namespace Widgets {
  *  виде кнопки, загрузки с диска, сохранения на диск
  */
 
-class PUSHBUTTONIMAGELIB PushButtonImage : public QPushButton
+class GUIEXTENSIONLIB PushButtonImage : public QPushButton
 {
     Q_OBJECT
 public:

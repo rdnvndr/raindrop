@@ -1,16 +1,16 @@
 import "../main.qbs" as LibProduct
 
 LibProduct {
-    name: "pushbuttonimage"
+    name: "guiextension"
 
-    productname: "PushButtonImage Library"
+    productname: "GuiExtension Library"
     version:     "1.0.0"
-    description: "PushButtonImage Library"
+    description: "GuiExtension Library"
     company:     "RTPTechGroup"
     copyright:   "Copyright (C) RTPTechGroup"
 
-    cpp.defines: base.concat(["PUSHBUTTONIMAGE_LIBRARY"])
-    Depends { name: "Qt"; submodules: ["widgets"] }
+    cpp.defines: base.concat(["GUIEXTENSION_LIBRARY"])
+    Depends { name: "Qt"; submodules: ["widgets", "core"] }
 
     files: [
         "*.h",

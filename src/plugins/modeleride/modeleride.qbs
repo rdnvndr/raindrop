@@ -15,9 +15,7 @@ PluginProduct {
     Depends { name: "plugin" }
     Depends { name: "mdiextarea" }
     Depends { name: "treexmlmodel" }
-    Depends { name: "treecombobox" }
-    Depends { name: "dockwidget" }
-    Depends { name: "pushbuttonimage" }
+    Depends { name: "guiextension" }
     Depends { name: "metadatamodel" }
 
     files: [
