@@ -7,9 +7,7 @@ SrcProduct {
        cpp.includePaths: product.sourceDirectory + "/../"
    }
    Group {
-       fileTagsFilter: [
-           "dynamiclibrary",
-           "dynamiclibrary_import"]
+       fileTagsFilter: ["dynamiclibrary"]
        qbs.install: true
        qbs.installDir: product.applicationPath + "/" + product.rPluginPath
    }
