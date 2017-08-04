@@ -4,7 +4,6 @@
 
 #include <imainwindow.h>
 
-#include <mdiextarea/mdiextarea.h>
 #include <treexmlmodel/tagxmlitem.h>
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <plugin/pluginmanager.h>
