@@ -11,6 +11,9 @@ AppProduct {
 
     Depends { name: "Qt"; submodules: ["widgets"] }
     Depends { name: "plugin"}
+    cpp.defines: base.concat([
+        "PLUGIN_DIR=\"" + product.rPluginPath + "\"",
+    ])
 
     files: [
         "*.h",

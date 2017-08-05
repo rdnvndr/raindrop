@@ -10,14 +10,14 @@ Product {
     property string copyright:   ""
 
     property string applicationPath: "bin"
-    property string interfacePath:   "include/raindrop/"
+    property string includePath:     "include/raindrop/"
     property string docPath:         "share/doc/raindrop"
     property string rPluginPath:     "../lib/raindrop/plugins/"
 
     Properties {
         condition: qbs.targetOS.contains("linux")
         property string rLibraryPath:     "../lib/raindrop"
-        property string rLibraryTestPath: "../../lib/raindrop"
+        property string rLibraryTestPath: "../../../lib/raindrop"
     }
     Properties {
         condition: qbs.targetOS.contains("windows")
@@ -25,7 +25,6 @@ Product {
         property string rLibraryTestPath: ""
     }
 
-    cpp.rpaths: rLibraryPath
     cpp.defines: [
         "APP_VERSION="     + "\"" +  product.version + "\"",
         "APP_COMPANY="     + "\"" +  product.company + "\"",

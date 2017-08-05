@@ -322,7 +322,7 @@
   <customwidget>
    <class>RTPTechGroup::Widgets::TreeComboBox</class>
    <extends>QComboBox</extends>
-   <header>treecombobox/treecombobox.h</header>
+   <header>guiextension/treecombobox.h</header>
   </customwidget>
  </customwidgets>
  <resources>

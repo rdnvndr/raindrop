@@ -1,10 +1,7 @@
 #include "classmodelxml.h"
 
-#include <QMessageBox>
-
-#include <treexmlmodel/tagxmlitem.h>
-
 #include "dbxmlstruct.h"
+#include "clogging.h"
 
 namespace  RTPTechGroup {
 namespace  MetaDataModel {
@@ -113,7 +110,7 @@ void ClassModelXml::initDisplayedAttrs()
     this->addDisplayedAttr(DBCONDITIONXML::COND, propsCondition, QIcon(":/expression"));
 
     QStringList propsQuantity;
-    propsQuantity << DBQUANTITYXML::NAME            << DBQUANTITYXML::ALIAS
+    propsQuantity << DBQUANTITYXML::NAME    << DBQUANTITYXML::ALIAS
                 << DBQUANTITYXML::DIMENSION << DBQUANTITYXML::BASICUNIT
                 << DBQUANTITYXML::ID;
     this->addDisplayedAttr(DBQUANTITYXML::QUANTITY, propsQuantity, QIcon(":/quantity"));
@@ -703,44 +700,42 @@ bool ClassModelXml::isRemove(const QModelIndex &srcIndex)
     if (!model) return false;
 
     bool success = true;
-    QString msg;
-
     if (tag == DBQUANTITYGROUPXML::QUANTITYGROUP) {
         QStringList tags(QStringList() << DBQUANTITYXML::QUANTITY);
         if (model->hasChildren(srcIndex, tags)) {
-            msg += tr("Необходимо удалить величины.\n\n");
+            m_errorText += tr("Необходимо удалить величины.");
             success = false;
         }
     } else if (tag == DBQUANTITYXML::QUANTITY) {
         QStringList tags(QStringList() << DBUNITXML::UNIT);
         if (model->hasChildren(srcIndex, tags)) {
-            msg += tr("Необходимо удалить ЕИ.\n\n");
+            m_errorText += tr("Необходимо удалить ЕИ.");
             success = false;
         }
     } else if (tag == DBCLASSXML::CLASS) {
         QStringList tags(QStringList() << DBCLASSXML::CLASS);
         if (model->hasChildren(srcIndex,tags)) {
-            msg += tr("Необходимо удалить классы-потомки.\n\n");
+            m_errorText += tr("Необходимо удалить классы-потомки.");
             if (success)
                 success = false;
         }
     } else if (tag == DBLOVXML::LOV) {
        QStringList tags(QStringList() << DBCLASSXML::CLASS);
        if (model->hasChildren(srcIndex, tags)) {
-           msg += tr("Необходимо удалить значение списка.\n\n");
+           m_errorText += tr("Необходимо удалить значение списка.");
            success = false;
        }
     } else if (tag == DBREFGROUPXML::REFGROUP) {
         QStringList tags(QStringList() << DBREFXML::REF);
         if (model->hasChildren(srcIndex,tags)) {
-            msg += tr("Необходимо удалить справочник.\n\n");
+            m_errorText += tr("Необходимо удалить справочник.");
             success = false;
         }
     } else if (tag == DBREFXML::REF) {
         QStringList tags(QStringList() << DBLINKTOCLASSXML::LINKTOCLASS
                                        << DBLINKTOFILTERXML::LINKTOFILTER);
         if (model->hasChildren(srcIndex,tags)) {
-            msg += tr("Необходимо удалить элементы справочника.\n\n");
+            m_errorText += tr("Необходимо удалить элементы справочника.");
             success = false;
         }
     } else {
@@ -792,7 +787,7 @@ bool ClassModelXml::isRemove(const QModelIndex &srcIndex)
                                                     DBATTRXML::NAME)
                                                 ).data().toString();
 
-                    msg += QString(tr("Необходимо удалить %1%2.\n\n")).
+                    m_errorText += QString(tr("Необходимо удалить %1%2.\n\n")).
                             arg(name).arg(parentName);
                     if (success)
                         success = false;
@@ -809,14 +804,14 @@ bool ClassModelXml::isRemove(const QModelIndex &srcIndex)
     }
 
     if (!success) {
-        QMessageBox msgBox;
-        msgBox.setText(tr("Удаление данного объекта не воможно."));
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setDetailedText(msg);
-        msgBox.setWindowTitle(tr("Предупреждение"));
-        msgBox.exec();
+        qCWarning(lcMetaDataModel) << lastError();
     }
     return success;
+}
+
+QString ClassModelXml::lastError()
+{
+    return m_errorText;
 }
 
 }}

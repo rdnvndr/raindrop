@@ -1,11 +1,12 @@
 #include "dbconnect.h"
 
-#include "threadconnect.h"
-
 #include <plugin/pluginmanager.h>
+#include <sqlextension/dialogconnect.h>
+
 #include <imainwindow.h>
 
 using namespace RTPTechGroup::Plugin;
+using namespace RTPTechGroup::SqlExtension;
 
 namespace RTPTechGroup {
 namespace DbConnect {

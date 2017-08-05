@@ -1,14 +1,17 @@
 #ifndef MAINWINDOW_H
 #define	MAINWINDOW_H
 
+#include <QMainWindow>
+#include <QMenu>
+
+#include <imainwindow.h>
+#include <plugin/iplugin.h>
+
 #include "mainwindowglobal.h"
 #include "ui_mainwindow.h"
 #include "mainwindowoptions.h"
-#include <imainwindow.h>
-#include <plugin/iplugin.h>
-#include <mdiextarea/mdiextarea.h>
-#include <QMainWindow>
-#include <QMenu>
+#include "mdiextarea.h"
+
 
 namespace RTPTechGroup {
 namespace MainWindow {
@@ -161,7 +164,7 @@ public slots:
     QMdiSubWindow *setActiveSubWindow(QString objName);
 
     //! Получение области подокон
-   RTPTechGroup::Widgets::MdiExtArea *getMdiArea();
+   IMdiExtArea *getMdiArea();
 
     //! Вызов окна "О Qt..."
     void aboutQt();

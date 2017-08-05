@@ -6,7 +6,7 @@
 #include <plugin/iplugin.h>
 #include <treexmlmodel/treexmlhashmodel.h>
 #include <metadatamodel/classmodelxml.h>
-#include <dockwidget/dockwidget.h>
+#include <guiextension/dockwidget.h>
 
 #include "classtreeview.h"
 #include "treefilterproxymodel.h"

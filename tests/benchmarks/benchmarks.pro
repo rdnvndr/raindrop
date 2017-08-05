@@ -1,5 +1,2 @@
 TEMPLATE = subdirs
-SUBDIRS += app
-SUBDIRS += libs
-SUBDIRS += plugins
-SUBDIRS += shared
+SUBDIRS += test_tmpl
