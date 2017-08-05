@@ -1,0 +1,15 @@
+[submodule "src/3rdparty/guiextension"]
+	path = src/3rdparty/guiextension
+	url = git@github.com:roandbox/guiextension.git
+[submodule "src/3rdparty/sqlextension"]
+	path = src/3rdparty/sqlextension
+	url = git@github.com:roandbox/sqlextension.git
+[submodule "src/3rdparty/plugin"]
+	path = src/3rdparty/plugin
+	url = git@github.com:roandbox/plugin.git
+[submodule "src/3rdparty/tilingframe"]
+	path = src/3rdparty/tilingframe
+	url = git@github.com:roandbox/tilingframe.git
+[submodule "src/3rdparty/treexmlmodel"]
+	path = src/3rdparty/treexmlmodel
+	url = git@github.com:roandbox/treexmlmodel.git
