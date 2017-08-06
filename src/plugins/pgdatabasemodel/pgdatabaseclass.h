@@ -63,7 +63,7 @@ public:
     void filtering(IDatabaseExpression *expr);
 
     //! Получение всех объектов класса
-    void all();
+    IDatabaseObjects *all();
 };
 
 }}

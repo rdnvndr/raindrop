@@ -120,7 +120,7 @@ public:
     virtual void filtering(IDatabaseExpression *expr) = 0;
 
     //! Получение всех объектов класса
-    virtual void all() = 0;
+    virtual IDatabaseObjects *all() = 0;
 
     //! Получение отсортированных объектов
     virtual void orderBy() = 0;

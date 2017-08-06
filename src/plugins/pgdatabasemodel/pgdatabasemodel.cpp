@@ -10,11 +10,14 @@ PgDatabaseModel::PgDatabaseModel(QSqlDatabase db)
 
 IDatabaseClass *PgDatabaseModel::createModelClass(const QString &name)
 {
+    Q_UNUSED(name)
+
     return NULL;
 }
 
 IDatabaseClass *PgDatabaseModel::modelClass(const QString &name)
 {
+    Q_UNUSED(name)
     return NULL;
 }
 

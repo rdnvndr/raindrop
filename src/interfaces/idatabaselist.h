@@ -7,12 +7,14 @@ class IDatabaseClass;
 class IDatabaseAttribute;
 class IDatabaseFilter;
 class IDatabaseComposition;
+class IDatabaseObject;
 template <class T1, class T2> class IDatabaseList;
 
 typedef IDatabaseList<IDatabaseClass, IDatabaseClass>       IDatabaseClasses;
 typedef IDatabaseList<IDatabaseClass, IDatabaseAttribute>   IDatabaseAttrs;
 typedef IDatabaseList<IDatabaseClass, IDatabaseFilter>      IDatabaseFilters;
 typedef IDatabaseList<IDatabaseClass, IDatabaseComposition> IDatabaseComps;
+typedef IDatabaseList<IDatabaseClass, IDatabaseObject>      IDatabaseObjects;
 
 //! Список элементов базы данных
 template <class T1, class T2>

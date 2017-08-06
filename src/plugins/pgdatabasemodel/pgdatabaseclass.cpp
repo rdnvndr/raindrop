@@ -4,6 +4,7 @@
 #include "pgdatabaseattrs.h"
 #include "pgdatabasefilters.h"
 #include "pgdatabasecomps.h"
+#include "pgdatabaseobjects.h"
 
 namespace RTPTechGroup {
 namespace DatabaseModel {
@@ -92,9 +93,9 @@ void PgDatabaseClass::filtering(IDatabaseExpression *expr)
     Q_UNUSED(expr)
 }
 
-void PgDatabaseClass::all()
+IDatabaseObjects *PgDatabaseClass::all()
 {
-
+    return dynamic_cast<IDatabaseObjects *>(new PgDatabaseObjects(this));
 }
 
 }}
