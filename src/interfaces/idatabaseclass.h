@@ -6,7 +6,7 @@
 #include <idatabasefilter.h>
 #include <idatabasecomposition.h>
 #include <idatabaseexpression.h>
-#include <idatabaselist.h>
+#include <idatabaseobjects.h>
 
 #include <QIcon>
 #include <QUuid>
