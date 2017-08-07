@@ -57,10 +57,10 @@ public:
 
 // Работа с объектами
      //! Получение отфильтрованных объектов класса
-    void filtering(IDatabaseFilter *filter);
+    IDatabaseObjects *filtering(IDatabaseFilter *filter);
 
     //! Получение отфильтрованных объектов класса
-    void filtering(IDatabaseExpression *expr);
+    IDatabaseObjects *filtering(IDatabaseExpression *expr);
 
     //! Получение всех объектов класса
     IDatabaseObjects *all();

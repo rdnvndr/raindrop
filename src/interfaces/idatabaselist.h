@@ -7,7 +7,7 @@ class IDatabaseClass;
 class IDatabaseAttribute;
 class IDatabaseFilter;
 class IDatabaseComposition;
-class IDatabaseObject;
+
 template <class T1, class T2> class IDatabaseList;
 
 typedef IDatabaseList<IDatabaseClass, IDatabaseClass>       IDatabaseClasses;
@@ -48,6 +48,10 @@ public:
     //! Возращает элемент с позицией index
     virtual bool seek(int index, bool relative = false)
     { return m_query->seek(index, relative); }
+
+    //! Возращает элемент с позицией index
+    virtual bool exec()
+    { return m_query->exec(); }
 
     //! Получение элемента базы данных
     virtual T2 *value() = 0;

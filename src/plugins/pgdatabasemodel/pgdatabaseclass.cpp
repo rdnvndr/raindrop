@@ -83,14 +83,18 @@ IDatabaseComps *PgDatabaseClass::compList()
     return dynamic_cast<IDatabaseComps *>(new PgDatabaseComps(this));
 }
 
-void PgDatabaseClass::filtering(IDatabaseFilter *filter)
+IDatabaseObjects *PgDatabaseClass::filtering(IDatabaseFilter *filter)
 {
     Q_UNUSED(filter)
+
+    return NULL;
 }
 
-void PgDatabaseClass::filtering(IDatabaseExpression *expr)
+IDatabaseObjects *PgDatabaseClass::filtering(IDatabaseExpression *expr)
 {
     Q_UNUSED(expr)
+
+    return NULL;
 }
 
 IDatabaseObjects *PgDatabaseClass::all()

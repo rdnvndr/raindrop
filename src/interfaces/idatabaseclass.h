@@ -5,17 +5,14 @@
 #include <idatabaseattribute.h>
 #include <idatabasefilter.h>
 #include <idatabasecomposition.h>
-#include <idatabaseexpression.h>
 #include <idatabaseobjects.h>
 
 #include <QIcon>
 #include <QUuid>
 #include <QString>
 
-class IDatabaseExpression;
-
 //! Класс базы данных
-class IDatabaseClass: public IDatabaseItem
+class IDatabaseClass: public IDatabaseItem, public IDatabaseManipulation
 {
 public:
     //! Перечисление режимов доступа
@@ -25,7 +22,7 @@ public:
     enum ClassType { Abstract, Context, Embedded, Normal };
 
     //! Конструктор класса
-    explicit IDatabaseClass() {
+    explicit IDatabaseClass(): IDatabaseManipulation(this) {
         m_classType  = IDatabaseClass::Normal;
         m_accessMode = IDatabaseClass::Standart;
         m_parent     = NULL;
@@ -111,34 +108,6 @@ public:
 
     //! Cписок атрибутов в классе
     virtual IDatabaseComps *compList() = 0;
-
-// Работа с объектами
-    //! Получение отфильтрованных объектов класса
-    virtual void filtering(IDatabaseFilter *filter) = 0;
-
-    //! Получение отфильтрованных объектов класса
-    virtual void filtering(IDatabaseExpression *expr) = 0;
-
-    //! Получение всех объектов класса
-    virtual IDatabaseObjects *all() = 0;
-
-    //! Получение отсортированных объектов
-    virtual void orderBy() = 0;
-
-    //! Получение уникальных объектов
-    virtual void distinct() = 0;
-
-    //! Получение количества объектов
-    virtual void count() = 0;
-
-    //! Сцепление объектов
-    virtual void join() = 0;
-
-    //! Объединение объектов
-    virtual void unionAll() = 0;
-
-    //! Ограничение объектов
-    virtual void limit(int up, int down = 0) = 0;
 
 private:
     //! Иконка класса
