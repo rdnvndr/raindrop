@@ -28,7 +28,7 @@ DbModelExample::DbModelExample(QObject *parent):
     // Текущий класс
     IDatabaseModel *dbModel = dbModelManager->createInstance(db);
     if (dbModel) {
-        IDatabaseClass *dbClass = dbModel->modelClass("TestClass");
+        IDatabaseClass *dbClass = dbModel->derivedClass("TestClass");
         if (dbClass) {
             dbClass->pull();
             int count = dbClass->count();
@@ -55,7 +55,7 @@ DbModelExample::DbModelExample(QObject *parent):
         }
 
         // Создание класса
-        IDatabaseClass *dbNewClass = dbModel->createModelClass("TestNewClass");
+        IDatabaseClass *dbNewClass = dbModel->createDerivedClass("TestNewClass");
         if (dbNewClass) {
             dbNewClass->setAlias("Тестовый класс");
             dbNewClass->setMaxVersion(5);

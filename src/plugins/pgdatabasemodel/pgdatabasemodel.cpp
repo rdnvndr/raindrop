@@ -8,26 +8,33 @@ PgDatabaseModel::PgDatabaseModel(QSqlDatabase db)
     m_db = db;
 }
 
-IDatabaseClass *PgDatabaseModel::createModelClass(const QString &name)
+IDatabaseClass *PgDatabaseModel::createDerivedClass(
+        const QString &name, const QString &base)
 {
     Q_UNUSED(name)
+    Q_UNUSED(base)
 
     return NULL;
 }
 
-IDatabaseClass *PgDatabaseModel::modelClass(const QString &name)
+IDatabaseClass *PgDatabaseModel::derivedClass(
+        const QString &name, const QString &base)
 {
     Q_UNUSED(name)
+    Q_UNUSED(base)
+
     return NULL;
 }
 
-IDatabaseClasses *PgDatabaseModel::classList()
+IDatabaseClasses *PgDatabaseModel::allClassList()
 {
     return NULL;
 }
 
-IDatabaseClasses *PgDatabaseModel::modelClassList()
+IDatabaseClasses *PgDatabaseModel::derivedClassList(const QString &base)
 {
+    Q_UNUSED(base)
+
     return NULL;
 }
 

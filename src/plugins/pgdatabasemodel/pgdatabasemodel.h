@@ -16,19 +16,21 @@ public:
     explicit PgDatabaseModel(QSqlDatabase db);
 
 // Создание элемента по имени
-    //! Создание класса модели по имени
-    virtual IDatabaseClass *createModelClass(const QString &name);
+    //! Создание производного класса по имени
+    virtual IDatabaseClass *createDerivedClass(
+            const QString &name, const QString &base = QString(""));
 
 // Получение доступа к элементам модели по имени
-    //! Получение класса модели по имени
-    virtual IDatabaseClass *modelClass(const QString &name);
+     //! Получение производного класса по имени
+    virtual IDatabaseClass *derivedClass(
+            const QString &name, const QString &base = QString(""));
 
 // Получение доступа к спискам элементов модели
     //! Cписок всех классов
-    virtual IDatabaseClasses *classList();
+    virtual IDatabaseClasses *allClassList();
 
-    //! Cписок классов модели
-    virtual IDatabaseClasses *modelClassList();
+    //! Cписок производных классов модели
+    virtual IDatabaseClasses *derivedClassList(const QString &base = QString(""));
 
 private:
     //! Соединение с базой данных

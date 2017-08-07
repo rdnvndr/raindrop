@@ -15,18 +15,21 @@ public:
 
 // Создание элемента по имени
     //! Создание производного класса по имени
-    virtual IDatabaseClass *createModelClass(const QString &name) = 0;
+    virtual IDatabaseClass *createDerivedClass(
+            const QString &name, const QString &base = QString("")) = 0;
 
 // Получение доступа к элементам модели по имени
     //! Получение производного класса по имени
-    virtual IDatabaseClass *modelClass(const QString &name) = 0;
+    virtual IDatabaseClass *derivedClass(
+            const QString &name, const QString &base = QString("")) = 0;
 
 // Получение доступа к спискам элементов модели
     //! Cписок всех классов
-    virtual IDatabaseClasses *classList() = 0;
+    virtual IDatabaseClasses *allClassList() = 0;
 
-    //! Cписок классов модели
-    virtual IDatabaseClasses *modelClassList() = 0;
+    //! Cписок производных классов модели
+    virtual IDatabaseClasses *derivedClassList(
+            const QString &base = QString("")) = 0;
 
 };
 
