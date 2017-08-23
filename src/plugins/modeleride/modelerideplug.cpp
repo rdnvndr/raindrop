@@ -308,6 +308,16 @@ void ModelerIDEPlug::add()
     } else if (tagRole == DBNUMERATORLISTXML::NUMERATORLIST) {
         lastInsertRow = m_model->insertLastRows(0, 1, indexSource,
                                                 DBNUMERATORXML::NUMERATOR);
+        if (lastInsertRow.isValid()){
+            qint32 column = m_model->columnDisplayedAttr(
+                        DBNUMERATORXML::NUMERATOR, DBNUMERATORXML::UNIQUE);
+            m_model->setData(lastInsertRow.sibling(lastInsertRow.row(), column),
+                             DBUNIQUENUMERATORXML::OBJECT);
+            column = m_model->columnDisplayedAttr(DBCLASSXML::CLASS,
+                                                  DBCLASSXML::TYPE);
+            m_model->setData(lastInsertRow.sibling(lastInsertRow.row(), column),
+                             DBCLASSTYPEXML::NORMAL);
+        }
     } else if (tagRole == DBREFLISTXML::REFLIST) {
         lastInsertRow = m_model->insertLastRows(0, 1, indexSource,
                                                 DBREFGROUPXML::REFGROUP);

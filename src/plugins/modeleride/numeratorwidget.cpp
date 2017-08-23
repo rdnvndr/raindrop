@@ -23,16 +23,28 @@ NumeratorWidget::NumeratorWidget(QWidget *parent) :
     numeratorNameLineEdit->setValidator(validator);
     connect(validator, &RegExpValidator::stateChanged,
             this, &NumeratorWidget::validateNumeratorName);
+
+
+    m_uniqueNumerator = new QStringListModel();
+    const QStringList unique = (QStringList()
+                                   << DBUNIQUENUMERATORXML::OBJECT
+                                   << DBUNIQUENUMERATORXML::CLASS
+                                   << DBUNIQUENUMERATORXML::COMP
+                                   );
+    m_uniqueNumerator->setStringList(unique);
 }
 
 NumeratorWidget::~NumeratorWidget()
 {
     delete numeratorNameLineEdit->validator();
+    delete m_uniqueNumerator;
 }
 
 void NumeratorWidget::setModel(TreeXmlHashModel *model)
 {
     AbstractEditorWidget::setModel(model);
+
+    numeratorUniqueComboBox->setModel(m_uniqueNumerator);
 
     dataMapper()->addMapping(numeratorNameLineEdit,
                              model->columnDisplayedAttr(DBNUMERATORXML::NUMERATOR,
@@ -40,6 +52,12 @@ void NumeratorWidget::setModel(TreeXmlHashModel *model)
     dataMapper()->addMapping(numeratorAliasLineEdit,
                              model->columnDisplayedAttr(DBNUMERATORXML::NUMERATOR,
                                                         DBNUMERATORXML::ALIAS));
+    dataMapper()->addMapping(numeratorUniqueComboBox,
+                             model->columnDisplayedAttr(DBNUMERATORXML::NUMERATOR,
+                                                        DBNUMERATORXML::UNIQUE));
+    dataMapper()->addMapping(numeratorStepSpinBox,
+                             model->columnDisplayedAttr(DBNUMERATORXML::NUMERATOR,
+                                                        DBNUMERATORXML::STEP));
 }
 
 bool NumeratorWidget::isEmpty()
@@ -49,12 +67,20 @@ bool NumeratorWidget::isEmpty()
 
 bool NumeratorWidget::add()
 {
-     return AbstractEditorWidget::add(DBNUMERATORXML::NUMERATOR);
+    if (AbstractEditorWidget::add(DBNUMERATORXML::NUMERATOR)) {
+        numeratorUniqueComboBox->setCurrentIndex(0);
+        return true;
+    }
+    return false;
 }
 
 void NumeratorWidget::setCurrent(const QModelIndex &index)
 {
     AbstractEditorWidget::setCurrent(index);
+    qint32 uniqueIndex = numeratorUniqueComboBox->findText(
+                modelData(DBNUMERATORXML::NUMERATOR, DBNUMERATORXML::UNIQUE,
+                          index).toString());
+    numeratorUniqueComboBox->setCurrentIndex(uniqueIndex);
 }
 
 void NumeratorWidget::edit(bool flag)

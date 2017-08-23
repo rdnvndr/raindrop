@@ -52,6 +52,10 @@ public slots:
 signals:
     //! Сигнал о редактировании нумератора
     void edited(bool flag);
+
+private:
+    //! Список уникальности
+    QStringListModel *m_uniqueNumerator;
 };
 
 }}
