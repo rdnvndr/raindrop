@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>196</width>
-    <height>120</height>
+    <width>229</width>
+    <height>148</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,15 +32,25 @@
       <string/>
      </property>
      <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="numeratorNameLineEdit"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="numeratorStepLabel">
+        <property name="text">
+         <string>Шаг автонумерации:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="numeratorAliasLineEdit"/>
+      </item>
       <item row="0" column="0">
        <widget class="QLabel" name="numeratorNameLabel">
         <property name="text">
          <string>Имя нумератора:</string>
         </property>
        </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="numeratorNameLineEdit"/>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="numeratorAliasLabel">
@@ -49,18 +59,22 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="numeratorAliasLineEdit"/>
+      <item row="3" column="1">
+       <widget class="QSpinBox" name="numeratorStepSpinBox">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+       </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="numeratorStepLabel">
+       <widget class="QLabel" name="numeratorUniqueLabel">
         <property name="text">
-         <string>Шаг автонумерации:</string>
+         <string>Уникален для:</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QSpinBox" name="numeratorStepSpinBox"/>
+       <widget class="QComboBox" name="numeratorUniqueComboBox"/>
       </item>
      </layout>
     </widget>

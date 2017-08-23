@@ -151,6 +151,7 @@ void ClassModelXml::initDisplayedAttrs()
 
     QStringList propsNumerator;
     propsNumerator << DBNUMERATORXML::NAME   << DBNUMERATORXML::ALIAS
+                   << DBNUMERATORXML::UNIQUE << DBNUMERATORXML::STEP
                    << DBNUMERATORXML::PARENT << DBNUMERATORXML::ID;
     this->addDisplayedAttr(DBNUMERATORXML::NUMERATOR, propsNumerator, QIcon(":/numerator"));
 

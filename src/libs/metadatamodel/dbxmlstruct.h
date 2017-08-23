@@ -301,6 +301,13 @@ namespace DBPERMISSIONXML{
     const QString ID         = "guid";
 }
 
+//! Уникальность нумератора
+namespace DBUNIQUENUMERATORXML{
+    const QString OBJECT = "Object";
+    const QString CLASS  = "Class";
+    const QString COMP   = "Composition";
+}
+
 //! Ключевые слова XML файла для описания списка нумераторов
 namespace DBNUMERATORLISTXML {
     const QString NUMERATORLIST = "RTPNumeratorList";
@@ -313,10 +320,12 @@ namespace DBNUMERATORLISTXML {
 //! Ключевые слова XML файла для нумератора
 namespace DBNUMERATORXML{
     const QString NUMERATOR = "RTPNumerator";
-    const QString NAME = "name";
-    const QString ALIAS = "alias";
-    const QString PARENT = "parent";
-    const QString ID = "guid";
+    const QString NAME      = "name";
+    const QString ALIAS     = "alias";
+    const QString STEP      = "step";
+    const QString UNIQUE    = "unique";
+    const QString PARENT    = "parent";
+    const QString ID        = "guid";
 }
 
 //! Ключевые слова XML файла для списка нумератора
