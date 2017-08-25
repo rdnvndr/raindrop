@@ -6,6 +6,7 @@
 namespace RTPTechGroup {
 namespace ModelerIde {
 
+//! Прокси модель получения списка групп атрибутов
 class AttrGroupProxyModel : public QAbstractListModel
 {
     Q_OBJECT

@@ -7,8 +7,8 @@ namespace RTPTechGroup {
 namespace MainWindow {
 
 //! Дерево команд
-//! Дерево команд отличается от стандартного дерева поддержкой Drag and Drop
-//!
+/*! Дерево команд отличается от стандартного дерева поддержкой Drag and Drop
+ */
 class ActionGroupTreeView : public QTreeView
 {
     Q_OBJECT
