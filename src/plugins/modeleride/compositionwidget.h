@@ -10,15 +10,14 @@
 
 #include "abstractitemwidget.h"
 
-//! Диалог редактирования составов класса
-/*! Диалог предназначен для редактирования списка составов
-    класса
-*/
-
 
 namespace RTPTechGroup {
 namespace ModelerIde {
 
+//! Диалог редактирования составов класса
+/*! Диалог предназначен для редактирования списка составов
+    класса
+*/
 class CompositionWidget : public AbstractItemWidget, private Ui::CompositionWidget
 {
     Q_OBJECT

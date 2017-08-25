@@ -16,7 +16,6 @@ namespace StackEditing {
 //! Плагин стека буфера обмена
 /*! Плагин предназначен для организации стека буфера обмена
 */
-
 class  CLIPBOARDSTACKLIB ClipboardStack:
         public QObject,
         public IClipboardStack,
