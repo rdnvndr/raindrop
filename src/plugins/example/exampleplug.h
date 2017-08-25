@@ -9,6 +9,7 @@
 namespace RTPTechGroup {
 namespace Example {
 
+//! Плагин-пример реализаии подключаемого модуля
 class EXAMPLELIB ExamplePlug:
         public QObject,
         public IPlugin

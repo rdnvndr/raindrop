@@ -4,6 +4,11 @@
 #include <QAbstractItemModel>
 #include <QAction>
 
+
+
+namespace RTPTechGroup {
+namespace MainWindow {
+
 //! Модель сгруппированных QAction
 /*! Модель сгруппированных QAction представляет собой на первом уровне
  *  список групп, а на втором уровне список QAction. \n
@@ -17,10 +22,6 @@
         listCommands->setRootIndex(model->index(0,0));
     \endcode
 */
-
-namespace RTPTechGroup {
-namespace MainWindow {
-
 class ActionGroupModel : public QAbstractItemModel
 {
     Q_OBJECT
