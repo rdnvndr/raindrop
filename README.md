@@ -16,7 +16,7 @@ Installation
 To download and build the development version:
 
 ```
-$ git clone git://github.com/roandbox/raindrop.git
+$ git clone git://github.com/rdnvndr/raindrop.git
 $ cd raindrop
 $ qmake
 $ make
@@ -24,8 +24,8 @@ $ make
 
 Author/Contributors
 ------------------------------------------------------------------------------
-* Author: [roandbox](https://github.com/roandbox)
-* Maintainer: [roandbox](https://github.com/roandbox) 
+* Author: [rdnvndr](https://github.com/rdnvndr)
+* Maintainer: [rdnvndr](https://github.com/rdnvndr) 
 * Contributors:
 
 License
