@@ -16,10 +16,17 @@ class IDatabaseClass: public IDatabaseItem, public IDatabaseManipulation
 {
 public:
     //! Перечисление режимов доступа
-    enum AccessMode { System, Standart, User };
+    enum AccessMode { System,   //!< Системный
+                      Standart, //!< Стандартный
+                      User      //!< Пользовательский
+                    };
 
     //! Перечисление типов класса
-    enum ClassType { Abstract, Context, Embedded, Normal };
+    enum ClassType { Abstract, //!< Абстрактный
+                     Context,  //!< Контекст
+                     Embedded, //!< Встроенный
+                     Normal    //!< Обычный
+                   };
 
     //! Конструктор класса
     explicit IDatabaseClass(): IDatabaseManipulation(this) {

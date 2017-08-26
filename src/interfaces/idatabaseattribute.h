@@ -18,8 +18,18 @@ class IDatabaseAttribute: public IDatabaseItem
 {
 public:
     //! Перечисление типов атрибутов
-    enum AttrbuteType { Boolean, Binary, Char, Date, Decimal, Double, Integer,
-                        String, Reference, Time, Timeshtamp };
+    enum AttrbuteType { Boolean,   //!< Логический
+                        Binary,    //!< Бинарный
+                        Char,      //!< Символ
+                        Date,      //!< Дата
+                        Decimal,   //!< Число с фиксированной точностью
+                        Double,    //!< Вещественный
+                        Integer,   //!< Целый
+                        String,    //!< Строка
+                        Reference, //!< Ссылка
+                        Time,      //!< Время
+                        Timeshtamp //!< Отметка времени
+                      };
 
     //! Конструктор класса
     explicit IDatabaseAttribute() {
