@@ -45,11 +45,12 @@ MainProduct {
                    doxFile.close();
 
                    var proc = new Process ();
-                   proc.setWorkingDirectory (product.buildDirectory);
+                   proc.setWorkingDirectory (product.sourceDirectory);
                    proc.start ("doxygen",["-"]);
                    proc.write(content);
                    proc.writeLine("HTML_OUTPUT = " + product.docName + "/");
                    proc.writeLine("QCH_FILE = ../" + product.docName + ".qch");
+                   proc.writeLine("OUTPUT_DIRECTORY = " + product.buildDirectory);
                    proc.closeWriteChannel();
                    if (!proc.waitForFinished())
                        proc.kill();
