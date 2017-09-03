@@ -1,7 +1,7 @@
 import "../main.qbs" as DocProduct
 
 DocProduct {
-    name: "api"
+    name: "raindrop-api"
     type: "docs"
 
     docName: "raindrop-dev"
