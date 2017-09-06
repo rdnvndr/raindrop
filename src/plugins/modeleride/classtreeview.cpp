@@ -293,7 +293,7 @@ void ClassTreeView::setCurrentIndex(const QModelIndex &index)
 
 void ClassTreeView::showContextMenu(const QPoint &point)
 {
-    if (classFilterModel->sourceModel()){
+    if (classFilterModel && classFilterModel->sourceModel()){
         QModelIndex indexSource = currentIndex();
         if (!indexSource.isValid())
             return;
