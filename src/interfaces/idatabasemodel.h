@@ -13,6 +13,9 @@ public:
     //! Деструктор класса
     virtual ~IDatabaseModel() {}
 
+    //! Инициализирует модель базы данных
+    virtual bool init() = 0;
+
 // Создание элемента по имени
     //! Создание производного класса по имени
     virtual IDatabaseClass *createDerivedClass(

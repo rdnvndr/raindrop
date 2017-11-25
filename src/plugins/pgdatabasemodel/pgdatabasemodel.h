@@ -15,6 +15,9 @@ public:
     //! Конструктор класса
     explicit PgDatabaseModel(QSqlDatabase db);
 
+    //! Инициализирует модель базы данных
+    virtual bool init();
+
 // Создание элемента по имени
     //! Создание производного класса по имени
     virtual IDatabaseClass *createDerivedClass(

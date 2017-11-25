@@ -8,6 +8,11 @@ PgDatabaseModel::PgDatabaseModel(QSqlDatabase db)
     m_db = db;
 }
 
+bool PgDatabaseModel::init()
+{
+    return true;
+}
+
 IDatabaseClass *PgDatabaseModel::createDerivedClass(
         const QString &name, const QString &base)
 {
