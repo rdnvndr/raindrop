@@ -4,6 +4,8 @@
 #include <idatabasemodel.h>
 #include <idatabasemodelmanager.h>
 
+#include "clogging.h"
+
 using namespace RTPTechGroup::Plugin;
 
 namespace RTPTechGroup {
@@ -21,12 +23,15 @@ DbModelExample::DbModelExample(QObject *parent):
     QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
     db.setHostName("localhost");
     db.setDatabaseName("customdb");
-    db.setUserName("user");
-    db.setPassword("password");
-    //    bool ok = db.open();
+    db.setUserName("postgres");
+    db.setPassword("");
+    bool ok = db.open();
+    qCWarning(lcDbModelExample) << tr("Соединение с базой данных: ") << ok;
 
     // Текущий класс
     IDatabaseModel *dbModel = dbModelManager->createInstance(db);
+    dbModel->init();
+
     if (dbModel) {
         IDatabaseClass *dbClass = dbModel->derivedClass("TestClass");
         if (dbClass) {
