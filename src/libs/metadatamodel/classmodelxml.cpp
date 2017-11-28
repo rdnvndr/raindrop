@@ -191,7 +191,7 @@ void ClassModelXml::initDisplayedAttrs()
     this->addDisplayedAttr(DBLOVXML::LOV, propsLov, QIcon(":/lov"));
 
     QStringList propsLovValue;
-    propsLovValue << DBLOVVALUEXML::NAME   << DBLOVVALUEXML::VALUE
+    propsLovValue << DBLOVVALUEXML::ALIAS   << DBLOVVALUEXML::VALUE
                   << DBLOVVALUEXML::PARENT << DBLOVVALUEXML::ID;
     this->addDisplayedAttr(DBLOVVALUEXML::LOVVALUE, propsLov, QIcon(":/lovvalue"));
 
@@ -366,7 +366,7 @@ void ClassModelXml::initHashAttrs()
                       DBLOVXML::NAME,
                       TreeXmlHashModel::UniqueUpperRename);
     this->addHashAttr(DBLOVVALUEXML::LOVVALUE,
-                      DBLOVVALUEXML::NAME,
+                      DBLOVVALUEXML::ALIAS,
                       TreeXmlHashModel::UniqueUpperRename);
     this->addHashAttr(DBREFGROUPXML::REFGROUP,
                       DBREFGROUPXML::NAME,

@@ -66,6 +66,7 @@ namespace DBCOMPXML{
 
 //! Типы атрибутов
 namespace DBATTRTYPEXML{
+    const QString ATTRTYPE   = "RTPAttributeType";
     const QString BOOLEAN    = "Boolean";
     const QString BINARY     = "Binary";
     const QString CHAR       = "Char";
@@ -81,17 +82,19 @@ namespace DBATTRTYPEXML{
 
 //! Типы классов
 namespace DBACCESSMODEXML{
-    const QString SYSTEM   = "System";
-    const QString STANDART = "Standart";
-    const QString USER     = "User";
+    const QString ACCESSMODE = "RTPAccessMode";
+    const QString SYSTEM     = "System";
+    const QString STANDART   = "Standart";
+    const QString USER       = "User";
 }
 
 //!  Вид классов
 namespace DBCLASSTYPEXML{
-    const QString ABSTRACT = "Abstract";
-    const QString CONTEXT  = "Context";
-    const QString EMBEDDED = "Embedded";
-    const QString NORMAL   = "Normal";
+    const QString CLASSTYPE = "RTPClassType";
+    const QString ABSTRACT  = "Abstract";
+    const QString CONTEXT   = "Context";
+    const QString EMBEDDED  = "Embedded";
+    const QString NORMAL    = "Normal";
 }
 
 //! Ключевые слова XML файла для описания фильтра
@@ -209,7 +212,7 @@ namespace DBLOVXML{
 //! Ключевые слова XML файла для значений списка
 namespace DBLOVVALUEXML{
     const QString LOVVALUE = "RTPLOVValue";
-    const QString NAME     = "name";
+    const QString ALIAS     = "name";
     const QString VALUE    = "value";
     const QString PARENT   = "parent";
     const QString ID       = "guid";
@@ -303,9 +306,10 @@ namespace DBPERMISSIONXML{
 
 //! Уникальность нумератора
 namespace DBUNIQUENUMERATORXML{
-    const QString OBJECT = "Object";
-    const QString CLASS  = "Class";
-    const QString COMP   = "Composition";
+    const QString UNIQUENUMERATOR = "RTPUniqueNumerator";
+    const QString OBJECT          = "Object";
+    const QString CLASS           = "Class";
+    const QString COMP            = "Composition";
 }
 
 //! Ключевые слова XML файла для описания списка нумераторов

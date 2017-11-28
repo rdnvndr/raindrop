@@ -27,6 +27,32 @@ bool PgDatabaseModel::init()
 
     // DBLOVVALUEXML::LOVVALUE - Таблицы
 
+    query.exec("CREATE TABLE \"" + DBATTRTYPEXML::ATTRTYPE + "\" ("
+               "\"" + DBLOVVALUEXML::ALIAS  + "\" VARCHAR(256),"
+               "\"" + DBLOVVALUEXML::VALUE  + "\" VARCHAR(256),"
+               "\"" + DBLOVVALUEXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               ");");
+
+    query.exec("CREATE TABLE \"" + DBCLASSTYPEXML::CLASSTYPE + "\" ("
+               "\"" + DBLOVVALUEXML::ALIAS  + "\" VARCHAR(256),"
+               "\"" + DBLOVVALUEXML::VALUE  + "\" VARCHAR(256),"
+               "\"" + DBLOVVALUEXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               ");");
+
+    query.exec("CREATE TABLE \"" + DBACCESSMODEXML::ACCESSMODE + "\" ("
+               "\"" + DBLOVVALUEXML::ALIAS  + "\" VARCHAR(256),"
+               "\"" + DBLOVVALUEXML::VALUE  + "\" VARCHAR(256),"
+               "\"" + DBLOVVALUEXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               ");");
+
+    query.exec("CREATE TABLE \"" + DBUNIQUENUMERATORXML::UNIQUENUMERATOR + "\" ("
+               "\"" + DBLOVVALUEXML::ALIAS  + "\" VARCHAR(256),"
+               "\"" + DBLOVVALUEXML::VALUE  + "\" VARCHAR(256),"
+               "\"" + DBLOVVALUEXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               ");");
+
+
+
     query.exec("CREATE TABLE \"" + DBQUANTITYGROUPXML::QUANTITYGROUP + "\" ("
                "\"" + DBQUANTITYGROUPXML::NAME   + "\" VARCHAR(27),"
                "\"" + DBQUANTITYGROUPXML::ALIAS  + "\" VARCHAR(256),"
@@ -63,10 +89,39 @@ bool PgDatabaseModel::init()
                " REFERENCES \"" + DBUNITXML::UNIT + "\""
                ";");
 
+
+    query.exec("CREATE TABLE \"" + DBNUMERATORXML::NUMERATOR + "\" ("
+               "\"" + DBNUMERATORXML::ALIAS  + "\" VARCHAR(256),"
+               "\"" + DBNUMERATORXML::NAME   + "\" VARCHAR(27),"
+               "\"" + DBNUMERATORXML::STEP   + "\" INTEGER,"
+               "\"" + DBNUMERATORXML::UNIQUE + "\" CHAR(36)"
+                    " REFERENCES \"" + DBUNIQUENUMERATORXML::UNIQUENUMERATOR + "\","
+               "\"" + DBNUMERATORXML::PARENT + "\" CHAR(36),"
+               "\"" + DBNUMERATORXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               ");");
+
+    query.exec("CREATE TABLE \"" + DBNUMERATORLOVXML::NUMERATORLOV + "\" ("
+               "\"" + DBNUMERATORLOVXML::REFLOV + "\" CHAR(36)"
+                    " REFERENCES \"" + DBLOVXML::LOV + "\","
+               "\"" + DBNUMERATORLOVXML::PARENT + "\" CHAR(36)"
+                    " REFERENCES \"" + DBNUMERATORXML::NUMERATOR + "\","
+               "\"" + DBNUMERATORLOVXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               ");");
+
+    query.exec("CREATE TABLE \"" + DBNUMERATORREGEXXML::NUMERATORREGEX + "\" ("
+               "\"" + DBNUMERATORREGEXXML::REGEX  + "\" VARCHAR(256),"
+               "\"" + DBNUMERATORREGEXXML::PARENT + "\" CHAR(36)"
+                    " REFERENCES \"" + DBNUMERATORXML::NUMERATOR + "\","
+               "\"" + DBNUMERATORREGEXXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               ");");
+
+
     query.exec("CREATE TABLE \"" + DBCLASSXML::CLASS + "\" ("
                "\"" + DBCLASSXML::NAME     + "\" VARCHAR(27),"
-               "\"" + DBCLASSXML::MODE     + "\" CHAR(36)," // REFERENCES
-               "\"" + DBCLASSXML::TYPE     + "\" CHAR(36)," // REFERENCES
+               "\"" + DBCLASSXML::MODE     + "\" CHAR(36)"
+                    " REFERENCES \"" + DBACCESSMODEXML::ACCESSMODE + "\","
+               "\"" + DBCLASSXML::TYPE     + "\" CHAR(36)"
+                    " REFERENCES \"" + DBCLASSTYPEXML::CLASSTYPE + "\","
                "\"" + DBCLASSXML::ALIAS    + "\" VARCHAR(256),"
                "\"" + DBCLASSXML::PARENT   + "\" CHAR(36)"
                     " REFERENCES \"" + DBCLASSXML::CLASS + "\","
@@ -76,10 +131,12 @@ bool PgDatabaseModel::init()
                "\"" + DBCLASSXML::ID       + "\" CHAR(36) PRIMARY KEY"
                ");");
 
+
     query.exec("CREATE TABLE \"" + DBATTRXML::ATTR + "\" ("
                "\"" + DBATTRXML::NAME           + "\" VARCHAR(27),"
                "\"" + DBATTRXML::ALIAS          + "\" VARCHAR(256),"
-               "\"" + DBATTRXML::TYPE           + "\" VARCHAR(15),"
+               "\"" + DBATTRXML::TYPE           + "\" CHAR(36)"
+                    " REFERENCES \"" + DBATTRTYPEXML::ATTRTYPE + "\","
                "\"" + DBATTRXML::GROUP          + "\" VARCHAR(256),"
                "\"" + DBATTRXML::MAXSTRLEN      + "\" INTEGER,"
                "\"" + DBATTRXML::ACCURACY       + "\" INTEGER,"
@@ -95,11 +152,13 @@ bool PgDatabaseModel::init()
                     " REFERENCES \"" + DBUNITXML::UNIT + "\","
                "\"" + DBATTRXML::REFLOV         + "\" CHAR(36)"
                     " REFERENCES \"" + DBLOVXML::LOV + "\","
-               "\"" + DBATTRXML::REFNUMERATOR   + "\" CHAR(36)," // REFERENCES
+               "\"" + DBATTRXML::REFNUMERATOR   + "\" CHAR(36)"
+                    " REFERENCES \"" + DBNUMERATORXML::NUMERATOR + "\","
                "\"" + DBATTRXML::PARENT         + "\" CHAR(36)"
                     " REFERENCES \"" + DBCLASSXML::CLASS + "\","
                "\"" + DBATTRXML::ID             + "\" CHAR(36) PRIMARY KEY"
                ");");
+
 
     query.exec("CREATE TABLE \"" + DBCOMPXML::COMP + "\" ("
                "\"" + DBCOMPXML::LINKCLASS          + "\" CHAR(36)"
@@ -114,6 +173,7 @@ bool PgDatabaseModel::init()
                "\"" + DBCOMPXML::ISCOMP             + "\" BOOL,"
                "\"" + DBCOMPXML::ID                 + "\" CHAR(36) PRIMARY KEY"
                ");");
+
 
     query.exec("CREATE TABLE \"" + DBFILTERXML::FILTER + "\" ("
                "\"" + DBFILTERXML::NAME               + "\" VARCHAR(27),"
@@ -147,6 +207,78 @@ bool PgDatabaseModel::init()
                "\"" + DBCONDITIONXML::OPERATOR   + "\" VARCHAR(10),"
                "\"" + DBCONDITIONXML::LINKOF     + "\" VARCHAR(10),"
                "\"" + DBCONDITIONXML::ID         + "\" CHAR(36) PRIMARY KEY"
+               ");");
+
+
+    query.exec("CREATE TABLE \"" + DBREFGROUPXML::REFGROUP + "\" ("
+               "\"" + DBREFGROUPXML::ALIAS  + "\" VARCHAR(256),"
+               "\"" + DBREFGROUPXML::NAME   + "\" VARCHAR(27),"
+               "\"" + DBREFGROUPXML::PARENT + "\" CHAR(36),"
+               "\"" + DBREFGROUPXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               ");");
+
+    query.exec("CREATE TABLE \"" + DBREFXML::REF + "\" ("
+               "\"" + DBREFXML::ALIAS  + "\" VARCHAR(256),"
+               "\"" + DBREFXML::NAME   + "\" VARCHAR(27),"
+               "\"" + DBREFXML::PARENT + "\" CHAR(36)"
+                    " REFERENCES \""   + DBREFGROUPXML::REFGROUP + "\","
+               "\"" + DBREFXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               ");");
+
+    query.exec("CREATE TABLE \"" + DBLINKTOFILTERXML::LINKTOFILTER + "\" ("
+               "\"" + DBLINKTOFILTERXML::ALIAS  + "\" VARCHAR(256),"
+               "\"" + DBLINKTOFILTERXML::REFFILTER   + "\" CHAR(36)"
+                    " REFERENCES \"" + DBFILTERXML::FILTER + "\","
+               "\"" + DBLINKTOFILTERXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               ");");
+
+    query.exec("CREATE TABLE \"" + DBLINKTOREFXML::LINKTOREF + "\" ("
+               "\"" + DBLINKTOREFXML::ALIAS  + "\" VARCHAR(256),"
+               "\"" + DBLINKTOREFXML::REFREF   + "\" CHAR(36)"
+                    " REFERENCES \"" + DBREFXML::REF + "\","
+               "\"" + DBLINKTOREFXML::PARENT + "\" CHAR(36)"
+                    " REFERENCES \"" + DBLINKTOFILTERXML::LINKTOFILTER + "\""
+                    " REFERENCES \"" + DBREFXML::REF + "\","
+               "\"" + DBLINKTOREFXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               ");");
+
+    query.exec("CREATE TABLE \"" + DBLINKTOCLASSXML::LINKTOCLASS + "\" ("
+               "\"" + DBLINKTOCLASSXML::ALIAS  + "\" VARCHAR(256),"
+               "\"" + DBLINKTOCLASSXML::REFCLASS   + "\" CHAR(36)"
+                    " REFERENCES \"" + DBCLASSXML::CLASS + "\","
+               "\"" + DBLINKTOCLASSXML::PARENT + "\" CHAR(36)"
+                    " REFERENCES \"" + DBLINKTOFILTERXML::LINKTOFILTER + "\""
+                    " REFERENCES \"" + DBREFXML::REF + "\","
+               "\"" + DBLINKTOCLASSXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               ");");
+
+    query.exec("ALTER TABLE \"" + DBLINKTOFILTERXML::LINKTOFILTER + "\" ADD COLUMN "
+               "\"" + DBLINKTOFILTERXML::PARENT + "\" CHAR(36)"
+               " REFERENCES \"" + DBLINKTOCLASSXML::LINKTOCLASS + "\""
+               " REFERENCES \"" + DBLINKTOREFXML::LINKTOREF + "\""
+               ";");
+
+
+    query.exec("CREATE TABLE \"" + DBROLEXML::ROLE + "\" ("
+               "\"" + DBROLEXML::ALIAS       + "\" VARCHAR(256),"
+               "\"" + DBROLEXML::NAME        + "\" VARCHAR(27),"
+               "\"" + DBROLEXML::DESCRIPTION + "\" VARCHAR(4000),"
+               "\"" + DBROLEXML::PARENT      + "\" CHAR(36),"
+               "\"" + DBROLEXML::ID          + "\" CHAR(36) PRIMARY KEY"
+               ");");
+
+    query.exec("CREATE TABLE \"" + DBPERMISSIONXML::PERMISSION + "\" ("
+               "\"" + DBPERMISSIONXML::ROLE     + "\" CHAR(36)"
+                    " REFERENCES \"" + DBROLEXML::ROLE   + "\","
+               "\"" + DBPERMISSIONXML::ISCREATE + "\" BOOL,"
+               "\"" + DBPERMISSIONXML::ISREAD   + "\" BOOL,"
+               "\"" + DBPERMISSIONXML::ISWRITE  + "\" BOOL,"
+               "\"" + DBPERMISSIONXML::ISDELETE + "\" BOOL,"
+               "\"" + DBPERMISSIONXML::ISBLOCK  + "\" BOOL,"
+               "\"" + DBPERMISSIONXML::PARENT   + "\" CHAR(36)"
+                    " REFERENCES \"" + DBCLASSXML::CLASS + "\""
+                    " REFERENCES \"" + DBATTRXML::ATTR   + "\","
+               "\"" + DBPERMISSIONXML::ID       + "\" CHAR(36) PRIMARY KEY"
                ");");
 
     m_db.commit();
