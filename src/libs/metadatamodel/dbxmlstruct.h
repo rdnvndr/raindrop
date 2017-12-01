@@ -348,6 +348,31 @@ namespace DBNUMERATORREGEXXML{
     const QString ID             = "guid";
 }
 
+//! Ключевые слова XML файла для GUID
+namespace DBSTRUCTGUIDXML{
+    const QString STRUCTGUID     = "RTPStructGuid";
+    const QString CLASS          = "";
+    const QString ATTR           = "";
+    const QString LOV            = "";
+    const QString QUANTITYGROUP  = "";
+    const QString QUANTITY       = "";
+    const QString UNIT           = "";
+    const QString NUMERATOR      = "";
+    const QString NUMERATORLOV   = "";
+    const QString NUMERATORREGEX = "";
+    const QString COMP           = "";
+    const QString FILTER         = "";
+    const QString BLOCK          = "";
+    const QString COND           = "";
+    const QString REFGROUP       = "";
+    const QString REF            = "";
+    const QString LINKTOFILTER   = "";
+    const QString LINKTOREF      = "";
+    const QString LINKTOCLASS    = "";
+    const QString ROLE           = "";
+    const QString PERMISSION     = "";
+}
+
 }}
 
 #endif // DBXMLSTRUCT_H

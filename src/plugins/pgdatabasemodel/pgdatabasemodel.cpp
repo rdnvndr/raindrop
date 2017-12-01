@@ -29,28 +29,194 @@ bool PgDatabaseModel::init()
 
     query.exec("CREATE TABLE \"" + DBATTRTYPEXML::ATTRTYPE + "\" ("
                "\"" + DBLOVVALUEXML::ALIAS  + "\" VARCHAR(256),"
-               "\"" + DBLOVVALUEXML::VALUE  + "\" VARCHAR(256),"
-               "\"" + DBLOVVALUEXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               "\"" + DBLOVVALUEXML::VALUE  + "\" CHAR(10) PRIMARY KEY"
                ");");
+
+    query.exec("INSERT INTO \"" + DBATTRTYPEXML::ATTRTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBATTRTYPEXML::BOOLEAN + "\","
+                    "\"" + DBATTRTYPEXML::BOOLEAN + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBATTRTYPEXML::ATTRTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBATTRTYPEXML::BINARY + "\","
+                    "\"" + DBATTRTYPEXML::BINARY + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBATTRTYPEXML::ATTRTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBATTRTYPEXML::CHAR + "\","
+                    "\"" + DBATTRTYPEXML::CHAR + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBATTRTYPEXML::ATTRTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBATTRTYPEXML::DATE + "\","
+                    "\"" + DBATTRTYPEXML::DATE + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBATTRTYPEXML::ATTRTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBATTRTYPEXML::DECIMAL + "\","
+                    "\"" + DBATTRTYPEXML::DECIMAL + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBATTRTYPEXML::ATTRTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBATTRTYPEXML::DOUBLE + "\","
+                    "\"" + DBATTRTYPEXML::DOUBLE + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBATTRTYPEXML::ATTRTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBATTRTYPEXML::INTEGER + "\","
+                    "\"" + DBATTRTYPEXML::INTEGER + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBATTRTYPEXML::ATTRTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBATTRTYPEXML::STRING + "\","
+                    "\"" + DBATTRTYPEXML::STRING + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBATTRTYPEXML::ATTRTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBATTRTYPEXML::REFERENCE + "\","
+                    "\"" + DBATTRTYPEXML::REFERENCE + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBATTRTYPEXML::ATTRTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBATTRTYPEXML::TIME + "\","
+                    "\"" + DBATTRTYPEXML::TIME + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBATTRTYPEXML::ATTRTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBATTRTYPEXML::TIMESHTAMP + "\","
+                    "\"" + DBATTRTYPEXML::TIMESHTAMP + "\""
+               ");");
+
 
     query.exec("CREATE TABLE \"" + DBCLASSTYPEXML::CLASSTYPE + "\" ("
                "\"" + DBLOVVALUEXML::ALIAS  + "\" VARCHAR(256),"
-               "\"" + DBLOVVALUEXML::VALUE  + "\" VARCHAR(256),"
-               "\"" + DBLOVVALUEXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               "\"" + DBLOVVALUEXML::VALUE  + "\" CHAR(10) PRIMARY KEY"
                ");");
+
+    query.exec("INSERT INTO \"" + DBCLASSTYPEXML::CLASSTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBCLASSTYPEXML::ABSTRACT + "\","
+                    "\"" + DBCLASSTYPEXML::ABSTRACT + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBCLASSTYPEXML::CLASSTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBCLASSTYPEXML::CONTEXT + "\","
+                    "\"" + DBCLASSTYPEXML::CONTEXT + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBCLASSTYPEXML::CLASSTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBCLASSTYPEXML::EMBEDDED + "\","
+                    "\"" + DBCLASSTYPEXML::EMBEDDED + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBCLASSTYPEXML::CLASSTYPE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBCLASSTYPEXML::NORMAL + "\","
+                    "\"" + DBCLASSTYPEXML::NORMAL + "\""
+               ");");
+
 
     query.exec("CREATE TABLE \"" + DBACCESSMODEXML::ACCESSMODE + "\" ("
                "\"" + DBLOVVALUEXML::ALIAS  + "\" VARCHAR(256),"
-               "\"" + DBLOVVALUEXML::VALUE  + "\" VARCHAR(256),"
-               "\"" + DBLOVVALUEXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               "\"" + DBLOVVALUEXML::VALUE  + "\" CHAR(10) PRIMARY KEY"
                ");");
+
+    query.exec("INSERT INTO \"" + DBACCESSMODEXML::ACCESSMODE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBACCESSMODEXML::STANDART + "\","
+                    "\"" + DBACCESSMODEXML::STANDART + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBACCESSMODEXML::ACCESSMODE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBACCESSMODEXML::SYSTEM + "\","
+                    "\"" + DBACCESSMODEXML::SYSTEM + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBACCESSMODEXML::ACCESSMODE + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBACCESSMODEXML::USER + "\","
+                    "\"" + DBACCESSMODEXML::USER + "\""
+               ");");
+
 
     query.exec("CREATE TABLE \"" + DBUNIQUENUMERATORXML::UNIQUENUMERATOR + "\" ("
                "\"" + DBLOVVALUEXML::ALIAS  + "\" VARCHAR(256),"
-               "\"" + DBLOVVALUEXML::VALUE  + "\" VARCHAR(256),"
-               "\"" + DBLOVVALUEXML::ID     + "\" CHAR(36) PRIMARY KEY"
+               "\"" + DBLOVVALUEXML::VALUE  + "\" CHAR(11) PRIMARY KEY"
                ");");
 
+    query.exec("INSERT INTO \"" + DBUNIQUENUMERATORXML::UNIQUENUMERATOR + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBUNIQUENUMERATORXML::CLASS + "\","
+                    "\"" + DBUNIQUENUMERATORXML::CLASS + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBUNIQUENUMERATORXML::UNIQUENUMERATOR + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBUNIQUENUMERATORXML::COMP + "\","
+                    "\"" + DBUNIQUENUMERATORXML::COMP + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBUNIQUENUMERATORXML::UNIQUENUMERATOR + "\"("
+                    "\"" + DBLOVVALUEXML::ALIAS + "\","
+                    "\"" + DBLOVVALUEXML::VALUE + "\","
+               ") VALUES("
+                    "\"" + DBUNIQUENUMERATORXML::OBJECT + "\","
+                    "\"" + DBUNIQUENUMERATORXML::OBJECT + "\""
+               ");");
 
 
     query.exec("CREATE TABLE \"" + DBQUANTITYGROUPXML::QUANTITYGROUP + "\" ("
@@ -94,7 +260,7 @@ bool PgDatabaseModel::init()
                "\"" + DBNUMERATORXML::ALIAS  + "\" VARCHAR(256),"
                "\"" + DBNUMERATORXML::NAME   + "\" VARCHAR(27),"
                "\"" + DBNUMERATORXML::STEP   + "\" INTEGER,"
-               "\"" + DBNUMERATORXML::UNIQUE + "\" CHAR(36)"
+               "\"" + DBNUMERATORXML::UNIQUE + "\" CHAR(11)"
                     " REFERENCES \"" + DBUNIQUENUMERATORXML::UNIQUENUMERATOR + "\","
                "\"" + DBNUMERATORXML::PARENT + "\" CHAR(36),"
                "\"" + DBNUMERATORXML::ID     + "\" CHAR(36) PRIMARY KEY"
@@ -118,9 +284,9 @@ bool PgDatabaseModel::init()
 
     query.exec("CREATE TABLE \"" + DBCLASSXML::CLASS + "\" ("
                "\"" + DBCLASSXML::NAME     + "\" VARCHAR(27),"
-               "\"" + DBCLASSXML::MODE     + "\" CHAR(36)"
+               "\"" + DBCLASSXML::MODE     + "\" CHAR(10)"
                     " REFERENCES \"" + DBACCESSMODEXML::ACCESSMODE + "\","
-               "\"" + DBCLASSXML::TYPE     + "\" CHAR(36)"
+               "\"" + DBCLASSXML::TYPE     + "\" CHAR(10)"
                     " REFERENCES \"" + DBCLASSTYPEXML::CLASSTYPE + "\","
                "\"" + DBCLASSXML::ALIAS    + "\" VARCHAR(256),"
                "\"" + DBCLASSXML::PARENT   + "\" CHAR(36)"
@@ -131,11 +297,99 @@ bool PgDatabaseModel::init()
                "\"" + DBCLASSXML::ID       + "\" CHAR(36) PRIMARY KEY"
                ");");
 
+    query.exec("INSERT INTO \"" + DBCLASSXML::CLASS + "\"("
+                    "\"" + DBCLASSXML::NAME     + "\","
+                    "\"" + DBCLASSXML::MODE     + "\","
+                    "\"" + DBCLASSXML::TYPE     + "\","
+                    "\"" + DBCLASSXML::ALIAS    + "\","
+                    "\"" + DBCLASSXML::PARENT   + "\","
+                    "\"" + DBCLASSXML::TEMPLATE + "\","
+                    "\"" + DBCLASSXML::VERCOUNT + "\","
+                    "\"" + DBCLASSXML::ICON     + "\","
+                    "\"" + DBCLASSXML::ID       + "\""
+               ") VALUES("
+                    "\"" + DBCLASSXML::CLASS       + "\","
+                    "\"" + DBACCESSMODEXML::SYSTEM + "\","
+                    "\"" + DBCLASSTYPEXML::NORMAL  + "\","
+                    "\"Класс\","
+                    "\"\","
+                    "\"\","
+                    "0,"
+                    "\"\","
+                    "\"" + DBSTRUCTGUIDXML::CLASS + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBCLASSXML::CLASS + "\"("
+                    "\"" + DBCLASSXML::NAME     + "\","
+                    "\"" + DBCLASSXML::MODE     + "\","
+                    "\"" + DBCLASSXML::TYPE     + "\","
+                    "\"" + DBCLASSXML::ALIAS    + "\","
+                    "\"" + DBCLASSXML::PARENT   + "\","
+                    "\"" + DBCLASSXML::TEMPLATE + "\","
+                    "\"" + DBCLASSXML::VERCOUNT + "\","
+                    "\"" + DBCLASSXML::ICON     + "\","
+                    "\"" + DBCLASSXML::ID       + "\""
+               ") VALUES("
+                    "\"" + DBATTRXML::ATTR       + "\","
+                    "\"" + DBACCESSMODEXML::SYSTEM + "\","
+                    "\"" + DBCLASSTYPEXML::NORMAL  + "\","
+                    "\"Атрибут\","
+                    "\"\","
+                    "\"\","
+                    "0,"
+                    "\"\","
+                    "\"" + DBSTRUCTGUIDXML::ATTR + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBCLASSXML::CLASS + "\"("
+                    "\"" + DBCLASSXML::NAME     + "\","
+                    "\"" + DBCLASSXML::MODE     + "\","
+                    "\"" + DBCLASSXML::TYPE     + "\","
+                    "\"" + DBCLASSXML::ALIAS    + "\","
+                    "\"" + DBCLASSXML::PARENT   + "\","
+                    "\"" + DBCLASSXML::TEMPLATE + "\","
+                    "\"" + DBCLASSXML::VERCOUNT + "\","
+                    "\"" + DBCLASSXML::ICON     + "\","
+                    "\"" + DBCLASSXML::ID       + "\""
+               ") VALUES("
+                    "\"" + DBLOVXML::LOV       + "\","
+                    "\"" + DBACCESSMODEXML::SYSTEM + "\","
+                    "\"" + DBCLASSTYPEXML::NORMAL  + "\","
+                    "\"Список значений\","
+                    "\"\","
+                    "\"\","
+                    "0,"
+                    "\"\","
+                    "\"" + DBSTRUCTGUIDXML::LOV + "\""
+               ");");
+
+    query.exec("INSERT INTO \"" + DBCLASSXML::CLASS + "\"("
+                    "\"" + DBCLASSXML::NAME     + "\","
+                    "\"" + DBCLASSXML::MODE     + "\","
+                    "\"" + DBCLASSXML::TYPE     + "\","
+                    "\"" + DBCLASSXML::ALIAS    + "\","
+                    "\"" + DBCLASSXML::PARENT   + "\","
+                    "\"" + DBCLASSXML::TEMPLATE + "\","
+                    "\"" + DBCLASSXML::VERCOUNT + "\","
+                    "\"" + DBCLASSXML::ICON     + "\","
+                    "\"" + DBCLASSXML::ID       + "\""
+               ") VALUES("
+                    "\"" + DBLOVXML::LOV       + "\","
+                    "\"" + DBACCESSMODEXML::SYSTEM + "\","
+                    "\"" + DBCLASSTYPEXML::NORMAL  + "\","
+                    "\"Список значений\","
+                    "\"\","
+                    "\"\","
+                    "0,"
+                    "\"\","
+                    "\"" + DBSTRUCTGUIDXML::LOV + "\""
+               ");");
+
 
     query.exec("CREATE TABLE \"" + DBATTRXML::ATTR + "\" ("
                "\"" + DBATTRXML::NAME           + "\" VARCHAR(27),"
                "\"" + DBATTRXML::ALIAS          + "\" VARCHAR(256),"
-               "\"" + DBATTRXML::TYPE           + "\" CHAR(36)"
+               "\"" + DBATTRXML::TYPE           + "\" CHAR(10)"
                     " REFERENCES \"" + DBATTRTYPEXML::ATTRTYPE + "\","
                "\"" + DBATTRXML::GROUP          + "\" VARCHAR(256),"
                "\"" + DBATTRXML::MAXSTRLEN      + "\" INTEGER,"
