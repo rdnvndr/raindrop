@@ -38,6 +38,10 @@ LovWidget::LovWidget(QWidget *parent) :
                                        << DBATTRTYPEXML::TIMESHTAMP
                                        );
     m_typeAttrModel->setStringList(attrTypeList);
+
+    connect(comboBoxLovType,
+            static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged),
+            this, &LovWidget::changeType);
 }
 
 LovWidget::~LovWidget()
@@ -69,6 +73,12 @@ void LovWidget::setModel(TreeXmlHashModel *model)
     dataMapper()->addMapping(comboBoxLovType,
                              model->columnDisplayedAttr(DBLOVXML::LOV,
                                                         DBLOVXML::TYPE));
+    dataMapper()->addMapping(spinBoxLength,
+                             model->columnDisplayedAttr(DBLOVXML::LOV,
+                                                        DBLOVXML::MAXSTRLEN));
+    dataMapper()->addMapping(spinBoxAccuracy,
+                             model->columnDisplayedAttr(DBLOVXML::LOV,
+                                                        DBLOVXML::ACCURACY));
     comboBoxLovType->setModel(m_typeAttrModel);
 }
 
@@ -118,6 +128,18 @@ void LovWidget::validateLovName(QValidator::State state) const
                               "символы и цифры длиной не более 27 символов"));
     else
         QToolTip::hideText();
+}
+
+void LovWidget::changeType(const QString &typeName)
+{
+    if (DBATTRTYPEXML::STRING==typeName){
+        spinBoxLength->setEnabled(true);
+        spinBoxAccuracy->setEnabled(false);
+    } else {
+        spinBoxLength->setEnabled(false);
+        spinBoxLength->setValue(0);
+        spinBoxAccuracy->setEnabled(DBATTRTYPEXML::DECIMAL == typeName);
+    }
 }
 
 }}

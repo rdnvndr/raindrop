@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>174</width>
-    <height>94</height>
+    <width>193</width>
+    <height>177</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,6 +35,13 @@
       <string/>
      </property>
      <layout class="QGridLayout" name="gridLayout">
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelLength">
+        <property name="text">
+         <string>Длина:</string>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="labelLovType">
         <property name="text">
@@ -72,6 +79,23 @@
       </item>
       <item row="2" column="1">
        <widget class="QComboBox" name="comboBoxLovType"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelAccuracy">
+        <property name="text">
+         <string>Точность</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSpinBox" name="spinBoxLength">
+        <property name="maximum">
+         <number>8000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="spinBoxAccuracy"/>
       </item>
      </layout>
     </widget>
