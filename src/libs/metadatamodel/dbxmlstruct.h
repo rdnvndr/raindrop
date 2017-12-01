@@ -201,12 +201,14 @@ namespace DBLOVLISTXML {
 
 //! Ключевые слова XML файла для списка значений
 namespace DBLOVXML{
-    const QString LOV    = "RTPLOV";
-    const QString NAME   = "name";
-    const QString ALIAS  = "alias";
-    const QString PARENT = "parent";
-    const QString ID     = "guid";
-    const QString TYPE   = "type";
+    const QString LOV       = "RTPLOV";
+    const QString NAME      = "name";
+    const QString ALIAS     = "alias";
+    const QString PARENT    = "parent";
+    const QString ID        = "guid";
+    const QString TYPE      = "type";
+    const QString MAXSTRLEN = "maxStringLength";
+    const QString ACCURACY  = "accuracy";
 }
 
 //! Ключевые слова XML файла для значений списка

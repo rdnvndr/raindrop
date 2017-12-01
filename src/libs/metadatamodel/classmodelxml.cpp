@@ -187,7 +187,7 @@ void ClassModelXml::initDisplayedAttrs()
     QStringList propsLov;
     propsLov << DBLOVXML::NAME   << DBLOVXML::ALIAS
              << DBLOVXML::PARENT << DBLOVXML::ID
-             << DBLOVXML::TYPE;
+             << DBLOVXML::TYPE   << DBLOVXML::MAXSTRLEN << DBLOVXML::ACCURACY;
     this->addDisplayedAttr(DBLOVXML::LOV, propsLov, QIcon(":/lov"));
 
     QStringList propsLovValue;
