@@ -17,22 +17,22 @@ public:
     virtual bool init() = 0;
 
 // Создание элемента по имени
-    //! Создание производного класса по имени
-    virtual IDatabaseClass *createDerivedClass(
+    //! Создание класса по имени
+    virtual IDatabaseClass *createClass(
             const QString &name, const QString &base = QString("")) = 0;
 
 // Получение доступа к элементам модели по имени
-    //! Получение производного класса по имени
-    virtual IDatabaseClass *derivedClass(
+    //! Получение класса по имени
+    virtual IDatabaseClass *oneClass(
             const QString &name, const QString &base = QString("")) = 0;
 
 // Получение доступа к спискам элементов модели
-    //! Cписок всех классов
-    virtual IDatabaseClasses *allClassList() = 0;
+    //! Cписок всех классов модели
+    virtual IDatabaseClasses *classList() = 0;
 
-    //! Cписок производных классов модели
-    virtual IDatabaseClasses *derivedClassList(
-            const QString &base = QString("")) = 0;
+    //! Cписок классов модели
+    virtual IDatabaseClasses *classList(
+            const QString &base) = 0;
 
 };
 

@@ -2,7 +2,6 @@
 #define PGDATABASEMODEL_H
 
 #include <QtSql/QSqlDatabase>
-
 #include <idatabasemodel.h>
 
 namespace RTPTechGroup {
@@ -19,21 +18,21 @@ public:
     virtual bool init();
 
 // Создание элемента по имени
-    //! Создание производного класса по имени
-    virtual IDatabaseClass *createDerivedClass(
+    //! Создание класса по имени
+    virtual IDatabaseClass *createClass(
             const QString &name, const QString &base = QString(""));
 
 // Получение доступа к элементам модели по имени
-     //! Получение производного класса по имени
-    virtual IDatabaseClass *derivedClass(
+     //! Получение класса по имени
+    virtual IDatabaseClass *oneClass(
             const QString &name, const QString &base = QString(""));
 
 // Получение доступа к спискам элементов модели
-    //! Cписок всех классов
-    virtual IDatabaseClasses *allClassList();
+    //! Cписок всех классов модели
+    virtual IDatabaseClasses *classList();
 
-    //! Cписок производных классов модели
-    virtual IDatabaseClasses *derivedClassList(const QString &base = QString(""));
+    //! Cписок классов модели
+    virtual IDatabaseClasses *classList(const QString &base);
 
 private:
     //! Соединение с базой данных

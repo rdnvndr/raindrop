@@ -79,7 +79,7 @@ public:
 
 // Создание элемента класса по имени
     //! Создание производного класса по имени
-    virtual IDatabaseClass *createDerivedClass(const QString &name) = 0;
+    virtual IDatabaseClass *createClass(const QString &name) = 0;
 
     //! Создание атрибута по имени
     virtual IDatabaseAttribute *createAttr(const QString &name) = 0;
@@ -92,7 +92,7 @@ public:
 
 // Получение доступа к элементам класса по имени
     //! Получение производного класса по имени
-    virtual IDatabaseClass *derivedClass(const QString &name) = 0;
+    virtual IDatabaseClass *oneClass(const QString &name) = 0;
 
     //! Получение атрибута по имени
     virtual IDatabaseAttribute *attr(const QString &name) = 0;

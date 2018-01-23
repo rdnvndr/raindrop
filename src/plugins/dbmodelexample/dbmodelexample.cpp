@@ -4,9 +4,12 @@
 #include <idatabasemodel.h>
 #include <idatabasemodelmanager.h>
 
+#include <metadatamodel/dbxmlstruct.h>
+
 #include "clogging.h"
 
 using namespace RTPTechGroup::Plugin;
+using namespace RTPTechGroup::MetaDataModel;
 
 namespace RTPTechGroup {
 namespace DatabaseModel {
@@ -30,10 +33,34 @@ DbModelExample::DbModelExample(QObject *parent):
 
     // Текущий класс
     IDatabaseModel *dbModel = dbModelManager->createInstance(db);
+    /*
+    IDatabaseClass *cls = dbModel->createDerivedClass(DBCLASSXML::CLASS);
+    cls = dbModel->createDerivedClass(DBLOVXML::LOV);
+    cls = dbModel->createDerivedClass(DBQUANTITYGROUPXML::QUANTITYGROUP);
+    cls = dbModel->createDerivedClass(DBQUANTITYXML::QUANTITY);
+    cls = dbModel->createDerivedClass(DBUNITXML::UNIT);
+    cls = dbModel->createDerivedClass(DBQUANTITYXML::QUANTITY);
+    cls = dbModel->createDerivedClass(DBNUMERATORXML::NUMERATOR);
+    cls = dbModel->createDerivedClass(DBNUMERATORLOVXML::NUMERATORLOV);
+    cls = dbModel->createDerivedClass(DBNUMERATORREGEXXML::NUMERATORREGEX);
+    cls = dbModel->createDerivedClass(DBATTRXML::ATTR);
+    cls = dbModel->createDerivedClass(DBCOMPXML::COMP);
+    cls = dbModel->createDerivedClass(DBFILTERXML::FILTER);
+    cls = dbModel->createDerivedClass(DBFILTERBLOCKXML::BLOCK);
+    cls = dbModel->createDerivedClass(DBCONDITIONXML::COND);
+    cls = dbModel->createDerivedClass(DBREFGROUPXML::REFGROUP);
+    cls = dbModel->createDerivedClass(DBREFXML::REF);
+    cls = dbModel->createDerivedClass(DBLINKTOFILTERXML::LINKTOFILTER);
+    cls = dbModel->createDerivedClass(DBLINKTOREFXML::LINKTOREF);
+    cls = dbModel->createDerivedClass(DBLINKTOCLASSXML::LINKTOCLASS);
+    cls = dbModel->createDerivedClass(DBLINKTOFILTERXML::LINKTOFILTER);
+    cls = dbModel->createDerivedClass(DBROLEXML::ROLE);
+    cls = dbModel->createDerivedClass(DBPERMISSIONXML::PERMISSION);
+    */
     dbModel->init();
 
     if (dbModel) {
-        IDatabaseClass *dbClass = dbModel->derivedClass("TestClass");
+        IDatabaseClass *dbClass = dbModel->oneClass("TestClass");
         if (dbClass) {
             dbClass->pull();
             int count = dbClass->count();
@@ -60,7 +87,7 @@ DbModelExample::DbModelExample(QObject *parent):
         }
 
         // Создание класса
-        IDatabaseClass *dbNewClass = dbModel->createDerivedClass("TestNewClass");
+        IDatabaseClass *dbNewClass = dbModel->createClass("TestNewClass");
         if (dbNewClass) {
             dbNewClass->setAlias("Тестовый класс");
             dbNewClass->setMaxVersion(5);

@@ -352,27 +352,31 @@ namespace DBNUMERATORREGEXXML{
 
 //! Ключевые слова XML файла для GUID
 namespace DBSTRUCTGUIDXML{
-    const QString STRUCTGUID     = "RTPStructGuid";
-    const QString CLASS          = "";
-    const QString ATTR           = "";
-    const QString LOV            = "";
-    const QString QUANTITYGROUP  = "";
-    const QString QUANTITY       = "";
-    const QString UNIT           = "";
-    const QString NUMERATOR      = "";
-    const QString NUMERATORLOV   = "";
-    const QString NUMERATORREGEX = "";
-    const QString COMP           = "";
-    const QString FILTER         = "";
-    const QString BLOCK          = "";
-    const QString COND           = "";
-    const QString REFGROUP       = "";
-    const QString REF            = "";
-    const QString LINKTOFILTER   = "";
-    const QString LINKTOREF      = "";
-    const QString LINKTOCLASS    = "";
-    const QString ROLE           = "";
-    const QString PERMISSION     = "";
+    const QString STRUCTGUID      = "RTPStructGuid";
+    const QString ACCESSMODE      = "6c12460d-ee83-4e8d-b345-0a2b5dee0352";
+    const QString CLASS           = "6298e00f-772d-471c-b328-49af7fec61c1";
+    const QString CLASSTYPE       = "b14dd4e1-8609-46b3-af52-fae79d024239";
+    const QString ATTR            = "a0df1533-eb59-4a0d-b015-36addac14153";
+    const QString ATTRTYPE        = "607adfb8-447f-4644-b43f-f55159bc195c";
+    const QString LOV             = "9c8299ac-3943-42d1-a6c3-558ca56be19f";
+    const QString QUANTITYGROUP   = "05f96912-5d79-440f-850e-01e34fe6a437";
+    const QString QUANTITY        = "fb25ee5e-a147-443c-a23a-27bd4e427d3e";
+    const QString UNIT            = "d2c7ce48-23de-4078-94a5-ef2dc8e7b3ac";
+    const QString NUMERATOR       = "f2a48594-488c-4357-865d-c9fee374ac04";
+    const QString NUMERATORLOV    = "5dfb5b26-5e77-4d93-b348-2a631c124bf7";
+    const QString NUMERATORREGEX  = "22ee00e7-33c2-4b15-8462-8c9711892253";
+    const QString COMP            = "94266979-42b1-494d-8e97-b0dcba2e288f";
+    const QString FILTER          = "7e364aca-c022-4f99-bdaa-a729e15eb839";
+    const QString BLOCK           = "af63e526-a964-4e16-bba1-e82996c4bc22";
+    const QString COND            = "ce7766cf-a990-487f-8d79-87fbb2a10943";
+    const QString REFGROUP        = "da58a426-7ac7-436d-8ff4-fc485dcf845c";
+    const QString REF             = "cda58a94-251d-4f3d-a0e6-16295d65afa1";
+    const QString LINKTOFILTER    = "cde9b27c-4778-4a42-b322-3749befeb652";
+    const QString LINKTOREF       = "31a5bd9d-67bf-4c35-a07b-ac545d9b3415";
+    const QString LINKTOCLASS     = "3ac56708-d8c4-463d-a7d0-9c78127701c2";
+    const QString ROLE            = "9dcda12a-c757-4be3-89a4-fe4381af26af";
+    const QString PERMISSION      = "4f7406c5-ff44-4db8-b98a-641f7a6b07dc";
+    const QString UNIQUENUMERATOR = "003f03dd-ec93-4afd-ac4c-3bf28ec0fe16";
 }
 
 }}
