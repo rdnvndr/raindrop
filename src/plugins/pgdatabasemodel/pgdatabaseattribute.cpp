@@ -22,6 +22,11 @@ bool PgDatabaseAttribute::isExist()
     return true;
 }
 
+bool PgDatabaseAttribute::create()
+{
+    return true;
+}
+
 bool PgDatabaseAttribute::push()
 {
     return true;

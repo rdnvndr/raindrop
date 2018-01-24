@@ -18,6 +18,11 @@ bool PgDatabaseComposition::isExist()
     return true;
 }
 
+bool PgDatabaseComposition::create()
+{
+    return true;
+}
+
 bool PgDatabaseComposition::push()
 {
     return true;
