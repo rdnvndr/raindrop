@@ -5,6 +5,7 @@
 
 #include <QDataWidgetMapper>
 #include <QMessageBox>
+#include <QValidator>
 
 #include <treexmlmodel/tablexmlproxymodel.h>
 #include <treexmlmodel/treexmlhashmodel.h>
