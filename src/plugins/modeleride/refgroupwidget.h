@@ -6,6 +6,7 @@
 #include <QDataWidgetMapper>
 #include <QMessageBox>
 #include <QWidget>
+#include <QValidator>
 
 #include <treexmlmodel/treexmlhashmodel.h>
 
