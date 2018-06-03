@@ -1,6 +1,8 @@
 #ifndef ROLEWIDGET_H
 #define ROLEWIDGET_H
 
+#include <QValidator>
+
 #include "ui_rolewidget.h"
 #include "abstracteditorwidget.h"
 

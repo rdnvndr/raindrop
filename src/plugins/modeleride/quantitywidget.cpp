@@ -1,7 +1,9 @@
 #include "quantitywidget.h"
 #include <metadatamodel/dbxmlstruct.h>
 #include "xmldelegate.h"
+
 #include <QStringListModel>
+#include <QAbstractItemView>
 
 using namespace RTPTechGroup::MetaDataModel;
 using namespace RTPTechGroup::XmlModel;
