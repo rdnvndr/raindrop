@@ -14,20 +14,32 @@ PgDatabaseModel::PgDatabaseModel(QSqlDatabase db)
     m_db = db;
 }
 
+QString clsTable(const QString &className) {
+    return QString("\"CLS" + className + "\"");
+}
+
+QString lovTable(const QString &lovName) {
+    return QString("\"LOV" + lovName + "\"");
+}
+
+QString tblField(const QString &attrName) {
+    return QString("\"" + attrName + "\"");
+}
+
 bool insertClass(QSqlQuery &query, const QString &name, const QString &alias,
                  const QIcon icon, const QString &guid, const QString &parent)
 {
-    query.prepare("INSERT INTO \"CLS" + DBCLASSXML::CLASS + "\"("
-                  "\"" + DBCLASSXML::NAME     + "\","
-                  "\"" + DBCLASSXML::MODE     + "\","
-                  "\"" + DBCLASSXML::TYPE     + "\","
-                  "\"" + DBCLASSXML::ALIAS    + "\","
-                  "\"" + DBCLASSXML::PARENT   + "\","
-                  "\"" + DBCLASSXML::TEMPLATE + "\","
-                  "\"" + DBCLASSXML::VERCOUNT + "\","
-                  "\"" + DBCLASSXML::ICON     + "\","
-                  "\"" + DBCLASSXML::ID       + "\""
-                  ") VALUES(?,?,?,?,?,?,?,?,?);");
+    query.prepare("INSERT INTO " + clsTable(DBCLASSXML::CLASS) + " ("
+                  + tblField(DBCLASSXML::NAME)     + ","
+                  + tblField(DBCLASSXML::MODE)     + ","
+                  + tblField(DBCLASSXML::TYPE)     + ","
+                  + tblField(DBCLASSXML::ALIAS)    + ","
+                  + tblField(DBCLASSXML::PARENT)   + ","
+                  + tblField(DBCLASSXML::TEMPLATE) + ","
+                  + tblField(DBCLASSXML::VERCOUNT) + ","
+                  + tblField(DBCLASSXML::ICON)     + ","
+                  + tblField(DBCLASSXML::ID)
+                + ") VALUES(?,?,?,?,?,?,?,?,?);");
     query.addBindValue(name);
     query.addBindValue(DBACCESSMODEXML::SYSTEM);
     query.addBindValue(DBCLASSTYPEXML::NORMAL);
@@ -44,10 +56,10 @@ bool insertClass(QSqlQuery &query, const QString &name, const QString &alias,
 bool insertLovValue(QSqlQuery &query, const QString &table,
                     const QString &alias, const QString &value)
 {
-    query.prepare("INSERT INTO \"LOV" + table + "\"("
-                    "\"" + DBLOVVALUEXML::ALIAS + "\","
-                    "\"" + DBLOVVALUEXML::VALUE + "\""
-               ") VALUES(?,?);");
+    query.prepare("INSERT INTO " + lovTable(table) + " ("
+                    + tblField(DBLOVVALUEXML::ALIAS) + ","
+                    + tblField(DBLOVVALUEXML::VALUE)
+               + ") VALUES(?,?);");
     query.addBindValue(alias);
     query.addBindValue(value);
 
@@ -57,19 +69,19 @@ bool insertLovValue(QSqlQuery &query, const QString &table,
 bool insertLov(QSqlQuery &query, const QString &name,
                     const QString &alias, const QString &guid)
 {
-    query.exec("CREATE TABLE \"LOV" + name + "\" ("
-               "\"" + DBLOVVALUEXML::ALIAS  + "\" VARCHAR(256),"
-               "\"" + DBLOVVALUEXML::VALUE  + "\" CHAR(12) PRIMARY KEY"
+    query.exec("CREATE TABLE " + lovTable(name) + " ("
+                + tblField(DBLOVVALUEXML::ALIAS)  + " VARCHAR(256),"
+                + tblField(DBLOVVALUEXML::VALUE)  + " CHAR(12) PRIMARY KEY"
                ");");
 
-    query.prepare("INSERT INTO \"CLS" + DBLOVXML::LOV + "\"("
-                    "\"" + DBLOVXML::ALIAS     + "\","
-                    "\"" + DBLOVXML::NAME      + "\","
-                    "\"" + DBLOVXML::TYPE      + "\","
-                    "\"" + DBLOVXML::MAXSTRLEN + "\","
-                    "\"" + DBLOVXML::ACCURACY  + "\","
-                    "\"" + DBLOVXML::ID        + "\""
-               ") VALUES(?,?,?,?,?,?);");
+    query.prepare("INSERT INTO " + clsTable(DBLOVXML::LOV) + " ("
+                  + tblField(DBLOVXML::ALIAS)     + ","
+                  + tblField(DBLOVXML::NAME)      + ","
+                  + tblField(DBLOVXML::TYPE)      + ","
+                  + tblField(DBLOVXML::MAXSTRLEN) + ","
+                  + tblField(DBLOVXML::ACCURACY)  + ","
+                  + tblField(DBLOVXML::ID)
+               + ") VALUES(?,?,?,?,?,?);");
 
     query.addBindValue(alias);
     query.addBindValue(name);
@@ -86,13 +98,13 @@ bool PgDatabaseModel::init()
     m_db.transaction();
     QSqlQuery query = QSqlQuery(m_db);
 
-    query.exec("CREATE TABLE \"CLS" + DBLOVXML::LOV + "\" ("
-               "\"" + DBLOVXML::ALIAS     + "\" VARCHAR(256),"
-               "\"" + DBLOVXML::NAME      + "\" VARCHAR(27),"
-               "\"" + DBLOVXML::TYPE      + "\" VARCHAR(15),"
-               "\"" + DBLOVXML::MAXSTRLEN + "\" INTEGER,"
-               "\"" + DBLOVXML::ACCURACY  + "\" INTEGER,"
-               "\"" + DBLOVXML::ID        + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBLOVXML::LOV) + " ("
+                + tblField(DBLOVXML::ALIAS)     + " VARCHAR(256),"
+                + tblField(DBLOVXML::NAME)      + " VARCHAR(27),"
+                + tblField(DBLOVXML::TYPE)      + " VARCHAR(15),"
+                + tblField(DBLOVXML::MAXSTRLEN) + " INTEGER,"
+                + tblField(DBLOVXML::ACCURACY)  + " INTEGER,"
+                + tblField(DBLOVXML::ID)        + " CHAR(36) PRIMARY KEY"
                ");");
 
 
@@ -157,19 +169,19 @@ bool PgDatabaseModel::init()
 
 
     // Создание описания классов
-    query.exec("CREATE TABLE \"CLS" + DBCLASSXML::CLASS + "\" ("
-               "\"" + DBCLASSXML::NAME     + "\" VARCHAR(27),"
-               "\"" + DBCLASSXML::MODE     + "\" CHAR(12)"
-                    " REFERENCES \"LOV" + DBACCESSMODEXML::ACCESSMODE + "\","
-               "\"" + DBCLASSXML::TYPE     + "\" CHAR(12)"
-                    " REFERENCES \"LOV" + DBCLASSTYPEXML::CLASSTYPE + "\","
-               "\"" + DBCLASSXML::ALIAS    + "\" VARCHAR(256),"
-               "\"" + DBCLASSXML::PARENT   + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBCLASSXML::CLASS + "\","
-               "\"" + DBCLASSXML::TEMPLATE + "\" VARCHAR(4000),"
-               "\"" + DBCLASSXML::VERCOUNT + "\" INTEGER,"
-               "\"" + DBCLASSXML::ICON     + "\" VARCHAR(4000),"
-               "\"" + DBCLASSXML::ID       + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBCLASSXML::CLASS) + " ("
+                + tblField(DBCLASSXML::NAME)     + " VARCHAR(27),"
+                + tblField(DBCLASSXML::MODE)     + " CHAR(12)"
+                    " REFERENCES " + lovTable(DBACCESSMODEXML::ACCESSMODE) + ","
+                + tblField(DBCLASSXML::TYPE)     + " CHAR(12)"
+                    " REFERENCES " + lovTable(DBCLASSTYPEXML::CLASSTYPE) + ","
+                + tblField(DBCLASSXML::ALIAS)    + " VARCHAR(256),"
+                + tblField(DBCLASSXML::PARENT)   + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBCLASSXML::CLASS) + ","
+                + tblField(DBCLASSXML::TEMPLATE) + " VARCHAR(4000),"
+                + tblField(DBCLASSXML::VERCOUNT) + " INTEGER,"
+                + tblField(DBCLASSXML::ICON)     + " VARCHAR(4000),"
+                + tblField(DBCLASSXML::ID)       + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBCLASSXML::CLASS, QObject::tr("Класс"), QIcon(),
@@ -178,11 +190,11 @@ bool PgDatabaseModel::init()
                 DBSTRUCTGUIDXML::LOV, QString());
 
     // Создание описания групп величин
-    query.exec("CREATE TABLE \"CLS" + DBQUANTITYGROUPXML::QUANTITYGROUP + "\" ("
-               "\"" + DBQUANTITYGROUPXML::NAME   + "\" VARCHAR(27),"
-               "\"" + DBQUANTITYGROUPXML::ALIAS  + "\" VARCHAR(256),"
-//               "\"" + DBQUANTITYGROUPXML::PARENT + "\" CHAR(36),"
-               "\"" + DBQUANTITYGROUPXML::ID     + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBQUANTITYGROUPXML::QUANTITYGROUP) + " ("
+                + tblField(DBQUANTITYGROUPXML::NAME)   + " VARCHAR(27),"
+                + tblField(DBQUANTITYGROUPXML::ALIAS)  + " VARCHAR(256),"
+//                + tblField(DBQUANTITYGROUPXML::PARENT) + " CHAR(36),"
+                + tblField(DBQUANTITYGROUPXML::ID)     + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBQUANTITYGROUPXML::QUANTITYGROUP,
@@ -192,52 +204,52 @@ bool PgDatabaseModel::init()
 
 
     // Создание описания величин
-    query.exec("CREATE TABLE \"CLS" + DBQUANTITYXML::QUANTITY + "\" ("
-               "\"" + DBQUANTITYXML::ALIAS     + "\" VARCHAR(256),"
-               "\"" + DBQUANTITYXML::NAME      + "\" VARCHAR(256),"
-               "\"" + DBQUANTITYXML::DIMENSION + "\" VARCHAR(256),"
-               "\"" + DBQUANTITYXML::PARENT    + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBQUANTITYGROUPXML::QUANTITYGROUP + "\","
-               "\"" + DBQUANTITYXML::ID        + "\" CHAR(36) PRIMARY KEY"
-               ");");
+    query.exec("CREATE TABLE " + clsTable(DBQUANTITYXML::QUANTITY) + " ("
+            + tblField(DBQUANTITYXML::ALIAS)     + " VARCHAR(256),"
+            + tblField(DBQUANTITYXML::NAME)      + " VARCHAR(256),"
+            + tblField(DBQUANTITYXML::DIMENSION) + " VARCHAR(256),"
+            + tblField(DBQUANTITYXML::PARENT)    + " CHAR(36)"
+              " REFERENCES " + clsTable(DBQUANTITYGROUPXML::QUANTITYGROUP) + ","
+            + tblField(DBQUANTITYXML::ID)        + " CHAR(36) PRIMARY KEY"
+        ");");
 
     insertClass(query, DBQUANTITYXML::QUANTITY, QObject::tr("Величина"),
                 QIcon(), DBSTRUCTGUIDXML::QUANTITY, QString());
 
 
     // Создание описания единиц измерения
-    query.exec("CREATE TABLE \"CLS" + DBUNITXML::UNIT + "\" ("
-               "\"" + DBUNITXML::CODE           + "\" INTEGER,"
-               "\"" + DBUNITXML::COEFF          + "\" DOUBLE PRECISION,"
-               "\"" + DBUNITXML::DELTA          + "\" DOUBLE PRECISION,"
-               "\"" + DBUNITXML::NAME           + "\" VARCHAR(256),"
-               "\"" + DBUNITXML::ID             + "\" CHAR(36) PRIMARY KEY,"
-               "\"" + DBUNITXML::DESIGNATION    + "\" VARCHAR(32),"
-               "\"" + DBUNITXML::INTDESIGNATION + "\" VARCHAR(32),"
-               "\"" + DBUNITXML::SYMBOL         + "\" VARCHAR(32),"
-               "\"" + DBUNITXML::INTSYMBOL      + "\" VARCHAR(32),"
-//               "\"" + DBUNITXML::ALIAS          + "\" VARCHAR(256),"
-               "\"" + DBUNITXML::PARENT         + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBQUANTITYXML::QUANTITY + "\""
-               ");");
+    query.exec("CREATE TABLE " + clsTable(DBUNITXML::UNIT) + " ("
+                + tblField(DBUNITXML::CODE)           + " INTEGER,"
+                + tblField(DBUNITXML::COEFF)          + " DOUBLE PRECISION,"
+                + tblField(DBUNITXML::DELTA)          + " DOUBLE PRECISION,"
+                + tblField(DBUNITXML::NAME)           + " VARCHAR(256),"
+                + tblField(DBUNITXML::ID)             + " CHAR(36) PRIMARY KEY,"
+                + tblField(DBUNITXML::DESIGNATION)    + " VARCHAR(32),"
+                + tblField(DBUNITXML::INTDESIGNATION) + " VARCHAR(32),"
+                + tblField(DBUNITXML::SYMBOL)         + " VARCHAR(32),"
+                + tblField(DBUNITXML::INTSYMBOL)      + " VARCHAR(32),"
+//                + tblField(DBUNITXML::ALIAS)          + " VARCHAR(256),"
+                + tblField(DBUNITXML::PARENT)         + " CHAR(36)"
+                    " REFERENCES \"CLS" + DBQUANTITYXML::QUANTITY
+              + ");");
 
-    query.exec("ALTER TABLE \"CLS" + DBQUANTITYXML::QUANTITY + "\" ADD COLUMN "
-               "\"" + DBQUANTITYXML::BASICUNIT + "\" CHAR(36)"
-               " REFERENCES \"CLS" + DBUNITXML::UNIT + "\""
-               ";");
+    query.exec("ALTER TABLE " + clsTable(DBQUANTITYXML::QUANTITY) + " ADD COLUMN "
+                + tblField(DBQUANTITYXML::BASICUNIT) + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBUNITXML::UNIT)
+               + ";");
 
     insertClass(query, DBUNITXML::UNIT, QObject::tr("Единица измерения"),
                 QIcon(), DBSTRUCTGUIDXML::UNIT, QString());
 
     // Создание описания нумератора
-    query.exec("CREATE TABLE \"CLS" + DBNUMERATORXML::NUMERATOR + "\" ("
-               "\"" + DBNUMERATORXML::ALIAS  + "\" VARCHAR(256),"
-               "\"" + DBNUMERATORXML::NAME   + "\" VARCHAR(27),"
-               "\"" + DBNUMERATORXML::STEP   + "\" INTEGER,"
-               "\"" + DBNUMERATORXML::UNIQUE + "\" CHAR(12)"
-                    " REFERENCES \"LOV" + DBUNIQUENUMERATORXML::UNIQUENUMERATOR + "\","
-               "\"" + DBNUMERATORXML::PARENT + "\" CHAR(36),"
-               "\"" + DBNUMERATORXML::ID     + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBNUMERATORXML::NUMERATOR) + " ("
+                + tblField(DBNUMERATORXML::ALIAS)  + " VARCHAR(256),"
+                + tblField(DBNUMERATORXML::NAME)   + " VARCHAR(27),"
+                + tblField(DBNUMERATORXML::STEP)   + " INTEGER,"
+                + tblField(DBNUMERATORXML::UNIQUE) + " CHAR(12)"
+                    " REFERENCES " + lovTable(DBUNIQUENUMERATORXML::UNIQUENUMERATOR) + ","
+                + tblField(DBNUMERATORXML::PARENT) + " CHAR(36),"
+                + tblField(DBNUMERATORXML::ID)     + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBNUMERATORXML::NUMERATOR, QObject::tr("Нумератор"),
@@ -245,12 +257,12 @@ bool PgDatabaseModel::init()
 
 
     // Создание описания списка значений в нумераторе
-    query.exec("CREATE TABLE \"CLS" + DBNUMERATORLOVXML::NUMERATORLOV + "\" ("
-               "\"" + DBNUMERATORLOVXML::REFLOV + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBLOVXML::LOV + "\","
-               "\"" + DBNUMERATORLOVXML::PARENT + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBNUMERATORXML::NUMERATOR + "\","
-               "\"" + DBNUMERATORLOVXML::ID     + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBNUMERATORLOVXML::NUMERATORLOV) + " ("
+                + tblField(DBNUMERATORLOVXML::REFLOV) + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBLOVXML::LOV) + ","
+                + tblField(DBNUMERATORLOVXML::PARENT) + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBNUMERATORXML::NUMERATOR) + ","
+                + tblField(DBNUMERATORLOVXML::ID)     + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBNUMERATORLOVXML::NUMERATORLOV,
@@ -259,11 +271,11 @@ bool PgDatabaseModel::init()
 
 
     // Создание описания регулярных выражений в нумераторе
-    query.exec("CREATE TABLE \"CLS" + DBNUMERATORREGEXXML::NUMERATORREGEX + "\" ("
-               "\"" + DBNUMERATORREGEXXML::REGEX  + "\" VARCHAR(256),"
-               "\"" + DBNUMERATORREGEXXML::PARENT + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBNUMERATORXML::NUMERATOR + "\","
-               "\"" + DBNUMERATORREGEXXML::ID     + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBNUMERATORREGEXXML::NUMERATORREGEX) + " ("
+                + tblField(DBNUMERATORREGEXXML::REGEX)  + " VARCHAR(256),"
+                + tblField(DBNUMERATORREGEXXML::PARENT) + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBNUMERATORXML::NUMERATOR) + ","
+                + tblField(DBNUMERATORREGEXXML::ID)     + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBNUMERATORREGEXXML::NUMERATORREGEX,
@@ -272,31 +284,31 @@ bool PgDatabaseModel::init()
 
 
     // Создание описания атрибутов
-    query.exec("CREATE TABLE \"CLS" + DBATTRXML::ATTR + "\" ("
-               "\"" + DBATTRXML::NAME           + "\" VARCHAR(27),"
-               "\"" + DBATTRXML::ALIAS          + "\" VARCHAR(256),"
-               "\"" + DBATTRXML::TYPE           + "\" CHAR(10)"
-                    " REFERENCES \"LOV" + DBATTRTYPEXML::ATTRTYPE + "\","
-               "\"" + DBATTRXML::GROUP          + "\" VARCHAR(256),"
-               "\"" + DBATTRXML::MAXSTRLEN      + "\" INTEGER,"
-               "\"" + DBATTRXML::ACCURACY       + "\" INTEGER,"
-               "\"" + DBATTRXML::ISNULLALLOWED  + "\" BOOL,"
-               "\"" + DBATTRXML::ISUNIQUE       + "\" BOOL,"
-               "\"" + DBATTRXML::ISCANDIDATEKEY + "\" BOOL,"
-               "\"" + DBATTRXML::INITIALVAL     + "\" VARCHAR(4000),"
-               "\"" + DBATTRXML::LOWERBOUND     + "\" VARCHAR(4000),"
-               "\"" + DBATTRXML::UPPERBOUND     + "\" VARCHAR(4000),"
-               "\"" + DBATTRXML::REFCLASS       + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBCLASSXML::CLASS + "\","
-               "\"" + DBATTRXML::REFUNIT        + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBUNITXML::UNIT + "\","
-               "\"" + DBATTRXML::REFLOV         + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBLOVXML::LOV + "\","
-               "\"" + DBATTRXML::REFNUMERATOR   + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBNUMERATORXML::NUMERATOR + "\","
-               "\"" + DBATTRXML::PARENT         + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBCLASSXML::CLASS + "\","
-               "\"" + DBATTRXML::ID             + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBATTRXML::ATTR) + " ("
+                + tblField(DBATTRXML::NAME)           + " VARCHAR(27),"
+                + tblField(DBATTRXML::ALIAS)          + " VARCHAR(256),"
+                + tblField(DBATTRXML::TYPE)           + " CHAR(10)"
+                    " REFERENCES " + lovTable(DBATTRTYPEXML::ATTRTYPE) + ","
+                + tblField(DBATTRXML::GROUP)          + " VARCHAR(256),"
+                + tblField(DBATTRXML::MAXSTRLEN)      + " INTEGER,"
+                + tblField(DBATTRXML::ACCURACY)       + " INTEGER,"
+                + tblField(DBATTRXML::ISNULLALLOWED)  + " BOOL,"
+                + tblField(DBATTRXML::ISUNIQUE)       + " BOOL,"
+                + tblField(DBATTRXML::ISCANDIDATEKEY) + " BOOL,"
+                + tblField(DBATTRXML::INITIALVAL)     + " VARCHAR(4000),"
+                + tblField(DBATTRXML::LOWERBOUND)     + " VARCHAR(4000),"
+                + tblField(DBATTRXML::UPPERBOUND)     + " VARCHAR(4000),"
+                + tblField(DBATTRXML::REFCLASS)       + " CHAR(36)"
+                    " REFERENCES " + lovTable(DBCLASSXML::CLASS) + ","
+                + tblField(DBATTRXML::REFUNIT)        + " CHAR(36)"
+                    " REFERENCES " + lovTable(DBUNITXML::UNIT) + ","
+                + tblField(DBATTRXML::REFLOV)         + " CHAR(36)"
+                    " REFERENCES " + lovTable(DBLOVXML::LOV) + ","
+                + tblField(DBATTRXML::REFNUMERATOR)   + " CHAR(36)"
+                    " REFERENCES " + lovTable(DBNUMERATORXML::NUMERATOR) + ","
+                + tblField(DBATTRXML::PARENT)         + " CHAR(36)"
+                    " REFERENCES " + lovTable(DBCLASSXML::CLASS) + ","
+                + tblField(DBATTRXML::ID)             + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBATTRXML::ATTR, QObject::tr("Атрибут"), QIcon(),
@@ -304,34 +316,34 @@ bool PgDatabaseModel::init()
 
 
     // Создание описания состава
-    query.exec("CREATE TABLE \"CLS" + DBCOMPXML::COMP + "\" ("
-               "\"" + DBCOMPXML::LINKCLASS          + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBCLASSXML::CLASS + "\","
-               "\"" + DBCOMPXML::ALIAS              + "\" VARCHAR(256),"
-               "\"" + DBCOMPXML::PARENT             + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBCLASSXML::CLASS + "\","
-               "\"" + DBCOMPXML::CLASS              + "\" CHAR(36),"
-               "\"" + DBCOMPXML::ISVIEW             + "\" BOOL,"
-               "\"" + DBCOMPXML::DIRECTDESCRIPTION  + "\" VARCHAR(256),"
-               "\"" + DBCOMPXML::INVERSEDESCRIPTION + "\" VARCHAR(256),"
-               "\"" + DBCOMPXML::ISCOMP             + "\" BOOL,"
-               "\"" + DBCOMPXML::ID                 + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBCOMPXML::COMP) + " ("
+                + tblField(DBCOMPXML::LINKCLASS)          + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBCLASSXML::CLASS) + ","
+                + tblField(DBCOMPXML::ALIAS)              + " VARCHAR(256),"
+                + tblField(DBCOMPXML::PARENT)             + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBCLASSXML::CLASS) + ","
+                + tblField(DBCOMPXML::CLASS)              + " CHAR(36),"
+                + tblField(DBCOMPXML::ISVIEW)             + " BOOL,"
+                + tblField(DBCOMPXML::DIRECTDESCRIPTION)  + " VARCHAR(256),"
+                + tblField(DBCOMPXML::INVERSEDESCRIPTION) + " VARCHAR(256),"
+                + tblField(DBCOMPXML::ISCOMP)             + " BOOL,"
+                + tblField(DBCOMPXML::ID)                 + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBCOMPXML::COMP, QObject::tr("Состав"), QIcon(),
                 DBSTRUCTGUIDXML::COMP, QString());
 
     // Создание описания фильтра
-    query.exec("CREATE TABLE \"CLS" + DBFILTERXML::FILTER + "\" ("
-               "\"" + DBFILTERXML::NAME               + "\" VARCHAR(27),"
-               "\"" + DBFILTERXML::ALIAS              + "\" VARCHAR(256),"
-               "\"" + DBFILTERXML::PARENT             + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBCLASSXML::CLASS + "\","
-               "\"" + DBFILTERXML::CLASS              + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBCLASSXML::CLASS + "\","
-               "\"" + DBFILTERXML::DIRECTDESCRIPTION  + "\" VARCHAR(256),"
-               "\"" + DBFILTERXML::INVERSEDESCRIPTION + "\" VARCHAR(256),"
-               "\"" + DBFILTERXML::ID                 + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBFILTERXML::FILTER) + " ("
+                + tblField(DBFILTERXML::NAME)               + " VARCHAR(27),"
+                + tblField(DBFILTERXML::ALIAS)              + " VARCHAR(256),"
+                + tblField(DBFILTERXML::PARENT)             + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBCLASSXML::CLASS) + ","
+                + tblField(DBFILTERXML::CLASS)              + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBCLASSXML::CLASS) + ","
+                + tblField(DBFILTERXML::DIRECTDESCRIPTION)  + " VARCHAR(256),"
+                + tblField(DBFILTERXML::INVERSEDESCRIPTION) + " VARCHAR(256),"
+                + tblField(DBFILTERXML::ID)                 + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBFILTERXML::FILTER, QObject::tr("Фильтр"), QIcon(),
@@ -339,12 +351,12 @@ bool PgDatabaseModel::init()
 
 
     // Создание описания блока условий фильтра
-    query.exec("CREATE TABLE \"CLS" + DBFILTERBLOCKXML::BLOCK + "\" ("
-               "\"" + DBFILTERBLOCKXML::PARENT + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBFILTERXML::FILTER + "\","
-//               "\"" + DBFILTERBLOCKXML::ALIAS  + "\" VARCHAR(256),"
-               "\"" + DBFILTERBLOCKXML::LINKOF + "\" VARCHAR(10),"
-               "\"" + DBFILTERBLOCKXML::ID     + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBFILTERBLOCKXML::BLOCK) + " ("
+                + tblField(DBFILTERBLOCKXML::PARENT) + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBFILTERXML::FILTER) + ","
+//                + tblField(DBFILTERBLOCKXML::ALIAS)  + " VARCHAR(256),"
+                + tblField(DBFILTERBLOCKXML::LINKOF) + " VARCHAR(10),"
+                + tblField(DBFILTERBLOCKXML::ID)     + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBFILTERBLOCKXML::BLOCK,
@@ -353,18 +365,18 @@ bool PgDatabaseModel::init()
 
 
     // Создание описания условия фильтра
-    query.exec("CREATE TABLE \"CLS" + DBCONDITIONXML::COND + "\" ("
-               "\"" + DBCONDITIONXML::FIRSTATTR  + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBATTRXML::ATTR + "\","
-//               "\"" + DBCONDITIONXML::ALIAS      + "\" VARCHAR(256),"
-               "\"" + DBCONDITIONXML::PARENT     + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBFILTERXML::FILTER + "\""
-                    " REFERENCES \"CLS" + DBFILTERBLOCKXML::BLOCK + "\","
-               "\"" + DBCONDITIONXML::SECONDATTR + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBATTRXML::ATTR + "\","
-               "\"" + DBCONDITIONXML::OPERATOR   + "\" VARCHAR(10),"
-               "\"" + DBCONDITIONXML::LINKOF     + "\" VARCHAR(10),"
-               "\"" + DBCONDITIONXML::ID         + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBCONDITIONXML::COND) + " ("
+                + tblField(DBCONDITIONXML::FIRSTATTR)  + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBATTRXML::ATTR) + ","
+//                + tblField(DBCONDITIONXML::ALIAS)      + " VARCHAR(256),"
+                + tblField(DBCONDITIONXML::PARENT)     + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBFILTERXML::FILTER) +
+                    " REFERENCES " + clsTable(DBFILTERBLOCKXML::BLOCK) + ","
+                + tblField(DBCONDITIONXML::SECONDATTR) + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBATTRXML::ATTR) + ","
+                + tblField(DBCONDITIONXML::OPERATOR)   + " VARCHAR(10),"
+                + tblField(DBCONDITIONXML::LINKOF)     + " VARCHAR(10),"
+                + tblField(DBCONDITIONXML::ID)         + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBCONDITIONXML::COND,
@@ -373,11 +385,11 @@ bool PgDatabaseModel::init()
 
 
     // Создание описания группы справочников
-    query.exec("CREATE TABLE \"CLS" + DBREFGROUPXML::REFGROUP + "\" ("
-               "\"" + DBREFGROUPXML::ALIAS  + "\" VARCHAR(256),"
-               "\"" + DBREFGROUPXML::NAME   + "\" VARCHAR(27),"
-               "\"" + DBREFGROUPXML::PARENT + "\" CHAR(36),"
-               "\"" + DBREFGROUPXML::ID     + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBREFGROUPXML::REFGROUP) + " ("
+                + tblField(DBREFGROUPXML::ALIAS)  + " VARCHAR(256),"
+                + tblField(DBREFGROUPXML::NAME)   + " VARCHAR(27),"
+                + tblField(DBREFGROUPXML::PARENT) + " CHAR(36),"
+                + tblField(DBREFGROUPXML::ID)     + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBREFGROUPXML::REFGROUP,
@@ -386,12 +398,12 @@ bool PgDatabaseModel::init()
 
 
     // Создание описания справочника
-    query.exec("CREATE TABLE \"CLS" + DBREFXML::REF + "\" ("
-               "\"" + DBREFXML::ALIAS  + "\" VARCHAR(256),"
-               "\"" + DBREFXML::NAME   + "\" VARCHAR(27),"
-               "\"" + DBREFXML::PARENT + "\" CHAR(36)"
-                    " REFERENCES \"CLS"   + DBREFGROUPXML::REFGROUP + "\","
-               "\"" + DBREFXML::ID     + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBREFXML::REF) + " ("
+                + tblField(DBREFXML::ALIAS)  + " VARCHAR(256),"
+                + tblField(DBREFXML::NAME)   + " VARCHAR(27),"
+                + tblField(DBREFXML::PARENT) + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBREFGROUPXML::REFGROUP) + ","
+                + tblField(DBREFXML::ID)     + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBREFXML::REF,
@@ -400,11 +412,11 @@ bool PgDatabaseModel::init()
 
 
     // Создание описания фильтра справочника
-    query.exec("CREATE TABLE \"CLS" + DBLINKTOFILTERXML::LINKTOFILTER + "\" ("
-               "\"" + DBLINKTOFILTERXML::ALIAS  + "\" VARCHAR(256),"
-               "\"" + DBLINKTOFILTERXML::REFFILTER   + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBFILTERXML::FILTER + "\","
-               "\"" + DBLINKTOFILTERXML::ID     + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBLINKTOFILTERXML::LINKTOFILTER) + " ("
+                + tblField(DBLINKTOFILTERXML::ALIAS)     + " VARCHAR(256),"
+                + tblField(DBLINKTOFILTERXML::REFFILTER) + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBFILTERXML::FILTER) + ","
+                + tblField(DBLINKTOFILTERXML::ID)        + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBLINKTOFILTERXML::LINKTOFILTER,
@@ -413,15 +425,15 @@ bool PgDatabaseModel::init()
 
 
     // Создание описания ссылки на справочник
-    query.exec("CREATE TABLE \"CLS" + DBLINKTOREFXML::LINKTOREF + "\" ("
-               "\"" + DBLINKTOREFXML::ALIAS  + "\" VARCHAR(256),"
-               "\"" + DBLINKTOREFXML::REFREF   + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBREFXML::REF + "\","
-               "\"" + DBLINKTOREFXML::PARENT + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBLINKTOFILTERXML::LINKTOFILTER + "\""
-                    " REFERENCES \"CLS" + DBREFXML::REF + "\","
-               "\"" + DBLINKTOREFXML::ID     + "\" CHAR(36) PRIMARY KEY"
-               ");");
+    query.exec("CREATE TABLE " + clsTable(DBLINKTOREFXML::LINKTOREF) + " ("
+                + tblField(DBLINKTOREFXML::ALIAS)  + " VARCHAR(256),"
+                + tblField(DBLINKTOREFXML::REFREF) + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBREFXML::REF) + ","
+                + tblField(DBLINKTOREFXML::PARENT) + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBLINKTOFILTERXML::LINKTOFILTER) +
+                    " REFERENCES " + clsTable(DBREFXML::REF) + ","
+                + tblField(DBLINKTOREFXML::ID)     + " CHAR(36) PRIMARY KEY"
+            ");");
 
     insertClass(query, DBLINKTOREFXML::LINKTOREF,
                 QObject::tr("Ссылка на справочник"), QIcon(),
@@ -429,34 +441,35 @@ bool PgDatabaseModel::init()
 
 
     // Создание описания класса справочника
-    query.exec("CREATE TABLE \"CLS" + DBLINKTOCLASSXML::LINKTOCLASS + "\" ("
-               "\"" + DBLINKTOCLASSXML::ALIAS  + "\" VARCHAR(256),"
-               "\"" + DBLINKTOCLASSXML::REFCLASS   + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBCLASSXML::CLASS + "\","
-               "\"" + DBLINKTOCLASSXML::PARENT + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBLINKTOFILTERXML::LINKTOFILTER + "\""
-                    " REFERENCES \"CLS" + DBREFXML::REF + "\","
-               "\"" + DBLINKTOCLASSXML::ID     + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBLINKTOCLASSXML::LINKTOCLASS) + " ("
+                + tblField(DBLINKTOCLASSXML::ALIAS)    + " VARCHAR(256),"
+                + tblField(DBLINKTOCLASSXML::REFCLASS) + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBCLASSXML::CLASS) + ","
+                + tblField(DBLINKTOCLASSXML::PARENT)   + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBLINKTOFILTERXML::LINKTOFILTER) +
+                    " REFERENCES " + clsTable(DBREFXML::REF) + ","
+                + tblField(DBLINKTOCLASSXML::ID)       + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBLINKTOCLASSXML::LINKTOCLASS,
                 QObject::tr("Класс справочника"), QIcon(),
                 DBSTRUCTGUIDXML::LINKTOCLASS, QString());
 
-    query.exec("ALTER TABLE \"CLS" + DBLINKTOFILTERXML::LINKTOFILTER + "\" ADD COLUMN "
-               "\"" + DBLINKTOFILTERXML::PARENT + "\" CHAR(36)"
-               " REFERENCES \"CLS" + DBLINKTOCLASSXML::LINKTOCLASS + "\""
-               " REFERENCES \"CLS" + DBLINKTOREFXML::LINKTOREF + "\""
+    query.exec("ALTER TABLE " + clsTable(DBLINKTOFILTERXML::LINKTOFILTER)
+               + " ADD COLUMN "
+               + tblField(DBLINKTOFILTERXML::PARENT) + " CHAR(36)"
+                 " REFERENCES " + clsTable(DBLINKTOCLASSXML::LINKTOCLASS) +
+                 " REFERENCES " + clsTable(DBLINKTOREFXML::LINKTOREF) +
                ";");
 
 
     // Создание описания роли
-    query.exec("CREATE TABLE \"CLS" + DBROLEXML::ROLE + "\" ("
-               "\"" + DBROLEXML::ALIAS       + "\" VARCHAR(256),"
-               "\"" + DBROLEXML::NAME        + "\" VARCHAR(27),"
-               "\"" + DBROLEXML::DESCRIPTION + "\" VARCHAR(4000),"
-               "\"" + DBROLEXML::PARENT      + "\" CHAR(36),"
-               "\"" + DBROLEXML::ID          + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBROLEXML::ROLE) + " ("
+                + tblField(DBROLEXML::ALIAS)       + " VARCHAR(256),"
+                + tblField(DBROLEXML::NAME)        + " VARCHAR(27),"
+                + tblField(DBROLEXML::DESCRIPTION) + " VARCHAR(4000),"
+                + tblField(DBROLEXML::PARENT)      + " CHAR(36),"
+                + tblField(DBROLEXML::ID)          + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBROLEXML::ROLE,
@@ -464,18 +477,18 @@ bool PgDatabaseModel::init()
                 DBSTRUCTGUIDXML::ROLE, QString());
 
     // Создание описания прав доступа
-    query.exec("CREATE TABLE \"CLS" + DBPERMISSIONXML::PERMISSION + "\" ("
-               "\"" + DBPERMISSIONXML::ROLE     + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBROLEXML::ROLE   + "\","
-               "\"" + DBPERMISSIONXML::ISCREATE + "\" BOOL,"
-               "\"" + DBPERMISSIONXML::ISREAD   + "\" BOOL,"
-               "\"" + DBPERMISSIONXML::ISWRITE  + "\" BOOL,"
-               "\"" + DBPERMISSIONXML::ISDELETE + "\" BOOL,"
-               "\"" + DBPERMISSIONXML::ISBLOCK  + "\" BOOL,"
-               "\"" + DBPERMISSIONXML::PARENT   + "\" CHAR(36)"
-                    " REFERENCES \"CLS" + DBCLASSXML::CLASS + "\""
-                    " REFERENCES \"CLS" + DBATTRXML::ATTR   + "\","
-               "\"" + DBPERMISSIONXML::ID       + "\" CHAR(36) PRIMARY KEY"
+    query.exec("CREATE TABLE " + clsTable(DBPERMISSIONXML::PERMISSION) + " ("
+                + tblField(DBPERMISSIONXML::ROLE)     + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBROLEXML::ROLE)   + ","
+                + tblField(DBPERMISSIONXML::ISCREATE) + " BOOL,"
+                + tblField(DBPERMISSIONXML::ISREAD)   + " BOOL,"
+                + tblField(DBPERMISSIONXML::ISWRITE)  + " BOOL,"
+                + tblField(DBPERMISSIONXML::ISDELETE) + " BOOL,"
+                + tblField(DBPERMISSIONXML::ISBLOCK)  + " BOOL,"
+                + tblField(DBPERMISSIONXML::PARENT)   + " CHAR(36)"
+                    " REFERENCES " + clsTable(DBCLASSXML::CLASS) +
+                    " REFERENCES " + clsTable(DBATTRXML::ATTR)   + ","
+                + tblField(DBPERMISSIONXML::ID)       + " CHAR(36) PRIMARY KEY"
                ");");
 
     insertClass(query, DBPERMISSIONXML::PERMISSION,
@@ -492,26 +505,26 @@ IDatabaseClass *PgDatabaseModel::createClass(
     Q_UNUSED(name)
     Q_UNUSED(base)
 
-    return NULL;
+    return nullptr;
 }
 
 IDatabaseClass *PgDatabaseModel::oneClass(const QString &name)
 {
     Q_UNUSED(name)
 
-    return NULL;
+    return nullptr;
 }
 
 IDatabaseClasses *PgDatabaseModel::classList()
 {
-    return NULL;
+    return nullptr;
 }
 
 IDatabaseClasses *PgDatabaseModel::derivedClassList(const QString &base)
 {
     Q_UNUSED(base)
 
-    return NULL;
+    return nullptr;
 }
 
 }}
