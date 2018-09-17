@@ -32,7 +32,7 @@ public:
     //! Проверка на возможность удаления элементов
     bool isRemove(const QModelIndex &srcIndex);
 
-    //! Возращает последнюю ошибку
+    //! Возвращает последнюю ошибку
     QString lastError();
 
 private:

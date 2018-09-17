@@ -32,46 +32,46 @@ public:
     explicit IDatabaseClass(): IDatabaseManipulation(this) {
         m_classType  = IDatabaseClass::Normal;
         m_accessMode = IDatabaseClass::Standart;
-        m_parent     = NULL;
+        m_baseClass  = nullptr;
     }
 
     //! Деструктор класса
     virtual ~IDatabaseClass() {}
 
 
-    //! Возращает иконку класса
-    virtual QIcon icon() { return m_icon; }
+    //! Возвращает иконку класса
+    virtual QIcon icon() const { return m_icon; }
 
     //! Устанавливает иконку класса
-    virtual void setIcon(QIcon icon) { m_icon = icon; }
+    virtual void setIcon(const QIcon &icon) { m_icon = icon; }
 
-    //! Возращает тип класса
+    //! Возвращает тип класса
     virtual ClassType classType() { return m_classType; }
 
     //! Устанавливает тип класса
     virtual void setClassType(ClassType classType) { m_classType = classType; }
 
-    //! Возращает режим доступа
+    //! Возвращает режим доступа
     virtual AccessMode accessMode() { return m_accessMode; }
 
     //! Устанавливает режим доступа
     virtual void setAccessMode(AccessMode accessMode)
     { m_accessMode = accessMode; }
 
-    //!  Возращает родительский класс
-    virtual IDatabaseClass *parent() { return m_parent; }
+    //!  Возвращает базовый класс
+    virtual IDatabaseClass *baseClass() { return m_baseClass; }
 
-    //!  Устанавливает родительский класс
-    virtual void setParent(IDatabaseClass *parent) { m_parent = parent; }
+    //!  Устанавливает базовый класс
+    virtual void setBaseClass(IDatabaseClass *parent) { m_baseClass = parent; }
 
-    //!  Возращает шаблон имени объекта
+    //!  Возвращает шаблон имени объекта
     virtual QString objectNameTemplate() { return m_objectNameTemplate; }
 
     //!  Устанавливает шаблон имени объекта
     virtual void setObjectNameTemplate(const QString &objectNameTemplate)
     { m_objectNameTemplate = objectNameTemplate; }
 
-    //! Возращает максимальное количество версий объекта
+    //! Возвращает максимальное количество версий объекта
     virtual qint32 maxVersion() { return m_maxVersion; }
 
     //! Устанавливает максимальное количество версий объекта
@@ -92,7 +92,7 @@ public:
 
 // Получение доступа к элементам класса по имени
     //! Получение производного класса по имени
-    virtual IDatabaseClass *oneClass(const QString &name) = 0;
+    virtual IDatabaseClass *derivedClass(const QString &name) = 0;
 
     //! Получение атрибута по имени
     virtual IDatabaseAttribute *attr(const QString &name) = 0;
@@ -104,16 +104,16 @@ public:
     virtual IDatabaseComposition *comp(const QString &name) = 0;
 
 // Получение доступа к спискам элементов класса по имени
-    //! Cписок производных классов
-    virtual IDatabaseClasses *classList() = 0;
+    //! Список производных классов
+    virtual IDatabaseClasses *derivedClassList() = 0;
 
-    //! Cписок атрибутов в классе
+    //! Список атрибутов в классе
     virtual IDatabaseAttrs *attrList() = 0;
 
-    //! Cписок фильтров в классе
+    //! Список фильтров в классе
     virtual IDatabaseFilters *filterList() = 0;
 
-    //! Cписок атрибутов в классе
+    //! Список атрибутов в классе
     virtual IDatabaseComps *compList() = 0;
 
 private:
@@ -127,7 +127,7 @@ private:
     AccessMode m_accessMode;
 
     //! Родительский класс
-    IDatabaseClass *m_parent;
+    IDatabaseClass *m_baseClass;
 
     //! Шаблон имени объекта
     QString m_objectNameTemplate;

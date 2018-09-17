@@ -39,7 +39,7 @@ bool PgDatabaseClass::remove()
     return  true;
 }
 
-IDatabaseClass *PgDatabaseClass::oneClass(const QString &name)
+IDatabaseClass *PgDatabaseClass::derivedClass(const QString &name)
 {
     Q_UNUSED(name)
     return NULL;
@@ -63,7 +63,7 @@ IDatabaseComposition *PgDatabaseClass::comp(const QString &name)
     return NULL;
 }
 
-IDatabaseClasses *PgDatabaseClass::classList()
+IDatabaseClasses *PgDatabaseClass::derivedClassList()
 {
     return dynamic_cast<IDatabaseClasses *>(new PgDatabaseClasses(this));
 }

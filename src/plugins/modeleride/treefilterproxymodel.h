@@ -27,17 +27,17 @@ public:
     //! Список тэгов для отображения
     QSet<QString> visibleTags();
 
-    //! Возращает хранимые данные
+    //! Возвращает хранимые данные
     QVariant data(const QModelIndex &index,
                   qint32 role = Qt::DisplayRole ) const;
 
-    //! Возращает список типов, которые могут быть упакованы
+    //! Возвращает список типов, которые могут быть упакованы
     QStringList mimeTypes() const;
 
-    //! Возращает поддерживаемые моделью операции Drop
+    //! Возвращает поддерживаемые моделью операции Drop
     Qt::DropActions supportedDropActions() const;
 
-    //! Возращает поддерживаемые моделью операции Drag
+    //! Возвращает поддерживаемые моделью операции Drag
     Qt::DropActions supportedDragActions() const;
 
     //! Обработчик окрнчания перетаскивания данных путем Drag and Drop

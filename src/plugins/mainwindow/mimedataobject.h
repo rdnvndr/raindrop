@@ -22,13 +22,13 @@ public:
     //! Записывает объект
     virtual void setObject(QAction *object);
 
-    //! Возращает объект
+    //! Возвращает объект
     virtual QObject *object() const;
 
-    //! Возращает true если объект внутри существует
+    //! Возвращает true если объект внутри существует
     virtual bool hasObject() const;
 
-    //! Возращает список mime типов записанной информации
+    //! Возвращает список mime типов записанной информации
     QStringList formats() const;
 
 private:

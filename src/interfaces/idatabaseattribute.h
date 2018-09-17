@@ -33,114 +33,114 @@ public:
 
     //! Конструктор класса
     explicit IDatabaseAttribute() {
-        m_attrType = IDatabaseAttribute::Integer;
+        m_attrType     = IDatabaseAttribute::Integer;
         m_nullsAllowed = true;
-        m_unique = false;
+        m_unique       = false;
         m_candidateKey = false;
-        m_refClass = NULL;
-        m_refUnit = NULL;
-        m_refLov = NULL;
-        m_refNumerator = NULL;
-        m_parent = NULL;
+        m_refClass     = nullptr;
+        m_refUnit      = nullptr;
+        m_refLov       = nullptr;
+        m_refNumerator = nullptr;
+        m_parent       = nullptr;
     }
 
     //! Деструктор класса
     virtual ~IDatabaseAttribute() {}
 
-    //! Возращает тип атрибута
+    //! Возвращает тип атрибута
     virtual AttrbuteType attributeType() { return m_attrType; }
 
     //! Устанавливает тип атрибута
     virtual void setAttrbuteType(AttrbuteType attrType) { m_attrType = attrType; }
 
-     //! Возращает группу атрибута
-    virtual QString group() { return m_group; }
+     //! Возвращает группу атрибута
+    virtual QString group() const { return m_group; }
 
     //! Устанавливает группу атрибута
     virtual void setGroup(const QString &group) { m_group = group; }
 
-     //! Возращает максимальную длину
+     //! Возвращает максимальную длину
     virtual qint32 maxStringLength() { return m_length; }
 
     //! Устанавливает максимальную длину
     virtual void setMaxStringLength(qint32 length) {m_length = length; }
 
-     //! Возращает точность
+     //! Возвращает точность
     virtual qint32 accuracy() { return m_accuracy; }
 
     //! Устанавливает точность
     virtual void setAccuracy(qint32 accuracy) { m_accuracy = accuracy; }
 
-     //! Возращает разрешение присваивать NULL
+     //! Возвращает разрешение присваивать NULL
     virtual bool isNullsAllowed() { return m_nullsAllowed; }
 
     //! Устанавливает разрешение присваивать NULL
     virtual void setNullsAllowed(bool nullsAllowed)
     { m_nullsAllowed = nullsAllowed; }
 
-     //! Возращает уникальность атрибута
+     //! Возвращает уникальность атрибута
     virtual bool isUnique() { return m_unique; }
 
     //! Устанавливает уникальность атрибута
     virtual void setUnique(bool unique) { m_unique = unique; }
 
-     //! Возращает является ли атрибут ключом
+     //! Возвращает является ли атрибут ключом
     virtual bool isCandidateKey() { return m_candidateKey; }
 
     //! Устанавливает атрибут ключом
     virtual void setCandidateKey(bool candidateKey)
     { m_candidateKey = candidateKey; }
 
-     //! Возращает значение по умолчанию
+     //! Возвращает значение по умолчанию
     virtual QVariant initialValue() { return m_initialValue; }
 
     //! Устанавливает значение по умолчанию
     virtual void setInitialValue(QVariant initialValue)
     { m_initialValue = initialValue; }
 
-     //! Возращает нижнюю границу атрибута
+     //! Возвращает нижнюю границу атрибута
     virtual QVariant lowerBound() { return m_lowerBound; }
 
     //! Устанавливает нижнюю границу атрибута
     virtual void setLowerBound(QVariant lowerBound)
     { m_lowerBound = lowerBound; }
 
-     //! Возращает верхнюю границу атрибута
+     //! Возвращает верхнюю границу атрибута
     virtual QVariant upperBound() { return m_upperBound; }
 
     //! Устанавливает верхнюю границу атрибута
     virtual void setUpperBound(QVariant upperBound)
     { m_upperBound = upperBound; }
 
-     //! Возращает ссылочный класс
+     //! Возвращает ссылочный класс
     virtual IDatabaseClass *referencedClass() { return m_refClass; }
 
     //! Устанавливает ссылочный класс
     virtual void setReferencedClass(IDatabaseClass *refClass)
     { m_refClass = refClass; }
 
-     //! Возращает единицу измерения атрибута
+     //! Возвращает единицу измерения атрибута
     virtual IDatabaseClass *referencedUnit() { return m_refUnit; }
 
     //! Устанавливает единицу измерения атрибута
     virtual void setReferencedUnit(IDatabaseClass *refUnit)
     { m_refUnit = refUnit; }
 
-     //! Возращает список значений атрибута
+     //! Возвращает список значений атрибута
     virtual IDatabaseClass *referencedLov() { return m_refLov; }
 
     //! Устанавливает список значений атрибута
     virtual void setReferencedLov(IDatabaseClass *refLov)
     { m_refLov = refLov; }
 
-     //! Возращает нумератор для атрибута
+     //! Возвращает нумератор для атрибута
     virtual IDatabaseClass *referenceNumerator() { return m_refNumerator; }
 
     //! Устанавливает нумератор для атрибута
     virtual void setReferenceNumerator(IDatabaseClass *refNumerator)
     { m_refNumerator = refNumerator; }
 
-     //! Возращает класс атрибута
+     //! Возвращает класс атрибута
     virtual IDatabaseClass *parent() { return m_parent; }
 
     //! Устанавливает класс атрибута
@@ -280,26 +280,8 @@ private:
         return expr;
     }
 
-    //! Тип атрибута
-    AttrbuteType m_attrType;
-
     //! Группа атрибута
     QString m_group;
-
-    //! Максимальная длина
-    qint32 m_length;
-
-    //! Точность атрибута
-    qint32 m_accuracy;
-
-    //! Разрешение использовать пустое значение
-    bool m_nullsAllowed;
-
-    //! Уникальность значения атрибута
-    bool m_unique;
-
-    //! Является ли атрибут ключём
-    bool m_candidateKey;
 
     //! Значение по умолчанию
     QVariant m_initialValue;
@@ -324,6 +306,24 @@ private:
 
     //! Класс атрибута
     IDatabaseClass *m_parent;
+
+    //! Тип атрибута
+    AttrbuteType m_attrType;
+
+    //! Максимальная длина
+    qint32 m_length;
+
+    //! Точность атрибута
+    qint32 m_accuracy;
+
+    //! Разрешение использовать пустое значение
+    bool m_nullsAllowed;
+
+    //! Уникальность значения атрибута
+    bool m_unique;
+
+    //! Является ли атрибут ключом
+    bool m_candidateKey;
 };
 
 Q_DECLARE_METATYPE(IDatabaseAttribute*)

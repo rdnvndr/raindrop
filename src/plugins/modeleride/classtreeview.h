@@ -30,7 +30,7 @@ public:
     //! Устанавливает модель для дерева классов
     void setModel(QAbstractItemModel *model);
 
-    //! Возращает текущую позицию в дереве классов
+    //! Возвращает текущую позицию в дереве классов
     QModelIndex currentIndex() const;
 
 public slots:

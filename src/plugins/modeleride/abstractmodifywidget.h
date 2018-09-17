@@ -29,10 +29,10 @@ public:
     //! Установка модели для редактирования
     void setModel(RTPTechGroup::XmlModel::TreeXmlHashModel *model);
 
-     //! Возращает модель
+     //! Возвращает модель
     RTPTechGroup::XmlModel::TreeXmlHashModel *model();
 
-    //! Возращает прокси модели
+    //! Возвращает прокси модели
     RTPTechGroup::XmlModel::ModifyProxyModel *proxyModel();
 
     //! Проверка на возможность удаления
@@ -41,7 +41,7 @@ public:
     //! Установка виджета отображения данных
     virtual void setItemView(QAbstractItemView *itemView);
 
-    //! Возращает виджет отображения данных
+    //! Возвращает виджет отображения данных
     virtual QAbstractItemView *itemView();
 
 signals:

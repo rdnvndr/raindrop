@@ -42,7 +42,7 @@ public:
     virtual IDatabaseObjects *limit(int up, int down = 0) = 0;
 
     //! Ограничение списка возращаемых полей
-    virtual IDatabaseObjects *values(IDatabaseAttribute *attr = NULL, ...) = 0;
+    virtual IDatabaseObjects *values(IDatabaseAttribute *attr = nullptr, ...) = 0;
 
 
     //! Сцепление объектов
@@ -58,7 +58,8 @@ public:
 
 
     //! Получение количества объектов
-    virtual int count(IDatabaseAttribute *attr=NULL, bool distinct=false) = 0;
+    virtual int count(IDatabaseAttribute *attr = nullptr,
+                      bool distinct = false) = 0;
 
     //! Получение среднего значения атрибута
     virtual int avg(IDatabaseAttribute *attr) = 0;

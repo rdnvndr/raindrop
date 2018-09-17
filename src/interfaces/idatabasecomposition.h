@@ -25,7 +25,7 @@ public:
         m_primaryClass = cls;
     }
 
-    //!  Возращает второй класс
+    //!  Возвращает второй класс
     virtual IDatabaseClass *secondClass() const {
         return m_secondClass;
     }
@@ -35,7 +35,7 @@ public:
         m_secondClass = cls;
     }
 
-    //! Возращает описание прямой связи
+    //! Возвращает описание прямой связи
     virtual QString directDescrition() const {
         return m_directDescrition;
     }
@@ -45,7 +45,7 @@ public:
        m_directDescrition = directDescrition;
     }
 
-    //! Возращает описание обратной связи
+    //! Возвращает описание обратной связи
     virtual QString inverseDescrition() const {
         return m_inverseDescrition;
     }

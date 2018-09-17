@@ -24,15 +24,14 @@ public:
 
 // Получение доступа к элементам модели по имени
      //! Получение класса по имени
-    virtual IDatabaseClass *oneClass(
-            const QString &name, const QString &base = QString(""));
+    virtual IDatabaseClass *oneClass(const QString &name);
 
 // Получение доступа к спискам элементов модели
-    //! Cписок всех классов модели
+    //! Список всех классов модели
     virtual IDatabaseClasses *classList();
 
-    //! Cписок классов модели
-    virtual IDatabaseClasses *classList(const QString &base);
+    //! Список производных классов модели
+    virtual IDatabaseClasses *derivedClassList(const QString &base);
 
 private:
     //! Соединение с базой данных

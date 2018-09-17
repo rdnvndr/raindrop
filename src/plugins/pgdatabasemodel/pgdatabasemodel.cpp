@@ -495,11 +495,9 @@ IDatabaseClass *PgDatabaseModel::createClass(
     return NULL;
 }
 
-IDatabaseClass *PgDatabaseModel::oneClass(
-        const QString &name, const QString &base)
+IDatabaseClass *PgDatabaseModel::oneClass(const QString &name)
 {
     Q_UNUSED(name)
-    Q_UNUSED(base)
 
     return NULL;
 }
@@ -509,7 +507,7 @@ IDatabaseClasses *PgDatabaseModel::classList()
     return NULL;
 }
 
-IDatabaseClasses *PgDatabaseModel::classList(const QString &base)
+IDatabaseClasses *PgDatabaseModel::derivedClassList(const QString &base)
 {
     Q_UNUSED(base)
 

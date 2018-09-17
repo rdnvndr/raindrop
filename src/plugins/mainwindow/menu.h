@@ -48,7 +48,7 @@ public:
     //! Перевод меню в режим редактирования
     void setEdited(bool edited);
 
-    //! Возращает режим редактирования
+    //! Возвращает режим редактирования
     bool isEdited();
 
     //! Установка иконки
@@ -56,7 +56,7 @@ public:
     void setIcon(const QIcon &icon);
     void setNativeIcon(QByteArray data);
 
-    //! Возращает иконку в исходном виде
+    //! Возвращает иконку в исходном виде
     QByteArray nativeIcon();
 
 private slots:

@@ -37,13 +37,13 @@ public:
     //! Устанавливает первый индекс
     void setFirstIndex(const QModelIndex& index);
 
-    //! Возращает первый индекс
+    //! Возвращает первый индекс
     QModelIndex firstIndex() const;
 
     //! Устанавливает второй индекс
     void setSecondIndex(const QModelIndex& index);
 
-    //! Возращает второй индекс
+    //! Возвращает второй индекс
     QModelIndex secondIndex() const;
     
 private:

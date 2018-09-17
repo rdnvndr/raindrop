@@ -23,26 +23,27 @@ public:
     //! Конструктор класса
     explicit IDatabaseExpression() { m_operator =  IDatabaseExpression::EQ; }
 
-    //! Деструктор класса
-    virtual ~IDatabaseExpression() {}
-
     //! Устанавливает первое значение
     void setFirstValue(QVariant value) { m_firstValue = value; }
 
-    //! Возращает первое значение
+    //! Возвращает первое значение
     QVariant firstValue() { return m_firstValue; }
 
     //! Устанавливает второе значение
     void setSecondValue(QVariant value) { m_secondValue = value; }
 
-    //! Возращает второе значение
+    //! Возвращает второе значение
     QVariant secondValue() { return m_secondValue; }
 
     //! Устанавливает оператор
-    void setExpressionOperator(ExpressionOperator oper) { m_operator = oper; }
+    void setExpressionOperator(IDatabaseExpression::ExpressionOperator oper) {
+        m_operator = oper;
+    }
 
-    //! Возращает оператор
-    ExpressionOperator expressionOperator()  { return m_operator; }
+    //! Возвращает оператор
+    IDatabaseExpression::ExpressionOperator expressionOperator()  {
+        return m_operator;
+    }
 
     //! Логическое "ИЛИ"
     IDatabaseExpression operator ||(const IDatabaseExpression &expr)
@@ -57,7 +58,8 @@ public:
     }
 
     IDatabaseExpression createExpression(
-            const IDatabaseExpression &expr, IDatabaseExpression::ExpressionOperator oper)
+            const IDatabaseExpression &expr,
+            IDatabaseExpression::ExpressionOperator oper)
     {
         IDatabaseExpression returnExpr;
         returnExpr.setFirstValue(QVariant::fromValue(*this));
@@ -69,7 +71,7 @@ public:
 private:
     QVariant m_firstValue;
     QVariant m_secondValue;
-    ExpressionOperator m_operator;
+    IDatabaseExpression::ExpressionOperator m_operator;
 };
 
 Q_DECLARE_METATYPE(IDatabaseExpression)

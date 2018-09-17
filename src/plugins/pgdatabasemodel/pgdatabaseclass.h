@@ -31,7 +31,7 @@ public:
 
 // Получение доступа к элементам класса по имени
     //! Получение производного класса по имени
-    IDatabaseClass *oneClass(const QString &name) ;
+    IDatabaseClass *derivedClass(const QString &name) ;
 
     //! Получение атрибута по имени
     IDatabaseAttribute *attr(const QString &name);
@@ -43,16 +43,16 @@ public:
     IDatabaseComposition *comp(const QString &name);
 
 // Получение доступа к спискам элементов класса по имени
-    //! Cписок производных классов
-    IDatabaseClasses *classList();
+    //! Список производных классов
+    IDatabaseClasses *derivedClassList();
 
-    //! Cписок атрибутов в классе
+    //! Список атрибутов в классе
     IDatabaseAttrs *attrList();
 
-    //! Cписок фильтров в классе
+    //! Список фильтров в классе
     IDatabaseFilters *filterList();
 
-    //! Cписок атрибутов в классе
+    //! Список атрибутов в классе
     IDatabaseComps *compList();
 
 // Работа с объектами

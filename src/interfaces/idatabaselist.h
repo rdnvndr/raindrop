@@ -45,11 +45,11 @@ public:
     //! Получение предыдущего элемента
     virtual bool previous() { return m_query->previous(); }
 
-    //! Возращает элемент с позицией index
+    //! Возвращает элемент с позицией index
     virtual bool seek(int index, bool relative = false)
     { return m_query->seek(index, relative); }
 
-    //! Возращает элемент с позицией index
+    //! Возвращает элемент с позицией index
     virtual bool exec()
     { return m_query->exec(); }
 
