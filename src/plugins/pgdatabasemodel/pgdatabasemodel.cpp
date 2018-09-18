@@ -145,7 +145,6 @@ bool PgDatabaseModel::init()
 
     query.exec("CREATE TABLE " + clsTable(DBLOVXML::LOV) + " ("
         + tblField(DBLOVXML::ALIAS)     + " " + fldStr(256) + ","
-        + tblField(DBLOVXML::ALIAS)     + " " + fldStr(256) + ","
         + tblField(DBLOVXML::NAME)      + " " + fldStr(27)  + ","
         + tblField(DBLOVXML::TYPE)      + " " + fldStr(15)  + ","
         + tblField(DBLOVXML::MAXSTRLEN) + " " + fldInt()    + ","
@@ -345,15 +344,15 @@ bool PgDatabaseModel::init()
         + tblField(DBATTRXML::LOWERBOUND)     + " " + fldStr(4000) + ","
         + tblField(DBATTRXML::UPPERBOUND)     + " " + fldStr(4000) + ","
         + tblField(DBATTRXML::REFCLASS)       + " " + fldGuid() +
-          " REFERENCES " + lovTable(DBCLASSXML::CLASS) + ","
+          " REFERENCES " + clsTable(DBCLASSXML::CLASS) + ","
         + tblField(DBATTRXML::REFUNIT)        + " " + fldGuid() +
-          " REFERENCES " + lovTable(DBUNITXML::UNIT) + ","
+          " REFERENCES " + clsTable(DBUNITXML::UNIT) + ","
         + tblField(DBATTRXML::REFLOV)         + " " + fldGuid() +
-          " REFERENCES " + lovTable(DBLOVXML::LOV) + ","
+          " REFERENCES " + clsTable(DBLOVXML::LOV) + ","
         + tblField(DBATTRXML::REFNUMERATOR)   + " " + fldGuid() +
-          " REFERENCES " + lovTable(DBNUMERATORXML::NUMERATOR) + ","
+          " REFERENCES " + clsTable(DBNUMERATORXML::NUMERATOR) + ","
         + tblField(DBATTRXML::PARENT)         + " " + fldGuid() +
-          " REFERENCES " + lovTable(DBCLASSXML::CLASS) + ","
+          " REFERENCES " + clsTable(DBCLASSXML::CLASS) + ","
         + tblField(DBATTRXML::ID)             + " " + fldGuid() + " PRIMARY KEY"
     ");");
 
