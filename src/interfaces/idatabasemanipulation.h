@@ -41,7 +41,7 @@ public:
     //! Ограничение объектов
     virtual IDatabaseObjects *limit(int up, int down = 0) = 0;
 
-    //! Ограничение списка возращаемых полей
+    //! Ограничение списка возвращаемых полей
     virtual IDatabaseObjects *values(IDatabaseAttribute *attr = nullptr, ...) = 0;
 
 
