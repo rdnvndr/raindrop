@@ -54,8 +54,10 @@ public:
     { return m_query->seek(index, relative); }
 
     //! Возвращает элемент с позицией index
-    virtual void exec(IDatabaseThread *databaseThread = nullptr)
-    { m_query->exec(); }
+    virtual void exec(IDatabaseThread *databaseThread = nullptr) {
+        Q_UNUSED(databaseThread)
+        m_query->exec();
+    }
 
     //! Получение элемента базы данных
     virtual T2 *value() = 0;
