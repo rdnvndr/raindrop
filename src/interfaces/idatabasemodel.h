@@ -33,6 +33,9 @@ public:
     virtual IDatabaseClasses *derivedClassList(
             const QString &base) = 0;
 
+private:
+    //! Пул SQL запросов
+    IDatabasePool *m_pool;
 };
 
 #endif // IDATABASEMODEL_H

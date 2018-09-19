@@ -17,20 +17,17 @@ public:
     virtual ~PgDatabaseComposition();
 
 
-    //! Проверка существования элемента базы данных
-    bool isExist();
-
     //! Создаёт элемент базы данных
-    bool create();
+    void create();
 
     //! Отправляет изменения элемента базы данных
-    bool push();
+    void push();
 
     //! Получает изменения элемента базы данных
-    bool pull();
+    void pull();
 
     //! Удаляет элемент базы данных
-    bool remove();
+    void remove();
 };
 
 }}

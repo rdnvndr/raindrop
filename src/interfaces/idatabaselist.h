@@ -1,7 +1,10 @@
 #ifndef IDATABASELIST_H
 #define IDATABASELIST_H
 
+#include <idatabasethread.h>
+
 #include <QtSql/QSqlQuery>
+#include <QtCore/QObject>
 
 class IDatabaseClass;
 class IDatabaseAttribute;
@@ -24,7 +27,8 @@ public:
     explicit IDatabaseList(T1 *item)
     {
         m_item  = item;
-        m_query = new QSqlQuery(item->database());
+        //m_query = new QSqlQuery(item->database());
+        m_query = new QSqlQuery();
     }
 
     //! Деструктор класса
@@ -50,11 +54,18 @@ public:
     { return m_query->seek(index, relative); }
 
     //! Возвращает элемент с позицией index
-    virtual bool exec()
-    { return m_query->exec(); }
+    virtual void exec(IDatabaseThread *databaseThread = nullptr)
+    { m_query->exec(); }
 
     //! Получение элемента базы данных
     virtual T2 *value() = 0;
+
+signals:
+    //! Сигнал об окончании выполнения операции в потоке
+    void done();
+
+    //! Сигнал об ошибке в потоке
+    void error(QSqlError err);
 
 protected:
     T1 *m_item;

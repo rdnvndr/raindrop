@@ -1,15 +1,25 @@
 #ifndef IDATABASEITEM_H
 #define IDATABASEITEM_H
 
+#include <idatabasethread.h>
+#include <idatabasepool.h>
+
 #include <QUuid>
 #include <QString>
 #include <QtSql/QSqlDatabase>
+#include <QtCore/QObject>
 
 //! Элемент базы данных
 class IDatabaseItem
 {
 
 public:
+    // Конструктор класса
+    explicit IDatabaseItem() {
+        m_threadUuid = QUuid();
+        m_pulled = false;
+    }
+
     // Деструктор класса
     virtual ~IDatabaseItem() {}
 
@@ -31,31 +41,35 @@ public:
     //! Устанавливает псевдоним элемента базы данных
     virtual void setAlias(const QString &alias) { m_alias = alias; }
 
-    //! Проверка существования элемента базы данных
-    virtual bool isExist() = 0;
+    //! Проверяет получены ли данные из базы данных
+    virtual bool isPulled() {return m_pulled; }
 
     //! Создаёт элемент базы данных
-    virtual bool create() = 0;
+    virtual void create() = 0;
 
     //! Отправляет изменения элемента базы данных
-    virtual bool push() = 0;
+    virtual void push() = 0;
 
     //! Получает изменения элемента базы данных
-    virtual bool pull() = 0;
+    virtual void pull() = 0;
 
     //! Удаляет элемент базы данных
-    virtual bool remove() = 0;
+    virtual void remove() = 0;
 
-    //! Получения соединения с базой данных
-    virtual QSqlDatabase database() const { return m_database; }
+    //! Устанавливает поток базы данных
+    virtual void setDatabaseThread(IDatabaseThread *databaseThread)
+    { m_threadUuid = databaseThread->id(); }
 
-    //! Установка соединения с базой данных
-    virtual void setDatabase(const QSqlDatabase &database)
-    { m_database = database; }
+signals:
+    //! Сигнал об окончании выполнения операции в потоке
+    void done();
+
+    //! Сигнал об ошибке в потоке
+    void error(QSqlError err);
 
 private:
-    //! Соединение с базой данных
-    QSqlDatabase m_database;
+    //! Пул SQL запросов
+    IDatabasePool *m_pool;
 
     //! Идентификатор элемента базы данных
     QUuid m_id;
@@ -65,6 +79,12 @@ private:
 
     //! Псевдоним элемента базы данных
     QString m_alias;
+
+    //! Поток базы данных
+    QUuid m_threadUuid;
+
+    //! Получены ли данные хотя бы один раз
+    bool m_pulled;
 };
 
 #endif // IDATABASEITEM_H

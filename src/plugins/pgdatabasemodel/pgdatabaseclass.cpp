@@ -19,48 +19,43 @@ PgDatabaseClass::~PgDatabaseClass()
 
 }
 
-bool PgDatabaseClass::isExist()
+void PgDatabaseClass::push()
 {
-    return  true;
+
 }
 
-bool PgDatabaseClass::push()
+void PgDatabaseClass::pull()
 {
-    return  true;
+
 }
 
-bool PgDatabaseClass::pull()
+void PgDatabaseClass::remove()
 {
-    return  true;
-}
 
-bool PgDatabaseClass::remove()
-{
-    return  true;
 }
 
 IDatabaseClass *PgDatabaseClass::derivedClass(const QString &name)
 {
     Q_UNUSED(name)
-    return NULL;
+    return nullptr;
 }
 
 IDatabaseAttribute *PgDatabaseClass::attr(const QString &name)
 {
     Q_UNUSED(name)
-    return NULL;
+    return nullptr;
 }
 
 IDatabaseFilter *PgDatabaseClass::filter(const QString &name)
 {
     Q_UNUSED(name)
-    return NULL;
+    return nullptr;
 }
 
 IDatabaseComposition *PgDatabaseClass::comp(const QString &name)
 {
     Q_UNUSED(name)
-    return NULL;
+    return nullptr;
 }
 
 IDatabaseClasses *PgDatabaseClass::derivedClassList()
@@ -87,14 +82,14 @@ IDatabaseObjects *PgDatabaseClass::filtering(IDatabaseFilter *filter)
 {
     Q_UNUSED(filter)
 
-    return NULL;
+    return nullptr;
 }
 
 IDatabaseObjects *PgDatabaseClass::filtering(IDatabaseExpression *expr)
 {
     Q_UNUSED(expr)
 
-    return NULL;
+    return nullptr;
 }
 
 IDatabaseObjects *PgDatabaseClass::all()

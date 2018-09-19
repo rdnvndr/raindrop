@@ -13,24 +13,19 @@ PgDatabaseFilter::~PgDatabaseFilter()
 
 }
 
-bool PgDatabaseFilter::isExist()
+void PgDatabaseFilter::push()
 {
-    return true;
+
 }
 
-bool PgDatabaseFilter::push()
+void PgDatabaseFilter::pull()
 {
-    return true;
+
 }
 
-bool PgDatabaseFilter::pull()
+void PgDatabaseFilter::remove()
 {
-    return true;
-}
 
-bool PgDatabaseFilter::remove()
-{
-    return true;
 }
 
 }}

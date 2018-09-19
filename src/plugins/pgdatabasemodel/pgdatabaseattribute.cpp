@@ -17,29 +17,24 @@ PgDatabaseAttribute::~PgDatabaseAttribute()
 
 }
 
-bool PgDatabaseAttribute::isExist()
+void PgDatabaseAttribute::create()
 {
-    return true;
+
 }
 
-bool PgDatabaseAttribute::create()
+void PgDatabaseAttribute::push()
 {
-    return true;
+
 }
 
-bool PgDatabaseAttribute::push()
+void PgDatabaseAttribute::pull()
 {
-    return true;
+
 }
 
-bool PgDatabaseAttribute::pull()
+void PgDatabaseAttribute::remove()
 {
-    return true;
-}
 
-bool PgDatabaseAttribute::remove()
-{
-    return true;
 }
 
 bool PgDatabaseAttribute::isInherited(IDatabaseClass *parent)

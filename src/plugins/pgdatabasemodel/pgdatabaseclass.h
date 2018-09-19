@@ -17,17 +17,14 @@ public:
     virtual ~PgDatabaseClass();
 
 
-    //! Проверка существования элемента базы данных
-    virtual bool isExist();
-
     //! Отправить изменения элемента базы данных
-    virtual bool push();
+    virtual void push();
 
     //! Получить изменения элемента базы данных
-    virtual bool pull();
+    virtual void pull();
 
     //! Удаление элемента базы данных
-    virtual bool remove();
+    virtual void remove();
 
 // Получение доступа к элементам класса по имени
     //! Получение производного класса по имени

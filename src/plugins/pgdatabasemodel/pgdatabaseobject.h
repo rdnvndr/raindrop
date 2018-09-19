@@ -17,17 +17,14 @@ public:
     virtual ~PgDatabaseObject();
 
 
-    //! Проверка существования элемента базы данных
-    bool isExist();
-
     //! Создание элемента базы данных
-    bool push();
+    void push();
 
     //! Обновление элемента базы данных
-    bool pull();
+    void pull();
 
     //! Удаление элемента базы данных
-    bool remove();
+    void remove();
 };
 
 }}

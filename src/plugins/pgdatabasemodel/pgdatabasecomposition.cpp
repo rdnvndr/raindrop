@@ -13,29 +13,24 @@ PgDatabaseComposition::~PgDatabaseComposition()
 
 }
 
-bool PgDatabaseComposition::isExist()
+void PgDatabaseComposition::create()
 {
-    return true;
+
 }
 
-bool PgDatabaseComposition::create()
+void PgDatabaseComposition::push()
 {
-    return true;
+
 }
 
-bool PgDatabaseComposition::push()
+void PgDatabaseComposition::pull()
 {
-    return true;
+
 }
 
-bool PgDatabaseComposition::pull()
+void PgDatabaseComposition::remove()
 {
-    return true;
-}
 
-bool PgDatabaseComposition::remove()
-{
-    return true;
 }
 
 }}

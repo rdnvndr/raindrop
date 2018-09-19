@@ -13,24 +13,19 @@ PgDatabaseObject::~PgDatabaseObject()
 
 }
 
-bool PgDatabaseObject::isExist()
+void PgDatabaseObject::push()
 {
-    return true;
+
 }
 
-bool PgDatabaseObject::push()
+void PgDatabaseObject::pull()
 {
-    return true;
+
 }
 
-bool PgDatabaseObject::pull()
+void PgDatabaseObject::remove()
 {
-    return true;
-}
 
-bool PgDatabaseObject::remove()
-{
-    return true;
 }
 
 }}

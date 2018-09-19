@@ -5,7 +5,8 @@ InterfacesProduct {
         "*.h"
     ]
 
-    Depends { name: "Qt"; submodules: ["widgets"] }
+    Depends { name: "Qt"; submodules: ["widgets", "sql"] }
+    Depends { name: "sqlextension" }
 
     FileTagger {
         patterns: "*.h"
