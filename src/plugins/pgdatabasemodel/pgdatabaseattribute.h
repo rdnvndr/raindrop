@@ -10,9 +10,6 @@ namespace DatabaseModel {
 class PgDatabaseAttribute : public IDatabaseAttribute
 {
 public:
-    //! Конструктор класса
-    explicit PgDatabaseAttribute();
-
     //! Деструктор класса
     virtual ~PgDatabaseAttribute();
 

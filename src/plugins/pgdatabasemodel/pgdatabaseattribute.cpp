@@ -7,11 +7,6 @@
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
-PgDatabaseAttribute::PgDatabaseAttribute()
-{
-
-}
-
 PgDatabaseAttribute::~PgDatabaseAttribute()
 {
 

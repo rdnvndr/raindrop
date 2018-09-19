@@ -28,12 +28,7 @@ public:
                      Normal    //!< Обычный
                    };
 
-    //! Конструктор класса
-    explicit IDatabaseClass(): IDatabaseManipulation(this) {
-        m_classType  = IDatabaseClass::Normal;
-        m_accessMode = IDatabaseClass::Standart;
-        m_baseClass  = nullptr;
-    }
+    friend class IDatabaseModel;
 
     //! Деструктор класса
     virtual ~IDatabaseClass() {}
@@ -115,6 +110,16 @@ public:
 
     //! Список атрибутов в классе
     virtual IDatabaseComps *compList() = 0;
+
+protected:
+    //! Конструктор класса
+    explicit IDatabaseClass(IDatabasePool *pool)
+        : IDatabaseItem (pool), IDatabaseManipulation(this)
+    {
+        m_classType  = IDatabaseClass::Normal;
+        m_accessMode = IDatabaseClass::Standart;
+        m_baseClass  = nullptr;
+    }
 
 private:
     //! Иконка класса

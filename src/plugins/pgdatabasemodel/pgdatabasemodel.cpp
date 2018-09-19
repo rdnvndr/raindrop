@@ -9,9 +9,9 @@ using namespace RTPTechGroup::MetaDataModel;
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
-PgDatabaseModel::PgDatabaseModel(QSqlDatabase db)
+PgDatabaseModel::PgDatabaseModel(IDatabasePool *pool): IDatabaseModel (pool)
 {
-    m_db = db;
+
 }
 
 QString clsTable(const QString &className) {
@@ -140,6 +140,7 @@ bool insertLov(QSqlQuery &query, const QString &name,
 
 bool PgDatabaseModel::init()
 {
+    QSqlDatabase m_db = QSqlDatabase::database();
     m_db.transaction();
     QSqlQuery query = QSqlQuery(m_db);
 

@@ -7,14 +7,19 @@
 class IDatabaseModel
 {
 public:
-    //! Конструктор класса
-    explicit IDatabaseModel() {}
-
     //! Деструктор класса
     virtual ~IDatabaseModel() {}
 
     //! Инициализирует модель базы данных
     virtual bool init() = 0;
+
+    //! Создаёт поток базы данных
+    virtual IDatabaseThread *createDatabaseThread() {
+        if (m_pool != nullptr)
+            return new IDatabaseThread(m_pool);
+
+        return nullptr;
+    }
 
 // Создание элемента по имени
     //! Создание класса по имени
@@ -32,6 +37,10 @@ public:
     //! Список производных классов модели
     virtual IDatabaseClasses *derivedClassList(
             const QString &base) = 0;
+
+protected:
+    //! Конструктор класса
+    explicit IDatabaseModel(IDatabasePool *pool) { m_pool = pool; }
 
 private:
     //! Пул SQL запросов

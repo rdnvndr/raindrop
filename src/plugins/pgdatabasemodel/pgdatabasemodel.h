@@ -12,7 +12,7 @@ class PgDatabaseModel : public IDatabaseModel
 {
 public:
     //! Конструктор класса
-    explicit PgDatabaseModel(QSqlDatabase db);
+    explicit PgDatabaseModel(IDatabasePool *pool);
 
     //! Инициализирует модель базы данных
     virtual bool init();
@@ -32,10 +32,6 @@ public:
 
     //! Список производных классов модели
     virtual IDatabaseClasses *derivedClassList(const QString &base);
-
-private:
-    //! Соединение с базой данных
-    QSqlDatabase m_db;
 };
 
 }}

@@ -7,9 +7,6 @@
 class IDatabaseObject: public IDatabaseItem
 {
 public:
-    //! Конструктор класса
-    explicit IDatabaseObject() {}
-
     //! Деструктор класса
     virtual ~IDatabaseObject() {}
 };

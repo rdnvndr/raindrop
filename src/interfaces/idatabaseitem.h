@@ -14,13 +14,7 @@ class IDatabaseItem
 {
 
 public:
-    // Конструктор класса
-    explicit IDatabaseItem() {
-        m_threadUuid = QUuid();
-        m_pulled = false;
-    }
-
-    // Деструктор класса
+    //! Деструктор класса
     virtual ~IDatabaseItem() {}
 
     //! Возвращает идентификатор элемента базы данных
@@ -66,6 +60,14 @@ signals:
 
     //! Сигнал об ошибке в потоке
     void error(QSqlError err);
+
+protected:
+    //! Конструктор класса
+    explicit IDatabaseItem(IDatabasePool *pool) {
+        m_threadUuid = QUuid();
+        m_pulled = false;
+        m_pool = pool;
+    }
 
 private:
     //! Пул SQL запросов

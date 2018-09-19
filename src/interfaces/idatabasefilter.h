@@ -11,9 +11,6 @@ class IDatabaseClass;
 class IDatabaseFilter: public IDatabaseItem
 {
 public:
-    //! Конструктор класса
-    explicit IDatabaseFilter() {}
-
     //! Деструктор класса
     virtual ~IDatabaseFilter() {}
 

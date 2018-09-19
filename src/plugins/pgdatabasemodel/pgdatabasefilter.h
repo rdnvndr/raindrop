@@ -10,9 +10,6 @@ namespace DatabaseModel {
 class PgDatabaseFilter : public IDatabaseFilter
 {
 public:
-    //! Конструктор класса
-    explicit PgDatabaseFilter();
-
     //! Деструктор класса
     virtual ~PgDatabaseFilter();
 

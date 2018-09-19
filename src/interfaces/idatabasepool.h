@@ -12,8 +12,6 @@ class IDatabasePool
 {
 
 public:
-    //! Конструктор класса
-    explicit IDatabasePool() {}
 
     //! Деструктор класса
     virtual ~IDatabasePool() {}

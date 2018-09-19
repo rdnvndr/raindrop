@@ -14,8 +14,6 @@ class IDatabaseExpression;
 class IDatabaseComposition: public IDatabaseItem
 {
 public:
-    //! Конструктор класса
-    explicit IDatabaseComposition() {}
 
     //! Деструктор класса
     virtual ~IDatabaseComposition() {}

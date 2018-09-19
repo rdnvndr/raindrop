@@ -9,7 +9,7 @@
 class IDatabaseThread
 {
 public:
-    friend class IDatabaseModelManager;
+    friend class IDatabaseModel;
 
     //! Деструктор класса
     virtual ~IDatabaseThread() {

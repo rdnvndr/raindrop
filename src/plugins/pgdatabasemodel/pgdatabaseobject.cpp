@@ -3,10 +3,6 @@
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
-PgDatabaseObject::PgDatabaseObject()
-{
-
-}
 
 PgDatabaseObject::~PgDatabaseObject()
 {

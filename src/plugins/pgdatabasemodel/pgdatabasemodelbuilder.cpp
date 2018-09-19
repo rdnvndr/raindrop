@@ -13,8 +13,9 @@ namespace DatabaseModel {
 PgDatabaseModelBuilder::PgDatabaseModelBuilder(QObject *parent):
     QObject(parent), IPlugin("")
 {
-    IDatabaseAttribute *m_attr = new PgDatabaseAttribute();
-    IDatabaseComposition *m_comp = new PgDatabaseComposition();
+    /*
+    IDatabaseAttribute *m_attr  = new PgDatabaseAttribute();
+    IDatabaseComposition *m_comp  = new PgDatabaseComposition();
     QVariant x(10);
     IDatabaseExpression e1 = (*m_attr == *m_attr);
     IDatabaseExpression e2 = (*m_attr == 10.5);
@@ -28,6 +29,7 @@ PgDatabaseModelBuilder::PgDatabaseModelBuilder(QObject *parent):
     delete m_attr;
     delete m_comp;
     delete e3;
+    */
 }
 
 PgDatabaseModelBuilder::~PgDatabaseModelBuilder()
@@ -35,9 +37,9 @@ PgDatabaseModelBuilder::~PgDatabaseModelBuilder()
 
 }
 
-IDatabaseModel *PgDatabaseModelBuilder::createDatabaseModel(QSqlDatabase db)
+IDatabaseModel *PgDatabaseModelBuilder::createDatabaseModel(IDatabasePool *pool)
 {
-    return new PgDatabaseModel(db);
+    return new PgDatabaseModel(pool);
 }
 
 QString PgDatabaseModelBuilder::implDriverName() const

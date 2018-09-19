@@ -27,7 +27,7 @@ class  PGDATABASEMODELLIB PgDatabaseModelBuilder:
 public:
 
     //! Конструктор плагина
-    explicit PgDatabaseModelBuilder(QObject *parent = 0);
+    explicit PgDatabaseModelBuilder(QObject *parent = nullptr);
 
     //! Деструктор плагина
     virtual ~PgDatabaseModelBuilder();
@@ -59,7 +59,7 @@ public:
 
 // IDatabaseModelBuilder
     //! Создание экземпляра модели базы данных
-    IDatabaseModel *createDatabaseModel(QSqlDatabase db);
+    IDatabaseModel *createDatabaseModel(IDatabasePool *pool);
 
     //! Модель базы данных
     QString implDriverName() const;

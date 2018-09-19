@@ -10,9 +10,6 @@ namespace DatabaseModel {
 class PgDatabaseClass : public IDatabaseClass
 {
 public:
-    //! Конструктор класса
-    explicit PgDatabaseClass();
-
     //! Деструктор класса
     virtual ~PgDatabaseClass();
 

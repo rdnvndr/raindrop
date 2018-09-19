@@ -3,11 +3,6 @@
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
-PgDatabaseComposition::PgDatabaseComposition()
-{
-
-}
-
 PgDatabaseComposition::~PgDatabaseComposition()
 {
 

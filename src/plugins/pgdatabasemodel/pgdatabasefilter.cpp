@@ -3,11 +3,6 @@
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
-PgDatabaseFilter::PgDatabaseFilter()
-{
-
-}
-
 PgDatabaseFilter::~PgDatabaseFilter()
 {
 

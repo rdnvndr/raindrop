@@ -9,11 +9,6 @@
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
-PgDatabaseClass::PgDatabaseClass()
-{
-
-}
-
 PgDatabaseClass::~PgDatabaseClass()
 {
 

@@ -31,19 +31,6 @@ public:
                         Timeshtamp //!< Отметка времени
                       };
 
-    //! Конструктор класса
-    explicit IDatabaseAttribute() {
-        m_attrType     = IDatabaseAttribute::Integer;
-        m_nullsAllowed = true;
-        m_unique       = false;
-        m_candidateKey = false;
-        m_refClass     = nullptr;
-        m_refUnit      = nullptr;
-        m_refLov       = nullptr;
-        m_refNumerator = nullptr;
-        m_parent       = nullptr;
-    }
-
     //! Деструктор класса
     virtual ~IDatabaseAttribute() {}
 
@@ -244,6 +231,20 @@ public:
     IDatabaseExpression contains (IDatabaseAttribute &value)
     {
         return createAttrExpr(value, IDatabaseExpression::LIKE);
+    }
+
+protected:
+    //! Конструктор класса
+    explicit IDatabaseAttribute(IDatabasePool *pool): IDatabaseItem(pool) {
+        m_attrType     = IDatabaseAttribute::Integer;
+        m_nullsAllowed = true;
+        m_unique       = false;
+        m_candidateKey = false;
+        m_refClass     = nullptr;
+        m_refUnit      = nullptr;
+        m_refLov       = nullptr;
+        m_refNumerator = nullptr;
+        m_parent       = nullptr;
     }
 
 private:

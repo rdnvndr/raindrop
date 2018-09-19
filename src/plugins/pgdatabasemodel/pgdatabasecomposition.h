@@ -10,12 +10,8 @@ namespace DatabaseModel {
 class PgDatabaseComposition : public IDatabaseComposition
 {
 public:
-    //! Конструктор класса
-    explicit PgDatabaseComposition();
-
     //! Деструктор класса
     virtual ~PgDatabaseComposition();
-
 
     //! Создаёт элемент базы данных
     void create();
