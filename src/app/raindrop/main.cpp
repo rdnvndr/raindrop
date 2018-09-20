@@ -3,6 +3,7 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QMessageBox>
+#include <QIcon>
 #include <plugin/pluginmanager.h>
 #include <signal.h>
 #include "version.h"
