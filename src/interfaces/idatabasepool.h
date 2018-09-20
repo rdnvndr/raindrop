@@ -1,11 +1,9 @@
 #ifndef IDATABASEPOOL_H
 #define IDATABASEPOOL_H
 
-#include <idatabasethread.h>
 #include <sqlextension/threadquery.h>
 
 #include <QUuid>
-
 
 //! Модель пул базы данных
 class IDatabasePool

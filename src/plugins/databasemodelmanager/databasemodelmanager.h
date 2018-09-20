@@ -10,6 +10,9 @@
 #include <idatabasemodel.h>
 #include <plugin/iplugin.h>
 
+namespace RTPTechGroup {
+namespace DatabaseModel {
+
 //! Менеджер моделей баз данных
 class  DATABASEMODELMANAGERLIB DatabaseModelManager:
         public QObject,
@@ -24,7 +27,7 @@ class  DATABASEMODELMANAGERLIB DatabaseModelManager:
 public:
 
     //! Конструктор плагина
-    explicit DatabaseModelManager(QObject *parent = 0);
+    explicit DatabaseModelManager(QObject *parent = nullptr);
 
     //! Деструктор плагина
     virtual ~DatabaseModelManager();
@@ -61,5 +64,7 @@ public:
     IDatabaseModel *createInstance(QSqlDatabase db = QSqlDatabase::database());
 
 };
+
+}}
 
 #endif

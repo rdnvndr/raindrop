@@ -8,7 +8,9 @@ class IDatabaseModel
 {
 public:
     //! Деструктор класса
-    virtual ~IDatabaseModel() {}
+    virtual ~IDatabaseModel() {
+        delete m_pool;
+    }
 
     //! Инициализирует модель базы данных
     virtual bool init() = 0;
