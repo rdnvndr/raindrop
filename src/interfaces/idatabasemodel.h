@@ -44,7 +44,6 @@ protected:
     //! Конструктор класса
     explicit IDatabaseModel(IDatabasePool *pool) { m_pool = pool; }
 
-private:
     //! Пул SQL запросов
     IDatabasePool *m_pool;
 };

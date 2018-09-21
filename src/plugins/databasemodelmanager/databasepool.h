@@ -19,10 +19,10 @@ public:
     explicit DatabasePool(const QSqlDatabase &db);
 
     //! Резервирует sql запрос потока
-    virtual void acquire(QUuid threadUuid);
+    virtual SqlExtension::ThreadQuery *acquire(QUuid threadUuid);
 
     //! Получение sql запроса потока
-    virtual RTPTechGroup::SqlExtension::ThreadQuery *threadQuery(QUuid threadUuid);
+    virtual RTPTechGroup::SqlExtension::ThreadQuery *find(QUuid threadUuid);
 
     //! Возвращает sql запрос потока
     virtual void release(QUuid threadUuid);

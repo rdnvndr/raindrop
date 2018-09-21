@@ -1,5 +1,7 @@
 #include "databasepool.h"
 
+using namespace RTPTechGroup::SqlExtension;
+
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
@@ -8,12 +10,12 @@ DatabasePool::DatabasePool(const QSqlDatabase &db)
 
 }
 
-void DatabasePool::acquire(QUuid threadUuid)
+ThreadQuery *DatabasePool::acquire(QUuid threadUuid)
 {
-
+    return nullptr;
 }
 
-RTPTechGroup::SqlExtension::ThreadQuery *DatabasePool::threadQuery(QUuid threadUuid)
+ThreadQuery *DatabasePool::find(QUuid threadUuid)
 {
     return nullptr;
 }

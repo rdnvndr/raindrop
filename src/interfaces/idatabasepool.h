@@ -15,10 +15,10 @@ public:
     virtual ~IDatabasePool() {}
 
     //! Резервирует sql запрос потока
-    virtual void acquire(QUuid threadUuid) = 0;
+    virtual RTPTechGroup::SqlExtension::ThreadQuery *acquire(QUuid threadUuid) = 0;
 
     //! Получение sql запроса потока
-    virtual RTPTechGroup::SqlExtension::ThreadQuery *threadQuery(QUuid threadUuid) = 0;
+    virtual RTPTechGroup::SqlExtension::ThreadQuery *find(QUuid threadUuid) = 0;
 
     //! Возвращает sql запрос потока
     virtual void release(QUuid threadUuid) = 0;
