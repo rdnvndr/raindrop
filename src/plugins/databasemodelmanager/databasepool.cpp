@@ -7,12 +7,12 @@ namespace DatabaseModel {
 
 DatabasePool::DatabasePool(const QSqlDatabase &db)
 {
-
+    m_db = db;
 }
 
 ThreadQuery *DatabasePool::acquire(QUuid threadUuid)
 {
-    return nullptr;
+    return new ThreadQuery(m_db);
 }
 
 ThreadQuery *DatabasePool::find(QUuid threadUuid)

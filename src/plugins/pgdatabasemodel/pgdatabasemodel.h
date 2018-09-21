@@ -15,7 +15,7 @@ public:
     explicit PgDatabaseModel(IDatabasePool *pool);
 
     //! Инициализирует модель базы данных
-    virtual bool init();
+    virtual void init();
 
 // Создание элемента по имени
     //! Создание класса по имени
@@ -32,6 +32,9 @@ public:
 
     //! Список производных классов модели
     virtual IDatabaseClasses *derivedClassList(const QString &base);
+
+private:
+    int m_number;
 };
 
 }}

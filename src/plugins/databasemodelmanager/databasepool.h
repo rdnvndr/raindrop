@@ -26,6 +26,9 @@ public:
 
     //! Возвращает sql запрос потока
     virtual void release(QUuid threadUuid);
+
+private:
+    QSqlDatabase m_db;
 };
 
 }}

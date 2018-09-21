@@ -13,7 +13,7 @@ public:
     }
 
     //! Инициализирует модель базы данных
-    virtual bool init() = 0;
+    virtual void init() = 0;
 
     //! Создаёт поток базы данных
     virtual IDatabaseThread *createDatabaseThread() {
