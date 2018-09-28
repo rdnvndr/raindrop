@@ -14,7 +14,8 @@ using namespace RTPTechGroup::SqlExtension;
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
-PgDatabaseModel::PgDatabaseModel(IDatabasePool *pool): IDatabaseModel (pool)
+PgDatabaseModel::PgDatabaseModel(IDatabasePool *pool): QObject (),
+    IDatabaseModel (pool)
 {
 
 }
@@ -140,22 +141,29 @@ void insertLov(ThreadQuery *query, const QString &name,
     query->execute();
 }
 
-void PgDatabaseModel::init()
+QUuid PgDatabaseModel::init()
 {
     IDatabaseThread *dbThread = this->createDatabaseThread();
     ThreadQuery *query = m_pool->acquire(dbThread->id());
+    QUuid uuidOper = QUuid::createUuid();
 
     // Обработка ошибки
-    QObject::connect(query, &ThreadQuery::error, [this, query, dbThread] (QSqlError err) {
-        qCWarning(lcPgDatabaseModel)
-              << QObject::tr("Ошибка создания структуры модели в базе данных.")
-              + " " + err.text();
+    QObject::connect(query, &ThreadQuery::error, [this, query, dbThread, uuidOper]
+                     (const QUuid &queryUuid, const QSqlError &err)
+    {
+        Q_UNUSED(queryUuid)
+
         query->rollback();
         this->m_pool->release(dbThread->id());
+        emit this->error(uuidOper, err);
     });
 
     this->m_number = 1;
-    QObject::connect(query, &ThreadQuery::executeDone, [this, query, dbThread] () {
+    QObject::connect(query, &ThreadQuery::executeDone, [this, query, dbThread, uuidOper]
+                     (const QUuid &queryUuid)
+    {
+        Q_UNUSED(queryUuid)
+
         switch (this->m_number) {
         case 1:
             query->execute("CREATE TABLE " + lovTable(DBATTRTYPEXML::ATTRTYPE) + " ("
@@ -709,6 +717,7 @@ void PgDatabaseModel::init()
         case 71:
             query->commit();
             this->m_pool->release(dbThread->id());
+            emit this->done(uuidOper);
 
         }
         this->m_number++;
@@ -723,6 +732,8 @@ void PgDatabaseModel::init()
         + tblField(DBLOVXML::ACCURACY)  + " " + fldInt()    + ","
         + tblField(DBLOVXML::ID)        + " " + fldGuid()   + " PRIMARY KEY"
      ");");
+
+    return uuidOper;
 }
 
 IDatabaseClass *PgDatabaseModel::createClass(

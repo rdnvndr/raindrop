@@ -4,18 +4,23 @@
 #include <QtSql/QSqlDatabase>
 #include <idatabasemodel.h>
 
+#include "pgdatabasemodelglobal.h"
+
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
 //! Реализация модели базы данных PostgreSql
-class PgDatabaseModel : public IDatabaseModel
+class PGDATABASEMODELLIB PgDatabaseModel :public QObject,  public IDatabaseModel
+
 {
+    Q_OBJECT
+
 public:
     //! Конструктор класса
     explicit PgDatabaseModel(IDatabasePool *pool);
 
     //! Инициализирует модель базы данных
-    virtual void init();
+    virtual QUuid init();
 
 // Создание элемента по имени
     //! Создание класса по имени
@@ -32,6 +37,14 @@ public:
 
     //! Список производных классов модели
     virtual IDatabaseClasses *derivedClassList(const QString &base);
+
+signals:
+    //! Сигнал об окончании выполнения операции в потоке
+    void done(const QUuid &uuidOper);
+
+    //! Сигнал об ошибке в потоке
+    void error(const QUuid &uuidOper, QSqlError err);
+
 
 private:
     int m_number;

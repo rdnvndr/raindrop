@@ -13,7 +13,7 @@ public:
     }
 
     //! Инициализирует модель базы данных
-    virtual void init() = 0;
+    virtual QUuid init() = 0;
 
     //! Создаёт поток базы данных
     virtual IDatabaseThread *createDatabaseThread() {
@@ -39,6 +39,13 @@ public:
     //! Список производных классов модели
     virtual IDatabaseClasses *derivedClassList(
             const QString &base) = 0;
+
+signals:
+    //! Сигнал об окончании выполнения операции в потоке
+    virtual void done(const QUuid &uuidOper) = 0;
+
+    //! Сигнал об ошибке в потоке
+    virtual void error(const QUuid &uuidOper, QSqlError err) = 0;
 
 protected:
     //! Конструктор класса
