@@ -113,9 +113,10 @@ public:
 
 protected:
     //! Конструктор класса
-    explicit IDatabaseClass(IDatabasePool *pool)
+    explicit IDatabaseClass(const QString &name, IDatabasePool *pool)
         : IDatabaseItem (pool), IDatabaseManipulation(this)
     {
+        m_name       = name;
         m_classType  = IDatabaseClass::Normal;
         m_accessMode = IDatabaseClass::Standart;
         m_baseClass  = nullptr;

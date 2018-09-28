@@ -8,6 +8,8 @@
 #include <QObject>
 #include <QtSql/QSql>
 
+#include "pgdatabaseclass.h"
+
 using namespace RTPTechGroup::MetaDataModel;
 using namespace RTPTechGroup::SqlExtension;
 
@@ -749,17 +751,12 @@ IDatabaseClass *PgDatabaseModel::oneClass(const QString &name)
 {
     Q_UNUSED(name)
 
-    return nullptr;
+    return new PgDatabaseClass(name, this->m_pool);
 }
 
-IDatabaseClasses *PgDatabaseModel::classList()
+IDatabaseClasses *PgDatabaseModel::classList(const QString &baseClass)
 {
-    return nullptr;
-}
-
-IDatabaseClasses *PgDatabaseModel::derivedClassList(const QString &base)
-{
-    Q_UNUSED(base)
+     Q_UNUSED(baseClass)
 
     return nullptr;
 }

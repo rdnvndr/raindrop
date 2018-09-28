@@ -32,11 +32,8 @@ public:
     virtual IDatabaseClass *oneClass(const QString &name);
 
 // Получение доступа к спискам элементов модели
-    //! Список всех классов модели
-    virtual IDatabaseClasses *classList();
-
-    //! Список производных классов модели
-    virtual IDatabaseClasses *derivedClassList(const QString &base);
+    //! Список классов модели
+    virtual IDatabaseClasses *classList(const QString &baseClass = QString());
 
 signals:
     //! Сигнал об окончании выполнения операции в потоке
