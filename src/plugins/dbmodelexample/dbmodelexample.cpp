@@ -85,11 +85,23 @@ DbModelExample::DbModelExample(QObject *parent):
 
         }
 
-        // Создание класса
+        // Создание класса               
+        IDatabaseThread *dbThread = dbModel->createDatabaseThread();
+        dbThread->transaction();
+
         IDatabaseClass *dbNewClass = dbModel->oneClass("TestNewClass");
+        dbNewClass->setDatabaseThread(dbThread);
         dbNewClass->setAlias("Тестовый класс");
         dbNewClass->setMaxVersion(5);
         dbNewClass->create();
+
+        IDatabaseAttribute *dbNewAttr = dbNewClass->attr("name");
+        dbNewAttr->setDatabaseThread(dbThread);
+        dbNewAttr->setAlias("Атрибут");
+        dbNewAttr->setInitialValue(0);
+        dbNewAttr->create();
+
+        dbThread->commit();
 
     }
 }

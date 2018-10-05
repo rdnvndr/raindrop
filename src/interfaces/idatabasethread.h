@@ -20,6 +20,16 @@ public:
     QUuid id() const
     { return m_id; }
 
+// Работа с транзакциями
+    //! Начало транзакции
+    void transaction() {}
+
+    //! Завершение транзакции
+    void commit() {}
+
+    //! Откат транзакции
+    void rollback() {}
+
 private:
     //! Конструктор класса
     explicit IDatabaseThread(IDatabasePool *pool) {
