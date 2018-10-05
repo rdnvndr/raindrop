@@ -29,19 +29,6 @@ public:
     //! Удаление элемента базы данных
     virtual void remove();
 
-// Создание элемента класса по имени
-    //! Создание производного класса по имени
-    virtual IDatabaseClass *createClass(const QString &name);
-
-    //! Создание атрибута по имени
-    virtual IDatabaseAttribute *createAttr(const QString &name);
-
-    //! Создание фильтра по имени
-    virtual IDatabaseFilter *createFilter(const QString &name);
-
-    //! Создание состава по имени
-    virtual IDatabaseComposition *createComp(const QString &name);
-
 // Получение доступа к элементам класса по имени
     //! Получение производного класса по имени
     IDatabaseClass *derivedClass(const QString &name) ;

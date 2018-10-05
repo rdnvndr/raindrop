@@ -72,19 +72,6 @@ public:
     //! Устанавливает максимальное количество версий объекта
     virtual void setMaxVersion(qint32 maxVersion) { m_maxVersion = maxVersion; }
 
-// Создание элемента класса по имени
-    //! Создание производного класса по имени
-    virtual IDatabaseClass *createClass(const QString &name) = 0;
-
-    //! Создание атрибута по имени
-    virtual IDatabaseAttribute *createAttr(const QString &name) = 0;
-
-    //! Создание фильтра по имени
-    virtual IDatabaseFilter *createFilter(const QString &name) = 0;
-
-    //! Создание состава по имени
-    virtual IDatabaseComposition *createComp(const QString &name) = 0;
-
 // Получение доступа к элементам класса по имени
     //! Получение производного класса по имени
     virtual IDatabaseClass *derivedClass(const QString &name) = 0;

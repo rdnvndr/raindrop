@@ -23,11 +23,6 @@ public:
         return nullptr;
     }
 
-// Создание элемента по имени
-    //! Создание класса по имени
-    virtual IDatabaseClass *createClass(
-            const QString &name, const QString &base = QString("")) = 0;
-
 // Получение доступа к элементам модели по имени
     //! Получение класса по имени
     virtual IDatabaseClass *oneClass(const QString &name) = 0;

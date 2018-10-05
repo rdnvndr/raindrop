@@ -40,30 +40,6 @@ void PgDatabaseClass::remove()
 
 }
 
-IDatabaseClass *PgDatabaseClass::createClass(const QString &name)
-{
-    Q_UNUSED(name)
-    return nullptr;
-}
-
-IDatabaseAttribute *PgDatabaseClass::createAttr(const QString &name)
-{
-    Q_UNUSED(name)
-    return nullptr;
-}
-
-IDatabaseFilter *PgDatabaseClass::createFilter(const QString &name)
-{
-    Q_UNUSED(name)
-    return nullptr;
-}
-
-IDatabaseComposition *PgDatabaseClass::createComp(const QString &name)
-{
-    Q_UNUSED(name)
-    return nullptr;
-}
-
 IDatabaseClass *PgDatabaseClass::derivedClass(const QString &name)
 {
     Q_UNUSED(name)

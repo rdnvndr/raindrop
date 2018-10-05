@@ -66,33 +66,31 @@ DbModelExample::DbModelExample(QObject *parent):
             int count = dbClass->count();
 
             // Создание атрибута
-            IDatabaseAttribute *dbAttr = dbClass->createAttr("name");
-            if (dbAttr) {
-                dbAttr->setAlias("Атрибут");
-                dbAttr->setInitialValue(0);
-                dbAttr->push();
+            IDatabaseAttribute *dbAttr = dbClass->attr("name");
+            dbAttr->setAlias("Атрибут");
+            dbAttr->setInitialValue(0);
+            dbAttr->create();
 
-                // Получение объектов
-                IDatabaseObjects *objects
-                        = dbClass->values()->orderByAsc(dbAttr);
-                if (objects) {
-                    objects->exec();
-                    objects->next();
-                    IDatabaseObject *object = objects->value();
-//                    QVariant value = object->value(dbAttr);
-//                    object->value(dbAttr) = "test";
-//                    object->push();
-                }
+            // Получение объектов
+            IDatabaseObjects *objects
+                    = dbClass->values()->orderByAsc(dbAttr);
+            if (objects) {
+                objects->exec();
+                objects->next();
+                IDatabaseObject *object = objects->value();
+                //                    QVariant value = object->value(dbAttr);
+                //                    object->value(dbAttr) = "test";
+                //                    object->push();
             }
+
         }
 
         // Создание класса
-        IDatabaseClass *dbNewClass = dbModel->createClass("TestNewClass");
-        if (dbNewClass) {
-            dbNewClass->setAlias("Тестовый класс");
-            dbNewClass->setMaxVersion(5);
-            dbNewClass->push();
-        }
+        IDatabaseClass *dbNewClass = dbModel->oneClass("TestNewClass");
+        dbNewClass->setAlias("Тестовый класс");
+        dbNewClass->setMaxVersion(5);
+        dbNewClass->create();
+
     }
 }
 

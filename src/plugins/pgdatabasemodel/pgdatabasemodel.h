@@ -22,11 +22,6 @@ public:
     //! Инициализирует модель базы данных
     virtual QUuid init();
 
-// Создание элемента по имени
-    //! Создание класса по имени
-    virtual IDatabaseClass *createClass(
-            const QString &name, const QString &base = QString(""));
-
 // Получение доступа к элементам модели по имени
      //! Получение класса по имени
     virtual IDatabaseClass *oneClass(const QString &name);

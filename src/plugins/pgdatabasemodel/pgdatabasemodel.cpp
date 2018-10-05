@@ -738,15 +738,6 @@ QUuid PgDatabaseModel::init()
     return uuidOper;
 }
 
-IDatabaseClass *PgDatabaseModel::createClass(
-        const QString &name, const QString &base)
-{
-    Q_UNUSED(name)
-    Q_UNUSED(base)
-
-    return nullptr;
-}
-
 IDatabaseClass *PgDatabaseModel::oneClass(const QString &name)
 {
     Q_UNUSED(name)

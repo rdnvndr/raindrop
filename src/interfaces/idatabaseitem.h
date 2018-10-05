@@ -35,8 +35,8 @@ public:
     //! Устанавливает псевдоним элемента базы данных
     virtual void setAlias(const QString &alias) { m_alias = alias; }
 
-    //! Проверяет получены ли данные из базы данных
-    virtual bool isPulled() {return m_pulled; }
+    //! Проверяет проведена ли синхронизацию с базой данных
+    virtual bool isSync() { return m_sync; }
 
     //! Создаёт элемент базы данных
     virtual void create() = 0;
@@ -65,7 +65,7 @@ protected:
     //! Конструктор класса
     explicit IDatabaseItem(IDatabasePool *pool) {
         m_threadUuid = QUuid();
-        m_pulled = false;
+        m_sync = false;
         m_pool = pool;
     }
 
@@ -85,7 +85,7 @@ protected:
     QUuid m_threadUuid;
 
     //! Получены ли данные хотя бы один раз
-    bool m_pulled;
+    bool m_sync;
 };
 
 #endif // IDATABASEITEM_H
