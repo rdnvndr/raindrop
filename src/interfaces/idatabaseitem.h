@@ -21,19 +21,28 @@ public:
     virtual QUuid id() { return m_id; }
 
     //! Устанавливает идентификатор элемента базы данных
-    virtual void setId(QUuid id) { m_id = id; }
+    virtual void setId(QUuid id) {
+        m_sync = false;
+        m_id = id;
+    }
 
     //! Возвращает имя элемента базы данных
     virtual QString name() {return m_name; }
 
     //! Устанавливает имя элемента базы данных
-    virtual void setName(const QString &name) { m_name = name; }
+    virtual void setName(const QString &name) {
+        m_sync = false;
+        m_name = name;
+    }
 
     //! Возвращает псевдоним элемента базы данных
     virtual QString alias() { return m_alias; }
 
     //! Устанавливает псевдоним элемента базы данных
-    virtual void setAlias(const QString &alias) { m_alias = alias; }
+    virtual void setAlias(const QString &alias) {
+        m_sync = false;
+        m_alias = alias;
+    }
 
     //! Проверяет проведена ли синхронизацию с базой данных
     virtual bool isSync() { return m_sync; }

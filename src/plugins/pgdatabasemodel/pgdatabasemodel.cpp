@@ -740,8 +740,6 @@ QUuid PgDatabaseModel::init()
 
 IDatabaseClass *PgDatabaseModel::oneClass(const QString &name)
 {
-    Q_UNUSED(name)
-
     return new PgDatabaseClass(name, this->m_pool);
 }
 

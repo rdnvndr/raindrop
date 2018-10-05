@@ -38,39 +38,55 @@ public:
     virtual QIcon icon() const { return m_icon; }
 
     //! Устанавливает иконку класса
-    virtual void setIcon(const QIcon &icon) { m_icon = icon; }
+    virtual void setIcon(const QIcon &icon) {
+        m_sync = false;
+        m_icon = icon;
+    }
 
     //! Возвращает тип класса
     virtual ClassType classType() { return m_classType; }
 
     //! Устанавливает тип класса
-    virtual void setClassType(ClassType classType) { m_classType = classType; }
+    virtual void setClassType(ClassType classType) {
+        m_sync = false;
+        m_classType = classType;
+    }
 
     //! Возвращает режим доступа
     virtual AccessMode accessMode() { return m_accessMode; }
 
     //! Устанавливает режим доступа
-    virtual void setAccessMode(AccessMode accessMode)
-    { m_accessMode = accessMode; }
+    virtual void setAccessMode(AccessMode accessMode) {
+        m_sync = false;
+        m_accessMode = accessMode;
+    }
 
     //!  Возвращает базовый класс
     virtual IDatabaseClass *baseClass() { return m_baseClass; }
 
     //!  Устанавливает базовый класс
-    virtual void setBaseClass(IDatabaseClass *parent) { m_baseClass = parent; }
+    virtual void setBaseClass(IDatabaseClass *parent) {
+        m_sync = false;
+        m_baseClass = parent;
+    }
 
     //!  Возвращает шаблон имени объекта
     virtual QString objectNameTemplate() { return m_objectNameTemplate; }
 
     //!  Устанавливает шаблон имени объекта
-    virtual void setObjectNameTemplate(const QString &objectNameTemplate)
-    { m_objectNameTemplate = objectNameTemplate; }
+    virtual void setObjectNameTemplate(const QString &objectNameTemplate) {
+        m_sync = false;
+        m_objectNameTemplate = objectNameTemplate;
+    }
 
     //! Возвращает максимальное количество версий объекта
     virtual qint32 maxVersion() { return m_maxVersion; }
 
     //! Устанавливает максимальное количество версий объекта
-    virtual void setMaxVersion(qint32 maxVersion) { m_maxVersion = maxVersion; }
+    virtual void setMaxVersion(qint32 maxVersion) {
+        m_sync = false;
+        m_maxVersion = maxVersion;
+    }
 
 // Получение доступа к элементам класса по имени
     //! Получение производного класса по имени

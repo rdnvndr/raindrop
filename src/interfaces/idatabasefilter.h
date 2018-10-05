@@ -21,6 +21,7 @@ public:
 
     //! Устанавливает основной класс
     virtual void setPrimaryClass(IDatabaseClass *cls) {
+        m_sync = false;
         m_primaryClass = cls;
     }
 
@@ -31,6 +32,7 @@ public:
 
      //! Устанавливает второй класс
     virtual void setSecondClass(IDatabaseClass *cls) {
+        m_sync = false;
         m_secondClass = cls;
     }
 
@@ -41,7 +43,8 @@ public:
 
     //! Устанавливает описание прямой связи
     virtual void setDirectDescrition(const QString &directDescrition) {
-       m_directDescrition = directDescrition;
+        m_sync = false;
+        m_directDescrition = directDescrition;
     }
 
     //! Возвращает описание обратной связи
@@ -51,11 +54,13 @@ public:
 
     //! Устанавливает описание обратной связи
     virtual void setInverseDescrition(const QString &inverseDescrition) {
+        m_sync = false;
         m_inverseDescrition = inverseDescrition;
     }
 
     //! Установка выражения для фильтра
     virtual void setExpression(IDatabaseExpression *expr) {
+        m_sync = false;
         m_expression = expr;
     }
 
