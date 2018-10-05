@@ -9,17 +9,17 @@ PgDatabaseObject::~PgDatabaseObject()
 
 }
 
-void PgDatabaseObject::push()
+void PgDatabaseObject::push(IDatabaseThread *databaseThread)
 {
 
 }
 
-void PgDatabaseObject::pull()
+void PgDatabaseObject::pull(IDatabaseThread *databaseThread)
 {
 
 }
 
-void PgDatabaseObject::remove()
+void PgDatabaseObject::remove(IDatabaseThread *databaseThread)
 {
 
 }

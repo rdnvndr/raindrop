@@ -90,13 +90,13 @@ DbModelExample::DbModelExample(QObject *parent):
         dbThread->transaction();
 
         IDatabaseClass *dbNewClass = dbModel->oneClass("TestNewClass");
-        dbNewClass->setDatabaseThread(dbThread);
+
         dbNewClass->setAlias("Тестовый класс");
         dbNewClass->setMaxVersion(5);
         dbNewClass->create();
 
         IDatabaseAttribute *dbNewAttr = dbNewClass->attr("name");
-        dbNewAttr->setDatabaseThread(dbThread);
+
         dbNewAttr->setAlias("Атрибут");
         dbNewAttr->setInitialValue(0);
         dbNewAttr->create();

@@ -20,22 +20,22 @@ PgDatabaseClass::~PgDatabaseClass()
 
 }
 
-void PgDatabaseClass::create()
+void PgDatabaseClass::create(IDatabaseThread *databaseThread)
 {
 
 }
 
-void PgDatabaseClass::push()
+void PgDatabaseClass::push(IDatabaseThread *databaseThread)
 {
 
 }
 
-void PgDatabaseClass::pull()
+void PgDatabaseClass::pull(IDatabaseThread *databaseThread)
 {
 
 }
 
-void PgDatabaseClass::remove()
+void PgDatabaseClass::remove(IDatabaseThread *databaseThread)
 {
 
 }

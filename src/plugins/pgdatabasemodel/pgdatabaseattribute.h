@@ -15,16 +15,16 @@ public:
 
 
     //! Создаёт элемент базы данных
-    void create();
+    void create(IDatabaseThread *databaseThread = nullptr);
 
     //! Отправляет изменения элемента базы данных
-    void push();
+    void push(IDatabaseThread *databaseThread = nullptr);
 
     //! Получает изменения элемента базы данных
-    void pull();
+    void pull(IDatabaseThread *databaseThread = nullptr);
 
     //! Удаляет элемент базы данных
-    void remove();
+    void remove(IDatabaseThread *databaseThread = nullptr);
 
 
     //! Проверка наследования атрибута

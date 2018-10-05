@@ -18,16 +18,16 @@ public:
 
 // Работа с элементами базы данных
     //! Создаёт элемент базы данных
-    virtual void create();
+    virtual void create(IDatabaseThread *databaseThread = nullptr);
 
     //! Отправить изменения элемента базы данных
-    virtual void push();
+    virtual void push(IDatabaseThread *databaseThread = nullptr);
 
     //! Получить изменения элемента базы данных
-    virtual void pull();
+    virtual void pull(IDatabaseThread *databaseThread = nullptr);
 
     //! Удаление элемента базы данных
-    virtual void remove();
+    virtual void remove(IDatabaseThread *databaseThread = nullptr);
 
 // Получение доступа к элементам класса по имени
     //! Получение производного класса по имени

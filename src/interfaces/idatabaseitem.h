@@ -48,20 +48,16 @@ public:
     virtual bool isSync() { return m_sync; }
 
     //! Создаёт элемент базы данных
-    virtual void create() = 0;
+    virtual void create(IDatabaseThread *databaseThread = nullptr) = 0;
 
     //! Отправляет изменения элемента базы данных
-    virtual void push() = 0;
+    virtual void push(IDatabaseThread *databaseThread = nullptr) = 0;
 
     //! Получает изменения элемента базы данных
-    virtual void pull() = 0;
+    virtual void pull(IDatabaseThread *databaseThread = nullptr) = 0;
 
     //! Удаляет элемент базы данных
-    virtual void remove() = 0;
-
-    //! Устанавливает поток базы данных
-    virtual void setDatabaseThread(IDatabaseThread *databaseThread)
-    { m_threadUuid = databaseThread->id(); }
+    virtual void remove(IDatabaseThread *databaseThread = nullptr) = 0;
 
 signals:
     //! Сигнал об окончании выполнения операции в потоке
@@ -73,7 +69,6 @@ signals:
 protected:
     //! Конструктор класса
     explicit IDatabaseItem(IDatabasePool *pool) {
-        m_threadUuid = QUuid();
         m_sync = false;
         m_pool = pool;
     }
@@ -89,9 +84,6 @@ protected:
 
     //! Псевдоним элемента базы данных
     QString m_alias;
-
-    //! Поток базы данных
-    QUuid m_threadUuid;
 
     //! Получены ли данные хотя бы один раз
     bool m_sync;

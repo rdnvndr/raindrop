@@ -8,17 +8,17 @@ PgDatabaseFilter::~PgDatabaseFilter()
 
 }
 
-void PgDatabaseFilter::push()
+void PgDatabaseFilter::push(IDatabaseThread *databaseThread)
 {
 
 }
 
-void PgDatabaseFilter::pull()
+void PgDatabaseFilter::pull(IDatabaseThread *databaseThread)
 {
 
 }
 
-void PgDatabaseFilter::remove()
+void PgDatabaseFilter::remove(IDatabaseThread *databaseThread)
 {
 
 }

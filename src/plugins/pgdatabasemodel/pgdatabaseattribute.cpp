@@ -12,22 +12,22 @@ PgDatabaseAttribute::~PgDatabaseAttribute()
 
 }
 
-void PgDatabaseAttribute::create()
+void PgDatabaseAttribute::create(IDatabaseThread *databaseThread)
 {
 
 }
 
-void PgDatabaseAttribute::push()
+void PgDatabaseAttribute::push(IDatabaseThread *databaseThread)
 {
 
 }
 
-void PgDatabaseAttribute::pull()
+void PgDatabaseAttribute::pull(IDatabaseThread *databaseThread)
 {
 
 }
 
-void PgDatabaseAttribute::remove()
+void PgDatabaseAttribute::remove(IDatabaseThread *databaseThread)
 {
 
 }

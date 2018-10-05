@@ -14,13 +14,13 @@ public:
     virtual ~PgDatabaseFilter();
 
     //! Отправить изменения элемента базы данных
-    void push();
+    void push(IDatabaseThread *databaseThread = nullptr);
 
     //! Получить изменения элемента базы данных
-    void pull();
+    void pull(IDatabaseThread *databaseThread = nullptr);
 
     //! Удаление элемента базы данных
-    void remove();
+    void remove(IDatabaseThread *databaseThread = nullptr);
 };
 
 }}
