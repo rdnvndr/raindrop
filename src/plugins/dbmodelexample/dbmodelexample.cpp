@@ -67,20 +67,22 @@ DbModelExample::DbModelExample(QObject *parent):
 
             // Создание атрибута
             IDatabaseAttribute *dbAttr = dbClass->attr("name");
-            dbAttr->setAlias("Атрибут");
-            dbAttr->setInitialValue(0);
-            dbAttr->create();
+            if (dbAttr != nullptr) {
+                dbAttr->setAlias("Атрибут");
+                dbAttr->setInitialValue(0);
+                dbAttr->create();
 
-            // Получение объектов
-            IDatabaseObjects *objects
-                    = dbClass->values()->orderByAsc(dbAttr);
-            if (objects) {
-                objects->exec();
-                objects->next();
-                IDatabaseObject *object = objects->value();
-                //                    QVariant value = object->value(dbAttr);
-                //                    object->value(dbAttr) = "test";
-                //                    object->push();
+                // Получение объектов
+                IDatabaseObjects *objects
+                        = dbClass->values()->orderByAsc(dbAttr);
+                if (objects) {
+                    objects->exec();
+                    objects->next();
+                    IDatabaseObject *object = objects->value();
+                    //                    QVariant value = object->value(dbAttr);
+                    //                    object->value(dbAttr) = "test";
+                    //                    object->push();
+                }
             }
 
         }
@@ -90,16 +92,18 @@ DbModelExample::DbModelExample(QObject *parent):
         dbThread->transaction();
 
         IDatabaseClass *dbNewClass = dbModel->oneClass("TestNewClass");
+        if (dbNewClass != nullptr) {
+            dbNewClass->setAlias("Тестовый класс");
+            dbNewClass->setMaxVersion(5);
+            dbNewClass->create();
 
-        dbNewClass->setAlias("Тестовый класс");
-        dbNewClass->setMaxVersion(5);
-        dbNewClass->create();
-
-        IDatabaseAttribute *dbNewAttr = dbNewClass->attr("name");
-
-        dbNewAttr->setAlias("Атрибут");
-        dbNewAttr->setInitialValue(0);
-        dbNewAttr->create();
+            IDatabaseAttribute *dbNewAttr = dbNewClass->attr("name");
+            if (dbNewAttr != nullptr) {
+                dbNewAttr->setAlias("Атрибут");
+                dbNewAttr->setInitialValue(0);
+                dbNewAttr->create();
+            }
+        }
 
         dbThread->commit();
 
