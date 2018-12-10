@@ -29,6 +29,8 @@ DbModelExample::DbModelExample(QObject *parent):
     db.setUserName("postgres");
     db.setPassword("");
     bool ok = db.open();
+    if (!ok)
+        return;
     qCWarning(lcDbModelExample) << tr("Соединение с базой данных: ") << ok;
 
     // Текущий класс
@@ -95,13 +97,13 @@ DbModelExample::DbModelExample(QObject *parent):
         if (dbNewClass != nullptr) {
             dbNewClass->setAlias("Тестовый класс");
             dbNewClass->setMaxVersion(5);
-            dbNewClass->create();
+            dbNewClass->create(dbThread);
 
             IDatabaseAttribute *dbNewAttr = dbNewClass->attr("name");
             if (dbNewAttr != nullptr) {
                 dbNewAttr->setAlias("Атрибут");
                 dbNewAttr->setInitialValue(0);
-                dbNewAttr->create();
+                dbNewAttr->create(dbThread);
             }
         }
 
