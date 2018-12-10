@@ -41,7 +41,7 @@ public:
     //! Установка таблицы
     virtual void setItemView(QAbstractItemView *itemView);
 
-    //! Возращает таблицу
+    //! Возвращает таблицу
     virtual QAbstractItemView *itemView();
 
     //! Получение маппера данных

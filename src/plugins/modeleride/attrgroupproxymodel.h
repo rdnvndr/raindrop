@@ -18,10 +18,10 @@ public:
     //! Деструктор класаа
     virtual ~AttrGroupProxyModel();
 
-    //! Возращает количество строк в индексе родителя
+    //! Возвращает количество строк в индексе родителя
     qint32 rowCount(const QModelIndex& parent) const;
 
-    //! Возращает хранимые данные
+    //! Возвращает хранимые данные
     QVariant data(const QModelIndex &index, qint32 role = Qt::DisplayRole) const;
 
     //! Установка модели источника
@@ -39,7 +39,7 @@ public:
     //! Указание столбца с уникальными значениями
     void setUniqueColumn(qint32 column);
 
-    //! Возращает столбец с уникальными значениями
+    //! Возвращает столбец с уникальными значениями
     qint32 uniqueColumn() const;
 
 public slots:

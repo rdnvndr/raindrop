@@ -25,10 +25,10 @@ public:
     //! Деструктор редактора прав доступа
     virtual ~PermissionWidget();
 
-    //! Возращает модель
+    //! Возвращает модель
     RTPTechGroup::XmlModel::TreeXmlHashModel *model();
 
-    //! Возращает прокси модели
+    //! Возвращает прокси модели
     PermissionProxyModel *proxyModel();
 
     //! Установка модели для редактирования прав доступа

@@ -44,7 +44,7 @@ public:
     //! Перевод меню в режим редактирования
     void setEdited(bool edited);
 
-    //! Возращает режим редактирования
+    //! Возвращает режим редактирования
     bool isEdited();
 
 private slots:
