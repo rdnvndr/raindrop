@@ -191,7 +191,7 @@ void ClassModelXml::initDisplayedAttrs()
     this->addDisplayedAttr(DBLOVXML::LOV, propsLov, QIcon(":/lov"));
 
     QStringList propsLovValue;
-    propsLovValue << DBLOVVALUEXML::ALIAS   << DBLOVVALUEXML::VALUE
+    propsLovValue << DBLOVVALUEXML::ALIAS  << DBLOVVALUEXML::VALUE
                   << DBLOVVALUEXML::PARENT << DBLOVVALUEXML::ID;
     this->addDisplayedAttr(DBLOVVALUEXML::LOVVALUE, propsLov, QIcon(":/lovvalue"));
 

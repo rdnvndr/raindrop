@@ -214,7 +214,7 @@ namespace DBLOVXML{
 //! Ключевые слова XML файла для значений списка
 namespace DBLOVVALUEXML{
     const QString LOVVALUE = "RTPLOVValue";
-    const QString ALIAS     = "name";
+    const QString ALIAS    = "name";
     const QString VALUE    = "value";
     const QString PARENT   = "parent";
     const QString ID       = "guid";
