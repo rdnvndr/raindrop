@@ -13,6 +13,8 @@ ExamplePlug::ExamplePlug(QObject *parent):
     PluginManager *pluginManager = PluginManager::instance();
     ITreeDockWidget *dockWidget =
             pluginManager->interfaceObject<ITreeDockWidget*>("ITreeDockWidget");
+    if (dockWidget == nullptr)
+        return;
 
     QTreeWidget *tree = dockWidget->insertTreeWidget(
                 QIcon(tr(":/example")),tr("Проверка"));

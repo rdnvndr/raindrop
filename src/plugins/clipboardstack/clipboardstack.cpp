@@ -12,9 +12,11 @@ ClipboardStack::ClipboardStack(QObject *parent):
 {
     PluginManager *pluginManager = PluginManager::instance();
 
-    // Создание пунктов строки меню и кнопок панели иструментов
+    // Создание пунктов строки меню и кнопок панели инструментов
     IMainWindow *iMainWindow
             = pluginManager->interfaceObject<IMainWindow*>("IMainWindow");
+    if (iMainWindow == nullptr)
+        return;
 
     connect(qApp, &QApplication::focusChanged,
             this, &ClipboardStack::focusChanged);
@@ -53,7 +55,7 @@ void ClipboardStack::focusChanged(QWidget *old, QWidget *now)
 {
     Q_UNUSED(old)
 
-    if (now == 0)
+    if (now == nullptr)
         return;
 
     setActiveItemForWidget(now);
@@ -140,7 +142,7 @@ void ClipboardStack::setActiveItemForWidget(QWidget *widget)
             return;
         }
     }
-    m_currentClipboardItem = NULL;
+    m_currentClipboardItem = nullptr;
     m_actionCut->setEnabled(false);
     m_actionCopy->setEnabled(false);
     m_actionPaste->setEnabled(false);

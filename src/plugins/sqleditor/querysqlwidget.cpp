@@ -19,18 +19,22 @@ QuerySqlWidget::QuerySqlWidget(QWidget *parent) :
     PluginManager *pluginManager = PluginManager::instance();
 
     m_undoGroup = pluginManager->interfaceObject<IUndoGroup*>("IUndoGroup");
-    m_undoGroup->addStack(m_undoStack);
-    m_undoGroup->addWidgetForStack(m_undoStack, this->toolButtonRun);
-    m_undoGroup->addWidgetForStack(m_undoStack, this);
-    plainQueryEdit->installEventFilter(this);
-    connect(plainQueryEdit->document(), &QTextDocument::undoCommandAdded,
-            this, &QuerySqlWidget::undoCommandAdd);
+    if (m_undoGroup != nullptr) {
+        m_undoGroup->addStack(m_undoStack);
+        m_undoGroup->addWidgetForStack(m_undoStack, this->toolButtonRun);
+        m_undoGroup->addWidgetForStack(m_undoStack, this);
+        plainQueryEdit->installEventFilter(this);
+        connect(plainQueryEdit->document(), &QTextDocument::undoCommandAdded,
+                this, &QuerySqlWidget::undoCommandAdd);
+    }
 
     m_clipboardStack
           = pluginManager->interfaceObject<IClipboardStack*>("IClipboardStack");
-    m_clipboardItem = new TextClipboardItem(plainQueryEdit);
-    m_clipboardStack->addClipboardItem(
-                 dynamic_cast<IClipboardItem *>(m_clipboardItem));
+    if (m_clipboardStack != nullptr) {
+        m_clipboardItem = new TextClipboardItem(plainQueryEdit);
+        m_clipboardStack->addClipboardItem(
+                     dynamic_cast<IClipboardItem *>(m_clipboardItem));
+    }
 
     m_model = new QSqlQueryModel();
 
