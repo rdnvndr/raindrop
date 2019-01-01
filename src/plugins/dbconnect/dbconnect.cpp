@@ -19,6 +19,8 @@ DbConnect::DbConnect(QObject *parent):
     // Создание пунктов строки меню и кнопок панели иструментов
     IMainWindow *iMainWindow
             = pluginManager->interfaceObject<IMainWindow*>("IMainWindow");
+    if (iMainWindow == nullptr)
+        return;
 
     m_actionDbConnect = new QAction(QIcon(":connect"), tr("Соединение с  БД"), this);
     connect(m_actionDbConnect, &QAction::triggered, this, &DbConnect::dbConnect);
