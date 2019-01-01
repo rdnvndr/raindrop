@@ -1,13 +1,14 @@
 cmake_minimum_required(VERSION 3.10)
-project(undostack VERSION 1.0.0)
+project(treedockwidget VERSION 1.0.0)
 
-set(PRODUCTNAME "UndoStack")
-set(DESCRIPTION "Undo Stack Plugin")
+set(PRODUCTNAME "TreeDockWidget")
+set(DESCRIPTION "Tree Dock Widget Plugin")
 set(COMPANY     "RTPTechGroup")
 set(COPYRIGHT   "Copyright (C) RTPTechGroup")
 
 set(LIBRARIES
     plugin
+    filtertreewidget
     interfaces
 )
 

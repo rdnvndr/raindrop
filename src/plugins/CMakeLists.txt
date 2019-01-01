@@ -7,7 +7,7 @@ add_subdirectory(mainwindow)
 add_subdirectory(modeleride)
 add_subdirectory(sqleditor)
 add_subdirectory(undostack)
-
+add_subdirectory(treedockwidget)
 add_subdirectory(databasemodelmanager)
 add_subdirectory(dbmodelexample)
 add_subdirectory(pgdatabasemodel)
