@@ -5,4 +5,4 @@ add_subdirectory(src)
 add_subdirectory(doc)
 
 enable_testing()
-add_subdirectory(tests)
+add_subdirectory(tests EXCLUDE_FROM_ALL)
