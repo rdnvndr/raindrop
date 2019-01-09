@@ -16,7 +16,7 @@ PgDatabaseClasses::~PgDatabaseClasses()
 
 PgDatabaseClass *PgDatabaseClasses::value()
 {
-    return NULL;
+    return nullptr;
 }
 
 }}

@@ -16,7 +16,7 @@ PgDatabaseAttrs::~PgDatabaseAttrs()
 
 PgDatabaseAttribute *PgDatabaseAttrs::value()
 {
-    return NULL;
+    return nullptr;
 }
 
 

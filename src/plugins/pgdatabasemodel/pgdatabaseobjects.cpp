@@ -16,7 +16,7 @@ PgDatabaseObjects::~PgDatabaseObjects()
 
 PgDatabaseObject *PgDatabaseObjects::value()
 {
-    return NULL;
+    return nullptr;
 }
 
 }}

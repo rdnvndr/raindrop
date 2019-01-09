@@ -16,7 +16,7 @@ PgDatabaseComps::~PgDatabaseComps()
 
 PgDatabaseComposition *PgDatabaseComps::value()
 {
-    return NULL;
+    return nullptr;
 }
 
 }}

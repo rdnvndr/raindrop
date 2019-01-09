@@ -16,7 +16,7 @@ PgDatabaseFilters::~PgDatabaseFilters()
 
 PgDatabaseFilter *PgDatabaseFilters::value()
 {
-    return NULL;
+    return nullptr;
 }
 
 }}
