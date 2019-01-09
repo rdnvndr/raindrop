@@ -21,7 +21,7 @@ FilterTreeWidget::FilterTreeWidget(QWidget *parent) :
 bool FilterTreeWidget::checkFormat(QDropEvent *ev)
 {
     /*QStringList supportedFormats = GetFormat();
-    foreach (QString format, supportedFormats)
+    for (const QString format : qAsConst(supportedFormats))
     {
 	if (ev->mimeData()->hasFormat(format))
 	{ */
