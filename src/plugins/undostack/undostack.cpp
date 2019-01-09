@@ -57,7 +57,7 @@ void UndoStack::addWidgetForStack(QUndoStack *stack, QWidget *widget)
 
 void UndoStack::removeWidgetForStack(QWidget *widget)
 {
-    foreach (QUndoStack *undoStack, m_undoStackList.keys(widget))
+    for (QUndoStack *undoStack : m_undoStackList.keys(widget))
         m_undoStackList.remove(undoStack, widget);
 }
 

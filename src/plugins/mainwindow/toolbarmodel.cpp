@@ -10,7 +10,7 @@ ToolBarModel::ToolBarModel(QMainWindow *mainWindow, QObject *parent) :
 
     m_mapper = new QSignalMapper(this);
     m_toolBars = mainWindow->findChildren<ToolBar *> ();
-    foreach (ToolBar *toolBar, m_toolBars) {
+    for (ToolBar *toolBar : qAsConst(m_toolBars)) {
         connect(toolBar, &ToolBar::stateVisibilityChanged, m_mapper,
                 static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
         m_mapper->setMapping(toolBar,toolBar);

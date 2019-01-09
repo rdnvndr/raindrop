@@ -144,7 +144,7 @@ QStringList ActionGroupModel::mimeTypes() const
 
 QMimeData *ActionGroupModel::mimeData(const QModelIndexList &indexes) const
 {
-    foreach (const QModelIndex &index, indexes)
+    for (const QModelIndex &index : indexes)
         if (index.internalId() > 0) {
             QString key = m_actions->uniqueKeys().at(index.internalId()-1);
             QAction *action = m_actions->values(key).at(index.row());          

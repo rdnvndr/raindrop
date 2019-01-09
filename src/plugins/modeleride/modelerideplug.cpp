@@ -716,7 +716,7 @@ void ModelerIDEPlug::closeClassModel()
     IMainWindow *mainWindow
             = pluginManager->interfaceObject<IMainWindow*>("IMainWindow");
 
-    foreach (QMdiSubWindow *subWindow, mainWindow->subWindowList()) {
+    for (QMdiSubWindow *subWindow : mainWindow->subWindowList()) {
         QString objName = subWindow->widget()->objectName();
         if (objName.indexOf(QRegExp("^PropClass::"))  != -1
          || objName.indexOf(QRegExp("^PropFilter::"))  != -1

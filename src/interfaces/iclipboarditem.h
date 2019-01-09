@@ -43,25 +43,25 @@ public:
 
     //! Включение возможности выполнении команды "Вырезать"
     virtual void enableCut(bool enabled) {
-        foreach (IClipboardElement *stack, m_elementList)
+        for (IClipboardElement *stack : qAsConst(m_elementList))
             stack->enableCut(enabled);
     }
 
     //! Включение возможности выполнении команды "Копировать"
     virtual void enableCopy(bool enabled) {
-        foreach (IClipboardElement *stack, m_elementList)
+        for (IClipboardElement *stack : qAsConst(m_elementList))
             stack->enableCopy(enabled);
     }
 
     //! Включение возможности выполнении команды "Вставить"
     virtual void enablePaste(bool enabled) {
-        foreach (IClipboardElement *stack, m_elementList)
+        for (IClipboardElement *stack : qAsConst(m_elementList))
             stack->enablePaste(enabled);
     }
 
     //! Включение возможности выполнении команды "Выделить все"
     virtual void enableSelectAll(bool enabled) {
-        foreach (IClipboardElement *stack, m_elementList)
+        for (IClipboardElement *stack : qAsConst(m_elementList))
             stack->enableSelectAll(enabled);
     }
 };

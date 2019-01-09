@@ -124,13 +124,13 @@ MainWindow::~MainWindow()
 {
     settings()->sync();
 
-    foreach (MenuItem *item, m_item) {
+    for (MenuItem *item : qAsConst(m_item)) {
         cleanBranchAction(item);
         removeBranchAction(item);
     }
     m_item.clear();
 
-    foreach (MenuItemHash actionItem, m_actionItem)
+    for (MenuItemHash actionItem : qAsConst(m_actionItem))
         actionItem.clear();
     m_actionItem.clear();
 
@@ -179,7 +179,7 @@ void MainWindow::writeSettings()
 void MainWindow::removeBranchAction(MenuItem *menuItem)
 {
     if (menuItem) {
-        foreach (MenuItem *item, menuItem->childItems) {
+        for (MenuItem *item : qAsConst(menuItem->childItems)) {
             removeBranchAction(item);
         }
         delete menuItem;
@@ -189,7 +189,7 @@ void MainWindow::removeBranchAction(MenuItem *menuItem)
 void MainWindow::cleanBranchAction(MainWindow::MenuItem *menuItem)
 {
     if (menuItem)
-        foreach (MenuItem *item, menuItem->childItems){
+        for (MenuItem *item : qAsConst(menuItem->childItems)){
             if (item->action)
             {
                 if (item->action->isSeparator() || item->action->menu())
@@ -345,8 +345,8 @@ void MainWindow::addAction(QString category, QAction *action)
 
     QString name = action->objectName();
 
-    foreach (const MenuItemHash &actionItem, m_actionItem)
-        foreach (MenuItem *menuItem,actionItem.values(name)) {
+    for (const MenuItemHash &actionItem : qAsConst(m_actionItem))
+        for (MenuItem *menuItem : actionItem.values(name)) {
             menuItem->action = action;
             createBranchAction(menuItem);
         }
@@ -360,14 +360,14 @@ void MainWindow::addAction(QString category, QAction *action)
 
 void MainWindow::removeAction(QObject *obj)
 {
-    foreach (const QString &category, m_actions.uniqueKeys())
-        foreach (QAction *actionCategory, m_actions.values(category))
+    for (const QString &category : m_actions.uniqueKeys())
+        for (QAction *actionCategory : m_actions.values(category))
             if (obj == qobject_cast< QObject *>(actionCategory))
                 m_actions.remove(category,actionCategory);
 
     QString name = obj->objectName();
-    foreach (MenuItemHash actionItem, m_actionItem)
-        foreach (MenuItem *item, actionItem.values(name)) {
+    for (MenuItemHash actionItem : qAsConst(m_actionItem))
+        for (MenuItem *item : actionItem.values(name)) {
             deleteBranchAction(item);
             actionItem.remove(name, item);
         }
@@ -416,20 +416,20 @@ void MainWindow::refreshAllBar(bool readingBarSettings)
     if (readingBarSettings)
         readBarSettings();
     else
-        foreach (MenuItem *item, m_item)
+        for (MenuItem *item : qAsConst(m_item))
             cleanBranchAction(item);
 
     QList<ToolBar *> toolBars = this->findChildren<ToolBar *> ();
-    foreach (ToolBar *toolBar,toolBars) {
+    for (ToolBar *toolBar : qAsConst(toolBars)) {
         this->removeToolBar(toolBar);
         delete toolBar;
     }
     this->setMenuBar(new MenuBar());
 
-    foreach (QAction *action, m_actions.values()) {
+    for (QAction *action : m_actions.values()) {
         if (action) {
-            foreach (const MenuItemHash &actionItem, m_actionItem)
-                foreach (MenuItem *menuItem, actionItem.values(action->objectName())) {
+            for (const MenuItemHash &actionItem : qAsConst(m_actionItem))
+                for (MenuItem *menuItem : actionItem.values(action->objectName())) {
                     menuItem->action = action;
                     createBranchAction(menuItem);
                 }
@@ -530,7 +530,7 @@ void MainWindow::showOptionsDialog()
     m_optionsDialog->createToolBarModel(this);
 
     // Показать и запомнить спрятанные команды
-    foreach (QAction *action, m_actions.values()) {
+    for (QAction *action : m_actions.values()) {
         if (!action->isVisible()) {
             m_hideActions.append(action);
             action->setVisible(true);
@@ -566,7 +566,7 @@ void MainWindow::saveOptionsDialog()
     m_optionsDialog = NULL;
 
     // Скрыть спрятанные команды
-    foreach (QAction *action, m_hideActions) {
+    for (QAction *action : qAsConst(m_hideActions)) {
             action->setVisible(false);
     }
     m_hideActions.clear();
@@ -578,7 +578,7 @@ void MainWindow::cancelOptionsDialog()
     m_optionsDialog = NULL;
 
     // Скрыть спрятанные команды
-    foreach (QAction *action, m_hideActions) {
+    for (QAction *action : qAsConst(m_hideActions)) {
             action->setVisible(false);
     }
     m_hideActions.clear();
@@ -669,7 +669,7 @@ void MainWindow::setEditedAllMenu(bool edited)
     setEditedMenu(this->menuBar(), edited);
 
     const QList<ToolBar *> toolBars = this->findChildren<ToolBar *> ();
-    foreach (ToolBar *toolBar,toolBars) {
+    for (ToolBar *toolBar : qAsConst(toolBars)) {
         setEditedMenu(toolBar, edited);
     }
 }
@@ -692,7 +692,7 @@ void MainWindow::writeBarSettings() {
     writeMenu(this->menuBar());
 
     const QList<ToolBar *> toolBars = this->findChildren<ToolBar *> ();
-    foreach (ToolBar *toolBar,toolBars) {
+    for (ToolBar *toolBar : qAsConst(toolBars)) {
         settings()->setArrayIndex(m_menuArrayIndex);
         ++m_menuArrayIndex;
         settings()->setValue("level", -1);
@@ -707,7 +707,7 @@ void MainWindow::writeBarSettings() {
 
     settings()->beginWriteArray("HotKeySettings");
     m_menuArrayIndex = 0;
-    foreach (QAction *action, m_actions.values())
+    for (QAction *action : m_actions.values())
         if (action)
             if (action->shortcut() != QKeySequence()){
                 settings()->setArrayIndex(m_menuArrayIndex);
@@ -722,13 +722,13 @@ void MainWindow::writeBarSettings() {
 
 void MainWindow::readBarSettings()
 {
-    foreach (MenuItem *item, m_item) {
+    for (MenuItem *item : qAsConst(m_item)) {
         cleanBranchAction(item);
         removeBranchAction(item);
     }
     m_item.clear();
 
-    foreach (MenuItemHash actionItem, m_actionItem)
+    for (MenuItemHash actionItem : qAsConst(m_actionItem))
         actionItem.clear();
     m_actionItem.clear();
     m_actionItem.append(MenuItemHash());

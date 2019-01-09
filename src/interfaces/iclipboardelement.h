@@ -15,7 +15,7 @@ public:
 
     //! Деструктор класса
     virtual ~IClipboardElement() {
-        foreach (IClipboardElement *item, m_elementList)
+        for (IClipboardElement *item : qAsConst(m_elementList))
             item->m_elementList.removeAll(this);
         m_elementList.clear();
     }

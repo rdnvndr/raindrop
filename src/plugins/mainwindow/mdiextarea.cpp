@@ -35,7 +35,7 @@ void MdiExtArea::setViewMode(ViewMode mode){
 }
 
 QMdiSubWindow *MdiExtArea::subWindow(QString widgetName) {
-    foreach (QMdiSubWindow *subwindow, this->subWindowList()){
+    for (QMdiSubWindow *subwindow : this->subWindowList()){
         if (subwindow->widget()->objectName()==widgetName){
             return subwindow;
         }

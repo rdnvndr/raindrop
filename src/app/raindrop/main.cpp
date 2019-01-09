@@ -66,7 +66,7 @@ qint32 main(qint32 argc, char *argv[])
     // Переводы находятся в <Каталог приложения>\translations\<Системная локализация>
     QDir translationDir = QDir(qApp->applicationDirPath());
     if (translationDir.cd("translations\\"+QLocale::system().name()))
-        foreach(const QString &fileName, translationDir.entryList(QDir::Files))
+        for (const QString &fileName : translationDir.entryList(QDir::Files))
             if (translator->load(fileName,translationDir.absolutePath()))
                 app->installTranslator(translator);
 
