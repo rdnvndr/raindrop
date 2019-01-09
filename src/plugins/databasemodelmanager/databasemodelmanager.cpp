@@ -21,7 +21,7 @@ DatabaseModelManager::~DatabaseModelManager()
 IDatabaseModel *DatabaseModelManager::createInstance(QSqlDatabase db)
 {
     PluginManager *pluginManager = PluginManager::instance();
-    foreach (QObject *obj, pluginManager->interfaceObjects("IDatabaseModelBuilder")) {
+    for (QObject *obj : pluginManager->interfaceObjects("IDatabaseModelBuilder")) {
         IDatabaseModelBuilder *iBuilder = qobject_cast<IDatabaseModelBuilder*>(obj);
         if (iBuilder->implDriverName() == db.driverName()) {
             IDatabasePool  *pool  = new DatabasePool(db);
