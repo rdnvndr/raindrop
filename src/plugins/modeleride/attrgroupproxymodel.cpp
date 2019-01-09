@@ -8,7 +8,7 @@ AttrGroupProxyModel::AttrGroupProxyModel(QObject *parent)
 :QAbstractListModel(parent)
 {
     setUniqueColumn(-1);
-    m_model = NULL;
+    m_model = nullptr;
 }
 
 AttrGroupProxyModel::~AttrGroupProxyModel()

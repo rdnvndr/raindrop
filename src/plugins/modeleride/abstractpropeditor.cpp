@@ -10,7 +10,7 @@ namespace ModelerIde {
 AbstractPropEditor::AbstractPropEditor(QWidget *parent)
     : QWidget(parent)
 {
-    m_model = NULL;
+    m_model = nullptr;
 }
 
 AbstractPropEditor::~AbstractPropEditor()

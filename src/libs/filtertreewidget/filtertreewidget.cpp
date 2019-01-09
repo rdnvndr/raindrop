@@ -52,7 +52,7 @@ void  FilterTreeWidget::mouseMoveEvent(QMouseEvent *pe){
 }
 
 void  FilterTreeWidget::startDrag(){
-    if (this->currentItem()==NULL)
+    if (this->currentItem() == nullptr)
 	return;
     QMimeData *mimeData = new QMimeData();
 

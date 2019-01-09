@@ -104,7 +104,7 @@ ClassTreeView::ClassTreeView(QWidget *parent) :
     connect(treeView, &QTreeView::customContextMenuRequested,
             this, &ClassTreeView::showContextMenu);
 
-    classFilterModel = NULL;
+    classFilterModel = nullptr;
 }
 
 ClassTreeView::~ClassTreeView()
@@ -272,7 +272,7 @@ void ClassTreeView::destroyModel()
 {
     if (classFilterModel){
         delete classFilterModel;
-        classFilterModel = NULL;
+        classFilterModel = nullptr;
     }
 }
 

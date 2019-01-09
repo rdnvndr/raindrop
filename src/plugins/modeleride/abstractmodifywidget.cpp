@@ -12,8 +12,8 @@ AbstractModifyWidget::AbstractModifyWidget(QWidget *parent) : QWidget(parent)
 {
     m_proxyModel = new ModifyProxyModel();
     m_proxyModel->setHiddenRow(true);
-    m_model = NULL;
-    m_itemView = NULL;
+    m_model = nullptr;
+    m_itemView = nullptr;
 }
 
 AbstractModifyWidget::~AbstractModifyWidget()
@@ -88,8 +88,10 @@ void AbstractModifyWidget::remove()
         m_proxyModel->removeRow(curIndex.row(),srcIndex);
         m_itemView->setModel(m_proxyModel);
     } else
-        QMessageBox::warning(NULL,tr("Предупреждение"),
-                             tr("Невозможно удалить значение списка, поскольку нет выбраных значений."));
+        QMessageBox::warning(
+            nullptr, tr("Предупреждение"),
+            tr("Невозможно удалить значение списка, поскольку нет выбранных значений.")
+        );
 }
 
 void AbstractModifyWidget::submit()

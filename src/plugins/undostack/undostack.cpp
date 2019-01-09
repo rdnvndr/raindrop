@@ -89,7 +89,7 @@ void UndoStack::setActiveStackForWidget(QWidget *widget)
             return;
         }
     }
-    m_undoGroup->setActiveStack(NULL);
+    m_undoGroup->setActiveStack(nullptr);
 }
 
 }}

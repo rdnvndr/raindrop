@@ -40,7 +40,7 @@ QMdiSubWindow *MdiExtArea::subWindow(QString widgetName) {
             return subwindow;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 QMdiSubWindow *MdiExtArea::setActiveSubWindow(QString widgetName)
@@ -50,7 +50,7 @@ QMdiSubWindow *MdiExtArea::setActiveSubWindow(QString widgetName)
         this->setActiveSubWindow(window);
         return window;
     }
-    return NULL;
+    return nullptr;
 }
 
 void MdiExtArea::setActiveSubWindow(QMdiSubWindow *window)

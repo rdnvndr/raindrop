@@ -17,7 +17,7 @@ MenuBar::MenuBar(QWidget *parent) :
     setAcceptDrops(true);
     m_dragPos = QPoint(-1,-1);
     m_edited = false;
-    m_contextAction = NULL;
+    m_contextAction = nullptr;
 }
 
 MenuBar::~MenuBar()
@@ -119,7 +119,7 @@ void MenuBar::dragMoveEvent(QDragMoveEvent *event)
 
 void MenuBar::contextMenuEvent(QContextMenuEvent *event)
 {
-    if (this->actionAt(event->pos())!=NULL && isEdited()) {
+    if (this->actionAt(event->pos()) != nullptr && isEdited()) {
         // Создание контекстного меню
         QMenu *contextMenu = new QMenu();
         QAction *action = new QAction(tr("Удалить"),this);

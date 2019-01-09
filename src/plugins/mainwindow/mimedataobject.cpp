@@ -5,7 +5,7 @@ namespace MainWindow {
 
 MimeDataObject::MimeDataObject(): QMimeData ()
 {
-    m_object = NULL;
+    m_object = nullptr;
 }
 
 void MimeDataObject::setObject(QAction *widget)

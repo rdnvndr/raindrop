@@ -25,7 +25,7 @@ MainWindow::MainWindow(QMainWindow *pwgt) : QMainWindow(pwgt), IPlugin("")
     this->setMenuBar(new MenuBar());
     setIconSize(QSize(20,20));
 
-    m_optionsDialog = NULL;
+    m_optionsDialog = nullptr;
 
     readBarSettings();
     connect(mdiArea, &MdiExtArea::subWindowActivated, this, &MainWindow::updateMenus);
@@ -194,7 +194,7 @@ void MainWindow::cleanBranchAction(MainWindow::MenuItem *menuItem)
             {
                 if (item->action->isSeparator() || item->action->menu())
                     delete item->action;
-                item->action = NULL;
+                item->action = nullptr;
             }
             cleanBranchAction(item);
         }
@@ -203,19 +203,19 @@ void MainWindow::cleanBranchAction(MainWindow::MenuItem *menuItem)
 QAction *MainWindow::createBranchAction(MenuItem *menuItem)
 {
     if (!menuItem)
-        return NULL;
+        return nullptr;
 
     if (menuItem->action && menuItem->type == "Menu")
         return menuItem->action;
 
     MenuItem *parentItem = menuItem->parentItem;
     if (!parentItem)
-        return NULL;
+        return nullptr;
 
     // Сортировка меню
     QAction *parentAction  = createBranchAction(parentItem);
-    QMenu *parentMenu = (parentAction) ? parentAction->menu():NULL;
-    ToolBar *toolBar = NULL;
+    QMenu *parentMenu = (parentAction) ? parentAction->menu():nullptr;
+    ToolBar *toolBar = nullptr;
     if (parentItem->type == "ToolBar") {
         toolBar = this->findChild<ToolBar *>(parentItem->name);
         if (!toolBar) {
@@ -229,8 +229,8 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
         }
     }
 
-    QAction *prevAction = NULL;
-    MenuItem *separatorItem = NULL;
+    QAction *prevAction = nullptr;
+    MenuItem *separatorItem = nullptr;
 
     QListIterator<MenuItem *> i(parentItem->childItems);
     i.toBack();
@@ -256,14 +256,14 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
 
         if (item->action) {
             prevAction = item->action;
-            separatorItem = NULL;
+            separatorItem = nullptr;
         }
     }
 
     // Создание пункта меню
     if (menuItem->type == "Menu") {
         Menu *currentMenu = new Menu(menuItem->text);
-        QAction *currentAction =  NULL;
+        QAction *currentAction =  nullptr;
         if (parentMenu) {
             currentAction = (prevAction)
                     ? parentMenu->insertMenu(prevAction,currentMenu)
@@ -291,7 +291,7 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
         menuItem->action = currentAction;
         currentAction->setObjectName(menuItem->name);
         return currentAction;
-    } else  if (menuItem->type =="Action" && menuItem->action != NULL) {
+    } else  if (menuItem->type =="Action" && menuItem->action != nullptr) {
         if (parentMenu) {
             if (prevAction)
                 parentMenu->insertAction(prevAction,menuItem->action);
@@ -310,7 +310,7 @@ QAction *MainWindow::createBranchAction(MenuItem *menuItem)
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 void MainWindow::deleteBranchAction(MenuItem *menuItem)
@@ -390,7 +390,7 @@ void MainWindow::setWindowModeEnable(bool mode)
     if (mode)
     {
         mdiArea->setViewMode(QMdiArea::SubWindowView);
-        if (mdiArea->activeSubWindow() != NULL)
+        if (mdiArea->activeSubWindow() != nullptr)
             mdiArea->activeSubWindow()->showMaximized();
     }
     else
@@ -453,7 +453,7 @@ QMdiSubWindow *MainWindow::addSubWindow(QWidget *widget)
 {
     if (mdiArea->setActiveSubWindow(widget->objectName()))
     {
-        return NULL;
+        return nullptr;
     }
 
     QMdiSubWindow *subWindow = new MdiSubWindow;
@@ -563,7 +563,7 @@ void MainWindow::saveOptionsDialog()
     this->setToolButtonStyle(m_optionsDialog->iconStyle());
     writeBarSettings();
     settings()->sync();
-    m_optionsDialog = NULL;
+    m_optionsDialog = nullptr;
 
     // Скрыть спрятанные команды
     for (QAction *action : qAsConst(m_hideActions)) {
@@ -575,7 +575,7 @@ void MainWindow::saveOptionsDialog()
 void MainWindow::cancelOptionsDialog()
 {
     refreshAllBar();
-    m_optionsDialog = NULL;
+    m_optionsDialog = nullptr;
 
     // Скрыть спрятанные команды
     for (QAction *action : qAsConst(m_hideActions)) {
@@ -741,8 +741,8 @@ void MainWindow::readBarSettings()
     this->setToolButtonStyle(style);
 
     qint32 prevLevel = -1;
-    MenuItem *parentItem  = NULL;
-    MenuItem *currentItem = NULL;
+    MenuItem *parentItem  = nullptr;
+    MenuItem *currentItem = nullptr;
 
     qint32 size = settings()->beginReadArray("BarSettings");
     for (qint32 i = 0; i < size; ++i) {
@@ -753,7 +753,7 @@ void MainWindow::readBarSettings()
         QString typeAction = settings()->value("type").toString();
 
         if (level < 0) {
-            parentItem = NULL;
+            parentItem = nullptr;
         } else {
             if (prevLevel<level)
                 parentItem = currentItem;
@@ -767,7 +767,7 @@ void MainWindow::readBarSettings()
         currentItem->text = text;
         currentItem->icon = settings()->value("icon").toByteArray();
         currentItem->type = typeAction;
-        currentItem->action = NULL;
+        currentItem->action = nullptr;
         currentItem->parentItem = parentItem;
         if (parentItem) {
             parentItem->childItems.append(currentItem);

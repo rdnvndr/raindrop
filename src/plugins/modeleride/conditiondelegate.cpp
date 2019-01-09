@@ -100,7 +100,7 @@ QWidget *ConditionDelegate::createEditor(QWidget *parent, const
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 void ConditionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,

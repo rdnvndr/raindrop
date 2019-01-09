@@ -84,7 +84,7 @@ QWidget *NumeratorRangeDelegate::createEditor(QWidget *parent,
 void NumeratorRangeDelegate::validateRegExp(QValidator::State state) const
 {
     QLineEdit *lineEdit = qobject_cast<QLineEdit *>(QObject::sender()->parent());
-    if (lineEdit != NULL) {
+    if (lineEdit != nullptr) {
         if(state != QValidator::Acceptable)
             QToolTip::showText(lineEdit->mapToGlobal(QPoint(0,5)),
                                tr("Введено неверное\n"
