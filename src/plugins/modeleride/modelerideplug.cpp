@@ -35,7 +35,7 @@ namespace ModelerIde {
 ModelerIDEPlug::ModelerIDEPlug(QObject *parent):
     QObject(parent), IPlugin("IMainWindow IUndoGroup IClipboardStack")
 {
-    m_model = NULL;
+    m_model = nullptr;
 
     PluginManager *pluginManager = PluginManager::instance();
 
@@ -497,7 +497,7 @@ void ModelerIDEPlug::remove()
         }
         m_model->removeRow(currentIndex.row(), currentIndex.parent());
     } else
-        QMessageBox::warning(NULL, tr("Предупреждение"),
+        QMessageBox::warning(nullptr, tr("Предупреждение"),
                              tr("Невозможно удалить узел, поскольку он не выбран."));
 }
 
@@ -626,7 +626,7 @@ void ModelerIDEPlug::newClassModel()
 
 void ModelerIDEPlug::openClassModel()
 {
-    m_fileName = QFileDialog::getOpenFileName(NULL, tr("Открытие модели"),
+    m_fileName = QFileDialog::getOpenFileName(nullptr, tr("Открытие модели"),
                                               ".", tr("Фаил модели (*.xml)"));
     if (m_fileName.isEmpty())
         return;
@@ -663,7 +663,7 @@ void ModelerIDEPlug::saveClassModel()
 
 void ModelerIDEPlug::saveAsClassModel()
 {
-    m_fileName = QFileDialog::getSaveFileName(NULL, tr("Сохранение модели"),
+    m_fileName = QFileDialog::getSaveFileName(nullptr, tr("Сохранение модели"),
                                               "", tr("Фаил модели (*.xml)"));
     if (m_fileName.right(4) != ".xml")
         m_fileName += ".xml";
@@ -733,7 +733,7 @@ void ModelerIDEPlug::closeClassModel()
 
     if (m_model){
         delete m_model;
-        m_model = NULL;
+        m_model = nullptr;
         m_actionCloseModel->setDisabled(true);
         m_actionSaveModel->setDisabled(true);
         m_actionSaveAsModel->setDisabled(true);

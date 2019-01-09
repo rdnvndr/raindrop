@@ -56,11 +56,11 @@ void ExamplePlug::createTab(){
     IMainWindow *mainWindow
             = pluginManager->interfaceObject<IMainWindow*>("IMainWindow");
 
-    mainWindow->addSubWindow(new QTextEdit(NULL));
+    mainWindow->addSubWindow(new QTextEdit(nullptr));
 }
 
 void ExamplePlug::createDlgWindow(){
-    QMessageBox::warning(NULL,tr("Инициализация"),tr("Инициализация плагина Example"));
+    QMessageBox::warning(nullptr,tr("Инициализация"),tr("Инициализация плагина Example"));
 }
 
 }}

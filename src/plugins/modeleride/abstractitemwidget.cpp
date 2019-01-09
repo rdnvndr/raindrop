@@ -92,7 +92,7 @@ void AbstractItemWidget::remove()
         m_model->removeRow(curIndex.row(),srcIndex);
         this->setCurrent(m_itemView->currentIndex());
     } else
-        QMessageBox::warning(NULL,tr("Предупреждение"),
+        QMessageBox::warning(nullptr,tr("Предупреждение"),
                              tr("Невозможно удалить, поскольку ничего не выбрано."));
 }
 

@@ -32,7 +32,7 @@ QWidget *PermDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
 {
     QString tag  = index.data(TreeXmlModel::TagRole).toString();
     if (tag != DBPERMISSIONXML::PERMISSION)
-        return NULL;
+        return nullptr;
 
     const TreeXmlHashModel *hashModel =this->hashModel(index.model());
     if (hashModel) {

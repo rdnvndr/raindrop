@@ -14,7 +14,7 @@ class RegExpValueValidator : public QValidator
     Q_OBJECT
 public:
     //! Конструктор класса
-    explicit RegExpValueValidator(QObject *parent = Q_NULLPTR);
+    explicit RegExpValueValidator(QObject *parent = nullptr);
 
 public slots:
     //! Проверка значения

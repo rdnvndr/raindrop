@@ -20,10 +20,10 @@ ToolBar::ToolBar(QWidget *parent) :
     setAcceptDrops(true);
 
     m_dragPos = QPoint(-1,-1);
-    m_activeAction = NULL;
+    m_activeAction = nullptr;
 
     m_edited = false;
-    m_contextAction = NULL;
+    m_contextAction = nullptr;
 
     connect(this, &QToolBar::visibilityChanged,
             this, &ToolBar::crossVisibilityChange);
@@ -160,7 +160,7 @@ void ToolBar::actionEvent(QActionEvent *event)
 
 void ToolBar::contextMenuEvent(QContextMenuEvent *event)
 {
-    if (this->actionAt(event->pos())!=NULL && isEdited()) {
+    if (this->actionAt(event->pos())!=nullptr && isEdited()) {
         // Создание контекстного меню
         QMenu *contextMenu = new QMenu();
         QAction *action = new QAction(tr("Удалить"),this);

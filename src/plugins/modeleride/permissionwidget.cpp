@@ -115,8 +115,10 @@ void PermissionWidget::remove()
             treeViewPerm->setModel(m_proxyModel);
         }
     } else
-        QMessageBox::warning(NULL,tr("Предупреждение"),
-                             tr("Невозможно удалить право доступа, поскольку нет выбраных значений."));
+        QMessageBox::warning(
+            nullptr, tr("Предупреждение"),
+            tr("Невозможно удалить право доступа, поскольку нет выбранных значений.")
+        );
 }
 
 void PermissionWidget::setRootIndex(const QModelIndex &index)

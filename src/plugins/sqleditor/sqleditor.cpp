@@ -45,7 +45,7 @@ void SqlEditor::showSqlEditor()
     QString subWindowName = "QuerySqlWidget";
     QMdiSubWindow *subWindow = iMainWindow->setActiveSubWindow(subWindowName);
     if (!subWindow) {
-        QuerySqlWidget *queryWidget = new QuerySqlWidget(NULL);
+        QuerySqlWidget *queryWidget = new QuerySqlWidget(nullptr);
         subWindow = iMainWindow->addSubWindow(queryWidget);
         queryWidget->setObjectName(subWindowName);
         subWindow->setWindowTitle(tr("SQL редактор"));

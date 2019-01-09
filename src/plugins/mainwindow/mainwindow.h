@@ -26,7 +26,7 @@ namespace MainWindow {
         PluginManager *pluginManager = PluginManager::instance();
         IMainWindow *iMainWindow = qobject_cast<IMainWindow*>(
                 pluginManager->interfaceObject("IMainWindow"));
-        iMainWindow->addSubWindow(new QTextEdit(NULL));
+        iMainWindow->addSubWindow(new QTextEdit(nullptr));
     \endcode
 */
 
