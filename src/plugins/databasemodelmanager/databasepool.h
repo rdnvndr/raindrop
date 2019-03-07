@@ -5,9 +5,12 @@
 
 #include <idatabasepool.h>
 #include <sqlextension/threadquery.h>
+#include <sqlextension/threadquerypool.h>
 
 #include <QUuid>
 #include <QSqlDatabase>
+
+using namespace RTPTechGroup::SqlExtension;
 
 namespace RTPTechGroup {
 namespace DatabaseModel {
@@ -18,17 +21,21 @@ public:
     //! Конструктор класса
     explicit DatabasePool(const QSqlDatabase &db);
 
-    //! Резервирует sql запрос потока
-    virtual SqlExtension::ThreadQuery *acquire(QUuid threadUuid);
+    //! Деструктор класса
+    virtual ~DatabasePool();
 
     //! Получение sql запроса потока
-    virtual RTPTechGroup::SqlExtension::ThreadQuery *find(QUuid threadUuid);
+    virtual SqlExtension::ThreadQuery *acquire(QUuid threadUuid = QUuid());
 
     //! Возвращает sql запрос потока
-    virtual void release(QUuid threadUuid);
+    virtual void release(QUuid threadUuid = QUuid());
 
 private:
-    QSqlDatabase m_db;
+    //! Список запросов
+    QHash<QUuid, ThreadQueryItem<ThreadQuery> *> m_threadQuery;
+
+    //! Пул многопоточных Sql запросов
+    ThreadQueryPool<ThreadQuery> *m_queryPool;
 };
 
 }}

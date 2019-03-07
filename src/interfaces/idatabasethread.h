@@ -22,20 +22,25 @@ public:
 
 // Работа с транзакциями
     //! Начало транзакции
-    void transaction() {}
+    void transaction() {
+        m_pool->acquire(m_id)->transaction();
+    }
 
     //! Завершение транзакции
-    void commit() {}
+    void commit() {
+        m_pool->acquire(m_id)->commit();
+    }
 
     //! Откат транзакции
-    void rollback() {}
+    void rollback() {
+        m_pool->acquire(m_id)->rollback();
+    }
 
 private:
     //! Конструктор класса
     explicit IDatabaseThread(IDatabasePool *pool) {
         m_id = QUuid();
         m_pool = pool;
-        m_pool->acquire(m_id);
     }
 
     //! Идентификатор потока базы данных
