@@ -39,7 +39,7 @@ public:
 private:
     //! Конструктор класса
     explicit IDatabaseThread(IDatabasePool *pool) {
-        m_id = QUuid();
+        m_id = QUuid::createUuid();
         m_pool = pool;
     }
 

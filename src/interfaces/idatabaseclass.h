@@ -14,6 +14,7 @@
 //! Класс базы данных
 class IDatabaseClass: public IDatabaseItem, public IDatabaseManipulation
 {
+
 public:
     //! Перечисление режимов доступа
     enum AccessMode { System,   //!< Системный
@@ -123,6 +124,7 @@ protected:
         m_classType  = IDatabaseClass::Normal;
         m_accessMode = IDatabaseClass::Standart;
         m_baseClass  = nullptr;
+        m_maxVersion = 0;
     }
 
 private:

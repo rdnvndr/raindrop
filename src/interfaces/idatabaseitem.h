@@ -7,6 +7,7 @@
 #include <QUuid>
 #include <QString>
 #include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlError>
 #include <QtCore/QObject>
 
 //! Элемент базы данных
@@ -61,10 +62,10 @@ public:
 
 signals:
     //! Сигнал об окончании выполнения операции в потоке
-    void done();
+    virtual void done() = 0;
 
     //! Сигнал об ошибке в потоке
-    void error(QSqlError err);
+    virtual void error(QSqlError err) = 0;
 
 protected:
     //! Конструктор класса

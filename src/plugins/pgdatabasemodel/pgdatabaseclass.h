@@ -7,8 +7,9 @@ namespace RTPTechGroup {
 namespace DatabaseModel {
 
 //! Реализация класса базы данных PostgreSql
-class PgDatabaseClass : public IDatabaseClass
+class PgDatabaseClass : public QObject, public IDatabaseClass
 {
+    Q_OBJECT
 public:
     //! Конструктор класса
     explicit PgDatabaseClass(const QString &name, IDatabasePool *pool);
@@ -105,6 +106,14 @@ public:
 
     //! Получение суммарного значения атрибута
     virtual int sum(IDatabaseAttribute *attr);
+
+signals:
+    //! Сигнал об окончании выполнения операции в потоке
+    void done();
+
+    //! Сигнал об ошибке в потоке
+    void error(QSqlError err);
+
 };
 
 }}

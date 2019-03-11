@@ -59,7 +59,7 @@ DbModelExample::DbModelExample(QObject *parent):
     cls = dbModel->createDerivedClass(DBROLEXML::ROLE);
     cls = dbModel->createDerivedClass(DBPERMISSIONXML::PERMISSION);
     */
-    dbModel->init();
+//    dbModel->init();
 
     if (dbModel) {
         IDatabaseClass *dbClass = dbModel->oneClass("TestClass");
@@ -91,7 +91,7 @@ DbModelExample::DbModelExample(QObject *parent):
 
         // Создание класса               
         IDatabaseThread *dbThread = dbModel->createDatabaseThread();
-        dbThread->transaction();
+//        dbThread->transaction();
 
         IDatabaseClass *dbNewClass = dbModel->oneClass("TestNewClass");
         if (dbNewClass != nullptr) {
@@ -107,7 +107,7 @@ DbModelExample::DbModelExample(QObject *parent):
             }
         }
 
-        dbThread->commit();
+//        dbThread->commit();
 
     }
 }
