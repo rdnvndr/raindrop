@@ -89,4 +89,9 @@ QString vlClassType(IDatabaseClass::ClassType clsType)
     return QString("Normal");
 }
 
+QString vlUuidString(const QUuid &uuid)
+{
+    return uuid.toString(QUuid::WithoutBraces);
+}
+
 }}

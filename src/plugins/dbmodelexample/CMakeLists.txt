@@ -10,7 +10,7 @@ set(LIBRARIES
     plugin
     sqlextension
     metadatamodel
-    interfaces
+    databasemodel
 )
 
 include("${CMAKE_SOURCE_DIR}/cmake/plugins.cmake")

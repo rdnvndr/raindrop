@@ -1,8 +1,8 @@
 #include "dbmodelexample.h"
 
 #include <plugin/pluginmanager.h>
-#include <idatabasemodel.h>
-#include <idatabasemodelmanager.h>
+#include <databasemodel/idatabasemodel.h>
+#include <databasemodel/idatabasemodelmanager.h>
 
 #include <metadatamodel/dbxmlstruct.h>
 
@@ -15,12 +15,12 @@ namespace RTPTechGroup {
 namespace DatabaseModel {
 
 DbModelExample::DbModelExample(QObject *parent):
-    QObject(parent), IPlugin("IDatabaseModelManager")
+    QObject(parent), IPlugin("")
 {
-    PluginManager *pluginManager = PluginManager::instance();
-    IDatabaseModelManager *dbModelManager
-            = pluginManager->interfaceObject<IDatabaseModelManager *>(
-                "IDatabaseModelManager");
+//    PluginManager *pluginManager = PluginManager::instance();
+//    IDatabaseModelManager *dbModelManager
+//            = pluginManager->interfaceObject<IDatabaseModelManager *>(
+//                "IDatabaseModelManager");
 
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
@@ -34,7 +34,8 @@ DbModelExample::DbModelExample(QObject *parent):
     qCWarning(lcDbModelExample) << tr("Соединение с базой данных: ") << ok;
 
     // Текущий класс
-    IDatabaseModel *dbModel = dbModelManager->createInstance(db);
+    IDatabaseModelManager *dbModelManager = IDatabaseModelManager::instance();
+    IDatabaseModel *dbModel = dbModelManager->createDatabaseModel(db);
     /*
     IDatabaseClass *cls = dbModel->createDerivedClass(DBCLASSXML::CLASS);
     cls = dbModel->createDerivedClass(DBLOVXML::LOV);
@@ -91,12 +92,15 @@ DbModelExample::DbModelExample(QObject *parent):
 
         // Создание класса               
         IDatabaseThread *dbThread = dbModel->createDatabaseThread();
-//        dbThread->transaction();
 
         IDatabaseClass *dbNewClass = dbModel->oneClass("TestNewClass");
         if (dbNewClass != nullptr) {
             dbNewClass->setAlias("Тестовый класс");
             dbNewClass->setMaxVersion(5);
+            QObject::connect(dbNewClass, &IDatabaseClass::done, [dbThread](){
+                dbThread->commit();
+            });
+            dbThread->transaction();
             dbNewClass->create(dbThread);
 
             IDatabaseAttribute *dbNewAttr = dbNewClass->attr("name");

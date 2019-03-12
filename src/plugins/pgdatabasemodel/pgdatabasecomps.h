@@ -1,7 +1,7 @@
 #ifndef PGDATABASECOMPS_H
 #define PGDATABASECOMPS_H
 
-#include <idatabaselist.h>
+#include <databasemodel/idatabaselist.h>
 #include "pgdatabaseclass.h"
 #include "pgdatabasecomposition.h"
 

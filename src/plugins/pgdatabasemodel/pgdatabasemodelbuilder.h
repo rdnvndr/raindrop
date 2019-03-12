@@ -5,8 +5,8 @@
 #include <plugin/iplugin.h>
 #include "pgdatabasemodelglobal.h"
 
-#include <idatabasemodelbuilder.h>
-#include <idatabasemodel.h>
+#include <databasemodel/idatabasemodelbuilder.h>
+#include <databasemodel/idatabasemodel.h>
 
 #include "pgdatabaseattribute.h"
 

@@ -6,7 +6,6 @@
 #include "pgdatabasecomposition.h"
 #include "pgdatabaseattribute.h"
 
-
 namespace RTPTechGroup {
 namespace DatabaseModel {
 

@@ -1,7 +1,7 @@
 #ifndef PGDATABASEFILTER_H
 #define PGDATABASEFILTER_H
 
-#include <idatabasefilter.h>
+#include <databasemodel/idatabasefilter.h>
 
 namespace RTPTechGroup {
 namespace DatabaseModel {

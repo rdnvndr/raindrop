@@ -1,7 +1,7 @@
 #ifndef PGDATABASEATTRS_H
 #define PGDATABASEATTRS_H
 
-#include <idatabaselist.h>
+#include <databasemodel/idatabaselist.h>
 #include "pgdatabaseclass.h"
 #include "pgdatabaseattribute.h"
 

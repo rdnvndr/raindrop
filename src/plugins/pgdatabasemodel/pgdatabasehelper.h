@@ -3,7 +3,7 @@
 
 #include <QtCore/QString>
 
-#include <idatabaseclass.h>
+#include <databasemodel/idatabaseclass.h>
 
 namespace RTPTechGroup {
 namespace DatabaseModel {
@@ -13,6 +13,9 @@ QString vlAccessMode(IDatabaseClass::AccessMode mode);
 
 //! Возвращает наименование типов класса
 QString vlClassType(IDatabaseClass::ClassType clsType);
+
+//! Возвращает строку идентификатор
+QString vlUuidString(const QUuid &uuid);
 
 //! Возвращает таблицу для класса
 QString clsTable(const QString &className);

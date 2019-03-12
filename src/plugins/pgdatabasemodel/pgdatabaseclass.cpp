@@ -1,6 +1,6 @@
 #include "pgdatabaseclass.h"
 
-#include <QDebug>
+#include <QtCore/QObject>
 
 #include <sqlextension/threadquery.h>
 #include <metadatamodel/dbxmlstruct.h>
@@ -19,7 +19,7 @@ namespace RTPTechGroup {
 namespace DatabaseModel {
 
 PgDatabaseClass::PgDatabaseClass(const QString &name, IDatabasePool *pool)
-    : QObject (), IDatabaseClass (name, pool)
+    : IDatabaseClass (name, pool)
 {
 
 }
@@ -31,51 +31,61 @@ PgDatabaseClass::~PgDatabaseClass()
 
 void PgDatabaseClass::create(IDatabaseThread *databaseThread)
 {
-    ThreadQuery *query = (databaseThread)
-            ? m_pool->acquire(databaseThread->id()) : m_pool->acquire();
+    ThreadQuery *query = (databaseThread) ? m_pool->acquire(databaseThread->id())
+                                          : m_pool->acquire();
+
     QUuid uuidOper = QUuid::createUuid();
+    auto uuidRoll = std::make_shared<QUuid>();
+    *uuidRoll = QUuid::createUuid();
 
     // Обработка ошибки
-    QObject::connect(query, &ThreadQuery::error, [this, query, databaseThread, uuidOper]
+    QObject::connect(query, &ThreadQuery::error, query,
+                     [this, query, databaseThread, uuidOper, uuidRoll]
                      (const QUuid &queryUuid, const QSqlError &err)
     {
-        Q_UNUSED(queryUuid)
-        qDebug() << err.databaseText();
-        if (databaseThread == nullptr) {
-            query->rollback();
-            delete query;
-        } else {
-            query->execute("ROLLBACK TO SAVEPOINT P" + queryUuid.toString(QUuid::Id128) + ";");
-            query->execute("RELEASE SAVEPOINT P" + uuidOper.toString(QUuid::Id128) + ";");
-            query->end();
+        if (!uuidRoll->isNull() && *uuidRoll != queryUuid) {
+            *uuidRoll = QUuid();
+            if (databaseThread == nullptr) {
+                query->rollback();
+                query->end();
+                delete query;
+            } else {
+                query->execute("ROLLBACK TO SAVEPOINT P"
+                               + uuidOper.toString(QUuid::Id128) + ";");
+                query->execute("RELEASE SAVEPOINT P"
+                               + uuidOper.toString(QUuid::Id128) + ";");
+                query->end();
+            }
+            emit this->error(err);
         }
-
-        emit this->error(err);
-    });
+    }, Qt::QueuedConnection);
 
     // Окончание запроса
-    QObject::connect(query, &ThreadQuery::executeDone, [this, query, databaseThread, uuidOper]
+    QObject::connect(query, &ThreadQuery::executeDone, query,
+                     [this, query, databaseThread, uuidOper]
                      (const QUuid &queryUuid)
     {
         if (uuidOper != queryUuid)
             return;
 
         if (databaseThread == nullptr) {
+            query->end();
             query->commit();
             delete query;
         } else {
-            query->execute("RELEASE SAVEPOINT P" + uuidOper.toString(QUuid::Id128) + ";");
+            query->execute("RELEASE SAVEPOINT P"
+                           + uuidOper.toString(QUuid::Id128) + ";");
             query->end();
         }
-
         emit this->done();
-    });
+    }, Qt::QueuedConnection);
 
+    query->begin();
     if (databaseThread == nullptr)
         query->transaction();
     else {
-        query->begin();
-        query->execute("SAVEPOINT P" + uuidOper.toString(QUuid::Id128) + ";");
+        query->execute("SAVEPOINT P"
+                       + uuidOper.toString(QUuid::Id128) + ";", *uuidRoll);
     }
 
     query->execute("CREATE TABLE " + clsTable(this->name()) + "();");
@@ -103,11 +113,12 @@ void PgDatabaseClass::create(IDatabaseThread *databaseThread)
     query->bindValue(":mode",     vlAccessMode(this->accessMode()));
     query->bindValue(":type",     vlClassType(this->classType()));
     query->bindValue(":alias",    this->alias());
-    query->bindValue(":parent",   (baseClass) ? baseClass->id() : QString());
+    query->bindValue(":parent",   (baseClass) ? vlUuidString(baseClass->id())
+                                              : QString());
     query->bindValue(":template", this->objectNameTemplate());
     query->bindValue(":vercount", this->maxVersion());
     query->bindValue(":icon",     this->icon());
-    query->bindValue(":id",       this->id().toString(QUuid::WithoutBraces));
+    query->bindValue(":id",       vlUuidString(this->id()));
     query->execute(uuidOper);
 }
 

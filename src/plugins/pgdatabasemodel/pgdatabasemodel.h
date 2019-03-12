@@ -2,7 +2,7 @@
 #define PGDATABASEMODEL_H
 
 #include <QtSql/QSqlDatabase>
-#include <idatabasemodel.h>
+#include <databasemodel/idatabasemodel.h>
 
 #include "pgdatabasemodelglobal.h"
 

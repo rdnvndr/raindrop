@@ -1,7 +1,7 @@
 #ifndef PGDATABASEATTRIBUTE_H
 #define PGDATABASEATTRIBUTE_H
 
-#include <idatabaseattribute.h>
+#include <databasemodel/idatabaseattribute.h>
 
 namespace RTPTechGroup {
 namespace DatabaseModel {

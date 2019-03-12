@@ -1,7 +1,7 @@
 #ifndef PGDATABASECOMPOSITION_H
 #define PGDATABASECOMPOSITION_H
 
-#include <idatabasecomposition.h>
+#include <databasemodel/idatabasecomposition.h>
 
 namespace RTPTechGroup {
 namespace DatabaseModel {

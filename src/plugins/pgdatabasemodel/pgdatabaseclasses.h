@@ -1,7 +1,7 @@
 #ifndef PGDATABASECLASSES_H
 #define PGDATABASECLASSES_H
 
-#include <idatabaselist.h>
+#include <databasemodel/idatabaselist.h>
 #include "pgdatabaseclass.h"
 
 namespace RTPTechGroup {

@@ -1,7 +1,7 @@
 #ifndef PGDATABASEFILTERS_H
 #define PGDATABASEFILTERS_H
 
-#include <idatabaselist.h>
+#include <databasemodel/idatabaselist.h>
 #include "pgdatabaseclass.h"
 #include "pgdatabasefilter.h"
 

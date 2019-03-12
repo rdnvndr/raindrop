@@ -1,7 +1,7 @@
 #ifndef PGDATABASEEXPRESSION_H
 #define PGDATABASEEXPRESSION_H
 
-#include <idatabaseexpression.h>
+#include <databasemodel/idatabaseexpression.h>
 
 //! Реализация выражение базы данных
 class PgDatabaseExpression : public IDatabaseExpression

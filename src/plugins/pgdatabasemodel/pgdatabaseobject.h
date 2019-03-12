@@ -1,7 +1,7 @@
 #ifndef PGDATABASEOBJECT_H
 #define PGDATABASEOBJECT_H
 
-#include <idatabaseobject.h>
+#include <databasemodel/idatabaseobject.h>
 
 namespace RTPTechGroup {
 namespace DatabaseModel {

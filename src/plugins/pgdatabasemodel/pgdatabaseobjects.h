@@ -1,7 +1,7 @@
 #ifndef PGDATABASEOBJECTS_H
 #define PGDATABASEOBJECTS_H
 
-#include <idatabaselist.h>
+#include <databasemodel/idatabaselist.h>
 #include "pgdatabaseclass.h"
 #include "pgdatabaseobject.h"
 
