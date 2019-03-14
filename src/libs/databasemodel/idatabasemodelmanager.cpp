@@ -24,7 +24,7 @@ IDatabaseModelManager::~IDatabaseModelManager()
 
 }
 
-IDatabaseModel *IDatabaseModelManager::createDatabaseModel(QSqlDatabase db)
+IDatabaseModel *IDatabaseModelManager::createModel(QSqlDatabase db)
 {
     PluginManager *pluginManager = PluginManager::instance();
     pluginManager->nextLoadPlugins("IDatabaseModelBuilder");
@@ -32,7 +32,7 @@ IDatabaseModel *IDatabaseModelManager::createDatabaseModel(QSqlDatabase db)
         IDatabaseModelBuilder *iBuilder = qobject_cast<IDatabaseModelBuilder*>(obj);
         if (iBuilder->implDriverName() == db.driverName()) {
             IDatabasePool  *pool  = new IDatabasePool(db);
-            IDatabaseModel *model = iBuilder->createDatabaseModel(pool);
+            IDatabaseModel *model = iBuilder->createModel(pool);
             return model;
         }
     }

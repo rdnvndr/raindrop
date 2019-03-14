@@ -1,12 +1,11 @@
 #ifndef IDATABASEITEM_H
 #define IDATABASEITEM_H
 
-#include <databasemodel/idatabasethread.h>
+#include <databasemodel/idatabasesession.h>
 #include <databasemodel/idatabasepool.h>
 
 #include <QtCore/QUuid>
 #include <QtCore/QString>
-#include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlError>
 #include <QtCore/QObject>
 
@@ -49,16 +48,16 @@ public:
     virtual bool isSync() { return m_sync; }
 
     //! Создаёт элемент базы данных
-    virtual void create(IDatabaseThread *databaseThread = nullptr) = 0;
+    virtual void create(IDatabaseSession *session = nullptr) = 0;
 
     //! Отправляет изменения элемента базы данных
-    virtual void push(IDatabaseThread *databaseThread = nullptr) = 0;
+    virtual void push(IDatabaseSession *session = nullptr) = 0;
 
     //! Получает изменения элемента базы данных
-    virtual void pull(IDatabaseThread *databaseThread = nullptr) = 0;
+    virtual void pull(IDatabaseSession *session = nullptr) = 0;
 
     //! Удаляет элемент базы данных
-    virtual void remove(IDatabaseThread *databaseThread = nullptr) = 0;
+    virtual void remove(IDatabaseSession *session = nullptr) = 0;
 
 signals:
     //! Сигнал об окончании выполнения операции в потоке

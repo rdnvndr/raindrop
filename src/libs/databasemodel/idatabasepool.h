@@ -21,11 +21,11 @@ public:
     //! Деструктор класса
     virtual ~IDatabasePool();
 
-    //! Резервирует sql запрос потока
-    ThreadQuery *acquire(QUuid threadUuid = QUuid());
+    //! Резервирует sql запрос
+    ThreadQuery *acquire(QUuid sessionId = QUuid());
 
     //! Возвращает sql запрос потока
-    void release(QUuid threadUuid = QUuid());
+    void release(QUuid sessionId = QUuid());
 
 private:
     //! Список запросов

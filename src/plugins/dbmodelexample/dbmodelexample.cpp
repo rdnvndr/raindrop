@@ -17,12 +17,6 @@ namespace DatabaseModel {
 DbModelExample::DbModelExample(QObject *parent):
     QObject(parent), IPlugin("")
 {
-//    PluginManager *pluginManager = PluginManager::instance();
-//    IDatabaseModelManager *dbModelManager
-//            = pluginManager->interfaceObject<IDatabaseModelManager *>(
-//                "IDatabaseModelManager");
-
-
     QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
     db.setHostName("localhost");
     db.setDatabaseName("customdb");
@@ -35,7 +29,7 @@ DbModelExample::DbModelExample(QObject *parent):
 
     // Текущий класс
     IDatabaseModelManager *dbModelManager = IDatabaseModelManager::instance();
-    IDatabaseModel *dbModel = dbModelManager->createDatabaseModel(db);
+    IDatabaseModel *dbModel = dbModelManager->createModel(db);
     /*
     IDatabaseClass *cls = dbModel->createDerivedClass(DBCLASSXML::CLASS);
     cls = dbModel->createDerivedClass(DBLOVXML::LOV);
@@ -91,23 +85,23 @@ DbModelExample::DbModelExample(QObject *parent):
         }
 
         // Создание класса               
-        IDatabaseThread *dbThread = dbModel->createDatabaseThread();
+        IDatabaseSession *dbSession = dbModel->createSession();
 
         IDatabaseClass *dbNewClass = dbModel->oneClass("TestNewClass");
         if (dbNewClass != nullptr) {
             dbNewClass->setAlias("Тестовый класс");
             dbNewClass->setMaxVersion(5);
-            QObject::connect(dbNewClass, &IDatabaseClass::done, [dbThread](){
-                dbThread->commit();
+            QObject::connect(dbNewClass, &IDatabaseClass::done, [dbSession](){
+                dbSession->commit();
             });
-            dbThread->transaction();
-            dbNewClass->create(dbThread);
+            dbSession->transaction();
+            dbNewClass->create(dbSession);
 
             IDatabaseAttribute *dbNewAttr = dbNewClass->attr("name");
             if (dbNewAttr != nullptr) {
                 dbNewAttr->setAlias("Атрибут");
                 dbNewAttr->setInitialValue(0);
-                dbNewAttr->create(dbThread);
+                dbNewAttr->create(dbSession);
             }
         }
 

@@ -94,4 +94,9 @@ QString vlUuidString(const QUuid &uuid)
     return uuid.toString(QUuid::WithoutBraces);
 }
 
+QString lblUuidPoint(const QUuid &uuid)
+{
+    return "P" + uuid.toString(QUuid::Id128);
+}
+
 }}

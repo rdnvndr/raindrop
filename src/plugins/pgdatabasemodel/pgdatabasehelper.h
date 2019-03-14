@@ -8,6 +8,9 @@
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
+//! Возвращает метку точки сохранения
+QString lblUuidPoint(const QUuid &uuid);
+
 //! Возвращает наименование режимов доступа
 QString vlAccessMode(IDatabaseClass::AccessMode mode);
 

@@ -29,31 +29,36 @@ PgDatabaseClass::~PgDatabaseClass()
 
 }
 
-void PgDatabaseClass::create(IDatabaseThread *databaseThread)
+void PgDatabaseClass::create(IDatabaseSession *session)
 {
-    ThreadQuery *query = (databaseThread) ? m_pool->acquire(databaseThread->id())
+    ThreadQuery *query = (session) ? m_pool->acquire(session->id())
                                           : m_pool->acquire();
 
     QUuid uuidOper = QUuid::createUuid();
     auto uuidRoll = std::make_shared<QUuid>();
     *uuidRoll = QUuid::createUuid();
 
+    auto connErr  = std::make_shared<QMetaObject::Connection>();
+    auto connDone = std::make_shared<QMetaObject::Connection>();
+
     // Обработка ошибки
-    QObject::connect(query, &ThreadQuery::error, query,
-                     [this, query, databaseThread, uuidOper, uuidRoll]
-                     (const QUuid &queryUuid, const QSqlError &err)
+    *connErr = QObject::connect(query, &ThreadQuery::error, query,
+                   [this, query, session, uuidOper, uuidRoll, connErr, connDone]
+                   (const QUuid &queryUuid, const QSqlError &err)
     {
         if (!uuidRoll->isNull() && *uuidRoll != queryUuid) {
+            QObject::disconnect(*connErr);
+            QObject::disconnect(*connDone);
             *uuidRoll = QUuid();
-            if (databaseThread == nullptr) {
+            if (session == nullptr) {
                 query->rollback();
                 query->end();
                 delete query;
             } else {
-                query->execute("ROLLBACK TO SAVEPOINT P"
-                               + uuidOper.toString(QUuid::Id128) + ";");
-                query->execute("RELEASE SAVEPOINT P"
-                               + uuidOper.toString(QUuid::Id128) + ";");
+                query->execute("ROLLBACK TO SAVEPOINT "
+                               + lblUuidPoint(uuidOper) + ";");
+                query->execute("RELEASE SAVEPOINT "
+                               + lblUuidPoint(uuidOper) + ";");
                 query->end();
             }
             emit this->error(err);
@@ -61,31 +66,32 @@ void PgDatabaseClass::create(IDatabaseThread *databaseThread)
     }, Qt::QueuedConnection);
 
     // Окончание запроса
-    QObject::connect(query, &ThreadQuery::executeDone, query,
-                     [this, query, databaseThread, uuidOper]
+    *connDone = QObject::connect(query, &ThreadQuery::executeDone, query,
+                     [this, query, session, uuidOper, connErr, connDone]
                      (const QUuid &queryUuid)
     {
         if (uuidOper != queryUuid)
             return;
 
-        if (databaseThread == nullptr) {
+        QObject::disconnect(*connErr);
+        QObject::disconnect(*connDone);
+
+        if (session == nullptr) {
             query->end();
             query->commit();
             delete query;
         } else {
-            query->execute("RELEASE SAVEPOINT P"
-                           + uuidOper.toString(QUuid::Id128) + ";");
+            query->execute("RELEASE SAVEPOINT " + lblUuidPoint(uuidOper) + ";");
             query->end();
         }
         emit this->done();
     }, Qt::QueuedConnection);
 
     query->begin();
-    if (databaseThread == nullptr)
+    if (session == nullptr)
         query->transaction();
     else {
-        query->execute("SAVEPOINT P"
-                       + uuidOper.toString(QUuid::Id128) + ";", *uuidRoll);
+        query->execute("SAVEPOINT " + lblUuidPoint(uuidOper) + ";", *uuidRoll);
     }
 
     query->execute("CREATE TABLE " + clsTable(this->name()) + "();");
@@ -122,17 +128,17 @@ void PgDatabaseClass::create(IDatabaseThread *databaseThread)
     query->execute(uuidOper);
 }
 
-void PgDatabaseClass::push(IDatabaseThread *databaseThread)
+void PgDatabaseClass::push(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseClass::pull(IDatabaseThread *databaseThread)
+void PgDatabaseClass::pull(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseClass::remove(IDatabaseThread *databaseThread)
+void PgDatabaseClass::remove(IDatabaseSession *session)
 {
 
 }

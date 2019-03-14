@@ -16,9 +16,9 @@ public:
     virtual QUuid init() = 0;
 
     //! Создаёт поток базы данных
-    virtual IDatabaseThread *createDatabaseThread() {
+    virtual IDatabaseSession *createSession() {
         if (m_pool != nullptr)
-            return new IDatabaseThread(m_pool);
+            return new IDatabaseSession(m_pool);
 
         return nullptr;
     }

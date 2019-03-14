@@ -36,7 +36,7 @@ PgDatabaseModelBuilder::~PgDatabaseModelBuilder()
 
 }
 
-IDatabaseModel *PgDatabaseModelBuilder::createDatabaseModel(IDatabasePool *pool)
+IDatabaseModel *PgDatabaseModelBuilder::createModel(IDatabasePool *pool)
 {
     return new PgDatabaseModel(pool);
 }

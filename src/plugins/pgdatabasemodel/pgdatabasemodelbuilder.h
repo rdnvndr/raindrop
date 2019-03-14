@@ -59,7 +59,7 @@ public:
 
 // IDatabaseModelBuilder
     //! Создание экземпляра модели базы данных
-    IDatabaseModel *createDatabaseModel(IDatabasePool *pool);
+    IDatabaseModel *createModel(IDatabasePool *pool);
 
     //! Модель базы данных
     QString implDriverName() const;

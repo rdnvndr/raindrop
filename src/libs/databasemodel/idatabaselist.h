@@ -1,7 +1,7 @@
 #ifndef IDATABASELIST_H
 #define IDATABASELIST_H
 
-#include <databasemodel/idatabasethread.h>
+#include <databasemodel/idatabasesession.h>
 
 #include <QtSql/QSqlQuery>
 #include <QtCore/QObject>
@@ -53,9 +53,9 @@ public:
     virtual bool seek(int index, bool relative = false)
     { return m_query->seek(index, relative); }
 
-    //! Возвращает элемент с позицией index
-    virtual void exec(IDatabaseThread *databaseThread = nullptr) {
-        Q_UNUSED(databaseThread)
+    //! Вызывает выполнение операции
+    virtual void exec(IDatabaseSession *session = nullptr) {
+        Q_UNUSED(session)
         m_query->exec();
     }
 

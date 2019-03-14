@@ -1,18 +1,18 @@
-#ifndef IDATABASETHREAD_H
-#define IDATABASETHREAD_H
+#ifndef IDATABASESESSION_H
+#define IDATABASESESSION_H
 
 #include <databasemodel/idatabasepool.h>
 
 #include <QUuid>
 
 //! Поток базы данных
-class IDatabaseThread
+class IDatabaseSession
 {
 public:
     friend class IDatabaseModel;
 
     //! Деструктор класса
-    virtual ~IDatabaseThread() {
+    virtual ~IDatabaseSession() {
         m_pool->release(m_id);
     }
 
@@ -38,7 +38,7 @@ public:
 
 private:
     //! Конструктор класса
-    explicit IDatabaseThread(IDatabasePool *pool) {
+    explicit IDatabaseSession(IDatabasePool *pool) {
         m_id = QUuid::createUuid();
         m_pool = pool;
     }
@@ -50,5 +50,5 @@ private:
     IDatabasePool *m_pool;
 };
 
-#endif // IDATABASETHREAD_H
+#endif // IDATABASESESSION_H
 

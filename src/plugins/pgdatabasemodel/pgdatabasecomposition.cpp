@@ -8,22 +8,22 @@ PgDatabaseComposition::~PgDatabaseComposition()
 
 }
 
-void PgDatabaseComposition::create(IDatabaseThread *databaseThread)
+void PgDatabaseComposition::create(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseComposition::push(IDatabaseThread *databaseThread)
+void PgDatabaseComposition::push(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseComposition::pull(IDatabaseThread *databaseThread)
+void PgDatabaseComposition::pull(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseComposition::remove(IDatabaseThread *databaseThread)
+void PgDatabaseComposition::remove(IDatabaseSession *session)
 {
 
 }

@@ -20,7 +20,7 @@ public:
 
 // IDatabaseModel
     //! Создание модели базы данных
-    virtual IDatabaseModel *createDatabaseModel(QSqlDatabase db = QSqlDatabase::database());
+    virtual IDatabaseModel *createModel(QSqlDatabase db = QSqlDatabase::database());
 
 private:
     //! Экземпляр менеджера

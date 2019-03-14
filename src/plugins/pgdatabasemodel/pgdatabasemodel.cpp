@@ -92,7 +92,7 @@ void insertLov(ThreadQuery *query, const QString &name,
 
 QUuid PgDatabaseModel::init()
 {
-    IDatabaseThread *dbThread = this->createDatabaseThread();
+    IDatabaseSession *dbThread = this->createSession();
     ThreadQuery *query = m_pool->acquire(dbThread->id());
     QUuid uuidOper = QUuid::createUuid();
 
