@@ -4,8 +4,9 @@
 #include <databasemodel/idatabaseclass.h>
 
 //! Модель базы данных
-class IDatabaseModel
+class IDatabaseModel : public QObject
 {
+    Q_OBJECT
 public:
     //! Деструктор класса
     virtual ~IDatabaseModel() {
@@ -33,14 +34,11 @@ public:
 
 signals:
     //! Сигнал об окончании выполнения операции в потоке
-    virtual void done(const QUuid &uuidOper) = 0;
-
-    //! Сигнал об ошибке в потоке
-    virtual void error(const QUuid &uuidOper, QSqlError err) = 0;
+    void done(const QUuid &uuidOper, const QSqlError &err);
 
 protected:
     //! Конструктор класса
-    explicit IDatabaseModel(IDatabasePool *pool) { m_pool = pool; }
+    explicit IDatabaseModel(IDatabasePool *pool) : QObject () { m_pool = pool; }
 
     //! Пул SQL запросов
     IDatabasePool *m_pool;

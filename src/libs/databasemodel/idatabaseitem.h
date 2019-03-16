@@ -61,10 +61,7 @@ public:
 
 signals:
     //! Сигнал об окончании выполнения операции в потоке
-    void done();
-
-    //! Сигнал об ошибке в потоке
-    void error(QSqlError err);
+    void done(QSqlError err);
 
 protected:
     //! Конструктор класса

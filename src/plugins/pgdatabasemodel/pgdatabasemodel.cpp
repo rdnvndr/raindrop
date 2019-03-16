@@ -17,8 +17,7 @@ using namespace RTPTechGroup::SqlExtension;
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
-PgDatabaseModel::PgDatabaseModel(IDatabasePool *pool): QObject (),
-    IDatabaseModel (pool)
+PgDatabaseModel::PgDatabaseModel(IDatabasePool *pool): IDatabaseModel (pool)
 {
 
 }
@@ -96,22 +95,19 @@ QUuid PgDatabaseModel::init()
     ThreadQuery *query = m_pool->acquire(dbThread->id());
     QUuid uuidOper = QUuid::createUuid();
 
-    // Обработка ошибки
-    QObject::connect(query, &ThreadQuery::error, [this, query, dbThread, uuidOper]
+    this->m_number = 1;
+    QObject::connect(query, &ThreadQuery::executeDone, [this, query, dbThread, uuidOper]
                      (const QUuid &queryUuid, const QSqlError &err)
     {
         Q_UNUSED(queryUuid)
 
-        query->rollback();
-        this->m_pool->release(dbThread->id());
-        emit this->error(uuidOper, err);
-    });
+        if (err.isValid()) {
+            query->rollback();
+            this->m_pool->release(dbThread->id());
+            emit this->done(uuidOper, err);
 
-    this->m_number = 1;
-    QObject::connect(query, &ThreadQuery::executeDone, [this, query, dbThread, uuidOper]
-                     (const QUuid &queryUuid)
-    {
-        Q_UNUSED(queryUuid)
+            return;
+        }
 
         switch (this->m_number) {
         case 1:
@@ -666,7 +662,7 @@ QUuid PgDatabaseModel::init()
         case 71:
             query->commit();
             this->m_pool->release(dbThread->id());
-            emit this->done(uuidOper);
+            emit this->done(uuidOper, err);
 
         }
         this->m_number++;

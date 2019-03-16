@@ -10,10 +10,8 @@ namespace RTPTechGroup {
 namespace DatabaseModel {
 
 //! Реализация модели базы данных PostgreSql
-class PGDATABASEMODELLIB PgDatabaseModel :public QObject,  public IDatabaseModel
-
+class PGDATABASEMODELLIB PgDatabaseModel : public IDatabaseModel
 {
-    Q_OBJECT
 
 public:
     //! Конструктор класса
@@ -29,14 +27,6 @@ public:
 // Получение доступа к спискам элементов модели
     //! Список классов модели
     virtual IDatabaseClasses *classList(const QString &baseClass = QString());
-
-signals:
-    //! Сигнал об окончании выполнения операции в потоке
-    void done(const QUuid &uuidOper);
-
-    //! Сигнал об ошибке в потоке
-    void error(const QUuid &uuidOper, QSqlError err);
-
 
 private:
     int m_number;
