@@ -5,11 +5,12 @@
 #include <databasemodel/idatabaseattribute.h>
 #include <databasemodel/idatabaseexpression.h>
 #include <databasemodel/idatabasefilter.h>
+#include "databasemodelglobal.h"
 
 class IDatabaseObjects;
 
 //! Работа с объектами базы данных
-class IDatabaseManipulation
+class DATABASEMODELLIB IDatabaseManipulation
 {
 public:
     //! Перечисление типов сцепления

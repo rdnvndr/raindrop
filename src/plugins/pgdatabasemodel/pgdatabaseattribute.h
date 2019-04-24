@@ -2,12 +2,13 @@
 #define PGDATABASEATTRIBUTE_H
 
 #include <databasemodel/idatabaseattribute.h>
+#include "pgdatabasemodelglobal.h"
 
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
 //! Реализация атрибута базы данных PostgreSql
-class PgDatabaseAttribute : public IDatabaseAttribute
+class PGDATABASEMODELLIB PgDatabaseAttribute : public IDatabaseAttribute
 {
 public:
     //! Деструктор класса

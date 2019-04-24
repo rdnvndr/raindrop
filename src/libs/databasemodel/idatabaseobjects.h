@@ -5,9 +5,10 @@
 #include <databasemodel/idatabaseclass.h>
 #include <databasemodel/idatabaseobject.h>
 #include <databasemodel/idatabasemanipulation.h>
+#include "databasemodelglobal.h"
 
 //! Список объектов базы данных
-class IDatabaseObjects: public IDatabaseList<IDatabaseClass, IDatabaseObject>,
+class DATABASEMODELLIB IDatabaseObjects: public IDatabaseList<IDatabaseClass, IDatabaseObject>,
                         public IDatabaseManipulation
 {
 public:

@@ -1,11 +1,13 @@
 #ifndef IDATABASEEXPRESSION_H
 #define IDATABASEEXPRESSION_H
 
+#include "databasemodelglobal.h"
+
 #include <QString>
 #include <QVariant>
 
 //! Выражение базы данных
-class IDatabaseExpression
+class DATABASEMODELLIB IDatabaseExpression
 {
 public:
     //! Операторы выражений  базы данных

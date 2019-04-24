@@ -2,12 +2,13 @@
 #define PGDATABASEFILTER_H
 
 #include <databasemodel/idatabasefilter.h>
+#include "pgdatabasemodelglobal.h"
 
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
 //! Реализация фильтра базы данных PostgreSql
-class PgDatabaseFilter : public IDatabaseFilter
+class PGDATABASEMODELLIB  PgDatabaseFilter : public IDatabaseFilter
 {
 public:
     //! Деструктор класса

@@ -2,12 +2,13 @@
 #define PGDATABASECOMPOSITION_H
 
 #include <databasemodel/idatabasecomposition.h>
+#include "pgdatabasemodelglobal.h"
 
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
 //! Реализация состава базы данных PostgreSql
-class PgDatabaseComposition : public IDatabaseComposition
+class PGDATABASEMODELLIB PgDatabaseComposition : public IDatabaseComposition
 {
 public:
     //! Деструктор класса

@@ -6,6 +6,7 @@
 #include <databasemodel/idatabasefilter.h>
 #include <databasemodel/idatabasecomposition.h>
 #include <databasemodel/idatabaseobjects.h>
+#include "databasemodelglobal.h"
 
 #include <QtCore/QObject>
 #include <QtCore/QUuid>
@@ -13,7 +14,7 @@
 #include <QtGui/QIcon>
 
 //! Класс базы данных
-class IDatabaseClass: public IDatabaseItem, public IDatabaseManipulation
+class DATABASEMODELLIB IDatabaseClass: public IDatabaseItem, public IDatabaseManipulation
 {
     Q_OBJECT
 public:

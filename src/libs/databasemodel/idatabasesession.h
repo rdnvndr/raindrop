@@ -2,11 +2,12 @@
 #define IDATABASESESSION_H
 
 #include <databasemodel/idatabasepool.h>
+#include "databasemodelglobal.h"
 
 #include <QUuid>
 
 //! Поток базы данных
-class IDatabaseSession
+class DATABASEMODELLIB IDatabaseSession
 {
 public:
     friend class IDatabaseModel;

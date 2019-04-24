@@ -2,9 +2,10 @@
 #define IDATABASEMODEL_H
 
 #include <databasemodel/idatabaseclass.h>
+#include "databasemodelglobal.h"
 
 //! Модель базы данных
-class IDatabaseModel : public QObject
+class DATABASEMODELLIB IDatabaseModel : public QObject
 {
     Q_OBJECT
 public:

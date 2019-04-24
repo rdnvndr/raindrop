@@ -2,9 +2,10 @@
 #define IDATABASEMODELBUILDER_H
 
 #include <databasemodel/idatabasemodel.h>
+#include "databasemodelglobal.h"
 
 //! Строитель модели базы данных
-class IDatabaseModelBuilder
+class DATABASEMODELLIB IDatabaseModelBuilder
 {
 
 public:

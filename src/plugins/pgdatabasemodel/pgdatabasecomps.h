@@ -4,12 +4,13 @@
 #include <databasemodel/idatabaselist.h>
 #include "pgdatabaseclass.h"
 #include "pgdatabasecomposition.h"
+#include "pgdatabasemodelglobal.h"
 
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
 //! Реализация списка составов базы данных PostgreSql
-class PgDatabaseComps
+class PGDATABASEMODELLIB  PgDatabaseComps
         : public IDatabaseList<PgDatabaseClass, PgDatabaseComposition>
 {
 public:

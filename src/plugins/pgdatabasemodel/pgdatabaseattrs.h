@@ -4,12 +4,13 @@
 #include <databasemodel/idatabaselist.h>
 #include "pgdatabaseclass.h"
 #include "pgdatabaseattribute.h"
+#include "pgdatabasemodelglobal.h"
 
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
 //! Реализация списка атрибутов класса базы данных PostgreSql
-class PgDatabaseAttrs
+class PGDATABASEMODELLIB  PgDatabaseAttrs
         : public IDatabaseList<PgDatabaseClass, PgDatabaseAttribute>
 {
 public:

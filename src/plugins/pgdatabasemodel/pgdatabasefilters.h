@@ -4,12 +4,13 @@
 #include <databasemodel/idatabaselist.h>
 #include "pgdatabaseclass.h"
 #include "pgdatabasefilter.h"
+#include "pgdatabasemodelglobal.h"
 
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
 //! Реализация списка фильтров базы данных PostgreSql
-class PgDatabaseFilters
+class PGDATABASEMODELLIB  PgDatabaseFilters
         : public IDatabaseList<PgDatabaseClass, PgDatabaseFilter>
 {
 public:

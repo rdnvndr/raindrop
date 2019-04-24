@@ -7,7 +7,6 @@
 
 #include <databasemodel/idatabasemodelbuilder.h>
 #include <databasemodel/idatabasemodel.h>
-
 #include "pgdatabaseattribute.h"
 
 namespace RTPTechGroup {

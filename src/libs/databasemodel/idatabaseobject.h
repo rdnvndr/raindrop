@@ -2,9 +2,10 @@
 #define IDATABASEOBJECT_H
 
 #include <databasemodel/idatabaseitem.h>
+#include "databasemodelglobal.h"
 
 //! Объект базы данных
-class IDatabaseObject: public IDatabaseItem
+class DATABASEMODELLIB IDatabaseObject: public IDatabaseItem
 {
 public:
     //! Деструктор класса

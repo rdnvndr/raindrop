@@ -4,6 +4,7 @@
 #include <databasemodel/idatabasepool.h>
 #include <sqlextension/threadquery.h>
 #include <sqlextension/threadquerypool.h>
+#include "databasemodelglobal.h"
 
 #include <QUuid>
 #include <QSqlDatabase>
@@ -11,7 +12,7 @@
 using namespace RTPTechGroup::SqlExtension;
 
 //! Модель пул базы данных
-class IDatabasePool
+class DATABASEMODELLIB IDatabasePool
 {
 
 public:

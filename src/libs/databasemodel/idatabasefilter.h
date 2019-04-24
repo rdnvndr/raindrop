@@ -4,11 +4,12 @@
 #include <databasemodel/idatabaseitem.h>
 #include <databasemodel/idatabaseclass.h>
 #include <databasemodel/idatabaseexpression.h>
+#include "databasemodelglobal.h"
 
 class IDatabaseClass;
 
 //! Фильтр класса базы данных
-class IDatabaseFilter: public IDatabaseItem
+class DATABASEMODELLIB IDatabaseFilter: public IDatabaseItem
 {
 public:
     //! Деструктор класса

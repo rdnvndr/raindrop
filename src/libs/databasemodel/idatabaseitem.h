@@ -3,6 +3,7 @@
 
 #include <databasemodel/idatabasesession.h>
 #include <databasemodel/idatabasepool.h>
+#include "databasemodelglobal.h"
 
 #include <QtCore/QUuid>
 #include <QtCore/QString>
@@ -10,7 +11,7 @@
 #include <QtCore/QObject>
 
 //! Элемент базы данных
-class IDatabaseItem: public QObject
+class DATABASEMODELLIB IDatabaseItem: public QObject
 {
     Q_OBJECT
 public:

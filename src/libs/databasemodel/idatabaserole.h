@@ -2,9 +2,10 @@
 #define IDATABASEROLE_H
 
 #include <databasemodel/idatabaseitem.h>
+#include "databasemodelglobal.h"
 
 //! Роль базы данных
-class IDatabaseRole: public IDatabaseItem
+class DATABASEMODELLIB IDatabaseRole: public IDatabaseItem
 {
 
 };

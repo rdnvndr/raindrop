@@ -5,13 +5,14 @@
 #include <databasemodel/idatabaseclass.h>
 #include <databasemodel/idatabaseattribute.h>
 #include <databasemodel/idatabaseexpression.h>
+#include "databasemodelglobal.h"
 
 class IDatabaseClass;
 class IDatabaseAttribute;
 class IDatabaseExpression;
 
 //! Состав класса базы данных
-class IDatabaseComposition: public IDatabaseItem
+class DATABASEMODELLIB IDatabaseComposition: public IDatabaseItem
 {
 public:
 

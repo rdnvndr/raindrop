@@ -3,7 +3,6 @@
 
 #include <QtSql/QSqlDatabase>
 #include <databasemodel/idatabasemodel.h>
-
 #include "pgdatabasemodelglobal.h"
 
 namespace RTPTechGroup {

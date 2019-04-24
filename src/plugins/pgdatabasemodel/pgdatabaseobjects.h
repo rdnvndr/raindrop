@@ -4,12 +4,13 @@
 #include <databasemodel/idatabaselist.h>
 #include "pgdatabaseclass.h"
 #include "pgdatabaseobject.h"
+#include "pgdatabasemodelglobal.h"
 
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
 //! Реализация списка объектов базы данных PostgreSql
-class PgDatabaseObjects : public IDatabaseList<PgDatabaseClass, PgDatabaseObject>
+class PGDATABASEMODELLIB PgDatabaseObjects : public IDatabaseList<PgDatabaseClass, PgDatabaseObject>
 {
 public:
     //! Конструктор класса

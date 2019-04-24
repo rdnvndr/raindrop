@@ -2,12 +2,13 @@
 #define PGDATABASECLASS_H
 
 #include <databasemodel/idatabaseclass.h>
+#include "pgdatabasemodelglobal.h"
 
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
 //! Реализация класса базы данных PostgreSql
-class PgDatabaseClass : public IDatabaseClass
+class PGDATABASEMODELLIB  PgDatabaseClass : public IDatabaseClass
 {
     Q_OBJECT
 public:

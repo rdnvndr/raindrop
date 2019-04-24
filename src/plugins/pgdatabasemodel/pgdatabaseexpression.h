@@ -2,9 +2,10 @@
 #define PGDATABASEEXPRESSION_H
 
 #include <databasemodel/idatabaseexpression.h>
+#include "pgdatabasemodelglobal.h"
 
 //! Реализация выражение базы данных
-class PgDatabaseExpression : public IDatabaseExpression
+class PGDATABASEMODELLIB  PgDatabaseExpression : public IDatabaseExpression
 {
 public:
     //! Конструктор класса

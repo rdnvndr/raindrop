@@ -5,6 +5,7 @@
 #include <databasemodel/idatabaseitem.h>
 #include <databasemodel/idatabaseclass.h>
 #include <databasemodel/idatabasecomposition.h>
+#include "databasemodelglobal.h"
 
 #include <QVariant>
 #include <QUuid>
@@ -14,7 +15,7 @@ class IDatabaseClass;
 class IDatabaseComposition;
 
 //! Атрибут класса базы данных
-class IDatabaseAttribute: public IDatabaseItem
+class DATABASEMODELLIB IDatabaseAttribute: public IDatabaseItem
 {
 public:
     //! Перечисление типов атрибутов
