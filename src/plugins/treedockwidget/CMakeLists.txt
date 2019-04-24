@@ -14,7 +14,7 @@ set(LIBRARIES
 
 include("${CMAKE_SOURCE_DIR}/cmake/plugins.cmake")
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE -DUNDOSTACK_LIBRARY)
+target_compile_definitions(${PROJECT_NAME} PRIVATE -DTREEDOCKWIDGET_LIBRARY)
 
 find_package(Qt5Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
