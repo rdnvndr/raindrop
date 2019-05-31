@@ -31,57 +31,8 @@ PgDatabaseClass::~PgDatabaseClass()
 
 void PgDatabaseClass::create(IDatabaseSession *session)
 {
-    ThreadQuery *query = (session) ? m_pool->acquire(session->id())
-                                   : m_pool->acquire();
-
     QUuid uuidOper = QUuid::createUuid();
-    auto uuidRoll = std::make_shared<QUuid>();
-    *uuidRoll = QUuid::createUuid();
-
-    // Окончание запроса
-    auto connDone = std::make_shared<QMetaObject::Connection>();
-    *connDone = QObject::connect(query, &ThreadQuery::executeDone, query,
-                     [this, query, session, uuidOper, uuidRoll, connDone]
-                     (const QUuid &queryUuid, const QSqlError &err)
-    {
-        if (err.isValid()) {
-            if (!uuidRoll->isNull()) {
-                QObject::disconnect(*connDone);
-                bool isRoll = *uuidRoll != queryUuid;
-                *uuidRoll = QUuid();
-                if (session == nullptr) {
-                    query->rollback();
-                    query->end();
-                    delete query;
-                } else if (isRoll) {
-                    query->execute("ROLLBACK TO SAVEPOINT "
-                                   + lblUuidPoint(uuidOper) + ";");
-                    query->execute("RELEASE SAVEPOINT "
-                                   + lblUuidPoint(uuidOper) + ";");
-                    query->end();
-                }
-                emit this->done(err);
-            }
-        } else if (uuidOper == queryUuid) {
-            QObject::disconnect(*connDone);
-            if (session == nullptr) {
-                query->commit();
-                query->end();
-                delete query;
-            } else {
-                query->execute("RELEASE SAVEPOINT " + lblUuidPoint(uuidOper) + ";");
-                query->end();
-            }
-            emit this->done(err);
-        }
-    }, Qt::QueuedConnection);
-
-    query->begin();
-    if (session == nullptr)
-        query->transaction();
-    else {
-        query->execute("SAVEPOINT " + lblUuidPoint(uuidOper) + ";", *uuidRoll);
-    }
+    ThreadQuery *query = autoDoneQuery(session, uuidOper, this, m_pool);
 
     query->execute("CREATE TABLE " + clsTable(this->name()) + "();");
     query->prepare(

@@ -62,6 +62,11 @@ QString fldStmp();
 //! Возвращает тип БД для типа глобальный идентификатор
 QString fldGuid();
 
+//! Возвращает класс выполнения Sql запроса для элемента базы данных по потоку
+//! базы данных с автозавершающейся транзакцией
+ThreadQuery *autoDoneQuery(IDatabaseSession *session, QUuid uuidOper,
+                           IDatabaseItem *dbItem, IDatabasePool *pool);
+
 }}
 
 #endif // PGDATABASEHELPER_H

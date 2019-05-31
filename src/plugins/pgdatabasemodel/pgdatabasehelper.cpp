@@ -99,4 +99,61 @@ QString lblUuidPoint(const QUuid &uuid)
     return "P" + uuid.toString(QUuid::Id128);
 }
 
+ThreadQuery *autoDoneQuery(IDatabaseSession *session, QUuid uuidOper,
+                           IDatabaseItem *dbItem, IDatabasePool *pool)
+{
+    ThreadQuery *query = (session) ? pool->acquire(session->id())
+                                   : pool->acquire();
+
+    auto uuidRoll = std::make_shared<QUuid>();
+    *uuidRoll = QUuid::createUuid();
+
+    // Окончание запроса
+    auto connDone = std::make_shared<QMetaObject::Connection>();
+    *connDone = QObject::connect(query, &ThreadQuery::executeDone, query,
+                                 [dbItem, query, session, uuidOper, uuidRoll, connDone]
+                                 (const QUuid &queryUuid, const QSqlError &err)
+    {
+        if (err.isValid()) {
+            if (!uuidRoll->isNull()) {
+                QObject::disconnect(*connDone);
+                bool isRoll = *uuidRoll != queryUuid;
+                *uuidRoll = QUuid();
+                if (session == nullptr) {
+                    query->rollback();
+                    query->end();
+                    delete query;
+                } else if (isRoll) {
+                    query->execute("ROLLBACK TO SAVEPOINT "
+                                   + lblUuidPoint(uuidOper) + ";");
+                    query->execute("RELEASE SAVEPOINT "
+                                   + lblUuidPoint(uuidOper) + ";");
+                    query->end();
+                }
+                emit dbItem->done(err);
+            }
+        } else if (uuidOper == queryUuid) {
+            QObject::disconnect(*connDone);
+            if (session == nullptr) {
+                query->commit();
+                query->end();
+                delete query;
+            } else {
+                query->execute("RELEASE SAVEPOINT " + lblUuidPoint(uuidOper) + ";");
+                query->end();
+            }
+            emit dbItem->done(err);
+        }
+    }, Qt::QueuedConnection);
+
+    query->begin();
+    if (session == nullptr)
+        query->transaction();
+    else {
+        query->execute("SAVEPOINT " + lblUuidPoint(uuidOper) + ";", *uuidRoll);
+    }
+
+    return query;
+}
+
 }}
