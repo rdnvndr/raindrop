@@ -78,6 +78,11 @@ void PgDatabaseClass::pull(IDatabaseSession *session)
 
 }
 
+void PgDatabaseClass::rename(const QString &name, IDatabaseSession *session)
+{
+
+}
+
 void PgDatabaseClass::remove(IDatabaseSession *session)
 {
 

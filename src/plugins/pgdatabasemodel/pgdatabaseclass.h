@@ -28,6 +28,9 @@ public:
     //! Получить изменения элемента базы данных
     virtual void pull(IDatabaseSession *session = nullptr);
 
+    //! Переименовывает элемент базы данных
+    virtual void rename(const QString &name, IDatabaseSession *session = nullptr);
+
     //! Удаление элемента базы данных
     virtual void remove(IDatabaseSession *session = nullptr);
 

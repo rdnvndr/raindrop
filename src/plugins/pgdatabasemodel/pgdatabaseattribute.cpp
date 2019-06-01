@@ -27,6 +27,11 @@ void PgDatabaseAttribute::pull(IDatabaseSession *session)
 
 }
 
+void PgDatabaseAttribute::rename(const QString &name, IDatabaseSession *session)
+{
+
+}
+
 void PgDatabaseAttribute::remove(IDatabaseSession *session)
 {
 

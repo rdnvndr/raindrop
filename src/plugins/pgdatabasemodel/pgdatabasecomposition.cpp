@@ -23,6 +23,11 @@ void PgDatabaseComposition::pull(IDatabaseSession *session)
 
 }
 
+void PgDatabaseComposition::rename(const QString &name, IDatabaseSession *session)
+{
+
+}
+
 void PgDatabaseComposition::remove(IDatabaseSession *session)
 {
 
