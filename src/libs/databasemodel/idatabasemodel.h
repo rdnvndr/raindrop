@@ -35,7 +35,7 @@ public:
 
 signals:
     //! Сигнал об окончании выполнения операции в потоке
-    void done(const QUuid &uuidOper, const QSqlError &err);
+    void done(const IDatabaseError &err);
 
 protected:
     //! Конструктор класса

@@ -104,7 +104,7 @@ QUuid PgDatabaseModel::init()
         if (err.isValid()) {
             query->rollback();
             this->m_pool->release(dbThread->id());
-            emit this->done(uuidOper, err);
+            emit this->done(IDatabaseError(err, dbThread));
 
             return;
         }
@@ -662,7 +662,7 @@ QUuid PgDatabaseModel::init()
         case 71:
             query->commit();
             this->m_pool->release(dbThread->id());
-            emit this->done(uuidOper, err);
+            emit this->done(IDatabaseError(err, dbThread));
 
         }
         this->m_number++;

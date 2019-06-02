@@ -130,7 +130,7 @@ ThreadQuery *autoDoneQuery(IDatabaseSession *session, QUuid uuidOper,
                                    + lblUuidPoint(uuidOper) + ";");
                     query->end();
                 }
-                emit dbItem->done(err);
+                emit dbItem->done(IDatabaseError(err, session));
             }
         } else if (uuidOper == queryUuid) {
             QObject::disconnect(*connDone);
@@ -142,7 +142,7 @@ ThreadQuery *autoDoneQuery(IDatabaseSession *session, QUuid uuidOper,
                 query->execute("RELEASE SAVEPOINT " + lblUuidPoint(uuidOper) + ";");
                 query->end();
             }
-            emit dbItem->done(err);
+            emit dbItem->done(IDatabaseError(err, session));
         }
     }, Qt::QueuedConnection);
 

@@ -2,8 +2,8 @@
 #define IDATABASELIST_H
 
 #include <databasemodel/idatabasesession.h>
+#include <databasemodel/idatabaseerror.h>
 
-#include <QtSql/QSqlQuery>
 #include <QtCore/QObject>
 
 class IDatabaseClass;
@@ -64,7 +64,7 @@ public:
 
 signals:
     //! Сигнал об окончании выполнения операции в потоке
-    void done(QSqlError err);
+    void done(const IDatabaseError &err);
 
 protected:
     T1 *m_item;

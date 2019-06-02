@@ -3,11 +3,11 @@
 
 #include <databasemodel/idatabasesession.h>
 #include <databasemodel/idatabasepool.h>
+#include <databasemodel/idatabaseerror.h>
 #include "databasemodelglobal.h"
 
 #include <QtCore/QUuid>
 #include <QtCore/QString>
-#include <QtSql/QSqlError>
 #include <QtCore/QObject>
 
 //! Элемент базы данных
@@ -65,7 +65,7 @@ public:
 
 signals:
     //! Сигнал об окончании выполнения операции в потоке
-    void done(QSqlError err);
+    void done(const IDatabaseError &err);
 
 protected:
     //! Конструктор класса

@@ -2,6 +2,7 @@
 
 #include <plugin/pluginmanager.h>
 #include <databasemodel/idatabasemodel.h>
+#include <databasemodel/idatabaseerror.h>
 #include <databasemodel/idatabasemodelmanager.h>
 
 #include <metadatamodel/dbxmlstruct.h>
@@ -91,8 +92,10 @@ DbModelExample::DbModelExample(QObject *parent):
         if (dbNewClass != nullptr) {
             dbNewClass->setAlias("Тестовый класс");
             dbNewClass->setMaxVersion(5);
-            QObject::connect(dbNewClass, &IDatabaseClass::done, [dbSession](){
-                dbSession->commit();
+            QObject::connect(dbNewClass, &IDatabaseClass::done,
+                             [](const IDatabaseError &err)
+            {
+                err.session()->commit();
             });
             dbSession->transaction();
             dbNewClass->create(dbSession);
