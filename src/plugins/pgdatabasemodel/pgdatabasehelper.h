@@ -64,8 +64,7 @@ QString fldGuid();
 
 //! Возвращает класс выполнения Sql запроса для элемента базы данных по потоку
 //! базы данных с автозавершающейся транзакцией
-ThreadQuery *autoDoneQuery(IDatabaseSession *session, QUuid uuidOper,
-                           IDatabaseItem *dbItem, IDatabasePool *pool);
+ThreadQuery *autoDoneQuery(QUuid uuidOper, IDatabaseError &error, IDatabasePool *pool);
 
 }}
 

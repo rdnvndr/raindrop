@@ -8,27 +8,28 @@ PgDatabaseComposition::~PgDatabaseComposition()
 
 }
 
-void PgDatabaseComposition::create(IDatabaseSession *session)
+IDatabaseError PgDatabaseComposition::create(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseComposition::push(IDatabaseSession *session)
+IDatabaseError PgDatabaseComposition::push(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseComposition::pull(IDatabaseSession *session)
+IDatabaseError PgDatabaseComposition::pull(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseComposition::rename(const QString &name, IDatabaseSession *session)
+IDatabaseError PgDatabaseComposition::rename(const QString &name,
+                                                        IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseComposition::remove(IDatabaseSession *session)
+IDatabaseError PgDatabaseComposition::remove(IDatabaseSession *session)
 {
 
 }

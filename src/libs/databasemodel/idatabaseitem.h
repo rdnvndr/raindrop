@@ -49,23 +49,20 @@ public:
     virtual bool isSync() { return m_sync; }
 
     //! Создаёт элемент базы данных
-    virtual void create(IDatabaseSession *session = nullptr) = 0;
+    virtual IDatabaseError create(IDatabaseSession *session = nullptr) = 0;
 
     //! Отправляет изменения элемента базы данных
-    virtual void push(IDatabaseSession *session = nullptr) = 0;
+    virtual IDatabaseError push(IDatabaseSession *session = nullptr) = 0;
 
     //! Получает изменения элемента базы данных
-    virtual void pull(IDatabaseSession *session = nullptr) = 0;
+    virtual IDatabaseError pull(IDatabaseSession *session = nullptr) = 0;
 
     //! Переименовывает элемент базы данных
-    virtual void rename(const QString &name, IDatabaseSession *session = nullptr) = 0;
+    virtual IDatabaseError rename(const QString &name,
+                                             IDatabaseSession *session = nullptr) = 0;
 
     //! Удаляет элемент базы данных
-    virtual void remove(IDatabaseSession *session = nullptr) = 0;
-
-signals:
-    //! Сигнал об окончании выполнения операции в потоке
-    void done(const IDatabaseError &err);
+    virtual IDatabaseError remove(IDatabaseSession *session = nullptr) = 0;
 
 protected:
     //! Конструктор класса

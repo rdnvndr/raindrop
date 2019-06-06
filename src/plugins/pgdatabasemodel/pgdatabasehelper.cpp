@@ -1,5 +1,7 @@
 #include "pgdatabasehelper.h"
 
+#include <QDebug>
+
 namespace RTPTechGroup {
 namespace DatabaseModel {
 
@@ -99,9 +101,9 @@ QString lblUuidPoint(const QUuid &uuid)
     return "P" + uuid.toString(QUuid::Id128);
 }
 
-ThreadQuery *autoDoneQuery(IDatabaseSession *session, QUuid uuidOper,
-                           IDatabaseItem *dbItem, IDatabasePool *pool)
+ThreadQuery *autoDoneQuery(QUuid uuidOper, IDatabaseError &error, IDatabasePool *pool)
 {
+    IDatabaseSession *session = error.session();
     ThreadQuery *query = (session) ? pool->acquire(session->id())
                                    : pool->acquire();
 
@@ -111,7 +113,7 @@ ThreadQuery *autoDoneQuery(IDatabaseSession *session, QUuid uuidOper,
     // Окончание запроса
     auto connDone = std::make_shared<QMetaObject::Connection>();
     *connDone = QObject::connect(query, &ThreadQuery::executeDone, query,
-                                 [dbItem, query, session, uuidOper, uuidRoll, connDone]
+                                 [&error, query, session, uuidOper, uuidRoll, connDone]
                                  (const QUuid &queryUuid, const QSqlError &err)
     {
         if (err.isValid()) {
@@ -130,7 +132,7 @@ ThreadQuery *autoDoneQuery(IDatabaseSession *session, QUuid uuidOper,
                                    + lblUuidPoint(uuidOper) + ";");
                     query->end();
                 }
-                emit dbItem->done(IDatabaseError(err, session));
+                error.finish(err);
             }
         } else if (uuidOper == queryUuid) {
             QObject::disconnect(*connDone);
@@ -142,7 +144,7 @@ ThreadQuery *autoDoneQuery(IDatabaseSession *session, QUuid uuidOper,
                 query->execute("RELEASE SAVEPOINT " + lblUuidPoint(uuidOper) + ";");
                 query->end();
             }
-            emit dbItem->done(IDatabaseError(err, session));
+            error.finish(err);
         }
     }, Qt::QueuedConnection);
 

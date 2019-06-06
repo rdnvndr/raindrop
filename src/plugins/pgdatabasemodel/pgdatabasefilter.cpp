@@ -8,22 +8,23 @@ PgDatabaseFilter::~PgDatabaseFilter()
 
 }
 
-void PgDatabaseFilter::push(IDatabaseSession *session)
+IDatabaseError PgDatabaseFilter::push(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseFilter::pull(IDatabaseSession *session)
+IDatabaseError PgDatabaseFilter::pull(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseFilter::rename(const QString &name, IDatabaseSession *session)
+IDatabaseError PgDatabaseFilter::rename(const QString &name,
+                                                   IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseFilter::remove(IDatabaseSession *session)
+IDatabaseError PgDatabaseFilter::remove(IDatabaseSession *session)
 {
 
 }

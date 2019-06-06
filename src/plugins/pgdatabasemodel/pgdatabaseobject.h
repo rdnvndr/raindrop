@@ -14,15 +14,22 @@ public:
     //! Деструктор класса
     virtual ~PgDatabaseObject();
 
+// Работа с элементами базы данных
+    //! Создаёт элемент базы данных
+    IDatabaseError create(IDatabaseSession *session = nullptr);
 
-    //! Создание элемента базы данных
-    void push(IDatabaseSession *session = nullptr);
+    //! Отправить изменения элемента базы данных
+    IDatabaseError push(IDatabaseSession *session = nullptr);
 
-    //! Обновление элемента базы данных
-    void pull(IDatabaseSession *session = nullptr);
+    //! Получить изменения элемента базы данных
+    IDatabaseError pull(IDatabaseSession *session = nullptr);
+
+    //! Переименовывает элемент базы данных
+    IDatabaseError rename(const QString &name,
+                                     IDatabaseSession *session = nullptr);
 
     //! Удаление элемента базы данных
-    void remove(IDatabaseSession *session = nullptr);
+    IDatabaseError remove(IDatabaseSession *session = nullptr);
 };
 
 }}

@@ -15,19 +15,20 @@ public:
     virtual ~PgDatabaseComposition();
 
     //! Создаёт элемент базы данных
-    void create(IDatabaseSession *session = nullptr);
+    IDatabaseError create(IDatabaseSession *session = nullptr);
 
     //! Отправляет изменения элемента базы данных
-    void push(IDatabaseSession *session = nullptr);
+    IDatabaseError push(IDatabaseSession *session = nullptr);
 
     //! Получает изменения элемента базы данных
-    void pull(IDatabaseSession *session = nullptr);
+    IDatabaseError pull(IDatabaseSession *session = nullptr);
 
     //! Переименовывает элемент базы данных
-    virtual void rename(const QString &name, IDatabaseSession *session = nullptr);
+    IDatabaseError rename(const QString &name,
+                                     IDatabaseSession *session = nullptr);
 
     //! Удаляет элемент базы данных
-    void remove(IDatabaseSession *session = nullptr);
+    IDatabaseError remove(IDatabaseSession *session = nullptr);
 };
 
 }}

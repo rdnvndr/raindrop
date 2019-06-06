@@ -9,17 +9,27 @@ PgDatabaseObject::~PgDatabaseObject()
 
 }
 
-void PgDatabaseObject::push(IDatabaseSession *session)
+IDatabaseError PgDatabaseObject::create(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseObject::pull(IDatabaseSession *session)
+IDatabaseError PgDatabaseObject::push(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseObject::remove(IDatabaseSession *session)
+IDatabaseError PgDatabaseObject::pull(IDatabaseSession *session)
+{
+
+}
+
+IDatabaseError PgDatabaseObject::rename(const QString &name, IDatabaseSession *session)
+{
+
+}
+
+IDatabaseError PgDatabaseObject::remove(IDatabaseSession *session)
 {
 
 }

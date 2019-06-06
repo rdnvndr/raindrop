@@ -20,19 +20,20 @@ public:
 
 // Работа с элементами базы данных
     //! Создаёт элемент базы данных
-    virtual void create(IDatabaseSession *session = nullptr);
+    IDatabaseError create(IDatabaseSession *session = nullptr);
 
     //! Отправить изменения элемента базы данных
-    virtual void push(IDatabaseSession *session = nullptr);
+    IDatabaseError push(IDatabaseSession *session = nullptr);
 
     //! Получить изменения элемента базы данных
-    virtual void pull(IDatabaseSession *session = nullptr);
+    IDatabaseError pull(IDatabaseSession *session = nullptr);
 
     //! Переименовывает элемент базы данных
-    virtual void rename(const QString &name, IDatabaseSession *session = nullptr);
+    IDatabaseError rename(const QString &name,
+                                     IDatabaseSession *session = nullptr);
 
     //! Удаление элемента базы данных
-    virtual void remove(IDatabaseSession *session = nullptr);
+    IDatabaseError remove(IDatabaseSession *session = nullptr);
 
 // Получение доступа к элементам класса по имени
     //! Получение производного класса по имени

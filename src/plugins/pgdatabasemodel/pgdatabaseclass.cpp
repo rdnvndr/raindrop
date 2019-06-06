@@ -29,10 +29,12 @@ PgDatabaseClass::~PgDatabaseClass()
 
 }
 
-void PgDatabaseClass::create(IDatabaseSession *session)
+IDatabaseError PgDatabaseClass::create(IDatabaseSession *session)
 {
+    IDatabaseError error(session);
+
     QUuid uuidOper = QUuid::createUuid();
-    ThreadQuery *query = autoDoneQuery(session, uuidOper, this, m_pool);
+    ThreadQuery *query = autoDoneQuery(uuidOper, error, m_pool);
 
     query->execute("CREATE TABLE " + clsTable(this->name()) + "();");
     query->prepare(
@@ -66,24 +68,27 @@ void PgDatabaseClass::create(IDatabaseSession *session)
     query->bindValue(":icon",     this->icon());
     query->bindValue(":id",       vlUuidString(this->id()));
     query->execute(uuidOper);
+
+    return error;
 }
 
-void PgDatabaseClass::push(IDatabaseSession *session)
+IDatabaseError PgDatabaseClass::push(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseClass::pull(IDatabaseSession *session)
+IDatabaseError PgDatabaseClass::pull(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseClass::rename(const QString &name, IDatabaseSession *session)
+IDatabaseError PgDatabaseClass::rename(const QString &name,
+                                                  IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseClass::remove(IDatabaseSession *session)
+IDatabaseError PgDatabaseClass::remove(IDatabaseSession *session)
 {
 
 }

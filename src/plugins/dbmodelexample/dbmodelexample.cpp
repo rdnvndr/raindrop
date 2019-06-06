@@ -92,13 +92,17 @@ DbModelExample::DbModelExample(QObject *parent):
         if (dbNewClass != nullptr) {
             dbNewClass->setAlias("Тестовый класс");
             dbNewClass->setMaxVersion(5);
-            QObject::connect(dbNewClass, &IDatabaseClass::done,
-                             [](const IDatabaseError &err)
-            {
-                err.session()->commit();
-            });
+
             dbSession->transaction();
-            dbNewClass->create(dbSession);
+            IDatabaseError err = dbNewClass->create(dbSession);
+
+            err.setHandlerDone([](IDatabaseError &error){
+                error.session()->commit();
+            });
+
+            QThread::sleep(5);
+            qApp->processEvents();
+            qDebug() << err.sqlError().text();
 
             IDatabaseAttribute *dbNewAttr = dbNewClass->attr("name");
             if (dbNewAttr != nullptr) {

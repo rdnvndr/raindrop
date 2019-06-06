@@ -12,27 +12,28 @@ PgDatabaseAttribute::~PgDatabaseAttribute()
 
 }
 
-void PgDatabaseAttribute::create(IDatabaseSession *session)
+IDatabaseError PgDatabaseAttribute::create(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseAttribute::push(IDatabaseSession *session)
+IDatabaseError PgDatabaseAttribute::push(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseAttribute::pull(IDatabaseSession *session)
+IDatabaseError PgDatabaseAttribute::pull(IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseAttribute::rename(const QString &name, IDatabaseSession *session)
+IDatabaseError PgDatabaseAttribute::rename(const QString &name,
+                                                      IDatabaseSession *session)
 {
 
 }
 
-void PgDatabaseAttribute::remove(IDatabaseSession *session)
+IDatabaseError PgDatabaseAttribute::remove(IDatabaseSession *session)
 {
 
 }
