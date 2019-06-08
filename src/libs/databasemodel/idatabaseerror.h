@@ -37,9 +37,6 @@ public:
     //! Конструктор класса
     IDatabaseError(IDatabaseSession *session);
 
-    //! Деструктор класса
-    ~IDatabaseError();
-
     //! Возвращает информация о сессии возникновения ошибки
     IDatabaseSession *session() const;
 

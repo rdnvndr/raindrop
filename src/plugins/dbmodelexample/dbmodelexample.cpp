@@ -80,9 +80,12 @@ DbModelExample::DbModelExample(QObject *parent):
                     //                    QVariant value = object->value(dbAttr);
                     //                    object->value(dbAttr) = "test";
                     //                    object->push();
+                    delete object;
+                    delete objects;
                 }
+                delete dbAttr;
             }
-
+            delete dbClass;
         }
 
         // Создание класса               
@@ -109,11 +112,12 @@ DbModelExample::DbModelExample(QObject *parent):
                 dbNewAttr->setAlias("Атрибут");
                 dbNewAttr->setInitialValue(0);
                 dbNewAttr->create(dbSession);
+                delete dbNewAttr;
             }
+            delete dbNewClass;
         }
-
-//        dbThread->commit();
-
+        delete dbSession;
+        delete dbModel;
     }
 }
 

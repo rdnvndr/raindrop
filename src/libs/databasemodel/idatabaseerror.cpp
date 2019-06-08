@@ -19,11 +19,6 @@ IDatabaseSession *IDatabaseError::session() const
     return (this->get() == nullptr) ? nullptr : this->get()->m_session;
 }
 
-IDatabaseError::~IDatabaseError()
-{
-
-}
-
 bool IDatabaseError::isValid() const
 {
     return (this->get() == nullptr) ? true : this->get()->m_sqlError.isValid();
