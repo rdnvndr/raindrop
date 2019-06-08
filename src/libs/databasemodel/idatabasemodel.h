@@ -15,7 +15,7 @@ public:
     }
 
     //! Инициализирует модель базы данных
-    virtual QUuid init() = 0;
+    virtual IDatabaseError init(IDatabaseSession *session = nullptr) = 0;
 
     //! Создаёт поток базы данных
     virtual IDatabaseSession *createSession() {
@@ -32,10 +32,6 @@ public:
 // Получение доступа к спискам элементов модели
     //! Список классов модели
     virtual IDatabaseClasses *classList(const QString &baseClass = QString()) = 0;
-
-signals:
-    //! Сигнал об окончании выполнения операции в потоке
-    void done(const IDatabaseError &err);
 
 protected:
     //! Конструктор класса

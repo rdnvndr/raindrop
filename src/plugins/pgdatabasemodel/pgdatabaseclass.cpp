@@ -31,10 +31,10 @@ PgDatabaseClass::~PgDatabaseClass()
 
 IDatabaseError PgDatabaseClass::create(IDatabaseSession *session)
 {
-    IDatabaseError error(session);
-
-    QUuid uuidOper = QUuid::createUuid();
+    IDatabaseError error(session);QUuid uuidOper = QUuid::createUuid();
     ThreadQuery *query = autoDoneQuery(uuidOper, error, m_pool);
+
+
 
     query->execute("CREATE TABLE " + clsTable(this->name()) + "();");
     query->prepare(

@@ -17,15 +17,15 @@ public:
     explicit PgDatabaseModel(IDatabasePool *pool);
 
     //! Инициализирует модель базы данных
-    virtual QUuid init();
+    IDatabaseError init(IDatabaseSession *session = nullptr);
 
 // Получение доступа к элементам модели по имени
      //! Получение класса по имени
-    virtual IDatabaseClass *oneClass(const QString &name);
+    IDatabaseClass *oneClass(const QString &name);
 
 // Получение доступа к спискам элементов модели
     //! Список классов модели
-    virtual IDatabaseClasses *classList(const QString &baseClass = QString());
+    IDatabaseClasses *classList(const QString &baseClass = QString());
 
 private:
     int m_number;
