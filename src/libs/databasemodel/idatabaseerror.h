@@ -52,6 +52,8 @@ public:
     //! Устанавливает функцию обработки окончания операции
     void setHandlerDone(IHandlerFunction done);
 
+    //! Возвращает функцию обработки окончания операции
+    IHandlerFunction handlerDone();
 };
 
 #endif // IDATABASEERROR_H

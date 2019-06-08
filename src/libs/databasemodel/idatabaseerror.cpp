@@ -54,3 +54,8 @@ void IDatabaseError::setHandlerDone(IHandlerFunction done)
         this->get()->m_isHandledDone = true;
     }
 }
+
+IHandlerFunction IDatabaseError::handlerDone()
+{
+    return (this->get() == nullptr) ? nullptr : this->get()->m_done;
+}
