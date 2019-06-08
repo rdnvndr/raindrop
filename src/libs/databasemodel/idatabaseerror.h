@@ -9,22 +9,15 @@
 class IDatabaseError;
 
 //! Класс функции обработки события
-typedef std::function<void(IDatabaseError &)> IHandlerFunction;
+typedef std::function<void(IDatabaseError &)> IHandlerDone;
 
 //! Структура предоставляет информацию об ошибке
 struct IDatabaseErrorStruct
 {
-    //! Информация об ошибке в базе данных
-    QSqlError m_sqlError;
-
-    //! Обработчик события
-    IHandlerFunction m_done;
-
-    //! Информация о сессии возникновения ошибки
-    IDatabaseSession *m_session;
-
-    //! Обработано ли событие
-    bool m_isHandledDone;
+    QSqlError m_sqlError;        //! Информация об ошибке в базе данных
+    IHandlerDone m_done;         //! Обработчик события
+    IDatabaseSession *m_session; //! Информация о сессии возникновения ошибки
+    bool m_isHandled;            //! Обработано ли событие
 };
 
 //! Класс предоставляет информацию об ошибке
@@ -50,10 +43,10 @@ public:
     void finish(const QSqlError &err);
 
     //! Устанавливает функцию обработки окончания операции
-    void setHandlerDone(IHandlerFunction done);
+    void setHandlerDone(IHandlerDone done);
 
     //! Возвращает функцию обработки окончания операции
-    IHandlerFunction handlerDone();
+    IHandlerDone handlerDone();
 };
 
 #endif // IDATABASEERROR_H
