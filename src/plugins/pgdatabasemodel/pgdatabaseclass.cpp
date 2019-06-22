@@ -74,23 +74,23 @@ IDatabaseError PgDatabaseClass::create(IDatabaseSession *session)
 
 IDatabaseError PgDatabaseClass::push(IDatabaseSession *session)
 {
-
+    return nullptr;
 }
 
 IDatabaseError PgDatabaseClass::pull(IDatabaseSession *session)
 {
-
+    return nullptr;
 }
 
 IDatabaseError PgDatabaseClass::rename(const QString &name,
                                                   IDatabaseSession *session)
 {
-
+    return nullptr;
 }
 
 IDatabaseError PgDatabaseClass::remove(IDatabaseSession *session)
 {
-
+    return nullptr;
 }
 
 IDatabaseClass *PgDatabaseClass::derivedClass(const QString &name)

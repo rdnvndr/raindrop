@@ -2,6 +2,7 @@
 #define IDATABASEERROR_H
 
 #include <databasemodel/idatabasesession.h>
+#include <memory>
 #include "databasemodelglobal.h"
 
 #include <QtSql/QSqlError>
