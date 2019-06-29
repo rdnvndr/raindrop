@@ -149,7 +149,7 @@ void AbstractEditorWidget::onRowsAboutToBeRemoved(const QModelIndex &index, qint
     if (index == m_mapper->rootIndex() && !m_oldIndex.isValid())
         for (qint32 row = start; row <= end; ++row)
             if (m_mapper->currentIndex() == row)
-                emit dataAboutToBeRemoved(index.child(row, 0));
+                emit dataAboutToBeRemoved(childIdx(row, 0, index));
 
 }
 
@@ -158,6 +158,12 @@ QVariant AbstractEditorWidget::modelData(const QString &tag, const QString &attr
 {
     return index.sibling(index.row(), m_model->columnDisplayedAttr(
                              tag,attr)).data(role);
+}
+
+QModelIndex AbstractEditorWidget::childIdx(int arow, int acolumn, const QModelIndex &parent) const
+{
+    return parent.model() ? parent.model()->index(arow, acolumn, parent)
+                          : QModelIndex();
 }
 
 }}

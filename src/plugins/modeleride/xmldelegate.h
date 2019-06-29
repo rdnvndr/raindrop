@@ -38,6 +38,10 @@ public:
     //! Получения центра для прямоугольника виджета
     QRect getCenteredComboBoxRect(const QStyleOptionViewItem &option) const;
 
+protected:
+    //! Возвращает дочерний индекс
+    QModelIndex childIdx(int arow, int acolumn, const QModelIndex &parent = QModelIndex()) const;
+
 private:
     //! Получение хэш модели
     RTPTechGroup::XmlModel::TreeXmlHashModel *sourceModel(QAbstractItemModel *model) const;

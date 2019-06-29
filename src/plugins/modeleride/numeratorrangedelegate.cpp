@@ -67,18 +67,24 @@ QWidget *NumeratorRangeDelegate::createEditor(QWidget *parent,
 
             numeratorFilterModel->setFilterIndex(
                         numeratorFilterModel->mapToSource(
-                            numeratorFilterModel->index(0,0).child(0,0))
+                           childIdx(0,0,numeratorFilterModel->index(0,0)))
                         );
             tags << DBLOVXML::LOV;
             numeratorFilterModel->setAttributeTags(tags);
             comboBox->setModel(numeratorFilterModel);
             comboBox->setRootModelIndex(
-                        numeratorFilterModel->index(0,0).child(0,0));
+                        childIdx(0,0,numeratorFilterModel->index(0,0)));
             comboBox->setCurrentIndex(-1);
             return comboBox;
         }
     }
     return QStyledItemDelegate::createEditor(parent, option, index);
+}
+
+QModelIndex NumeratorRangeDelegate::childIdx(int arow, int acolumn, const QModelIndex &parent) const
+{
+    return parent.model() ? parent.model()->index(arow, acolumn, parent)
+                          : QModelIndex();
 }
 
 void NumeratorRangeDelegate::validateRegExp(QValidator::State state) const

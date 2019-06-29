@@ -111,7 +111,8 @@ void AbstractItemWidget::setCurrent(const QModelIndex &index)
 void AbstractItemWidget::submit()
 {
 
-    QPersistentModelIndex srcIndex = m_mapper->rootIndex().child(m_mapper->currentIndex(),0);
+    QPersistentModelIndex srcIndex = childIdx(m_mapper->currentIndex(),0,
+                                              m_mapper->rootIndex());
     m_mapper->submit();
     edit(false);
 
@@ -198,11 +199,17 @@ void AbstractItemWidget::setRootIndex(const QModelIndex &index)
     m_proxyModel->setSourceModel(m_model);
 
     m_itemView->setRootIndex(m_proxyModel->mapFromSource(index));
-    m_itemView->setCurrentIndex(m_itemView->rootIndex().child(0,0));
+    m_itemView->setCurrentIndex(childIdx(0,0,m_itemView->rootIndex()));
 
     m_mapper->setRootIndex(m_proxyModel->mapFromSource(index));
 
-    this->setCurrent(m_itemView->rootIndex().child(0,0));
+    this->setCurrent(childIdx(0,0,m_itemView->rootIndex()));
+}
+
+QModelIndex AbstractItemWidget::childIdx(int arow, int acolumn, const QModelIndex &parent) const
+{
+    return parent.model() ? parent.model()->index(arow, acolumn, parent)
+                          : QModelIndex();
 }
 
 }}

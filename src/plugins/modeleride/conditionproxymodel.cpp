@@ -223,7 +223,7 @@ bool ConditionProxyModel::insertRows(qint32 row, qint32 count, const QModelIndex
 QModelIndex ConditionProxyModel::insertLastRows(qint32 row, qint32 count, const QModelIndex &parent)
 {
     if (data(parent,TreeXmlModel::TagRole) == DBCONDITIONXML::COND)
-        return QModelIndex().child(-1,-1);
+        return childIdx(-1,-1);
 
     return ModifyProxyModel::insertLastRows(row, count, parent);
 }

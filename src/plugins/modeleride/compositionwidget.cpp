@@ -81,12 +81,12 @@ void CompositionWidget::setModel(TreeXmlHashModel *model)
     classFilterModel->sort(0);
 
     comboBoxDestClass->setModel(classFilterModel);
-    comboBoxDestClass->setRootModelIndex(classFilterModel->index(0,0).child(0,0));
+    comboBoxDestClass->setRootModelIndex(childIdx(0,0,classFilterModel->index(0,0)));
     comboBoxDestClass->setIndexColumn(model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                                  DBCLASSXML::ID));
 
     comboBoxLinkClass->setModel(classFilterModel);
-    comboBoxLinkClass->setRootModelIndex(classFilterModel->index(0,0).child(0,0));
+    comboBoxLinkClass->setRootModelIndex(childIdx(0,0,classFilterModel->index(0,0)));
     comboBoxLinkClass->setIndexColumn(model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                                  DBCLASSXML::ID));
 
@@ -166,7 +166,7 @@ void CompositionWidget::edit(bool flag)
 void CompositionWidget::submit()
 {
     QModelIndex rootIndex = tableViewComp->rootIndex();
-    QModelIndex srcIndex = dataMapper()->rootIndex().child(dataMapper()->currentIndex(),0);
+    QModelIndex srcIndex = childIdx(dataMapper()->currentIndex(),0,dataMapper()->rootIndex());
     qint32 nameColumn = model()->columnDisplayedAttr(DBCOMPXML::COMP, DBCOMPXML::LINKCLASS);
 
     qint32 row = 0;

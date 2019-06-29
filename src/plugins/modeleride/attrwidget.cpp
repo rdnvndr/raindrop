@@ -128,8 +128,9 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     lovFilterModel->setDynamicSortFilter(true);
     lovFilterModel->sort(0);
     comboBoxLov->setModel(lovFilterModel);
-    comboBoxLov->setRootModelIndex(lovFilterModel->index(0,0).child(0,0));
-    lovFilterModel->setFilterIndex(lovFilterModel->mapToSource(lovFilterModel->index(0,0).child(0,0)));
+    comboBoxLov->setRootModelIndex(childIdx(0,0,lovFilterModel->index(0,0)));
+    lovFilterModel->setFilterIndex(
+                lovFilterModel->mapToSource(childIdx(0,0,lovFilterModel->index(0,0))));
     tags << DBLOVXML::LOV;
     lovFilterModel->setAttributeTags(tags);
 
@@ -143,10 +144,10 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     numeratorFilterModel->setDynamicSortFilter(true);
     numeratorFilterModel->sort(0);
     comboBoxNumerator->setModel(numeratorFilterModel);
-    comboBoxNumerator->setRootModelIndex(numeratorFilterModel->index(0,0).child(0,0));
+    comboBoxNumerator->setRootModelIndex(childIdx(0,0,numeratorFilterModel->index(0,0)));
     numeratorFilterModel->setFilterIndex(
                 numeratorFilterModel->mapToSource(
-                    numeratorFilterModel->index(0,0).child(0,0))
+                    childIdx(0,0,numeratorFilterModel->index(0,0)))
                 );
     tags << DBNUMERATORXML::NUMERATOR;
     numeratorFilterModel->setAttributeTags(tags);
@@ -162,7 +163,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     classFilterModel->sort(0);
 
     comboBoxLinkAttr->setModel(classFilterModel);
-    comboBoxLinkAttr->setRootModelIndex(classFilterModel->index(0,0).child(0,0));
+    comboBoxLinkAttr->setRootModelIndex(childIdx(0,0,classFilterModel->index(0,0)));
     comboBoxLinkAttr->setIndexColumn(model->columnDisplayedAttr(DBCLASSXML::CLASS,
                                                                 DBCLASSXML::ID));
 
@@ -178,7 +179,7 @@ void AttrWidget::setModel(TreeXmlHashModel *model)
     unitFilterModel->setDynamicSortFilter(false);
 
     comboBoxUnitAttr->setModel(unitFilterModel);
-    comboBoxUnitAttr->setRootModelIndex(unitFilterModel->index(0,0).child(0,0));
+    comboBoxUnitAttr->setRootModelIndex(childIdx(0,0,unitFilterModel->index(0,0)));
     comboBoxUnitAttr->setIndexColumn(
                 model->columnDisplayedAttr(DBUNITXML::UNIT,
                                            DBUNITXML::ID));
@@ -281,7 +282,8 @@ bool AttrWidget::add()
 void AttrWidget::submit()
 {
     QModelIndex rootIndex = (tableViewAttr->rootIndex());
-    QModelIndex srcIndex = dataMapper()->rootIndex().child(dataMapper()->currentIndex(),0);
+    QModelIndex srcIndex = childIdx(dataMapper()->currentIndex(),0,
+                                    dataMapper()->rootIndex());
     qint32 nameColumn = model()->columnDisplayedAttr(DBATTRXML::ATTR, DBATTRXML::NAME);
 
     qint32 row = 0;

@@ -56,7 +56,7 @@ bool TreeFilterProxyModel::filterAcceptsRow(
 {
     if (source_parent.isValid()
             && !m_filterTags.contains(sourceModel()->data(
-                                          source_parent.child(source_row,0),
+                                          childIdx(source_row,0,source_parent),
                                           TreeXmlModel::TagRole).toString()))
         return false;
 
@@ -76,20 +76,20 @@ bool TreeFilterProxyModel::filterAcceptsRowItself(
 {
     if (source_parent.isValid()
             && !m_filterTags.contains(sourceModel()->data(
-                                          source_parent.child(source_row,0),
+                                          childIdx(source_row,0,source_parent),
                                           TreeXmlModel::TagRole).toString()))
         return false;
 
     if (!this->filterRegExp().isEmpty()) {
         QString first = sourceModel()->data(
-                    source_parent.child(source_row, m_displayFirstColumn),
+                    childIdx(source_row, m_displayFirstColumn, source_parent),
                     Qt::DisplayRole).toString();
 
         if (m_displaySecondColumn == -1)
             return filterRegExp().indexIn(first) != -1;
 
         QString second = sourceModel()->data(
-                    source_parent.child(source_row, m_displaySecondColumn),
+                    childIdx(source_row, m_displaySecondColumn, source_parent),
                     Qt::DisplayRole).toString();
 
         return filterRegExp().indexIn(
@@ -209,6 +209,12 @@ bool TreeFilterProxyModel::lessThan(
     }
 
     return QSortFilterProxyModel::lessThan(left,right);
+}
+
+QModelIndex TreeFilterProxyModel::childIdx(int arow, int acolumn, const QModelIndex &parent) const
+{
+    return parent.model() ? parent.model()->index(arow, acolumn, parent)
+                          : QModelIndex();
 }
 
 QString TreeFilterProxyModel::formatDisplayColumn() const

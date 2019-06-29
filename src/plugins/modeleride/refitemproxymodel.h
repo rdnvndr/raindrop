@@ -41,6 +41,9 @@ protected:
     //! Фильтр по дереву
     bool filterAcceptsRowItself(qint32 source_row, const QModelIndex &source_parent) const;
 
+    //! Возвращает дочерний индекс
+    QModelIndex childIdx(int arow, int acolumn, const QModelIndex &parent = QModelIndex()) const;
+
 private:
     QPersistentModelIndex m_classIndex;
     bool m_recursion;

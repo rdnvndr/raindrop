@@ -20,6 +20,11 @@ public:
     //! Предоставление редактора
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                           const QModelIndex &index) const;
+
+protected:
+    //! Возвращает дочерний индекс
+    QModelIndex childIdx(int arow, int acolumn, const QModelIndex &parent = QModelIndex()) const;
+
 public slots:
     //! Сообщение о неверном регулярном выражении
     void validateRegExp(QValidator::State state) const;

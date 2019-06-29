@@ -170,6 +170,12 @@ QRect  XmlDelegate::getCenteredComboBoxRect(const QStyleOptionViewItem &option) 
     return result;
 }
 
+QModelIndex XmlDelegate::childIdx(int arow, int acolumn, const QModelIndex &parent) const
+{
+    return parent.model() ? parent.model()->index(arow, acolumn, parent)
+                          : QModelIndex();
+}
+
 void XmlDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                         const QModelIndex &index) const
 {

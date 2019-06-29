@@ -80,6 +80,11 @@ signals:
     //! Сигнал об изменении данных
     void currentIndexChanged(const QModelIndex &index);
 
+protected:
+
+    //! Возвращает дочерний индекс
+    QModelIndex childIdx(int arow, int acolumn, const QModelIndex &parent = QModelIndex()) const;
+
 private:
     //! Модель структуры классов
     RTPTechGroup::XmlModel::TreeXmlHashModel *m_model;
