@@ -8,23 +8,17 @@ ToolBarModel::ToolBarModel(QMainWindow *mainWindow, QObject *parent) :
 {
     m_mainWindow = mainWindow;
 
-    m_mapper = new QSignalMapper(this);
     m_toolBars = mainWindow->findChildren<ToolBar *> ();
     for (ToolBar *toolBar : qAsConst(m_toolBars)) {
-        connect(toolBar, &ToolBar::stateVisibilityChanged, m_mapper,
-                static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
-        m_mapper->setMapping(toolBar,toolBar);
+        connect(toolBar, &ToolBar::stateVisibilityChanged, [=] {
+            setToolBarVisible(toolBar);
+        });
     }
-    connect(m_mapper,
-            static_cast<void (QSignalMapper::*)(QWidget *)>(&QSignalMapper::mapped),
-            this, &ToolBarModel::setToolBarVisible);
-
 }
 
 ToolBarModel::~ToolBarModel()
 {
     m_toolBars.clear();
-    delete m_mapper;
 }
 
 bool ToolBarModel::setData(const QModelIndex &index, const QVariant &value,
@@ -74,10 +68,7 @@ Qt::ItemFlags ToolBarModel::flags(const QModelIndex &index) const
 QVariant ToolBarModel::headerData(qint32 section, Qt::Orientation orientation, qint32 role) const
 {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
-        if (section == 0)
-            return  tr("Видимость");
-        else
-            return  tr("Наименование");
+        return (section == 0) ? tr("Видимость") : tr("Наименование");
     }
     return QVariant();
 }
@@ -112,9 +103,9 @@ bool ToolBarModel::insertRows(qint32 row, qint32 count, const QModelIndex &paren
     ToolBar *toolBar = new ToolBar();
     m_mainWindow->addToolBar(toolBar);
     m_toolBars.insert(row,toolBar);
-    connect(toolBar, &ToolBar::stateVisibilityChanged, m_mapper,
-            static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
-    m_mapper->setMapping(toolBar,toolBar);
+    connect(toolBar, &ToolBar::stateVisibilityChanged, [=] {
+        setToolBarVisible(toolBar);
+    });
     endInsertRows();
     toolBar->setEdited(true);
     return true;
@@ -125,10 +116,9 @@ void ToolBarModel::setToolBarVisible(QWidget *widget)
     ToolBar *toolBar = qobject_cast<ToolBar *>(widget);
     if (toolBar) {
         qint32 row = m_toolBars.indexOf(toolBar);
-        if (toolBar->isVisible())
-            setData(index(row,0),Qt::Checked,Qt::CheckStateRole);
-        else
-            setData(index(row,0),Qt::Unchecked,Qt::CheckStateRole);
+        setData(index(row,0),
+                toolBar->isVisible() ? Qt::Checked : Qt::Unchecked,
+                Qt::CheckStateRole);
     }
 }
 
