@@ -3,7 +3,6 @@
 
 #include <QAbstractItemModel>
 #include <QMainWindow>
-#include <QSignalMapper>
 #include "toolbar.h"
 
 namespace RTPTechGroup {
@@ -49,9 +48,6 @@ public:
 
     //! Удаление строки
     bool removeRows (qint32 row, qint32 count, const QModelIndex & parent);
-
-    
-signals:
     
 public slots:
     //! Смена видимости панели инструмента
@@ -61,12 +57,8 @@ private:
     //! Список панелей инструментов
     QList<ToolBar *> m_toolBars;
 
-    //! Маппер сигналов для панелей инструментов
-    QSignalMapper *m_mapper;
-
     //! Главное окно
-    QMainWindow *m_mainWindow;
-    
+    QMainWindow *m_mainWindow;    
 };
 
 }
