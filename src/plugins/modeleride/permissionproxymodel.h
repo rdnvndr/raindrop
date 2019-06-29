@@ -27,6 +27,9 @@ protected:
     //! Сортировка. Порядок: Класс, Состав, Атрибут, Алфавит
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
 
+    //! Возвращает дочерний индекс
+    QModelIndex childIdx(int arow, int acolumn, const QModelIndex &parent = QModelIndex()) const;
+
 private:
     QModelIndex m_rootIndex;
 };

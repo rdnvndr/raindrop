@@ -97,11 +97,11 @@ void FilterPropWidget::setModel(TreeXmlHashModel *model)
     classFilterModel->setDynamicSortFilter(true);
     classFilterModel->sort(0);
     comboBoxDestClass->setModel(classFilterModel);
-    comboBoxDestClass->setRootModelIndex(classFilterModel->index(0,0).child(0,0));
+    comboBoxDestClass->setRootModelIndex(childIdx(0,0,classFilterModel->index(0,0)));
     comboBoxDestClass->setIndexColumn(model->columnDisplayedAttr(
                                           DBCLASSXML::CLASS, DBCLASSXML::ID));
     comboBoxDestClass->setCurrentModelIndex(
-                classFilterModel->index(0,0).child(0,0).child(0,0));
+                childIdx(0,0,childIdx(0,0,classFilterModel->index(0,0))));
 
     dataMapper()->addMapping(lineEditName,
                          model->columnDisplayedAttr(DBFILTERXML::FILTER,

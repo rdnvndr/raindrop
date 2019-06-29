@@ -136,9 +136,9 @@ void QuantityWidget::changeUnit(qint32 current)
     coeff = (coeff==0)? 1: coeff;
 
     for (qint32 row = 0; row < count; ++row) {
-        index = parent.child(row, columnCoeff);
+        index = childIdx(row, columnCoeff,parent);
         model->setData(index,QString("%1").arg(index.data().toFloat()/coeff));
-        index = parent.child(row, columnDelta);
+        index = childIdx(row, columnDelta,parent);
         model->setData(index,QString("%1").arg(index.data().toFloat()-delta));
     }
 }

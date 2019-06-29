@@ -23,12 +23,12 @@ bool RefItemProxyModel::filterAcceptsRowItself(qint32 source_row, const QModelIn
 
      if (tag == DBREFGROUPXML::REFGROUP) {
          qint32 row = 0;
-         QModelIndex childIndex = srcIndex.child(row,0);
+         QModelIndex childIndex = childIdx(row,0,srcIndex);
          while (childIndex.isValid())
          {
              if (filterAcceptsRowItself(row, srcIndex))
                  return true;
-             childIndex = srcIndex.child(++row,0);
+             childIndex = childIdx(++row,0,srcIndex);
          }
      }
 
@@ -43,7 +43,7 @@ bool RefItemProxyModel::filterAcceptsRowItself(qint32 source_row, const QModelIn
                          DBLINKTOCLASSXML::REFCLASS);
 
              qint32 row = 0;
-             QModelIndex childIndex = srcIndex.child(row,0);
+             QModelIndex childIndex = childIdx(row,0,srcIndex);
              while (childIndex.isValid())
              {
                  if (childIndex.data(TreeXmlModel::TagRole) == DBLINKTOCLASSXML::LINKTOCLASS)
@@ -55,12 +55,18 @@ bool RefItemProxyModel::filterAcceptsRowItself(qint32 source_row, const QModelIn
                                              m_classIndex))
                          return true;
                  }
-                 childIndex = srcIndex.child(++row, 0);
+                 childIndex = childIdx(++row, 0, srcIndex);
              }
          }
      }
 
-    return false;
+     return false;
+}
+
+QModelIndex RefItemProxyModel::childIdx(int arow, int acolumn, const QModelIndex &parent) const
+{
+    return parent.model() ? parent.model()->index(arow, acolumn, parent)
+                          : QModelIndex();
 }
 
 bool RefItemProxyModel::recursion() const

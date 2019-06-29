@@ -73,10 +73,10 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
                 comboBoxDestClass->setCurrentModelIndex(QModelIndex());
             } else {
                 comboBoxDestClass->setRootModelIndex(
-                            classFilterModel->index(0,0).child(0,0));
+                            childIdx(0,0,classFilterModel->index(0,0)));
 
                 comboBoxDestClass->setCurrentModelIndex(
-                            classFilterModel->index(0,0).child(0,0).child(0,0));
+                            childIdx(0,0,childIdx(0,0,classFilterModel->index(0,0))));
             }
             return comboBoxDestClass;
         } else if (tag == DBLINKTOCLASSXML::LINKTOCLASS
@@ -101,7 +101,7 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
             if (srcParentIndex.isValid())
                 classFilterModel->setFilterIndex(srcParentIndex);
             else
-                classFilterModel->setFilterIndex(hashModel->index(0,0).child(0,0));
+                classFilterModel->setFilterIndex(childIdx(0,0,hashModel->index(0,0)));
             classFilterModel->setDynamicSortFilter(true);
             classFilterModel->sort(0);
 
@@ -116,10 +116,10 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
                 comboBoxDestClass->setCurrentModelIndex(QModelIndex());
             } else {
                 comboBoxDestClass->setRootModelIndex(
-                            classFilterModel->index(0,0).child(0,0));
+                            childIdx(0,0,classFilterModel->index(0,0)));
 
                 comboBoxDestClass->setCurrentModelIndex(
-                            classFilterModel->index(0,0).child(0,0).child(0,0));
+                            childIdx(0,0,childIdx(0,0,classFilterModel->index(0,0))));
             }
             return comboBoxDestClass;
         } else  if (tag == DBLINKTOREFXML::LINKTOREF
@@ -153,10 +153,10 @@ QWidget *RefItemDelegate::createEditor(QWidget *parent,
                                                        DBREFXML::ID));
 
             comboBoxDestClass->setRootModelIndex(
-                        classFilterModel->index(0,0).child(0,0));
+                        childIdx(0,0,classFilterModel->index(0,0)));
 
             comboBoxDestClass->setCurrentModelIndex(
-                        classFilterModel->index(0,0).child(0,0).child(0,0));
+                        childIdx(0,0,childIdx(0,0,classFilterModel->index(0,0))));
 
             return comboBoxDestClass;
         } else

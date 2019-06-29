@@ -141,7 +141,7 @@ void PermissionWidget::showParent(bool flag)
     if (flag==true){
         proxyModel()->setFilterRegExp("");
     } else {
-        QModelIndex index = treeViewPerm->rootIndex().child(0,0);
+        QModelIndex index = childIdx(0,0,treeViewPerm->rootIndex());
         QString className = modelData(DBCLASSXML::CLASS,
                                       DBCLASSXML::ID,
                                       index).toString();
@@ -176,6 +176,12 @@ void PermissionWidget::cellItemEdit(const QModelIndex &index)
 {
     if (index.column() != 0)
         treeViewPerm->edit(index);
+}
+
+QModelIndex PermissionWidget::childIdx(int arow, int acolumn, const QModelIndex &parent) const
+{
+    return parent.model() ? parent.model()->index(arow, acolumn, parent)
+                          : QModelIndex();
 }
 
 QVariant PermissionWidget::modelData(const QString &tag, const QString &attr,

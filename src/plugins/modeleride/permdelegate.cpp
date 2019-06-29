@@ -55,13 +55,13 @@ QWidget *PermDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
 
             permFilterModel->setFilterIndex(
                         permFilterModel->mapToSource(
-                            permFilterModel->index(0,0).child(0,0))
+                            childIdx(0,0,permFilterModel->index(0,0)))
                         );
             tags << DBROLEXML::ROLE;
             permFilterModel->setAttributeTags(tags);
             comboBox->setModel(permFilterModel);
             comboBox->setRootModelIndex(
-                        permFilterModel->index(0,0).child(0,0));
+                        childIdx(0,0,permFilterModel->index(0,0)));
             comboBox->setCurrentIndex(-1);
 
             return comboBox;

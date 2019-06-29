@@ -57,6 +57,10 @@ private slots:
     //! Перевод в режим редактирования ячейки дерева
     void cellItemEdit(const QModelIndex& index);
 
+protected:
+    //! Возвращает дочерний индекс
+    QModelIndex childIdx(int arow, int acolumn, const QModelIndex &parent = QModelIndex()) const;
+
 private:
     //! Получение данных модели
     QVariant modelData(const QString &tag, const QString &attr, const QModelIndex &index);

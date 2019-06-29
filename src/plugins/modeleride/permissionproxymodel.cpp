@@ -34,7 +34,7 @@ QModelIndex PermissionProxyModel::rootIndex()
 
 bool PermissionProxyModel::filterAcceptsRow(qint32 source_row, const QModelIndex &source_parent) const
 {
-    QModelIndex source_index = source_parent.child(source_row,0);
+    QModelIndex source_index = childIdx(source_row,0,source_parent);
     QString tag =
             sourceModel()->data(source_index, TreeXmlModel::TagRole).toString();
 
@@ -103,6 +103,12 @@ bool PermissionProxyModel::lessThan(const QModelIndex &left, const QModelIndex &
     }
 
     return QSortFilterProxyModel::lessThan(left,right);
+}
+
+QModelIndex PermissionProxyModel::childIdx(int arow, int acolumn, const QModelIndex &parent) const
+{
+    return parent.model() ? parent.model()->index(arow, acolumn, parent)
+                          : QModelIndex();
 }
 
 }}

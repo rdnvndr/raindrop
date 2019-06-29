@@ -663,7 +663,7 @@ bool ClassModelXml::removeRows(qint32 row, qint32 count, const QModelIndex &pare
     if (parent.isValid()) {
         QString parentTag = parent.data(TreeXmlModel::TagRole).toString();
         for (qint32 i = row; i < row+count; ++i) {
-            QModelIndex childIndex = parent.child(i,0);
+            QModelIndex childIndex = childIdx(i,0,parent);
             QString tag = childIndex.data(TreeXmlModel::TagRole).toString();
             if (childIndex.isValid()) {
                 if (tag == DBATTRXML::ATTR
