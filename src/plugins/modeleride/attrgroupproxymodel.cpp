@@ -73,7 +73,7 @@ void AttrGroupProxyModel::reset()
         if (!nameGroup.isEmpty()) hash.insert(nameGroup);
         childIndex = m_model->index(++row, m_uniqueColumn, m_rootIndex);
     }
-    m_list = hash.toList();
+    m_list = hash.values();
     if (!m_list.isEmpty()) {
         beginInsertRows(QModelIndex(), 0, m_list.count()-1);
         endInsertRows();

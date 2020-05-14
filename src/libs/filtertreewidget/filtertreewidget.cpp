@@ -62,7 +62,7 @@ void  FilterTreeWidget::startDrag(){
     QDrag *drag = new QDrag(this);
     drag->setPixmap(this->currentItem()->icon(0).pixmap(32,32,QIcon::Normal));
     drag->setMimeData(mimeData);
-    drag->start(Qt::MoveAction);
+    drag->exec(Qt::MoveAction);
 }
 
 bool FilterTreeWidget::searchShowItem(QString text,QTreeWidgetItem *item){
