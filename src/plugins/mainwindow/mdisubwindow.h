@@ -19,7 +19,7 @@ class MdiSubWindow : public QMdiSubWindow
 
 public:
     //! Конструктор класса
-    explicit MdiSubWindow(QWidget *parent = 0, Qt::WindowFlags flags = 0);
+    explicit MdiSubWindow(QWidget *parent = 0, Qt::WindowFlags flags = Qt::WindowFlags());
 
     //! Деструктор класса
     virtual ~MdiSubWindow();

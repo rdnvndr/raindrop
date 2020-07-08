@@ -51,7 +51,7 @@ public slots:
     void validateLovName(QValidator::State state) const;
 
     //! Обработка изменения типа атрибута
-    void changeType(const QString &typeName);
+    void changeType(const int &index);
 
 signals:
     //! Сигнал о редактировании списка значений

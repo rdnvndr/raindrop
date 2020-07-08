@@ -61,7 +61,7 @@ AttrWidget::AttrWidget(QWidget *parent) :
             this, &AttrWidget::remove);
 
     connect(comboBoxTypeAttr,
-            static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged),
+            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &AttrWidget::changeType);
     connect(pushButtonAttrSave, &QPushButton::clicked, this, &AttrWidget::submit);
     connect(pushButtonAttrCancel, &QPushButton::clicked, this, &AttrWidget::revert);
@@ -348,8 +348,9 @@ void AttrWidget::showParentAttr(bool flag)
                                    DBATTRXML::ATTR, DBATTRXML::PARENT);
 }
 
-void AttrWidget::changeType(const QString &typeName)
+void AttrWidget::changeType(const int &index)
 {
+    auto typeName = comboBoxTypeAttr->itemText(index);
     if (DBATTRTYPEXML::STRING==typeName){
         // String
         spinBoxStringLen->setEnabled(true);

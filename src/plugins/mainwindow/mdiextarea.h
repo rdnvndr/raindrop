@@ -36,7 +36,7 @@ public:
         визуальным компонентом
         \param widget Визуальный компонент
     */
-    QMdiSubWindow *addSubWindow(QWidget *widget, Qt::WindowFlags flags = 0);
+    QMdiSubWindow *addSubWindow(QWidget *widget, Qt::WindowFlags flags = Qt::WindowFlags());
 
     //! Установка режима отображения окна
     /*! Предназначено для установки режима отображения подокна.

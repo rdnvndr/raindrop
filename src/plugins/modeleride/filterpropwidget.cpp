@@ -40,7 +40,7 @@ FilterPropWidget::FilterPropWidget(QWidget *parent) :
     treeViewCondition->setItemDelegate(new ConditionDelegate(this));
 
     connect(comboBoxDestClass,
-            static_cast<void (QComboBox::*)(const QString&)>
+            static_cast<void (QComboBox::*)(int)>
             (&RTPTechGroup::Widgets::TreeComboBox::currentIndexChanged),
             this, &FilterPropWidget::changeDestClass);
 
@@ -214,7 +214,7 @@ void FilterPropWidget::setCurrent(const QModelIndex &index)
     conditionDelegate->setFirstIndex(index.parent());
 
     treeViewCondition->setRootIndex(m_conditionModel->mapFromSource(index));
-    changeDestClass(comboBoxDestClass->displayText());
+    changeDestClass(comboBoxDestClass->currentIndex());
 
     AbstractEditorWidget::setCurrent(index);
 }
@@ -271,10 +271,11 @@ void FilterPropWidget::revert()
     AbstractEditorWidget::revert();
 }
 
-void FilterPropWidget::changeDestClass(const QString &nameClass)
+void FilterPropWidget::changeDestClass(const int &idx)
 {
     QModelIndex index = model()->indexHashAttr(
-                DBCLASSXML::CLASS, DBCLASSXML::NAME, nameClass);
+                DBCLASSXML::CLASS, DBCLASSXML::NAME,
+                comboBoxDestClass->itemText(idx));
 
     ConditionDelegate *conditionDelegate =
             qobject_cast<ConditionDelegate *>(treeViewCondition->itemDelegate());

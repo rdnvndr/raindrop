@@ -54,7 +54,7 @@ public slots:
     void showParentAttr(bool flag);
 
     //! Обработка изменения типа атрибута
-    void changeType(const QString &typeName);
+    void changeType(const int &index);
 
     //! Установка родителя атрибутов
     void setRootIndex(const QModelIndex &index);

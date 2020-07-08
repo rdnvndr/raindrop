@@ -70,7 +70,7 @@ public slots:
     void revert();
 
     //! Установка индексов для делегата ConditionDelegate
-    void changeDestClass(const QString& nameClass);
+    void changeDestClass(const int &idx);
 
     //! Сообщение о неверном имени фильтра
     void validateFilterName(QValidator::State state) const;
