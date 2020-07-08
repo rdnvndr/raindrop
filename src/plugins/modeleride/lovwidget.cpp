@@ -40,7 +40,7 @@ LovWidget::LovWidget(QWidget *parent) :
     m_typeAttrModel->setStringList(attrTypeList);
 
     connect(comboBoxLovType,
-            static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged),
+            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &LovWidget::changeType);
 }
 
@@ -130,9 +130,10 @@ void LovWidget::validateLovName(QValidator::State state) const
         QToolTip::hideText();
 }
 
-void LovWidget::changeType(const QString &typeName)
+void LovWidget::changeType(const int &index)
 {
-    if (DBATTRTYPEXML::STRING==typeName){
+    auto typeName = comboBoxLovType->itemText(index);
+    if (DBATTRTYPEXML::STRING == typeName) {
         spinBoxLength->setEnabled(true);
         spinBoxAccuracy->setEnabled(false);
     } else {
