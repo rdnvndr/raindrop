@@ -1,15 +1,21 @@
 [submodule "src/3rdparty/guiextension"]
 	path = src/3rdparty/guiextension
-	url = git@github.com:rdnvndr/guiextension.git
-[submodule "src/3rdparty/sqlextension"]
-	path = src/3rdparty/sqlextension
-	url = git@github.com:rdnvndr/sqlextension.git
+	url = https://github.com/rdnvndr/guiextension.git
 [submodule "src/3rdparty/plugin"]
 	path = src/3rdparty/plugin
-	url = git@github.com:rdnvndr/plugin.git
+	url = https://github.com/rdnvndr/plugin.git
 [submodule "src/3rdparty/tilingframe"]
 	path = src/3rdparty/tilingframe
-	url = git@github.com:rdnvndr/tilingframe.git
+	url = https://github.com/rdnvndr/tilingframe.git
 [submodule "src/3rdparty/treexmlmodel"]
 	path = src/3rdparty/treexmlmodel
-	url = git@github.com:rdnvndr/treexmlmodel.git
+	url = https://github.com/rdnvndr/treexmlmodel.git
+[submodule "src/3rdparty/sqlextension"]
+	path = src/3rdparty/sqlextension
+	url = https://github.com/rdnvndr/sqlextension.git
+[submodule "src/3rdparty/src/3rdparty/treexmlmodel"]
+	path = src/3rdparty/src/3rdparty/treexmlmodel
+	url = https://github.com/rdnvndr/treexmlmodel.git
+[submodule "src/3rdparty/src/3rdparty/tilingframe"]
+	path = src/3rdparty/src/3rdparty/tilingframe
+	url = https://github.com/rdnvndr/tilingframe.git
